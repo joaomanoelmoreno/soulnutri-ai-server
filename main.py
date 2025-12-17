@@ -8,15 +8,21 @@ class IdentifyRequest(BaseModel):
 
 @app.get("/")
 def root():
-    return {"status": "online", "service": "SoulNutri AI Server", "https": True}
+    return {
+        "status": "online",
+        "service": "SoulNutri AI Server",
+        "https": True
+    }
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok"
+    }
 
 @app.post("/ai/identify-dish")
 def identify_dish(payload: IdentifyRequest):
-    dish_name = (payload.dish or "").strip().lower()
+    dish_name = payload.dish.lower().strip()
 
     if "strogonoff" in dish_name:
         return {
