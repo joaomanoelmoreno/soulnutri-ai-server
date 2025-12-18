@@ -1,9 +1,12 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="SoulNutri AI Server", version="1.1")
+app = FastAPI(
+    title="SoulNutri AI Server",
+    version="1.1"
+)
 
-# CORS liberado (ok para fase de testes)
+# CORS (libera chamadas do front-end)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -11,6 +14,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ======================
+# ROOT & HEALTH
+# ======================
 
 @app.get("/")
 def root():
@@ -24,34 +31,78 @@ def root():
 def health():
     return {"status": "ok"}
 
-# ==========================
-# ENDPOINT PRINCIPAL — IMAGEM
-# ==========================
+# ======================
+# OCR / TEXTO (SECUNDÁRIO)
+# ======================
+
+@app.post("/ai/identify-dish")
+def identify_dish(payload: dict):
+    dish = (payload.get("dish") or "").lower()
+
+    if "strogonoff" in dish:
+        return {
+            "identified": True,
+            "dish": "Strogonoff de Filé Mignon",
+            "confidence": 0.92,
+            "level": "alta"
+        }
+
+    return {
+        "identified": False,
+        "confidence": 0.0,
+        "level": "baixa"
+    }
+
+# ======================
+# IMAGEM (MÉTODO PRINCIPAL)
+# ======================
+
 @app.post("/ai/identify-image")
 async def identify_image(file: UploadFile = File(...)):
-    filename = file.filename.lower()
+    """
+    Endpoint principal:
+    - Recebe imagem multipart
+    - No momento faz mock (fase 1)
+    """
 
-    # 🔹 STUB (simulação controlada)
-    if "abobora" in filename:
+    contents = await file.read()
+
+    # Log mínimo (para debug)
+    print({
+        "filename": file.filename,
+        "size": len(contents),
+        "type": file.content_type
+    })
+
+    # ===== MOCK DE RECONHECIMENTO =====
+    name = file.filename.lower()
+
+    if "abobora" in name:
         return {
             "identified": True,
             "dish": "Abóbora ao Curry",
+            "confidence": 0.85,
+            "level": "alta"
+        }
+
+    if "atum" in name:
+        return {
+            "identified": True,
+            "dish": "Atum Selado em Crosta de Gergelim",
             "confidence": 0.88,
             "level": "alta"
         }
 
-    if "tomate" in filename:
+    if "tomate" in name:
         return {
             "identified": True,
             "dish": "Umami de Tomate",
-            "confidence": 0.82,
+            "confidence": 0.80,
             "level": "media"
         }
 
     return {
         "identified": False,
-        "dish": None,
-        "confidence": 0.0,
-        "level": "baixa",
-        "message": "Prato não reconhecido"
+        "confidence": 0.30,
+        "level": "baixa"
     }
