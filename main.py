@@ -1,91 +1,99 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import Optional, Dict, Any
+from typing import Optional
+import os
 import hashlib
+from PIL import Image
+import imagehash
 
-app = FastAPI(title="SoulNutri AI Server", version="1.1.0")
+# ======================================================
+# CONFIGURAÇÕES
+# ======================================================
 
-# CORS (permite o site chamar a API)
+DATA_DIR = "data"
+SUPPORTED_EXTS = (".jpg", ".jpeg", ".png", ".webp")
+
+# Limites de confiança
+CONF_HIGH = 0.85
+CONF_MED = 0.50
+
+# ======================================================
+# APP
+# ======================================================
+
+app = FastAPI(
+    title="SoulNutri AI Server",
+    version="2.0.0"
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # depois podemos travar para seu domínio
+    allow_origins=["*"],   # depois podemos travar no domínio
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# ======================================================
+# UTILIDADES
+# ======================================================
 
-# =========================
-# MODELOS
-# =========================
-class IdentifyRequest(BaseModel):
-    dish: str
-
-
-# =========================
-# UTILITÁRIOS
-# =========================
-def _level_from_confidence(conf: float) -> str:
-    if conf >= 0.85:
-        return "alta"
-    if conf >= 0.50:
-        return "media"
-    return "baixa"
+def sha256_16(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()[:16]
 
 
-def _normalize_text(s: str) -> str:
-    return (s or "").strip().lower()
+def compute_phash(img: Image.Image):
+    return imagehash.phash(img)
 
 
-def _match_dish_by_text(text: str) -> Dict[str, Any]:
-    t = _normalize_text(text)
-
-    if "strogonoff" in t:
-        conf = 0.92
-        return {"identified": True, "dish": "Strogonoff de Filé Mignon", "confidence": conf, "level": _level_from_confidence(conf)}
-
-    # você pode ir adicionando outras regras simples aqui, se quiser
-    conf = 0.20
-    return {"identified": False, "dish": None, "confidence": conf, "level": _level_from_confidence(conf)}
-
-
-def _match_dish_by_filename(filename: str) -> Dict[str, Any]:
+def load_dataset():
     """
-    Enquanto a IA real não estiver plugada, usamos um fallback
-    para validar o pipeline por imagem (upload OK + resposta OK).
-    Isso evita 'Field required' e permite testar já com suas fotos nomeadas.
+    Lê todas as imagens em /data/<prato>/*.jpg
+    Calcula o pHash e retorna uma lista indexada
     """
-    f = _normalize_text(filename)
+    dataset = []
 
-    # Regras baseadas nos seus nomes de arquivo (ex.: aboboraacurry07.jpeg, atumaogergelim02.jpeg etc.)
-    if "abobora" in f and "curry" in f:
-        conf = 0.86
-        return {"identified": True, "dish": "Abóbora ao Curry", "confidence": conf, "level": _level_from_confidence(conf)}
+    if not os.path.isdir(DATA_DIR):
+        return dataset
 
-    if "atum" in f and ("gergelim" in f or "sesamo" in f):
-        conf = 0.86
-        return {"identified": True, "dish": "Atum Selado em Crosta de Gergelim", "confidence": conf, "level": _level_from_confidence(conf)}
+    for dish in os.listdir(DATA_DIR):
+        dish_path = os.path.join(DATA_DIR, dish)
+        if not os.path.isdir(dish_path):
+            continue
 
-    if "brocolis" in f and ("parmes" in f or "parmesao" in f):
-        conf = 0.80
-        return {"identified": True, "dish": "Brócolis com Parmesão", "confidence": conf, "level": _level_from_confidence(conf)}
+        for fname in os.listdir(dish_path):
+            if not fname.lower().endswith(SUPPORTED_EXTS):
+                continue
 
-    if "umami" in f and "tomate" in f:
-        conf = 0.75
-        return {"identified": True, "dish": "Umami de Tomate", "confidence": conf, "level": _level_from_confidence(conf)}
+            fpath = os.path.join(dish_path, fname)
+            try:
+                img = Image.open(fpath).convert("RGB")
+                ph = compute_phash(img)
+                dataset.append({
+                    "dish": dish,
+                    "path": fpath,
+                    "phash": ph
+                })
+            except Exception:
+                pass
 
-    # Desconhecido
-    conf = 0.20
-    return {"identified": False, "dish": None, "confidence": conf, "level": _level_from_confidence(conf)}
+    return dataset
 
 
-# =========================
-# ROTAS BÁSICAS
-# =========================
+DATASET = load_dataset()
+
+# ======================================================
+# ENDPOINTS BÁSICOS
+# ======================================================
+
 @app.get("/")
 def root():
-    return {"status": "online", "service": "SoulNutri AI Server", "https": True}
+    return {
+        "service": "SoulNutri AI Server",
+        "status": "online",
+        "pratos": len(set(d["dish"] for d in DATASET)),
+        "imagens": len(DATASET)
+    }
 
 
 @app.get("/health")
@@ -93,46 +101,74 @@ def health():
     return {"status": "ok"}
 
 
-# =========================
-# OCR / TEXTO
-# =========================
-@app.post("/ai/identify-dish")
-def identify_dish(payload: IdentifyRequest):
-    return _match_dish_by_text(payload.dish)
+# ======================================================
+# IDENTIFICAÇÃO POR IMAGEM
+# ======================================================
 
-
-# =========================
-# IMAGEM (UPLOAD MULTIPART)
-# =========================
 @app.post("/ai/identify-image")
 async def identify_image(
     file: UploadFile = File(...),
-    hint: Optional[str] = Form(None),
+    hint: Optional[str] = Form(None)
 ):
-    """
-    Recebe imagem via multipart/form-data com campo 'file'.
-    Retorna um JSON de diagnóstico + uma identificação (stub por enquanto).
+    content = await file.read()
+    sha = sha256_16(content)
 
-    Assim que a IA real estiver pronta, aqui será o ponto de integração.
-    """
     try:
-        content = await file.read()
-        size = len(content)
-        sha = hashlib.sha256(content).hexdigest()[:16]
+        img = Image.open(file.file).convert("RGB")
+    except Exception:
+        return {
+            "ok": False,
+            "error": "imagem inválida"
+        }
 
-        # Identificação provisória (por nome do arquivo)
-        result = _match_dish_by_filename(file.filename or "")
+    query_hash = compute_phash(img)
 
+    best = None
+    best_dist = 999
+
+    for item in DATASET:
+        dist = query_hash - item["phash"]
+        if dist < best_dist:
+            best_dist = dist
+            best = item
+
+    if best is None:
         return {
             "ok": True,
             "received": {
                 "filename": file.filename,
-                "content_type": file.content_type,
-                "size": size,
+                "size": len(content),
                 "sha256_16": sha,
-                "hint": hint,
+                "hint": hint
             },
-            **result,
+            "identified": False,
+            "dish": None,
+            "confidence": 0.0,
+            "level": "baixa"
         }
-    except Exception as e:
-        return {"ok": False, "error": str(e)}
+
+    # Conversão simples de distância em confiança
+    confidence = max(0.0, min(1.0, 1 - (best_dist / 20)))
+
+    if confidence >= CONF_HIGH:
+        level = "alta"
+    elif confidence >= CONF_MED:
+        level = "media"
+    else:
+        level = "baixa"
+
+    return {
+        "ok": True,
+        "received": {
+            "filename": file.filename,
+            "size": len(content),
+            "sha256_16": sha,
+            "hint": hint
+        },
+        "identified": confidence >= CONF_MED,
+        "dish": best["dish"],
+        "confidence": round(confidence, 2),
+        "level": level,
+        "matched_path": best["path"],
+        "dist": best_dist
+    }
