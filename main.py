@@ -7,15 +7,15 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timezone
 
-from fastapi import FastAPI, UploadFile, File, Form
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Query
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from PIL import Image
 
 
 APP_NAME = "SoulNutri AI Server"
-APP_VERSION = "1.1.3"
+APP_VERSION = "1.2.0"
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DATA_DIR = BASE_DIR / "data"
@@ -32,7 +32,12 @@ CANDIDATES_DIR = DATA_DIR / CANDIDATES_DIRNAME
 CANDIDATES_META_PATH = CANDIDATES_DIR / "meta.jsonl"
 
 # Limite de upload (bytes). Pode ajustar via env.
-MAX_UPLOAD_BYTES = int(os.getenv("SOULNUTRI_MAX_UPLOAD_BYTES", str(8 * 1024 * 1024)))  # 8MB
+MAX_UPLOAD_BYTES = int(os.getenv("SOULNUTRI_MAX_UPLOAD_BYTES", str(10 * 1024 * 1024)))  # 10MB
+
+# Política de decisão (evita rotular errado)
+IDENTIFY_MIN_CONF = float(os.getenv("SOULNUTRI_IDENTIFY_MIN_CONF", "0.85"))
+IDENTIFY_MAX_DIST = int(os.getenv("SOULNUTRI_IDENTIFY_MAX_DIST", "12"))
+RETURN_SUGGESTION_WHEN_NOT_IDENTIFIED = os.getenv("SOULNUTRI_RETURN_SUGGESTION", "true").lower() == "true"
 
 
 def now_ts() -> float:
@@ -40,7 +45,6 @@ def now_ts() -> float:
 
 
 def utc_stamp() -> str:
-    # 2025-12-24_10-23-01 (UTC)
     return datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
 
 
@@ -70,7 +74,7 @@ def safe_list_images(p: Path) -> List[Path]:
 
 def slug_to_title(slug: str) -> str:
     parts = slug.replace("-", "_").split("_")
-    small = {"de", "da", "do", "das", "dos", "ao", "aos", "à", "às", "e", "com", "sem"}
+    small = {"de", "da", "do", "das", "dos", "ao", "aos", "a", "e", "com", "sem"}
     out = []
     for i, w in enumerate(parts):
         if not w:
@@ -118,8 +122,11 @@ def level_from_conf(conf: float) -> str:
     return "baixa"
 
 
-def identified_from_conf(conf: float) -> bool:
-    return conf >= 0.50
+def safe_ext_from_filename(filename: str) -> str:
+    ext = (Path(filename).suffix or "").lower()
+    if ext in ALLOWED_EXTS:
+        return ext
+    return ".jpg"
 
 
 # -----------------------------
@@ -137,7 +144,7 @@ def build_hash_index(data_dir: Path) -> Dict[str, Any]:
     for dish_dir in safe_list_dirs(data_dir):
         slug = dish_dir.name
 
-        # IMPORTANTE: ignora a pasta de candidatos
+        # ignora a pasta de candidatos
         if slug == CANDIDATES_DIRNAME:
             continue
 
@@ -148,8 +155,7 @@ def build_hash_index(data_dir: Path) -> Dict[str, Any]:
         recs = []
         for fp in images:
             try:
-                with fp.open("rb") as f:
-                    raw = f.read()
+                raw = fp.read_bytes()
                 img = Image.open(io.BytesIO(raw))
                 h = ahash64(img)
                 recs.append({"file": fp.name, "hash64": int(h), "bytes": len(raw)})
@@ -216,7 +222,7 @@ def best_match(hash_idx: Dict[str, Any], img_hash: int) -> Tuple[Optional[str], 
 # -----------------------------
 app = FastAPI(title=APP_NAME, version=APP_VERSION)
 
-# CORS (evita "Failed to fetch" no browser)
+# CORS (evita "Failed to fetch")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -270,6 +276,11 @@ def health():
         "ts": now_ts(),
         "allowed_exts": sorted(list(ALLOWED_EXTS)),
         "max_upload_bytes": MAX_UPLOAD_BYTES,
+        "policy": {
+            "identify_min_conf": IDENTIFY_MIN_CONF,
+            "identify_max_dist": IDENTIFY_MAX_DIST,
+            "return_suggestion_when_not_identified": RETURN_SUGGESTION_WHEN_NOT_IDENTIFIED,
+        },
     }
 
 
@@ -284,9 +295,11 @@ def index_status():
 
     h_dishes, h_images = count_hash_index(h)
 
-    # candidates
     ensure_dir(CANDIDATES_DIR)
     cand_imgs = safe_list_images(CANDIDATES_DIR)
+
+    meta_exists = CANDIDATES_META_PATH.exists()
+    meta_bytes = CANDIDATES_META_PATH.stat().st_size if meta_exists else 0
 
     return {
         "ok": True,
@@ -303,6 +316,8 @@ def index_status():
         "candidates_dir": str(CANDIDATES_DIR),
         "candidates_images": len(cand_imgs),
         "candidates_meta_path": str(CANDIDATES_META_PATH),
+        "candidates_meta_exists": meta_exists,
+        "candidates_meta_bytes": meta_bytes,
         "ts": now_ts(),
     }
 
@@ -349,10 +364,6 @@ async def identify_image(file: UploadFile = File(...)):
         "hint": None,
     }
 
-    ext = (Path(file.filename).suffix or "").lower()
-    if ext and ext not in ALLOWED_EXTS:
-        received["ext_warning"] = f"extension {ext} not in allowed {sorted(list(ALLOWED_EXTS))}"
-
     try:
         img = Image.open(io.BytesIO(raw))
     except Exception as e:
@@ -381,32 +392,46 @@ async def identify_image(file: UploadFile = File(...)):
         }
 
     slug, conf, dist = best_match(hash_idx, img_hash)
-    title = slug_to_title(slug) if slug else None
-    level = level_from_conf(conf)
-    identified = identified_from_conf(conf)
+
+    passes = (conf >= IDENTIFY_MIN_CONF) and (dist <= IDENTIFY_MAX_DIST)
+
+    if passes and slug:
+        return {
+            "ok": True,
+            "received": received,
+            "identified": True,
+            "dish": slug_to_title(slug),
+            "dish_slug": slug,
+            "confidence": conf,
+            "level": level_from_conf(conf),
+            "debug": {"best_dist": dist},
+        }
+
+    sug = {"suggested_slug": slug, "suggested_dish": slug_to_title(slug) if slug else None} if RETURN_SUGGESTION_WHEN_NOT_IDENTIFIED else {}
 
     return {
         "ok": True,
         "received": received,
-        "identified": identified,
-        "dish": title if title else None,
-        "dish_slug": slug,
+        "identified": False,
+        "dish": None,
+        "dish_slug": None,
         "confidence": conf,
-        "level": level,
-        "debug": {"best_dist": dist},
+        "level": "baixa",
+        "debug": {
+            "best_dist": dist,
+            "policy": {"min_conf": IDENTIFY_MIN_CONF, "max_dist": IDENTIFY_MAX_DIST},
+            **sug,
+        },
     }
 
 
-# -----------------------------
-# NOVO: salvar captura para revisão
-# -----------------------------
 @app.post("/ai/save-capture")
 async def save_capture(
     file: UploadFile = File(...),
     suggested_dish_slug: Optional[str] = Form(None),
     confidence: Optional[float] = Form(None),
     level: Optional[str] = Form(None),
-    source: Optional[str] = Form(None),  # ex: "soulnutri_test"
+    source: Optional[str] = Form(None),
 ):
     raw = await file.read()
 
@@ -418,13 +443,7 @@ async def save_capture(
 
     ensure_dir(CANDIDATES_DIR)
 
-    # Determina extensão (preferindo a do nome recebido; fallback para .jpg)
-    ext = (Path(file.filename).suffix or "").lower()
-    if ext not in ALLOWED_EXTS:
-        # se vier "capture.jpg" ok; se vier sem ext ou estranho, usamos jpg
-        ext = ".jpg"
-
-    # Nome do arquivo: UTC + sha16 (evita colisão)
+    ext = safe_ext_from_filename(file.filename)
     digest = sha256_16(raw)
     name = f"{utc_stamp()}_{digest}_capture{ext}"
     out_path = CANDIDATES_DIR / name
@@ -447,26 +466,13 @@ async def save_capture(
         "source": source,
     }
 
+    meta_saved = True
     try:
         append_jsonl(CANDIDATES_META_PATH, meta)
     except Exception:
-        # mesmo se falhar meta, a imagem foi salva; seguimos com ok e avisamos
-        return {
-            "ok": True,
-            "saved": True,
-            "file": name,
-            "path": str(out_path),
-            "meta_saved": False,
-            "note": "image saved but meta.jsonl append failed",
-        }
+        meta_saved = False
 
-    return {
-        "ok": True,
-        "saved": True,
-        "file": name,
-        "path": str(out_path),
-        "meta_saved": True,
-    }
+    return {"ok": True, "saved": True, "file": name, "path": str(out_path), "meta_saved": meta_saved}
 
 
 @app.get("/ai/candidates-status")
@@ -486,22 +492,34 @@ def candidates_status():
     }
 
 
-@app.post("/ai/identify-dish")
-def identify_dish(payload: Dict[str, Any]):
-    slug = (payload or {}).get("dish_slug")
-    if not slug:
-        return JSONResponse(status_code=400, content={"ok": False, "error": "dish_slug is required"})
+@app.get("/ai/candidates-list")
+def candidates_list(limit: int = Query(50, ge=1, le=500)):
+    ensure_dir(CANDIDATES_DIR)
+    imgs = safe_list_images(CANDIDATES_DIR)
+    imgs_sorted = sorted(imgs, key=lambda p: p.stat().st_mtime, reverse=True)[:limit]
 
-    dish_dir = DATA_DIR / slug
-    exists = dish_dir.exists() and dish_dir.is_dir()
-    imgs = safe_list_images(dish_dir) if exists else []
+    items = []
+    for p in imgs_sorted:
+        st = p.stat()
+        items.append({"file": p.name, "bytes": st.st_size, "mtime": st.st_mtime})
 
-    return {
-        "ok": True,
-        "dish_slug": slug,
-        "dish": slug_to_title(slug),
-        "exists_in_data": exists,
-        "images_in_folder": len(imgs),
-        "sample_images": [p.name for p in imgs[:10]],
-        "ts": now_ts(),
-    }
+    return {"ok": True, "count": len(items), "items": items, "ts": now_ts()}
+
+
+@app.get("/ai/candidates-download")
+def candidates_download(file: str = Query(..., min_length=1, max_length=200)):
+    if "/" in file or "\\" in file or ".." in file:
+        raise HTTPException(status_code=400, detail="invalid file")
+
+    p = CANDIDATES_DIR / file
+    if not p.exists() or not p.is_file():
+        raise HTTPException(status_code=404, detail="not found")
+
+    ext = p.suffix.lower()
+    media = "image/jpeg"
+    if ext == ".png":
+        media = "image/png"
+    elif ext == ".webp":
+        media = "image/webp"
+
+    return FileResponse(path=str(p), media_type=media, filename=p.name)
