@@ -8,13 +8,14 @@ from typing import Dict, Any, List, Optional, Tuple
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 # Pillow (PIL) é usado para ler imagens e calcular hash perceptual
 from PIL import Image
 
 
 APP_NAME = "SoulNutri AI Server"
-APP_VERSION = "1.1.1"
+APP_VERSION = "1.1.2"
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DATA_DIR = BASE_DIR / "data"
@@ -43,7 +44,7 @@ def safe_list_dirs(p: Path) -> List[Path]:
 def safe_list_images(p: Path) -> List[Path]:
     if not p.exists() or not p.is_dir():
         return []
-    imgs = []
+    imgs: List[Path] = []
     for ext in ALLOWED_EXTS:
         imgs.extend(p.glob(f"*{ext}"))
         imgs.extend(p.glob(f"*{ext.upper()}"))
@@ -133,7 +134,7 @@ def build_hash_index(data_dir: Path) -> Dict[str, Any]:
         "data_dir": str(data_dir),
         "generated_at": now_ts(),
         "allowed_exts": sorted(list(ALLOWED_EXTS)),
-        "dishes": {}
+        "dishes": {},
     }
 
     for dish_dir in safe_list_dirs(data_dir):
@@ -149,11 +150,13 @@ def build_hash_index(data_dir: Path) -> Dict[str, Any]:
                     raw = f.read()
                 img = Image.open(io.BytesIO(raw))
                 h = ahash64(img)
-                recs.append({
-                    "file": fp.name,
-                    "hash64": int(h),
-                    "bytes": len(raw),
-                })
+                recs.append(
+                    {
+                        "file": fp.name,
+                        "hash64": int(h),
+                        "bytes": len(raw),
+                    }
+                )
             except Exception:
                 # Se alguma imagem estiver corrompida, apenas ignora
                 continue
@@ -219,6 +222,23 @@ def best_match(hash_idx: Dict[str, Any], img_hash: int) -> Tuple[Optional[str], 
 # -----------------------------
 app = FastAPI(title=APP_NAME, version=APP_VERSION)
 
+# CORS: permite que o frontend em soulnutri.app.br chame o backend no Render
+# (evita o erro "Failed to fetch" no navegador)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://soulnutri.app.br",
+        "https://www.soulnutri.app.br",
+        "http://localhost",
+        "http://127.0.0.1",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.on_event("startup")
 def startup_load_indexes() -> None:
@@ -270,7 +290,6 @@ def index_status():
     v_exists = VISUAL_INDEX_PATH.exists()
     h_exists = HASH_INDEX_PATH.exists()
 
-    # visual_index é só informativo (não sabemos o schema antigo)
     v_size = VISUAL_INDEX_PATH.stat().st_size if v_exists else 0
 
     h_dishes, h_images = count_hash_index(h)
@@ -297,7 +316,7 @@ def reindex():
     if not DATA_DIR.exists():
         return JSONResponse(
             status_code=400,
-            content={"ok": False, "error": f"DATA_DIR not found: {DATA_DIR}"}
+            content={"ok": False, "error": f"DATA_DIR not found: {DATA_DIR}"},
         )
 
     idx = build_hash_index(DATA_DIR)
@@ -331,7 +350,7 @@ async def identify_image(file: UploadFile = File(...)):
     # valida extensão (quando disponível)
     ext = (Path(file.filename).suffix or "").lower()
     if ext and ext not in ALLOWED_EXTS:
-        # Não bloqueia totalmente (pois capture.jpg vem sem extensão em alguns fluxos),
+        # Não bloqueia totalmente (pois capture.jpg pode vir com nome simples),
         # mas registra.
         received["ext_warning"] = f"extension {ext} not in allowed {sorted(list(ALLOWED_EXTS))}"
 
@@ -341,7 +360,7 @@ async def identify_image(file: UploadFile = File(...)):
     except Exception as e:
         return JSONResponse(
             status_code=400,
-            content={"ok": False, "received": received, "error": f"invalid image: {e}"}
+            content={"ok": False, "received": received, "error": f"invalid image: {e}"},
         )
 
     img_hash = ahash64(img)
@@ -359,6 +378,7 @@ async def identify_image(file: UploadFile = File(...)):
             "received": received,
             "identified": False,
             "dish": None,
+            "dish_slug": None,
             "confidence": 0.2,
             "level": "baixa",
             "note": "hash_index not loaded; run POST /ai/reindex",
