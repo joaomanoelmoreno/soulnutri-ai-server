@@ -1,4 +1,21 @@
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
+fastapi==0.110.0
+uvicorn==0.29.0
 python-multipart==0.0.9
-pillow==10.4.0
+
+# Numérico / imagem
+numpy==1.26.4
+pillow==10.2.0
+opencv-python-headless==4.9.0.80
+
+# Torch CPU (compatível com Render)
+torch==2.2.2
+torchvision==0.17.2
+
+# CLIP / embeddings
+open-clip-torch==2.24.0
+
+# Similaridade
+scikit-learn==1.4.1.post1
+
+# Utilidades
+tqdm==4.66.2
