@@ -1,3 +1,8 @@
+# =====================================================
+# FORCE PYTORCH CPU (CRITICAL FOR RENDER)
+# =====================================================
+--index-url https://download.pytorch.org/whl/cpu
+
 # =========================
 # Core API
 # =========================
@@ -11,7 +16,9 @@ python-multipart==0.0.9
 torch==2.2.2
 torchvision==0.17.2
 
+# =========================
 # OpenCLIP (visual embeddings)
+# =========================
 open-clip-torch==2.24.0
 timm==1.0.22
 
