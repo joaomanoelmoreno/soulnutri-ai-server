@@ -1,21 +1,52 @@
+# =========================
+# Core API
+# =========================
 fastapi==0.110.0
 uvicorn==0.29.0
 python-multipart==0.0.9
 
-# Numérico / imagem
-numpy==1.26.4
-pillow==10.2.0
-opencv-python-headless==4.9.0.80
-
-# Torch CPU (compatível com Render)
+# =========================
+# Machine Learning (CPU ONLY)
+# =========================
 torch==2.2.2
 torchvision==0.17.2
 
-# CLIP / embeddings
+# OpenCLIP (visual embeddings)
 open-clip-torch==2.24.0
+timm==1.0.22
 
-# Similaridade
+# =========================
+# Image / CV
+# =========================
+opencv-python-headless==4.9.0.80
+pillow==10.2.0
+
+# =========================
+# Data / Utils
+# =========================
+numpy==1.26.4
 scikit-learn==1.4.1.post1
-
-# Utilidades
+scipy==1.16.3
+joblib==1.5.3
 tqdm==4.66.2
+
+# =========================
+# HTTP / Async
+# =========================
+httpx==0.28.1
+anyio==4.12.0
+
+# =========================
+# Text / Tokenization (CLIP)
+# =========================
+ftfy==6.3.1
+regex==2025.11.3
+sentencepiece==0.2.1
+
+# =========================
+# Config / Validation
+# =========================
+pydantic==2.12.5
+pydantic-core==2.41.5
+typing-extensions==4.15.0
+pyyaml==6.0.3
