@@ -1,24 +1,21 @@
-# Web
+# SoulNutri AI Server - requirements (Render)
+
+# NUNCA use --index-url do PyTorch, senão FastAPI/uvicorn não existem.
+# Se precisar do torch CPU, use extra-index-url.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 fastapi==0.110.0
 uvicorn[standard]==0.27.1
-
-# Imagem
+python-multipart==0.0.9
 pillow==10.2.0
 
-# Numpy
 numpy==1.26.4
+tqdm==4.66.2
 
-# Torch CPU (Render)
---extra-index-url https://download.pytorch.org/whl/cpu
+# stack do modelo (CPU)
 torch==2.2.2
 torchvision==0.17.2
 
-# CLIP fallback (OpenAI)
-git+https://github.com/openai/CLIP.git
-
-# OpenCLIP (preferido)  -> o import no código é "open_clip"
+# modelos e utilitários (usados no emb_index refatorado)
 open-clip-torch==2.24.0
-
-# Utils
-requests==2.31.0
-python-multipart==0.0.9
+timm==0.9.16
