@@ -5,40 +5,43 @@ from typing import List, Tuple, Optional
 import numpy as np
 from PIL import Image
 
-# Torch é necessário para qualquer modo de embeddings
 import torch
 
 
 class EmbeddingIndex:
     """
-    Índice simples de embeddings com fallback:
-      1) tenta OpenCLIP (open_clip)
-      2) se não existir, tenta CLIP (openai/CLIP)
-      3) se nada existir, NÃO derruba o servidor:
-         - search() retorna [] e o app continua vivo
+    Índice simples de embeddings com blindagem total:
+    - NÃO faz import de open_clip no topo do arquivo.
+    - Tenta open_clip dentro do método _init_backend().
+    - Se falhar, backend fica NONE e o servidor NÃO cai.
     """
 
     def __init__(self, index_path: str):
         self.index_path = index_path
-        self.items: List[Tuple[str, str]] = []  # [(dish_slug, img_path)]
-        self.matrix: Optional[np.ndarray] = None  # shape (N, D)
+
+        # [(dish_slug, img_path)]
+        self.items: List[Tuple[str, str]] = []
+        # np.ndarray shape (N, D)
+        self.matrix: Optional[np.ndarray] = None
 
         self._device = "cpu"
-        self._backend = None  # "open_clip" | "clip" | None
+        self._backend = None  # "open_clip" | None
         self._model = None
         self._preprocess = None
-        self._tokenizer = None  # usado no open_clip
 
         self._init_backend()
         self._load_index_if_exists()
 
     # -----------------------------
-    # Backend init
+    # Backend init (SAFE)
     # -----------------------------
     def _init_backend(self):
-        # 1) Tentar OpenCLIP
+        """
+        Nunca derruba o servidor.
+        Se open_clip não existir, só desliga o reconhecimento por imagem.
+        """
         try:
-            import open_clip  # type: ignore
+            import open_clip  # <- IMPORT SOMENTE AQUI (nunca no topo)
 
             model, _, preprocess = open_clip.create_model_and_transforms(
                 "ViT-B-32",
@@ -50,33 +53,12 @@ class EmbeddingIndex:
             self._backend = "open_clip"
             self._model = model
             self._preprocess = preprocess
-            self._tokenizer = open_clip.get_tokenizer("ViT-B-32")
             print("[emb] backend=open_clip OK")
-            return
         except Exception as e:
-            print(f"[emb] backend=open_clip NOT available: {e}")
-
-        # 2) Tentar CLIP (OpenAI)
-        try:
-            import clip  # type: ignore
-
-            model, preprocess = clip.load("ViT-B/32", device=self._device)
-            model.eval()
-
-            self._backend = "clip"
-            self._model = model
-            self._preprocess = preprocess
-            print("[emb] backend=clip OK")
-            return
-        except Exception as e:
-            print(f"[emb] backend=clip NOT available: {e}")
-
-        # 3) Sem backend (não derruba o servidor)
-        self._backend = None
-        self._model = None
-        self._preprocess = None
-        self._tokenizer = None
-        print("[emb] backend=NONE (service will run without image recognition)")
+            self._backend = None
+            self._model = None
+            self._preprocess = None
+            print(f"[emb] backend=NONE (open_clip unavailable): {e}")
 
     # -----------------------------
     # Index persistence
@@ -115,13 +97,7 @@ class EmbeddingIndex:
         x = self._preprocess(img).unsqueeze(0).to(self._device)
 
         with torch.no_grad():
-            if self._backend == "open_clip":
-                # open_clip: encode_image -> tensor (1, D)
-                feats = self._model.encode_image(x)
-            else:
-                # clip: encode_image -> tensor (1, D)
-                feats = self._model.encode_image(x)
-
+            feats = self._model.encode_image(x)
             feats = feats / feats.norm(dim=-1, keepdim=True)
             vec = feats.squeeze(0).cpu().numpy().astype(np.float32)
 
@@ -131,10 +107,6 @@ class EmbeddingIndex:
     # Public API
     # -----------------------------
     def build_from_folder(self, dish_folder: str):
-        """
-        Indexa todas as imagens de uma pasta de prato: data/<dish>/*.jpg
-        O slug do prato é o nome da pasta.
-        """
         dish_slug = os.path.basename(dish_folder.rstrip("/"))
         exts = {".jpg", ".jpeg", ".png", ".webp"}
 
@@ -144,10 +116,10 @@ class EmbeddingIndex:
                 continue
 
             img_path = os.path.join(dish_folder, fn)
-
             vec = self._embed_image(img_path)
+
+            # Se backend está NONE, não indexa — mas NÃO quebra.
             if vec is None:
-                # backend ausente: não indexa, mas não quebra
                 continue
 
             self.items.append((dish_slug, img_path))
@@ -156,14 +128,9 @@ class EmbeddingIndex:
             else:
                 self.matrix = np.vstack([self.matrix, vec.reshape(1, -1)])
 
-        # salva no final
         self._save_index()
 
     def search(self, img_path: str, top_k: int = 5) -> List[Tuple[str, float]]:
-        """
-        Retorna [(dish_slug, score)].
-        score = similaridade cosseno (0..1 em geral).
-        """
         if self._backend is None:
             return []
         if self.matrix is None or len(self.items) == 0:
@@ -173,7 +140,6 @@ class EmbeddingIndex:
         if q is None:
             return []
 
-        # cosine similarity
         sims = (self.matrix @ q.reshape(-1, 1)).reshape(-1)
         idx = np.argsort(-sims)[: max(1, top_k)]
 
