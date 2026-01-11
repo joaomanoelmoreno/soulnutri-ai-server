@@ -4,8 +4,10 @@ import time
 import json
 import hashlib
 import tempfile
+import traceback
+import logging
 from datetime import datetime
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Optional, Dict, Any, List
 
 from fastapi import FastAPI, UploadFile, File, Form, Query
 from fastapi.responses import JSONResponse, FileResponse
@@ -13,6 +15,13 @@ from PIL import Image
 
 from ai.emb_index import EmbeddingIndex
 from ai.policy import confidence_level
+
+
+# =========================================================
+# Logging
+# =========================================================
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger("soulnutri")
 
 
 # =========================================================
@@ -32,7 +41,7 @@ CANDIDATES_META_PATH = os.path.join(CANDIDATES_DIR, "meta.jsonl")
 
 ALLOWED_EXTS = {".jpeg", ".jpg", ".png", ".webp"}
 
-# Modo (deixa preparado para futuro):
+# Modo:
 # - embeddings: usa CLIP (Servidor B)
 # - hash: reservado (compatibilidade)
 RECO_MODE = os.getenv("RECO_MODE", "embeddings").lower().strip()
@@ -87,9 +96,14 @@ def _read_upload_as_jpeg_bytes(file: UploadFile) -> bytes:
 def _init_indexes_if_needed():
     """
     Carrega/instancia o índice de embeddings.
+
+    IMPORTANTE:
+    - só chamamos isso em endpoints que REALMENTE precisam do modelo/índice
+      (identify e reindex), para não "puxar" peso/modelo à toa.
     """
     global _emb_index
     if _emb_index is None:
+        log.info("Inicializando EmbeddingIndex (pode carregar modelo/pesos)...")
         _emb_index = EmbeddingIndex(index_path=VISUAL_INDEX_PATH)
     return _emb_index
 
@@ -114,9 +128,13 @@ def _count_images_in_data() -> int:
     total = 0
     for dish in _dish_dirs():
         dish_path = os.path.join(DATA_DIR, dish)
-        for f in os.listdir(dish_path):
-            if _safe_ext(f) in ALLOWED_EXTS:
-                total += 1
+        try:
+            for f in os.listdir(dish_path):
+                if _safe_ext(f) in ALLOWED_EXTS:
+                    total += 1
+        except Exception:
+            # se alguma pasta tiver problema de permissão, não derruba tudo
+            continue
     return total
 
 
@@ -124,16 +142,19 @@ def _build_hash_index_stub():
     """
     Mantém compatibilidade com a estrutura do status.
     """
-    if not os.path.exists(HASH_INDEX_PATH):
-        payload = {
-            "ok": True,
-            "mode": "stub",
-            "dishes": len(_dish_dirs()),
-            "images": _count_images_in_data(),
-            "ts": _now_ts(),
-        }
+    payload = {
+        "ok": True,
+        "mode": "stub",
+        "dishes": len(_dish_dirs()),
+        "images": _count_images_in_data(),
+        "ts": _now_ts(),
+    }
+    try:
         with open(HASH_INDEX_PATH, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
+    except Exception:
+        # não derruba o serviço por falha de escrita do stub
+        log.exception("Falha ao escrever hash_index stub")
 
 
 def _append_candidate_meta(meta: Dict[str, Any]):
@@ -155,6 +176,31 @@ def _list_candidate_images() -> List[str]:
     return files
 
 
+def _safe_write_empty_visual_index():
+    """
+    Fast-path: quando não existe nenhuma imagem em data/, criamos um índice visual vazio
+    sem tentar processar embeddings.
+
+    Observação: isto evita gastar CPU/RAM e, principalmente, evita que o reindex tente
+    rodar pipeline pesado "à toa".
+    """
+    empty_payload = {
+        "ok": True,
+        "mode": "empty",
+        "items": [],
+        "ts": _now_ts(),
+        "version": APP_VERSION,
+    }
+    try:
+        os.makedirs(os.path.dirname(VISUAL_INDEX_PATH), exist_ok=True)
+        with open(VISUAL_INDEX_PATH, "w", encoding="utf-8") as f:
+            json.dump(empty_payload, f, ensure_ascii=False, indent=2)
+        return True
+    except Exception:
+        log.exception("Falha ao escrever visual_index vazio")
+        return False
+
+
 # =========================================================
 # Routes
 # =========================================================
@@ -169,10 +215,19 @@ def health():
     return {"ok": True}
 
 
+# compat: você estava testando /ai/status e recebia 404
+@app.get("/ai/status")
+def ai_status():
+    return JSONResponse(status_code=404, content={"ok": False, "error": "deprecated: use /ai/index-status"})
+
+
 @app.get("/ai/index-status")
 def index_status():
+    """
+    IMPORTANTE: NÃO inicializa EmbeddingIndex aqui.
+    Esse endpoint deve ser "leve" e não pode puxar modelo/pesos.
+    """
     _ensure_dirs()
-    emb = _init_indexes_if_needed()
 
     visual_exists = os.path.exists(VISUAL_INDEX_PATH)
     visual_bytes = os.path.getsize(VISUAL_INDEX_PATH) if visual_exists else 0
@@ -201,7 +256,8 @@ def index_status():
         "visual_index_path": VISUAL_INDEX_PATH,
         "visual_index_exists": visual_exists,
         "visual_index_bytes": visual_bytes,
-        "visual_index_loaded": bool(getattr(emb, "items", None) is not None),
+        # "loaded" aqui significa apenas: o app já inicializou o objeto em memória
+        "visual_index_loaded": bool(_emb_index is not None),
         "hash_index_path": HASH_INDEX_PATH,
         "hash_index_exists": hash_exists,
         "hash_index_loaded": hash_loaded,
@@ -221,29 +277,75 @@ def reindex():
     """
     Reconstrói o índice visual (embeddings) usando apenas data/<dish>/*.jpg
     (ignora data/candidates)
+
+    BLINDAGEM:
+    - fast-path quando não há imagens
+    - try/except para não derrubar o processo por exceção Python
+    - logs úteis para Render
     """
     _ensure_dirs()
     _build_hash_index_stub()
 
-    emb = _init_indexes_if_needed()
+    try:
+        total_images = _count_images_in_data()
+        total_dishes = len(_dish_dirs())
 
-    # rebuild limpo
-    emb.items = []
-    emb.matrix = None
+        log.info(f"REINDEX start | dishes={total_dishes} | images={total_images} | data_dir={DATA_DIR}")
 
-    # Blindagem: indexa apenas pastas de prato
-    for dish in _dish_dirs():
-        dish_path = os.path.join(DATA_DIR, dish)
-        emb.build_from_folder(dish_path)
+        # FAST PATH: sem imagens -> não roda pipeline pesado
+        if total_images == 0:
+            ok_empty = _safe_write_empty_visual_index()
+            log.info(f"REINDEX fast-path (no images) | wrote_empty_visual={ok_empty}")
+            return {
+                "ok": True,
+                "mode": RECO_MODE,
+                "fast_path": True,
+                "reason": "no_images_in_data_dir",
+                "visual_index_path": VISUAL_INDEX_PATH,
+                "visual_index_images": 0,
+                "dishes": total_dishes,
+                "images": 0,
+                "ts": _now_ts(),
+            }
 
-    return {
-        "ok": True,
-        "mode": RECO_MODE,
-        "visual_index_path": VISUAL_INDEX_PATH,
-        "visual_index_images": len(emb.items),
-        "dishes": len(_dish_dirs()),
-        "ts": _now_ts(),
-    }
+        emb = _init_indexes_if_needed()
+
+        # rebuild limpo
+        emb.items = []
+        emb.matrix = None
+
+        # Blindagem: indexa apenas pastas de prato
+        for dish in _dish_dirs():
+            dish_path = os.path.join(DATA_DIR, dish)
+            log.info(f"REINDEX dish={dish} path={dish_path}")
+            emb.build_from_folder(dish_path)
+
+        log.info(f"REINDEX done | indexed_images={len(getattr(emb, 'items', []) or [])}")
+
+        return {
+            "ok": True,
+            "mode": RECO_MODE,
+            "fast_path": False,
+            "visual_index_path": VISUAL_INDEX_PATH,
+            "visual_index_images": len(emb.items) if getattr(emb, "items", None) is not None else 0,
+            "dishes": total_dishes,
+            "images": total_images,
+            "ts": _now_ts(),
+        }
+
+    except Exception as e:
+        # Isso impede 502 por exceção Python não tratada (quando NÃO é OOM/SIGKILL)
+        tb = traceback.format_exc()
+        log.error(f"REINDEX error: {e}\n{tb}")
+        return JSONResponse(
+            status_code=500,
+            content={
+                "ok": False,
+                "error": str(e),
+                "where": "reindex",
+                "ts": _now_ts(),
+            },
+        )
 
 
 @app.post("/ai/identify-image")
@@ -264,10 +366,8 @@ async def identify_image(file: UploadFile = File(...)):
     jpeg_bytes = _read_upload_as_jpeg_bytes(file)
     sha16 = _sha256_16(jpeg_bytes)
 
-    # request_id ajuda a depurar “efeito memória”
     request_id = f"{int(_now_ts())}_{sha16}"
 
-    # Temp em /tmp (não polui candidates)
     tmp_path = None
     try:
         fd, tmp_path = tempfile.mkstemp(prefix=f"soulnutri_{sha16}_", suffix=".jpg")
@@ -317,7 +417,7 @@ async def identify_image(file: UploadFile = File(...)):
         },
         "identified": identified,
         "dish": best_dish if identified else None,
-        "suggested_dish": best_dish,  # sempre sugere o melhor, mesmo quando não é "alta"
+        "suggested_dish": best_dish,
         "confidence": float(best_score),
         "level": level,
         "matches": [{"dish": d, "score": float(s), "level": confidence_level(float(s))} for d, s in results],
@@ -411,7 +511,6 @@ def candidates_list(limit: int = Query(50, ge=1, le=500)):
 def candidates_download(file: str = Query(..., min_length=1, max_length=200)):
     _ensure_dirs()
 
-    # proteção básica de path traversal
     file = os.path.basename(file)
     p = os.path.join(CANDIDATES_DIR, file)
     if not os.path.exists(p):
