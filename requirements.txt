@@ -1,21 +1,25 @@
-# SoulNutri AI Server - requirements (Render)
-
-# NUNCA use --index-url do PyTorch, senão FastAPI/uvicorn não existem.
-# Se precisar do torch CPU, use extra-index-url.
+# SoulNutri AI Server - requirements.txt
+# IMPORTANTE:
+# - Mantém PyPI como índice principal
+# - Adiciona PyTorch CPU wheels como "extra index" (não quebra FastAPI)
 --extra-index-url https://download.pytorch.org/whl/cpu
 
 fastapi==0.110.0
 uvicorn[standard]==0.27.1
 python-multipart==0.0.9
+
 pillow==10.2.0
-
 numpy==1.26.4
-tqdm==4.66.2
 
-# stack do modelo (CPU)
+# OpenCV (no Render, use headless)
+opencv-python-headless==4.10.0.84
+
+# Torch CPU
 torch==2.2.2
 torchvision==0.17.2
 
-# modelos e utilitários (usados no emb_index refatorado)
+# OpenCLIP (fornece o módulo "open_clip")
 open-clip-torch==2.24.0
-timm==0.9.16
+
+# Utilitários
+requests==2.31.0
