@@ -1,59 +1,31 @@
-# =====================================================
-# FORCE PYTORCH CPU (CRITICAL FOR RENDER)
-# =====================================================
---index-url https://download.pytorch.org/whl/cpu
+# ===============================
+# Índices de instalação (CRÍTICO)
+# ===============================
+--index-url https://pypi.org/simple
+--extra-index-url https://download.pytorch.org/whl/cpu
 
-# =========================
-# Core API
-# =========================
+# ===============================
+# Framework web
+# ===============================
 fastapi==0.110.0
-uvicorn==0.29.0
+uvicorn==0.27.1
+
+# ===============================
+# Utilidades
+# ===============================
 python-multipart==0.0.9
-
-# =========================
-# Machine Learning (CPU ONLY)
-# =========================
-torch==2.2.2
-torchvision==0.17.2
-
-# =========================
-# OpenCLIP (visual embeddings)
-# =========================
-open-clip-torch==2.24.0
-timm==1.0.22
-
-# =========================
-# Image / CV
-# =========================
-opencv-python-headless==4.9.0.80
 pillow==10.2.0
 
-# =========================
-# Data / Utils
-# =========================
+# ===============================
+# Machine Learning / Visão
+# ===============================
+torch==2.2.0
+torchvision==0.17.0
+timm==0.9.12
 numpy==1.26.4
-scikit-learn==1.4.1.post1
-scipy==1.16.3
-joblib==1.5.3
-tqdm==4.66.2
+scikit-learn==1.4.0
 
-# =========================
-# HTTP / Async
-# =========================
-httpx==0.28.1
-anyio==4.12.0
-
-# =========================
-# Text / Tokenization (CLIP)
-# =========================
-ftfy==6.3.1
-regex==2025.11.3
-sentencepiece==0.2.1
-
-# =========================
-# Config / Validation
-# =========================
-pydantic==2.12.5
-pydantic-core==2.41.5
-typing-extensions==4.15.0
-pyyaml==6.0.3
+# ===============================
+# Outros (se usados no projeto)
+# ===============================
+requests==2.31.0
