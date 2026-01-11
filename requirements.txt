@@ -1,31 +1,24 @@
-# ===============================
-# Índices de instalação (CRÍTICO)
-# ===============================
---index-url https://pypi.org/simple
---extra-index-url https://download.pytorch.org/whl/cpu
-
-# ===============================
-# Framework web
-# ===============================
+# Web
 fastapi==0.110.0
-uvicorn==0.27.1
+uvicorn[standard]==0.27.1
 
-# ===============================
-# Utilidades
-# ===============================
-python-multipart==0.0.9
+# Imagem
 pillow==10.2.0
 
-# ===============================
-# Machine Learning / Visão
-# ===============================
-torch==2.2.0
-torchvision==0.17.0
-timm==0.9.12
+# Numpy
 numpy==1.26.4
-scikit-learn==1.4.0
 
-# ===============================
-# Outros (se usados no projeto)
-# ===============================
+# Torch CPU (Render)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2
+torchvision==0.17.2
+
+# CLIP fallback (OpenAI)
+git+https://github.com/openai/CLIP.git
+
+# OpenCLIP (preferido)  -> o import no código é "open_clip"
+open-clip-torch==2.24.0
+
+# Utils
 requests==2.31.0
+python-multipart==0.0.9
