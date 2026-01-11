@@ -6,15 +6,19 @@ services:
     region: oregon
 
     buildCommand: |
-      pip install --upgrade pip
-      pip install -r requirements.txt
+      python -m pip install --upgrade pip
+      python -m pip install -r requirements.txt
 
     startCommand: |
-      uvicorn main:app --host 0.0.0.0 --port 10000
+      python -m uvicorn main:app --host 0.0.0.0 --port $PORT
 
     envVars:
       - key: PYTHONUNBUFFERED
         value: "1"
+
+      # opcional, mas ajuda a "travar" a versão que você já viu no log do Render
+      - key: PYTHON_VERSION
+        value: "3.11.8"
 
       # força modo embeddings (Servidor B)
       - key: RECO_MODE
