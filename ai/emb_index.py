@@ -1,59 +1,68 @@
 import os
 import json
-from typing import List, Tuple, Optional
-
 import numpy as np
+import torch
+from typing import Optional, List, Tuple
 from PIL import Image
 
-import torch
+# =========================
+# Embedding Index
+# =========================
 
+class EmbIndex:
+    def __init__(
+        self,
+        data_dir: str = "data",
+        index_filename: str = "emb_index.json",
+        device: Optional[str] = None,
+    ):
+        # Diretório base de dados
+        self.data_dir = data_dir
 
-class EmbeddingIndex:
-    """
-    Índice simples de embeddings com blindagem total:
-    - NÃO faz import de open_clip no topo do arquivo.
-    - Tenta open_clip dentro do método _init_backend().
-    - Se falhar, backend fica NONE e o servidor NÃO cai.
-    """
+        # Normalização do caminho do índice (SEMPRE arquivo, nunca diretório)
+        if not index_filename:
+            index_filename = "emb_index.json"
 
-    def __init__(self, index_path: str):
-        self.index_path = index_path
+        self.index_path = os.path.join(self.data_dir, index_filename)
 
-        # [(dish_slug, img_path)]
+        # Estruturas em memória
         self.items: List[Tuple[str, str]] = []
-        # np.ndarray shape (N, D)
         self.matrix: Optional[np.ndarray] = None
 
-        self._device = "cpu"
-        self._backend = None  # "open_clip" | None
+        # Device
+        if device:
+            self._device = device
+        else:
+            self._device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        # Backend de embeddings
+        self._backend = None
         self._model = None
         self._preprocess = None
 
+        # Inicialização
         self._init_backend()
         self._load_index_if_exists()
 
     # -----------------------------
-    # Backend init (SAFE)
+    # Backend (OpenCLIP)
     # -----------------------------
     def _init_backend(self):
-        """
-        Nunca derruba o servidor.
-        Se open_clip não existir, só desliga o reconhecimento por imagem.
-        """
         try:
-            import open_clip  # <- IMPORT SOMENTE AQUI (nunca no topo)
+            import open_clip
 
             model, _, preprocess = open_clip.create_model_and_transforms(
                 "ViT-B-32",
-                pretrained="laion2b_s34b_b79k",
-                device=self._device,
+                pretrained="openai"
             )
+            model = model.to(self._device)
             model.eval()
 
             self._backend = "open_clip"
             self._model = model
             self._preprocess = preprocess
             print("[emb] backend=open_clip OK")
+
         except Exception as e:
             self._backend = None
             self._model = None
@@ -64,27 +73,48 @@ class EmbeddingIndex:
     # Index persistence
     # -----------------------------
     def _load_index_if_exists(self):
+        # Se não existir, nada a fazer
+        if not self.index_path:
+            return
         if not os.path.exists(self.index_path):
             return
+        # Blindagem: nunca tentar abrir diretório
+        if os.path.isdir(self.index_path):
+            print(f"[emb] index_path is a directory, skipping load: {self.index_path!r}")
+            return
+
         try:
             with open(self.index_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
+
             self.items = [(x["dish"], x["path"]) for x in data.get("items", [])]
-            mat = data.get("matrix", None)
+
+            mat = data.get("matrix")
             if mat is not None:
                 self.matrix = np.array(mat, dtype=np.float32)
+
             print(f"[emb] loaded index: items={len(self.items)}")
+
         except Exception as e:
             print(f"[emb] failed to load index: {e}")
 
     def _save_index(self):
+        # Blindagem: não salva se path inválido
+        if not self.index_path or os.path.isdir(self.index_path):
+            print(f"[emb] index_path invalid for save: {self.index_path!r}")
+            return
+
         payload = {
             "items": [{"dish": d, "path": p} for (d, p) in self.items],
             "matrix": self.matrix.tolist() if self.matrix is not None else None,
         }
+
         os.makedirs(os.path.dirname(self.index_path), exist_ok=True)
+
         with open(self.index_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False)
+
+        print(f"[emb] index saved: {self.index_path}")
 
     # -----------------------------
     # Embeddings
@@ -117,34 +147,17 @@ class EmbeddingIndex:
 
             img_path = os.path.join(dish_folder, fn)
             vec = self._embed_image(img_path)
-
-            # Se backend está NONE, não indexa — mas NÃO quebra.
             if vec is None:
                 continue
 
-            self.items.append((dish_slug, img_path))
             if self.matrix is None:
                 self.matrix = vec.reshape(1, -1)
             else:
-                self.matrix = np.vstack([self.matrix, vec.reshape(1, -1)])
+                self.matrix = np.vstack([self.matrix, vec])
+
+            self.items.append((dish_slug, img_path))
 
         self._save_index()
 
-    def search(self, img_path: str, top_k: int = 5) -> List[Tuple[str, float]]:
-        if self._backend is None:
-            return []
-        if self.matrix is None or len(self.items) == 0:
-            return []
-
-        q = self._embed_image(img_path)
-        if q is None:
-            return []
-
-        sims = (self.matrix @ q.reshape(-1, 1)).reshape(-1)
-        idx = np.argsort(-sims)[: max(1, top_k)]
-
-        out: List[Tuple[str, float]] = []
-        for i in idx:
-            dish_slug, _p = self.items[int(i)]
-            out.append((dish_slug, float(sims[int(i)])))
-        return out
+    def is_ready(self) -> bool:
+        return self.matrix is not None and len(self.items) > 0
