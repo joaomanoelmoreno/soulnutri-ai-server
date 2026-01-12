@@ -1,21 +1,13 @@
-cat > main.py <<'PY'
 import os
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 
-from ai.emb_index import EmbIndex
-from ai.policy import normalize_slug  # se você não tiver isso, me avise e eu ajusto
-
-
 APP_NAME = "SoulNutri AI Server"
 
-# Diretório de dados (em produção, ideal usar volume persistente)
+# Render costuma passar PORT no start command; DATA_DIR pode ser ajustado por env
 DATA_DIR = os.getenv("DATA_DIR", "data")
 
 app = FastAPI(title=APP_NAME)
-
-# Índice por embeddings (carrega leve no startup; modelo é lazy)
-emb_index = EmbIndex(data_dir=DATA_DIR)
 
 
 @app.get("/health")
@@ -25,33 +17,53 @@ def health():
 
 @app.get("/ai/status")
 def ai_status():
+    """
+    Status leve e seguro para Render (512Mi).
+    Não carrega modelo pesado aqui.
+    """
+    disabled = os.getenv("SOULNUTRI_EMB_DISABLED", "").strip().lower() in ("1", "true", "yes", "on")
+
+    # Tentativa segura de verificar se EmbIndex existe sem derrubar o server
+    emb_ok = False
+    try:
+        from ai.emb_index import EmbIndex  # noqa: F401
+        emb_ok = True
+    except Exception:
+        emb_ok = False
+
     return {
         "ok": True,
         "service": APP_NAME,
         "mode": os.getenv("MODE", "render"),
         "data_dir": DATA_DIR,
-        "embeddings_enabled": (os.getenv("SOULNUTRI_EMB_DISABLED", "").strip().lower() not in ("1", "true", "yes", "on")),
-        "index_path": getattr(emb_index, "index_path", None),
-        "items": len(getattr(emb_index, "items", []) or []),
-        "has_matrix": getattr(emb_index, "matrix", None) is not None,
+        "embeddings_disabled": disabled,
+        "emb_module_import_ok": emb_ok,
     }
 
 
 @app.post("/ai/reindex")
 def reindex():
     """
-    Reindex por embeddings pode consumir muita RAM/CPU.
-    Em Render 512Mi, recomenda-se manter SOULNUTRI_EMB_DISABLED=1
-    e fazer reindex fora (local ou instância maior).
+    Reindex pode consumir RAM/CPU. No Render 512Mi, mantenha embeddings desabilitados.
     """
+    disabled = os.getenv("SOULNUTRI_EMB_DISABLED", "").strip().lower() in ("1", "true", "yes", "on")
+    if disabled:
+        return JSONResponse(
+            status_code=400,
+            content={"ok": False, "error": "Embeddings desabilitados (SOULNUTRI_EMB_DISABLED=1). Reindex deve rodar fora do Render 512Mi."},
+        )
+
     try:
+        from ai.emb_index import EmbIndex
+
         if not os.path.isdir(DATA_DIR):
             return JSONResponse(
                 status_code=400,
                 content={"ok": False, "error": f"DATA_DIR not found or not a directory: {DATA_DIR}"},
             )
 
-        # percorre subpastas (cada prato = uma pasta)
+        emb_index = EmbIndex(data_dir=DATA_DIR)
+
         count_folders = 0
         for name in sorted(os.listdir(DATA_DIR)):
             p = os.path.join(DATA_DIR, name)
@@ -59,7 +71,8 @@ def reindex():
                 count_folders += 1
                 emb_index.build_from_folder(p)
 
-        return {"ok": True, "indexed_folders": count_folders, "items": len(emb_index.items)}
+        items = getattr(emb_index, "items", None)
+        return {"ok": True, "indexed_folders": count_folders, "items": len(items) if items else 0}
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
@@ -68,12 +81,10 @@ def reindex():
 @app.post("/ai/identify-image")
 async def identify_image(file: UploadFile = File(...)):
     """
-    Endpoint placeholder: depende da sua lógica de match.
-    Mantido aqui para não quebrar integração.
+    Endpoint mínimo para manter o serviço vivo e testável.
+    (Reconhecimento completo a gente liga depois, com RAM adequada ou pipeline separado.)
     """
     try:
-        # Sem matcher aqui (porque seu projeto pode ter outra lógica).
-        # Retorna apenas metadados para confirmar upload funcionando.
         content = await file.read()
         return {
             "ok": True,
@@ -89,4 +100,3 @@ async def identify_image(file: UploadFile = File(...)):
         }
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
-PY
