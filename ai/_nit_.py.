@@ -1,9 +1,0 @@
-"""
-SoulNutri AI - Módulo de Inteligência Artificial
-Servidor B - Embeddings + Similaridade
-
-Este pacote contém:
-- policy: regras de decisão
-- embedder: geração de embeddings CLIP
-- emb_index: indexação vetorial e busca
-"""
