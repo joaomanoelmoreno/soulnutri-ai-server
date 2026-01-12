@@ -2,3 +2,7 @@
 .venv/
 
 data/hash_index.json
+
+# SoulNutri local data
+/data/
+**/.DS_Store
