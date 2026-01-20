@@ -62,6 +62,12 @@ app.add_middleware(
 # MODELS
 # =====================
 
+class NutritionInfo(BaseModel):
+    calorias: str
+    proteinas: str
+    carboidratos: str
+    gorduras: str
+
 class IdentifyResponse(BaseModel):
     ok: bool
     identified: bool
@@ -70,6 +76,9 @@ class IdentifyResponse(BaseModel):
     confidence: str
     score: float
     message: str
+    category: Optional[str] = None
+    category_emoji: Optional[str] = None
+    nutrition: Optional[NutritionInfo] = None
     alternatives: List[str] = []
     search_time_ms: Optional[float] = None
 
