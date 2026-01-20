@@ -241,6 +241,10 @@ async def identify_image(file: UploadFile = File(...)):
             category=decision.get('category'),
             category_emoji=decision.get('category_emoji'),
             nutrition=nutrition_obj,
+            descricao=decision.get('descricao'),
+            ingredientes=decision.get('ingredientes'),
+            beneficios=decision.get('beneficios'),
+            riscos=decision.get('riscos'),
             alternatives=decision.get('alternatives', []),
             search_time_ms=round(elapsed_ms, 2)
         )
