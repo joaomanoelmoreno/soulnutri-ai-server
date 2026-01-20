@@ -286,6 +286,11 @@ DISH_INFO = {
 }
 
 
+def get_dish_info(slug: str) -> dict:
+    """Retorna informações completas do prato"""
+    return DISH_INFO.get(slug, DISH_INFO['default'])
+
+
 def get_dish_name(slug: str) -> str:
     """Retorna o nome correto do prato"""
     return DISH_NAMES.get(slug, format_dish_name_fallback(slug))
