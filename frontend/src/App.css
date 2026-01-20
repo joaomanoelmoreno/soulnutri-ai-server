@@ -32,10 +32,12 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .res h2{font-size:1.5rem;margin-bottom:8px}
 .desc{color:#aaa;font-size:.85rem;margin-bottom:12px;line-height:1.4}
 
-.nutr{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
-.nutr div{background:rgba(0,0,0,.3);padding:8px 4px;border-radius:8px;text-align:center}
-.nutr b{display:block;font-size:.8rem;color:#0cf}
-.nutr small{font-size:.6rem;color:#666}
+.nutr{margin-bottom:12px}
+.nutr-title{font-size:.7rem;color:#888;text-align:center;margin-bottom:6px;text-transform:uppercase}
+.nutr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.nutr-grid div{background:rgba(0,0,0,.3);padding:8px 4px;border-radius:8px;text-align:center}
+.nutr-grid b{display:block;font-size:.8rem;color:#0cf}
+.nutr-grid small{font-size:.6rem;color:#666}
 
 .info-box{background:rgba(255,255,255,.03);padding:10px;border-radius:8px;margin-bottom:8px}
 .info-box h4{font-size:.75rem;margin-bottom:6px;color:#888}
