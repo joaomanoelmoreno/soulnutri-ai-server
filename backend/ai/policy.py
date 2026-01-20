@@ -385,6 +385,9 @@ def analyze_result(results: List[Dict]) -> Dict:
     category = get_category(dish)
     category_emoji = get_category_emoji(category)
     
+    # Informações do prato
+    dish_info = get_dish_info(dish)
+    
     # Informações nutricionais
     nutrition_type = get_nutrition_type(dish)
     nutrition = DISH_NUTRITION.get(nutrition_type, DISH_NUTRITION['default'])
