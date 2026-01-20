@@ -79,6 +79,10 @@ class IdentifyResponse(BaseModel):
     category: Optional[str] = None
     category_emoji: Optional[str] = None
     nutrition: Optional[NutritionInfo] = None
+    descricao: Optional[str] = None
+    ingredientes: Optional[List[str]] = None
+    beneficios: Optional[List[str]] = None
+    riscos: Optional[List[str]] = None
     alternatives: List[str] = []
     search_time_ms: Optional[float] = None
 
