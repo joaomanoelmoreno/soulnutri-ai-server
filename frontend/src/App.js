@@ -104,10 +104,13 @@ function App() {
           
           {r.nutrition && (
             <div className="nutr">
-              <div><b>{r.nutrition.calorias}</b><small>Calorias</small></div>
-              <div><b>{r.nutrition.proteinas}</b><small>Proteínas</small></div>
-              <div><b>{r.nutrition.carboidratos}</b><small>Carbos</small></div>
-              <div><b>{r.nutrition.gorduras}</b><small>Gorduras</small></div>
+              <div className="nutr-title">Informação Nutricional (100g)</div>
+              <div className="nutr-grid">
+                <div><b>{r.nutrition.calorias}</b><small>Calorias</small></div>
+                <div><b>{r.nutrition.proteinas}</b><small>Proteínas</small></div>
+                <div><b>{r.nutrition.carboidratos}</b><small>Carbos</small></div>
+                <div><b>{r.nutrition.gorduras}</b><small>Gorduras</small></div>
+              </div>
             </div>
           )}
 
