@@ -44,8 +44,13 @@ def analyze_result(results: List[Dict]) -> Dict:
     if len(results) > 1:
         gap = score - results[1].get('score', 0)
     
+    # REGRA CRÍTICA: Se gap é pequeno, confiança não pode ser alta
+    # Isso evita dizer "alta confiança" quando pode estar errado
+    if gap < 0.15:
+        confidence = 'média' if score >= 0.50 else 'baixa'
+    
     # Decisão baseada em confiança e gap
-    if confidence == 'alta' and gap >= 0.1:
+    if confidence == 'alta' and gap >= 0.15:
         # Alta confiança com boa margem
         return {
             'identified': True,
