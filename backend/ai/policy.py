@@ -233,6 +233,58 @@ DISH_NUTRITION = {
     'sobremesa': {'calorias': '200 kcal', 'proteinas': '3g', 'carboidratos': '35g', 'gorduras': '6g'},
 }
 
+# Descrição, ingredientes, benefícios e riscos dos pratos
+DISH_INFO = {
+    'baiaodedois': {
+        'descricao': 'Prato típico nordestino com arroz e feijão-de-corda cozidos juntos',
+        'ingredientes': ['arroz', 'feijão-de-corda', 'bacon', 'queijo coalho', 'manteiga', 'temperos'],
+        'beneficios': ['Rico em proteínas', 'Fonte de fibras', 'Energia de longa duração'],
+        'riscos': ['Alto teor de sódio', 'Contém lactose (queijo)', 'Gordura saturada (bacon)']
+    },
+    'espaguete': {
+        'descricao': 'Massa italiana longa servida com molho',
+        'ingredientes': ['massa de trigo', 'molho de tomate', 'azeite', 'alho', 'manjericão'],
+        'beneficios': ['Fonte de carboidratos', 'Energia rápida', 'Baixo teor de gordura'],
+        'riscos': ['Contém glúten', 'Alto índice glicêmico']
+    },
+    'feijaocariocasemcarne': {
+        'descricao': 'Feijão carioca cozido em caldo temperado, versão vegetariana',
+        'ingredientes': ['feijão carioca', 'alho', 'cebola', 'louro', 'sal'],
+        'beneficios': ['Rico em fibras', 'Proteína vegetal', 'Fonte de ferro', 'Baixa gordura'],
+        'riscos': ['Pode causar gases', 'Moderado em carboidratos']
+    },
+    'aboboraaocurry': {
+        'descricao': 'Abóbora cozida com especiarias indianas em molho cremoso',
+        'ingredientes': ['abóbora', 'curry', 'leite de coco', 'gengibre', 'cúrcuma'],
+        'beneficios': ['Rico em betacaroteno', 'Antioxidantes', 'Anti-inflamatório', 'Baixa caloria'],
+        'riscos': ['Pode conter leite de coco (alérgenos)']
+    },
+    'filedepeixeaomolhodelimao': {
+        'descricao': 'Filé de peixe branco grelhado com molho cítrico de limão',
+        'ingredientes': ['peixe branco', 'limão', 'manteiga', 'alcaparras', 'salsinha'],
+        'beneficios': ['Rico em ômega-3', 'Proteína magra', 'Baixa caloria', 'Bom para coração'],
+        'riscos': ['Contém lactose (manteiga)', 'Alérgeno: peixe']
+    },
+    'maminhaaomolhomostarda': {
+        'descricao': 'Corte bovino nobre assado com molho de mostarda',
+        'ingredientes': ['maminha bovina', 'mostarda', 'creme de leite', 'vinho branco'],
+        'beneficios': ['Alto teor proteico', 'Rico em ferro e zinco', 'Vitaminas do complexo B'],
+        'riscos': ['Gordura saturada', 'Contém lactose', 'Alto colesterol']
+    },
+    'brocolisgratinado': {
+        'descricao': 'Brócolis ao forno com queijo gratinado',
+        'ingredientes': ['brócolis', 'queijo mussarela', 'creme de leite', 'parmesão'],
+        'beneficios': ['Rico em vitamina C', 'Fibras', 'Cálcio do queijo', 'Antioxidantes'],
+        'riscos': ['Contém lactose', 'Gordura do queijo']
+    },
+    'default': {
+        'descricao': 'Prato preparado com ingredientes frescos',
+        'ingredientes': ['Ingredientes variados conforme preparo'],
+        'beneficios': ['Verifique informações com o atendente'],
+        'riscos': ['Consulte sobre alérgenos específicos']
+    }
+}
+
 
 def get_dish_name(slug: str) -> str:
     """Retorna o nome correto do prato"""
