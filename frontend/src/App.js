@@ -10,18 +10,51 @@ function App() {
   const [status, setStatus] = useState(null);
   const [stream, setStream] = useState(null);
   const [autoCapture, setAutoCapture] = useState(false);
+  const [countdown, setCountdown] = useState(0);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
+  const autoIntervalRef = useRef(null);
+  const countdownIntervalRef = useRef(null);
 
-  useEffect(() => { checkStatus(); startCamera(); return () => stopCamera(); }, []);
+  useEffect(() => { 
+    checkStatus(); 
+    startCamera(); 
+    return () => {
+      stopCamera();
+      clearAllIntervals();
+    };
+  }, []);
 
+  const clearAllIntervals = () => {
+    if (autoIntervalRef.current) clearInterval(autoIntervalRef.current);
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+  };
+
+  // Gerenciar auto-captura com countdown visual
   useEffect(() => {
-    let interval;
-    if (autoCapture && stream) {
-      interval = setInterval(captureAndIdentify, 3000);
+    clearAllIntervals();
+    
+    if (autoCapture && stream && !loading) {
+      // Iniciar countdown
+      setCountdown(3);
+      
+      countdownIntervalRef.current = setInterval(() => {
+        setCountdown(prev => {
+          if (prev <= 1) return 3;
+          return prev - 1;
+        });
+      }, 1000);
+
+      // Captura a cada 3 segundos
+      autoIntervalRef.current = setInterval(() => {
+        captureAndIdentify();
+      }, 3000);
+    } else {
+      setCountdown(0);
     }
-    return () => clearInterval(interval);
+
+    return () => clearAllIntervals();
   }, [autoCapture, stream]);
 
   const checkStatus = async () => {
@@ -33,7 +66,9 @@ function App() {
 
   const startCamera = async () => {
     try {
-      const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      const s = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
+      });
       setStream(s);
       if (videoRef.current) videoRef.current.srcObject = s;
     } catch { console.error("Câmera não disponível"); }
@@ -43,26 +78,64 @@ function App() {
 
   const captureAndIdentify = useCallback(async () => {
     if (!videoRef.current || !canvasRef.current || loading) return;
+    
+    // LIMPAR resultado anterior antes de nova busca
+    setResult(null);
+    
     const v = videoRef.current, c = canvasRef.current;
-    c.width = v.videoWidth; c.height = v.videoHeight;
+    c.width = v.videoWidth; 
+    c.height = v.videoHeight;
     c.getContext('2d').drawImage(v, 0, 0);
-    c.toBlob(b => b && identifyImage(b), 'image/jpeg', 0.8);
+    c.toBlob(b => b && identifyImage(b), 'image/jpeg', 0.85);
   }, [loading]);
 
   const identifyImage = async (blob) => {
     setLoading(true);
-    const fd = new FormData(); fd.append("file", blob, "photo.jpg");
+    // LIMPAR resultado anterior
+    setResult(null);
+    
+    const fd = new FormData(); 
+    fd.append("file", blob, "photo.jpg");
+    
     try {
       const t = Date.now();
       const res = await fetch(`${API}/ai/identify`, { method: "POST", body: fd });
       const data = await res.json();
       setResult({ ...data, totalTime: Date.now() - t });
-    } catch (e) { setResult({ ok: false, message: e.message }); }
-    finally { setLoading(false); }
+    } catch (e) { 
+      setResult({ ok: false, message: e.message }); 
+    } finally { 
+      setLoading(false); 
+    }
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Desativar auto-captura ao selecionar da galeria
+      setAutoCapture(false);
+      identifyImage(file);
+    }
+  };
+
+  const toggleAutoCapture = (enabled) => {
+    setAutoCapture(enabled);
+    if (enabled) {
+      // Limpar resultado ao ativar auto
+      setResult(null);
+    }
   };
 
   const r = result;
-  const confColor = { alta: "#10b981", média: "#f59e0b", baixa: "#ef4444" }[r?.confidence] || "#666";
+  
+  // Cores e labels de confiança
+  const confidenceConfig = {
+    alta: { color: "#10b981", label: "ALTA CONFIANÇA", bg: "rgba(16,185,129,0.15)" },
+    média: { color: "#f59e0b", label: "MÉDIA CONFIANÇA", bg: "rgba(245,158,11,0.15)" },
+    baixa: { color: "#ef4444", label: "BAIXA CONFIANÇA", bg: "rgba(239,68,68,0.15)" }
+  };
+  
+  const confData = confidenceConfig[r?.confidence] || confidenceConfig.baixa;
   const catColor = { vegano: "#22c55e", vegetariano: "#84cc16", "proteína animal": "#f97316" }[r?.category] || "#666";
 
   return (
@@ -76,34 +149,96 @@ function App() {
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
         <div className="cam-ctrl">
-          <button className="cap-btn" onClick={captureAndIdentify} disabled={loading}>
+          <button 
+            className="cap-btn" 
+            onClick={captureAndIdentify} 
+            disabled={loading}
+            data-testid="capture-button"
+          >
             {loading ? "⏳" : "📸"}
           </button>
           <label className="auto-lbl">
-            <input type="checkbox" checked={autoCapture} onChange={e => setAutoCapture(e.target.checked)} />
-            Auto 3s
+            <input 
+              type="checkbox" 
+              checked={autoCapture} 
+              onChange={e => toggleAutoCapture(e.target.checked)}
+              data-testid="auto-capture-toggle" 
+            />
+            Auto {autoCapture && countdown > 0 ? `(${countdown}s)` : "3s"}
           </label>
         </div>
       </div>
 
-      <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={e => e.target.files[0] && identifyImage(e.target.files[0])} />
-      <button className="gal-btn" onClick={() => fileInputRef.current?.click()}>🖼️ Galeria</button>
+      <input 
+        ref={fileInputRef} 
+        type="file" 
+        accept="image/*" 
+        hidden 
+        onChange={handleFileSelect} 
+      />
+      <button 
+        className="gal-btn" 
+        onClick={() => fileInputRef.current?.click()}
+        data-testid="gallery-button"
+      >
+        🖼️ Galeria
+      </button>
 
-      {loading && <div className="load"><span>🔍</span></div>}
+      {loading && (
+        <div className="load">
+          <span>🔍</span>
+        </div>
+      )}
 
       {r?.ok && (
-        <div className={`res ${r.confidence}`}>
+        <div className={`res ${r.confidence}`} data-testid="result-container">
+          {/* Indicador de Confiança */}
+          <div className="conf-indicator" style={{ background: confData.bg, borderColor: confData.color }}>
+            <span className="conf-label" style={{ color: confData.color }}>
+              {confData.label}
+            </span>
+            <span className="conf-score" style={{ color: confData.color }}>
+              {(r.score * 100).toFixed(0)}%
+            </span>
+          </div>
+
           <div className="res-top">
-            <span className="cat" style={{background: catColor}}>{r.category_emoji} {r.category}</span>
-            <span className="conf" style={{background: confColor}}>{(r.score*100).toFixed(0)}%</span>
+            <span className="cat" style={{background: catColor}} data-testid="category-badge">
+              {r.category_emoji} {r.category}
+            </span>
           </div>
           
-          <h2>{r.dish_display}</h2>
+          <h2 data-testid="dish-name">{r.dish_display}</h2>
           
-          {r.descricao && <p className="desc">{r.descricao}</p>}
-          
+          {r.descricao && <p className="desc" data-testid="dish-description">{r.descricao}</p>}
+
+          {/* Ingredientes */}
+          {r.ingredientes?.length > 0 && (
+            <div className="info-box" data-testid="ingredients-box">
+              <h4>🥗 Ingredientes</h4>
+              <p>{Array.isArray(r.ingredientes) ? r.ingredientes.join(', ') : r.ingredientes}</p>
+            </div>
+          )}
+
+          {/* Benefícios */}
+          {r.beneficios?.length > 0 && (
+            <div className="info-box good" data-testid="benefits-box">
+              <h4>✅ Benefícios</h4>
+              <ul>{r.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
+            </div>
+          )}
+
+          {/* Riscos/Atenção */}
+          {r.riscos?.length > 0 && (
+            <div className="info-box warn" data-testid="risks-box">
+              <h4>⚠️ Atenção (Alérgenos e Riscos)</h4>
+              <ul>{r.riscos.map((x,i) => <li key={i}>{x}</li>)}</ul>
+            </div>
+          )}
+
+          {/* Informação Nutricional - por último */}
           {r.nutrition && (
-            <div className="nutr">
+            <div className="nutr" data-testid="nutrition-box">
               <div className="nutr-title">Informação Nutricional (100g)</div>
               <div className="nutr-grid">
                 <div><b>{r.nutrition.calorias}</b><small>Calorias</small></div>
@@ -114,31 +249,10 @@ function App() {
             </div>
           )}
 
-          {r.ingredientes?.length > 0 && (
-            <div className="info-box">
-              <h4>🥗 Ingredientes</h4>
-              <p>{r.ingredientes.join(', ')}</p>
-            </div>
-          )}
-
-          {r.beneficios?.length > 0 && (
-            <div className="info-box good">
-              <h4>✅ Benefícios</h4>
-              <ul>{r.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
-            </div>
-          )}
-
-          {r.riscos?.length > 0 && (
-            <div className="info-box warn">
-              <h4>⚠️ Atenção</h4>
-              <ul>{r.riscos.map((x,i) => <li key={i}>{x}</li>)}</ul>
-            </div>
-          )}
-
-          <div className="time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
+          <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
 
           {r.alternatives?.length > 0 && (
-            <div className="alts">
+            <div className="alts" data-testid="alternatives-box">
               <small>Também pode ser:</small>
               {r.alternatives.map((a,i) => <span key={i}>{a}</span>)}
             </div>
@@ -146,8 +260,13 @@ function App() {
         </div>
       )}
 
-      {r && !r.ok && <div className="err">❌ {r.message}</div>}
+      {r && !r.ok && (
+        <div className="err" data-testid="error-message">
+          ❌ {r.message}
+        </div>
+      )}
     </div>
   );
 }
+
 export default App;
