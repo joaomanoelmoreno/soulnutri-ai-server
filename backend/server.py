@@ -259,7 +259,7 @@ async def list_dishes():
     """Lista todos os pratos no índice"""
     try:
         from ai.index import get_index
-        from ai.policy import format_dish_name
+        from ai.policy import get_dish_name, get_category, get_category_emoji
         
         index = get_index()
         
@@ -267,7 +267,9 @@ async def list_dishes():
         for dish_slug, data in index.metadata.items():
             dishes.append({
                 'slug': dish_slug,
-                'name': format_dish_name(dish_slug),
+                'name': get_dish_name(dish_slug),
+                'category': get_category(dish_slug),
+                'category_emoji': get_category_emoji(get_category(dish_slug)),
                 'image_count': data.get('image_count', 0)
             })
         
@@ -280,6 +282,110 @@ async def list_dishes():
             "dishes": dishes
         }
         
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/learn")
+async def learn_new_dish(
+    dish_name: str,
+    file: UploadFile = File(...)
+):
+    """
+    Cadastra foto de um novo prato para aprendizado.
+    
+    O prato será adicionado à pasta de datasets e poderá ser
+    incorporado ao índice no próximo reindex.
+    
+    Args:
+        dish_name: Nome do prato (será convertido em slug)
+        file: Imagem do prato
+    """
+    import re
+    import shutil
+    
+    try:
+        # Converter nome para slug
+        slug = dish_name.lower().strip()
+        slug = re.sub(r'[^a-z0-9]+', '', slug)
+        
+        if not slug:
+            return JSONResponse(
+                status_code=400,
+                content={"ok": False, "error": "Nome do prato inválido"}
+            )
+        
+        # Criar diretório se não existir
+        dish_dir = f"/app/datasets/organized/{slug}"
+        os.makedirs(dish_dir, exist_ok=True)
+        
+        # Contar imagens existentes
+        existing = len([f for f in os.listdir(dish_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
+        
+        # Salvar nova imagem
+        ext = file.filename.split('.')[-1] if '.' in file.filename else 'jpg'
+        new_filename = f"{slug}{existing + 1:02d}.{ext}"
+        file_path = os.path.join(dish_dir, new_filename)
+        
+        content = await file.read()
+        with open(file_path, 'wb') as f:
+            f.write(content)
+        
+        logger.info(f"Nova imagem salva: {file_path}")
+        
+        return {
+            "ok": True,
+            "message": f"Imagem do prato '{dish_name}' salva com sucesso!",
+            "dish_slug": slug,
+            "file_saved": new_filename,
+            "total_images": existing + 1,
+            "note": "Execute /api/ai/reindex para incorporar ao índice"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao salvar prato: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.get("/ai/unknown")
+async def check_unknown(file: UploadFile = File(...)):
+    """
+    Verifica se um prato é desconhecido (não está no índice).
+    Útil para identificar pratos que precisam ser cadastrados.
+    """
+    try:
+        from ai.index import get_index
+        
+        index = get_index()
+        if not index.is_ready():
+            return {"ok": False, "message": "Índice não carregado"}
+        
+        content = await file.read()
+        results = index.search(content, top_k=1)
+        
+        if results and results[0].get('score', 0) < 0.50:
+            return {
+                "ok": True,
+                "is_unknown": True,
+                "best_match": results[0].get('dish'),
+                "score": results[0].get('score'),
+                "message": "Prato não reconhecido. Considere cadastrá-lo via /api/ai/learn"
+            }
+        else:
+            return {
+                "ok": True,
+                "is_unknown": False,
+                "best_match": results[0].get('dish') if results else None,
+                "score": results[0].get('score') if results else 0,
+                "message": "Prato reconhecido no índice"
+            }
+            
     except Exception as e:
         return JSONResponse(
             status_code=500,
