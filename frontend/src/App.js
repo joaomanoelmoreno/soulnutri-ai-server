@@ -1,21 +1,47 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./App.css";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 function App() {
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
+  const [mode, setMode] = useState('camera'); // 'camera' ou 'gallery'
+  const [stream, setStream] = useState(null);
+  const [autoCapture, setAutoCapture] = useState(false);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
+  const captureIntervalRef = useRef(null);
 
-  // Verificar status da API ao carregar
-  React.useEffect(() => {
+  // Verificar status da API
+  useEffect(() => {
     checkStatus();
   }, []);
+
+  // Iniciar câmera automaticamente
+  useEffect(() => {
+    if (mode === 'camera') {
+      startCamera();
+    }
+    return () => stopCamera();
+  }, [mode]);
+
+  // Auto-captura a cada 3 segundos quando ativado
+  useEffect(() => {
+    if (autoCapture && stream) {
+      captureIntervalRef.current = setInterval(() => {
+        captureAndIdentify();
+      }, 3000);
+    }
+    return () => {
+      if (captureIntervalRef.current) {
+        clearInterval(captureIntervalRef.current);
+      }
+    };
+  }, [autoCapture, stream]);
 
   const checkStatus = async () => {
     try {
@@ -23,31 +49,63 @@ function App() {
       const data = await response.json();
       setStatus(data);
     } catch (error) {
-      setStatus({ ok: false, message: "Erro ao conectar com servidor" });
+      setStatus({ ok: false, message: "Erro ao conectar" });
     }
   };
 
-  const handleImageChange = (e) => {
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: 640, height: 480 }
+      });
+      setStream(mediaStream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
+    } catch (error) {
+      console.error("Erro ao acessar câmera:", error);
+      setMode('gallery');
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setAutoCapture(false);
+  };
+
+  const captureAndIdentify = useCallback(async () => {
+    if (!videoRef.current || !canvasRef.current || loading) return;
+    
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+    
+    canvas.toBlob(async (blob) => {
+      if (blob) {
+        await identifyImage(blob);
+      }
+    }, 'image/jpeg', 0.8);
+  }, [loading]);
+
+  const handleFileSelect = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
-      setResult(null);
+      await identifyImage(file);
     }
   };
 
-  const handleCapture = () => {
-    fileInputRef.current?.click();
-  };
-
-  const identifyDish = async () => {
-    if (!image) return;
-
+  const identifyImage = async (imageBlob) => {
     setLoading(true);
-    setResult(null);
 
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("file", imageBlob, "photo.jpg");
 
     try {
       const startTime = Date.now();
@@ -62,7 +120,7 @@ function App() {
     } catch (error) {
       setResult({ 
         ok: false, 
-        message: "Erro ao identificar prato: " + error.message 
+        message: "Erro: " + error.message 
       });
     } finally {
       setLoading(false);
@@ -78,126 +136,165 @@ function App() {
     }
   };
 
-  const getConfidenceEmoji = (confidence) => {
-    switch (confidence) {
-      case "alta": return "✅";
-      case "média": return "⚠️";
-      case "baixa": return "❌";
-      default: return "❓";
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case "vegano": return "#22c55e";
+      case "vegetariano": return "#84cc16";
+      case "proteína animal": return "#f97316";
+      default: return "#6b7280";
     }
   };
 
   return (
     <div className="app">
-      {/* Header */}
+      {/* Header compacto */}
       <header className="header">
         <h1>🍽️ SoulNutri</h1>
-        <p className="tagline">Como o Waze para alimentação saudável</p>
+        {status?.ready && (
+          <span className="status-badge">✅ {status.total_dishes} pratos</span>
+        )}
       </header>
 
-      {/* Status */}
-      <div className="status-bar">
-        {status?.ready ? (
-          <span className="status-ok">✅ Sistema pronto ({status.total_dishes} pratos)</span>
-        ) : (
-          <span className="status-warn">⚠️ {status?.message || "Verificando..."}</span>
-        )}
-      </div>
-
-      {/* Main Content */}
+      {/* Área principal */}
       <main className="main">
-        {/* Upload Area */}
-        <div className="upload-area" onClick={handleCapture}>
-          {preview ? (
-            <img src={preview} alt="Preview" className="preview-image" />
-          ) : (
-            <div className="upload-placeholder">
-              <span className="upload-icon">📷</span>
-              <p>Clique para tirar foto ou selecionar imagem</p>
-            </div>
-          )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={handleImageChange}
-            style={{ display: "none" }}
-          />
+        {/* Seletor de modo */}
+        <div className="mode-selector">
+          <button 
+            className={mode === 'camera' ? 'active' : ''} 
+            onClick={() => setMode('camera')}
+          >
+            📷 Câmera
+          </button>
+          <button 
+            className={mode === 'gallery' ? 'active' : ''} 
+            onClick={() => { setMode('gallery'); fileInputRef.current?.click(); }}
+          >
+            🖼️ Galeria
+          </button>
         </div>
 
-        {/* Identify Button */}
-        {image && (
-          <button 
-            className="identify-btn"
-            onClick={identifyDish}
-            disabled={loading}
-          >
-            {loading ? "🔍 Identificando..." : "🔍 Identificar Prato"}
-          </button>
+        {/* Câmera */}
+        {mode === 'camera' && (
+          <div className="camera-container">
+            <video 
+              ref={videoRef} 
+              autoPlay 
+              playsInline 
+              muted 
+              className="camera-video"
+            />
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            
+            <div className="camera-controls">
+              <button 
+                className="capture-btn"
+                onClick={captureAndIdentify}
+                disabled={loading || !stream}
+              >
+                {loading ? "⏳" : "📸"}
+              </button>
+              
+              <label className="auto-capture-toggle">
+                <input 
+                  type="checkbox"
+                  checked={autoCapture}
+                  onChange={(e) => setAutoCapture(e.target.checked)}
+                />
+                Auto (3s)
+              </label>
+            </div>
+          </div>
         )}
 
-        {/* Result */}
-        {result && (
+        {/* Input de arquivo escondido */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelect}
+          style={{ display: 'none' }}
+        />
+
+        {/* Loading */}
+        {loading && (
+          <div className="loading-overlay">
+            <div className="loading-spinner">🔍</div>
+            <p>Identificando...</p>
+          </div>
+        )}
+
+        {/* Resultado */}
+        {result && result.ok && (
           <div className={`result-card ${result.confidence}`}>
-            {result.ok ? (
-              <>
-                <div className="result-header">
-                  <span className="confidence-emoji">
-                    {getConfidenceEmoji(result.confidence)}
-                  </span>
-                  <span 
-                    className="confidence-badge"
-                    style={{ backgroundColor: getConfidenceColor(result.confidence) }}
-                  >
-                    Confiança {result.confidence?.toUpperCase()}
-                  </span>
+            {/* Cabeçalho do resultado */}
+            <div className="result-header">
+              <span className="category-badge" style={{ backgroundColor: getCategoryColor(result.category) }}>
+                {result.category_emoji} {result.category}
+              </span>
+              <span 
+                className="confidence-badge"
+                style={{ backgroundColor: getConfidenceColor(result.confidence) }}
+              >
+                {(result.score * 100).toFixed(0)}%
+              </span>
+            </div>
+
+            {/* Nome do prato */}
+            <h2 className="dish-name">{result.dish_display}</h2>
+
+            {/* Informações nutricionais */}
+            {result.nutrition && (
+              <div className="nutrition-grid">
+                <div className="nutrition-item">
+                  <span className="nutrition-value">{result.nutrition.calorias}</span>
+                  <span className="nutrition-label">Calorias</span>
                 </div>
-
-                <h2 className="dish-name">{result.dish_display || result.dish}</h2>
-                
-                <p className="result-message">{result.message}</p>
-
-                <div className="result-details">
-                  <p><strong>Score:</strong> {(result.score * 100).toFixed(1)}%</p>
-                  <p><strong>Tempo de busca:</strong> {result.search_time_ms?.toFixed(0)}ms</p>
-                  <p><strong>Tempo total:</strong> {result.totalTime}ms</p>
+                <div className="nutrition-item">
+                  <span className="nutrition-value">{result.nutrition.proteinas}</span>
+                  <span className="nutrition-label">Proteínas</span>
                 </div>
+                <div className="nutrition-item">
+                  <span className="nutrition-value">{result.nutrition.carboidratos}</span>
+                  <span className="nutrition-label">Carbos</span>
+                </div>
+                <div className="nutrition-item">
+                  <span className="nutrition-value">{result.nutrition.gorduras}</span>
+                  <span className="nutrition-label">Gorduras</span>
+                </div>
+              </div>
+            )}
 
-                {result.alternatives?.length > 0 && (
-                  <div className="alternatives">
-                    <p><strong>Alternativas:</strong></p>
-                    <ul>
-                      {result.alternatives.map((alt, i) => (
-                        <li key={i}>{alt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="error-result">
-                <span>❌</span>
-                <p>{result.message}</p>
+            {/* Tempo de resposta */}
+            <div className="response-time">
+              ⚡ {result.search_time_ms?.toFixed(0)}ms
+            </div>
+
+            {/* Alternativas (só se confiança média/baixa) */}
+            {result.alternatives?.length > 0 && (
+              <div className="alternatives">
+                <p>Também pode ser:</p>
+                <div className="alternatives-list">
+                  {result.alternatives.map((alt, i) => (
+                    <span key={i} className="alt-tag">{alt}</span>
+                  ))}
+                </div>
               </div>
             )}
           </div>
         )}
 
-        {/* Instructions */}
-        <div className="instructions">
-          <h3>Como usar:</h3>
-          <ol>
-            <li>📷 Tire uma foto do prato ou selecione uma imagem</li>
-            <li>🔍 Clique em "Identificar Prato"</li>
-            <li>✅ Veja o resultado com nível de confiança</li>
-          </ol>
-        </div>
+        {/* Erro */}
+        {result && !result.ok && (
+          <div className="error-card">
+            <span>❌</span>
+            <p>{result.message}</p>
+          </div>
+        )}
       </main>
 
-      {/* Footer */}
+      {/* Instruções */}
       <footer className="footer">
-        <p>SoulNutri © 2025 - Informação em tempo real para escolhas conscientes</p>
+        <p>Aponte a câmera para o prato • Resultado em tempo real</p>
       </footer>
     </div>
   );
