@@ -222,6 +222,10 @@ async def identify_image(file: UploadFile = File(...)):
         
         logger.info(f"Identificação: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
         
+        # Preparar nutrition como objeto
+        nutrition_data = decision.get('nutrition')
+        nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
+        
         return IdentifyResponse(
             ok=True,
             identified=decision['identified'],
@@ -230,6 +234,9 @@ async def identify_image(file: UploadFile = File(...)):
             confidence=decision['confidence'],
             score=decision['score'],
             message=decision['message'],
+            category=decision.get('category'),
+            category_emoji=decision.get('category_emoji'),
+            nutrition=nutrition_obj,
             alternatives=decision.get('alternatives', []),
             search_time_ms=round(elapsed_ms, 2)
         )
