@@ -405,6 +405,10 @@ def analyze_result(results: List[Dict]) -> Dict:
             'category': category,
             'category_emoji': category_emoji,
             'nutrition': nutrition,
+            'descricao': dish_info.get('descricao'),
+            'ingredientes': dish_info.get('ingredientes'),
+            'beneficios': dish_info.get('beneficios'),
+            'riscos': dish_info.get('riscos'),
             'alternatives': []  # SEM alternativas quando confiança é alta
         }
     
@@ -421,6 +425,10 @@ def analyze_result(results: List[Dict]) -> Dict:
             'category': category,
             'category_emoji': category_emoji,
             'nutrition': nutrition,
+            'descricao': dish_info.get('descricao'),
+            'ingredientes': dish_info.get('ingredientes'),
+            'beneficios': dish_info.get('beneficios'),
+            'riscos': dish_info.get('riscos'),
             'alternatives': alternatives
         }
     
@@ -437,6 +445,10 @@ def analyze_result(results: List[Dict]) -> Dict:
             'category': category,
             'category_emoji': category_emoji,
             'nutrition': None,
+            'descricao': None,
+            'ingredientes': None,
+            'beneficios': None,
+            'riscos': None,
             'alternatives': alternatives
         }
 
