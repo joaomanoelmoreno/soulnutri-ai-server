@@ -411,6 +411,38 @@ function App() {
             </div>
           )}
 
+          {/* SEÇÃO CIENTÍFICA - Informações relevantes */}
+          {(r.beneficio_principal || r.curiosidade_cientifica) && (
+            <div className="scientific-section" data-testid="scientific-section">
+              {r.beneficio_principal && (
+                <div className="sci-box benefit" data-testid="main-benefit">
+                  <h4>🔬 Você Sabia?</h4>
+                  <p>{r.beneficio_principal}</p>
+                </div>
+              )}
+              
+              {r.curiosidade_cientifica && (
+                <div className="sci-box curiosity" data-testid="curiosity">
+                  <h4>💡 Curiosidade Científica</h4>
+                  <p>{r.curiosidade_cientifica}</p>
+                </div>
+              )}
+              
+              {r.alerta_saude && (
+                <div className="sci-box alert" data-testid="health-alert">
+                  <h4>⚠️ Atenção</h4>
+                  <p>{r.alerta_saude}</p>
+                </div>
+              )}
+              
+              {r.referencia_pesquisa && (
+                <div className="sci-reference" data-testid="reference">
+                  📚 Fonte: {r.referencia_pesquisa}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Informação Nutricional */}
           {r.nutrition && (
             <div className="nutr" data-testid="nutrition-box">
