@@ -127,9 +127,28 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 /* MODAL DE CORREÇÃO */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal-content{background:#1a1a2e;border-radius:16px;padding:20px;max-width:400px;width:100%;max-height:80vh;overflow-y:auto}
-.modal-content h3{text-align:center;margin-bottom:6px;font-size:1.1rem}
+.modal-content h3{text-align:center;margin-bottom:12px;font-size:1.1rem}
 .modal-hint{text-align:center;color:#888;font-size:.75rem;margin-bottom:12px}
-.dishes-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow-y:auto;margin-bottom:16px}
+
+/* Seção de novo prato */
+.new-dish-section{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:10px;padding:12px;margin-bottom:12px}
+.section-label{font-size:.85rem;color:#22c55e;margin-bottom:8px;font-weight:600}
+.new-dish-input{display:flex;gap:8px;margin-bottom:6px}
+.new-dish-input input{flex:1;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;font-size:.9rem}
+.new-dish-input input::placeholder{color:#666}
+.create-btn{padding:10px 16px;background:#22c55e;border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer;white-space:nowrap}
+.create-btn:disabled{opacity:.5;cursor:not-allowed}
+.new-dish-section small{color:#888;font-size:.7rem}
+
+.divider{text-align:center;color:#666;font-size:.75rem;margin:12px 0;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:30%;height:1px;background:rgba(255,255,255,0.1)}
+.divider::before{left:0}
+.divider::after{right:0}
+
+.search-input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;font-size:.85rem;margin-bottom:10px}
+.search-input::placeholder{color:#666}
+
+.dishes-list{display:flex;flex-direction:column;gap:6px;max-height:40vh;overflow-y:auto;margin-bottom:12px}
 .dish-option{padding:12px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-size:.85rem;text-align:left;cursor:pointer;transition:all .2s}
 .dish-option:hover{background:rgba(0,200,255,0.1);border-color:rgba(0,200,255,0.3)}
 .modal-actions{display:flex;flex-direction:column;gap:8px;margin-top:12px}
