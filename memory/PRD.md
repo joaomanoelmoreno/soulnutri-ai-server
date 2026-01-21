@@ -27,18 +27,24 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 - [x] Bug da auto-captura corrigido (useRef para loading)
 - [x] Footer "Powered by Emergent" discreto
 - [x] Layout responsivo mobile-first
+- [x] Logo SoulNutri oficial integrado com ® (21/01/2026)
+
+### ✅ Performance (Melhorada - 21/01/2026)
+- [x] Modelo CLIP pré-carregado no startup
+- [x] Tempo de resposta: ~6000ms → ~250ms (25x mais rápido!)
+- [ ] Meta: ~100ms (requer GPU)
 
 ## Backlog
 
 ### P0 - Alta Prioridade
-- [ ] Gerar ícone/logo do app SoulNutri (favicon + UI)
+- [x] ~~Gerar ícone/logo do app SoulNutri~~ (Usuário forneceu logo)
+- [ ] Testar reconhecimento de pratos não cadastrados
 
 ### P1 - Média Prioridade
-- [ ] Testar reconhecimento de pratos não cadastrados
-- [ ] Otimizar tempo de resposta (atual: ~6s, meta: ~100ms)
+- [ ] Otimizar para ~100ms (requer GPU ou modelo mais leve)
+- [ ] Investigar domínio personalizado `soulnutri.app.br`
 
 ### P2 - Baixa Prioridade
-- [ ] Investigar domínio personalizado `soulnutri.app.br`
 - [ ] Refatorar dados dos pratos para JSON/MongoDB
 - [ ] Deploy em produção (Render com mais memória/GPU)
 
