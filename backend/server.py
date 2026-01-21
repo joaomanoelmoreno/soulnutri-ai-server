@@ -566,6 +566,32 @@ async def create_new_dish(
         )
 
 
+@api_router.get("/ai/ingredient-research/{ingredient}")
+async def get_ingredient_research(ingredient: str):
+    """
+    Busca pesquisas científicas recentes sobre um ingrediente.
+    Retorna informações da OMS, ANVISA, estudos científicos, etc.
+    """
+    try:
+        from services.generic_ai import search_ingredient_news
+        
+        logger.info(f"Buscando pesquisas sobre: {ingredient}")
+        result = await search_ingredient_news(ingredient)
+        
+        if "error" in result:
+            return {"ok": False, "error": result["error"]}
+        
+        return {
+            "ok": True,
+            "ingredient": ingredient,
+            **result
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar pesquisa: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.post("/ai/feedback")
 async def submit_feedback(
     file: UploadFile = File(...),
