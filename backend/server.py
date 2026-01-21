@@ -439,9 +439,9 @@ async def list_dishes():
 @api_router.post("/ai/feedback")
 async def submit_feedback(
     file: UploadFile = File(...),
-    dish_slug: str = "",
-    is_correct: str = "true",
-    original_dish: str = ""
+    dish_slug: str = Form(""),
+    is_correct: str = Form("true"),
+    original_dish: str = Form("")
 ):
     """
     Recebe feedback sobre reconhecimento de prato.
