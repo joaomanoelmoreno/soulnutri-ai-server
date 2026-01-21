@@ -212,6 +212,13 @@ function App() {
           
           {r.descricao && <p className="desc" data-testid="dish-description">{r.descricao}</p>}
 
+          {/* Técnica de Preparo */}
+          {r.tecnica && (
+            <div className="tecnica-box" data-testid="technique-box">
+              <span>👨‍🍳 {r.tecnica}</span>
+            </div>
+          )}
+
           {/* Ingredientes */}
           {r.ingredientes?.length > 0 && (
             <div className="info-box" data-testid="ingredients-box">
@@ -236,7 +243,7 @@ function App() {
             </div>
           )}
 
-          {/* Informação Nutricional - por último */}
+          {/* Informação Nutricional */}
           {r.nutrition && (
             <div className="nutr" data-testid="nutrition-box">
               <div className="nutr-title">Informação Nutricional (100g)</div>
@@ -246,6 +253,13 @@ function App() {
                 <div><b>{r.nutrition.carboidratos}</b><small>Carbos</small></div>
                 <div><b>{r.nutrition.gorduras}</b><small>Gorduras</small></div>
               </div>
+            </div>
+          )}
+
+          {/* Aviso Cibi Sana */}
+          {r.aviso_cibi_sana && (
+            <div className="cibi-sana-badge" data-testid="cibi-sana-badge">
+              <span>🌿 {r.aviso_cibi_sana}</span>
             </div>
           )}
 
