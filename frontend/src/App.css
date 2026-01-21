@@ -3,7 +3,9 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .app{max-width:480px;margin:0 auto;padding:8px;display:flex;flex-direction:column;min-height:100vh}
 
 .hdr{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
-.hdr h1{font-size:1.2rem;background:linear-gradient(90deg,#0cf,#0f8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-container{position:relative;display:flex;align-items:flex-start}
+.logo{height:40px;width:auto}
+.trademark{position:absolute;top:-2px;right:-12px;font-size:.5rem;color:#888}
 .st{font-size:.65rem;color:#0f8;background:rgba(0,255,136,.1);padding:3px 8px;border-radius:10px}
 
 /* Câmera - Ocupa mais espaço no topo */

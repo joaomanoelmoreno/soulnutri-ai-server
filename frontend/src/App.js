@@ -147,9 +147,12 @@ function App() {
 
   return (
     <div className="app">
-      {/* Header compacto */}
+      {/* Header com Logo */}
       <header className="hdr">
-        <h1>🍽️ SoulNutri</h1>
+        <div className="logo-container">
+          <img src="/images/soulnutri-logo.png" alt="SoulNutri" className="logo" />
+          <span className="trademark">®</span>
+        </div>
         {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
       </header>
 
