@@ -37,11 +37,16 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 - [x] Botões "Sim, correto" / "Não, corrigir" após cada identificação
 - [x] Modal para selecionar prato correto quando errar
 - [x] Salvar fotos corretas no dataset do prato
+- [x] Fotos corrigidas são salvas no prato correto (treinamento contínuo)
 - [x] Opção para descartar fotos ruins
 - [x] Estatísticas de feedback no MongoDB
-- [x] Endpoint GET /api/ai/dishes - lista todos os pratos
-- [x] Endpoint POST /api/ai/feedback - salva feedback
-- [x] Endpoint GET /api/ai/feedback/stats - estatísticas
+
+### ✅ IA Genérica para Pratos Desconhecidos (21/01/2026)
+- [x] GPT-4o Vision para identificar pratos NÃO cadastrados
+- [x] Três níveis de confiança (alta/média/baixa) também para IA genérica
+- [x] Indicador visual "🤖 Identificado por IA Genérica"
+- [x] Retorna: nome, categoria, ingredientes, benefícios, riscos
+- [x] Fallback automático quando índice local tem baixa confiança
 
 ### ✅ Performance (Melhorada - 21/01/2026)
 - [x] Modelo CLIP pré-carregado no startup
