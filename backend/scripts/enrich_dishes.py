@@ -18,7 +18,7 @@ sys.path.insert(0, '/app/backend')
 load_dotenv('/app/backend/.env')
 
 # Emergent Integrations
-from emergentintegrations.llm.chat import Chat, Message, MessageRole
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 EMERGENT_KEY = os.environ.get('EMERGENT_LLM_KEY')
 
