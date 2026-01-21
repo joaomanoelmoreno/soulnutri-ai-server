@@ -11,11 +11,13 @@ function App() {
   const [stream, setStream] = useState(null);
   const [autoCapture, setAutoCapture] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [error, setError] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const autoIntervalRef = useRef(null);
   const countdownIntervalRef = useRef(null);
+  const loadingRef = useRef(false);
 
   useEffect(() => { 
     checkStatus(); 
@@ -26,7 +28,7 @@ function App() {
     };
   }, []);
 
-  const clearAllIntervals = () => {
+  const clearAllIntervals = useCallback(() => {
     if (autoIntervalRef.current) {
       clearInterval(autoIntervalRef.current);
       autoIntervalRef.current = null;
@@ -35,11 +37,11 @@ function App() {
       clearInterval(countdownIntervalRef.current);
       countdownIntervalRef.current = null;
     }
-  };
+  }, []);
 
-  // Gerenciar auto-captura
+  // Gerenciar auto-captura - CORRIGIDO: sem dependência de loading
   useEffect(() => {
-    if (autoCapture && stream && !loading) {
+    if (autoCapture && stream) {
       setCountdown(3);
       
       countdownIntervalRef.current = setInterval(() => {
@@ -47,7 +49,10 @@ function App() {
       }, 1000);
 
       autoIntervalRef.current = setInterval(() => {
-        captureAndIdentify();
+        // Usar ref para checar loading sem causar re-render
+        if (!loadingRef.current) {
+          captureAndIdentify();
+        }
       }, 3000);
     } else {
       clearAllIntervals();
@@ -55,7 +60,7 @@ function App() {
     }
 
     return () => clearAllIntervals();
-  }, [autoCapture, stream, loading]);
+  }, [autoCapture, stream, clearAllIntervals]);
 
   const checkStatus = async () => {
     try {
@@ -77,25 +82,20 @@ function App() {
   const stopCamera = () => { stream?.getTracks().forEach(t => t.stop()); };
 
   const captureAndIdentify = useCallback(async () => {
-    if (!videoRef.current || !canvasRef.current || loading) return;
-    
-    setResult(null);
+    if (!videoRef.current || !canvasRef.current || loadingRef.current) return;
     
     const v = videoRef.current, c = canvasRef.current;
     c.width = v.videoWidth; 
     c.height = v.videoHeight;
     c.getContext('2d').drawImage(v, 0, 0);
     c.toBlob(b => b && identifyImage(b), 'image/jpeg', 0.85);
-  }, [loading]);
+  }, []);
 
   const identifyImage = async (blob) => {
+    loadingRef.current = true;
     setLoading(true);
     setResult(null);
-    
-    // Desativa auto-captura durante processamento
-    if (autoCapture) {
-      clearAllIntervals();
-    }
+    setError(null);
     
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
@@ -106,8 +106,9 @@ function App() {
       const data = await res.json();
       setResult({ ...data, totalTime: Date.now() - t });
     } catch (e) { 
-      setResult({ ok: false, message: e.message }); 
+      setError(e.message);
     } finally { 
+      loadingRef.current = false;
       setLoading(false);
     }
   };
@@ -123,12 +124,14 @@ function App() {
   const toggleAutoCapture = (enabled) => {
     if (enabled) {
       setResult(null);
+      setError(null);
     }
     setAutoCapture(enabled);
   };
 
   const clearResult = () => {
     setResult(null);
+    setError(null);
   };
 
   const r = result;
@@ -144,15 +147,17 @@ function App() {
 
   return (
     <div className="app">
+      {/* Header compacto */}
       <header className="hdr">
         <h1>🍽️ SoulNutri</h1>
         {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
       </header>
 
-      {/* Câmera - Posição mais alta */}
-      <div className="cam-box">
+      {/* Câmera no topo - ocupa mais espaço */}
+      <div className="cam-box" data-testid="camera-container">
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
+        {loading && <div className="cam-loading"><span>🔍</span></div>}
         <div className="cam-ctrl">
           <button 
             className="cap-btn" 
@@ -174,7 +179,7 @@ function App() {
         </div>
       </div>
 
-      {/* Botões de ação */}
+      {/* Botões de ação - sempre visíveis */}
       <div className="action-btns">
         <button 
           className="gal-btn" 
@@ -183,15 +188,14 @@ function App() {
         >
           🖼️ Galeria
         </button>
-        {r && (
-          <button 
-            className="clear-btn" 
-            onClick={clearResult}
-            data-testid="clear-button"
-          >
-            🔄 Nova Foto
-          </button>
-        )}
+        <button 
+          className="clear-btn" 
+          onClick={clearResult}
+          disabled={!r && !error}
+          data-testid="clear-button"
+        >
+          🔄 Nova Foto
+        </button>
       </div>
 
       <input 
@@ -201,12 +205,6 @@ function App() {
         hidden 
         onChange={handleFileSelect} 
       />
-
-      {loading && (
-        <div className="load">
-          <span>🔍</span>
-        </div>
-      )}
 
       {r?.ok && (
         <div className={`res ${r.confidence}`} data-testid="result-container">
@@ -296,6 +294,17 @@ function App() {
           ❌ {r.message}
         </div>
       )}
+
+      {error && (
+        <div className="err" data-testid="network-error">
+          ❌ Erro de conexão: {error}
+        </div>
+      )}
+
+      {/* Rodapé discreto */}
+      <footer className="footer">
+        <small>Powered by Emergent</small>
+      </footer>
     </div>
   );
 }
