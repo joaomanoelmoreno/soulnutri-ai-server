@@ -88,6 +88,11 @@ class IdentifyResponse(BaseModel):
     alternatives: List[str] = []
     search_time_ms: Optional[float] = None
     source: Optional[str] = "local_index"  # "local_index" ou "generic_ai"
+    # Novos campos científicos
+    beneficio_principal: Optional[str] = None
+    curiosidade_cientifica: Optional[str] = None
+    referencia_pesquisa: Optional[str] = None
+    alerta_saude: Optional[str] = None
 
 class ReindexResponse(BaseModel):
     ok: bool
