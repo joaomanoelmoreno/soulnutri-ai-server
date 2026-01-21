@@ -54,6 +54,12 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .nutr-grid b{display:block;font-size:.8rem;color:#0cf}
 .nutr-grid small{font-size:.6rem;color:#666}
 
+.tecnica-box{background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:center}
+.tecnica-box span{color:#a78bfa;font-size:.8rem;font-weight:500}
+
+.cibi-sana-badge{background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(16,185,129,0.15));border:1px solid rgba(34,197,94,0.3);padding:10px 12px;border-radius:8px;margin:12px 0;text-align:center}
+.cibi-sana-badge span{color:#22c55e;font-size:.75rem;font-weight:600}
+
 .time{text-align:center;font-size:.7rem;color:#555;padding:8px 0}
 
 .alts{border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:8px}
