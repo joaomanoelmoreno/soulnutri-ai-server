@@ -15,20 +15,20 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 
 ## Diretrizes de Conteúdo
 
-### ❌ O QUE NÃO FAZER (informações óbvias):
+### O QUE NÃO FAZER (informações óbvias):
 - "Muito colesterol faz mal" (todo mundo sabe)
 - "Açúcar em excesso engorda" (óbvio)
 - "Fritura não é saudável" (conhecimento popular)
 - "Evitar glúten se for celíaco" (óbvio)
 - "Fonte de proteínas" (genérico)
 
-### ✅ O QUE FAZER (informações relevantes):
-- **Com dados**: "Potássio (485mg) - regula impulsos elétricos do coração, previne arritmias"
+### O QUE FAZER (informações relevantes):
+- **Com dados**: "Potássio (485mg) - regula impulsos elétricos do coração"
 - **Com fonte**: "OMS classificou embutidos como Grupo 1 carcinógeno (2015)"
 - **Com impacto**: "80% dos brasileiros têm deficiência de vitamina D (USP 2023)"
-- **Com curiosidade**: "Cogumelos recarregam vitamina D no sol mesmo depois de colhidos"
+- **Com curiosidade**: "Cogumelos recarregam vitamina D no sol"
 
-### 📊 Fontes Científicas:
+### Fontes Científicas:
 - OMS/WHO (Organização Mundial da Saúde)
 - ANVISA (Agência Nacional de Vigilância Sanitária)
 - IARC (Agência Internacional de Pesquisa em Câncer)
@@ -36,71 +36,54 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 - Tabela TACO (UNICAMP)
 - Revistas: Nature, Lancet, JAMA, Harvard Health
 
-### ⚠️ Alertas de Saúde Relevantes:
-- **Carnes Processadas**: OMS Grupo 1 carcinógeno (bacon, linguiça, presunto)
-- **Peixes Grandes**: Mercúrio - FDA limite 340g/semana
-- **Ultraprocessados**: +10% consumo = +12% risco câncer (NutriNet 2022)
-- **Agrotóxicos**: Brasil maior consumidor mundial
-- **Gordura Trans**: FDA baniu nos EUA em 2018
-
----
-
-## Versões do Produto
-
-### Versão Gratuita
-- Identificação de pratos por imagem
-- Categoria (vegano/vegetariano/proteína animal)
-- Alérgenos em destaque
-- 1 benefício principal (científico)
-- 1 alerta de saúde (se relevante)
-- 1 curiosidade científica
-- Referência da pesquisa
-
-### Versão Premium (Futuro)
-- Perfil nutricional pessoal
-- Histórico de consumo
-- Alertas: "Você já consumiu X de sódio esta semana..."
-- Link para notícias/pesquisas sobre ingredientes
-- Busca: "Veja esta pesquisa recente sobre..."
-
 ---
 
 ## Tecnologias
 - **Backend**: FastAPI + Python
 - **Frontend**: React
 - **ML/CV**: OpenCLIP (ViT-B-32)
-- **Database**: MongoDB
-- **IA**: GPT-4o Vision (identificação e informações científicas)
+- **Database**: MongoDB (soulnutri)
+- **IA**: GPT-4o Vision (via Emergent LLM Key)
 
 ---
 
-## Funcionalidades Implementadas
+## Status Atual (Janeiro 2026)
 
-### ✅ Core
-- [x] Identificação por imagem (139 pratos índice + 18 novos)
+### Base de Dados
+- **Total de pratos**: 116
+- **Com dados científicos**: 116 (100%)
+- **Veganos**: 43 pratos
+- **Vegetarianos**: 30 pratos
+- **Proteína animal**: 42 pratos
+
+### Funcionalidades Implementadas
+
+#### Core
+- [x] Identificação por imagem (139 pratos no índice visual)
 - [x] Sistema de feedback (correto/incorreto)
 - [x] Cadastro de pratos novos com IA
-- [x] IA genérica para pratos não cadastrados
+- [x] IA genérica para pratos não cadastrados (GPT-4o Vision)
 - [x] Busca de pesquisas sobre ingredientes
 
-### ✅ UI/UX
+#### UI/UX
 - [x] Câmera com moldura retangular vertical
 - [x] Toque para fotografar
 - [x] Modal de correção com busca
 - [x] Campo para cadastrar prato novo
 
-### ✅ Informações Científicas
-- [x] Prompt detalhado para IA (evitar óbvio, focar em relevante)
-- [x] 18 pratos com informações completas
-- [x] Endpoint de pesquisa de ingredientes
-- [ ] Estender para todos os 139 pratos
+#### Informações Científicas (CONCLUÍDO)
+- [x] Todos os 116 pratos enriquecidos com dados científicos
+- [x] beneficio_principal: informação educativa com dados
+- [x] curiosidade_cientifica: fato interessante ou dica prática
+- [x] referencia_pesquisa: fonte científica (journals, OMS, etc)
+- [x] alerta_saude: alertas equilibrados quando relevante
+- [x] Frontend exibindo seção científica estilizada
 
 ---
 
 ## Backlog
 
 ### P0 - URGENTE
-- [ ] Estender informações científicas para TODOS os 139 pratos
 - [ ] Investigar travamentos do app
 - [ ] Melhorar precisão (meta: 100% pratos cadastrados)
 
@@ -116,8 +99,36 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 
 ---
 
-## Estatísticas Atuais
-- Pratos no índice: 139
-- Pratos criados pelo usuário: 18
-- Feedbacks coletados: 18
-- Taxa de acerto: 83.3%
+## Arquitetura
+
+```
+/app
+├── backend/
+│   ├── ai/
+│   │   ├── embedder.py      # OpenCLIP
+│   │   ├── index.py         # Gerencia index.pkl
+│   │   └── policy.py        # Lógica de decisão
+│   ├── data/
+│   │   └── index.pkl        # Índice visual
+│   ├── scripts/
+│   │   └── enrich_dishes.py # Script de enriquecimento
+│   ├── services/
+│   │   ├── dish_service.py  # CRUD MongoDB
+│   │   └── generic_ai.py    # GPT-4o Vision
+│   └── server.py            # FastAPI
+├── frontend/
+│   ├── src/
+│   │   ├── App.css
+│   │   └── App.js
+│   └── package.json
+└── datasets/
+    └── organized/           # Imagens de pratos
+```
+
+## Endpoints Principais
+
+- `POST /api/ai/identify` - Identifica prato por imagem
+- `POST /api/ai/feedback` - Registra feedback
+- `POST /api/ai/create-dish` - Cria novo prato com IA
+- `GET /api/ai/dishes` - Lista pratos
+- `GET /api/ai/status` - Status do índice
