@@ -136,12 +136,6 @@ async def enrich_all_dishes(batch_size: int = 10, max_dishes: int = None):
         print("Todos os pratos já estão enriquecidos!")
         return
     
-    # Inicializar Chat
-    chat = Chat(
-        api_key=EMERGENT_KEY,
-        model="gpt-4o"
-    )
-    
     success_count = 0
     error_count = 0
     
@@ -150,7 +144,7 @@ async def enrich_all_dishes(batch_size: int = 10, max_dishes: int = None):
         print(f"\n[{i}/{len(dishes_to_enrich)}] Enriquecendo: {nome}...")
         
         try:
-            enriched_data = await enrich_single_dish(chat, dish)
+            enriched_data = await enrich_single_dish(dish)
             
             # Atualizar no MongoDB
             update_result = await db.dishes.update_one(
