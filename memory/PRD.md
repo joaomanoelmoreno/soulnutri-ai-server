@@ -1,5 +1,9 @@
 # SoulNutri - Product Requirements Document
 
+## ATENÇÃO: Leia também /app/memory/DIRETRIZES_PROJETO.md para contexto completo!
+
+---
+
 ## Visão e Posicionamento
 
 ### Slogan
@@ -13,28 +17,23 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 
 ---
 
-## Diretrizes de Conteúdo
+## Arquitetura de Reconhecimento (APROVADA)
 
-### O QUE NÃO FAZER (informações óbvias):
-- "Muito colesterol faz mal" (todo mundo sabe)
-- "Açúcar em excesso engorda" (óbvio)
-- "Fritura não é saudável" (conhecimento popular)
-- "Evitar glúten se for celíaco" (óbvio)
-- "Fonte de proteínas" (genérico)
+### Sistema Híbrido em 3 Níveis
 
-### O QUE FAZER (informações relevantes):
-- **Com dados**: "Potássio (485mg) - regula impulsos elétricos do coração"
-- **Com fonte**: "OMS classificou embutidos como Grupo 1 carcinógeno (2015)"
-- **Com impacto**: "80% dos brasileiros têm deficiência de vitamina D (USP 2023)"
-- **Com curiosidade**: "Cogumelos recarregam vitamina D no sol"
+**NÍVEL 1 - Índice Local (OpenCLIP)**
+- Custo: $0 | Velocidade: ~200ms | Precisão: 95%+
+- Se confiança >= 90% → RESULTADO FINAL
+- Se confiança < 90% → Nível 2
 
-### Fontes Científicas:
-- OMS/WHO (Organização Mundial da Saúde)
-- ANVISA (Agência Nacional de Vigilância Sanitária)
-- IARC (Agência Internacional de Pesquisa em Câncer)
-- FDA (Food and Drug Administration)
-- Tabela TACO (UNICAMP)
-- Revistas: Nature, Lancet, JAMA, Harvard Health
+**NÍVEL 2 - IA Especializada (LogMeal API)** ← A IMPLEMENTAR
+- Custo: Free tier | Velocidade: ~500ms | Precisão: 93-98%
+- Se confiança >= 85% → RESULTADO FINAL
+- Se confiança < 85% → Nível 3
+
+**NÍVEL 3 - IA Genérica (GPT-4o Vision)**
+- Custo: ~$0.01-0.02 | Velocidade: ~1-2s
+- Fallback universal, sempre retorna resultado
 
 ---
 
@@ -44,86 +43,52 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 - **ML/CV**: OpenCLIP (ViT-B-32)
 - **Database**: MongoDB (soulnutri)
 - **IA**: GPT-4o Vision (via Emergent LLM Key)
+- **A integrar**: LogMeal API
 
 ---
 
 ## Status Atual (Janeiro 2026)
 
 ### Base de Dados
-- **Total de pratos**: 116
-- **Com dados científicos**: 116 (100%)
-- **Veganos**: 43 pratos
-- **Vegetarianos**: 30 pratos
-- **Proteína animal**: 42 pratos
+- **Total de pratos**: 115
+- **Com dados científicos**: 115 (100%)
+- **Veganos**: 43 | **Vegetarianos**: 30 | **Proteína animal**: 42
 
 ### Funcionalidades Implementadas
-
-#### Core
-- [x] Identificação por imagem (139 pratos no índice visual)
+- [x] Identificação por imagem (139 pratos no índice)
 - [x] Sistema de feedback (correto/incorreto)
 - [x] Cadastro de pratos novos com IA
-- [x] IA genérica para pratos não cadastrados (GPT-4o Vision)
-- [x] Busca de pesquisas sobre ingredientes
-
-#### UI/UX
-- [x] Câmera com moldura retangular vertical
-- [x] Toque para fotografar
-- [x] Modal de correção com busca
-- [x] Campo para cadastrar prato novo
-
-#### Informações Científicas (CONCLUÍDO)
-- [x] Todos os 116 pratos enriquecidos com dados científicos
-- [x] beneficio_principal: informação educativa com dados
-- [x] curiosidade_cientifica: fato interessante ou dica prática
-- [x] referencia_pesquisa: fonte científica (journals, OMS, etc)
-- [x] alerta_saude: alertas equilibrados quando relevante
-- [x] Frontend exibindo seção científica estilizada
+- [x] IA genérica para pratos não cadastrados
+- [x] Informações científicas em todos os pratos
+- [x] Botão de compartilhar curiosidade
+- [x] Câmera com moldura guia
 
 ---
 
-## Backlog
+## Backlog Priorizado
 
-### P0 - URGENTE
+### P0 - CRÍTICO (Próxima Implementação)
+- [ ] Integrar LogMeal API (Nível 2 do sistema híbrido)
+- [ ] Implementar lógica de cascata para 100% precisão
 - [ ] Investigar travamentos do app
-- [ ] Melhorar precisão (meta: 100% pratos cadastrados)
 
-### P1 - ESTA SEMANA
-- [ ] Teste com grupo de 3-4 pessoas simultâneas
-- [ ] Interface para mostrar link "Veja esta pesquisa"
-- [ ] Retreinar índice com novas fotos
+### P1 - ALTA
+- [ ] Teste com 3-4 usuários simultâneos
+- [ ] Melhorar índice local (mais fotos)
+- [ ] Validação cruzada Nível 1 + Nível 2
 
-### P2 - FUTURO
-- [ ] Versão Premium separada
-- [ ] Perfil nutricional do usuário
-- [ ] Reconhecimento de pratos compostos
+### P2 - MÉDIA
+- [ ] Painel para restaurantes cadastrarem pratos
+- [ ] Link "Veja esta pesquisa" na UI
+- [ ] Retreinar índice com fotos de feedback
+
+### P3 - FUTURO (Premium)
+- [ ] Contador nutricional em tempo real
+- [ ] Perfil do usuário (médico/alergias/restrições)
+- [ ] Histórico de consumo semanal
+- [ ] Alertas personalizados
 
 ---
-
-## Arquitetura
-
-```
-/app
-├── backend/
-│   ├── ai/
-│   │   ├── embedder.py      # OpenCLIP
-│   │   ├── index.py         # Gerencia index.pkl
-│   │   └── policy.py        # Lógica de decisão
-│   ├── data/
-│   │   └── index.pkl        # Índice visual
-│   ├── scripts/
-│   │   └── enrich_dishes.py # Script de enriquecimento
-│   ├── services/
-│   │   ├── dish_service.py  # CRUD MongoDB
-│   │   └── generic_ai.py    # GPT-4o Vision
-│   └── server.py            # FastAPI
-├── frontend/
-│   ├── src/
-│   │   ├── App.css
-│   │   └── App.js
-│   └── package.json
-└── datasets/
-    └── organized/           # Imagens de pratos
-```
 
 ## Endpoints Principais
 
@@ -132,3 +97,8 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 - `POST /api/ai/create-dish` - Cria novo prato com IA
 - `GET /api/ai/dishes` - Lista pratos
 - `GET /api/ai/status` - Status do índice
+
+---
+
+## URL de Preview
+https://nutriwaze.preview.emergentagent.com
