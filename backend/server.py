@@ -245,8 +245,10 @@ async def identify_image(file: UploadFile = File(...)):
             nutrition=nutrition_obj,
             descricao=decision.get('descricao'),
             ingredientes=decision.get('ingredientes'),
+            tecnica=decision.get('tecnica'),
             beneficios=decision.get('beneficios'),
             riscos=decision.get('riscos'),
+            aviso_cibi_sana=decision.get('aviso_cibi_sana'),
             alternatives=decision.get('alternatives', []),
             search_time_ms=round(elapsed_ms, 2)
         )
