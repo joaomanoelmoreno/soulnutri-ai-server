@@ -272,6 +272,24 @@ async def identify_image(file: UploadFile = File(...)):
         
         logger.info(f"Identificação: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
         
+        # Buscar dados científicos do MongoDB
+        scientific_data = {}
+        dish_slug = decision.get('dish')
+        if dish_slug and decision.get('source') != 'generic_ai':
+            # Normalizar slug para busca
+            slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
+            mongo_dish = await db.dishes.find_one(
+                {'$or': [
+                    {'slug': slug_normalized},
+                    {'slug': dish_slug}
+                ]},
+                {'_id': 0, 'beneficio_principal': 1, 'curiosidade_cientifica': 1, 
+                 'referencia_pesquisa': 1, 'alerta_saude': 1}
+            )
+            if mongo_dish:
+                scientific_data = mongo_dish
+                logger.info(f"Dados científicos encontrados para {dish_slug}")
+        
         # Preparar nutrition como objeto
         nutrition_data = decision.get('nutrition')
         nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
@@ -295,7 +313,12 @@ async def identify_image(file: UploadFile = File(...)):
             aviso_cibi_sana=decision.get('aviso_cibi_sana'),
             alternatives=decision.get('alternatives', []),
             search_time_ms=round(elapsed_ms, 2),
-            source=decision.get('source', 'local_index')
+            source=decision.get('source', 'local_index'),
+            # Dados científicos do MongoDB
+            beneficio_principal=scientific_data.get('beneficio_principal'),
+            curiosidade_cientifica=scientific_data.get('curiosidade_cientifica'),
+            referencia_pesquisa=scientific_data.get('referencia_pesquisa'),
+            alerta_saude=scientific_data.get('alerta_saude')
         )
         
     except Exception as e:
