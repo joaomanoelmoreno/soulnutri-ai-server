@@ -489,6 +489,25 @@ function App() {
               ✅ Obrigado pelo feedback! Isso ajuda a melhorar o reconhecimento.
             </div>
           )}
+
+          {/* BOTÃO DE COMPARTILHAR */}
+          {(r.beneficio_principal || r.curiosidade_cientifica) && (
+            <button 
+              className="share-btn"
+              onClick={() => {
+                const text = `🍽️ ${r.dish_display}\n\n🔬 ${r.beneficio_principal || ''}\n\n💡 ${r.curiosidade_cientifica || ''}\n\n📚 ${r.referencia_pesquisa || ''}\n\nDescubra mais no SoulNutri - seu agente de nutrição virtual!`;
+                if (navigator.share) {
+                  navigator.share({ title: 'SoulNutri', text });
+                } else {
+                  navigator.clipboard.writeText(text);
+                  alert('Texto copiado! Cole para compartilhar.');
+                }
+              }}
+              data-testid="share-button"
+            >
+              📤 Compartilhar curiosidade
+            </button>
+          )}
         </div>
       )}
 
