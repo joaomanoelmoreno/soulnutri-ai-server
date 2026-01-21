@@ -387,6 +387,7 @@ function App() {
         <div className="modal-overlay" onClick={() => setShowFeedback(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <h3>Qual é o prato correto?</h3>
+            <p className="modal-hint">Selecione o prato para salvar esta foto (mesmo se estiver ruim/tremida)</p>
             <div className="dishes-list">
               {dishes.map(d => (
                 <button 
@@ -400,7 +401,7 @@ function App() {
             </div>
             <div className="modal-actions">
               <button className="discard-btn" onClick={discardPhoto}>
-                🗑️ Descartar foto (não salvar)
+                🗑️ Descartar (foto inutilizável)
               </button>
               <button className="cancel-btn" onClick={() => setShowFeedback(false)}>
                 Cancelar
