@@ -81,8 +81,10 @@ class IdentifyResponse(BaseModel):
     nutrition: Optional[NutritionInfo] = None
     descricao: Optional[str] = None
     ingredientes: Optional[List[str]] = None
+    tecnica: Optional[str] = None
     beneficios: Optional[List[str]] = None
     riscos: Optional[List[str]] = None
+    aviso_cibi_sana: Optional[str] = None
     alternatives: List[str] = []
     search_time_ms: Optional[float] = None
 
