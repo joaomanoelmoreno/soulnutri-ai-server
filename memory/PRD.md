@@ -23,14 +23,25 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 - [x] Lógica de glúten corrigida
 
 ### ✅ UI/UX (Concluídas - 21/01/2026)
-- [x] Câmera no topo com área ampla (300px min)
-- [x] **"Toque para fotografar"** - interação intuitiva
-- [x] **Botões maiores** - Galeria e Nova Foto bem visíveis
-- [x] **Categoria logo abaixo do nome** (Vegano=verde, Vegetariano=branco, Proteína=laranja)
-- [x] **Alérgenos em destaque** com formato específico
+- [x] **Câmera menor** (-30%, 200px de altura)
+- [x] **Moldura guia circular** para posicionar o prato
+- [x] "Toque para fotografar" - interação intuitiva
+- [x] Botões maiores - Galeria e Nova Foto
+- [x] Categoria logo abaixo do nome (cores por tipo)
+- [x] Alérgenos em destaque
 - [x] Logo SoulNutri oficial com ®
-- [x] Footer "Powered by Emergent" discreto
+- [x] Footer discreto
 - [x] Layout responsivo mobile-first
+
+### ✅ Sistema de Feedback (21/01/2026)
+- [x] Botões "Sim, correto" / "Não, corrigir" após cada identificação
+- [x] Modal para selecionar prato correto quando errar
+- [x] Salvar fotos corretas no dataset do prato
+- [x] Opção para descartar fotos ruins
+- [x] Estatísticas de feedback no MongoDB
+- [x] Endpoint GET /api/ai/dishes - lista todos os pratos
+- [x] Endpoint POST /api/ai/feedback - salva feedback
+- [x] Endpoint GET /api/ai/feedback/stats - estatísticas
 
 ### ✅ Performance (Melhorada - 21/01/2026)
 - [x] Modelo CLIP pré-carregado no startup
