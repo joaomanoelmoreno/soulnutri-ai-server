@@ -82,7 +82,7 @@ Responda APENAS com o JSON no formato especificado."""
         system_message=SYSTEM_PROMPT
     ).with_model("openai", "gpt-4o")
     
-    response = chat.send_message(UserMessage(content=user_prompt))
+    response = chat.send_message(UserMessage(text=user_prompt))
     
     # Extrair JSON da resposta
     import json
