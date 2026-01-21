@@ -48,6 +48,9 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .res.média{border-left:4px solid #f59e0b}
 .res.baixa{border-left:4px solid #ef4444}
 
+/* Indicador de fonte (IA genérica) */
+.source-badge{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.4);padding:8px 12px;border-radius:8px;text-align:center;color:#a78bfa;font-size:.75rem;margin-bottom:10px}
+
 /* Nome do Prato */
 .dish-name{font-size:1.4rem;font-weight:700;margin-bottom:8px;text-align:center}
 
