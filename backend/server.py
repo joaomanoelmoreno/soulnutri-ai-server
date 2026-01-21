@@ -87,6 +87,7 @@ class IdentifyResponse(BaseModel):
     aviso_cibi_sana: Optional[str] = None
     alternatives: List[str] = []
     search_time_ms: Optional[float] = None
+    source: Optional[str] = "local_index"  # "local_index" ou "generic_ai"
 
 class ReindexResponse(BaseModel):
     ok: bool
