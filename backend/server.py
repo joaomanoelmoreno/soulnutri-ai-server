@@ -223,6 +223,44 @@ async def identify_image(file: UploadFile = File(...)):
         # Analisar resultado e decidir resposta
         decision = analyze_result(results)
         
+        # Se confiança baixa ou não identificado, tentar IA genérica
+        if decision['confidence'] == 'baixa' or not decision['identified'] or decision['score'] < 0.5:
+            try:
+                from services.generic_ai import identify_unknown_dish
+                
+                logger.info("Confiança baixa no índice local, usando IA genérica...")
+                generic_result = await identify_unknown_dish(content)
+                
+                if generic_result.get('ok') and generic_result.get('nome'):
+                    # Usar resultado da IA genérica
+                    decision = {
+                        'identified': True,
+                        'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
+                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
+                        'confidence': generic_result.get('confianca', 'baixa'),
+                        'score': generic_result.get('score', 0.5),
+                        'message': f"Identificado por IA genérica: {generic_result.get('nome')}",
+                        'category': generic_result.get('categoria', 'outros'),
+                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
+                        'descricao': generic_result.get('descricao', ''),
+                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
+                        'tecnica': generic_result.get('tecnica_preparo', ''),
+                        'beneficios': generic_result.get('beneficios', []),
+                        'riscos': generic_result.get('riscos', []),
+                        'alternatives': generic_result.get('alternativas', []),
+                        'nutrition': {
+                            'calorias': '~200 kcal',
+                            'proteinas': '~10g',
+                            'carboidratos': '~25g',
+                            'gorduras': '~8g'
+                        },
+                        'aviso_cibi_sana': None,
+                        'source': 'generic_ai'
+                    }
+                    logger.info(f"IA genérica identificou: {decision['dish_display']}")
+            except Exception as e:
+                logger.warning(f"Erro na IA genérica: {e}")
+        
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
         
