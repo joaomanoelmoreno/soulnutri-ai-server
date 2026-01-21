@@ -6,14 +6,42 @@
 **"SOULNUTRI - O SEU AGENTE DE NUTRIÇÃO VIRTUAL"**
 
 ### Proposta de Valor
-O SoulNutri é um **nutricionista virtual** que acompanha o cliente em todas as suas refeições, fornecendo informações **educativas e relevantes** que ele NÃO conhece.
-
-### Diferencial
-- ❌ NÃO: "Evitar glúten se for celíaco" (óbvio)
-- ✅ SIM: "Rico em potássio (380mg), mineral que regula a pressão arterial e previne cãibras musculares"
+O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em todas as suas refeições, fornecendo informações **CIENTÍFICAS, RELEVANTES e RECENTES** que ele NÃO conhece.
 
 ### Disclaimer Legal
-> "As informações são educativas e não substituem orientação de profissionais de saúde. Consulte um nutricionista para dietas personalizadas."
+> "As informações são educativas e baseadas em pesquisas científicas. Não substituem orientação de profissionais de saúde."
+
+---
+
+## Diretrizes de Conteúdo
+
+### ❌ O QUE NÃO FAZER (informações óbvias):
+- "Muito colesterol faz mal" (todo mundo sabe)
+- "Açúcar em excesso engorda" (óbvio)
+- "Fritura não é saudável" (conhecimento popular)
+- "Evitar glúten se for celíaco" (óbvio)
+- "Fonte de proteínas" (genérico)
+
+### ✅ O QUE FAZER (informações relevantes):
+- **Com dados**: "Potássio (485mg) - regula impulsos elétricos do coração, previne arritmias"
+- **Com fonte**: "OMS classificou embutidos como Grupo 1 carcinógeno (2015)"
+- **Com impacto**: "80% dos brasileiros têm deficiência de vitamina D (USP 2023)"
+- **Com curiosidade**: "Cogumelos recarregam vitamina D no sol mesmo depois de colhidos"
+
+### 📊 Fontes Científicas:
+- OMS/WHO (Organização Mundial da Saúde)
+- ANVISA (Agência Nacional de Vigilância Sanitária)
+- IARC (Agência Internacional de Pesquisa em Câncer)
+- FDA (Food and Drug Administration)
+- Tabela TACO (UNICAMP)
+- Revistas: Nature, Lancet, JAMA, Harvard Health
+
+### ⚠️ Alertas de Saúde Relevantes:
+- **Carnes Processadas**: OMS Grupo 1 carcinógeno (bacon, linguiça, presunto)
+- **Peixes Grandes**: Mercúrio - FDA limite 340g/semana
+- **Ultraprocessados**: +10% consumo = +12% risco câncer (NutriNet 2022)
+- **Agrotóxicos**: Brasil maior consumidor mundial
+- **Gordura Trans**: FDA baniu nos EUA em 2018
 
 ---
 
@@ -23,17 +51,17 @@ O SoulNutri é um **nutricionista virtual** que acompanha o cliente em todas as 
 - Identificação de pratos por imagem
 - Categoria (vegano/vegetariano/proteína animal)
 - Alérgenos em destaque
-- 1 benefício educativo (o melhor do prato)
-- 1 risco/atenção (o mais importante)
-- Informações nutricionais básicas
+- 1 benefício principal (científico)
+- 1 alerta de saúde (se relevante)
+- 1 curiosidade científica
+- Referência da pesquisa
 
 ### Versão Premium (Futuro)
-- Perfil nutricional do usuário
+- Perfil nutricional pessoal
 - Histórico de consumo
-- Alertas personalizados: "Esta semana você já consumiu X de potássio..."
-- Sugestões baseadas no histórico
-- Notícias/pesquisas sobre ingredientes
-- Link com mídia especializada (saúde, agrotóxicos, etc.)
+- Alertas: "Você já consumiu X de sódio esta semana..."
+- Link para notícias/pesquisas sobre ingredientes
+- Busca: "Veja esta pesquisa recente sobre..."
 
 ---
 
@@ -42,50 +70,49 @@ O SoulNutri é um **nutricionista virtual** que acompanha o cliente em todas as 
 - **Frontend**: React
 - **ML/CV**: OpenCLIP (ViT-B-32)
 - **Database**: MongoDB
-- **IA Genérica**: GPT-4o Vision
+- **IA**: GPT-4o Vision (identificação e informações científicas)
 
 ---
 
 ## Funcionalidades Implementadas
 
-### ✅ Core Features
-- [x] Identificação de pratos por imagem
-- [x] 139 pratos no índice + 18 criados pelo usuário
-- [x] Indicador de confiança (ALTA/MÉDIA/BAIXA)
-- [x] Categorias coloridas (vegano/vegetariano/proteína animal)
-- [x] Alérgenos sempre visíveis
+### ✅ Core
+- [x] Identificação por imagem (139 pratos índice + 18 novos)
 - [x] Sistema de feedback (correto/incorreto)
 - [x] Cadastro de pratos novos com IA
 - [x] IA genérica para pratos não cadastrados
+- [x] Busca de pesquisas sobre ingredientes
 
 ### ✅ UI/UX
 - [x] Câmera com moldura retangular vertical
 - [x] Toque para fotografar
-- [x] Botões Galeria e Nova Foto
 - [x] Modal de correção com busca
 - [x] Campo para cadastrar prato novo
 
+### ✅ Informações Científicas
+- [x] Prompt detalhado para IA (evitar óbvio, focar em relevante)
+- [x] 18 pratos com informações completas
+- [x] Endpoint de pesquisa de ingredientes
+- [ ] Estender para todos os 139 pratos
+
 ---
 
-## Backlog Priorizado
+## Backlog
 
 ### P0 - URGENTE
-- [ ] Corrigir preenchimento de ingredientes/benefícios nos 18 pratos novos
+- [ ] Estender informações científicas para TODOS os 139 pratos
 - [ ] Investigar travamentos do app
-- [ ] Melhorar precisão (meta: 100% em pratos cadastrados)
-- [ ] Simplificar benefícios/riscos (1 melhor + 1 pior, educativos)
+- [ ] Melhorar precisão (meta: 100% pratos cadastrados)
 
 ### P1 - ESTA SEMANA
-- [ ] Implementar busca de notícias sobre ingredientes
-- [ ] Preparar teste com múltiplos usuários simultâneos
-- [ ] Retreinar índice com novas fotos coletadas
+- [ ] Teste com grupo de 3-4 pessoas simultâneas
+- [ ] Interface para mostrar link "Veja esta pesquisa"
+- [ ] Retreinar índice com novas fotos
 
 ### P2 - FUTURO
-- [ ] Reconhecimento de pratos compostos (múltiplos itens)
 - [ ] Versão Premium separada
 - [ ] Perfil nutricional do usuário
-- [ ] Histórico de consumo
-- [ ] Alertas personalizados
+- [ ] Reconhecimento de pratos compostos
 
 ---
 
@@ -94,11 +121,3 @@ O SoulNutri é um **nutricionista virtual** que acompanha o cliente em todas as 
 - Pratos criados pelo usuário: 18
 - Feedbacks coletados: 18
 - Taxa de acerto: 83.3%
-
----
-
-## Notas Importantes
-- Usuário não é técnico - comunicação simples
-- Informações devem ser EDUCATIVAS, não óbvias
-- Nunca se posicionar como profissional de saúde
-- Foco em informar, não prescrever
