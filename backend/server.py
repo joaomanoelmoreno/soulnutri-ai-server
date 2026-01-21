@@ -417,6 +417,14 @@ async def shutdown_db_client():
 async def startup_event():
     logger.info("SoulNutri AI Server iniciando...")
     
+    # Pré-carregar o modelo CLIP (importante para performance!)
+    try:
+        from ai.embedder import preload_model
+        preload_model()
+        logger.info("Modelo CLIP pré-carregado!")
+    except Exception as e:
+        logger.warning(f"Não foi possível pré-carregar modelo: {e}")
+    
     # Tentar pré-carregar o índice (se existir)
     try:
         from ai.index import get_index
