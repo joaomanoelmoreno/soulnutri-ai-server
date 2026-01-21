@@ -53,7 +53,7 @@ EXEMPLOS DE INFORMAÇÕES RUINS (EVITAR):
 - "Evitar em excesso" (vale para tudo)"""
 
 
-async def enrich_single_dish(chat: Chat, dish: dict) -> dict:
+async def enrich_single_dish(dish: dict) -> dict:
     """Enriquece um único prato com informações científicas"""
     
     nome = dish.get('nome', '')
@@ -73,12 +73,13 @@ RISCOS JÁ CONHECIDOS: {', '.join(riscos_existentes) if riscos_existentes else '
 Gere informações que o cliente NÃO sabe, com dados numéricos e fontes reais.
 Responda APENAS com o JSON no formato especificado."""
 
-    chat.messages = [
-        Message(role=MessageRole.SYSTEM, content=SYSTEM_PROMPT),
-        Message(role=MessageRole.USER, content=user_prompt)
-    ]
+    chat = LlmChat(
+        api_key=EMERGENT_KEY,
+        model="gpt-4o",
+        system_prompt=SYSTEM_PROMPT
+    )
     
-    response = await chat.send_async()
+    response = await chat.send_message_async(user_prompt)
     
     # Extrair JSON da resposta
     import json
