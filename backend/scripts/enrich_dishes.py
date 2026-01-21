@@ -73,13 +73,16 @@ RISCOS JÁ CONHECIDOS: {', '.join(riscos_existentes) if riscos_existentes else '
 Gere informações que o cliente NÃO sabe, com dados numéricos e fontes reais.
 Responda APENAS com o JSON no formato especificado."""
 
+    import uuid
+    session_id = str(uuid.uuid4())
+    
     chat = LlmChat(
         api_key=EMERGENT_KEY,
-        model="gpt-4o",
-        system_prompt=SYSTEM_PROMPT
-    )
+        session_id=session_id,
+        system_message=SYSTEM_PROMPT
+    ).with_model("openai", "gpt-4o")
     
-    response = await chat.send_message_async(user_prompt)
+    response = chat.send_message(UserMessage(content=user_prompt))
     
     # Extrair JSON da resposta
     import json
