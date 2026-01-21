@@ -14,6 +14,9 @@ function App() {
   const [dishes, setDishes] = useState([]);
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [lastImageBlob, setLastImageBlob] = useState(null);
+  const [newDishName, setNewDishName] = useState("");
+  const [creatingDish, setCreatingDish] = useState(false);
+  const [searchFilter, setSearchFilter] = useState("");
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -53,7 +56,6 @@ function App() {
 
   const stopCamera = () => { stream?.getTracks().forEach(t => t.stop()); };
 
-  // Toque na câmera para capturar
   const handleCameraTouch = useCallback(() => {
     if (loadingRef.current || !videoRef.current || !canvasRef.current) return;
     
@@ -107,6 +109,8 @@ function App() {
     setShowFeedback(false);
     setFeedbackSent(false);
     setLastImageBlob(null);
+    setNewDishName("");
+    setSearchFilter("");
   };
 
   // Enviar feedback - CORRETO
@@ -152,10 +156,55 @@ function App() {
     }
   };
 
-  // Descartar foto (não salvar)
+  // CRIAR PRATO NOVO com IA
+  const createNewDish = async () => {
+    if (!lastImageBlob || !newDishName.trim()) return;
+    
+    setCreatingDish(true);
+    
+    const fd = new FormData();
+    fd.append("file", lastImageBlob, "photo.jpg");
+    fd.append("dish_name", newDishName.trim());
+    
+    try {
+      const res = await fetch(`${API}/ai/create-dish`, { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.ok) {
+        setFeedbackSent(true);
+        setShowFeedback(false);
+        setNewDishName("");
+        // Atualizar lista de pratos
+        loadDishes();
+        // Mostrar resultado do novo prato
+        if (data.dish_info) {
+          setResult({
+            ok: true,
+            identified: true,
+            dish: data.dish_slug,
+            dish_display: data.dish_name,
+            confidence: 'alta',
+            score: 1.0,
+            message: 'Prato cadastrado com sucesso!',
+            ...data.dish_info,
+            source: 'new_dish'
+          });
+        }
+      } else {
+        alert(data.error || 'Erro ao criar prato');
+      }
+    } catch (e) {
+      console.error('Erro ao criar prato:', e);
+      alert('Erro ao criar prato: ' + e.message);
+    } finally {
+      setCreatingDish(false);
+    }
+  };
+
+  // Descartar foto
   const discardPhoto = () => {
     setShowFeedback(false);
     setFeedbackSent(true);
+    setNewDishName("");
   };
 
   const r = result;
@@ -181,21 +230,43 @@ function App() {
   
   const catStyle = getCategoryStyle(r?.category);
 
-  // Formatar alertas de alérgenos
-  const formatAllergenAlert = (riscos) => {
-    if (!riscos || riscos.length === 0) return null;
-    return riscos.map(risco => {
-      if (risco.toLowerCase().includes('contém') || risco.toLowerCase().includes('alérgeno:')) {
-        return { type: 'definite', text: risco.replace('Alérgeno:', 'Atenção: este prato contém') };
-      }
-      if (risco.toLowerCase().includes('pode conter') || risco.toLowerCase().includes('traços')) {
-        return { type: 'possible', text: `${risco}. Verifique com o atendente.` };
-      }
-      return { type: 'info', text: risco };
-    });
+  // Formatar alertas de alérgenos - SEMPRE MOSTRAR
+  const getAllergenDisplay = (riscos) => {
+    if (!riscos || riscos.length === 0) {
+      return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
+    }
+    
+    const allergenRisks = riscos.filter(r => 
+      r.toLowerCase().includes('alérgeno') || 
+      r.toLowerCase().includes('contém') ||
+      r.toLowerCase().includes('glúten') ||
+      r.toLowerCase().includes('lactose') ||
+      r.toLowerCase().includes('crustáceo') ||
+      r.toLowerCase().includes('camarão') ||
+      r.toLowerCase().includes('amendoim') ||
+      r.toLowerCase().includes('soja') ||
+      r.toLowerCase().includes('ovo')
+    );
+    
+    if (allergenRisks.length === 0) {
+      return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
+    }
+    
+    return { 
+      hasAllergens: true, 
+      alerts: allergenRisks.map(risco => ({
+        type: risco.toLowerCase().includes('pode conter') ? 'possible' : 'definite',
+        text: risco
+      }))
+    };
   };
 
-  const allergenAlerts = formatAllergenAlert(r?.riscos);
+  const allergenInfo = getAllergenDisplay(r?.riscos);
+
+  // Filtrar pratos na busca
+  const filteredDishes = dishes.filter(d => 
+    d.name.toLowerCase().includes(searchFilter.toLowerCase())
+  );
 
   return (
     <div className="app">
@@ -208,7 +279,7 @@ function App() {
         {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
       </header>
 
-      {/* Câmera com moldura guia - MENOR */}
+      {/* Câmera com moldura guia */}
       <div 
         className="cam-box" 
         onClick={handleCameraTouch}
@@ -217,13 +288,11 @@ function App() {
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
         
-        {/* Moldura guia para posicionar o prato */}
         <div className="cam-guide">
           <div className="guide-frame"></div>
           <span className="guide-text">Posicione o prato aqui</span>
         </div>
         
-        {/* Overlay de loading */}
         {loading && (
           <div className="cam-loading">
             <span>🔍</span>
@@ -231,7 +300,6 @@ function App() {
           </div>
         )}
         
-        {/* Instrução de toque */}
         {!loading && !r && (
           <div className="cam-hint">
             <span>👆</span>
@@ -262,7 +330,8 @@ function App() {
       <input 
         ref={fileInputRef} 
         type="file" 
-        accept="image/*" 
+        accept="image/*"
+        capture="environment"
         hidden 
         onChange={handleFileSelect} 
       />
@@ -271,10 +340,15 @@ function App() {
       {r?.ok && (
         <div className={`res ${r.confidence}`} data-testid="result-container">
           
-          {/* Indicador de fonte (IA genérica) */}
+          {/* Indicador de fonte */}
           {r.source === 'generic_ai' && (
             <div className="source-badge" data-testid="source-badge">
               🤖 Identificado por IA Genérica (prato não cadastrado)
+            </div>
+          )}
+          {r.source === 'new_dish' && (
+            <div className="source-badge new" data-testid="source-badge">
+              ✨ Novo prato cadastrado com sucesso!
             </div>
           )}
           
@@ -290,16 +364,20 @@ function App() {
             {r.category_emoji} {r.category?.toUpperCase()}
           </div>
 
-          {/* ALÉRGENOS EM DESTAQUE */}
-          {allergenAlerts && allergenAlerts.length > 0 && (
-            <div className="allergen-alert" data-testid="allergen-alert">
-              {allergenAlerts.map((alert, i) => (
+          {/* ALÉRGENOS - SEMPRE MOSTRAR */}
+          <div className={`allergen-section ${allergenInfo.hasAllergens ? 'has-allergens' : 'no-allergens'}`}>
+            {allergenInfo.hasAllergens ? (
+              allergenInfo.alerts.map((alert, i) => (
                 <div key={i} className={`alert-item ${alert.type}`}>
                   ⚠️ {alert.text}
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <div className="alert-item safe">
+                {allergenInfo.text}
+              </div>
+            )}
+          </div>
 
           {/* Indicador de Confiança */}
           <div className="conf-indicator" style={{ background: confData.bg, borderColor: confData.color }}>
@@ -360,7 +438,7 @@ function App() {
           )}
 
           {/* BOTÕES DE FEEDBACK */}
-          {!feedbackSent && (
+          {!feedbackSent && r.source !== 'new_dish' && (
             <div className="feedback-section">
               <p className="feedback-question">Este reconhecimento está correto?</p>
               <div className="feedback-btns">
@@ -386,10 +464,43 @@ function App() {
       {showFeedback && (
         <div className="modal-overlay" onClick={() => setShowFeedback(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>Qual é o prato correto?</h3>
-            <p className="modal-hint">Selecione o prato para salvar esta foto (mesmo se estiver ruim/tremida)</p>
+            <h3>Corrigir identificação</h3>
+            
+            {/* Campo para NOVO PRATO */}
+            <div className="new-dish-section">
+              <p className="section-label">📝 Cadastrar prato novo:</p>
+              <div className="new-dish-input">
+                <input 
+                  type="text"
+                  placeholder="Digite o nome do prato..."
+                  value={newDishName}
+                  onChange={e => setNewDishName(e.target.value)}
+                />
+                <button 
+                  onClick={createNewDish} 
+                  disabled={!newDishName.trim() || creatingDish}
+                  className="create-btn"
+                >
+                  {creatingDish ? '⏳' : '➕'} {creatingDish ? 'Criando...' : 'Criar'}
+                </button>
+              </div>
+              <small>A IA vai gerar automaticamente: categoria, ingredientes, benefícios, riscos e alérgenos</small>
+            </div>
+
+            <div className="divider">ou selecione um prato existente:</div>
+
+            {/* Busca */}
+            <input 
+              type="text"
+              className="search-input"
+              placeholder="🔍 Buscar prato..."
+              value={searchFilter}
+              onChange={e => setSearchFilter(e.target.value)}
+            />
+
+            {/* Lista de pratos */}
             <div className="dishes-list">
-              {dishes.map(d => (
+              {filteredDishes.map(d => (
                 <button 
                   key={d.slug} 
                   className="dish-option"
@@ -399,6 +510,7 @@ function App() {
                 </button>
               ))}
             </div>
+            
             <div className="modal-actions">
               <button className="discard-btn" onClick={discardPhoto}>
                 🗑️ Descartar (foto inutilizável)
