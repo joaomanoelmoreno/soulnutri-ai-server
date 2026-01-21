@@ -9,58 +9,17 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
   const [stream, setStream] = useState(null);
-  const [autoCapture, setAutoCapture] = useState(false);
-  const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
-  const autoIntervalRef = useRef(null);
-  const countdownIntervalRef = useRef(null);
   const loadingRef = useRef(false);
 
   useEffect(() => { 
     checkStatus(); 
     startCamera(); 
-    return () => {
-      stopCamera();
-      clearAllIntervals();
-    };
+    return () => stopCamera();
   }, []);
-
-  const clearAllIntervals = useCallback(() => {
-    if (autoIntervalRef.current) {
-      clearInterval(autoIntervalRef.current);
-      autoIntervalRef.current = null;
-    }
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-  }, []);
-
-  // Gerenciar auto-captura - CORRIGIDO: sem dependência de loading
-  useEffect(() => {
-    if (autoCapture && stream) {
-      setCountdown(3);
-      
-      countdownIntervalRef.current = setInterval(() => {
-        setCountdown(prev => (prev <= 1 ? 3 : prev - 1));
-      }, 1000);
-
-      autoIntervalRef.current = setInterval(() => {
-        // Usar ref para checar loading sem causar re-render
-        if (!loadingRef.current) {
-          captureAndIdentify();
-        }
-      }, 3000);
-    } else {
-      clearAllIntervals();
-      setCountdown(0);
-    }
-
-    return () => clearAllIntervals();
-  }, [autoCapture, stream, clearAllIntervals]);
 
   const checkStatus = async () => {
     try {
@@ -81,8 +40,9 @@ function App() {
 
   const stopCamera = () => { stream?.getTracks().forEach(t => t.stop()); };
 
-  const captureAndIdentify = useCallback(async () => {
-    if (!videoRef.current || !canvasRef.current || loadingRef.current) return;
+  // Toque na câmera para capturar
+  const handleCameraTouch = useCallback(() => {
+    if (loadingRef.current || !videoRef.current || !canvasRef.current) return;
     
     const v = videoRef.current, c = canvasRef.current;
     c.width = v.videoWidth; 
@@ -115,18 +75,7 @@ function App() {
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setAutoCapture(false);
-      identifyImage(file);
-    }
-  };
-
-  const toggleAutoCapture = (enabled) => {
-    if (enabled) {
-      setResult(null);
-      setError(null);
-    }
-    setAutoCapture(enabled);
+    if (file) identifyImage(file);
   };
 
   const clearResult = () => {
@@ -136,6 +85,7 @@ function App() {
 
   const r = result;
   
+  // Config de confiança
   const confidenceConfig = {
     alta: { color: "#10b981", label: "ALTA CONFIANÇA", bg: "rgba(16,185,129,0.15)" },
     média: { color: "#f59e0b", label: "MÉDIA CONFIANÇA", bg: "rgba(245,158,11,0.15)" },
@@ -143,7 +93,39 @@ function App() {
   };
   
   const confData = confidenceConfig[r?.confidence] || confidenceConfig.baixa;
-  const catColor = { vegano: "#22c55e", vegetariano: "#84cc16", "proteína animal": "#f97316" }[r?.category] || "#666";
+  
+  // Cores das categorias conforme diretriz
+  const getCategoryStyle = (cat) => {
+    switch(cat) {
+      case 'vegano': return { bg: '#22c55e', color: '#fff' };
+      case 'vegetariano': return { bg: '#fff', color: '#333', border: '1px solid #333' };
+      case 'proteína animal': return { bg: '#f97316', color: '#fff' };
+      default: return { bg: '#666', color: '#fff' };
+    }
+  };
+  
+  const catStyle = getCategoryStyle(r?.category);
+
+  // Formatar alertas de alérgenos
+  const formatAllergenAlert = (riscos, confidence) => {
+    if (!riscos || riscos.length === 0) return null;
+    
+    const alerts = riscos.map(risco => {
+      // Se contém definitivamente
+      if (risco.toLowerCase().includes('contém') || risco.toLowerCase().includes('alérgeno:')) {
+        return { type: 'definite', text: risco.replace('Alérgeno:', 'Atenção: este prato contém') };
+      }
+      // Se pode conter (traços ou incerteza)
+      if (risco.toLowerCase().includes('pode conter') || risco.toLowerCase().includes('traços')) {
+        return { type: 'possible', text: `${risco}. Verifique com o atendente.` };
+      }
+      return { type: 'info', text: risco };
+    });
+    
+    return alerts;
+  };
+
+  const allergenAlerts = formatAllergenAlert(r?.riscos, r?.confidence);
 
   return (
     <div className="app">
@@ -156,43 +138,43 @@ function App() {
         {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
       </header>
 
-      {/* Câmera no topo - ocupa mais espaço */}
-      <div className="cam-box" data-testid="camera-container">
+      {/* Câmera - TOQUE PARA CAPTURAR */}
+      <div 
+        className="cam-box" 
+        onClick={handleCameraTouch}
+        data-testid="camera-container"
+      >
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
-        {loading && <div className="cam-loading"><span>🔍</span></div>}
-        <div className="cam-ctrl">
-          <button 
-            className="cap-btn" 
-            onClick={captureAndIdentify} 
-            disabled={loading}
-            data-testid="capture-button"
-          >
-            {loading ? "⏳" : "📸"}
-          </button>
-          <label className="auto-lbl">
-            <input 
-              type="checkbox" 
-              checked={autoCapture} 
-              onChange={e => toggleAutoCapture(e.target.checked)}
-              data-testid="auto-capture-toggle" 
-            />
-            Auto {autoCapture && countdown > 0 ? `(${countdown}s)` : "3s"}
-          </label>
-        </div>
+        
+        {/* Overlay de loading */}
+        {loading && (
+          <div className="cam-loading">
+            <span>🔍</span>
+            <p>Identificando...</p>
+          </div>
+        )}
+        
+        {/* Instrução de toque */}
+        {!loading && !r && (
+          <div className="cam-hint">
+            <span>👆</span>
+            <p>Toque para fotografar</p>
+          </div>
+        )}
       </div>
 
-      {/* Botões de ação - sempre visíveis */}
+      {/* Botões de ação - MAIORES */}
       <div className="action-btns">
         <button 
-          className="gal-btn" 
+          className="action-btn gallery" 
           onClick={() => fileInputRef.current?.click()}
           data-testid="gallery-button"
         >
           🖼️ Galeria
         </button>
         <button 
-          className="clear-btn" 
+          className="action-btn clear" 
           onClick={clearResult}
           disabled={!r && !error}
           data-testid="clear-button"
@@ -209,8 +191,37 @@ function App() {
         onChange={handleFileSelect} 
       />
 
+      {/* RESULTADO */}
       {r?.ok && (
         <div className={`res ${r.confidence}`} data-testid="result-container">
+          
+          {/* Nome do Prato */}
+          <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
+          
+          {/* CATEGORIA - Logo abaixo do nome */}
+          <div 
+            className="category-badge" 
+            style={{ 
+              background: catStyle.bg, 
+              color: catStyle.color,
+              border: catStyle.border || 'none'
+            }}
+            data-testid="category-badge"
+          >
+            {r.category_emoji} {r.category?.toUpperCase()}
+          </div>
+
+          {/* ALÉRGENOS EM DESTAQUE */}
+          {allergenAlerts && allergenAlerts.length > 0 && (
+            <div className="allergen-alert" data-testid="allergen-alert">
+              {allergenAlerts.map((alert, i) => (
+                <div key={i} className={`alert-item ${alert.type}`}>
+                  ⚠️ {alert.text}
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Indicador de Confiança */}
           <div className="conf-indicator" style={{ background: confData.bg, borderColor: confData.color }}>
             <span className="conf-label" style={{ color: confData.color }}>
@@ -220,15 +231,8 @@ function App() {
               {(r.score * 100).toFixed(0)}%
             </span>
           </div>
-
-          <div className="res-top">
-            <span className="cat" style={{background: catColor}} data-testid="category-badge">
-              {r.category_emoji} {r.category}
-            </span>
-          </div>
           
-          <h2 data-testid="dish-name">{r.dish_display}</h2>
-          
+          {/* Descrição */}
           {r.descricao && <p className="desc" data-testid="dish-description">{r.descricao}</p>}
 
           {/* Técnica de Preparo */}
@@ -254,14 +258,6 @@ function App() {
             </div>
           )}
 
-          {/* Riscos/Atenção */}
-          {r.riscos?.length > 0 && (
-            <div className="info-box warn" data-testid="risks-box">
-              <h4>⚠️ Alérgenos e Atenção</h4>
-              <ul>{r.riscos.map((x,i) => <li key={i}>{x}</li>)}</ul>
-            </div>
-          )}
-
           {/* Informação Nutricional */}
           {r.nutrition && (
             <div className="nutr" data-testid="nutrition-box">
@@ -283,7 +279,8 @@ function App() {
 
           <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
 
-          {r.alternatives?.length > 0 && (
+          {/* Alternativas (apenas se confiança média/baixa) */}
+          {r.alternatives?.length > 0 && r.confidence !== 'alta' && (
             <div className="alts" data-testid="alternatives-box">
               <small>Também pode ser:</small>
               {r.alternatives.map((a,i) => <span key={i}>{a}</span>)}
