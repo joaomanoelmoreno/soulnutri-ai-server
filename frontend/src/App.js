@@ -543,12 +543,13 @@ function App() {
               ))}
             </div>
             
-            <div className="modal-actions">
+            {/* Ações do modal - FIXAS NO FINAL */}
+            <div className="modal-actions-fixed">
               <button className="discard-btn" onClick={discardPhoto}>
-                🗑️ Descartar (foto inutilizável)
+                🗑️ Descartar foto (inutilizável)
               </button>
               <button className="cancel-btn" onClick={() => setShowFeedback(false)}>
-                Cancelar
+                ✕ Cancelar
               </button>
             </div>
           </div>
