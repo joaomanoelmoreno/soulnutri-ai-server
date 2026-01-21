@@ -476,6 +476,96 @@ async def list_dishes():
         )
 
 
+@api_router.post("/ai/create-dish")
+async def create_new_dish(
+    file: UploadFile = File(...),
+    dish_name: str = Form("")
+):
+    """
+    Cria um novo prato usando IA para gerar todas as informações.
+    Salva a foto e adiciona ao banco de dados.
+    """
+    try:
+        import uuid
+        from datetime import datetime
+        from services.generic_ai import identify_unknown_dish
+        
+        if not dish_name.strip():
+            return {"ok": False, "error": "Nome do prato é obrigatório"}
+        
+        content = await file.read()
+        
+        # Gerar slug
+        slug = dish_name.lower().strip()
+        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
+        slug = slug.replace(' ', '_')
+        
+        # Usar IA para gerar informações do prato
+        logger.info(f"Gerando informações para novo prato: {dish_name}")
+        ai_result = await identify_unknown_dish(content)
+        
+        # Preparar informações do prato
+        dish_info = {
+            "nome": dish_name.strip(),
+            "slug": slug,
+            "categoria": ai_result.get("categoria", "outros"),
+            "category_emoji": ai_result.get("category_emoji", "🍽️"),
+            "descricao": ai_result.get("descricao", f"{dish_name} - prato cadastrado pelo usuário"),
+            "ingredientes": ai_result.get("ingredientes_provaveis", []),
+            "beneficios": ai_result.get("beneficios", []),
+            "riscos": ai_result.get("riscos", []),
+            "tecnica": ai_result.get("tecnica_preparo", ""),
+            "nutricao": {
+                "calorias": "~200 kcal",
+                "proteinas": "~10g",
+                "carboidratos": "~25g",
+                "gorduras": "~8g"
+            },
+            "contem_gluten": any("glúten" in r.lower() for r in ai_result.get("riscos", [])),
+            "ativo": True,
+            "origem": "user_created",
+            "created_at": datetime.utcnow()
+        }
+        
+        # Salvar no MongoDB
+        await db.dishes.update_one(
+            {"slug": slug},
+            {"$set": dish_info},
+            upsert=True
+        )
+        
+        # Criar diretório e salvar imagem
+        dataset_dir = Path("/app/datasets/organized") / slug
+        dataset_dir.mkdir(parents=True, exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{slug}_{timestamp}_{unique_id}.jpg"
+        file_path = dataset_dir / filename
+        
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        logger.info(f"Novo prato criado: {dish_name} -> {slug}")
+        
+        return {
+            "ok": True,
+            "message": f"Prato '{dish_name}' criado com sucesso!",
+            "dish_slug": slug,
+            "dish_name": dish_name,
+            "dish_info": dish_info,
+            "file_saved": filename,
+            "note": "Execute /api/ai/reindex para incorporar ao índice de busca"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar prato: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
 @api_router.post("/ai/feedback")
 async def submit_feedback(
     file: UploadFile = File(...),
