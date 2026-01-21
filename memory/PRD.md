@@ -22,12 +22,15 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 - [x] Lógica de glúten corrigida
 
 ### ✅ UI/UX (Concluídas - 21/01/2026)
-- [x] Câmera no topo com área ampla (280px min)
-- [x] Botão "Nova Foto" sempre visível (lado do Galeria)
-- [x] Bug da auto-captura corrigido (useRef para loading)
+- [x] Câmera no topo com área ampla (300px min)
+- [x] **NOVO: "Toque para fotografar"** - substituiu auto-captura
+- [x] **NOVO: Botões maiores** - Galeria e Nova Foto bem visíveis
+- [x] **NOVO: Categoria logo abaixo do nome** (Vegano=verde, Vegetariano=branco, Proteína=laranja)
+- [x] **NOVO: Alérgenos em destaque** com formato específico
+- [x] Bug da auto-captura corrigido
+- [x] Logo SoulNutri oficial com ®
 - [x] Footer "Powered by Emergent" discreto
 - [x] Layout responsivo mobile-first
-- [x] Logo SoulNutri oficial integrado com ® (21/01/2026)
 
 ### ✅ Performance (Melhorada - 21/01/2026)
 - [x] Modelo CLIP pré-carregado no startup
@@ -37,16 +40,24 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 ## Backlog
 
 ### P0 - Alta Prioridade
-- [x] ~~Gerar ícone/logo do app SoulNutri~~ (Usuário forneceu logo)
+- [ ] Revisar dados dos pratos com informações genéricas
 - [ ] Testar reconhecimento de pratos não cadastrados
 
 ### P1 - Média Prioridade
-- [ ] Otimizar para ~100ms (requer GPU ou modelo mais leve)
-- [ ] Investigar domínio personalizado `soulnutri.app.br`
+- [ ] Melhorar precisão entre pratos similares (confusão)
+- [ ] Sistema de feedback: "correto/incorreto"
+- [ ] Migrar dados para MongoDB (escalabilidade)
 
 ### P2 - Baixa Prioridade
-- [ ] Refatorar dados dos pratos para JSON/MongoDB
-- [ ] Deploy em produção (Render com mais memória/GPU)
+- [ ] Investigar domínio personalizado `soulnutri.app.br`
+- [ ] Otimizar para ~100ms (requer GPU)
+- [ ] Deploy em produção
+
+### Premium (Futuro)
+- [ ] Perfil nutricional do usuário
+- [ ] Alertas personalizados
+- [ ] Histórico de consumo
+- [ ] Notícias e pesquisas
 
 ### Futuro
 - [ ] Funcionalidades Premium (alertas inteligentes)
