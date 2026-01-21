@@ -404,6 +404,151 @@ async def check_unknown(file: UploadFile = File(...)):
             content={"ok": False, "error": str(e)}
         )
 
+
+@api_router.get("/ai/dishes")
+async def list_dishes():
+    """
+    Lista todos os pratos disponíveis para seleção no feedback.
+    """
+    try:
+        from ai.policy import DISH_NAMES, DISH_CATEGORIES, get_category_emoji
+        
+        dishes = []
+        for slug, name in sorted(DISH_NAMES.items(), key=lambda x: x[1]):
+            category = DISH_CATEGORIES.get(slug, 'outros')
+            dishes.append({
+                "slug": slug,
+                "name": name,
+                "category": category,
+                "category_emoji": get_category_emoji(category)
+            })
+        
+        return {
+            "ok": True,
+            "total": len(dishes),
+            "dishes": dishes
+        }
+    except Exception as e:
+        logger.error(f"Erro ao listar pratos: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/feedback")
+async def submit_feedback(
+    file: UploadFile = File(...),
+    dish_slug: str = "",
+    is_correct: str = "true",
+    original_dish: str = ""
+):
+    """
+    Recebe feedback sobre reconhecimento de prato.
+    - Se correto: salva a foto no dataset do prato
+    - Se incorreto: salva no prato correto informado pelo usuário
+    
+    Isso ajuda a melhorar o modelo com o tempo.
+    """
+    try:
+        import uuid
+        from datetime import datetime
+        
+        content = await file.read()
+        is_correct_bool = is_correct.lower() == "true"
+        
+        if not dish_slug:
+            return {"ok": False, "message": "dish_slug é obrigatório"}
+        
+        # Diretório do dataset
+        dataset_dir = Path("/app/datasets/organized")
+        
+        # Normalizar slug
+        slug = dish_slug.lower().replace(' ', '').replace('-', '').replace('_', '')
+        
+        # Encontrar a pasta correta
+        target_dir = None
+        for folder in dataset_dir.iterdir():
+            if folder.is_dir():
+                folder_slug = folder.name.lower().replace('_', '').replace('-', '')
+                if folder_slug == slug or slug in folder_slug:
+                    target_dir = folder
+                    break
+        
+        if not target_dir:
+            # Criar pasta se não existir
+            target_dir = dataset_dir / slug
+            target_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Gerar nome único para o arquivo
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        feedback_type = "correct" if is_correct_bool else "corrected"
+        filename = f"{slug}_{feedback_type}_{timestamp}_{unique_id}.jpg"
+        
+        # Salvar imagem
+        file_path = target_dir / filename
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        # Log no MongoDB para análise posterior
+        feedback_doc = {
+            "dish_slug": dish_slug,
+            "original_dish": original_dish if not is_correct_bool else dish_slug,
+            "is_correct": is_correct_bool,
+            "file_path": str(file_path),
+            "created_at": datetime.utcnow()
+        }
+        await db.feedback.insert_one(feedback_doc)
+        
+        logger.info(f"Feedback salvo: {feedback_type} para {dish_slug} -> {filename}")
+        
+        return {
+            "ok": True,
+            "message": f"Feedback registrado! Foto salva em {target_dir.name}",
+            "file_saved": filename,
+            "is_correct": is_correct_bool,
+            "note": "Execute /api/ai/reindex para incorporar ao índice"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao processar feedback: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.get("/ai/feedback/stats")
+async def get_feedback_stats():
+    """
+    Retorna estatísticas dos feedbacks recebidos.
+    """
+    try:
+        total = await db.feedback.count_documents({})
+        correct = await db.feedback.count_documents({"is_correct": True})
+        incorrect = await db.feedback.count_documents({"is_correct": False})
+        
+        # Pratos mais corrigidos
+        pipeline = [
+            {"$match": {"is_correct": False}},
+            {"$group": {"_id": "$original_dish", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 10}
+        ]
+        most_corrected = await db.feedback.aggregate(pipeline).to_list(10)
+        
+        return {
+            "ok": True,
+            "total_feedbacks": total,
+            "correct": correct,
+            "incorrect": incorrect,
+            "accuracy_rate": (correct / total * 100) if total > 0 else 0,
+            "most_corrected": most_corrected
+        }
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
 # Incluir router
 app.include_router(api_router)
 
