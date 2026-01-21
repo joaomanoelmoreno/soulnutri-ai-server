@@ -271,6 +271,13 @@ function App() {
       {r?.ok && (
         <div className={`res ${r.confidence}`} data-testid="result-container">
           
+          {/* Indicador de fonte (IA genérica) */}
+          {r.source === 'generic_ai' && (
+            <div className="source-badge" data-testid="source-badge">
+              🤖 Identificado por IA Genérica (prato não cadastrado)
+            </div>
+          )}
+          
           {/* Nome do Prato */}
           <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
           
