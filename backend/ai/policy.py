@@ -7,6 +7,18 @@ Faixas de confiança:
 - baixa:  < 0.50 (incerto)
 
 Baseado na analogia Waze: mostrar o melhor caminho em tempo real.
+
+CIBI SANA - PREMISSAS GASTRONÔMICAS:
+- Sem aditivos químicos e alimentos ou bases industrializados
+- Legumes e verduras orgânicos
+- Peixes e carnes frescos (recebidos a cada 1-2 dias)
+- Técnicas: sous vide, vapor, braseamento, banho maria, grelhas, azeite
+- Creme de leite fresco, bases e molhos feitos na cozinha
+- Especiarias importadas (Índia, Arábia, Israel, China, Japão)
+- Ervas frescas orgânicas recebidas diariamente
+- Forno combinado ao invés de fritadeira (exceto bolinho de bacalhau)
+- Feijão demolhado antes do preparo
+- Maple light e Maple Canadense para adoçar
 """
 
 from typing import Dict, List, Optional
@@ -230,608 +242,712 @@ DISH_NUTRITION = {
     'carne': {'calorias': '250 kcal', 'proteinas': '26g', 'carboidratos': '0g', 'gorduras': '15g'},
     'vegetal': {'calorias': '50 kcal', 'proteinas': '2g', 'carboidratos': '10g', 'gorduras': '0.5g'},
     'massa': {'calorias': '131 kcal', 'proteinas': '5g', 'carboidratos': '25g', 'gorduras': '1g'},
-    'sobremesa': {'calorias': '200 kcal', 'proteinas': '3g', 'carboidratos': '35g', 'gorduras': '6g'},
+    'sobremesa': {'calorias': '180 kcal', 'proteinas': '3g', 'carboidratos': '30g', 'gorduras': '5g'},
     'batata': {'calorias': '90 kcal', 'proteinas': '2g', 'carboidratos': '20g', 'gorduras': '0.1g'},
 }
 
 # =============================================================================
-# INFORMAÇÕES DETALHADAS DOS PRATOS
+# CIBI SANA - AVISOS PADRÃO
+# =============================================================================
+AVISO_CIBI_SANA = "Cibi Sana: Sem aditivos químicos e alimentos ou bases industrializados."
+AVISO_GLUTEN = "Pode haver presença de traços de glúten em alguns preparos."
+
+# =============================================================================
+# INFORMAÇÕES DETALHADAS DOS PRATOS - CIBI SANA
 # =============================================================================
 DISH_INFO = {
     # ===================== VEGANOS =====================
     'aboboraaocurry': {
-        'descricao': 'Abóbora cozida com especiarias indianas em molho cremoso de leite de coco',
-        'ingredientes': ['abóbora', 'curry', 'leite de coco', 'gengibre', 'cúrcuma', 'cebola', 'alho'],
-        'beneficios': ['Rico em betacaroteno', 'Antioxidantes naturais', 'Anti-inflamatório', 'Baixa caloria', 'Fonte de vitamina A'],
-        'riscos': ['Alérgeno: pode conter coco', 'Contém especiarias fortes']
+        'descricao': 'Abóbora orgânica cozida no vapor com especiarias indianas importadas em molho cremoso de leite de coco',
+        'ingredientes': ['abóbora orgânica', 'curry indiano importado', 'leite de coco', 'gengibre fresco', 'cúrcuma importada', 'cebola orgânica', 'alho orgânico'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Rico em betacaroteno', 'Antioxidantes naturais', 'Anti-inflamatório natural', 'Baixa caloria', 'Fonte de vitamina A', 'Especiarias com propriedades medicinais'],
+        'riscos': ['Pode conter traços de glúten', 'Alérgeno: pode conter coco']
     },
     'alhoporogratinadovegano': {
-        'descricao': 'Alho poró gratinado com creme vegetal e ervas',
-        'ingredientes': ['alho poró', 'creme vegetal', 'farinha de rosca', 'azeite', 'ervas finas'],
-        'beneficios': ['Prebiótico natural', 'Rico em fibras', 'Baixo teor calórico', 'Fonte de vitamina K'],
-        'riscos': ['Pode conter glúten (farinha de rosca)', 'Flatulência em excesso']
+        'descricao': 'Alho poró orgânico gratinado no forno combinado com creme vegetal e ervas frescas orgânicas',
+        'ingredientes': ['alho poró orgânico', 'creme vegetal artesanal', 'ervas frescas orgânicas', 'azeite extravirgem'],
+        'tecnica': 'Gratinado em forno combinado',
+        'beneficios': ['Prebiótico natural', 'Rico em fibras', 'Baixo teor calórico', 'Fonte de vitamina K', 'Vegetais orgânicos'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'arroz7graos': {
-        'descricao': 'Mistura de arroz com grãos integrais e sementes nutritivas',
+        'descricao': 'Mistura artesanal de arroz com grãos integrais e sementes nutritivas',
         'ingredientes': ['arroz integral', 'quinoa', 'linhaça', 'aveia', 'centeio', 'cevada', 'trigo'],
+        'tecnica': 'Cozimento tradicional',
         'beneficios': ['Alto teor de fibras', 'Proteína vegetal completa', 'Energia de longa duração', 'Rico em minerais'],
-        'riscos': ['Contém glúten (trigo, cevada, centeio)', 'Índice glicêmico moderado']
+        'riscos': ['Contém glúten (trigo, cevada, centeio)', 'Pode conter traços de glúten']
     },
     'arroz7graoscomfrutassecas': {
-        'descricao': 'Arroz 7 grãos enriquecido com frutas secas',
+        'descricao': 'Arroz 7 grãos enriquecido com frutas secas selecionadas',
         'ingredientes': ['arroz 7 grãos', 'uva passa', 'damasco', 'castanhas', 'amêndoas'],
+        'tecnica': 'Cozimento tradicional',
         'beneficios': ['Rico em antioxidantes', 'Energia natural', 'Fibras e proteínas', 'Fonte de ferro'],
-        'riscos': ['Contém glúten', 'Alérgeno: castanhas', 'Alto teor de açúcar das frutas']
+        'riscos': ['Contém glúten', 'Alérgeno: oleaginosas', 'Pode conter traços de glúten']
     },
     'arroz7graoscomlegumes': {
-        'descricao': 'Arroz 7 grãos salteado com legumes frescos',
-        'ingredientes': ['arroz 7 grãos', 'cenoura', 'ervilha', 'milho', 'brócolis', 'abobrinha'],
-        'beneficios': ['Rico em fibras', 'Vitaminas variadas', 'Baixa gordura', 'Refeição completa'],
-        'riscos': ['Contém glúten', 'Pode causar gases']
+        'descricao': 'Arroz 7 grãos salteado com legumes orgânicos frescos',
+        'ingredientes': ['arroz 7 grãos', 'cenoura orgânica', 'ervilha', 'milho', 'brócolis orgânico', 'abobrinha orgânica'],
+        'tecnica': 'Cozimento e salteado',
+        'beneficios': ['Rico em fibras', 'Vitaminas variadas', 'Baixa gordura', 'Refeição completa', 'Vegetais orgânicos'],
+        'riscos': ['Contém glúten', 'Pode conter traços de glúten']
     },
     'arrozbranco': {
-        'descricao': 'Arroz branco cozido no vapor, acompanhamento clássico',
-        'ingredientes': ['arroz branco', 'sal', 'alho', 'óleo'],
+        'descricao': 'Arroz branco cozido no vapor, acompanhamento clássico preparado artesanalmente',
+        'ingredientes': ['arroz branco selecionado', 'sal', 'alho orgânico', 'azeite extravirgem'],
+        'tecnica': 'Cozimento no vapor',
         'beneficios': ['Fonte de energia rápida', 'Fácil digestão', 'Sem glúten naturalmente'],
-        'riscos': ['Alto índice glicêmico', 'Baixo teor de fibras']
+        'riscos': ['Pode conter traços de glúten']
     },
     'arrozde7graoscomamendoas': {
-        'descricao': 'Arroz 7 grãos com amêndoas tostadas',
-        'ingredientes': ['arroz 7 grãos', 'amêndoas', 'azeite', 'sal', 'ervas'],
+        'descricao': 'Arroz 7 grãos com amêndoas tostadas artesanalmente',
+        'ingredientes': ['arroz 7 grãos', 'amêndoas tostadas', 'azeite extravirgem', 'sal', 'ervas frescas orgânicas'],
+        'tecnica': 'Cozimento tradicional',
         'beneficios': ['Rico em ômega-3', 'Proteína e fibras', 'Vitamina E das amêndoas'],
-        'riscos': ['Contém glúten', 'Alérgeno: amêndoas (oleaginosas)']
+        'riscos': ['Contém glúten', 'Alérgeno: amêndoas (oleaginosas)', 'Pode conter traços de glúten']
     },
     'arrozintegral': {
-        'descricao': 'Arroz integral rico em fibras e nutrientes',
-        'ingredientes': ['arroz integral', 'sal'],
+        'descricao': 'Arroz integral rico em fibras e nutrientes, cozido no vapor',
+        'ingredientes': ['arroz integral selecionado', 'sal'],
+        'tecnica': 'Cozimento no vapor',
         'beneficios': ['Alto teor de fibras', 'Baixo índice glicêmico', 'Rico em vitaminas B', 'Sem glúten'],
-        'riscos': ['Digestão mais lenta', 'Pode conter arsênio em excesso']
+        'riscos': ['Pode conter traços de glúten']
     },
     'arrozintlegumes': {
-        'descricao': 'Arroz integral salteado com legumes variados',
-        'ingredientes': ['arroz integral', 'cenoura', 'brócolis', 'ervilha', 'abobrinha', 'azeite'],
-        'beneficios': ['Refeição completa', 'Rico em fibras e vitaminas', 'Baixo índice glicêmico'],
-        'riscos': ['Digestão lenta', 'Pode causar flatulência']
+        'descricao': 'Arroz integral salteado com legumes orgânicos variados',
+        'ingredientes': ['arroz integral', 'cenoura orgânica', 'brócolis orgânico', 'ervilha', 'abobrinha orgânica', 'azeite extravirgem'],
+        'tecnica': 'Cozimento no vapor e salteado',
+        'beneficios': ['Refeição completa', 'Rico em fibras e vitaminas', 'Baixo índice glicêmico', 'Vegetais orgânicos'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'batataassada': {
-        'descricao': 'Batatas assadas com ervas aromáticas',
-        'ingredientes': ['batata', 'azeite', 'alecrim', 'alho', 'sal'],
-        'beneficios': ['Fonte de potássio', 'Energia complexa', 'Vitamina C', 'Sem glúten'],
-        'riscos': ['Alto índice glicêmico', 'Cuidado com fritura em excesso']
+        'descricao': 'Batatas assadas em forno combinado com ervas frescas orgânicas aromáticas',
+        'ingredientes': ['batata', 'azeite extravirgem', 'alecrim fresco orgânico', 'alho orgânico', 'sal'],
+        'tecnica': 'Assado em forno combinado (sem fritura)',
+        'beneficios': ['Fonte de potássio', 'Energia complexa', 'Vitamina C', 'Sem glúten', 'Sem fritura'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'batatacompaprica': {
-        'descricao': 'Batatas temperadas com páprica defumada',
-        'ingredientes': ['batata', 'páprica defumada', 'azeite', 'alho', 'sal'],
-        'beneficios': ['Antioxidantes da páprica', 'Fonte de potássio', 'Energia sustentada'],
-        'riscos': ['Alto índice glicêmico', 'Páprica pode irritar estômago sensível']
+        'descricao': 'Batatas temperadas com páprica defumada importada, assadas em forno combinado',
+        'ingredientes': ['batata', 'páprica defumada importada', 'azeite extravirgem', 'alho orgânico', 'sal'],
+        'tecnica': 'Assado em forno combinado (sem fritura)',
+        'beneficios': ['Antioxidantes da páprica', 'Fonte de potássio', 'Energia sustentada', 'Sem fritura'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'batatadoce': {
-        'descricao': 'Batata doce assada ou cozida, naturalmente doce',
-        'ingredientes': ['batata doce'],
-        'beneficios': ['Baixo índice glicêmico', 'Rica em betacaroteno', 'Fibras', 'Vitamina A', 'Antioxidantes'],
-        'riscos': ['Moderação para diabéticos', 'Alto teor de carboidratos']
+        'descricao': 'Batata doce orgânica assada em forno combinado, naturalmente doce',
+        'ingredientes': ['batata doce orgânica'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Baixo índice glicêmico', 'Rica em betacaroteno', 'Fibras', 'Vitamina A', 'Antioxidantes', 'Orgânica'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'beringelaaolimao': {
-        'descricao': 'Berinjela grelhada com molho cítrico de limão',
-        'ingredientes': ['berinjela', 'limão', 'azeite', 'alho', 'salsinha'],
-        'beneficios': ['Baixíssima caloria', 'Rica em fibras', 'Antioxidantes', 'Ajuda na digestão'],
-        'riscos': ['Pode absorver muito óleo', 'Evitar se tiver problemas renais']
+        'descricao': 'Berinjela orgânica grelhada com molho cítrico de limão fresco',
+        'ingredientes': ['berinjela orgânica', 'limão fresco', 'azeite extravirgem', 'alho orgânico', 'salsinha orgânica'],
+        'tecnica': 'Grelhado na grelha',
+        'beneficios': ['Baixíssima caloria', 'Rica em fibras', 'Antioxidantes', 'Ajuda na digestão', 'Vegetal orgânico'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'beringelaaocurrykincam': {
-        'descricao': 'Berinjela ao curry com especiarias aromáticas',
-        'ingredientes': ['berinjela', 'curry', 'leite de coco', 'gengibre', 'coentro'],
-        'beneficios': ['Anti-inflamatório', 'Baixa caloria', 'Fibras', 'Especiarias benéficas'],
-        'riscos': ['Pode conter coco (alérgeno)', 'Especiarias fortes']
+        'descricao': 'Berinjela orgânica ao curry indiano importado com especiarias aromáticas',
+        'ingredientes': ['berinjela orgânica', 'curry indiano importado', 'leite de coco', 'gengibre fresco', 'coentro orgânico'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Anti-inflamatório', 'Baixa caloria', 'Fibras', 'Especiarias medicinais importadas'],
+        'riscos': ['Pode conter traços de glúten', 'Pode conter coco (alérgeno)']
     },
     'beterrabaaobalsamico': {
-        'descricao': 'Beterraba assada com redução de vinagre balsâmico',
-        'ingredientes': ['beterraba', 'vinagre balsâmico', 'azeite', 'mel', 'tomilho'],
-        'beneficios': ['Rica em ferro', 'Nitratos naturais', 'Melhora circulação', 'Antioxidantes'],
-        'riscos': ['Alto teor de açúcar natural', 'Pode tingir urina/fezes (normal)']
+        'descricao': 'Beterraba orgânica assada em forno combinado com redução de vinagre balsâmico',
+        'ingredientes': ['beterraba orgânica', 'vinagre balsâmico', 'azeite extravirgem', 'maple light', 'tomilho orgânico'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Rica em ferro', 'Nitratos naturais', 'Melhora circulação', 'Antioxidantes', 'Adoçado com maple'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'bolochocolatevegano': {
-        'descricao': 'Bolo de chocolate sem ingredientes de origem animal',
-        'ingredientes': ['farinha', 'cacau', 'açúcar', 'óleo vegetal', 'leite vegetal', 'fermento'],
-        'beneficios': ['Livre de lactose', 'Antioxidantes do cacau', 'Sem colesterol'],
-        'riscos': ['Contém glúten', 'Alto teor de açúcar', 'Calórico']
+        'descricao': 'Bolo de chocolate vegano preparado artesanalmente com cacau de qualidade, adoçado com maple',
+        'ingredientes': ['farinha (uso controlado)', 'cacau em pó', 'maple canadense', 'óleo vegetal', 'leite vegetal'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Livre de lactose', 'Antioxidantes do cacau', 'Sem colesterol', 'Adoçado com maple natural'],
+        'riscos': ['Contém glúten', 'Pode conter traços de glúten']
     },
     'brocolis': {
-        'descricao': 'Brócolis cozido no vapor, nutritivo e saboroso',
-        'ingredientes': ['brócolis', 'sal', 'azeite'],
-        'beneficios': ['Superalimento', 'Rico em vitamina C e K', 'Fibras', 'Cálcio', 'Anticancerígeno'],
-        'riscos': ['Pode causar gases', 'Evitar em hipotireoidismo não tratado']
+        'descricao': 'Brócolis orgânico fresco cozido no vapor, nutritivo e saboroso',
+        'ingredientes': ['brócolis orgânico fresco', 'sal', 'azeite extravirgem'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Superalimento', 'Rico em vitamina C e K', 'Fibras', 'Cálcio', 'Anticancerígeno', 'Orgânico'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'caponata': {
-        'descricao': 'Prato siciliano de berinjela com tomate e especiarias',
-        'ingredientes': ['berinjela', 'tomate', 'cebola', 'aipo', 'azeitonas', 'alcaparras', 'vinagre'],
-        'beneficios': ['Rico em fibras', 'Antioxidantes', 'Baixa caloria', 'Probióticos naturais'],
-        'riscos': ['Alto teor de sódio', 'Acidez do vinagre']
+        'descricao': 'Prato siciliano de berinjela orgânica com tomate sem pele e especiarias importadas',
+        'ingredientes': ['berinjela orgânica', 'tomate sem pele', 'cebola orgânica', 'aipo orgânico', 'azeitonas', 'alcaparras', 'vinagre'],
+        'tecnica': 'Refogado em azeite',
+        'beneficios': ['Rico em fibras', 'Antioxidantes', 'Baixa caloria', 'Tomate sem pele para melhor digestão'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'carpacciodeabobrinha': {
-        'descricao': 'Finas fatias de abobrinha crua com azeite e limão',
-        'ingredientes': ['abobrinha', 'azeite extravirgem', 'limão', 'parmesão vegano', 'rúcula'],
-        'beneficios': ['Baixíssima caloria', 'Hidratante', 'Rico em potássio', 'Fácil digestão'],
-        'riscos': ['Sensibilidade a alimentos crus', 'Atenção à procedência']
+        'descricao': 'Finas fatias de abobrinha orgânica crua com azeite extravirgem e limão',
+        'ingredientes': ['abobrinha orgânica', 'azeite extravirgem', 'limão fresco', 'sal', 'rúcula orgânica'],
+        'tecnica': 'Preparo a frio (crudo)',
+        'beneficios': ['Baixíssima caloria', 'Hidratante', 'Rico em potássio', 'Fácil digestão', 'Orgânico'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'cebola': {
-        'descricao': 'Cebola caramelizada ou grelhada',
-        'ingredientes': ['cebola', 'azeite', 'sal'],
+        'descricao': 'Cebola orgânica caramelizada lentamente em azeite',
+        'ingredientes': ['cebola orgânica', 'azeite extravirgem', 'sal'],
+        'tecnica': 'Caramelização lenta em azeite',
         'beneficios': ['Prebiótico', 'Anti-inflamatório', 'Rico em antioxidantes', 'Melhora imunidade'],
-        'riscos': ['Pode causar azia', 'Flatulência', 'Mau hálito']
+        'riscos': ['Pode conter traços de glúten']
     },
     'cenourapalito': {
-        'descricao': 'Cenouras cortadas em palito, cozidas ou cruas',
-        'ingredientes': ['cenoura', 'sal'],
-        'beneficios': ['Rica em betacaroteno', 'Vitamina A', 'Boa para visão', 'Fibras', 'Baixa caloria'],
-        'riscos': ['Em excesso pode deixar pele amarelada (carotenemia)']
+        'descricao': 'Cenouras orgânicas cortadas em palito, cozidas no vapor',
+        'ingredientes': ['cenoura orgânica', 'sal'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Rica em betacaroteno', 'Vitamina A', 'Boa para visão', 'Fibras', 'Baixa caloria', 'Orgânica'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'cuscuzmarroquino': {
-        'descricao': 'Semolina de trigo cozida no vapor com temperos',
-        'ingredientes': ['semolina de trigo', 'caldo de legumes', 'azeite', 'especiarias'],
-        'beneficios': ['Fonte de carboidratos', 'Rápido preparo', 'Leve'],
-        'riscos': ['Contém glúten', 'Baixo teor de fibras']
+        'descricao': 'Semolina de trigo cozida no vapor com especiarias importadas do Oriente Médio',
+        'ingredientes': ['semolina de trigo', 'caldo de legumes artesanal', 'azeite extravirgem', 'especiarias importadas'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Fonte de carboidratos', 'Rápido preparo', 'Especiarias importadas'],
+        'riscos': ['Contém glúten', 'Pode conter traços de glúten']
     },
     'ervadocecomlaranja': {
-        'descricao': 'Erva doce (funcho) salteada com suco de laranja',
-        'ingredientes': ['erva doce', 'suco de laranja', 'azeite', 'sal'],
-        'beneficios': ['Digestivo natural', 'Rico em vitamina C', 'Baixa caloria', 'Anti-inflamatório'],
-        'riscos': ['Pode causar alergia em sensíveis', 'Interação com alguns medicamentos']
+        'descricao': 'Erva doce (funcho) orgânica salteada em azeite com suco de laranja fresco',
+        'ingredientes': ['erva doce orgânica', 'suco de laranja fresco', 'azeite extravirgem', 'sal'],
+        'tecnica': 'Salteado em azeite',
+        'beneficios': ['Digestivo natural', 'Rico em vitamina C', 'Baixa caloria', 'Anti-inflamatório', 'Orgânico'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'farofadebananadaterra': {
-        'descricao': 'Farofa com banana da terra frita',
-        'ingredientes': ['farinha de mandioca', 'banana da terra', 'cebola', 'manteiga vegana', 'sal'],
-        'beneficios': ['Fonte de potássio', 'Energia', 'Sem glúten (se usar farinha de mandioca)'],
-        'riscos': ['Alto teor calórico', 'Gordura da fritura']
+        'descricao': 'Farofa artesanal com banana da terra assada em forno combinado (sem fritura)',
+        'ingredientes': ['farinha de mandioca', 'banana da terra', 'cebola orgânica', 'azeite extravirgem', 'sal'],
+        'tecnica': 'Banana assada em forno combinado (sem fritura)',
+        'beneficios': ['Fonte de potássio', 'Energia', 'Sem glúten (farinha de mandioca)', 'Sem fritura'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'feijaocariocasemcarne': {
-        'descricao': 'Feijão carioca cozido em caldo temperado, versão vegetariana',
-        'ingredientes': ['feijão carioca', 'alho', 'cebola', 'louro', 'sal'],
-        'beneficios': ['Rico em fibras', 'Proteína vegetal', 'Fonte de ferro', 'Baixa gordura'],
-        'riscos': ['Pode causar gases', 'Moderado em carboidratos']
+        'descricao': 'Feijão carioca demolhado e cozido em caldo temperado artesanal, versão vegetariana',
+        'ingredientes': ['feijão carioca demolhado', 'alho orgânico', 'cebola orgânica', 'louro', 'sal'],
+        'tecnica': 'Feijão demolhado + cozimento tradicional',
+        'beneficios': ['Rico em fibras', 'Proteína vegetal', 'Fonte de ferro', 'Baixa gordura', 'Feijão demolhado para melhor digestão'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'feijaopretosemcarne': {
-        'descricao': 'Feijão preto cozido sem carne, rico e saboroso',
-        'ingredientes': ['feijão preto', 'alho', 'cebola', 'louro', 'sal'],
-        'beneficios': ['Alto teor de fibras', 'Proteína vegetal', 'Rico em ferro', 'Antioxidantes'],
-        'riscos': ['Pode causar flatulência', 'Digestão mais lenta']
+        'descricao': 'Feijão preto demolhado e cozido sem carne, rico e saboroso',
+        'ingredientes': ['feijão preto demolhado', 'alho orgânico', 'cebola orgânica', 'louro', 'sal'],
+        'tecnica': 'Feijão demolhado + cozimento tradicional',
+        'beneficios': ['Alto teor de fibras', 'Proteína vegetal', 'Rico em ferro', 'Antioxidantes', 'Demolhado'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'graodebicotomatesecoespinafre': {
-        'descricao': 'Grão de bico salteado com tomate seco e espinafre',
-        'ingredientes': ['grão de bico', 'tomate seco', 'espinafre', 'alho', 'azeite'],
-        'beneficios': ['Proteína completa', 'Rico em ferro', 'Fibras', 'Vitaminas A e K'],
-        'riscos': ['Pode causar gases', 'Alto teor de sódio do tomate seco']
+        'descricao': 'Grão de bico sem pele salteado com tomate seco e espinafre orgânico',
+        'ingredientes': ['grão de bico sem pele', 'tomate seco', 'espinafre orgânico', 'alho orgânico', 'azeite extravirgem'],
+        'tecnica': 'Grão de bico sem pele + salteado em azeite',
+        'beneficios': ['Proteína completa', 'Rico em ferro', 'Fibras', 'Vitaminas A e K', 'Sem pele para melhor digestão'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'hamburguervegano': {
-        'descricao': 'Hambúrguer de proteína vegetal com especiarias',
-        'ingredientes': ['proteína de soja ou grão de bico', 'cebola', 'alho', 'especiarias', 'farinha'],
-        'beneficios': ['Proteína vegetal', 'Sem colesterol', 'Fibras'],
-        'riscos': ['Pode conter glúten', 'Alto teor de sódio', 'Soja pode ser alérgeno']
+        'descricao': 'Hambúrguer de proteína vegetal artesanal com especiarias importadas, grelhado',
+        'ingredientes': ['proteína de grão de bico sem pele', 'cebola orgânica', 'alho orgânico', 'especiarias importadas'],
+        'tecnica': 'Grelhado na grelha (sem fritura)',
+        'beneficios': ['Proteína vegetal', 'Sem colesterol', 'Fibras', 'Sem fritura'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'lentilhacomtofu': {
-        'descricao': 'Lentilha cozida com cubos de tofu temperado',
-        'ingredientes': ['lentilha', 'tofu', 'tomate', 'cebola', 'curry', 'coentro'],
-        'beneficios': ['Proteína completa', 'Rico em ferro', 'Fibras', 'Baixa gordura'],
-        'riscos': ['Soja (tofu) pode ser alérgeno', 'Pode causar gases']
+        'descricao': 'Lentilha cozida com cubos de tofu temperado com especiarias indianas importadas',
+        'ingredientes': ['lentilha', 'tofu', 'tomate sem pele', 'cebola orgânica', 'curry indiano importado', 'coentro orgânico'],
+        'tecnica': 'Cozimento tradicional',
+        'beneficios': ['Proteína completa', 'Rico em ferro', 'Fibras', 'Baixa gordura', 'Especiarias importadas'],
+        'riscos': ['Pode conter traços de glúten', 'Soja (tofu) pode ser alérgeno']
     },
     'molhovinagrete': {
-        'descricao': 'Molho fresco de tomate, cebola e pimentão picados',
-        'ingredientes': ['tomate', 'cebola', 'pimentão', 'vinagre', 'azeite', 'coentro'],
-        'beneficios': ['Baixíssima caloria', 'Rico em vitamina C', 'Antioxidantes', 'Fresco'],
-        'riscos': ['Acidez pode irritar estômago', 'Cebola crua pode causar gases']
+        'descricao': 'Molho fresco de tomate sem pele, cebola orgânica e pimentão picados',
+        'ingredientes': ['tomate sem pele', 'cebola orgânica', 'pimentão orgânico', 'vinagre', 'azeite extravirgem', 'coentro orgânico'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Baixíssima caloria', 'Rico em vitamina C', 'Antioxidantes', 'Fresco', 'Orgânico'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'repolho': {
-        'descricao': 'Repolho refogado ou cru em salada',
-        'ingredientes': ['repolho', 'sal', 'azeite'],
-        'beneficios': ['Baixíssima caloria', 'Rico em vitamina C', 'Fibras', 'Anticancerígeno'],
-        'riscos': ['Pode causar gases', 'Evitar em hipotireoidismo']
+        'descricao': 'Repolho orgânico refogado em azeite',
+        'ingredientes': ['repolho orgânico', 'sal', 'azeite extravirgem'],
+        'tecnica': 'Refogado em azeite',
+        'beneficios': ['Baixíssima caloria', 'Rico em vitamina C', 'Fibras', 'Anticancerígeno', 'Orgânico'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'saladadefeijaobranco': {
-        'descricao': 'Salada fria de feijão branco com ervas',
-        'ingredientes': ['feijão branco', 'tomate', 'cebola', 'salsinha', 'azeite', 'limão'],
-        'beneficios': ['Proteína vegetal', 'Fibras', 'Vitaminas', 'Baixa gordura'],
-        'riscos': ['Pode causar gases', 'Digestão lenta']
+        'descricao': 'Salada fria de feijão branco demolhado com ervas frescas orgânicas',
+        'ingredientes': ['feijão branco demolhado', 'tomate sem pele', 'cebola orgânica', 'salsinha orgânica', 'azeite extravirgem', 'limão'],
+        'tecnica': 'Feijão demolhado + preparo a frio',
+        'beneficios': ['Proteína vegetal', 'Fibras', 'Vitaminas', 'Baixa gordura', 'Demolhado'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'tabuledequinoa': {
-        'descricao': 'Salada libanesa com quinoa no lugar do trigo',
-        'ingredientes': ['quinoa', 'tomate', 'pepino', 'hortelã', 'salsinha', 'limão', 'azeite'],
-        'beneficios': ['Proteína completa', 'Sem glúten', 'Rico em fibras', 'Vitaminas'],
-        'riscos': ['Saponinas podem irritar intestino (lavar bem)']
+        'descricao': 'Salada libanesa com quinoa, ervas frescas orgânicas e especiarias do Oriente Médio',
+        'ingredientes': ['quinoa', 'tomate sem pele', 'pepino orgânico', 'hortelã orgânica', 'salsinha orgânica', 'limão', 'azeite extravirgem'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Proteína completa', 'Sem glúten', 'Rico em fibras', 'Vitaminas', 'Ervas orgânicas'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'umamidetomate': {
-        'descricao': 'Tomates concentrados com sabor umami intenso',
-        'ingredientes': ['tomate', 'azeite', 'alho', 'ervas', 'sal'],
-        'beneficios': ['Licopeno (antioxidante)', 'Baixa caloria', 'Vitamina C'],
-        'riscos': ['Acidez', 'Alto teor de sódio se concentrado']
+        'descricao': 'Tomates sem pele concentrados com sabor umami intenso',
+        'ingredientes': ['tomate sem pele', 'azeite extravirgem', 'alho orgânico', 'ervas orgânicas', 'sal'],
+        'tecnica': 'Concentração lenta',
+        'beneficios': ['Licopeno (antioxidante)', 'Baixa caloria', 'Vitamina C', 'Tomate sem pele'],
+        'riscos': ['Pode conter traços de glúten']
     },
 
     # ===================== VEGETARIANOS =====================
     'brocoliscomparmesao': {
-        'descricao': 'Brócolis gratinado com queijo parmesão',
-        'ingredientes': ['brócolis', 'queijo parmesão', 'azeite', 'alho'],
-        'beneficios': ['Rico em cálcio', 'Vitamina C e K', 'Proteína do queijo'],
-        'riscos': ['Contém lactose', 'Gordura saturada do queijo']
+        'descricao': 'Brócolis orgânico cozido no vapor e gratinado com queijo parmesão',
+        'ingredientes': ['brócolis orgânico', 'queijo parmesão', 'azeite extravirgem', 'alho orgânico'],
+        'tecnica': 'Vapor + gratinado em forno combinado',
+        'beneficios': ['Rico em cálcio', 'Vitamina C e K', 'Proteína do queijo', 'Orgânico'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'brocoliscouveflorgratinado': {
-        'descricao': 'Brócolis e couve-flor gratinados com queijo',
-        'ingredientes': ['brócolis', 'couve-flor', 'queijo', 'creme de leite', 'noz-moscada'],
-        'beneficios': ['Rico em fibras', 'Cálcio', 'Vitaminas C e K', 'Proteína'],
-        'riscos': ['Contém lactose', 'Gordura do creme', 'Pode causar gases']
+        'descricao': 'Brócolis e couve-flor orgânicos no vapor, gratinados com molho branco artesanal',
+        'ingredientes': ['brócolis orgânico', 'couve-flor orgânica', 'queijo', 'creme de leite fresco', 'noz-moscada importada'],
+        'tecnica': 'Vapor + gratinado em forno combinado',
+        'beneficios': ['Rico em fibras', 'Cálcio', 'Vitaminas C e K', 'Molho artesanal', 'Creme fresco'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'brocolisgratinado': {
-        'descricao': 'Brócolis ao forno com queijo gratinado',
-        'ingredientes': ['brócolis', 'queijo mussarela', 'creme de leite', 'parmesão'],
-        'beneficios': ['Rico em vitamina C', 'Fibras', 'Cálcio do queijo', 'Antioxidantes'],
-        'riscos': ['Contém lactose', 'Gordura do queijo']
+        'descricao': 'Brócolis orgânico ao forno combinado com queijo gratinado e creme fresco',
+        'ingredientes': ['brócolis orgânico', 'queijo mussarela', 'creme de leite fresco', 'parmesão'],
+        'tecnica': 'Vapor + gratinado em forno combinado',
+        'beneficios': ['Rico em vitamina C', 'Fibras', 'Cálcio do queijo', 'Antioxidantes', 'Creme fresco'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'canelonedeespinafre': {
-        'descricao': 'Massa recheada com espinafre e ricota',
-        'ingredientes': ['massa de canelone', 'espinafre', 'ricota', 'molho de tomate', 'queijo'],
-        'beneficios': ['Rico em ferro', 'Cálcio', 'Vitamina A', 'Proteína'],
-        'riscos': ['Contém glúten', 'Contém lactose', 'Calórico']
+        'descricao': 'Massa recheada com espinafre orgânico e ricota fresca, molho artesanal',
+        'ingredientes': ['massa de canelone', 'espinafre orgânico', 'ricota fresca', 'molho de tomate artesanal', 'queijo'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Rico em ferro', 'Cálcio', 'Vitamina A', 'Proteína', 'Molho artesanal'],
+        'riscos': ['Contém glúten', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'carpacciodelaranja': {
-        'descricao': 'Fatias finas de laranja com mel e hortelã',
-        'ingredientes': ['laranja', 'mel', 'hortelã', 'canela'],
-        'beneficios': ['Rico em vitamina C', 'Antioxidantes', 'Hidratante', 'Baixa caloria'],
-        'riscos': ['Alto teor de açúcar', 'Acidez pode irritar estômago']
+        'descricao': 'Fatias finas de laranja fresca com maple canadense e hortelã orgânica',
+        'ingredientes': ['laranja fresca', 'maple canadense', 'hortelã orgânica', 'canela importada'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Rico em vitamina C', 'Antioxidantes', 'Hidratante', 'Adoçado com maple natural'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'carpacciodeperaruculaeamendoas': {
-        'descricao': 'Fatias de pera com rúcula e amêndoas',
-        'ingredientes': ['pera', 'rúcula', 'amêndoas', 'azeite', 'queijo parmesão'],
-        'beneficios': ['Rico em fibras', 'Vitamina E', 'Antioxidantes', 'Ômega-3'],
-        'riscos': ['Alérgeno: amêndoas', 'Contém lactose (queijo)']
+        'descricao': 'Fatias de pera fresca com rúcula orgânica e amêndoas tostadas',
+        'ingredientes': ['pera fresca', 'rúcula orgânica', 'amêndoas tostadas', 'azeite extravirgem', 'queijo parmesão'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Rico em fibras', 'Vitamina E', 'Antioxidantes', 'Ômega-3', 'Orgânico'],
+        'riscos': ['Alérgeno: amêndoas', 'Contém lactose (queijo)', 'Pode conter traços de glúten']
     },
     'cenouraaoiogurte': {
-        'descricao': 'Cenoura ralada com molho de iogurte',
-        'ingredientes': ['cenoura', 'iogurte natural', 'mel', 'gengibre'],
-        'beneficios': ['Probióticos', 'Vitamina A', 'Cálcio', 'Digestivo'],
-        'riscos': ['Contém lactose']
+        'descricao': 'Cenoura orgânica ralada com molho de iogurte fresco artesanal',
+        'ingredientes': ['cenoura orgânica', 'iogurte natural fresco', 'maple light', 'gengibre fresco'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Probióticos', 'Vitamina A', 'Cálcio', 'Digestivo', 'Adoçado com maple'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'cocada': {
-        'descricao': 'Doce tradicional de coco com açúcar',
-        'ingredientes': ['coco ralado', 'açúcar', 'leite condensado'],
-        'beneficios': ['Energia rápida', 'Fibras do coco', 'Sabor tradicional'],
-        'riscos': ['Muito alto em açúcar', 'Alto teor calórico', 'Contém lactose']
+        'descricao': 'Doce tradicional de coco artesanal, adoçado com maple canadense',
+        'ingredientes': ['coco ralado fresco', 'maple canadense', 'leite condensado artesanal'],
+        'tecnica': 'Banho maria',
+        'beneficios': ['Energia', 'Fibras do coco', 'Sabor tradicional', 'Adoçado com maple'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'cuscuzdetapioca': {
-        'descricao': 'Cuscuz doce de tapioca com coco',
-        'ingredientes': ['tapioca', 'leite de coco', 'açúcar', 'coco ralado'],
-        'beneficios': ['Sem glúten', 'Fonte de energia', 'Tradição brasileira'],
-        'riscos': ['Alto teor de açúcar', 'Calórico', 'Pode conter coco (alérgeno)']
+        'descricao': 'Cuscuz doce de tapioca artesanal com coco, adoçado com maple',
+        'ingredientes': ['tapioca', 'leite de coco', 'maple canadense', 'coco ralado fresco'],
+        'tecnica': 'Vapor + banho maria',
+        'beneficios': ['Sem glúten', 'Fonte de energia', 'Tradição brasileira', 'Adoçado com maple'],
+        'riscos': ['Pode conter coco (alérgeno)', 'Pode conter traços de glúten']
     },
     'dadinhodetapioca': {
-        'descricao': 'Cubos crocantes de tapioca com queijo',
+        'descricao': 'Cubos de tapioca artesanal com queijo coalho, assados em forno combinado',
         'ingredientes': ['tapioca', 'queijo coalho', 'sal'],
-        'beneficios': ['Sem glúten', 'Proteína do queijo', 'Petisco saboroso'],
-        'riscos': ['Contém lactose', 'Alto teor de gordura', 'Fritura']
+        'tecnica': 'Assado em forno combinado (sem fritura)',
+        'beneficios': ['Sem glúten', 'Proteína do queijo', 'Petisco saboroso', 'Sem fritura'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'espaguete': {
-        'descricao': 'Massa italiana longa servida com molho',
-        'ingredientes': ['massa de trigo', 'molho de tomate', 'azeite', 'alho', 'manjericão'],
-        'beneficios': ['Fonte de carboidratos', 'Energia rápida', 'Baixo teor de gordura'],
-        'riscos': ['Contém glúten', 'Alto índice glicêmico']
+        'descricao': 'Massa italiana artesanal servida com molho de tomate feito em nossa cozinha',
+        'ingredientes': ['massa de trigo', 'molho de tomate artesanal', 'azeite extravirgem', 'alho orgânico', 'manjericão orgânico'],
+        'tecnica': 'Cozimento tradicional',
+        'beneficios': ['Fonte de carboidratos', 'Energia', 'Molho artesanal feito na cozinha'],
+        'riscos': ['Contém glúten', 'Pode conter traços de glúten']
     },
     'gelatinadecereja': {
-        'descricao': 'Sobremesa de gelatina sabor cereja',
-        'ingredientes': ['gelatina', 'açúcar', 'aroma de cereja'],
-        'beneficios': ['Baixa caloria', 'Colágeno', 'Hidratante'],
-        'riscos': ['Alto teor de açúcar', 'Corantes artificiais', 'Gelatina de origem animal']
+        'descricao': 'Sobremesa de gelatina artesanal sabor cereja',
+        'ingredientes': ['gelatina', 'suco de cereja', 'maple light'],
+        'tecnica': 'Refrigeração',
+        'beneficios': ['Baixa caloria', 'Colágeno', 'Hidratante', 'Adoçado com maple'],
+        'riscos': ['Pode conter traços de glúten', 'Gelatina de origem animal']
     },
     'goiabada': {
-        'descricao': 'Doce tradicional de goiaba em bloco',
-        'ingredientes': ['goiaba', 'açúcar'],
-        'beneficios': ['Rico em vitamina C', 'Fibras', 'Energia'],
-        'riscos': ['Muito alto em açúcar', 'Alto índice glicêmico']
+        'descricao': 'Doce tradicional de goiaba artesanal em bloco',
+        'ingredientes': ['goiaba fresca', 'açúcar', 'maple canadense'],
+        'tecnica': 'Cozimento tradicional',
+        'beneficios': ['Rico em vitamina C', 'Fibras', 'Energia', 'Artesanal'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'jiloempanado': {
-        'descricao': 'Jiló empanado e frito, crocante',
-        'ingredientes': ['jiló', 'farinha', 'ovo', 'sal', 'óleo'],
-        'beneficios': ['Fibras', 'Baixa caloria (sem empanamento)', 'Digestivo'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Gordura da fritura']
+        'descricao': 'Jiló orgânico empanado artesanalmente, assado em forno combinado (sem fritura)',
+        'ingredientes': ['jiló orgânico', 'farinha (uso controlado)', 'ovo', 'sal'],
+        'tecnica': 'Empanado e assado em forno combinado (SEM FRITURA)',
+        'beneficios': ['Fibras', 'Vitaminas', 'Ácido fólico', 'Sem fritura', 'Orgânico'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Pode conter traços de glúten']
     },
     'lasanhadeespinafre': {
-        'descricao': 'Lasanha verde com camadas de espinafre e queijo',
-        'ingredientes': ['massa de lasanha', 'espinafre', 'ricota', 'mussarela', 'molho branco'],
-        'beneficios': ['Rico em ferro', 'Cálcio', 'Proteína', 'Vitaminas'],
-        'riscos': ['Contém glúten', 'Contém lactose', 'Alto teor calórico']
+        'descricao': 'Lasanha verde com camadas de espinafre orgânico, ricota fresca e molho branco artesanal',
+        'ingredientes': ['massa de lasanha', 'espinafre orgânico', 'ricota fresca', 'mussarela', 'molho branco artesanal'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Rico em ferro', 'Cálcio', 'Proteína', 'Vitaminas', 'Molhos artesanais', 'Creme fresco'],
+        'riscos': ['Contém glúten', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'lasanhadeportobello': {
-        'descricao': 'Lasanha com cogumelos portobello',
-        'ingredientes': ['massa', 'cogumelo portobello', 'queijo', 'molho branco', 'cebola'],
-        'beneficios': ['Proteína do cogumelo', 'Vitamina D', 'Fibras', 'Umami natural'],
-        'riscos': ['Contém glúten', 'Contém lactose', 'Calórico']
+        'descricao': 'Lasanha com cogumelos portobello frescos e molho branco artesanal',
+        'ingredientes': ['massa', 'cogumelo portobello fresco', 'queijo', 'molho branco artesanal', 'cebola orgânica'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Proteína do cogumelo', 'Vitamina D', 'Fibras', 'Umami natural', 'Molho artesanal'],
+        'riscos': ['Contém glúten', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'mandioquinhaassada': {
-        'descricao': 'Mandioquinha assada com ervas',
-        'ingredientes': ['mandioquinha', 'azeite', 'alecrim', 'sal'],
-        'beneficios': ['Fácil digestão', 'Fonte de potássio', 'Vitaminas', 'Sem glúten'],
-        'riscos': ['Alto teor de carboidratos', 'Índice glicêmico moderado']
+        'descricao': 'Mandioquinha assada em forno combinado com ervas frescas orgânicas',
+        'ingredientes': ['mandioquinha', 'azeite extravirgem', 'alecrim orgânico', 'sal'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Fácil digestão', 'Fonte de potássio', 'Vitaminas', 'Sem glúten', 'Sem fritura'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'moussedemaracuja': {
-        'descricao': 'Mousse cremoso de maracujá',
-        'ingredientes': ['maracujá', 'creme de leite', 'leite condensado', 'gelatina'],
-        'beneficios': ['Rico em vitamina C', 'Relaxante natural', 'Sabor tropical'],
-        'riscos': ['Alto teor de açúcar', 'Contém lactose', 'Calórico']
+        'descricao': 'Mousse cremoso de maracujá fresco com creme de leite fresco, adoçado com maple',
+        'ingredientes': ['maracujá fresco', 'creme de leite fresco', 'leite condensado artesanal', 'maple light'],
+        'tecnica': 'Banho maria + refrigeração',
+        'beneficios': ['Rico em vitamina C', 'Relaxante natural', 'Sabor tropical', 'Creme fresco', 'Adoçado com maple'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'moussedemorango': {
-        'descricao': 'Mousse cremoso de morango',
-        'ingredientes': ['morango', 'creme de leite', 'leite condensado', 'gelatina'],
-        'beneficios': ['Antioxidantes', 'Vitamina C', 'Refrescante'],
-        'riscos': ['Alto teor de açúcar', 'Contém lactose', 'Calórico']
+        'descricao': 'Mousse cremoso de morango fresco com creme de leite fresco, adoçado com maple',
+        'ingredientes': ['morango fresco', 'creme de leite fresco', 'leite condensado artesanal', 'maple light'],
+        'tecnica': 'Banho maria + refrigeração',
+        'beneficios': ['Antioxidantes', 'Vitamina C', 'Refrescante', 'Creme fresco', 'Adoçado com maple'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'nhoqueaosugo': {
-        'descricao': 'Nhoque de batata com molho de tomate',
-        'ingredientes': ['batata', 'farinha', 'ovo', 'molho de tomate', 'manjericão'],
-        'beneficios': ['Fonte de carboidratos', 'Energia', 'Potássio da batata'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Alto índice glicêmico']
+        'descricao': 'Nhoque de batata artesanal com molho de tomate feito em nossa cozinha',
+        'ingredientes': ['batata', 'farinha (uso controlado)', 'ovo', 'molho de tomate artesanal', 'manjericão orgânico'],
+        'tecnica': 'Preparo artesanal',
+        'beneficios': ['Fonte de carboidratos', 'Energia', 'Potássio da batata', 'Molho artesanal'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Pode conter traços de glúten']
     },
     'pepinocomiogurte': {
-        'descricao': 'Pepino fresco com molho de iogurte (tipo tzatziki)',
-        'ingredientes': ['pepino', 'iogurte', 'alho', 'hortelã', 'azeite'],
-        'beneficios': ['Hidratante', 'Probióticos', 'Baixíssima caloria', 'Refrescante'],
-        'riscos': ['Contém lactose']
+        'descricao': 'Pepino orgânico fresco com molho de iogurte artesanal (tipo tzatziki)',
+        'ingredientes': ['pepino orgânico', 'iogurte fresco', 'alho orgânico', 'hortelã orgânica', 'azeite extravirgem'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Hidratante', 'Probióticos', 'Baixíssima caloria', 'Refrescante', 'Orgânico'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'risoneaopesto': {
-        'descricao': 'Massa risone com molho pesto de manjericão',
-        'ingredientes': ['massa risone', 'manjericão', 'parmesão', 'pinoli', 'azeite', 'alho'],
-        'beneficios': ['Antioxidantes', 'Gorduras boas do azeite', 'Sabor aromático'],
-        'riscos': ['Contém glúten', 'Contém lactose', 'Alérgeno: pinoli (oleaginosa)']
+        'descricao': 'Massa risone com molho pesto artesanal de manjericão orgânico',
+        'ingredientes': ['massa risone', 'manjericão orgânico', 'parmesão', 'pinoli', 'azeite extravirgem', 'alho orgânico'],
+        'tecnica': 'Cozimento tradicional',
+        'beneficios': ['Antioxidantes', 'Gorduras boas do azeite', 'Sabor aromático', 'Pesto artesanal', 'Ervas orgânicas'],
+        'riscos': ['Contém glúten', 'Contém lactose', 'Alérgeno: pinoli (oleaginosa)', 'Pode conter traços de glúten']
     },
     'bananacaramelizada': {
-        'descricao': 'Banana grelhada com açúcar caramelizado',
-        'ingredientes': ['banana', 'açúcar', 'manteiga', 'canela'],
-        'beneficios': ['Potássio', 'Energia rápida', 'Sabor doce natural'],
-        'riscos': ['Alto teor de açúcar', 'Contém lactose (manteiga)', 'Calórico']
+        'descricao': 'Banana grelhada com maple canadense caramelizado',
+        'ingredientes': ['banana', 'maple canadense', 'manteiga fresca', 'canela importada'],
+        'tecnica': 'Grelhado + caramelização',
+        'beneficios': ['Potássio', 'Energia', 'Sabor doce natural', 'Adoçado com maple'],
+        'riscos': ['Contém lactose (manteiga)', 'Pode conter traços de glúten']
     },
     'bolobrownie': {
-        'descricao': 'Bolo denso de chocolate tipo brownie',
-        'ingredientes': ['chocolate', 'manteiga', 'açúcar', 'ovos', 'farinha', 'nozes'],
-        'beneficios': ['Antioxidantes do cacau', 'Energia', 'Sabor intenso'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Contém lactose', 'Alérgeno: nozes', 'Alto teor calórico']
+        'descricao': 'Bolo denso de chocolate artesanal tipo brownie, adoçado com maple',
+        'ingredientes': ['chocolate', 'manteiga fresca', 'maple canadense', 'ovos', 'farinha (uso controlado)', 'nozes'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Antioxidantes do cacau', 'Energia', 'Sabor intenso', 'Adoçado com maple'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Contém lactose', 'Alérgeno: nozes', 'Pode conter traços de glúten']
     },
     'bolodegengibre': {
-        'descricao': 'Bolo aromático de gengibre',
-        'ingredientes': ['farinha', 'gengibre', 'açúcar', 'ovos', 'manteiga', 'especiarias'],
-        'beneficios': ['Anti-inflamatório', 'Digestivo', 'Sabor único'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Contém lactose', 'Alto teor de açúcar']
+        'descricao': 'Bolo aromático de gengibre fresco com especiarias importadas, adoçado com maple',
+        'ingredientes': ['farinha (uso controlado)', 'gengibre fresco', 'maple canadense', 'ovos', 'manteiga fresca', 'especiarias importadas'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Anti-inflamatório', 'Digestivo', 'Sabor único', 'Especiarias importadas', 'Adoçado com maple'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Contém lactose', 'Pode conter traços de glúten']
     },
 
     # ===================== PROTEÍNA ANIMAL =====================
     'almondegasmolhosugo': {
-        'descricao': 'Almôndegas de carne bovina ao molho de tomate',
-        'ingredientes': ['carne moída', 'cebola', 'alho', 'ovo', 'farinha de rosca', 'molho de tomate'],
-        'beneficios': ['Rica em proteína', 'Ferro', 'Vitaminas B', 'Zinco'],
-        'riscos': ['Gordura saturada', 'Contém glúten', 'Contém ovo', 'Alto teor de sódio']
+        'descricao': 'Almôndegas de carne bovina fresca ao molho de tomate artesanal feito em nossa cozinha',
+        'ingredientes': ['carne bovina fresca', 'cebola orgânica', 'alho orgânico', 'ovo', 'farinha (uso controlado)', 'molho de tomate artesanal'],
+        'tecnica': 'Braseado',
+        'beneficios': ['Rica em proteína', 'Ferro', 'Vitaminas B', 'Zinco', 'Carne fresca', 'Molho artesanal'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Pode conter traços de glúten']
     },
     'almdegasmolhosugo': {
-        'descricao': 'Almôndegas de carne bovina ao molho de tomate',
-        'ingredientes': ['carne moída', 'cebola', 'alho', 'ovo', 'farinha de rosca', 'molho de tomate'],
-        'beneficios': ['Rica em proteína', 'Ferro', 'Vitaminas B', 'Zinco'],
-        'riscos': ['Gordura saturada', 'Contém glúten', 'Contém ovo', 'Alto teor de sódio']
+        'descricao': 'Almôndegas de carne bovina fresca ao molho de tomate artesanal feito em nossa cozinha',
+        'ingredientes': ['carne bovina fresca', 'cebola orgânica', 'alho orgânico', 'ovo', 'farinha (uso controlado)', 'molho de tomate artesanal'],
+        'tecnica': 'Braseado',
+        'beneficios': ['Rica em proteína', 'Ferro', 'Vitaminas B', 'Zinco', 'Carne fresca', 'Molho artesanal'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Pode conter traços de glúten']
     },
     'atumaogergelim': {
-        'descricao': 'Atum fresco selado com crosta de gergelim',
-        'ingredientes': ['atum fresco', 'gergelim', 'shoyu', 'gengibre', 'wasabi'],
-        'beneficios': ['Rico em ômega-3', 'Proteína magra', 'Selênio', 'Vitamina D'],
-        'riscos': ['Alérgeno: peixe', 'Alérgeno: gergelim', 'Alto teor de sódio (shoyu)', 'Mercúrio em excesso']
+        'descricao': 'Atum fresco (recebido a cada 1-2 dias) selado com crosta de gergelim importado',
+        'ingredientes': ['atum fresco', 'gergelim importado', 'shoyu', 'gengibre fresco', 'wasabi importado do Japão'],
+        'tecnica': 'Selado na grelha',
+        'beneficios': ['Rico em ômega-3', 'Proteína magra', 'Selênio', 'Vitamina D', 'Peixe fresco', 'Especiarias japonesas'],
+        'riscos': ['Alérgeno: peixe', 'Alérgeno: gergelim', 'Pode conter traços de glúten']
     },
     'bacalhaucomnatas': {
-        'descricao': 'Bacalhau desfiado gratinado com creme de leite',
-        'ingredientes': ['bacalhau', 'batata', 'creme de leite', 'cebola', 'alho', 'azeitonas'],
-        'beneficios': ['Proteína de alta qualidade', 'Ômega-3', 'Cálcio'],
-        'riscos': ['Alérgeno: peixe', 'Contém lactose', 'Alto teor de sódio', 'Calórico']
+        'descricao': 'Bacalhau fresco desfiado gratinado com creme de leite fresco artesanal',
+        'ingredientes': ['bacalhau fresco', 'batata', 'creme de leite fresco', 'cebola orgânica', 'alho orgânico', 'azeitonas'],
+        'tecnica': 'Gratinado em forno combinado',
+        'beneficios': ['Proteína de alta qualidade', 'Ômega-3', 'Cálcio', 'Peixe fresco', 'Creme fresco'],
+        'riscos': ['Alérgeno: peixe', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'bacalhaugomesdesa': {
-        'descricao': 'Prato tradicional português de bacalhau com batatas',
-        'ingredientes': ['bacalhau', 'batata', 'cebola', 'ovos', 'azeitonas', 'azeite'],
-        'beneficios': ['Rico em proteína', 'Ômega-3', 'Vitaminas B12 e D'],
-        'riscos': ['Alérgeno: peixe', 'Alérgeno: ovo', 'Alto teor de sódio']
+        'descricao': 'Prato tradicional português de bacalhau fresco com batatas e ovos',
+        'ingredientes': ['bacalhau fresco', 'batata', 'cebola orgânica', 'ovos', 'azeitonas', 'azeite extravirgem'],
+        'tecnica': 'Assado em forno combinado',
+        'beneficios': ['Rico em proteína', 'Ômega-3', 'Vitaminas B12 e D', 'Peixe fresco'],
+        'riscos': ['Alérgeno: peixe', 'Alérgeno: ovo', 'Pode conter traços de glúten']
     },
     'baiaodedois': {
-        'descricao': 'Prato típico nordestino com arroz e feijão-de-corda cozidos juntos',
-        'ingredientes': ['arroz', 'feijão-de-corda', 'bacon', 'queijo coalho', 'manteiga', 'temperos'],
-        'beneficios': ['Rico em proteínas', 'Fonte de fibras', 'Energia de longa duração'],
-        'riscos': ['Alto teor de sódio', 'Contém lactose (queijo)', 'Gordura saturada (bacon)']
+        'descricao': 'Prato típico nordestino com arroz e feijão-de-corda demolhado cozidos juntos',
+        'ingredientes': ['arroz', 'feijão-de-corda demolhado', 'bacon artesanal', 'queijo coalho', 'manteiga fresca', 'temperos'],
+        'tecnica': 'Cozimento tradicional',
+        'beneficios': ['Rico em proteínas', 'Fonte de fibras', 'Energia de longa duração', 'Feijão demolhado'],
+        'riscos': ['Contém lactose (queijo)', 'Pode conter traços de glúten']
     },
     'bolinhodebacalhau': {
-        'descricao': 'Bolinho frito de bacalhau com batata',
-        'ingredientes': ['bacalhau', 'batata', 'ovo', 'cebola', 'salsinha'],
-        'beneficios': ['Proteína', 'Ômega-3', 'Sabor tradicional'],
-        'riscos': ['Alérgeno: peixe', 'Alérgeno: ovo', 'Fritura', 'Alto teor de sódio']
+        'descricao': 'Bolinho artesanal de bacalhau fresco com batata - ÚNICO ITEM FRITO',
+        'ingredientes': ['bacalhau fresco', 'batata', 'ovo', 'cebola orgânica', 'salsinha orgânica'],
+        'tecnica': 'Frito em óleo (ÚNICA EXCEÇÃO de fritura)',
+        'beneficios': ['Proteína', 'Ômega-3', 'Sabor tradicional', 'Peixe fresco'],
+        'riscos': ['Alérgeno: peixe', 'Alérgeno: ovo', 'Fritura', 'Pode conter traços de glúten']
     },
     'cestinhasdecamarao': {
-        'descricao': 'Cestinhas crocantes recheadas com camarão',
-        'ingredientes': ['camarão', 'massa wonton', 'cream cheese', 'cebolinha'],
-        'beneficios': ['Proteína magra', 'Selênio', 'Zinco'],
-        'riscos': ['Alérgeno: crustáceo (camarão)', 'Contém lactose', 'Fritura']
+        'descricao': 'Cestinhas assadas em forno combinado recheadas com camarão fresco',
+        'ingredientes': ['camarão fresco', 'massa wonton', 'cream cheese artesanal', 'cebolinha orgânica'],
+        'tecnica': 'Assado em forno combinado (sem fritura)',
+        'beneficios': ['Proteína magra', 'Selênio', 'Zinco', 'Camarão fresco', 'Sem fritura'],
+        'riscos': ['Alérgeno: crustáceo (camarão)', 'Contém lactose', 'Contém glúten', 'Pode conter traços de glúten']
     },
     'cevicheperuano': {
-        'descricao': 'Peixe cru marinado em limão com cebola roxa',
-        'ingredientes': ['peixe branco', 'limão', 'cebola roxa', 'coentro', 'pimenta', 'milho'],
-        'beneficios': ['Proteína magra', 'Vitamina C', 'Ômega-3', 'Baixa caloria'],
-        'riscos': ['Alérgeno: peixe', 'Peixe cru requer frescor', 'Acidez alta']
+        'descricao': 'Peixe fresco (recebido a cada 1-2 dias) marinado em limão com cebola roxa orgânica',
+        'ingredientes': ['peixe branco fresco', 'limão fresco', 'cebola roxa orgânica', 'coentro orgânico', 'pimenta importada', 'milho'],
+        'tecnica': 'Marinado a frio (crudo)',
+        'beneficios': ['Proteína magra', 'Vitamina C', 'Ômega-3', 'Baixa caloria', 'Peixe fresco'],
+        'riscos': ['Alérgeno: peixe', 'Pode conter traços de glúten']
     },
     'costelinhacibisana': {
-        'descricao': 'Costelinha de porco assada com molho especial',
-        'ingredientes': ['costela de porco', 'alho', 'mel', 'shoyu', 'gengibre'],
-        'beneficios': ['Alto teor proteico', 'Vitaminas B', 'Colágeno'],
-        'riscos': ['Alto teor de gordura saturada', 'Calórico', 'Alto sódio']
+        'descricao': 'Costelinha suína preparada sous vide e finalizada na grelha com molho especial artesanal',
+        'ingredientes': ['costela de porco fresca', 'alho orgânico', 'maple canadense', 'shoyu', 'gengibre fresco'],
+        'tecnica': 'Sous vide + finalização na grelha',
+        'beneficios': ['Alto teor proteico', 'Vitaminas B', 'Colágeno', 'Carne fresca', 'Técnica sous vide', 'Adoçado com maple'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'entrecotegrelhado': {
-        'descricao': 'Corte nobre de carne bovina grelhado',
-        'ingredientes': ['entrecôte', 'sal grosso', 'pimenta', 'alho'],
-        'beneficios': ['Alto teor proteico', 'Rico em ferro e zinco', 'Vitaminas B12'],
-        'riscos': ['Gordura saturada', 'Colesterol', 'Excesso pode ser prejudicial']
+        'descricao': 'Corte nobre de carne bovina fresca grelhado na grelha',
+        'ingredientes': ['entrecôte bovino fresco', 'sal grosso', 'pimenta importada', 'alho orgânico'],
+        'tecnica': 'Grelhado na grelha',
+        'beneficios': ['Alto teor proteico', 'Rico em ferro e zinco', 'Vitaminas B12', 'Carne fresca'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'escondidinhodecarneseca': {
-        'descricao': 'Purê de mandioca com carne seca desfiada gratinada',
-        'ingredientes': ['mandioca', 'carne seca', 'queijo', 'manteiga', 'creme de leite'],
-        'beneficios': ['Alto teor proteico', 'Energia', 'Sabor intenso'],
-        'riscos': ['Alto teor de sódio', 'Gordura saturada', 'Contém lactose', 'Muito calórico']
+        'descricao': 'Purê de mandioca artesanal com carne seca desfiada gratinada em forno combinado',
+        'ingredientes': ['mandioca', 'carne seca', 'queijo', 'manteiga fresca', 'creme de leite fresco'],
+        'tecnica': 'Gratinado em forno combinado',
+        'beneficios': ['Alto teor proteico', 'Energia', 'Sabor intenso', 'Creme fresco'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'farofadebacon': {
-        'descricao': 'Farofa com bacon crocante',
-        'ingredientes': ['farinha de mandioca', 'bacon', 'cebola', 'manteiga', 'ovos'],
-        'beneficios': ['Energia', 'Proteína do bacon', 'Sabor defumado'],
-        'riscos': ['Alto teor de gordura saturada', 'Alto sódio', 'Contém ovo']
+        'descricao': 'Farofa artesanal com bacon de preparo próprio',
+        'ingredientes': ['farinha de mandioca', 'bacon artesanal', 'cebola orgânica', 'manteiga fresca', 'ovos'],
+        'tecnica': 'Preparo tradicional',
+        'beneficios': ['Energia', 'Proteína do bacon', 'Sabor defumado', 'Bacon artesanal'],
+        'riscos': ['Contém ovo', 'Pode conter traços de glúten']
     },
     'feijaopretocomcarne': {
-        'descricao': 'Feijão preto cozido com carne bovina',
-        'ingredientes': ['feijão preto', 'carne bovina', 'alho', 'cebola', 'louro'],
-        'beneficios': ['Rico em proteína', 'Ferro', 'Fibras'],
-        'riscos': ['Pode causar gases', 'Gordura da carne', 'Alto sódio']
+        'descricao': 'Feijão preto demolhado cozido com carne bovina fresca',
+        'ingredientes': ['feijão preto demolhado', 'carne bovina fresca', 'alho orgânico', 'cebola orgânica', 'louro'],
+        'tecnica': 'Feijão demolhado + cozimento tradicional',
+        'beneficios': ['Rico em proteína', 'Ferro', 'Fibras', 'Feijão demolhado', 'Carne fresca'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'feijaotropeiro': {
-        'descricao': 'Prato mineiro com feijão, bacon, linguiça e farinha',
-        'ingredientes': ['feijão', 'bacon', 'linguiça', 'farinha de mandioca', 'ovos', 'couve'],
-        'beneficios': ['Muito proteico', 'Energia', 'Tradição mineira'],
-        'riscos': ['Alto teor de gordura', 'Alto sódio', 'Contém ovo', 'Muito calórico']
+        'descricao': 'Prato mineiro tradicional com feijão demolhado, bacon artesanal e couve orgânica',
+        'ingredientes': ['feijão demolhado', 'bacon artesanal', 'linguiça artesanal', 'farinha de mandioca', 'ovos', 'couve orgânica'],
+        'tecnica': 'Preparo tradicional',
+        'beneficios': ['Muito proteico', 'Energia', 'Tradição mineira', 'Feijão demolhado', 'Couve orgânica'],
+        'riscos': ['Contém ovo', 'Pode conter traços de glúten']
     },
     'figadoacebolado': {
-        'descricao': 'Fígado bovino grelhado com cebolas',
-        'ingredientes': ['fígado bovino', 'cebola', 'alho', 'sal', 'azeite'],
-        'beneficios': ['Riquíssimo em ferro', 'Vitamina A', 'Vitamina B12', 'Proteína'],
-        'riscos': ['Muito alto em colesterol', 'Alto em vitamina A (não exceder)', 'Purina alta']
+        'descricao': 'Fígado bovino fresco grelhado com cebolas orgânicas',
+        'ingredientes': ['fígado bovino fresco', 'cebola orgânica', 'alho orgânico', 'sal', 'azeite extravirgem'],
+        'tecnica': 'Grelhado na grelha',
+        'beneficios': ['Riquíssimo em ferro', 'Vitamina A', 'Vitamina B12', 'Proteína', 'Fígado fresco'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'filedefrangoaparmegiana': {
-        'descricao': 'Filé de frango empanado com molho e queijo',
-        'ingredientes': ['peito de frango', 'farinha de rosca', 'ovo', 'molho de tomate', 'mussarela', 'presunto'],
-        'beneficios': ['Alto teor proteico', 'Cálcio do queijo'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Contém lactose', 'Fritura', 'Calórico']
+        'descricao': 'Filé de frango sous vide, empanado artesanalmente e finalizado em forno combinado',
+        'ingredientes': ['peito de frango fresco', 'farinha (uso controlado)', 'ovo', 'molho de tomate artesanal', 'mussarela', 'presunto'],
+        'tecnica': 'Sous vide + empanado assado em forno combinado (SEM FRITURA)',
+        'beneficios': ['Alto teor proteico', 'Cálcio do queijo', 'Frango fresco', 'Sous vide', 'Sem fritura'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'filedepeixeaomisso': {
-        'descricao': 'Filé de peixe com molho de missô japonês',
-        'ingredientes': ['peixe branco', 'missô', 'saquê', 'gengibre', 'cebolinha'],
-        'beneficios': ['Proteína magra', 'Ômega-3', 'Probióticos do missô'],
-        'riscos': ['Alérgeno: peixe', 'Alérgeno: soja (missô)', 'Alto sódio']
+        'descricao': 'Filé de peixe fresco (recebido a cada 1-2 dias) ao vapor com molho de missô japonês',
+        'ingredientes': ['peixe branco fresco', 'missô importado do Japão', 'saquê', 'gengibre fresco', 'cebolinha orgânica'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Proteína magra', 'Ômega-3', 'Probióticos do missô', 'Peixe fresco', 'Ingredientes japoneses'],
+        'riscos': ['Alérgeno: peixe', 'Alérgeno: soja (missô)', 'Pode conter traços de glúten']
     },
     'filedepeixeaomolhodelimao': {
-        'descricao': 'Filé de peixe branco grelhado com molho cítrico de limão',
-        'ingredientes': ['peixe branco', 'limão', 'manteiga', 'alcaparras', 'salsinha'],
-        'beneficios': ['Rico em ômega-3', 'Proteína magra', 'Baixa caloria', 'Bom para coração'],
-        'riscos': ['Alérgeno: peixe', 'Contém lactose (manteiga)']
+        'descricao': 'Filé de peixe fresco ao vapor com molho cítrico de limão e manteiga fresca',
+        'ingredientes': ['peixe branco fresco', 'limão fresco', 'manteiga fresca', 'alcaparras', 'salsinha orgânica'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Rico em ômega-3', 'Proteína magra', 'Baixa caloria', 'Bom para coração', 'Peixe fresco'],
+        'riscos': ['Alérgeno: peixe', 'Contém lactose (manteiga)', 'Pode conter traços de glúten']
     },
     'filedepeixeaomolhomisso': {
-        'descricao': 'Filé de peixe ao molho missô',
-        'ingredientes': ['peixe', 'missô', 'gengibre', 'cebolinha', 'gergelim'],
-        'beneficios': ['Proteína magra', 'Ômega-3', 'Probióticos'],
-        'riscos': ['Alérgeno: peixe', 'Alérgeno: soja', 'Alérgeno: gergelim', 'Alto sódio']
+        'descricao': 'Filé de peixe fresco ao vapor com molho missô importado',
+        'ingredientes': ['peixe fresco', 'missô importado do Japão', 'gengibre fresco', 'cebolinha orgânica', 'gergelim importado'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Proteína magra', 'Ômega-3', 'Probióticos', 'Peixe fresco', 'Ingredientes importados'],
+        'riscos': ['Alérgeno: peixe', 'Alérgeno: soja', 'Alérgeno: gergelim', 'Pode conter traços de glúten']
     },
     'filedepeixemolhoconfit': {
-        'descricao': 'Filé de peixe com tomate confit',
-        'ingredientes': ['peixe', 'tomate', 'azeite', 'alho', 'ervas'],
-        'beneficios': ['Proteína magra', 'Ômega-3', 'Licopeno', 'Baixa caloria'],
-        'riscos': ['Alérgeno: peixe']
+        'descricao': 'Filé de peixe fresco ao vapor com tomate sem pele confit',
+        'ingredientes': ['peixe fresco', 'tomate sem pele', 'azeite extravirgem', 'alho orgânico', 'ervas orgânicas'],
+        'tecnica': 'Cozimento no vapor + tomate confit em azeite',
+        'beneficios': ['Proteína magra', 'Ômega-3', 'Licopeno', 'Baixa caloria', 'Peixe fresco', 'Tomate sem pele'],
+        'riscos': ['Alérgeno: peixe', 'Pode conter traços de glúten']
     },
     'filedepeixemolhofrutassecas': {
-        'descricao': 'Filé de peixe com molho de frutas secas',
-        'ingredientes': ['peixe', 'uva passa', 'damasco', 'vinho branco', 'manteiga'],
-        'beneficios': ['Ômega-3', 'Antioxidantes das frutas', 'Proteína'],
-        'riscos': ['Alérgeno: peixe', 'Contém lactose', 'Açúcar das frutas secas']
+        'descricao': 'Filé de peixe fresco ao vapor com molho artesanal de frutas secas',
+        'ingredientes': ['peixe fresco', 'uva passa', 'damasco', 'vinho branco', 'manteiga fresca'],
+        'tecnica': 'Cozimento no vapor',
+        'beneficios': ['Ômega-3', 'Antioxidantes das frutas', 'Proteína', 'Peixe fresco', 'Molho artesanal'],
+        'riscos': ['Alérgeno: peixe', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'frangocremedelimaosalnegro': {
-        'descricao': 'Frango ao creme de limão com sal negro do Havaí',
-        'ingredientes': ['frango', 'creme de leite', 'limão', 'sal negro', 'ervas'],
-        'beneficios': ['Proteína magra', 'Vitamina C', 'Minerais do sal negro'],
-        'riscos': ['Contém lactose', 'Gordura do creme']
+        'descricao': 'Frango sous vide ao creme de limão com sal negro do Havaí importado',
+        'ingredientes': ['frango fresco', 'creme de leite fresco', 'limão fresco', 'sal negro do Havaí', 'ervas orgânicas'],
+        'tecnica': 'Sous vide',
+        'beneficios': ['Proteína magra', 'Vitamina C', 'Minerais do sal negro', 'Frango fresco', 'Técnica sous vide', 'Creme fresco'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'hamburgerdecarne': {
-        'descricao': 'Hambúrguer artesanal de carne bovina',
-        'ingredientes': ['carne bovina moída', 'sal', 'pimenta', 'cebola'],
-        'beneficios': ['Alto teor proteico', 'Ferro', 'Zinco', 'Vitaminas B'],
-        'riscos': ['Gordura saturada', 'Colesterol', 'Alto sódio']
+        'descricao': 'Hambúrguer artesanal de carne bovina fresca, grelhado',
+        'ingredientes': ['carne bovina fresca moída', 'sal', 'pimenta importada', 'cebola orgânica'],
+        'tecnica': 'Grelhado na grelha',
+        'beneficios': ['Alto teor proteico', 'Ferro', 'Zinco', 'Vitaminas B', 'Carne fresca', 'Artesanal'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'kibe': {
-        'descricao': 'Bolinho de origem árabe de carne e trigo',
-        'ingredientes': ['carne moída', 'trigo para quibe', 'cebola', 'hortelã', 'especiarias'],
-        'beneficios': ['Proteína', 'Ferro', 'Fibras do trigo'],
-        'riscos': ['Contém glúten', 'Gordura da carne', 'Fritura (se frito)']
+        'descricao': 'Bolinho de origem árabe de carne fresca e trigo, assado em forno combinado',
+        'ingredientes': ['carne moída fresca', 'trigo para quibe', 'cebola orgânica', 'hortelã orgânica', 'especiarias importadas da Arábia'],
+        'tecnica': 'Assado em forno combinado (sem fritura)',
+        'beneficios': ['Proteína', 'Ferro', 'Fibras do trigo', 'Carne fresca', 'Especiarias árabes', 'Sem fritura'],
+        'riscos': ['Contém glúten', 'Pode conter traços de glúten']
     },
     'maminhaaomolhomongolia': {
-        'descricao': 'Maminha bovina ao molho agridoce mongoliano',
-        'ingredientes': ['maminha', 'shoyu', 'gengibre', 'alho', 'açúcar mascavo', 'cebolinha'],
-        'beneficios': ['Alto teor proteico', 'Ferro', 'Zinco'],
-        'riscos': ['Alto sódio', 'Açúcar do molho', 'Gordura']
+        'descricao': 'Maminha bovina fresca sous vide ao molho agridoce mongoliano com maple',
+        'ingredientes': ['maminha fresca', 'shoyu', 'gengibre fresco', 'alho orgânico', 'maple canadense', 'cebolinha orgânica'],
+        'tecnica': 'Sous vide + finalização',
+        'beneficios': ['Alto teor proteico', 'Ferro', 'Zinco', 'Carne fresca', 'Sous vide', 'Adoçado com maple'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'maminhaaomolhomostarda': {
-        'descricao': 'Corte bovino nobre assado com molho de mostarda',
-        'ingredientes': ['maminha bovina', 'mostarda', 'creme de leite', 'vinho branco'],
-        'beneficios': ['Alto teor proteico', 'Rico em ferro e zinco', 'Vitaminas do complexo B'],
-        'riscos': ['Gordura saturada', 'Contém lactose', 'Alto colesterol']
+        'descricao': 'Corte bovino nobre fresco preparado sous vide com molho de mostarda e creme fresco',
+        'ingredientes': ['maminha bovina fresca', 'mostarda', 'creme de leite fresco', 'vinho branco'],
+        'tecnica': 'Sous vide',
+        'beneficios': ['Alto teor proteico', 'Rico em ferro e zinco', 'Vitaminas do complexo B', 'Carne fresca', 'Sous vide', 'Creme fresco'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'maminhamolhocebola': {
-        'descricao': 'Maminha com molho de cebola caramelizada',
-        'ingredientes': ['maminha', 'cebola', 'vinho', 'manteiga', 'tomilho'],
-        'beneficios': ['Proteína', 'Ferro', 'Zinco', 'Sabor intenso'],
-        'riscos': ['Gordura saturada', 'Contém lactose', 'Colesterol']
+        'descricao': 'Maminha fresca sous vide com molho de cebola orgânica caramelizada',
+        'ingredientes': ['maminha fresca', 'cebola orgânica', 'vinho', 'manteiga fresca', 'tomilho orgânico'],
+        'tecnica': 'Sous vide + caramelização',
+        'beneficios': ['Proteína', 'Ferro', 'Zinco', 'Sabor intenso', 'Carne fresca', 'Sous vide'],
+        'riscos': ['Contém lactose', 'Pode conter traços de glúten']
     },
     'maminhanacervejapreta': {
-        'descricao': 'Maminha assada na cerveja preta',
-        'ingredientes': ['maminha', 'cerveja preta', 'cebola', 'alho', 'louro'],
-        'beneficios': ['Proteína', 'Ferro', 'Carne macia', 'Sabor intenso'],
-        'riscos': ['Gordura saturada', 'Contém álcool residual', 'Colesterol']
+        'descricao': 'Maminha bovina fresca braseada na cerveja preta',
+        'ingredientes': ['maminha fresca', 'cerveja preta', 'cebola orgânica', 'alho orgânico', 'louro'],
+        'tecnica': 'Braseamento',
+        'beneficios': ['Proteína', 'Ferro', 'Carne macia', 'Sabor intenso', 'Carne fresca', 'Técnica de braseamento'],
+        'riscos': ['Contém álcool residual', 'Pode conter traços de glúten']
     },
     'mandioquinhacomcamarao': {
-        'descricao': 'Purê de mandioquinha com camarões salteados',
-        'ingredientes': ['mandioquinha', 'camarão', 'alho', 'manteiga', 'salsinha'],
-        'beneficios': ['Proteína do camarão', 'Selênio', 'Vitaminas'],
-        'riscos': ['Alérgeno: crustáceo', 'Contém lactose', 'Colesterol do camarão']
+        'descricao': 'Purê de mandioquinha artesanal com camarões frescos salteados em azeite',
+        'ingredientes': ['mandioquinha', 'camarão fresco', 'alho orgânico', 'manteiga fresca', 'salsinha orgânica'],
+        'tecnica': 'Purê artesanal + camarão salteado em azeite',
+        'beneficios': ['Proteína do camarão', 'Selênio', 'Vitaminas', 'Camarão fresco'],
+        'riscos': ['Alérgeno: crustáceo', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'minipolpetonerecheadocomqueijo': {
-        'descricao': 'Polpetone de carne recheado com queijo',
-        'ingredientes': ['carne moída', 'queijo mussarela', 'ovo', 'farinha de rosca', 'molho de tomate'],
-        'beneficios': ['Alto teor proteico', 'Cálcio do queijo'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Contém lactose', 'Gordura saturada']
+        'descricao': 'Polpetone artesanal de carne fresca recheado com queijo',
+        'ingredientes': ['carne moída fresca', 'queijo mussarela', 'ovo', 'farinha (uso controlado)', 'molho de tomate artesanal'],
+        'tecnica': 'Braseado',
+        'beneficios': ['Alto teor proteico', 'Cálcio do queijo', 'Carne fresca', 'Molho artesanal'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Contém lactose', 'Pode conter traços de glúten']
     },
     'moquecadebanadaterra': {
-        'descricao': 'Moqueca com banana da terra',
-        'ingredientes': ['peixe', 'banana da terra', 'leite de coco', 'azeite de dendê', 'pimentão', 'tomate'],
-        'beneficios': ['Ômega-3', 'Potássio', 'Gorduras boas do dendê'],
-        'riscos': ['Alérgeno: peixe', 'Alérgeno: coco', 'Calórico']
+        'descricao': 'Moqueca de peixe fresco com banana da terra e leite de coco',
+        'ingredientes': ['peixe fresco', 'banana da terra', 'leite de coco', 'azeite de dendê', 'pimentão orgânico', 'tomate sem pele'],
+        'tecnica': 'Cozimento tradicional',
+        'beneficios': ['Ômega-3', 'Potássio', 'Gorduras boas do dendê', 'Peixe fresco', 'Tomate sem pele'],
+        'riscos': ['Alérgeno: peixe', 'Alérgeno: coco', 'Pode conter traços de glúten']
     },
     'pancetapururuca': {
-        'descricao': 'Panceta de porco com pele crocante',
-        'ingredientes': ['panceta de porco', 'sal grosso', 'alho', 'ervas'],
-        'beneficios': ['Alto teor proteico', 'Colágeno', 'Sabor intenso'],
-        'riscos': ['Muito alto em gordura saturada', 'Alto sódio', 'Alto colesterol', 'Muito calórico']
+        'descricao': 'Panceta suína fresca preparada sous vide e finalizada em forno combinado para crocância',
+        'ingredientes': ['panceta de porco fresca', 'sal grosso', 'alho orgânico', 'ervas orgânicas'],
+        'tecnica': 'Sous vide + finalização em forno combinado',
+        'beneficios': ['Alto teor proteico', 'Colágeno', 'Sabor intenso', 'Carne fresca', 'Sous vide'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'pernildecordeiro': {
-        'descricao': 'Pernil de cordeiro assado com ervas',
-        'ingredientes': ['pernil de cordeiro', 'alecrim', 'alho', 'vinho', 'azeite'],
-        'beneficios': ['Proteína de alta qualidade', 'Ferro', 'Zinco', 'Vitaminas B'],
-        'riscos': ['Gordura saturada', 'Colesterol', 'Calórico']
+        'descricao': 'Pernil de cordeiro fresco braseado com ervas frescas orgânicas',
+        'ingredientes': ['pernil de cordeiro fresco', 'alecrim orgânico', 'alho orgânico', 'vinho', 'azeite extravirgem'],
+        'tecnica': 'Braseamento',
+        'beneficios': ['Proteína de alta qualidade', 'Ferro', 'Zinco', 'Vitaminas B', 'Cordeiro fresco', 'Ervas orgânicas'],
+        'riscos': ['Pode conter traços de glúten']
     },
     'quiaboempanado': {
-        'descricao': 'Quiabo empanado e frito',
-        'ingredientes': ['quiabo', 'farinha', 'ovo', 'sal', 'óleo'],
-        'beneficios': ['Fibras', 'Vitaminas', 'Ácido fólico'],
-        'riscos': ['Contém glúten', 'Contém ovo', 'Fritura']
+        'descricao': 'Quiabo orgânico empanado artesanalmente, assado em forno combinado (sem fritura)',
+        'ingredientes': ['quiabo orgânico', 'farinha (uso controlado)', 'ovo', 'sal'],
+        'tecnica': 'Empanado e assado em forno combinado (SEM FRITURA)',
+        'beneficios': ['Fibras', 'Vitaminas', 'Ácido fólico', 'Sem fritura', 'Orgânico'],
+        'riscos': ['Contém glúten (controlado)', 'Contém ovo', 'Pode conter traços de glúten']
     },
     'rolinhovietnamita': {
-        'descricao': 'Rolinho primavera vietnamita',
-        'ingredientes': ['papel de arroz', 'camarão', 'vegetais', 'macarrão de arroz', 'ervas'],
-        'beneficios': ['Baixa caloria', 'Proteína do camarão', 'Vegetais frescos'],
-        'riscos': ['Alérgeno: crustáceo', 'Pode conter amendoim no molho']
+        'descricao': 'Rolinho primavera vietnamita com camarão fresco e vegetais orgânicos',
+        'ingredientes': ['papel de arroz', 'camarão fresco', 'vegetais orgânicos', 'macarrão de arroz', 'ervas orgânicas'],
+        'tecnica': 'Preparo a frio',
+        'beneficios': ['Baixa caloria', 'Proteína do camarão', 'Vegetais frescos', 'Camarão fresco', 'Orgânicos'],
+        'riscos': ['Alérgeno: crustáceo', 'Pode conter traços de glúten']
     },
     'salpicaodefrango': {
-        'descricao': 'Salada de frango desfiado com maionese e legumes',
-        'ingredientes': ['frango desfiado', 'maionese', 'cenoura', 'batata palha', 'milho', 'ervilha'],
-        'beneficios': ['Proteína do frango', 'Vitaminas dos legumes'],
-        'riscos': ['Alto teor de gordura (maionese)', 'Alérgeno: ovo (maionese)', 'Calórico']
+        'descricao': 'Salada de frango sous vide desfiado com maionese artesanal e legumes orgânicos',
+        'ingredientes': ['frango sous vide desfiado', 'maionese artesanal', 'cenoura orgânica', 'batata palha', 'milho', 'ervilha'],
+        'tecnica': 'Frango sous vide + preparo a frio',
+        'beneficios': ['Proteína do frango', 'Vitaminas dos legumes', 'Frango sous vide', 'Maionese artesanal'],
+        'riscos': ['Alérgeno: ovo (maionese)', 'Pode conter traços de glúten']
     },
     'sobrecoxaaotandoori': {
-        'descricao': 'Sobrecoxa de frango marinada em especiarias tandoori',
-        'ingredientes': ['sobrecoxa de frango', 'iogurte', 'garam masala', 'cúrcuma', 'páprica', 'gengibre'],
-        'beneficios': ['Proteína', 'Especiarias anti-inflamatórias', 'Probióticos do iogurte'],
-        'riscos': ['Contém lactose (iogurte)', 'Especiarias fortes']
+        'descricao': 'Sobrecoxa de frango fresco marinada em especiarias tandoori importadas da Índia',
+        'ingredientes': ['sobrecoxa de frango fresco', 'iogurte fresco', 'garam masala importado', 'cúrcuma importada', 'páprica importada', 'gengibre fresco'],
+        'tecnica': 'Marinado em iogurte + assado em forno combinado',
+        'beneficios': ['Proteína', 'Especiarias anti-inflamatórias', 'Probióticos do iogurte', 'Frango fresco', 'Especiarias indianas importadas'],
+        'riscos': ['Contém lactose (iogurte)', 'Pode conter traços de glúten']
     },
 
     # Fallback padrão
     'default': {
-        'descricao': 'Prato preparado com ingredientes frescos',
-        'ingredientes': ['Ingredientes variados conforme preparo'],
-        'beneficios': ['Consulte informações com o atendente'],
-        'riscos': ['Consulte sobre alérgenos específicos']
+        'descricao': 'Prato preparado com ingredientes frescos e técnicas artesanais Cibi Sana',
+        'ingredientes': ['Ingredientes frescos selecionados'],
+        'tecnica': 'Técnica artesanal',
+        'beneficios': ['Sem aditivos químicos', 'Ingredientes frescos', 'Preparo artesanal'],
+        'riscos': ['Pode conter traços de glúten', 'Consulte sobre alérgenos específicos']
     }
 }
 
@@ -944,7 +1060,12 @@ def analyze_result(results: List[Dict]) -> Dict:
     nutrition_type = get_nutrition_type(dish)
     nutrition = DISH_NUTRITION.get(nutrition_type, DISH_NUTRITION['default'])
     
-    # DECISÃO DE CONFIANÇA (CORRIGIDA)
+    # Adicionar riscos padrão Cibi Sana aos riscos existentes
+    riscos = dish_info.get('riscos', [])
+    if not any('traços de glúten' in r.lower() for r in riscos):
+        riscos = riscos + [AVISO_GLUTEN]
+    
+    # DECISÃO DE CONFIANÇA
     if score >= 0.85:
         # ALTA CONFIANÇA - identificação segura
         return {
@@ -959,8 +1080,10 @@ def analyze_result(results: List[Dict]) -> Dict:
             'nutrition': nutrition,
             'descricao': dish_info.get('descricao'),
             'ingredientes': dish_info.get('ingredientes'),
+            'tecnica': dish_info.get('tecnica'),
             'beneficios': dish_info.get('beneficios'),
-            'riscos': dish_info.get('riscos'),
+            'riscos': riscos,
+            'aviso_cibi_sana': AVISO_CIBI_SANA,
             'alternatives': []  # SEM alternativas quando confiança é alta
         }
     
@@ -979,8 +1102,10 @@ def analyze_result(results: List[Dict]) -> Dict:
             'nutrition': nutrition,
             'descricao': dish_info.get('descricao'),
             'ingredientes': dish_info.get('ingredientes'),
+            'tecnica': dish_info.get('tecnica'),
             'beneficios': dish_info.get('beneficios'),
-            'riscos': dish_info.get('riscos'),
+            'riscos': riscos,
+            'aviso_cibi_sana': AVISO_CIBI_SANA,
             'alternatives': alternatives
         }
     
@@ -999,8 +1124,10 @@ def analyze_result(results: List[Dict]) -> Dict:
             'nutrition': None,
             'descricao': None,
             'ingredientes': None,
+            'tecnica': None,
             'beneficios': None,
             'riscos': None,
+            'aviso_cibi_sana': None,
             'alternatives': alternatives
         }
 
