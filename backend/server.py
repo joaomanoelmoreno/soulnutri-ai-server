@@ -289,7 +289,8 @@ async def identify_image(file: UploadFile = File(...)):
             riscos=decision.get('riscos'),
             aviso_cibi_sana=decision.get('aviso_cibi_sana'),
             alternatives=decision.get('alternatives', []),
-            search_time_ms=round(elapsed_ms, 2)
+            search_time_ms=round(elapsed_ms, 2),
+            source=decision.get('source', 'local_index')
         )
         
     except Exception as e:
