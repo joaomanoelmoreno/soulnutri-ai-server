@@ -7,13 +7,14 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 - **Backend**: FastAPI + Python
 - **Frontend**: React
 - **ML/CV**: OpenCLIP (ViT-B-32) para embeddings visuais
-- **Database**: MongoDB (não utilizado atualmente - dados hardcoded)
+- **Database**: MongoDB (98 pratos migrados)
 
 ## Funcionalidades Implementadas
 
 ### ✅ Core Features (Concluídas)
 - [x] Identificação de pratos por imagem via câmera ou upload
-- [x] 139 pratos cadastrados com dados completos
+- [x] 139 pratos cadastrados no índice visual
+- [x] 98 pratos com dados completos no MongoDB
 - [x] Indicador de confiança visual (ALTA/MÉDIA/BAIXA)
 - [x] Exibição de ingredientes, benefícios e riscos
 - [x] Informações nutricionais (calorias, proteínas, carbos, gorduras)
@@ -23,19 +24,23 @@ Sistema inteligente de identificação de pratos em tempo real para restaurantes
 
 ### ✅ UI/UX (Concluídas - 21/01/2026)
 - [x] Câmera no topo com área ampla (300px min)
-- [x] **NOVO: "Toque para fotografar"** - substituiu auto-captura
-- [x] **NOVO: Botões maiores** - Galeria e Nova Foto bem visíveis
-- [x] **NOVO: Categoria logo abaixo do nome** (Vegano=verde, Vegetariano=branco, Proteína=laranja)
-- [x] **NOVO: Alérgenos em destaque** com formato específico
-- [x] Bug da auto-captura corrigido
+- [x] **"Toque para fotografar"** - interação intuitiva
+- [x] **Botões maiores** - Galeria e Nova Foto bem visíveis
+- [x] **Categoria logo abaixo do nome** (Vegano=verde, Vegetariano=branco, Proteína=laranja)
+- [x] **Alérgenos em destaque** com formato específico
 - [x] Logo SoulNutri oficial com ®
 - [x] Footer "Powered by Emergent" discreto
 - [x] Layout responsivo mobile-first
 
 ### ✅ Performance (Melhorada - 21/01/2026)
 - [x] Modelo CLIP pré-carregado no startup
-- [x] Tempo de resposta: ~6000ms → ~250ms (25x mais rápido!)
-- [ ] Meta: ~100ms (requer GPU)
+- [x] Tempo de resposta: ~250ms
+
+### ✅ Banco de Dados MongoDB (21/01/2026)
+- [x] 98 pratos migrados
+- [x] 34 veganos, 25 vegetarianos, 38 proteína animal
+- [x] Estrutura: slug, nome, categoria, ingredientes, benefícios, riscos, nutrição
+- [x] Índices criados para performance
 
 ## Backlog
 
