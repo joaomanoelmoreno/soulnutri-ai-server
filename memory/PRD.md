@@ -1,105 +1,104 @@
 # SoulNutri - Product Requirements Document
 
-## Visão Geral
-Sistema inteligente de identificação de pratos em tempo real para restaurantes. Funciona como um "Waze para alimentação" - identificando pratos por imagem e fornecendo informações nutricionais, ingredientes, benefícios e riscos (alérgenos).
+## Visão e Posicionamento
+
+### Slogan
+**"SOULNUTRI - O SEU AGENTE DE NUTRIÇÃO VIRTUAL"**
+
+### Proposta de Valor
+O SoulNutri é um **nutricionista virtual** que acompanha o cliente em todas as suas refeições, fornecendo informações **educativas e relevantes** que ele NÃO conhece.
+
+### Diferencial
+- ❌ NÃO: "Evitar glúten se for celíaco" (óbvio)
+- ✅ SIM: "Rico em potássio (380mg), mineral que regula a pressão arterial e previne cãibras musculares"
+
+### Disclaimer Legal
+> "As informações são educativas e não substituem orientação de profissionais de saúde. Consulte um nutricionista para dietas personalizadas."
+
+---
+
+## Versões do Produto
+
+### Versão Gratuita
+- Identificação de pratos por imagem
+- Categoria (vegano/vegetariano/proteína animal)
+- Alérgenos em destaque
+- 1 benefício educativo (o melhor do prato)
+- 1 risco/atenção (o mais importante)
+- Informações nutricionais básicas
+
+### Versão Premium (Futuro)
+- Perfil nutricional do usuário
+- Histórico de consumo
+- Alertas personalizados: "Esta semana você já consumiu X de potássio..."
+- Sugestões baseadas no histórico
+- Notícias/pesquisas sobre ingredientes
+- Link com mídia especializada (saúde, agrotóxicos, etc.)
+
+---
 
 ## Tecnologias
 - **Backend**: FastAPI + Python
 - **Frontend**: React
-- **ML/CV**: OpenCLIP (ViT-B-32) para embeddings visuais
-- **Database**: MongoDB (98 pratos migrados)
+- **ML/CV**: OpenCLIP (ViT-B-32)
+- **Database**: MongoDB
+- **IA Genérica**: GPT-4o Vision
+
+---
 
 ## Funcionalidades Implementadas
 
-### ✅ Core Features (Concluídas)
-- [x] Identificação de pratos por imagem via câmera ou upload
-- [x] 139 pratos cadastrados no índice visual
-- [x] 98 pratos com dados completos no MongoDB
-- [x] Indicador de confiança visual (ALTA/MÉDIA/BAIXA)
-- [x] Exibição de ingredientes, benefícios e riscos
-- [x] Informações nutricionais (calorias, proteínas, carbos, gorduras)
-- [x] Técnicas de preparo Cibi Sana
-- [x] Aviso "sem aditivos químicos e/ou alimentos industrializados"
-- [x] Lógica de glúten corrigida
+### ✅ Core Features
+- [x] Identificação de pratos por imagem
+- [x] 139 pratos no índice + 18 criados pelo usuário
+- [x] Indicador de confiança (ALTA/MÉDIA/BAIXA)
+- [x] Categorias coloridas (vegano/vegetariano/proteína animal)
+- [x] Alérgenos sempre visíveis
+- [x] Sistema de feedback (correto/incorreto)
+- [x] Cadastro de pratos novos com IA
+- [x] IA genérica para pratos não cadastrados
 
-### ✅ UI/UX (Concluídas - 21/01/2026)
-- [x] **Câmera menor** (-30%, 200px de altura)
-- [x] **Moldura guia circular** para posicionar o prato
-- [x] "Toque para fotografar" - interação intuitiva
-- [x] Botões maiores - Galeria e Nova Foto
-- [x] Categoria logo abaixo do nome (cores por tipo)
-- [x] Alérgenos em destaque
-- [x] Logo SoulNutri oficial com ®
-- [x] Footer discreto
-- [x] Layout responsivo mobile-first
+### ✅ UI/UX
+- [x] Câmera com moldura retangular vertical
+- [x] Toque para fotografar
+- [x] Botões Galeria e Nova Foto
+- [x] Modal de correção com busca
+- [x] Campo para cadastrar prato novo
 
-### ✅ Sistema de Feedback (21/01/2026)
-- [x] Botões "Sim, correto" / "Não, corrigir" após cada identificação
-- [x] Modal para selecionar prato correto quando errar
-- [x] Salvar fotos corretas no dataset do prato
-- [x] Fotos corrigidas são salvas no prato correto (treinamento contínuo)
-- [x] Opção para descartar fotos ruins
-- [x] Estatísticas de feedback no MongoDB
+---
 
-### ✅ IA Genérica para Pratos Desconhecidos (21/01/2026)
-- [x] GPT-4o Vision para identificar pratos NÃO cadastrados
-- [x] Três níveis de confiança (alta/média/baixa) também para IA genérica
-- [x] Indicador visual "🤖 Identificado por IA Genérica"
-- [x] Retorna: nome, categoria, ingredientes, benefícios, riscos
-- [x] Fallback automático quando índice local tem baixa confiança
+## Backlog Priorizado
 
-### ✅ Performance (Melhorada - 21/01/2026)
-- [x] Modelo CLIP pré-carregado no startup
-- [x] Tempo de resposta: ~250ms
+### P0 - URGENTE
+- [ ] Corrigir preenchimento de ingredientes/benefícios nos 18 pratos novos
+- [ ] Investigar travamentos do app
+- [ ] Melhorar precisão (meta: 100% em pratos cadastrados)
+- [ ] Simplificar benefícios/riscos (1 melhor + 1 pior, educativos)
 
-### ✅ Banco de Dados MongoDB (21/01/2026)
-- [x] 98 pratos migrados
-- [x] 34 veganos, 25 vegetarianos, 38 proteína animal
-- [x] Estrutura: slug, nome, categoria, ingredientes, benefícios, riscos, nutrição
-- [x] Índices criados para performance
+### P1 - ESTA SEMANA
+- [ ] Implementar busca de notícias sobre ingredientes
+- [ ] Preparar teste com múltiplos usuários simultâneos
+- [ ] Retreinar índice com novas fotos coletadas
 
-## Backlog
-
-### P0 - Alta Prioridade
-- [ ] Revisar dados dos pratos com informações genéricas
-- [ ] Testar reconhecimento de pratos não cadastrados
-
-### P1 - Média Prioridade
-- [ ] Melhorar precisão entre pratos similares (confusão)
-- [ ] Sistema de feedback: "correto/incorreto"
-- [ ] Migrar dados para MongoDB (escalabilidade)
-
-### P2 - Baixa Prioridade
-- [ ] Investigar domínio personalizado `soulnutri.app.br`
-- [ ] Otimizar para ~100ms (requer GPU)
-- [ ] Deploy em produção
-
-### Premium (Futuro)
+### P2 - FUTURO
+- [ ] Reconhecimento de pratos compostos (múltiplos itens)
+- [ ] Versão Premium separada
 - [ ] Perfil nutricional do usuário
-- [ ] Alertas personalizados
 - [ ] Histórico de consumo
-- [ ] Notícias e pesquisas
+- [ ] Alertas personalizados
 
-### Futuro
-- [ ] Funcionalidades Premium (alertas inteligentes)
-- [ ] Histórico de consultas
-- [ ] Favoritos
+---
 
-## Arquivos Principais
-- `/app/frontend/src/App.js` - Componente React principal
-- `/app/frontend/src/App.css` - Estilos
-- `/app/backend/server.py` - API FastAPI
-- `/app/backend/ai/policy.py` - Dados dos pratos (HARDCODED)
-- `/app/backend/ai/index.py` - Índice de embeddings
+## Estatísticas Atuais
+- Pratos no índice: 139
+- Pratos criados pelo usuário: 18
+- Feedbacks coletados: 18
+- Taxa de acerto: 83.3%
 
-## Endpoints da API
-- `GET /api/ai/status` - Status do índice
-- `POST /api/ai/identify` - Identificar prato
-- `POST /api/ai/reindex` - Reconstruir índice
-- `GET /api/ai/dishes` - Listar pratos
-- `POST /api/ai/learn` - Cadastrar novo prato
+---
 
 ## Notas Importantes
 - Usuário não é técnico - comunicação simples
-- Dados dos 139 pratos estão hardcoded em `policy.py`
-- Performance atual ~6s (necessita GPU para atingir 100ms)
+- Informações devem ser EDUCATIVAS, não óbvias
+- Nunca se posicionar como profissional de saúde
+- Foco em informar, não prescrever
