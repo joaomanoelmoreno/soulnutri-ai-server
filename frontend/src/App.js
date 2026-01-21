@@ -10,6 +10,10 @@ function App() {
   const [status, setStatus] = useState(null);
   const [stream, setStream] = useState(null);
   const [error, setError] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [dishes, setDishes] = useState([]);
+  const [feedbackSent, setFeedbackSent] = useState(false);
+  const [lastImageBlob, setLastImageBlob] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -17,7 +21,8 @@ function App() {
 
   useEffect(() => { 
     checkStatus(); 
-    startCamera(); 
+    startCamera();
+    loadDishes();
     return () => stopCamera();
   }, []);
 
@@ -26,6 +31,14 @@ function App() {
       const res = await fetch(`${API}/ai/status`);
       setStatus(await res.json());
     } catch { setStatus({ ok: false }); }
+  };
+
+  const loadDishes = async () => {
+    try {
+      const res = await fetch(`${API}/ai/dishes`);
+      const data = await res.json();
+      if (data.ok) setDishes(data.dishes || []);
+    } catch (e) { console.error('Erro ao carregar pratos:', e); }
   };
 
   const startCamera = async () => {
@@ -48,7 +61,12 @@ function App() {
     c.width = v.videoWidth; 
     c.height = v.videoHeight;
     c.getContext('2d').drawImage(v, 0, 0);
-    c.toBlob(b => b && identifyImage(b), 'image/jpeg', 0.85);
+    c.toBlob(b => {
+      if (b) {
+        setLastImageBlob(b);
+        identifyImage(b);
+      }
+    }, 'image/jpeg', 0.85);
   }, []);
 
   const identifyImage = async (blob) => {
@@ -56,6 +74,8 @@ function App() {
     setLoading(true);
     setResult(null);
     setError(null);
+    setFeedbackSent(false);
+    setShowFeedback(false);
     
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
@@ -75,12 +95,67 @@ function App() {
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
-    if (file) identifyImage(file);
+    if (file) {
+      setLastImageBlob(file);
+      identifyImage(file);
+    }
   };
 
   const clearResult = () => {
     setResult(null);
     setError(null);
+    setShowFeedback(false);
+    setFeedbackSent(false);
+    setLastImageBlob(null);
+  };
+
+  // Enviar feedback - CORRETO
+  const sendFeedbackCorrect = async () => {
+    if (!lastImageBlob || !result?.dish) return;
+    
+    const fd = new FormData();
+    fd.append("file", lastImageBlob, "photo.jpg");
+    fd.append("dish_slug", result.dish);
+    fd.append("is_correct", "true");
+    
+    try {
+      const res = await fetch(`${API}/ai/feedback`, { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.ok) {
+        setFeedbackSent(true);
+        setShowFeedback(false);
+      }
+    } catch (e) {
+      console.error('Erro ao enviar feedback:', e);
+    }
+  };
+
+  // Enviar feedback - INCORRETO (com correção)
+  const sendFeedbackIncorrect = async (correctSlug) => {
+    if (!lastImageBlob) return;
+    
+    const fd = new FormData();
+    fd.append("file", lastImageBlob, "photo.jpg");
+    fd.append("dish_slug", correctSlug);
+    fd.append("is_correct", "false");
+    fd.append("original_dish", result?.dish || "");
+    
+    try {
+      const res = await fetch(`${API}/ai/feedback`, { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.ok) {
+        setFeedbackSent(true);
+        setShowFeedback(false);
+      }
+    } catch (e) {
+      console.error('Erro ao enviar feedback:', e);
+    }
+  };
+
+  // Descartar foto (não salvar)
+  const discardPhoto = () => {
+    setShowFeedback(false);
+    setFeedbackSent(true);
   };
 
   const r = result;
@@ -94,7 +169,7 @@ function App() {
   
   const confData = confidenceConfig[r?.confidence] || confidenceConfig.baixa;
   
-  // Cores das categorias conforme diretriz
+  // Cores das categorias
   const getCategoryStyle = (cat) => {
     switch(cat) {
       case 'vegano': return { bg: '#22c55e', color: '#fff' };
@@ -107,25 +182,20 @@ function App() {
   const catStyle = getCategoryStyle(r?.category);
 
   // Formatar alertas de alérgenos
-  const formatAllergenAlert = (riscos, confidence) => {
+  const formatAllergenAlert = (riscos) => {
     if (!riscos || riscos.length === 0) return null;
-    
-    const alerts = riscos.map(risco => {
-      // Se contém definitivamente
+    return riscos.map(risco => {
       if (risco.toLowerCase().includes('contém') || risco.toLowerCase().includes('alérgeno:')) {
         return { type: 'definite', text: risco.replace('Alérgeno:', 'Atenção: este prato contém') };
       }
-      // Se pode conter (traços ou incerteza)
       if (risco.toLowerCase().includes('pode conter') || risco.toLowerCase().includes('traços')) {
         return { type: 'possible', text: `${risco}. Verifique com o atendente.` };
       }
       return { type: 'info', text: risco };
     });
-    
-    return alerts;
   };
 
-  const allergenAlerts = formatAllergenAlert(r?.riscos, r?.confidence);
+  const allergenAlerts = formatAllergenAlert(r?.riscos);
 
   return (
     <div className="app">
@@ -138,7 +208,7 @@ function App() {
         {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
       </header>
 
-      {/* Câmera - TOQUE PARA CAPTURAR */}
+      {/* Câmera com moldura guia - MENOR */}
       <div 
         className="cam-box" 
         onClick={handleCameraTouch}
@@ -146,6 +216,12 @@ function App() {
       >
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
+        
+        {/* Moldura guia para posicionar o prato */}
+        <div className="cam-guide">
+          <div className="guide-frame"></div>
+          <span className="guide-text">Posicione o prato aqui</span>
+        </div>
         
         {/* Overlay de loading */}
         {loading && (
@@ -164,7 +240,7 @@ function App() {
         )}
       </div>
 
-      {/* Botões de ação - MAIORES */}
+      {/* Botões de ação */}
       <div className="action-btns">
         <button 
           className="action-btn gallery" 
@@ -198,14 +274,10 @@ function App() {
           {/* Nome do Prato */}
           <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
           
-          {/* CATEGORIA - Logo abaixo do nome */}
+          {/* CATEGORIA */}
           <div 
             className="category-badge" 
-            style={{ 
-              background: catStyle.bg, 
-              color: catStyle.color,
-              border: catStyle.border || 'none'
-            }}
+            style={{ background: catStyle.bg, color: catStyle.color, border: catStyle.border || 'none' }}
             data-testid="category-badge"
           >
             {r.category_emoji} {r.category?.toUpperCase()}
@@ -224,12 +296,8 @@ function App() {
 
           {/* Indicador de Confiança */}
           <div className="conf-indicator" style={{ background: confData.bg, borderColor: confData.color }}>
-            <span className="conf-label" style={{ color: confData.color }}>
-              {confData.label}
-            </span>
-            <span className="conf-score" style={{ color: confData.color }}>
-              {(r.score * 100).toFixed(0)}%
-            </span>
+            <span className="conf-label" style={{ color: confData.color }}>{confData.label}</span>
+            <span className="conf-score" style={{ color: confData.color }}>{(r.score * 100).toFixed(0)}%</span>
           </div>
           
           {/* Descrição */}
@@ -268,40 +336,82 @@ function App() {
                 <div><b>{r.nutrition.carboidratos}</b><small>Carbos</small></div>
                 <div><b>{r.nutrition.gorduras}</b><small>Gorduras</small></div>
               </div>
-              {/* Aviso Cibi Sana */}
               {r.aviso_cibi_sana && (
-                <div className="cibi-sana-text" data-testid="cibi-sana-badge">
-                  {r.aviso_cibi_sana}
-                </div>
+                <div className="cibi-sana-text" data-testid="cibi-sana-badge">{r.aviso_cibi_sana}</div>
               )}
             </div>
           )}
 
           <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
 
-          {/* Alternativas (apenas se confiança média/baixa) */}
+          {/* Alternativas */}
           {r.alternatives?.length > 0 && r.confidence !== 'alta' && (
             <div className="alts" data-testid="alternatives-box">
               <small>Também pode ser:</small>
               {r.alternatives.map((a,i) => <span key={i}>{a}</span>)}
             </div>
           )}
+
+          {/* BOTÕES DE FEEDBACK */}
+          {!feedbackSent && (
+            <div className="feedback-section">
+              <p className="feedback-question">Este reconhecimento está correto?</p>
+              <div className="feedback-btns">
+                <button className="fb-btn correct" onClick={sendFeedbackCorrect}>
+                  ✅ Sim, correto
+                </button>
+                <button className="fb-btn incorrect" onClick={() => setShowFeedback(true)}>
+                  ❌ Não, corrigir
+                </button>
+              </div>
+            </div>
+          )}
+
+          {feedbackSent && (
+            <div className="feedback-thanks">
+              ✅ Obrigado pelo feedback! Isso ajuda a melhorar o reconhecimento.
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* MODAL DE CORREÇÃO */}
+      {showFeedback && (
+        <div className="modal-overlay" onClick={() => setShowFeedback(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h3>Qual é o prato correto?</h3>
+            <div className="dishes-list">
+              {dishes.map(d => (
+                <button 
+                  key={d.slug} 
+                  className="dish-option"
+                  onClick={() => sendFeedbackIncorrect(d.slug)}
+                >
+                  {d.category_emoji} {d.name}
+                </button>
+              ))}
+            </div>
+            <div className="modal-actions">
+              <button className="discard-btn" onClick={discardPhoto}>
+                🗑️ Descartar foto (não salvar)
+              </button>
+              <button className="cancel-btn" onClick={() => setShowFeedback(false)}>
+                Cancelar
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
       {r && !r.ok && (
-        <div className="err" data-testid="error-message">
-          ❌ {r.message}
-        </div>
+        <div className="err" data-testid="error-message">❌ {r.message}</div>
       )}
 
       {error && (
-        <div className="err" data-testid="network-error">
-          ❌ Erro de conexão: {error}
-        </div>
+        <div className="err" data-testid="network-error">❌ Erro de conexão: {error}</div>
       )}
 
-      {/* Rodapé discreto */}
+      {/* Rodapé */}
       <footer className="footer">
         <small>Powered by Emergent</small>
       </footer>
