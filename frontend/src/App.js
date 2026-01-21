@@ -27,35 +27,35 @@ function App() {
   }, []);
 
   const clearAllIntervals = () => {
-    if (autoIntervalRef.current) clearInterval(autoIntervalRef.current);
-    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+    if (autoIntervalRef.current) {
+      clearInterval(autoIntervalRef.current);
+      autoIntervalRef.current = null;
+    }
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
   };
 
-  // Gerenciar auto-captura com countdown visual
+  // Gerenciar auto-captura
   useEffect(() => {
-    clearAllIntervals();
-    
     if (autoCapture && stream && !loading) {
-      // Iniciar countdown
       setCountdown(3);
       
       countdownIntervalRef.current = setInterval(() => {
-        setCountdown(prev => {
-          if (prev <= 1) return 3;
-          return prev - 1;
-        });
+        setCountdown(prev => (prev <= 1 ? 3 : prev - 1));
       }, 1000);
 
-      // Captura a cada 3 segundos
       autoIntervalRef.current = setInterval(() => {
         captureAndIdentify();
       }, 3000);
     } else {
+      clearAllIntervals();
       setCountdown(0);
     }
 
     return () => clearAllIntervals();
-  }, [autoCapture, stream]);
+  }, [autoCapture, stream, loading]);
 
   const checkStatus = async () => {
     try {
@@ -79,7 +79,6 @@ function App() {
   const captureAndIdentify = useCallback(async () => {
     if (!videoRef.current || !canvasRef.current || loading) return;
     
-    // LIMPAR resultado anterior antes de nova busca
     setResult(null);
     
     const v = videoRef.current, c = canvasRef.current;
@@ -91,8 +90,12 @@ function App() {
 
   const identifyImage = async (blob) => {
     setLoading(true);
-    // LIMPAR resultado anterior
     setResult(null);
+    
+    // Desativa auto-captura durante processamento
+    if (autoCapture) {
+      clearAllIntervals();
+    }
     
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
@@ -105,30 +108,31 @@ function App() {
     } catch (e) { 
       setResult({ ok: false, message: e.message }); 
     } finally { 
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Desativar auto-captura ao selecionar da galeria
       setAutoCapture(false);
       identifyImage(file);
     }
   };
 
   const toggleAutoCapture = (enabled) => {
-    setAutoCapture(enabled);
     if (enabled) {
-      // Limpar resultado ao ativar auto
       setResult(null);
     }
+    setAutoCapture(enabled);
+  };
+
+  const clearResult = () => {
+    setResult(null);
   };
 
   const r = result;
   
-  // Cores e labels de confiança
   const confidenceConfig = {
     alta: { color: "#10b981", label: "ALTA CONFIANÇA", bg: "rgba(16,185,129,0.15)" },
     média: { color: "#f59e0b", label: "MÉDIA CONFIANÇA", bg: "rgba(245,158,11,0.15)" },
@@ -145,6 +149,7 @@ function App() {
         {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
       </header>
 
+      {/* Câmera - Posição mais alta */}
       <div className="cam-box">
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
@@ -169,6 +174,26 @@ function App() {
         </div>
       </div>
 
+      {/* Botões de ação */}
+      <div className="action-btns">
+        <button 
+          className="gal-btn" 
+          onClick={() => fileInputRef.current?.click()}
+          data-testid="gallery-button"
+        >
+          🖼️ Galeria
+        </button>
+        {r && (
+          <button 
+            className="clear-btn" 
+            onClick={clearResult}
+            data-testid="clear-button"
+          >
+            🔄 Nova Foto
+          </button>
+        )}
+      </div>
+
       <input 
         ref={fileInputRef} 
         type="file" 
@@ -176,13 +201,6 @@ function App() {
         hidden 
         onChange={handleFileSelect} 
       />
-      <button 
-        className="gal-btn" 
-        onClick={() => fileInputRef.current?.click()}
-        data-testid="gallery-button"
-      >
-        🖼️ Galeria
-      </button>
 
       {loading && (
         <div className="load">
@@ -230,7 +248,7 @@ function App() {
           {/* Benefícios */}
           {r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
-              <h4>✅ Benefícios</h4>
+              <h4>✅ Benefícios para a Saúde</h4>
               <ul>{r.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
             </div>
           )}
@@ -238,7 +256,7 @@ function App() {
           {/* Riscos/Atenção */}
           {r.riscos?.length > 0 && (
             <div className="info-box warn" data-testid="risks-box">
-              <h4>⚠️ Atenção (Alérgenos e Riscos)</h4>
+              <h4>⚠️ Alérgenos e Atenção</h4>
               <ul>{r.riscos.map((x,i) => <li key={i}>{x}</li>)}</ul>
             </div>
           )}
@@ -253,13 +271,12 @@ function App() {
                 <div><b>{r.nutrition.carboidratos}</b><small>Carbos</small></div>
                 <div><b>{r.nutrition.gorduras}</b><small>Gorduras</small></div>
               </div>
-            </div>
-          )}
-
-          {/* Aviso Cibi Sana */}
-          {r.aviso_cibi_sana && (
-            <div className="cibi-sana-badge" data-testid="cibi-sana-badge">
-              <span>🌿 {r.aviso_cibi_sana}</span>
+              {/* Aviso Cibi Sana */}
+              {r.aviso_cibi_sana && (
+                <div className="cibi-sana-text" data-testid="cibi-sana-badge">
+                  {r.aviso_cibi_sana}
+                </div>
+              )}
             </div>
           )}
 
