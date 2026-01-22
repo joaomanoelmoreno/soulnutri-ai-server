@@ -203,6 +203,7 @@ async def identify_image(
     try:
         from ai.index import get_index
         from ai.policy import analyze_result
+        from services.cache_service import get_cached_result, cache_result
         
         # Verificar se índice está pronto
         index = get_index()
@@ -226,6 +227,16 @@ async def identify_image(
                 score=0.0,
                 message="Arquivo de imagem vazio"
             )
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # CACHE: Verificar se já identificamos esta imagem antes
+        # ═══════════════════════════════════════════════════════════════════════
+        cached = get_cached_result(content)
+        if cached:
+            elapsed_ms = (time.time() - start_time) * 1000
+            cached['search_time_ms'] = round(elapsed_ms, 2)
+            logger.info(f"[CACHE] ⚡ Resposta do cache em {elapsed_ms:.0f}ms")
+            return cached
         
         # ═══════════════════════════════════════════════════════════════════════
         # SISTEMA HÍBRIDO DE IDENTIFICAÇÃO EM 3 NÍVEIS
