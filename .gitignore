@@ -111,3 +111,4 @@ datasets/fotos.zip
 # Environment files
 *.env
 *.env.*
+ml/dataset.zip
