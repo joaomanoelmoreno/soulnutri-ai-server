@@ -35,6 +35,7 @@ function App() {
     checkStatus(); 
     startCamera();
     loadDishes();
+    checkPremiumSession();
     return () => stopCamera();
   }, []);
 
@@ -51,6 +52,75 @@ function App() {
       const data = await res.json();
       if (data.ok) setDishes(data.dishes || []);
     } catch (e) { console.error('Erro ao carregar pratos:', e); }
+  };
+
+  // Verificar sessão Premium salva
+  const checkPremiumSession = async () => {
+    const pin = localStorage.getItem('soulnutri_pin');
+    if (pin) {
+      try {
+        const fd = new FormData();
+        fd.append('pin', pin);
+        const res = await fetch(`${API}/premium/login`, { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.ok) {
+          setPremiumUser(data.user);
+          loadDailySummary(pin);
+        }
+      } catch (e) {
+        console.error('Erro ao verificar sessão:', e);
+      }
+    }
+  };
+
+  // Carregar resumo diário
+  const loadDailySummary = async (pin) => {
+    try {
+      const res = await fetch(`${API}/premium/daily-summary?pin=${pin || localStorage.getItem('soulnutri_pin')}`);
+      const data = await res.json();
+      if (data.ok) setDailySummary(data);
+    } catch (e) {
+      console.error('Erro ao carregar resumo:', e);
+    }
+  };
+
+  // Registrar refeição automaticamente após identificar
+  const logMealToPremium = async (prato) => {
+    if (!premiumUser) return;
+    
+    const pin = localStorage.getItem('soulnutri_pin');
+    const fd = new FormData();
+    fd.append('pin', pin);
+    fd.append('prato_nome', prato.dish_display || prato.nome || 'Prato');
+    fd.append('calorias', parseFloat(prato.nutrition?.calorias?.replace(/[^\d]/g, '') || 200));
+    fd.append('proteinas', parseFloat(prato.nutrition?.proteinas?.replace(/[^\d]/g, '') || 10));
+    fd.append('carboidratos', parseFloat(prato.nutrition?.carboidratos?.replace(/[^\d]/g, '') || 25));
+    fd.append('gorduras', parseFloat(prato.nutrition?.gorduras?.replace(/[^\d]/g, '') || 8));
+    
+    try {
+      const res = await fetch(`${API}/premium/log-meal`, { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data.ok) {
+        setDailySummary(prev => ({
+          ...prev,
+          consumido: data.consumido,
+          restante: data.restante,
+          percentual: data.percentual,
+          pratos: [...(prev?.pratos || []), { nome: prato.dish_display, calorias: fd.get('calorias'), hora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) }]
+        }));
+      }
+    } catch (e) {
+      console.error('Erro ao registrar refeição:', e);
+    }
+  };
+
+  // Logout Premium
+  const handlePremiumLogout = () => {
+    localStorage.removeItem('soulnutri_pin');
+    localStorage.removeItem('soulnutri_user');
+    setPremiumUser(null);
+    setDailySummary(null);
+    setShowPremium(null);
   };
 
   const startCamera = async () => {
