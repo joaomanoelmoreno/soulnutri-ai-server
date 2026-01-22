@@ -239,11 +239,11 @@ async def identify_image(
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
-        # SISTEMA HÍBRIDO DE IDENTIFICAÇÃO EM 3 NÍVEIS
+        # SISTEMA DE IDENTIFICAÇÃO OTIMIZADO
         # ═══════════════════════════════════════════════════════════════════════
-        # NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados (~200-300ms)
-        # NÍVEL 2: HuggingFace API (GRATUITA!) - Food-101, 89% precisão (~500ms)
-        # NÍVEL 3: Gemini Vision - Fallback universal (~3-4s)
+        # 0. CACHE: Verifica se imagem já foi identificada (~0ms)
+        # 1. NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados (~200-300ms)
+        # 2. NÍVEL 2: Gemini Vision - Pratos não cadastrados (~3-4s)
         # ═══════════════════════════════════════════════════════════════════════
         
         # ─────────────────────────────────────────────────────────────────────
