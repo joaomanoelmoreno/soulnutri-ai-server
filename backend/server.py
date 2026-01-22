@@ -491,6 +491,12 @@ async def identify_image(
             "is_premium": is_premium
         }
         
+        # ═══════════════════════════════════════════════════════════════════════
+        # CACHE: Salvar resultado para futuras consultas
+        # ═══════════════════════════════════════════════════════════════════════
+        if response_data.get('identified'):
+            cache_result(content, response_data, ttl_seconds=3600)  # 1 hora de cache
+        
         return response_data
         
     except Exception as e:
