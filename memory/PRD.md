@@ -17,22 +17,21 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 
 ---
 
-## Arquitetura de Reconhecimento (APROVADA)
+## Arquitetura de Reconhecimento (IMPLEMENTADA)
 
 ### Sistema Híbrido em 3 Níveis
 
 **NÍVEL 1 - Índice Local (OpenCLIP)**
 - Custo: $0 | Velocidade: ~200ms | Precisão: 95%+
-- Se confiança >= 90% → RESULTADO FINAL
-- Se confiança < 90% → Nível 2
+- Se confiança >= 95% → RESULTADO FINAL
+- Se confiança < 95% → Nível 3
 
-**NÍVEL 2 - IA Especializada (LogMeal API)** ← A IMPLEMENTAR
-- Custo: Free tier | Velocidade: ~500ms | Precisão: 93-98%
-- Se confiança >= 85% → RESULTADO FINAL
-- Se confiança < 85% → Nível 3
+**NÍVEL 2 - IA Especializada (Clarifai)**
+- Status: DESABILITADO (código implementado, mas desativado por custo)
+- Pode ser reativado quando necessário
 
-**NÍVEL 3 - IA Genérica (GPT-4o Vision)**
-- Custo: ~$0.01-0.02 | Velocidade: ~1-2s
+**NÍVEL 3 - IA Genérica (Gemini Vision)**
+- Custo: via Emergent LLM Key | Velocidade: ~1-2s
 - Fallback universal, sempre retorna resultado
 
 ---
@@ -42,15 +41,14 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 - **Frontend**: React
 - **ML/CV**: OpenCLIP (ViT-B-32)
 - **Database**: MongoDB (soulnutri)
-- **IA**: GPT-4o Vision (via Emergent LLM Key)
-- **A integrar**: LogMeal API
+- **IA**: Gemini Vision (via Emergent LLM Key)
 
 ---
 
 ## Status Atual (Janeiro 2026)
 
 ### Base de Dados
-- **Total de pratos**: 115
+- **Total de pratos**: 139 no índice
 - **Com dados científicos**: 115 (100%)
 - **Veganos**: 43 | **Vegetarianos**: 30 | **Proteína animal**: 42
 
@@ -62,25 +60,34 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 - [x] Informações científicas em todos os pratos
 - [x] Botão de compartilhar curiosidade
 - [x] Câmera com moldura guia
+- [x] **NOVO: Modo Multi-Item** - Identifica múltiplos alimentos no prato
+
+### Última Implementação (22/01/2026)
+- **Reconhecimento de Múltiplos Itens**: 
+  - Novo endpoint `POST /api/ai/identify-multi`
+  - Identifica cada item separadamente (útil para buffets)
+  - Mostra calorias individuais e totais
+  - Indica equilíbrio nutricional da refeição
+  - Combina alertas de alérgenos de todos os itens
+  - Toggle na UI para alternar entre modo Único e Multi
 
 ---
 
 ## Backlog Priorizado
 
-### P0 - CRÍTICO (Próxima Implementação)
-- [ ] Integrar LogMeal API (Nível 2 do sistema híbrido)
-- [ ] Implementar lógica de cascata para 100% precisão
-- [ ] Investigar travamentos do app
+### P0 - CRÍTICO (Em andamento)
+- [x] ~~Reconhecimento de múltiplos itens no prato~~ ✅ CONCLUÍDO
+- [ ] Validação de precisão com pratos do Cibi Sana (aguardando feedback do usuário)
 
 ### P1 - ALTA
-- [ ] Teste com 3-4 usuários simultâneos
-- [ ] Melhorar índice local (mais fotos)
-- [ ] Validação cruzada Nível 1 + Nível 2
+- [ ] Investigar travamentos ocasionais do app
+- [ ] Implementar link "Veja esta notícia" junto a alertas
+- [ ] Histórico de pratos identificados
 
 ### P2 - MÉDIA
 - [ ] Painel para restaurantes cadastrarem pratos
-- [ ] Link "Veja esta pesquisa" na UI
 - [ ] Retreinar índice com fotos de feedback
+- [ ] Teste com 3-4 usuários simultâneos
 
 ### P3 - FUTURO (Premium)
 - [ ] Contador nutricional em tempo real
@@ -92,11 +99,32 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 
 ## Endpoints Principais
 
-- `POST /api/ai/identify` - Identifica prato por imagem
-- `POST /api/ai/feedback` - Registra feedback
-- `POST /api/ai/create-dish` - Cria novo prato com IA
-- `GET /api/ai/dishes` - Lista pratos
-- `GET /api/ai/status` - Status do índice
+| Endpoint | Método | Descrição |
+|----------|--------|-----------|
+| `/api/ai/identify` | POST | Identifica prato único por imagem |
+| `/api/ai/identify-multi` | POST | **NOVO** - Identifica múltiplos itens |
+| `/api/ai/feedback` | POST | Registra feedback |
+| `/api/ai/create-dish` | POST | Cria novo prato com IA |
+| `/api/ai/dishes` | GET | Lista pratos |
+| `/api/ai/status` | GET | Status do índice |
+
+---
+
+## Testes de Precisão (22/01/2026)
+
+### Modo Único
+| Imagem | Resultado | Confiança | Fonte |
+|--------|-----------|-----------|-------|
+| Pizza | Pizza Havaiana | 95% | Gemini Vision |
+| Salada | Buddha Bowl Vegano | 95% | Gemini Vision |
+| Sushi | Uramaki de Salmão | 95% | Gemini Vision |
+| Hambúrguer | Hambúrguer Duplo | 95% | Gemini Vision |
+
+### Modo Multi-Item
+| Imagem | Itens | Calorias Totais |
+|--------|-------|-----------------|
+| Prato composto | 4 itens | ~287 kcal |
+| Buffet | 6 itens | ~1180 kcal |
 
 ---
 
