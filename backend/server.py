@@ -223,49 +223,137 @@ async def identify_image(file: UploadFile = File(...)):
                 message="Arquivo de imagem vazio"
             )
         
-        # Buscar no índice
-        results = index.search(content, top_k=5)
+        # ═══════════════════════════════════════════════════════════════════════
+        # SISTEMA HÍBRIDO DE IDENTIFICAÇÃO EM 3 NÍVEIS
+        # ═══════════════════════════════════════════════════════════════════════
+        # NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados
+        # NÍVEL 2: LogMeal API - IA especializada em alimentos
+        # NÍVEL 3: GPT-4o Vision - Fallback universal
+        # ═══════════════════════════════════════════════════════════════════════
         
-        # Analisar resultado e decidir resposta
+        # ─────────────────────────────────────────────────────────────────────
+        # NÍVEL 1: Índice Local (OpenCLIP)
+        # ─────────────────────────────────────────────────────────────────────
+        results = index.search(content, top_k=5)
         decision = analyze_result(results)
         
-        # Se confiança baixa ou não identificado, tentar IA genérica
-        if decision['confidence'] == 'baixa' or not decision['identified'] or decision['score'] < 0.5:
+        nivel1_score = decision.get('score', 0.0)
+        nivel1_confidence = decision.get('confidence', 'baixa')
+        
+        logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
+        
+        # Se confiança >= 90% no Nível 1, usar resultado direto
+        if nivel1_score >= 0.90 and decision.get('identified'):
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            logger.info(f"[CASCATA] Resultado final do Nível 1 (alta confiança)")
+        
+        # ─────────────────────────────────────────────────────────────────────
+        # NÍVEL 2: LogMeal API (se Nível 1 < 90%)
+        # ─────────────────────────────────────────────────────────────────────
+        elif nivel1_score < 0.90:
             try:
-                from services.generic_ai import identify_unknown_dish
+                from services.logmeal_service import identify_with_logmeal
                 
-                logger.info("Confiança baixa no índice local, usando IA genérica...")
-                generic_result = await identify_unknown_dish(content)
+                logger.info(f"[NÍVEL 2] Consultando LogMeal API...")
+                logmeal_result = await identify_with_logmeal(content)
                 
-                if generic_result.get('ok') and generic_result.get('nome'):
-                    # Usar resultado da IA genérica
-                    decision = {
-                        'identified': True,
-                        'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
-                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
-                        'confidence': generic_result.get('confianca', 'baixa'),
-                        'score': generic_result.get('score', 0.5),
-                        'message': f"Identificado por IA genérica: {generic_result.get('nome')}",
-                        'category': generic_result.get('categoria', 'outros'),
-                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                        'descricao': generic_result.get('descricao', ''),
-                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                        'tecnica': generic_result.get('tecnica_preparo', ''),
-                        'beneficios': generic_result.get('beneficios', []),
-                        'riscos': generic_result.get('riscos', []),
-                        'alternatives': generic_result.get('alternativas', []),
-                        'nutrition': {
-                            'calorias': '~200 kcal',
-                            'proteinas': '~10g',
-                            'carboidratos': '~25g',
-                            'gorduras': '~8g'
-                        },
-                        'aviso_cibi_sana': None,
-                        'source': 'generic_ai'
-                    }
-                    logger.info(f"IA genérica identificou: {decision['dish_display']}")
+                nivel2_score = logmeal_result.get('score', 0.0)
+                nivel2_ok = logmeal_result.get('ok', False) and logmeal_result.get('identified', False)
+                
+                if nivel2_ok:
+                    logger.info(f"[NÍVEL 2] LogMeal: {logmeal_result.get('dish_display', 'N/A')} ({nivel2_score:.2%})")
+                    
+                    # VALIDAÇÃO CRUZADA: Se Nível 1 e 2 concordam, confiança 99%+
+                    nivel1_dish = decision.get('dish_display', '').lower()
+                    nivel2_dish = logmeal_result.get('dish_display', '').lower()
+                    
+                    if nivel1_dish and nivel2_dish and (nivel1_dish in nivel2_dish or nivel2_dish in nivel1_dish):
+                        # Concordam! Usar Nível 1 com boost de confiança
+                        decision['score'] = min(0.99, max(nivel1_score, nivel2_score) + 0.1)
+                        decision['confidence'] = 'alta'
+                        decision['source'] = 'local_index+logmeal'
+                        decision['cascade_level'] = '1+2'
+                        decision['message'] = f"Confirmado: {decision.get('dish_display')} (validação cruzada)"
+                        logger.info(f"[CASCATA] Validação cruzada! Níveis 1 e 2 concordam → confiança boosted")
+                    
+                    # LogMeal tem confiança >= 85%, usar como resultado
+                    elif nivel2_score >= 0.85:
+                        decision = {
+                            'identified': True,
+                            'dish': logmeal_result.get('dish', ''),
+                            'dish_display': logmeal_result.get('dish_display', 'Prato'),
+                            'confidence': logmeal_result.get('confidence', 'média'),
+                            'score': nivel2_score,
+                            'message': f"Identificado: {logmeal_result.get('dish_display')}",
+                            'category': logmeal_result.get('category', 'outros'),
+                            'category_emoji': logmeal_result.get('category_emoji', '🍽️'),
+                            'descricao': '',
+                            'ingredientes': [],
+                            'tecnica': '',
+                            'beneficios': [],
+                            'riscos': [],
+                            'alternatives': [],
+                            'nutrition': None,
+                            'aviso_cibi_sana': None,
+                            'source': 'logmeal',
+                            'cascade_level': 2
+                        }
+                        logger.info(f"[CASCATA] Resultado final do Nível 2 (LogMeal)")
+                    
+                    # Ambos têm confiança baixa, ir para Nível 3
+                    else:
+                        logger.info(f"[NÍVEL 2] Confiança insuficiente ({nivel2_score:.2%}), indo para Nível 3...")
+                else:
+                    logger.info(f"[NÍVEL 2] LogMeal não identificou, indo para Nível 3...")
+                    
             except Exception as e:
-                logger.warning(f"Erro na IA genérica: {e}")
+                logger.warning(f"[NÍVEL 2] Erro no LogMeal: {e}, indo para Nível 3...")
+            
+            # ─────────────────────────────────────────────────────────────────────
+            # NÍVEL 3: GPT-4o Vision (Fallback Universal)
+            # ─────────────────────────────────────────────────────────────────────
+            if decision.get('cascade_level') is None and (decision.get('score', 0) < 0.85 or not decision.get('identified')):
+                try:
+                    from services.generic_ai import identify_unknown_dish
+                    
+                    logger.info(f"[NÍVEL 3] Consultando GPT-4o Vision...")
+                    generic_result = await identify_unknown_dish(content)
+                    
+                    if generic_result.get('ok') and generic_result.get('nome'):
+                        decision = {
+                            'identified': True,
+                            'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
+                            'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
+                            'confidence': generic_result.get('confianca', 'média'),
+                            'score': generic_result.get('score', 0.7),
+                            'message': f"Identificado: {generic_result.get('nome')}",
+                            'category': generic_result.get('categoria', 'outros'),
+                            'category_emoji': generic_result.get('category_emoji', '🍽️'),
+                            'descricao': generic_result.get('descricao', ''),
+                            'ingredientes': generic_result.get('ingredientes_provaveis', []),
+                            'tecnica': generic_result.get('tecnica_preparo', ''),
+                            'beneficios': generic_result.get('beneficios', []),
+                            'riscos': generic_result.get('riscos', []),
+                            'alternatives': generic_result.get('alternativas', []),
+                            'nutrition': {
+                                'calorias': '~200 kcal',
+                                'proteinas': '~10g',
+                                'carboidratos': '~25g',
+                                'gorduras': '~8g'
+                            },
+                            'aviso_cibi_sana': None,
+                            'source': 'generic_ai',
+                            'cascade_level': 3,
+                            # Dados científicos da IA genérica
+                            'beneficio_principal': generic_result.get('beneficio_principal'),
+                            'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
+                            'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
+                            'alerta_saude': generic_result.get('alerta_saude')
+                        }
+                        logger.info(f"[CASCATA] Resultado final do Nível 3 (GPT-4o Vision)")
+                except Exception as e:
+                    logger.warning(f"[NÍVEL 3] Erro na IA genérica: {e}")
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
