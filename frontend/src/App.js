@@ -814,6 +814,69 @@ function App() {
         <div className="err" data-testid="network-error">❌ Erro de conexão: {error}</div>
       )}
 
+      {/* PREMIUM - Mini contador flutuante */}
+      {premiumUser && dailySummary && !showPremium && (
+        <div className="mini-counter" onClick={() => setShowPremium('dashboard')} data-testid="mini-counter">
+          <div className="mini-value">{dailySummary.consumido?.toFixed(0) || 0}</div>
+          <div className="mini-label">de {dailySummary.meta?.toFixed(0)} kcal</div>
+          <div className="mini-progress">
+            <div 
+              className="mini-fill" 
+              style={{ 
+                width: `${Math.min(dailySummary.percentual || 0, 100)}%`,
+                background: dailySummary.percentual >= 100 ? '#ef4444' : dailySummary.percentual >= 75 ? '#f59e0b' : '#22c55e'
+              }} 
+            />
+          </div>
+        </div>
+      )}
+
+      {/* PREMIUM - Botão flutuante */}
+      <button 
+        className={`premium-btn ${premiumUser ? 'logged-in' : ''}`}
+        onClick={() => setShowPremium(premiumUser ? 'dashboard' : 'login')}
+        data-testid="premium-button"
+      >
+        {premiumUser ? '📊' : '⭐'}
+      </button>
+
+      {/* PREMIUM - Modal */}
+      {showPremium && (
+        <div className="modal-overlay" onClick={() => setShowPremium(null)}>
+          <div className="modal-content premium-modal" onClick={e => e.stopPropagation()}>
+            {showPremium === 'login' && (
+              <PremiumLogin 
+                onSuccess={(data) => {
+                  setPremiumUser(data.user);
+                  loadDailySummary();
+                  setShowPremium('dashboard');
+                }}
+                onRegister={() => setShowPremium('register')}
+                onCancel={() => setShowPremium(null)}
+              />
+            )}
+            
+            {showPremium === 'register' && (
+              <PremiumRegister 
+                onSuccess={(data) => {
+                  setPremiumUser({ nome: data.nome, meta_calorica: data.meta_calorica });
+                  setDailySummary({ nome: data.nome, meta: data.meta_calorica.meta_sugerida, consumido: 0, restante: data.meta_calorica.meta_sugerida, percentual: 0, pratos: [] });
+                  setShowPremium('dashboard');
+                }}
+                onCancel={() => setShowPremium('login')}
+              />
+            )}
+            
+            {showPremium === 'dashboard' && premiumUser && (
+              <DailyCounter 
+                user={premiumUser}
+                onLogout={handlePremiumLogout}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Rodapé */}
       <footer className="footer">
         <small>Powered by Emergent</small>
