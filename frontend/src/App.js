@@ -837,7 +837,7 @@ function App() {
         onClick={() => setShowPremium(premiumUser ? 'dashboard' : 'login')}
         data-testid="premium-button"
       >
-        {premiumUser ? '📊' : '⭐'}
+        {premiumUser ? 'Dieta' : 'Premium'}
       </button>
 
       {/* PREMIUM - Modal */}
