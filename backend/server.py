@@ -323,7 +323,7 @@ async def identify_image(
             # ─────────────────────────────────────────────────────────────────────
             # NÍVEL 3: Gemini Vision (Fallback Universal)
             # ─────────────────────────────────────────────────────────────────────
-            if decision.get('cascade_level') is None and (decision.get('score', 0) < 0.95 or not decision.get('identified')):
+            if decision.get('cascade_level') is None and (decision.get('score', 0) < THRESHOLD_LOCAL or not decision.get('identified')):
                 try:
                     from services.generic_ai import identify_unknown_dish
                     
