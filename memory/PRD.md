@@ -82,8 +82,15 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 │ 0. CACHE       │ Hash da imagem      │ ~0ms (repetidos) │
 │ 1. OpenCLIP    │ Pratos cadastrados  │ ~200-300ms       │
 │ 2. Gemini      │ Pratos genéricos    │ ~3-5s            │
+│ 🔜 YOLOv8      │ Em desenvolvimento  │ ~50-100ms        │
 └─────────────────────────────────────────────────────────┘
 ```
+
+### Projeto YOLOv8 (Em Andamento)
+- **Status**: Fase 1 - Preparação de Dataset
+- **Dataset**: 229 classes, 1746 imagens (58 classes com 10+ imgs)
+- **Documentação**: `/app/ml/YOLOV8_PROJECT.md`
+- **Meta**: Inferência < 100ms, Acurácia > 85%
 
 ### Backend
 - FastAPI + MongoDB
@@ -92,6 +99,12 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 ### Frontend
 - React com componentes Premium
 - LocalStorage para sessão (nome + PIN)
+- **Seção "Você Sabia?"** destacada com visual premium
+
+### Proteção Anti-Fake News
+- Apenas fontes verificadas: OMS, ANVISA, FDA, PubMed
+- Nível de evidência indicado (consenso/forte/moderado/preliminar)
+- Data e fonte oficial obrigatórias
 
 ### Fluxo Premium
 1. Usuário faz login (nome + PIN)
@@ -112,6 +125,7 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 | `POST /api/premium/log-meal` | Sim | Registrar refeição |
 | `GET /api/premium/daily-summary` | Sim | Resumo do dia |
 | `GET /api/premium/history` | Sim | Histórico semanal |
+| `GET /api/ai/ingredient-research/{ingrediente}` | Sim | Notícias verificadas |
 
 ---
 
