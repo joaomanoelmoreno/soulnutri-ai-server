@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./App.css";
+import "./Premium.css";
+import { PremiumRegister, PremiumLogin, DailyCounter } from "./Premium";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -20,6 +22,10 @@ function App() {
   const [multiMode, setMultiMode] = useState(false);
   const [multiResult, setMultiResult] = useState(null);
   const [cameraError, setCameraError] = useState(null);
+  // Premium states
+  const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
+  const [premiumUser, setPremiumUser] = useState(null);
+  const [dailySummary, setDailySummary] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
