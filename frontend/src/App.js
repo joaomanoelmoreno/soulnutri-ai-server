@@ -77,6 +77,7 @@ function App() {
     loadingRef.current = true;
     setLoading(true);
     setResult(null);
+    setMultiResult(null);
     setError(null);
     setFeedbackSent(false);
     setShowFeedback(false);
@@ -86,9 +87,15 @@ function App() {
     
     try {
       const t = Date.now();
-      const res = await fetch(`${API}/ai/identify`, { method: "POST", body: fd });
+      const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
+      const res = await fetch(endpoint, { method: "POST", body: fd });
       const data = await res.json();
-      setResult({ ...data, totalTime: Date.now() - t });
+      
+      if (multiMode) {
+        setMultiResult({ ...data, totalTime: Date.now() - t });
+      } else {
+        setResult({ ...data, totalTime: Date.now() - t });
+      }
     } catch (e) { 
       setError(e.message);
     } finally { 
@@ -107,6 +114,7 @@ function App() {
 
   const clearResult = () => {
     setResult(null);
+    setMultiResult(null);
     setError(null);
     setShowFeedback(false);
     setFeedbackSent(false);
