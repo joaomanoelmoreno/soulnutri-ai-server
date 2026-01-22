@@ -1,9 +1,28 @@
 # SoulNutri - Product Requirements Document
 
+**Última atualização**: Janeiro 2026
+**URL**: https://plate-radar.preview.emergentagent.com
+
+---
+
 ## Visão
 **"SOULNUTRI - O SEU AGENTE DE NUTRIÇÃO VIRTUAL"**
 
 O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO REAL durante as refeições, fornecendo informações científicas, alertas personalizados e educação nutricional.
+
+---
+
+## 🚨 TAREFA PENDENTE DO USUÁRIO
+
+**O usuário está treinando o modelo YOLOv8 no Google Colab.**
+
+Quando ele voltar, provavelmente dirá:
+- "Terminei o treinamento" → Pedir o arquivo `best.pt` e integrar
+- "Tive problemas no Colab" → Ver `/app/ml/GUIA_TREINAMENTO_YOLOV8.md`
+
+**Arquivos para o usuário baixar:**
+- `/app/ml/dataset.zip` (148 MB)
+- `/app/ml/SoulNutri_YOLOv8_Training.ipynb`
 
 ---
 
@@ -20,112 +39,72 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 - ✅ Informações científicas (curiosidade, benefício, referência)
 - ✅ Alertas de alérgenos baseados no PERFIL do usuário
 - ✅ Alertas de nutrientes baseados no HISTÓRICO semanal
-  - Ex: "Este prato tem 800mg de sódio. Você já consumiu 1500mg esta semana!"
 - ✅ Combinações inteligentes
-  - Ex: "Combine feijão com limão para absorver 6x mais ferro!"
 - ✅ Substituições saudáveis
-  - Ex: "Troque batata frita por batata assada: 70% menos gordura"
 - ✅ Meta calórica automática (Harris-Benedict)
 - ✅ Contador nutricional diário
 - ✅ Histórico de consumo
 
-**Educação Nutricional (implementado no backend):**
-- Combinações que melhoram absorção
-- Substituições mais saudáveis
-- Rastreamento de nutrientes: sódio, açúcar, fibras, proteínas
-
 ---
 
-## Status Atual (Janeiro 2026)
+## Status Atual
 
 ### ✅ Implementado
-- [x] Identificação em cascata (OpenCLIP + Gemini Vision)
-- [x] **Sistema de Cache** - reduz tempo para 0ms em pratos repetidos
+- [x] Identificação em cascata (Cache → OpenCLIP → YOLOv8 → Gemini)
+- [x] Sistema de Cache (~0ms para repetidos)
 - [x] Login com Nome + PIN
 - [x] Perfil com dados físicos e alergias
-- [x] Meta calórica calculada
 - [x] Contador nutricional diário
-- [x] **Alertas Premium em tempo real**
-- [x] **Combinações inteligentes**
-- [x] **Substituições saudáveis**
-- [x] **Info científica só para Premium**
-- [x] Botão "Início" no dashboard Premium
+- [x] Alertas Premium em tempo real
+- [x] Seção "Você Sabia?" com visual melhorado
+- [x] Proteção anti-fake news
+- [x] **Endpoint YOLOv8 configurado** (aguardando modelo)
+- [x] **Dataset preparado**: 8.145 imagens (5x augmentation)
 
-### 🔴 Limitação Conhecida
-- **Pratos não cadastrados**: ~3-5s (Gemini Vision)
-- **Causa**: APIs gratuitas do Hugging Face descontinuadas/requerem autenticação paga
-- **Mitigação**: Cache reduz tempo para 0ms em pratos já identificados
-- **Solução futura**: Modelo YOLOv8 customizado
+### ⏳ Aguardando
+- [ ] **Modelo YOLOv8 treinado** (usuário vai treinar no Colab)
 
-### 📋 Prioridades (atualizado)
-| Prioridade | Tarefa | Status |
-|------------|--------|--------|
-| P1 | Alertas personalizados Premium | ✅ Feito |
-| P1 | "Você sabia..." / Curiosidades | 🔄 Parcial (curiosidade_cientifica) |
-| P1 | Combinação de alimentos | ✅ Feito |
-| P2 | Notícias recentes sobre ingredientes | ⏳ Pendente |
-| P2 | Seção "Você Sabia" destacada na UI | ⏳ Pendente |
-| P3 | Histórico semanal com gráficos | ⏳ Pendente |
-| P3 | Receitas saudáveis | ⏳ Pendente |
-| P4 | Gamificação (conquistas) | ⏳ Backlog |
-| P4 | Interações medicamentosas | ⏳ Backlog |
+### 📋 Próximas Tarefas (após YOLOv8)
+| Prioridade | Tarefa |
+|------------|--------|
+| P2 | Notícias recentes na UI Premium |
+| P2 | Melhorar alertas visuais |
+| P3 | Histórico semanal com gráficos |
+| P3 | Receitas saudáveis |
 
 ---
 
-## Arquitetura
+## Arquitetura de Identificação
 
-### Sistema de Identificação
 ```
 ┌─────────────────────────────────────────────────────────┐
-│               SISTEMA DE IDENTIFICAÇÃO                   │
+│           CASCATA DE IDENTIFICAÇÃO                       │
 ├─────────────────────────────────────────────────────────┤
-│ 0. CACHE       │ Hash da imagem      │ ~0ms (repetidos) │
+│ 0. CACHE       │ Hash MD5            │ ~0ms             │
 │ 1. OpenCLIP    │ Pratos cadastrados  │ ~200-300ms       │
-│ 2. Gemini      │ Pratos genéricos    │ ~3-5s            │
-│ 🔜 YOLOv8      │ Em desenvolvimento  │ ~50-100ms        │
+│ 1.5 YOLOv8     │ Modelo local (⏳)   │ ~50-100ms        │
+│ 2. Gemini      │ Fallback universal  │ ~3-5s            │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Projeto YOLOv8 (Em Andamento)
-- **Status**: Fase 1 - Preparação de Dataset
-- **Dataset**: 229 classes, 1746 imagens (58 classes com 10+ imgs)
-- **Documentação**: `/app/ml/YOLOV8_PROJECT.md`
-- **Meta**: Inferência < 100ms, Acurácia > 85%
-
-### Backend
-- FastAPI + MongoDB
-- Serviços: `profile_service.py`, `alerts_service.py`, `generic_ai.py`, `cache_service.py`
-
-### Frontend
-- React com componentes Premium
-- LocalStorage para sessão (nome + PIN)
-- **Seção "Você Sabia?"** destacada com visual premium
-
-### Proteção Anti-Fake News
-- Apenas fontes verificadas: OMS, ANVISA, FDA, PubMed
-- Nível de evidência indicado (consenso/forte/moderado/preliminar)
-- Data e fonte oficial obrigatórias
-
-### Fluxo Premium
-1. Usuário faz login (nome + PIN)
-2. Ao identificar prato, envia credenciais
-3. Backend verifica se é Premium
-4. Se sim, retorna dados científicos + alertas personalizados
-5. Frontend exibe alertas em tempo real
+### Para ativar YOLOv8:
+1. Usuário treina no Colab
+2. Faz upload de `best.pt` 
+3. Mover para `/app/ml/models/best.pt`
+4. Reiniciar backend
+5. Automático!
 
 ---
 
-## Endpoints
+## Arquivos Importantes
 
-| Endpoint | Premium? | Descrição |
-|----------|----------|-----------|
-| `POST /api/ai/identify` | Parcial | Retorna alertas Premium se autenticado |
-| `POST /api/premium/register` | - | Criar perfil |
-| `POST /api/premium/login` | - | Login nome + PIN |
-| `POST /api/premium/log-meal` | Sim | Registrar refeição |
-| `GET /api/premium/daily-summary` | Sim | Resumo do dia |
-| `GET /api/premium/history` | Sim | Histórico semanal |
-| `GET /api/ai/ingredient-research/{ingrediente}` | Sim | Notícias verificadas |
+| Arquivo | Descrição |
+|---------|-----------|
+| `/app/memory/CONTINUIDADE.md` | Documento completo de continuidade |
+| `/app/ml/GUIA_TREINAMENTO_YOLOV8.md` | Guia para iniciantes |
+| `/app/ml/dataset.zip` | Dataset para treinar |
+| `/app/ml/SoulNutri_YOLOv8_Training.ipynb` | Notebook Colab |
+| `/app/backend/services/yolo_service.py` | Serviço YOLOv8 |
 
 ---
 
