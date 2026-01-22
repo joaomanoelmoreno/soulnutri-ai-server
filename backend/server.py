@@ -230,9 +230,9 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         # SISTEMA HÍBRIDO DE IDENTIFICAÇÃO EM 3 NÍVEIS
         # ═══════════════════════════════════════════════════════════════════════
-        # NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados
-        # NÍVEL 2: LogMeal API - IA especializada em alimentos
-        # NÍVEL 3: GPT-4o Vision - Fallback universal
+        # NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados (~200-300ms)
+        # NÍVEL 2: HuggingFace API (GRATUITA!) - Food-101, 89% precisão (~500ms)
+        # NÍVEL 3: Gemini Vision - Fallback universal (~3-4s)
         # ═══════════════════════════════════════════════════════════════════════
         
         # ─────────────────────────────────────────────────────────────────────
