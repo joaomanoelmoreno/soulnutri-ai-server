@@ -38,8 +38,9 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 
 ## Status Atual (Janeiro 2026)
 
-### Implementado
+### ✅ Implementado
 - [x] Identificação em cascata (OpenCLIP + Gemini Vision)
+- [x] **Sistema de Cache** - reduz tempo para 0ms em pratos repetidos
 - [x] Login com Nome + PIN
 - [x] Perfil com dados físicos e alergias
 - [x] Meta calórica calculada
@@ -48,32 +49,45 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 - [x] **Combinações inteligentes**
 - [x] **Substituições saudáveis**
 - [x] **Info científica só para Premium**
+- [x] Botão "Início" no dashboard Premium
 
-### Pendente
-- [ ] Receitas saudáveis (vegan, vegetariano, práticas)
-- [ ] Histórico semanal com gráficos
-- [ ] Gamificação (conquistas)
-- [ ] Interações medicamentosas
+### 🔴 Limitação Conhecida
+- **Pratos não cadastrados**: ~3-5s (Gemini Vision)
+- **Causa**: APIs gratuitas do Hugging Face descontinuadas/requerem autenticação paga
+- **Mitigação**: Cache reduz tempo para 0ms em pratos já identificados
+- **Solução futura**: Modelo YOLOv8 customizado
 
----
-
-## Limites Nutricionais Configurados (OMS/ANVISA)
-
-| Nutriente | Limite Diário | Tipo |
-|-----------|---------------|------|
-| Sódio | 2000mg | máximo |
-| Açúcar | 25g | máximo |
-| Gordura Saturada | 22g | máximo |
-| Fibras | 25g | mínimo |
-| Proteínas | 50g | mínimo |
+### 📋 Prioridades (atualizado)
+| Prioridade | Tarefa | Status |
+|------------|--------|--------|
+| P1 | Alertas personalizados Premium | ✅ Feito |
+| P1 | "Você sabia..." / Curiosidades | 🔄 Parcial (curiosidade_cientifica) |
+| P1 | Combinação de alimentos | ✅ Feito |
+| P2 | Notícias recentes sobre ingredientes | ⏳ Pendente |
+| P2 | Seção "Você Sabia" destacada na UI | ⏳ Pendente |
+| P3 | Histórico semanal com gráficos | ⏳ Pendente |
+| P3 | Receitas saudáveis | ⏳ Pendente |
+| P4 | Gamificação (conquistas) | ⏳ Backlog |
+| P4 | Interações medicamentosas | ⏳ Backlog |
 
 ---
 
 ## Arquitetura
 
+### Sistema de Identificação
+```
+┌─────────────────────────────────────────────────────────┐
+│               SISTEMA DE IDENTIFICAÇÃO                   │
+├─────────────────────────────────────────────────────────┤
+│ 0. CACHE       │ Hash da imagem      │ ~0ms (repetidos) │
+│ 1. OpenCLIP    │ Pratos cadastrados  │ ~200-300ms       │
+│ 2. Gemini      │ Pratos genéricos    │ ~3-5s            │
+└─────────────────────────────────────────────────────────┘
+```
+
 ### Backend
 - FastAPI + MongoDB
-- Serviços: `profile_service.py`, `alerts_service.py`, `generic_ai.py`
+- Serviços: `profile_service.py`, `alerts_service.py`, `generic_ai.py`, `cache_service.py`
 
 ### Frontend
 - React com componentes Premium
