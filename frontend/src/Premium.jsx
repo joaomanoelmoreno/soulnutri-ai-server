@@ -285,7 +285,7 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
 }
 
 // Componente do Contador Diário
-export function DailyCounter({ user, onLogout }) {
+export function DailyCounter({ user, onLogout, onClose }) {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -375,6 +375,11 @@ export function DailyCounter({ user, onLogout }) {
           ))}
         </div>
       )}
+
+      {/* Botão para voltar à câmera */}
+      <button className="back-to-camera-btn" onClick={onClose}>
+        📷 Voltar para Câmera
+      </button>
     </div>
   );
 }
