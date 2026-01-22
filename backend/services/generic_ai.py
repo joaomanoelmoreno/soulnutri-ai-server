@@ -77,15 +77,6 @@ REGRAS DE IDENTIFICAÇÃO:
 
 Responda APENAS com JSON válido, sem texto adicional."""
 
-═══════════════════════════════════════════════════════════════════════════════
-⚠️ ALERTAS DE SAÚDE (usar apenas quando relevante):
-═══════════════════════════════════════════════════════════════════════════════
-- CARNES PROCESSADAS: OMS Grupo 1 carcinógeno
-- PEIXES GRANDES: Mercúrio - FDA limite 340g/semana
-- ULTRAPROCESSADOS: Evitar quando possível
-
-Responda APENAS com o JSON válido."""
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROMPT PARA ENRIQUECER INFORMAÇÕES DE PRATOS EXISTENTES
