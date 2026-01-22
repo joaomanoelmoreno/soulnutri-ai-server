@@ -185,7 +185,7 @@ async def reindex(max_per_dish: int = 10):
             content={"ok": False, "error": str(e)}
         )
 
-@api_router.post("/ai/identify", response_model=IdentifyResponse)
+@api_router.post("/ai/identify")
 async def identify_image(
     file: UploadFile = File(...),
     pin: Optional[str] = Form(None),
