@@ -1259,3 +1259,14 @@ async def startup_event():
         logger.warning(f"Não foi possível carregar índice: {e}")
     
     logger.info("SoulNutri AI Server pronto!")
+
+@api_router.get("/download/marketing")
+async def download_marketing_doc():
+    """Download do documento de marketing Premium"""
+    from fastapi.responses import FileResponse
+    file_path = "/app/backend/SoulNutri_Premium_Marketing.docx"
+    return FileResponse(
+        path=file_path,
+        filename="SoulNutri_Premium_Marketing.docx",
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
