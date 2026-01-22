@@ -7,7 +7,7 @@ import os
 import base64
 import json
 from dotenv import load_dotenv
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContent
 
 load_dotenv()
 
