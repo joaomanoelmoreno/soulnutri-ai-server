@@ -251,7 +251,7 @@ async def identify_image(file: UploadFile = File(...)):
         # ─────────────────────────────────────────────────────────────────────
         # NÍVEL 2: LogMeal API (se Nível 1 < 90%)
         # ─────────────────────────────────────────────────────────────────────
-        elif nivel1_score < 0.90:
+        elif nivel1_score < 0.95:
             try:
                 from services.logmeal_service import identify_with_logmeal
                 
