@@ -240,3 +240,6 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .cam-error span{font-size:3rem}
 .cam-error p{color:#f59e0b;font-size:.9rem}
 .cam-error button{background:rgba(0,200,255,.2);color:#0cf;border:2px solid rgba(0,200,255,.4);padding:12px 24px;border-radius:10px;font-size:.9rem;cursor:pointer}
+
+/* Premium Modal */
+.premium-modal{max-width:400px;max-height:90vh;overflow-y:auto;padding-bottom:40px}
