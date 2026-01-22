@@ -364,7 +364,26 @@ async def identify_image(
         
         logger.info(f"Identificação: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
         
-        # Buscar dados científicos do MongoDB
+        # ═══════════════════════════════════════════════════════════════════════
+        # VERIFICAR SE É USUÁRIO PREMIUM
+        # ═══════════════════════════════════════════════════════════════════════
+        is_premium = False
+        user_profile = None
+        premium_data = {}
+        
+        if pin and nome:
+            from services.profile_service import hash_pin
+            pin_hash = hash_pin(pin)
+            user_profile = await db.users.find_one(
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                {"_id": 0}
+            )
+            is_premium = user_profile is not None
+            
+            if is_premium:
+                logger.info(f"[PREMIUM] Usuário {nome} identificado")
+        
+        # Buscar dados científicos do MongoDB (APENAS PARA PREMIUM)
         scientific_data = {}
         dish_slug = decision.get('dish')
         if dish_slug and decision.get('source') != 'generic_ai':
@@ -378,40 +397,87 @@ async def identify_image(
                 {'_id': 0, 'beneficio_principal': 1, 'curiosidade_cientifica': 1, 
                  'referencia_pesquisa': 1, 'alerta_saude': 1}
             )
-            if mongo_dish:
+            if mongo_dish and is_premium:
                 scientific_data = mongo_dish
-                logger.info(f"Dados científicos encontrados para {dish_slug}")
+                logger.info(f"[PREMIUM] Dados científicos liberados para {dish_slug}")
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # ALERTAS PREMIUM EM TEMPO REAL
+        # ═══════════════════════════════════════════════════════════════════════
+        if is_premium and user_profile:
+            try:
+                from services.alerts_service import (
+                    gerar_alertas_tempo_real,
+                    gerar_combinacoes_sugeridas,
+                    gerar_substituicoes,
+                    verificar_alergenos_perfil
+                )
+                
+                ingredientes = decision.get('ingredientes', [])
+                
+                # Alertas de alérgenos baseados no perfil
+                alertas_alergenos = verificar_alergenos_perfil(user_profile, ingredientes)
+                
+                # Alertas baseados no histórico semanal
+                alertas_historico = await gerar_alertas_tempo_real(
+                    db, nome, decision, ingredientes
+                )
+                
+                # Combinações inteligentes
+                combinacoes = gerar_combinacoes_sugeridas(ingredientes)
+                
+                # Substituições saudáveis
+                substituicoes = gerar_substituicoes(ingredientes)
+                
+                premium_data = {
+                    "alertas_alergenos": alertas_alergenos,
+                    "alertas_historico": alertas_historico,
+                    "combinacoes_sugeridas": combinacoes,
+                    "substituicoes": substituicoes,
+                    "is_premium": True
+                }
+                
+                logger.info(f"[PREMIUM] {len(alertas_alergenos)} alertas de alérgenos, {len(alertas_historico)} alertas de histórico")
+                
+            except Exception as e:
+                logger.error(f"[PREMIUM] Erro ao gerar alertas: {e}")
         
         # Preparar nutrition como objeto
         nutrition_data = decision.get('nutrition')
         nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
         
-        return IdentifyResponse(
-            ok=True,
-            identified=decision['identified'],
-            dish=decision.get('dish'),
-            dish_display=decision.get('dish_display'),
-            confidence=decision['confidence'],
-            score=decision['score'],
-            message=decision['message'],
-            category=decision.get('category'),
-            category_emoji=decision.get('category_emoji'),
-            nutrition=nutrition_obj,
-            descricao=decision.get('descricao'),
-            ingredientes=decision.get('ingredientes'),
-            tecnica=decision.get('tecnica'),
-            beneficios=decision.get('beneficios'),
-            riscos=decision.get('riscos'),
-            aviso_cibi_sana=decision.get('aviso_cibi_sana'),
-            alternatives=decision.get('alternatives', []),
-            search_time_ms=round(elapsed_ms, 2),
-            source=decision.get('source', 'local_index'),
-            # Dados científicos do MongoDB
-            beneficio_principal=scientific_data.get('beneficio_principal'),
-            curiosidade_cientifica=scientific_data.get('curiosidade_cientifica'),
-            referencia_pesquisa=scientific_data.get('referencia_pesquisa'),
-            alerta_saude=scientific_data.get('alerta_saude')
-        )
+        # Montar resposta base
+        response_data = {
+            "ok": True,
+            "identified": decision['identified'],
+            "dish": decision.get('dish'),
+            "dish_display": decision.get('dish_display'),
+            "confidence": decision['confidence'],
+            "score": decision['score'],
+            "message": decision['message'],
+            "category": decision.get('category'),
+            "category_emoji": decision.get('category_emoji'),
+            "nutrition": nutrition_obj,
+            "descricao": decision.get('descricao'),
+            "ingredientes": decision.get('ingredientes'),
+            "tecnica": decision.get('tecnica'),
+            "beneficios": decision.get('beneficios'),
+            "riscos": decision.get('riscos'),
+            "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
+            "alternatives": decision.get('alternatives', []),
+            "search_time_ms": round(elapsed_ms, 2),
+            "source": decision.get('source', 'local_index'),
+            # Dados científicos - SÓ PREMIUM
+            "beneficio_principal": scientific_data.get('beneficio_principal') if is_premium else None,
+            "curiosidade_cientifica": scientific_data.get('curiosidade_cientifica') if is_premium else None,
+            "referencia_pesquisa": scientific_data.get('referencia_pesquisa') if is_premium else None,
+            "alerta_saude": scientific_data.get('alerta_saude') if is_premium else None,
+            # Dados Premium extras
+            "premium": premium_data if is_premium else None,
+            "is_premium": is_premium
+        }
+        
+        return response_data
         
     except Exception as e:
         logger.error(f"Erro na identificação: {e}")
