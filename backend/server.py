@@ -239,11 +239,12 @@ async def identify_image(
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
-        # SISTEMA DE IDENTIFICAÇÃO OTIMIZADO
+        # SISTEMA DE IDENTIFICAÇÃO EM CASCATA
         # ═══════════════════════════════════════════════════════════════════════
         # 0. CACHE: Verifica se imagem já foi identificada (~0ms)
         # 1. NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados (~200-300ms)
-        # 2. NÍVEL 2: Gemini Vision - Pratos não cadastrados (~3-4s)
+        # 1.5 NÍVEL 1.5: YOLOv8 Local - Se disponível (~50-100ms)
+        # 2. NÍVEL 2: Gemini Vision - Fallback universal (~3-4s)
         # ═══════════════════════════════════════════════════════════════════════
         
         # ─────────────────────────────────────────────────────────────────────
@@ -270,10 +271,34 @@ async def identify_image(
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2/3: Gemini Vision (Fallback para pratos não cadastrados)
-        # Nota: HuggingFace API está descontinuada, indo direto para Gemini
+        # NÍVEL 1.5: YOLOv8 Local (Se modelo treinado disponível)
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < THRESHOLD_LOCAL:
+            yolo_used = False
+            try:
+                from services.yolo_service import is_available, identify_with_yolo
+                
+                if is_available():
+                    logger.info(f"[NÍVEL 1.5] Consultando YOLOv8 local...")
+                    yolo_result = await identify_with_yolo(content)
+                    
+                    if yolo_result.get('ok') and yolo_result.get('identified'):
+                        yolo_score = yolo_result.get('score', 0)
+                        
+                        # Se YOLOv8 tem confiança >= 70%, usar resultado
+                        if yolo_score >= 0.70:
+                            decision = yolo_result
+                            yolo_used = True
+                            logger.info(f"[CASCATA] ⚡ Resultado do YOLOv8 ({yolo_score:.0%})")
+                        else:
+                            logger.info(f"[NÍVEL 1.5] YOLOv8 confiança baixa ({yolo_score:.0%}), tentando Gemini...")
+            except Exception as e:
+                logger.debug(f"[NÍVEL 1.5] YOLOv8 não disponível: {e}")
+            
+            # ─────────────────────────────────────────────────────────────────────
+            # NÍVEL 2: Gemini Vision (Fallback universal)
+            # ─────────────────────────────────────────────────────────────────────
+            if not yolo_used:
             try:
                 from services.generic_ai import identify_unknown_dish
                 
