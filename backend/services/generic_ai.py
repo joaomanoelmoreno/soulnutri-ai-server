@@ -143,40 +143,60 @@ Retorne JSON com:
 
 async def identify_unknown_dish(image_bytes: bytes) -> dict:
     """
-    Identifica um prato desconhecido usando GPT-4o Vision.
-    Retorna informações científicas e relevantes.
+    Identifica um prato desconhecido usando Gemini Vision.
+    OTIMIZADO para velocidade: comprime imagem antes de enviar.
     """
     try:
         api_key = os.environ.get('EMERGENT_LLM_KEY')
         if not api_key:
             return {"ok": False, "error": "EMERGENT_LLM_KEY não configurada"}
         
-        # Salvar imagem temporariamente para usar com FileContentWithMimeType
+        # OTIMIZAÇÃO: Comprimir imagem para envio mais rápido
+        from PIL import Image
+        import io
+        
+        img = Image.open(io.BytesIO(image_bytes))
+        
+        # Redimensionar se muito grande (max 800px no lado maior)
+        max_size = 800
+        if max(img.size) > max_size:
+            ratio = max_size / max(img.size)
+            new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
+            img = img.resize(new_size, Image.LANCZOS)
+        
+        # Converter para RGB se necessário
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+        
+        # Salvar com compressão
+        buffer = io.BytesIO()
+        img.save(buffer, format='JPEG', quality=75, optimize=True)
+        compressed_bytes = buffer.getvalue()
+        
+        # Salvar arquivo temporário
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
-            tmp_file.write(image_bytes)
+            tmp_file.write(compressed_bytes)
             tmp_path = tmp_file.name
         
         try:
             chat = LlmChat(
                 api_key=api_key,
-                session_id=f"dish-identify-{id(image_bytes)}",
+                session_id=f"dish-{id(image_bytes)}",
                 system_message=SYSTEM_PROMPT_IDENTIFY
             ).with_model("gemini", "gemini-2.0-flash")
             
-            # Usar FileContentWithMimeType para enviar imagem
             image_file = FileContentWithMimeType(
                 file_path=tmp_path,
                 mime_type="image/jpeg"
             )
             
             user_message = UserMessage(
-                text="Analise esta imagem de prato/alimento. Identifique o prato com precisão e forneça informações científicas relevantes. Responda APENAS com JSON válido.",
+                text="Identifique o prato. JSON apenas.",
                 file_contents=[image_file]
             )
             
             response = await chat.send_message(user_message)
         finally:
-            # Limpar arquivo temporário
             if os.path.exists(tmp_path):
                 os.remove(tmp_path)
         
