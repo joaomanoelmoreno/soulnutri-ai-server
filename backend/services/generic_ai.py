@@ -333,3 +333,63 @@ Retorne JSON:
         
     except Exception as e:
         return {"error": str(e)}
+
+
+async def identify_multiple_items(image_bytes: bytes) -> dict:
+    """
+    Identifica MÚLTIPLOS itens em uma imagem de refeição.
+    Útil para buffets, pratos compostos ou refeições com vários componentes.
+    """
+    try:
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            return {"ok": False, "error": "EMERGENT_LLM_KEY não configurada"}
+        
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+            tmp_file.write(image_bytes)
+            tmp_path = tmp_file.name
+        
+        try:
+            chat = LlmChat(
+                api_key=api_key,
+                session_id=f"multi-item-{id(image_bytes)}",
+                system_message=SYSTEM_PROMPT_MULTI_ITEM
+            ).with_model("gemini", "gemini-2.0-flash")
+            
+            image_file = FileContentWithMimeType(
+                file_path=tmp_path,
+                mime_type="image/jpeg"
+            )
+            
+            user_message = UserMessage(
+                text="Analise esta imagem e identifique TODOS os itens/pratos separadamente. Se for um buffet ou prato composto, liste cada componente. Responda APENAS com JSON válido.",
+                file_contents=[image_file]
+            )
+            
+            response = await chat.send_message(user_message)
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        
+        # Parse JSON
+        response_clean = response.strip()
+        if response_clean.startswith("```"):
+            response_clean = response_clean.split("```")[1]
+            if response_clean.startswith("json"):
+                response_clean = response_clean[4:]
+        response_clean = response_clean.strip()
+        
+        try:
+            result = json.loads(response_clean)
+            result["ok"] = True
+            result["source"] = "generic_ai_multi"
+            return result
+        except json.JSONDecodeError:
+            return {
+                "ok": False,
+                "error": "Erro ao processar resposta da IA",
+                "raw_response": response
+            }
+            
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
