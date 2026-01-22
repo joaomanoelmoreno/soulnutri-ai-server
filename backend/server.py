@@ -937,18 +937,22 @@ async def register_user(
 
 
 @api_router.post("/premium/login")
-async def login_user(pin: str = Form(...)):
+async def login_user(pin: str = Form(...), nome: str = Form(...)):
     """
-    Login com PIN local.
+    Login com Nome + PIN.
     """
     try:
         from services.profile_service import hash_pin
         
         pin_hash = hash_pin(pin)
-        user = await db.users.find_one({"pin_hash": pin_hash}, {"_id": 0, "pin_hash": 0})
+        # Buscar por nome E pin_hash
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"_id": 0, "pin_hash": 0}
+        )
         
         if not user:
-            return {"ok": False, "error": "PIN incorreto"}
+            return {"ok": False, "error": "Nome ou PIN incorreto"}
         
         # Buscar consumo do dia
         from datetime import datetime
