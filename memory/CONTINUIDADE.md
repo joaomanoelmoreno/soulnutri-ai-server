@@ -17,9 +17,18 @@
 - Cache de imagens (~0ms para repetidos)
 - Seção "Você Sabia?" com visual melhorado
 - Proteção anti-fake news em notícias
+- **🛡️ SISTEMA DE SEGURANÇA** - Valida e corrige classificações erradas
 
 ### ⏳ Em Andamento
-- **Treinamento YOLOv8**: Dataset preparado, aguardando treinamento no Colab
+- **Treinamento YOLOv8**: Rodando em background (~Época 10/50, ~99% accuracy)
+
+### 🛡️ Sistema de Segurança (NOVO)
+- Arquivo: `/app/backend/services/safety_validator.py`
+- Detecta proteínas animais em pratos classificados como veganos
+- Detecta derivados (ovo/leite) em pratos classificados como veganos
+- Corrige automaticamente a categoria
+- Detecta 9 tipos de alérgenos
+- Gera alertas de segurança
 
 ### 🔴 Limitação Conhecida
 - Pratos não cadastrados levam ~3-5s (Gemini Vision)
