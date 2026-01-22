@@ -989,6 +989,7 @@ function App() {
               <DailyCounter 
                 user={premiumUser}
                 onLogout={handlePremiumLogout}
+                onClose={() => setShowPremium(null)}
               />
             )}
           </div>
