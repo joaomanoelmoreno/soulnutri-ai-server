@@ -57,15 +57,17 @@ function App() {
   // Verificar sessão Premium salva
   const checkPremiumSession = async () => {
     const pin = localStorage.getItem('soulnutri_pin');
-    if (pin) {
+    const nome = localStorage.getItem('soulnutri_nome');
+    if (pin && nome) {
       try {
         const fd = new FormData();
         fd.append('pin', pin);
+        fd.append('nome', nome);
         const res = await fetch(`${API}/premium/login`, { method: 'POST', body: fd });
         const data = await res.json();
         if (data.ok) {
           setPremiumUser(data.user);
-          loadDailySummary(pin);
+          loadDailySummary();
         }
       } catch (e) {
         console.error('Erro ao verificar sessão:', e);
@@ -74,11 +76,43 @@ function App() {
   };
 
   // Carregar resumo diário
-  const loadDailySummary = async (pin) => {
+  const loadDailySummary = async () => {
+    const pin = localStorage.getItem('soulnutri_pin');
+    const nome = localStorage.getItem('soulnutri_nome');
+    if (!pin || !nome) return;
+    
     try {
-      const res = await fetch(`${API}/premium/daily-summary?pin=${pin || localStorage.getItem('soulnutri_pin')}`);
+      const fd = new FormData();
+      fd.append('pin', pin);
+      fd.append('nome', nome);
+      const res = await fetch(`${API}/premium/login`, { method: 'POST', body: fd });
       const data = await res.json();
-      if (data.ok) setDailySummary(data);
+      if (data.ok && data.daily_log) {
+        setDailySummary({
+          nome: data.user.nome,
+          meta: data.user.meta_calorica?.meta_sugerida || 2000,
+          consumido: data.daily_log.calorias_total || 0,
+          restante: (data.user.meta_calorica?.meta_sugerida || 2000) - (data.daily_log.calorias_total || 0),
+          percentual: ((data.daily_log.calorias_total || 0) / (data.user.meta_calorica?.meta_sugerida || 2000)) * 100,
+          pratos: data.daily_log.pratos || [],
+          totais: {
+            calorias: data.daily_log.calorias_total || 0,
+            proteinas: data.daily_log.proteinas_total || 0,
+            carboidratos: data.daily_log.carboidratos_total || 0,
+            gorduras: data.daily_log.gorduras_total || 0
+          }
+        });
+      } else if (data.ok) {
+        setDailySummary({
+          nome: data.user.nome,
+          meta: data.user.meta_calorica?.meta_sugerida || 2000,
+          consumido: 0,
+          restante: data.user.meta_calorica?.meta_sugerida || 2000,
+          percentual: 0,
+          pratos: [],
+          totais: { calorias: 0, proteinas: 0, carboidratos: 0, gorduras: 0 }
+        });
+      }
     } catch (e) {
       console.error('Erro ao carregar resumo:', e);
     }
