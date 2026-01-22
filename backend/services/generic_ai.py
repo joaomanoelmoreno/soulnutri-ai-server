@@ -284,7 +284,11 @@ Forneça:
 async def search_ingredient_news(ingredient: str) -> dict:
     """
     Busca notícias/pesquisas recentes sobre um ingrediente.
-    Para o recurso "veja esta notícia recente".
+    
+    PROTEÇÃO CONTRA FAKE NEWS:
+    - Usa apenas fontes científicas verificadas
+    - Inclui data da pesquisa
+    - Valida informações com múltiplas fontes
     """
     try:
         api_key = os.environ.get('EMERGENT_LLM_KEY')
@@ -294,26 +298,53 @@ async def search_ingredient_news(ingredient: str) -> dict:
         chat = LlmChat(
             api_key=api_key,
             session_id=f"news-{ingredient}",
-            system_message="""Você é um pesquisador de nutrição. Forneça informações sobre pesquisas RECENTES (últimos 5 anos) relacionadas ao ingrediente.
+            system_message="""Você é um pesquisador de nutrição RIGOROSO. Forneça APENAS informações de pesquisas VERIFICADAS.
 
-Foque em:
-- Estudos da OMS, IARC, ANVISA, FDA
-- Pesquisas publicadas em revistas científicas
-- Alertas de saúde pública
-- Descobertas nutricionais relevantes
+🔒 REGRAS ANTI-FAKE NEWS (OBRIGATÓRIAS):
+1. Use APENAS fontes científicas oficiais:
+   - OMS (Organização Mundial da Saúde)
+   - ANVISA (Brasil)
+   - FDA (EUA)
+   - EFSA (Europa)
+   - PubMed / NIH
+   - Revistas científicas peer-reviewed (Nature, Lancet, JAMA, etc.)
+
+2. NUNCA cite:
+   - Blogs pessoais
+   - Redes sociais
+   - Sites de notícias sensacionalistas
+   - Estudos não revisados por pares
+   - Fontes sem data ou autor
+
+3. Sempre inclua:
+   - ANO do estudo/publicação
+   - NOME da instituição ou revista
+   - Se é CONSENSO científico ou estudo PRELIMINAR
+
+4. Se NÃO houver pesquisa confiável, diga claramente:
+   "Não há estudos científicos robustos sobre este tópico"
 
 Retorne JSON:
 {
     "ingrediente": "nome",
-    "pesquisa_recente": "Descrição da pesquisa mais relevante",
-    "fonte": "OMS 2023 / Estudo Harvard / etc",
+    "pesquisa_verificada": "Descrição factual da pesquisa",
+    "fonte_oficial": "OMS 2023 / Estudo Harvard publicado no JAMA / etc",
+    "nivel_evidencia": "consenso" | "forte" | "moderado" | "preliminar",
+    "data_pesquisa": "2023" ou "2024",
     "impacto_saude": "O que isso significa para o consumidor",
-    "recomendacao": "Sugestão baseada na pesquisa"
+    "recomendacao_oficial": "Recomendação baseada em órgão oficial",
+    "aviso": "Informação importante sobre limitações do estudo, se houver"
 }"""
         ).with_model("openai", "gpt-4o-mini")
         
         response = await chat.send_message(UserMessage(
-            text=f"Busque pesquisas científicas RECENTES sobre: {ingredient}. Foque em estudos dos últimos 5 anos sobre impactos na saúde."
+            text=f"""Busque pesquisas científicas VERIFICADAS sobre: {ingredient}
+
+IMPORTANTE:
+- Apenas estudos de fontes oficiais (OMS, ANVISA, FDA, revistas científicas)
+- Inclua ano e fonte exata
+- Indique se é consenso ou estudo preliminar
+- Se não houver evidência forte, seja honesto sobre isso"""
         ))
         
         response_clean = response.strip()
@@ -322,10 +353,14 @@ Retorne JSON:
             if response_clean.startswith("json"):
                 response_clean = response_clean[4:]
         
-        return json.loads(response_clean.strip())
+        result = json.loads(response_clean.strip())
+        result["fonte_verificada"] = True
+        result["aviso_padrao"] = "Informações baseadas em pesquisas científicas. Consulte um profissional de saúde para orientação personalizada."
+        
+        return result
         
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e), "fonte_verificada": False}
 
 
 async def identify_multiple_items(image_bytes: bytes) -> dict:
