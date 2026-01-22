@@ -243,3 +243,11 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 
 /* Premium Modal */
 .premium-modal{max-width:400px;max-height:90vh;overflow-y:auto;padding-bottom:40px}
+
+/* Escurecer badge Emergent */
+[class*="emergent"], [id*="emergent"], [data-testid*="emergent"],
+iframe[src*="emergent"], div[style*="Made with"] {
+  opacity: 0.3 !important;
+  filter: brightness(0.5) !important;
+  transform: scale(0.8) !important;
+}
