@@ -270,108 +270,50 @@ async def identify_image(
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: Hugging Face API (GRATUITA! - se Nível 1 < 90%)
+        # NÍVEL 2/3: Gemini Vision (Fallback para pratos não cadastrados)
+        # Nota: HuggingFace API está descontinuada, indo direto para Gemini
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < THRESHOLD_LOCAL:
             try:
-                from services.huggingface_service import identify_with_huggingface
+                from services.generic_ai import identify_unknown_dish
                 
-                logger.info(f"[NÍVEL 2] Consultando Hugging Face API (gratuita)...")
-                hf_result = await identify_with_huggingface(content)
+                logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
+                generic_result = await identify_unknown_dish(content)
                 
-                nivel2_score = hf_result.get('score', 0.0)
-                nivel2_ok = hf_result.get('ok', False) and hf_result.get('identified', False)
-                
-                if nivel2_ok:
-                    logger.info(f"[NÍVEL 2] HuggingFace: {hf_result.get('dish_display', 'N/A')} ({nivel2_score:.2%})")
-                    
-                    # VALIDAÇÃO CRUZADA: Se Nível 1 e 2 concordam, confiança boosted
-                    nivel1_dish = decision.get('dish_display', '').lower()
-                    nivel2_dish = hf_result.get('dish_display', '').lower()
-                    
-                    if nivel1_dish and nivel2_dish and (nivel1_dish in nivel2_dish or nivel2_dish in nivel1_dish):
-                        decision['score'] = min(0.99, max(nivel1_score, nivel2_score) + 0.1)
-                        decision['confidence'] = 'alta'
-                        decision['source'] = 'local_index+huggingface'
-                        decision['cascade_level'] = '1+2'
-                        decision['message'] = f"Confirmado: {decision.get('dish_display')} (validação cruzada)"
-                        logger.info(f"[CASCATA] ✓ Validação cruzada! Níveis 1 e 2 concordam")
-                    
-                    # HuggingFace tem confiança >= 70%, usar como resultado
-                    elif nivel2_score >= 0.70:
-                        decision = {
-                            'identified': True,
-                            'dish': hf_result.get('food_class', ''),
-                            'dish_display': hf_result.get('dish_display', 'Prato'),
-                            'confidence': hf_result.get('confidence', 'média'),
-                            'score': nivel2_score,
-                            'message': f"Identificado: {hf_result.get('dish_display')}",
-                            'category': hf_result.get('category', 'outros'),
-                            'category_emoji': hf_result.get('category_emoji', '🍽️'),
-                            'descricao': '',
-                            'ingredientes': hf_result.get('ingredientes', []),
-                            'tecnica': '',
-                            'beneficios': hf_result.get('beneficios', []),
-                            'riscos': hf_result.get('riscos', []),
-                            'alternatives': hf_result.get('alternatives', []),
-                            'nutrition': None,
-                            'aviso_cibi_sana': None,
-                            'source': 'huggingface',
-                            'cascade_level': 2
-                        }
-                        logger.info(f"[CASCATA] ⚡ Resultado rápido do Nível 2 (HuggingFace)")
-                    else:
-                        logger.info(f"[NÍVEL 2] Confiança insuficiente ({nivel2_score:.2%}), indo para Nível 3...")
-                else:
-                    logger.info(f"[NÍVEL 2] HuggingFace não identificou, indo para Nível 3...")
-                    
+                if generic_result.get('ok') and generic_result.get('nome'):
+                    decision = {
+                        'identified': True,
+                        'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
+                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
+                        'confidence': generic_result.get('confianca', 'média'),
+                        'score': generic_result.get('score', 0.7),
+                        'message': f"Identificado: {generic_result.get('nome')}",
+                        'category': generic_result.get('categoria', 'outros'),
+                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
+                        'descricao': generic_result.get('descricao', ''),
+                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
+                        'tecnica': generic_result.get('tecnica_preparo', ''),
+                        'beneficios': generic_result.get('beneficios', []),
+                        'riscos': generic_result.get('riscos', []),
+                        'alternatives': generic_result.get('alternativas', []),
+                        'nutrition': {
+                            'calorias': '~200 kcal',
+                            'proteinas': '~10g',
+                            'carboidratos': '~25g',
+                            'gorduras': '~8g'
+                        },
+                        'aviso_cibi_sana': None,
+                        'source': 'generic_ai',
+                        'cascade_level': 2,
+                        # Dados científicos da IA genérica
+                        'beneficio_principal': generic_result.get('beneficio_principal'),
+                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
+                        'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
+                        'alerta_saude': generic_result.get('alerta_saude')
+                    }
+                    logger.info(f"[CASCATA] Resultado do Gemini Vision")
             except Exception as e:
-                logger.warning(f"[NÍVEL 2] Erro no HuggingFace: {e}, indo para Nível 3...")
-            
-            # ─────────────────────────────────────────────────────────────────────
-            # NÍVEL 3: Gemini Vision (Fallback Universal)
-            # ─────────────────────────────────────────────────────────────────────
-            if decision.get('cascade_level') is None and (decision.get('score', 0) < THRESHOLD_LOCAL or not decision.get('identified')):
-                try:
-                    from services.generic_ai import identify_unknown_dish
-                    
-                    logger.info(f"[NÍVEL 3] Consultando Gemini Vision...")
-                    generic_result = await identify_unknown_dish(content)
-                    
-                    if generic_result.get('ok') and generic_result.get('nome'):
-                        decision = {
-                            'identified': True,
-                            'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
-                            'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
-                            'confidence': generic_result.get('confianca', 'média'),
-                            'score': generic_result.get('score', 0.7),
-                            'message': f"Identificado: {generic_result.get('nome')}",
-                            'category': generic_result.get('categoria', 'outros'),
-                            'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                            'descricao': generic_result.get('descricao', ''),
-                            'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                            'tecnica': generic_result.get('tecnica_preparo', ''),
-                            'beneficios': generic_result.get('beneficios', []),
-                            'riscos': generic_result.get('riscos', []),
-                            'alternatives': generic_result.get('alternativas', []),
-                            'nutrition': {
-                                'calorias': '~200 kcal',
-                                'proteinas': '~10g',
-                                'carboidratos': '~25g',
-                                'gorduras': '~8g'
-                            },
-                            'aviso_cibi_sana': None,
-                            'source': 'generic_ai',
-                            'cascade_level': 3,
-                            # Dados científicos da IA genérica
-                            'beneficio_principal': generic_result.get('beneficio_principal'),
-                            'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                            'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
-                            'alerta_saude': generic_result.get('alerta_saude')
-                        }
-                        logger.info(f"[CASCATA] Resultado final do Nível 3 (Gemini Vision)")
-                except Exception as e:
-                    logger.warning(f"[NÍVEL 3] Erro na IA genérica: {e}")
+                logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
