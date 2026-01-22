@@ -259,66 +259,63 @@ async def identify_image(
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: LogMeal API (se Nível 1 < 90%)
+        # NÍVEL 2: Hugging Face API (GRATUITA! - se Nível 1 < 90%)
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < THRESHOLD_LOCAL:
             try:
-                from services.clarifai_service import identify_with_clarifai
+                from services.huggingface_service import identify_with_huggingface
                 
-                logger.info(f"[NÍVEL 2] Consultando Clarifai API...")
-                clarifai_result = await identify_with_clarifai(content)
+                logger.info(f"[NÍVEL 2] Consultando Hugging Face API (gratuita)...")
+                hf_result = await identify_with_huggingface(content)
                 
-                nivel2_score = clarifai_result.get('score', 0.0)
-                nivel2_ok = clarifai_result.get('ok', False) and clarifai_result.get('identified', False)
+                nivel2_score = hf_result.get('score', 0.0)
+                nivel2_ok = hf_result.get('ok', False) and hf_result.get('identified', False)
                 
                 if nivel2_ok:
-                    logger.info(f"[NÍVEL 2] Clarifai: {clarifai_result.get('dish_display', 'N/A')} ({nivel2_score:.2%})")
+                    logger.info(f"[NÍVEL 2] HuggingFace: {hf_result.get('dish_display', 'N/A')} ({nivel2_score:.2%})")
                     
-                    # VALIDAÇÃO CRUZADA: Se Nível 1 e 2 concordam, confiança 99%+
+                    # VALIDAÇÃO CRUZADA: Se Nível 1 e 2 concordam, confiança boosted
                     nivel1_dish = decision.get('dish_display', '').lower()
-                    nivel2_dish = clarifai_result.get('dish_display', '').lower()
+                    nivel2_dish = hf_result.get('dish_display', '').lower()
                     
                     if nivel1_dish and nivel2_dish and (nivel1_dish in nivel2_dish or nivel2_dish in nivel1_dish):
-                        # Concordam! Usar Nível 1 com boost de confiança
                         decision['score'] = min(0.99, max(nivel1_score, nivel2_score) + 0.1)
                         decision['confidence'] = 'alta'
-                        decision['source'] = 'local_index+clarifai'
+                        decision['source'] = 'local_index+huggingface'
                         decision['cascade_level'] = '1+2'
                         decision['message'] = f"Confirmado: {decision.get('dish_display')} (validação cruzada)"
-                        logger.info(f"[CASCATA] Validação cruzada! Níveis 1 e 2 concordam → confiança boosted")
+                        logger.info(f"[CASCATA] ✓ Validação cruzada! Níveis 1 e 2 concordam")
                     
-                    # Clarifai tem confiança >= 85%, usar como resultado
-                    elif nivel2_score >= 0.85:
+                    # HuggingFace tem confiança >= 70%, usar como resultado
+                    elif nivel2_score >= 0.70:
                         decision = {
                             'identified': True,
-                            'dish': clarifai_result.get('dish', ''),
-                            'dish_display': clarifai_result.get('dish_display', 'Prato'),
-                            'confidence': clarifai_result.get('confidence', 'média'),
+                            'dish': hf_result.get('food_class', ''),
+                            'dish_display': hf_result.get('dish_display', 'Prato'),
+                            'confidence': hf_result.get('confidence', 'média'),
                             'score': nivel2_score,
-                            'message': f"Identificado: {clarifai_result.get('dish_display')}",
-                            'category': clarifai_result.get('category', 'outros'),
-                            'category_emoji': clarifai_result.get('category_emoji', '🍽️'),
+                            'message': f"Identificado: {hf_result.get('dish_display')}",
+                            'category': hf_result.get('category', 'outros'),
+                            'category_emoji': hf_result.get('category_emoji', '🍽️'),
                             'descricao': '',
-                            'ingredientes': clarifai_result.get('ingredientes', []),
+                            'ingredientes': hf_result.get('ingredientes', []),
                             'tecnica': '',
-                            'beneficios': [],
-                            'riscos': [],
-                            'alternatives': [],
+                            'beneficios': hf_result.get('beneficios', []),
+                            'riscos': hf_result.get('riscos', []),
+                            'alternatives': hf_result.get('alternatives', []),
                             'nutrition': None,
                             'aviso_cibi_sana': None,
-                            'source': 'clarifai',
+                            'source': 'huggingface',
                             'cascade_level': 2
                         }
-                        logger.info(f"[CASCATA] Resultado final do Nível 2 (Clarifai)")
-                    
-                    # Ambos têm confiança baixa, ir para Nível 3
+                        logger.info(f"[CASCATA] ⚡ Resultado rápido do Nível 2 (HuggingFace)")
                     else:
                         logger.info(f"[NÍVEL 2] Confiança insuficiente ({nivel2_score:.2%}), indo para Nível 3...")
                 else:
-                    logger.info(f"[NÍVEL 2] Clarifai não identificou, indo para Nível 3...")
+                    logger.info(f"[NÍVEL 2] HuggingFace não identificou, indo para Nível 3...")
                     
             except Exception as e:
-                logger.warning(f"[NÍVEL 2] Erro no Clarifai: {e}, indo para Nível 3...")
+                logger.warning(f"[NÍVEL 2] Erro no HuggingFace: {e}, indo para Nível 3...")
             
             # ─────────────────────────────────────────────────────────────────────
             # NÍVEL 3: Gemini Vision (Fallback Universal)
