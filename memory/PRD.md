@@ -1,9 +1,5 @@
 # SoulNutri - Product Requirements Document
 
-## ATENÇÃO: Leia também /app/memory/DIRETRIZES_PROJETO.md para contexto completo!
-
----
-
 ## Visão e Posicionamento
 
 ### Slogan
@@ -12,27 +8,51 @@
 ### Proposta de Valor
 O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em todas as suas refeições, fornecendo informações **CIENTÍFICAS, RELEVANTES e RECENTES** que ele NÃO conhece.
 
-### Disclaimer Legal
-> "As informações são educativas e baseadas em pesquisas científicas. Não substituem orientação de profissionais de saúde."
-
 ---
 
-## Arquitetura de Reconhecimento (IMPLEMENTADA)
+## Funcionalidades Implementadas
 
-### Sistema Híbrido em 3 Níveis
+### ✅ Identificação de Pratos (Core)
+- **Sistema em Cascata**: OpenCLIP (Nível 1, 95% threshold) + Gemini Vision (Nível 3)
+- **139 pratos indexados** no Cibi Sana
+- Identificação de alérgenos automática
+- Informações científicas (benefício principal, curiosidade, referência)
+- Botão de compartilhar curiosidade
 
-**NÍVEL 1 - Índice Local (OpenCLIP)**
-- Custo: $0 | Velocidade: ~200ms | Precisão: 95%+
-- Se confiança >= 95% → RESULTADO FINAL
-- Se confiança < 95% → Nível 3
+### ✅ Modo Multi-Item (Novo - 22/01/2026)
+- Endpoint: `POST /api/ai/identify-multi`
+- Identifica múltiplos alimentos em buffets ou pratos compostos
+- Mostra calorias individuais e totais
+- Indica equilíbrio nutricional da refeição
+- Combina alertas de alérgenos de todos os itens
 
-**NÍVEL 2 - IA Especializada (Clarifai)**
-- Status: DESABILITADO (código implementado, mas desativado por custo)
-- Pode ser reativado quando necessário
+### ✅ Premium com PIN Local (Novo - 22/01/2026)
+- **Sistema de Perfil**:
+  - Cadastro com PIN (4-6 dígitos)
+  - Dados: peso, altura, idade, sexo, nível de atividade
+  - Objetivo: perder/manter/ganhar peso
+  - Alergias e restrições alimentares
+  
+- **Contador Nutricional**:
+  - Cálculo automático de meta calórica (Harris-Benedict)
+  - Registro de refeições identificadas
+  - Progresso diário em anel visual
+  - Alertas quando próximo da meta (75%, 90%, 100%)
+  - Histórico de refeições do dia
 
-**NÍVEL 3 - IA Genérica (Gemini Vision)**
-- Custo: via Emergent LLM Key | Velocidade: ~1-2s
-- Fallback universal, sempre retorna resultado
+- **Endpoints Premium**:
+  - `POST /api/premium/register` - Criar perfil
+  - `POST /api/premium/login` - Login com PIN
+  - `POST /api/premium/log-meal` - Registrar refeição
+  - `GET /api/premium/daily-summary` - Resumo do dia
+  - `GET /api/premium/history` - Histórico semanal
+
+### ✅ UX/UI
+- Câmera com moldura guia
+- Tratamento de erro de câmera com botão "Tentar novamente"
+- Toggle Único/Multi para alternar modos
+- Botão flutuante Premium (⭐ ou 📊 se logado)
+- Mini-contador flutuante mostrando progresso do dia
 
 ---
 
@@ -45,86 +65,46 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 
 ---
 
-## Status Atual (Janeiro 2026)
-
-### Base de Dados
-- **Total de pratos**: 139 no índice
-- **Com dados científicos**: 115 (100%)
-- **Veganos**: 43 | **Vegetarianos**: 30 | **Proteína animal**: 42
-
-### Funcionalidades Implementadas
-- [x] Identificação por imagem (139 pratos no índice)
-- [x] Sistema de feedback (correto/incorreto)
-- [x] Cadastro de pratos novos com IA
-- [x] IA genérica para pratos não cadastrados
-- [x] Informações científicas em todos os pratos
-- [x] Botão de compartilhar curiosidade
-- [x] Câmera com moldura guia
-- [x] **NOVO: Modo Multi-Item** - Identifica múltiplos alimentos no prato
-
-### Última Implementação (22/01/2026)
-- **Reconhecimento de Múltiplos Itens**: 
-  - Novo endpoint `POST /api/ai/identify-multi`
-  - Identifica cada item separadamente (útil para buffets)
-  - Mostra calorias individuais e totais
-  - Indica equilíbrio nutricional da refeição
-  - Combina alertas de alérgenos de todos os itens
-  - Toggle na UI para alternar entre modo Único e Multi
-
----
-
 ## Backlog Priorizado
 
-### P0 - CRÍTICO (Em andamento)
-- [x] ~~Reconhecimento de múltiplos itens no prato~~ ✅ CONCLUÍDO
-- [ ] Validação de precisão com pratos do Cibi Sana (aguardando feedback do usuário)
+### P0 - CRÍTICO
+- [x] ~~Reconhecimento de múltiplos itens~~ ✅
+- [x] ~~Sistema Premium com PIN~~ ✅
+- [x] ~~Contador nutricional~~ ✅
+- [ ] Validação de precisão com pratos do Cibi Sana (aguardando usuário)
 
 ### P1 - ALTA
 - [ ] Investigar travamentos ocasionais do app
-- [ ] Implementar link "Veja esta notícia" junto a alertas
-- [ ] Histórico de pratos identificados
+- [ ] Alertas personalizados baseados nas alergias do perfil (ao identificar prato)
+- [ ] Botão compartilhar mais visível na UI
 
 ### P2 - MÉDIA
-- [ ] Painel para restaurantes cadastrarem pratos
-- [ ] Retreinar índice com fotos de feedback
-- [ ] Teste com 3-4 usuários simultâneos
+- [ ] Histórico semanal com gráficos
+- [ ] Relatórios nutricionais
+- [ ] Link "Veja esta pesquisa" para alertas
 
-### P3 - FUTURO (Premium)
-- [ ] Contador nutricional em tempo real
-- [ ] Perfil do usuário (médico/alergias/restrições)
-- [ ] Histórico de consumo semanal
-- [ ] Alertas personalizados
+### P3 - FUTURO
+- [ ] Modo offline (PWA)
+- [ ] Notificações push
+- [ ] Integração com wearables
 
 ---
 
-## Endpoints Principais
+## Endpoints da API
 
 | Endpoint | Método | Descrição |
 |----------|--------|-----------|
-| `/api/ai/identify` | POST | Identifica prato único por imagem |
-| `/api/ai/identify-multi` | POST | **NOVO** - Identifica múltiplos itens |
+| `/api/ai/identify` | POST | Identifica prato único |
+| `/api/ai/identify-multi` | POST | Identifica múltiplos itens |
 | `/api/ai/feedback` | POST | Registra feedback |
 | `/api/ai/create-dish` | POST | Cria novo prato com IA |
 | `/api/ai/dishes` | GET | Lista pratos |
 | `/api/ai/status` | GET | Status do índice |
-
----
-
-## Testes de Precisão (22/01/2026)
-
-### Modo Único
-| Imagem | Resultado | Confiança | Fonte |
-|--------|-----------|-----------|-------|
-| Pizza | Pizza Havaiana | 95% | Gemini Vision |
-| Salada | Buddha Bowl Vegano | 95% | Gemini Vision |
-| Sushi | Uramaki de Salmão | 95% | Gemini Vision |
-| Hambúrguer | Hambúrguer Duplo | 95% | Gemini Vision |
-
-### Modo Multi-Item
-| Imagem | Itens | Calorias Totais |
-|--------|-------|-----------------|
-| Prato composto | 4 itens | ~287 kcal |
-| Buffet | 6 itens | ~1180 kcal |
+| `/api/premium/register` | POST | Criar perfil Premium |
+| `/api/premium/login` | POST | Login com PIN |
+| `/api/premium/log-meal` | POST | Registrar refeição |
+| `/api/premium/daily-summary` | GET | Resumo do dia |
+| `/api/premium/history` | GET | Histórico semanal |
 
 ---
 
