@@ -864,6 +864,294 @@ async def identify_multiple_items(file: UploadFile = File(...)):
         }
 
 
+# ═══════════════════════════════════════════════════════════════════════
+# PREMIUM - PERFIL DO USUÁRIO E CONTADOR NUTRICIONAL
+# ═══════════════════════════════════════════════════════════════════════
+
+@api_router.post("/premium/register")
+async def register_user(
+    pin: str = Form(...),
+    nome: str = Form(...),
+    peso: float = Form(...),
+    altura: float = Form(...),
+    idade: int = Form(...),
+    sexo: str = Form(...),
+    nivel_atividade: str = Form("moderado"),
+    objetivo: str = Form("manter"),
+    alergias: str = Form(""),
+    restricoes: str = Form("")
+):
+    """
+    Registra um novo usuário Premium com PIN local.
+    Calcula automaticamente a meta calórica sugerida.
+    """
+    try:
+        from services.profile_service import hash_pin, calcular_tmb, calcular_meta_calorica
+        from datetime import datetime, timezone
+        
+        # Validações
+        if len(pin) < 4 or len(pin) > 6:
+            return {"ok": False, "error": "PIN deve ter entre 4 e 6 dígitos"}
+        
+        if not pin.isdigit():
+            return {"ok": False, "error": "PIN deve conter apenas números"}
+        
+        # Calcular meta calórica
+        tmb = calcular_tmb(peso, altura, idade, sexo)
+        meta_info = calcular_meta_calorica(tmb, nivel_atividade, objetivo)
+        
+        # Criar perfil
+        perfil = {
+            "pin_hash": hash_pin(pin),
+            "nome": nome,
+            "peso": peso,
+            "altura": altura,
+            "idade": idade,
+            "sexo": sexo,
+            "nivel_atividade": nivel_atividade,
+            "objetivo": objetivo,
+            "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
+            "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
+            "meta_calorica": meta_info,
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc)
+        }
+        
+        # Salvar no MongoDB
+        result = await db.users.insert_one(perfil)
+        user_id = str(result.inserted_id)
+        
+        logger.info(f"[PREMIUM] Novo usuário registrado: {nome}")
+        
+        return {
+            "ok": True,
+            "user_id": user_id,
+            "nome": nome,
+            "meta_calorica": meta_info,
+            "message": f"Bem-vindo ao SoulNutri Premium, {nome}!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao registrar usuário: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/login")
+async def login_user(pin: str = Form(...)):
+    """
+    Login com PIN local.
+    """
+    try:
+        from services.profile_service import hash_pin
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash}, {"_id": 0, "pin_hash": 0})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Buscar consumo do dia
+        from datetime import datetime
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        return {
+            "ok": True,
+            "user": user,
+            "daily_log": daily_log,
+            "message": f"Olá, {user['nome']}!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no login: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/log-meal")
+async def log_meal(
+    pin: str = Form(...),
+    prato_nome: str = Form(...),
+    calorias: float = Form(...),
+    proteinas: float = Form(0),
+    carboidratos: float = Form(0),
+    gorduras: float = Form(0),
+    porcao: str = Form("1 porção")
+):
+    """
+    Registra uma refeição no contador diário.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timezone
+        
+        # Verificar usuário
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        agora = datetime.now(timezone.utc)
+        
+        # Criar entrada do prato
+        prato_entry = {
+            "nome": prato_nome,
+            "calorias": calorias,
+            "proteinas": proteinas,
+            "carboidratos": carboidratos,
+            "gorduras": gorduras,
+            "porcao": porcao,
+            "hora": agora.strftime("%H:%M")
+        }
+        
+        # Atualizar ou criar log diário
+        result = await db.daily_logs.update_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {
+                "$push": {"pratos": prato_entry},
+                "$inc": {
+                    "calorias_total": calorias,
+                    "proteinas_total": proteinas,
+                    "carboidratos_total": carboidratos,
+                    "gorduras_total": gorduras
+                },
+                "$setOnInsert": {"created_at": agora}
+            },
+            upsert=True
+        )
+        
+        # Buscar totais atualizados
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        meta = user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        consumido = daily_log.get("calorias_total", 0)
+        restante = meta - consumido
+        percentual = (consumido / meta) * 100 if meta > 0 else 0
+        
+        # Gerar alerta se necessário
+        alerta = None
+        if percentual >= 100:
+            alerta = {"tipo": "limite", "mensagem": "🚨 Você atingiu sua meta calórica diária!"}
+        elif percentual >= 90:
+            alerta = {"tipo": "aviso", "mensagem": f"⚠️ Você está a {restante:.0f} kcal da sua meta!"}
+        elif percentual >= 75:
+            alerta = {"tipo": "info", "mensagem": f"📊 75% da meta. Restam {restante:.0f} kcal"}
+        
+        logger.info(f"[PREMIUM] {user['nome']} registrou: {prato_nome} ({calorias} kcal)")
+        
+        return {
+            "ok": True,
+            "daily_log": daily_log,
+            "meta": meta,
+            "consumido": consumido,
+            "restante": restante,
+            "percentual": round(percentual, 1),
+            "alerta": alerta
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao registrar refeição: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/daily-summary")
+async def get_daily_summary(pin: str):
+    """
+    Retorna resumo do consumo diário.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        meta = user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        consumido = daily_log.get("calorias_total", 0) if daily_log else 0
+        
+        return {
+            "ok": True,
+            "nome": user["nome"],
+            "data": hoje,
+            "meta": meta,
+            "consumido": consumido,
+            "restante": meta - consumido,
+            "percentual": round((consumido / meta) * 100, 1) if meta > 0 else 0,
+            "pratos": daily_log.get("pratos", []) if daily_log else [],
+            "totais": {
+                "calorias": consumido,
+                "proteinas": daily_log.get("proteinas_total", 0) if daily_log else 0,
+                "carboidratos": daily_log.get("carboidratos_total", 0) if daily_log else 0,
+                "gorduras": daily_log.get("gorduras_total", 0) if daily_log else 0
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar resumo: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/history")
+async def get_history(pin: str, dias: int = 7):
+    """
+    Retorna histórico de consumo dos últimos X dias.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timedelta
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Buscar logs dos últimos dias
+        data_inicio = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
+        
+        cursor = db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1)
+        
+        historico = await cursor.to_list(length=dias)
+        
+        # Calcular média
+        if historico:
+            media_calorias = sum(d.get("calorias_total", 0) for d in historico) / len(historico)
+        else:
+            media_calorias = 0
+        
+        return {
+            "ok": True,
+            "nome": user["nome"],
+            "dias": dias,
+            "historico": historico,
+            "media_calorias": round(media_calorias, 0),
+            "meta": user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar histórico: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 # Incluir router
 app.include_router(api_router)
 
