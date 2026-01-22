@@ -338,7 +338,7 @@ async def identify_image(
                         }
                         logger.info(f"[CASCATA] Resultado do Gemini Vision")
                 except Exception as e:
-                logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
+                    logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
