@@ -821,6 +821,49 @@ async def get_feedback_stats():
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
+
+@api_router.post("/ai/identify-multi")
+async def identify_multiple_items(file: UploadFile = File(...)):
+    """
+    Identifica MÚLTIPLOS itens em uma imagem de refeição.
+    Útil para buffets, pratos compostos ou quando há vários alimentos no prato.
+    
+    Returns:
+        Lista de itens identificados com informações nutricionais individuais e totais.
+    """
+    start_time = time.time()
+    
+    try:
+        from services.generic_ai import identify_multiple_items as identify_multi
+        
+        content = await file.read()
+        
+        if len(content) == 0:
+            return {"ok": False, "error": "Arquivo de imagem vazio"}
+        
+        logger.info("[MULTI-ITEM] Iniciando identificação de múltiplos itens...")
+        result = await identify_multi(content)
+        
+        elapsed_ms = (time.time() - start_time) * 1000
+        result['search_time_ms'] = round(elapsed_ms, 2)
+        
+        if result.get('ok'):
+            total_itens = result.get('total_itens', 0)
+            logger.info(f"[MULTI-ITEM] {total_itens} itens identificados em {elapsed_ms:.0f}ms")
+        else:
+            logger.warning(f"[MULTI-ITEM] Erro: {result.get('error')}")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro na identificação múltipla: {e}")
+        return {
+            "ok": False,
+            "error": str(e),
+            "search_time_ms": round((time.time() - start_time) * 1000, 2)
+        }
+
+
 # Incluir router
 app.include_router(api_router)
 
