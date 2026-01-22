@@ -33,7 +33,8 @@ class ClarifaiService:
     
     def __init__(self):
         self.pat = CLARIFAI_PAT
-        self.api_url = f"https://api.clarifai.com/v2/models/{CLARIFAI_MODEL_ID}/outputs"
+        # URL correta da API v2 com user_id e app_id
+        self.api_url = f"https://api.clarifai.com/v2/users/{CLARIFAI_USER_ID}/apps/{CLARIFAI_APP_ID}/models/{CLARIFAI_MODEL_ID}/outputs"
         
     def is_configured(self) -> bool:
         """Verifica se a API está configurada"""
