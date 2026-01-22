@@ -6,8 +6,9 @@ Foco: Informações RELEVANTES, CIENTÍFICAS e RECENTES que o cliente NÃO conhe
 import os
 import base64
 import json
+import tempfile
 from dotenv import load_dotenv
-from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContent
+from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContentWithMimeType
 
 load_dotenv()
 
