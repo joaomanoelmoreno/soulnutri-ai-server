@@ -186,10 +186,14 @@ async def reindex(max_per_dish: int = 10):
         )
 
 @api_router.post("/ai/identify", response_model=IdentifyResponse)
-async def identify_image(file: UploadFile = File(...)):
+async def identify_image(
+    file: UploadFile = File(...),
+    pin: Optional[str] = Form(None),
+    nome: Optional[str] = Form(None)
+):
     """
     Identifica um prato a partir de uma imagem.
-    Meta: resposta em 100ms após a foto.
+    Se PIN e nome forem fornecidos, retorna dados Premium.
     
     Returns:
         IdentifyResponse com o prato identificado e nível de confiança
