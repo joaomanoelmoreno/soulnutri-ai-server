@@ -242,8 +242,8 @@ async def identify_image(file: UploadFile = File(...)):
         
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
-        # Se confiança >= 90% no Nível 1, usar resultado direto
-        if nivel1_score >= 0.90 and decision.get('identified'):
+        # Se confiança >= 95% no Nível 1, usar resultado direto (threshold alto para evitar falsos positivos)
+        if nivel1_score >= 0.95 and decision.get('identified'):
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
             logger.info(f"[CASCATA] Resultado final do Nível 1 (alta confiança)")
