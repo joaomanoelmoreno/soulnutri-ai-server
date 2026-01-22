@@ -299,45 +299,45 @@ async def identify_image(
             # NÍVEL 2: Gemini Vision (Fallback universal)
             # ─────────────────────────────────────────────────────────────────────
             if not yolo_used:
-            try:
-                from services.generic_ai import identify_unknown_dish
-                
-                logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
-                generic_result = await identify_unknown_dish(content)
-                
-                if generic_result.get('ok') and generic_result.get('nome'):
-                    decision = {
-                        'identified': True,
-                        'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
-                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
-                        'confidence': generic_result.get('confianca', 'média'),
-                        'score': generic_result.get('score', 0.7),
-                        'message': f"Identificado: {generic_result.get('nome')}",
-                        'category': generic_result.get('categoria', 'outros'),
-                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                        'descricao': generic_result.get('descricao', ''),
-                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                        'tecnica': generic_result.get('tecnica_preparo', ''),
-                        'beneficios': generic_result.get('beneficios', []),
-                        'riscos': generic_result.get('riscos', []),
-                        'alternatives': generic_result.get('alternativas', []),
-                        'nutrition': {
-                            'calorias': '~200 kcal',
-                            'proteinas': '~10g',
-                            'carboidratos': '~25g',
-                            'gorduras': '~8g'
-                        },
-                        'aviso_cibi_sana': None,
-                        'source': 'generic_ai',
-                        'cascade_level': 2,
-                        # Dados científicos da IA genérica
-                        'beneficio_principal': generic_result.get('beneficio_principal'),
-                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                        'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
-                        'alerta_saude': generic_result.get('alerta_saude')
-                    }
-                    logger.info(f"[CASCATA] Resultado do Gemini Vision")
-            except Exception as e:
+                try:
+                    from services.generic_ai import identify_unknown_dish
+                    
+                    logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
+                    generic_result = await identify_unknown_dish(content)
+                    
+                    if generic_result.get('ok') and generic_result.get('nome'):
+                        decision = {
+                            'identified': True,
+                            'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
+                            'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
+                            'confidence': generic_result.get('confianca', 'média'),
+                            'score': generic_result.get('score', 0.7),
+                            'message': f"Identificado: {generic_result.get('nome')}",
+                            'category': generic_result.get('categoria', 'outros'),
+                            'category_emoji': generic_result.get('category_emoji', '🍽️'),
+                            'descricao': generic_result.get('descricao', ''),
+                            'ingredientes': generic_result.get('ingredientes_provaveis', []),
+                            'tecnica': generic_result.get('tecnica_preparo', ''),
+                            'beneficios': generic_result.get('beneficios', []),
+                            'riscos': generic_result.get('riscos', []),
+                            'alternatives': generic_result.get('alternativas', []),
+                            'nutrition': {
+                                'calorias': '~200 kcal',
+                                'proteinas': '~10g',
+                                'carboidratos': '~25g',
+                                'gorduras': '~8g'
+                            },
+                            'aviso_cibi_sana': None,
+                            'source': 'generic_ai',
+                            'cascade_level': 2,
+                            # Dados científicos da IA genérica
+                            'beneficio_principal': generic_result.get('beneficio_principal'),
+                            'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
+                            'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
+                            'alerta_saude': generic_result.get('alerta_saude')
+                        }
+                        logger.info(f"[CASCATA] Resultado do Gemini Vision")
+                except Exception as e:
                 logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
         
         # Calcular tempo total
