@@ -572,7 +572,82 @@ function App() {
             </div>
           )}
 
-          {/* SEÇÃO CIENTÍFICA - Informações relevantes */}
+          {/* ALERTAS PREMIUM EM TEMPO REAL */}
+          {r.premium && (
+            <div className="premium-alerts-section" data-testid="premium-alerts">
+              {/* Alertas de alérgenos críticos */}
+              {r.premium.alertas_alergenos?.length > 0 && (
+                <div className="premium-alert-group critical">
+                  {r.premium.alertas_alergenos.map((a, i) => (
+                    <div key={i} className={`premium-alert ${a.severidade}`} data-testid={`allergen-alert-${i}`}>
+                      <span className="alert-emoji">{a.emoji}</span>
+                      <div className="alert-content">
+                        <strong>{a.titulo}</strong>
+                        <p>{a.mensagem}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Alertas baseados no histórico */}
+              {r.premium.alertas_historico?.length > 0 && (
+                <div className="premium-alert-group history">
+                  {r.premium.alertas_historico.map((a, i) => (
+                    <div key={i} className={`premium-alert ${a.tipo}`} data-testid={`history-alert-${i}`}>
+                      <span className="alert-emoji">{a.emoji}</span>
+                      <div className="alert-content">
+                        <strong>{a.titulo}</strong>
+                        <p>{a.mensagem}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Combinações inteligentes */}
+              {r.premium.combinacoes_sugeridas?.length > 0 && (
+                <div className="premium-suggestions">
+                  <h4>💡 Combinações Inteligentes</h4>
+                  {r.premium.combinacoes_sugeridas.map((c, i) => (
+                    <div key={i} className="suggestion-card" data-testid={`combo-${i}`}>
+                      <span className="sugg-emoji">{c.emoji}</span>
+                      <div className="sugg-content">
+                        <strong>{c.titulo}</strong>
+                        <p className="sugg-examples">Ex: {c.exemplos?.join(', ')}</p>
+                        <p className="sugg-benefit">{c.beneficio}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Substituições saudáveis */}
+              {r.premium.substituicoes?.length > 0 && (
+                <div className="premium-substitutions">
+                  <h4>🔄 Substituições Mais Saudáveis</h4>
+                  {r.premium.substituicoes.map((s, i) => (
+                    <div key={i} className="substitution-card" data-testid={`subst-${i}`}>
+                      <span className="subst-original">{s.original}</span>
+                      <span className="subst-arrow">→</span>
+                      <span className="subst-new">{s.substituto}</span>
+                      <span className="subst-benefit">{s.beneficio}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Badge Premium se não tiver dados científicos */}
+          {!r.is_premium && !r.beneficio_principal && (
+            <div className="premium-upgrade-hint" onClick={() => setShowPremium('login')}>
+              <span>⭐</span>
+              <p>Desbloqueie informações científicas e alertas personalizados com o <strong>Premium</strong></p>
+            </div>
+          )}
+
+          {/* SEÇÃO CIENTÍFICA - Informações relevantes (PREMIUM) */}
           {(r.beneficio_principal || r.curiosidade_cientifica) && (
             <div className="scientific-section" data-testid="scientific-section">
               {r.beneficio_principal && (
