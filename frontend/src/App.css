@@ -234,3 +234,9 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .dica-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);border-radius:8px;padding:12px;margin-bottom:10px}
 .dica-box h5{font-size:.8rem;color:#3b82f6;margin-bottom:6px}
 .dica-box p{font-size:.75rem;color:#e0e0e0;line-height:1.4}
+
+/* Erro de câmera */
+.cam-error{position:absolute;inset:0;background:rgba(0,0,0,.9);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;z-index:5;text-align:center;padding:20px}
+.cam-error span{font-size:3rem}
+.cam-error p{color:#f59e0b;font-size:.9rem}
+.cam-error button{background:rgba(0,200,255,.2);color:#0cf;border:2px solid rgba(0,200,255,.4);padding:12px 24px;border-radius:10px;font-size:.9rem;cursor:pointer}
