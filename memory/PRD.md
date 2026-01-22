@@ -1,112 +1,105 @@
 # SoulNutri - Product Requirements Document
 
-## Visão e Posicionamento
-
-### Slogan
+## Visão
 **"SOULNUTRI - O SEU AGENTE DE NUTRIÇÃO VIRTUAL"**
 
-### Proposta de Valor
-O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em todas as suas refeições, fornecendo informações **CIENTÍFICAS, RELEVANTES e RECENTES** que ele NÃO conhece.
+O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO REAL durante as refeições, fornecendo informações científicas, alertas personalizados e educação nutricional.
 
 ---
 
-## Funcionalidades Implementadas
+## Funcionalidades por Versão
 
-### ✅ Identificação de Pratos (Core)
-- **Sistema em Cascata**: OpenCLIP (Nível 1, 95% threshold) + Gemini Vision (Nível 3)
-- **139 pratos indexados** no Cibi Sana
-- Identificação de alérgenos automática
-- Informações científicas (benefício principal, curiosidade, referência)
-- Botão de compartilhar curiosidade
+### 🆓 VERSÃO GRATUITA
+- Identificação de pratos por imagem
+- Nome, categoria e ingredientes do prato
+- Alérgenos básicos
+- Modo Multi-Item (buffet)
 
-### ✅ Modo Multi-Item (Novo - 22/01/2026)
-- Endpoint: `POST /api/ai/identify-multi`
-- Identifica múltiplos alimentos em buffets ou pratos compostos
-- Mostra calorias individuais e totais
-- Indica equilíbrio nutricional da refeição
-- Combina alertas de alérgenos de todos os itens
+### ⭐ VERSÃO PREMIUM
+**Exclusivo Premium - Alertas em Tempo Real:**
+- ✅ Informações científicas (curiosidade, benefício, referência)
+- ✅ Alertas de alérgenos baseados no PERFIL do usuário
+- ✅ Alertas de nutrientes baseados no HISTÓRICO semanal
+  - Ex: "Este prato tem 800mg de sódio. Você já consumiu 1500mg esta semana!"
+- ✅ Combinações inteligentes
+  - Ex: "Combine feijão com limão para absorver 6x mais ferro!"
+- ✅ Substituições saudáveis
+  - Ex: "Troque batata frita por batata assada: 70% menos gordura"
+- ✅ Meta calórica automática (Harris-Benedict)
+- ✅ Contador nutricional diário
+- ✅ Histórico de consumo
 
-### ✅ Premium com PIN Local (Novo - 22/01/2026)
-- **Sistema de Perfil**:
-  - Cadastro com PIN (4-6 dígitos)
-  - Dados: peso, altura, idade, sexo, nível de atividade
-  - Objetivo: perder/manter/ganhar peso
-  - Alergias e restrições alimentares
-  
-- **Contador Nutricional**:
-  - Cálculo automático de meta calórica (Harris-Benedict)
-  - Registro de refeições identificadas
-  - Progresso diário em anel visual
-  - Alertas quando próximo da meta (75%, 90%, 100%)
-  - Histórico de refeições do dia
-
-- **Endpoints Premium**:
-  - `POST /api/premium/register` - Criar perfil
-  - `POST /api/premium/login` - Login com PIN
-  - `POST /api/premium/log-meal` - Registrar refeição
-  - `GET /api/premium/daily-summary` - Resumo do dia
-  - `GET /api/premium/history` - Histórico semanal
-
-### ✅ UX/UI
-- Câmera com moldura guia
-- Tratamento de erro de câmera com botão "Tentar novamente"
-- Toggle Único/Multi para alternar modos
-- Botão flutuante Premium (⭐ ou 📊 se logado)
-- Mini-contador flutuante mostrando progresso do dia
+**Educação Nutricional (implementado no backend):**
+- Combinações que melhoram absorção
+- Substituições mais saudáveis
+- Rastreamento de nutrientes: sódio, açúcar, fibras, proteínas
 
 ---
 
-## Tecnologias
-- **Backend**: FastAPI + Python
-- **Frontend**: React
-- **ML/CV**: OpenCLIP (ViT-B-32)
-- **Database**: MongoDB (soulnutri)
-- **IA**: Gemini Vision (via Emergent LLM Key)
+## Status Atual (Janeiro 2026)
 
----
+### Implementado
+- [x] Identificação em cascata (OpenCLIP + Gemini Vision)
+- [x] Login com Nome + PIN
+- [x] Perfil com dados físicos e alergias
+- [x] Meta calórica calculada
+- [x] Contador nutricional diário
+- [x] **Alertas Premium em tempo real**
+- [x] **Combinações inteligentes**
+- [x] **Substituições saudáveis**
+- [x] **Info científica só para Premium**
 
-## Backlog Priorizado
-
-### P0 - CRÍTICO
-- [x] ~~Reconhecimento de múltiplos itens~~ ✅
-- [x] ~~Sistema Premium com PIN~~ ✅
-- [x] ~~Contador nutricional~~ ✅
-- [ ] Validação de precisão com pratos do Cibi Sana (aguardando usuário)
-
-### P1 - ALTA
-- [ ] Investigar travamentos ocasionais do app
-- [ ] Alertas personalizados baseados nas alergias do perfil (ao identificar prato)
-- [ ] Botão compartilhar mais visível na UI
-
-### P2 - MÉDIA
+### Pendente
+- [ ] Receitas saudáveis (vegan, vegetariano, práticas)
 - [ ] Histórico semanal com gráficos
-- [ ] Relatórios nutricionais
-- [ ] Link "Veja esta pesquisa" para alertas
-
-### P3 - FUTURO
-- [ ] Modo offline (PWA)
-- [ ] Notificações push
-- [ ] Integração com wearables
+- [ ] Gamificação (conquistas)
+- [ ] Interações medicamentosas
 
 ---
 
-## Endpoints da API
+## Limites Nutricionais Configurados (OMS/ANVISA)
 
-| Endpoint | Método | Descrição |
-|----------|--------|-----------|
-| `/api/ai/identify` | POST | Identifica prato único |
-| `/api/ai/identify-multi` | POST | Identifica múltiplos itens |
-| `/api/ai/feedback` | POST | Registra feedback |
-| `/api/ai/create-dish` | POST | Cria novo prato com IA |
-| `/api/ai/dishes` | GET | Lista pratos |
-| `/api/ai/status` | GET | Status do índice |
-| `/api/premium/register` | POST | Criar perfil Premium |
-| `/api/premium/login` | POST | Login com PIN |
-| `/api/premium/log-meal` | POST | Registrar refeição |
-| `/api/premium/daily-summary` | GET | Resumo do dia |
-| `/api/premium/history` | GET | Histórico semanal |
+| Nutriente | Limite Diário | Tipo |
+|-----------|---------------|------|
+| Sódio | 2000mg | máximo |
+| Açúcar | 25g | máximo |
+| Gordura Saturada | 22g | máximo |
+| Fibras | 25g | mínimo |
+| Proteínas | 50g | mínimo |
 
 ---
 
-## URL de Preview
+## Arquitetura
+
+### Backend
+- FastAPI + MongoDB
+- Serviços: `profile_service.py`, `alerts_service.py`, `generic_ai.py`
+
+### Frontend
+- React com componentes Premium
+- LocalStorage para sessão (nome + PIN)
+
+### Fluxo Premium
+1. Usuário faz login (nome + PIN)
+2. Ao identificar prato, envia credenciais
+3. Backend verifica se é Premium
+4. Se sim, retorna dados científicos + alertas personalizados
+5. Frontend exibe alertas em tempo real
+
+---
+
+## Endpoints
+
+| Endpoint | Premium? | Descrição |
+|----------|----------|-----------|
+| `POST /api/ai/identify` | Parcial | Retorna alertas Premium se autenticado |
+| `POST /api/premium/register` | - | Criar perfil |
+| `POST /api/premium/login` | - | Login nome + PIN |
+| `POST /api/premium/log-meal` | Sim | Registrar refeição |
+| `GET /api/premium/daily-summary` | Sim | Resumo do dia |
+| `GET /api/premium/history` | Sim | Histórico semanal |
+
+---
+
+## URL
 https://nutrivision-39.preview.emergentagent.com
