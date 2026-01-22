@@ -351,7 +351,7 @@ async def identify_image(file: UploadFile = File(...)):
                             'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
                             'alerta_saude': generic_result.get('alerta_saude')
                         }
-                        logger.info(f"[CASCATA] Resultado final do Nível 3 (GPT-4o Vision)")
+                        logger.info(f"[CASCATA] Resultado final do Nível 3 (Gemini Vision)")
                 except Exception as e:
                     logger.warning(f"[NÍVEL 3] Erro na IA genérica: {e}")
         
