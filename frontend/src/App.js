@@ -49,12 +49,16 @@ function App() {
 
   const startCamera = async () => {
     try {
+      setCameraError(null);
       const s = await navigator.mediaDevices.getUserMedia({ 
         video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
       });
       setStream(s);
       if (videoRef.current) videoRef.current.srcObject = s;
-    } catch { console.error("Câmera não disponível"); }
+    } catch (err) { 
+      console.error("Câmera não disponível:", err);
+      setCameraError(err.name === 'NotAllowedError' ? 'Permissão negada. Toque para permitir.' : 'Câmera não disponível');
+    }
   };
 
   const stopCamera = () => { stream?.getTracks().forEach(t => t.stop()); };
