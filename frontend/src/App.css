@@ -32,14 +32,19 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 
 /* BOTÕES DE AÇÃO */
-.action-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.action-btn{padding:14px 10px;border:none;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.action-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
+.action-btn{padding:12px 8px;border:none;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
 .action-btn.gallery{background:rgba(255,255,255,.1);color:#fff}
 .action-btn.gallery:hover{background:rgba(255,255,255,.2)}
+.action-btn.mode{background:rgba(147,51,234,.2);color:#a78bfa;border:2px solid rgba(147,51,234,.4)}
+.action-btn.mode.active{background:rgba(147,51,234,.4);color:#fff}
 .action-btn.clear{background:rgba(0,200,255,.2);color:#0cf;border:2px solid rgba(0,200,255,.4)}
 .action-btn.clear:hover{background:rgba(0,200,255,.3)}
 .action-btn:disabled{opacity:.4;cursor:not-allowed}
 .action-btn:active{transform:scale(0.97)}
+
+/* Indicador de modo */
+.mode-indicator{background:rgba(147,51,234,.15);color:#a78bfa;padding:8px 12px;border-radius:8px;font-size:.75rem;text-align:center;margin-bottom:10px;border:1px solid rgba(147,51,234,.3)}
 
 /* Resultado */
 .res{background:rgba(255,255,255,.06);border-radius:14px;padding:14px;animation:up .3s}
