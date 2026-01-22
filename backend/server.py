@@ -246,16 +246,22 @@ async def identify_image(
         
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
-        # Se confiança >= 95% no Nível 1, usar resultado direto (threshold alto para evitar falsos positivos)
-        if nivel1_score >= 0.95 and decision.get('identified'):
+        # ═══════════════════════════════════════════════════════════════════════
+        # OTIMIZAÇÃO: Threshold 90% para pratos cadastrados (velocidade!)
+        # Para pratos do Cibi Sana, 90% já é confiança suficiente
+        # ═══════════════════════════════════════════════════════════════════════
+        THRESHOLD_LOCAL = 0.90  # 90% para resposta rápida em pratos conhecidos
+        
+        # Se confiança >= 90% no Nível 1, usar resultado direto (RÁPIDO!)
+        if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
-            logger.info(f"[CASCATA] Resultado final do Nível 1 (alta confiança)")
+            logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
         # NÍVEL 2: LogMeal API (se Nível 1 < 90%)
         # ─────────────────────────────────────────────────────────────────────
-        elif nivel1_score < 0.95:
+        elif nivel1_score < THRESHOLD_LOCAL:
             try:
                 from services.clarifai_service import identify_with_clarifai
                 
