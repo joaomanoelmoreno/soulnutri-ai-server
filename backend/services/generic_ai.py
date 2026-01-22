@@ -122,11 +122,15 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
             system_message=SYSTEM_PROMPT_IDENTIFY
         ).with_model("openai", "gpt-4o")
         
-        image_content = ImageContent(image_base64=image_base64)
+        # Usar FileContent com content_type para imagem
+        image_content = FileContent(
+            content_type="image/jpeg",
+            file_content_base64=image_base64
+        )
         
         user_message = UserMessage(
-            text="Analise esta imagem de prato/alimento. Forneça informações CIENTÍFICAS e RELEVANTES que o cliente não conhece. Inclua referências a pesquisas quando possível.",
-            image_contents=[image_content]
+            text="Analise esta imagem de prato/alimento. Identifique o prato com precisão e forneça informações científicas relevantes. Responda APENAS com JSON.",
+            file_contents=[image_content]
         )
         
         response = await chat.send_message(user_message)
