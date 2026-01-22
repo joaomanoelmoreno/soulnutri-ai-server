@@ -17,6 +17,8 @@ function App() {
   const [newDishName, setNewDishName] = useState("");
   const [creatingDish, setCreatingDish] = useState(false);
   const [searchFilter, setSearchFilter] = useState("");
+  const [multiMode, setMultiMode] = useState(false);
+  const [multiResult, setMultiResult] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
