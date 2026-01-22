@@ -151,6 +151,7 @@ function App() {
   // Logout Premium
   const handlePremiumLogout = () => {
     localStorage.removeItem('soulnutri_pin');
+    localStorage.removeItem('soulnutri_nome');
     localStorage.removeItem('soulnutri_user');
     setPremiumUser(null);
     setDailySummary(null);
