@@ -125,7 +125,7 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
                 api_key=api_key,
                 session_id=f"dish-identify-{id(image_bytes)}",
                 system_message=SYSTEM_PROMPT_IDENTIFY
-            ).with_model("openai", "gpt-4o")
+            ).with_model("gemini", "gemini-2.0-flash")
             
             # Usar FileContentWithMimeType para enviar imagem
             image_file = FileContentWithMimeType(
