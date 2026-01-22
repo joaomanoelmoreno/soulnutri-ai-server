@@ -101,4 +101,4 @@ O SoulNutri é um **agente de nutrição virtual** que acompanha o cliente em to
 ---
 
 ## URL de Preview
-https://nutriwaze.preview.emergentagent.com
+https://nutrivision-39.preview.emergentagent.com
