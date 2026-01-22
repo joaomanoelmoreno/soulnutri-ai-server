@@ -1,9 +1,21 @@
 /* ========================================
-   SOULNUTRI PREMIUM STYLES
+   SOULNUTRI PREMIUM STYLES - GOLD EDITION
+   Paleta exclusiva: Dourado/Âmbar
    ======================================== */
 
+/* Variáveis de cor Premium */
+:root {
+  --premium-gold: #f59e0b;
+  --premium-gold-light: #fbbf24;
+  --premium-gold-dark: #d97706;
+  --premium-amber: #f59e0b;
+  --premium-bg: rgba(245, 158, 11, 0.08);
+  --premium-border: rgba(245, 158, 11, 0.3);
+}
+
 .premium-form {
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05));
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 16px;
   padding: 24px;
   animation: slideUp 0.3s ease;
@@ -18,11 +30,12 @@
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 4px;
+  color: #fbbf24;
 }
 
 .premium-form .subtitle {
   text-align: center;
-  color: #888;
+  color: #d4a574;
   font-size: 0.85rem;
   margin-bottom: 20px;
 }
@@ -34,7 +47,7 @@
 .form-group label {
   display: block;
   font-size: 0.8rem;
-  color: #aaa;
+  color: #d4a574;
   margin-bottom: 6px;
 }
 
@@ -42,8 +55,8 @@
 .form-group select {
   width: 100%;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 10px;
   color: #fff;
   font-size: 1rem;
@@ -52,12 +65,13 @@
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #a78bfa;
-  background: rgba(167, 139, 250, 0.1);
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
 }
 
 .form-group input::placeholder {
-  color: #666;
+  color: #8b7355;
 }
 
 .form-row {
@@ -75,23 +89,23 @@
 
 .objetivo-btn {
   padding: 10px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(245, 158, 11, 0.05);
+  border: 2px solid rgba(245, 158, 11, 0.15);
   border-radius: 10px;
-  color: #888;
+  color: #a08060;
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .objetivo-btn.active {
-  background: rgba(var(--accent-rgb, 59, 130, 246), 0.2);
-  border-color: var(--accent, #3b82f6);
-  color: var(--accent, #3b82f6);
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fbbf24;
 }
 
 .objetivo-btn:hover {
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(245, 158, 11, 0.4);
 }
 
 /* Restrições grid */
@@ -103,10 +117,10 @@
 
 .restricao-btn {
   padding: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(245, 158, 11, 0.05);
+  border: 2px solid rgba(245, 158, 11, 0.15);
   border-radius: 10px;
-  color: #888;
+  color: #a08060;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -118,11 +132,11 @@
   color: #22c55e;
 }
 
-/* Submit button */
+/* Submit button - GOLD GRADIENT */
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   border: none;
   border-radius: 12px;
   color: #fff;
@@ -131,11 +145,12 @@
   cursor: pointer;
   transition: all 0.2s;
   margin-top: 20px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(167, 139, 250, 0.4);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
 }
 
 .submit-btn:disabled {
@@ -147,12 +162,17 @@
   width: 100%;
   padding: 12px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 10px;
-  color: #888;
+  color: #a08060;
   font-size: 0.9rem;
   cursor: pointer;
   margin-top: 10px;
+}
+
+.cancel-btn:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
 }
 
 .error-msg {
@@ -183,15 +203,22 @@
   font-size: 2rem;
   text-align: center;
   letter-spacing: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(167, 139, 250, 0.3);
+  background: rgba(245, 158, 11, 0.08);
+  border: 2px solid rgba(245, 158, 11, 0.3);
   border-radius: 12px;
   color: #fff;
 }
 
 .pin-input:focus {
   outline: none;
-  border-color: #a78bfa;
+  border-color: #f59e0b;
+}
+
+.pin-input-small {
+  padding: 12px 14px;
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  text-align: center;
 }
 
 .login-footer {
@@ -200,7 +227,7 @@
 }
 
 .login-footer p {
-  color: #666;
+  color: #8b7355;
   font-size: 0.85rem;
   margin-bottom: 8px;
 }
@@ -208,15 +235,20 @@
 .register-link {
   background: transparent;
   border: none;
-  color: #a78bfa;
+  color: #f59e0b;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: underline;
 }
 
-/* Daily Counter */
+.register-link:hover {
+  color: #fbbf24;
+}
+
+/* Daily Counter - GOLD THEME */
 .daily-counter {
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05));
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 16px;
   padding: 20px;
   animation: slideUp 0.3s ease;
@@ -231,6 +263,7 @@
 
 .counter-header h3 {
   font-size: 1.1rem;
+  color: #fbbf24;
 }
 
 .logout-btn {
@@ -243,7 +276,7 @@
   cursor: pointer;
 }
 
-/* Calorie Ring */
+/* Calorie Ring - GOLD */
 .calorie-ring {
   position: relative;
   width: 180px;
@@ -259,7 +292,7 @@
 
 .ring-bg {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.1);
+  stroke: rgba(245, 158, 11, 0.15);
   stroke-width: 8;
 }
 
@@ -282,24 +315,24 @@
 .ring-content .consumed {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #fff;
+  color: #fbbf24;
 }
 
 .ring-content .label {
   font-size: 0.9rem;
-  color: #888;
+  color: #a08060;
 }
 
 .ring-content .meta {
   font-size: 0.75rem;
-  color: #666;
+  color: #8b7355;
   margin-top: 4px;
 }
 
 /* Progress bar */
 .progress-bar {
   height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(245, 158, 11, 0.15);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 8px;
@@ -328,7 +361,8 @@
 .macro-item {
   text-align: center;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.15);
   border-radius: 10px;
 }
 
@@ -336,12 +370,12 @@
   display: block;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fff;
+  color: #fbbf24;
 }
 
 .macro-label {
   font-size: 0.7rem;
-  color: #888;
+  color: #a08060;
   text-transform: uppercase;
 }
 
@@ -349,13 +383,13 @@
 .meals-list {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(245, 158, 11, 0.15);
 }
 
 .meals-list h4 {
   font-size: 0.9rem;
   margin-bottom: 12px;
-  color: #aaa;
+  color: #d4a574;
 }
 
 .meal-item {
@@ -363,14 +397,14 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(245, 158, 11, 0.05);
   border-radius: 8px;
   margin-bottom: 8px;
 }
 
 .meal-time {
   font-size: 0.75rem;
-  color: #666;
+  color: #8b7355;
   width: 45px;
 }
 
@@ -386,66 +420,94 @@
   font-weight: 600;
 }
 
-/* Premium button in main screen - DISCRETO */
+/* Back to camera button */
+.back-to-camera-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s;
+}
+
+.back-to-camera-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Premium button in main screen - GOLD */
 .premium-btn {
   position: fixed;
   bottom: 12px;
   left: 12px;
-  background: rgba(167, 139, 250, 0.3);
-  border: 1px solid rgba(167, 139, 250, 0.4);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.2));
+  border: 1px solid rgba(245, 158, 11, 0.4);
   border-radius: 8px;
   width: auto;
   height: auto;
   padding: 6px 10px;
   font-size: 0.7rem;
   cursor: pointer;
-  box-shadow: none;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
   z-index: 100;
   transition: all 0.2s;
-  color: #a78bfa;
+  color: #fbbf24;
+  font-weight: 600;
 }
 
 .premium-btn:hover {
-  background: rgba(167, 139, 250, 0.5);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.5), rgba(217, 119, 6, 0.3));
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
 }
 
 .premium-btn.logged-in {
-  background: rgba(34, 197, 94, 0.3);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.2));
   border-color: rgba(34, 197, 94, 0.4);
   color: #22c55e;
+  box-shadow: 0 2px 10px rgba(34, 197, 94, 0.2);
 }
 
-/* Mini counter badge - mais discreto */
+/* Mini counter badge - GOLD */
 .mini-counter {
   position: fixed;
   bottom: 12px;
-  left: 70px;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(167, 139, 250, 0.3);
+  left: 75px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(30, 20, 10, 0.95));
+  border: 1px solid rgba(245, 158, 11, 0.3);
   border-radius: 8px;
   padding: 4px 8px;
   z-index: 100;
   min-width: 80px;
   text-align: center;
   font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.mini-counter:hover {
+  border-color: rgba(245, 158, 11, 0.5);
 }
 
 .mini-counter .mini-value {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: #fbbf24;
 }
 
 .mini-counter .mini-label {
-  font-size: 0.65rem;
-  color: #888;
+  font-size: 0.6rem;
+  color: #a08060;
 }
 
 .mini-counter .mini-progress {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  height: 3px;
+  background: rgba(245, 158, 11, 0.15);
   border-radius: 2px;
-  margin-top: 6px;
+  margin-top: 4px;
   overflow: hidden;
 }
 
@@ -454,10 +516,12 @@
   border-radius: 2px;
 }
 
-/* PIN input menor para login com nome */
-.pin-input-small {
-  padding: 12px 14px;
-  font-size: 1.2rem;
-  letter-spacing: 4px;
-  text-align: center;
+/* Premium Modal */
+.premium-modal {
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding-bottom: 40px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
