@@ -115,26 +115,34 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
         if not api_key:
             return {"ok": False, "error": "EMERGENT_LLM_KEY não configurada"}
         
-        image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+        # Salvar imagem temporariamente para usar com FileContentWithMimeType
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+            tmp_file.write(image_bytes)
+            tmp_path = tmp_file.name
         
-        chat = LlmChat(
-            api_key=api_key,
-            session_id=f"dish-identify-{id(image_bytes)}",
-            system_message=SYSTEM_PROMPT_IDENTIFY
-        ).with_model("openai", "gpt-4o")
-        
-        # Usar FileContent com content_type para imagem
-        image_content = FileContent(
-            content_type="image/jpeg",
-            file_content_base64=image_base64
-        )
-        
-        user_message = UserMessage(
-            text="Analise esta imagem de prato/alimento. Identifique o prato com precisão e forneça informações científicas relevantes. Responda APENAS com JSON.",
-            file_contents=[image_content]
-        )
-        
-        response = await chat.send_message(user_message)
+        try:
+            chat = LlmChat(
+                api_key=api_key,
+                session_id=f"dish-identify-{id(image_bytes)}",
+                system_message=SYSTEM_PROMPT_IDENTIFY
+            ).with_model("openai", "gpt-4o")
+            
+            # Usar FileContentWithMimeType para enviar imagem
+            image_file = FileContentWithMimeType(
+                file_path=tmp_path,
+                mime_type="image/jpeg"
+            )
+            
+            user_message = UserMessage(
+                text="Analise esta imagem de prato/alimento. Identifique o prato com precisão e forneça informações científicas relevantes. Responda APENAS com JSON válido.",
+                file_contents=[image_file]
+            )
+            
+            response = await chat.send_message(user_message)
+        finally:
+            # Limpar arquivo temporário
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
         
         # Parse JSON
         response_clean = response.strip()
