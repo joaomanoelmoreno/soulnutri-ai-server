@@ -328,14 +328,28 @@ function App() {
           🖼️ Galeria
         </button>
         <button 
+          className={`action-btn mode ${multiMode ? 'active' : ''}`}
+          onClick={() => setMultiMode(!multiMode)}
+          data-testid="multi-mode-button"
+        >
+          {multiMode ? '🍽️ Multi' : '🍴 Único'}
+        </button>
+        <button 
           className="action-btn clear" 
           onClick={clearResult}
-          disabled={!r && !error}
+          disabled={!r && !multiResult && !error}
           data-testid="clear-button"
         >
-          🔄 Nova Foto
+          🔄 Nova
         </button>
       </div>
+
+      {/* Indicador de modo */}
+      {multiMode && (
+        <div className="mode-indicator" data-testid="mode-indicator">
+          📊 Modo Multi-Item: Identifica vários alimentos no prato
+        </div>
+      )}
 
       <input 
         ref={fileInputRef} 
