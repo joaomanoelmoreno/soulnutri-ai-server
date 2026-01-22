@@ -201,6 +201,14 @@ function App() {
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
     
+    // Se for Premium, enviar credenciais para receber dados exclusivos
+    const pin = localStorage.getItem('soulnutri_pin');
+    const nome = localStorage.getItem('soulnutri_nome');
+    if (pin && nome && !multiMode) {
+      fd.append("pin", pin);
+      fd.append("nome", nome);
+    }
+    
     try {
       const t = Date.now();
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
