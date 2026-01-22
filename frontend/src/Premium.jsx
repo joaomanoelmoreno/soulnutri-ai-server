@@ -203,6 +203,7 @@ export function PremiumRegister({ onSuccess, onCancel }) {
 
 // Componente de Login
 export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
+  const [nome, setNome] = useState('');
   const [pin, setPin] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -214,12 +215,14 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
 
     try {
       const fd = new FormData();
+      fd.append('nome', nome);
       fd.append('pin', pin);
       const res = await fetch(`${API}/premium/login`, { method: 'POST', body: fd });
       const data = await res.json();
       
       if (data.ok) {
         localStorage.setItem('soulnutri_pin', pin);
+        localStorage.setItem('soulnutri_nome', nome);
         localStorage.setItem('soulnutri_user', JSON.stringify(data.user));
         onSuccess(data);
       } else {
@@ -234,10 +237,22 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
   return (
     <div className="premium-form login" data-testid="premium-login">
       <h2>🔐 Entrar</h2>
-      <p className="subtitle">Digite seu PIN</p>
+      <p className="subtitle">Digite seu nome e PIN</p>
       
       <form onSubmit={handleLogin}>
-        <div className="pin-input-container">
+        <div className="form-group">
+          <label>Seu nome</label>
+          <input 
+            type="text"
+            placeholder="Como você se cadastrou?"
+            value={nome}
+            onChange={e => setNome(e.target.value)}
+            autoFocus
+          />
+        </div>
+        
+        <div className="form-group">
+          <label>PIN</label>
           <input 
             type="password"
             inputMode="numeric"
@@ -245,14 +260,13 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
             placeholder="••••••"
             value={pin}
             onChange={e => setPin(e.target.value.replace(/\D/g, ''))}
-            className="pin-input"
-            autoFocus
+            className="pin-input-small"
           />
         </div>
 
         {error && <div className="error-msg">{error}</div>}
 
-        <button type="submit" className="submit-btn" disabled={loading || pin.length < 4}>
+        <button type="submit" className="submit-btn" disabled={loading || pin.length < 4 || !nome.trim()}>
           {loading ? '⏳' : '→'} Entrar
         </button>
       </form>
