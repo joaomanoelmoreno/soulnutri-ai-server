@@ -311,13 +311,13 @@ async def identify_image(file: UploadFile = File(...)):
                 logger.warning(f"[NÍVEL 2] Erro no LogMeal: {e}, indo para Nível 3...")
             
             # ─────────────────────────────────────────────────────────────────────
-            # NÍVEL 3: GPT-4o Vision (Fallback Universal)
+            # NÍVEL 3: Gemini Vision (Fallback Universal)
             # ─────────────────────────────────────────────────────────────────────
             if decision.get('cascade_level') is None and (decision.get('score', 0) < 0.85 or not decision.get('identified')):
                 try:
                     from services.generic_ai import identify_unknown_dish
                     
-                    logger.info(f"[NÍVEL 3] Consultando GPT-4o Vision...")
+                    logger.info(f"[NÍVEL 3] Consultando Gemini Vision...")
                     generic_result = await identify_unknown_dish(content)
                     
                     if generic_result.get('ok') and generic_result.get('nome'):
