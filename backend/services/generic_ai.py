@@ -294,11 +294,17 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
             result["ok"] = True
             result["source"] = "generic_ai"
             
+            # ═══════════════════════════════════════════════════════════════
+            # VALIDAÇÃO DE SEGURANÇA - Corrige classificações erradas
+            # ═══════════════════════════════════════════════════════════════
+            from services.safety_validator import validar_resultado_ia
+            result = validar_resultado_ia(result)
+            
             # Mapear confiança
             conf_map = {"alta": "🟢", "média": "🟡", "baixa": "🔴"}
             result["confidence_emoji"] = conf_map.get(result.get("confianca", "baixa"), "🔴")
             
-            # Mapear categoria
+            # Mapear categoria (após validação de segurança)
             cat_map = {"vegano": "🌱", "vegetariano": "🥬", "proteína animal": "🍖"}
             result["category_emoji"] = cat_map.get(result.get("categoria", ""), "🍽️")
             
