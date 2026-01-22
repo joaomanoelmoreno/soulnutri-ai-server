@@ -253,62 +253,62 @@ async def identify_image(file: UploadFile = File(...)):
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < 0.95:
             try:
-                from services.logmeal_service import identify_with_logmeal
+                from services.clarifai_service import identify_with_clarifai
                 
-                logger.info(f"[NÍVEL 2] Consultando LogMeal API...")
-                logmeal_result = await identify_with_logmeal(content)
+                logger.info(f"[NÍVEL 2] Consultando Clarifai API...")
+                clarifai_result = await identify_with_clarifai(content)
                 
-                nivel2_score = logmeal_result.get('score', 0.0)
-                nivel2_ok = logmeal_result.get('ok', False) and logmeal_result.get('identified', False)
+                nivel2_score = clarifai_result.get('score', 0.0)
+                nivel2_ok = clarifai_result.get('ok', False) and clarifai_result.get('identified', False)
                 
                 if nivel2_ok:
-                    logger.info(f"[NÍVEL 2] LogMeal: {logmeal_result.get('dish_display', 'N/A')} ({nivel2_score:.2%})")
+                    logger.info(f"[NÍVEL 2] Clarifai: {clarifai_result.get('dish_display', 'N/A')} ({nivel2_score:.2%})")
                     
                     # VALIDAÇÃO CRUZADA: Se Nível 1 e 2 concordam, confiança 99%+
                     nivel1_dish = decision.get('dish_display', '').lower()
-                    nivel2_dish = logmeal_result.get('dish_display', '').lower()
+                    nivel2_dish = clarifai_result.get('dish_display', '').lower()
                     
                     if nivel1_dish and nivel2_dish and (nivel1_dish in nivel2_dish or nivel2_dish in nivel1_dish):
                         # Concordam! Usar Nível 1 com boost de confiança
                         decision['score'] = min(0.99, max(nivel1_score, nivel2_score) + 0.1)
                         decision['confidence'] = 'alta'
-                        decision['source'] = 'local_index+logmeal'
+                        decision['source'] = 'local_index+clarifai'
                         decision['cascade_level'] = '1+2'
                         decision['message'] = f"Confirmado: {decision.get('dish_display')} (validação cruzada)"
                         logger.info(f"[CASCATA] Validação cruzada! Níveis 1 e 2 concordam → confiança boosted")
                     
-                    # LogMeal tem confiança >= 85%, usar como resultado
+                    # Clarifai tem confiança >= 85%, usar como resultado
                     elif nivel2_score >= 0.85:
                         decision = {
                             'identified': True,
-                            'dish': logmeal_result.get('dish', ''),
-                            'dish_display': logmeal_result.get('dish_display', 'Prato'),
-                            'confidence': logmeal_result.get('confidence', 'média'),
+                            'dish': clarifai_result.get('dish', ''),
+                            'dish_display': clarifai_result.get('dish_display', 'Prato'),
+                            'confidence': clarifai_result.get('confidence', 'média'),
                             'score': nivel2_score,
-                            'message': f"Identificado: {logmeal_result.get('dish_display')}",
-                            'category': logmeal_result.get('category', 'outros'),
-                            'category_emoji': logmeal_result.get('category_emoji', '🍽️'),
+                            'message': f"Identificado: {clarifai_result.get('dish_display')}",
+                            'category': clarifai_result.get('category', 'outros'),
+                            'category_emoji': clarifai_result.get('category_emoji', '🍽️'),
                             'descricao': '',
-                            'ingredientes': [],
+                            'ingredientes': clarifai_result.get('ingredientes', []),
                             'tecnica': '',
                             'beneficios': [],
                             'riscos': [],
                             'alternatives': [],
                             'nutrition': None,
                             'aviso_cibi_sana': None,
-                            'source': 'logmeal',
+                            'source': 'clarifai',
                             'cascade_level': 2
                         }
-                        logger.info(f"[CASCATA] Resultado final do Nível 2 (LogMeal)")
+                        logger.info(f"[CASCATA] Resultado final do Nível 2 (Clarifai)")
                     
                     # Ambos têm confiança baixa, ir para Nível 3
                     else:
                         logger.info(f"[NÍVEL 2] Confiança insuficiente ({nivel2_score:.2%}), indo para Nível 3...")
                 else:
-                    logger.info(f"[NÍVEL 2] LogMeal não identificou, indo para Nível 3...")
+                    logger.info(f"[NÍVEL 2] Clarifai não identificou, indo para Nível 3...")
                     
             except Exception as e:
-                logger.warning(f"[NÍVEL 2] Erro no LogMeal: {e}, indo para Nível 3...")
+                logger.warning(f"[NÍVEL 2] Erro no Clarifai: {e}, indo para Nível 3...")
             
             # ─────────────────────────────────────────────────────────────────────
             # NÍVEL 3: Gemini Vision (Fallback Universal)
