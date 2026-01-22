@@ -376,9 +376,9 @@ export function DailyCounter({ user, onLogout, onClose }) {
         </div>
       )}
 
-      {/* Botão para voltar à câmera */}
+      {/* Botão para voltar ao início */}
       <button className="back-to-camera-btn" onClick={onClose}>
-        📷 Voltar para Câmera
+        🏠 Início
       </button>
     </div>
   );
