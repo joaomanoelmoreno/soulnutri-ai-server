@@ -1,194 +1,231 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo que funciona como um agente de nutrição virtual ou Waze da alimentação. A principal funcionalidade é a identificação de pratos em tempo real por meio de imagens, fornecendo ao consumidor informações detalhadas (ingredientes, alérgenos, dados nutricionais, fatos científicos relevantes) antes da escolha do prato.
+O usuário deseja construir o **SoulNutri**, um aplicativo que funciona como um agente de nutrição virtual. A funcionalidade principal é a identificação de pratos em tempo real por meio de imagens, fornecendo ao consumidor informações detalhadas e personalizadas (ingredientes, alérgenos, dados nutricionais, fatos científicos) antes da escolha do prato. A aplicação deve ser extremamente rápida e precisa. Uma versão Premium foi introduzida, contendo funcionalidades avançadas como perfil de usuário, contador nutricional, histórico e alertas em tempo real.
 
-**PRODUCT REQUIREMENTS (baseado nos documentos e na conversa):**
-1.  **Visão:** O slogan é SOULNUTRI - O SEU AGENTE DE NUTRICAO VIRTUAL. O app deve agir como um radar do prato, focando em segurança alimentar e informação de valor, atuando *antes* do consumo.
-2.  **Premissa Fundamental:** **100% de precisão no reconhecimento** é a base de tudo. O erro no reconhecimento é veneno do app.
-3.  **Arquitetura de Reconhecimento (Híbrida):** Um sistema em cascata foi aprovado para garantir a precisão.
-    *   **Nível 1 (Índice Local):** OpenCLIP para pratos de parceiros (ex: Cibi Sana), com altíssima confiança.
-    *   **Nível 2 (API Especializada):** Uma API de reconhecimento de alimentos com um generoso plano gratuito.
-    *   **Nível 3 (IA Genérica):** Uma IA de visão de uso geral (como Gemini Vision) como fallback final.
-4.  **Qualidade da Informação:**
-    *   As informações devem ser educativas, cientificamente embasadas e despertar curiosidade, evitando dados óbvios.
-    *   Deve haver um equilíbrio entre notícias boas e alertas, para não ser um app do apocalipse. Para alertas de risco, deve haver um link para uma fonte relevante.
-5.  **UX/UI:**
-    *   Interface com o mínimo de cliques, captura por toque na tela.
-    *   Sistema de feedback para o usuário: confirmar, corrigir, cadastrar novo prato, descartar foto.
-    *   Implementar um botão de Compartilhar para as curiosidades científicas.
-6.  **Versão Premium:**
-    *   Funcionalidades futuras incluem um contador nutricional que monitora o consumo do usuário com base em seu perfil (restrições, alergias, etc.), um histórico de pratos identificados e alertas personalizados no momento do consumo.
+**PRODUCT REQUIREMENTS:**
+1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
+2.  **Performance e Precisão:** A identificação deve ser quase instantânea (< 500ms) e 100% precisa. Erros de classificação, especialmente de alérgenos ou restrições (ex: vegano), são inaceitáveis.
+3.  **Arquitetura Híbrida:** Um sistema em cascata para balancear velocidade, custo e precisão.
+4.  **Qualidade da Informação:** As informações devem ser educativas, cientificamente embasadas e despertar curiosidade.
+5.  **UX/UI:** Interface com o mínimo de cliques. O layout deve ser limpo e a experiência de usuário fluida.
+6.  **Versão Gratuita vs. Premium:**
+    *   **Gratuito:** Identificação simples (nome do prato, ingredientes básicos).
+    *   **Premium:** Perfil de usuário, contador nutricional com metas, histórico de consumo, alertas personalizados em tempo real (alergias, excesso de nutrientes), informações científicas, combinações inteligentes, sugestões de receitas e substituições saudáveis.
 
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-Um aplicativo full-stack (React + FastAPI + MongoDB). A principal funcionalidade é um sistema de reconhecimento de imagem em cascata, atualmente configurado com 2 níveis ativos:
--   **Backend:**
-    -   Usa MongoDB para armazenar os dados de 115 pratos, todos enriquecidos com informações científicas.
-    -   Endpoint  implementa a lógica de cascata:
-        1.  **Nível 1 (OpenCLIP):** Tenta identificar o prato no índice local. Se a confiança for **>= 95%**, retorna o resultado.
-        2.  **Nível 2 (Clarifai API):** A estrutura está implementada, mas **desabilitada** a pedido do usuário para economizar créditos, pois a API retornou erro .
-        3.  **Nível 3 (Gemini Vision):** Se a confiança do Nível 1 for < 95%, a imagem é enviada para o Gemini Vision para uma identificação genérica.
--   **Frontend:**
-    -   A interface da câmera está funcional.
-    -   Após a identificação, exibe o nome do prato, categoria, ingredientes e uma nova seção Você Sabia? com o benefício principal, curiosidade científica e fonte.
-    -   Inclui um botão **Compartilhar curiosidade**.
-    -   O modal de feedback (para corrigir/descartar) foi corrigido e está com os botões sempre visíveis.
+Um aplicativo full-stack (React + FastAPI + MongoDB) funcional com duas versões (Gratuita e Premium).
+
+*   **Backend:**
+    *   Uma arquitetura de reconhecimento em cascata:
+        *   **Nível 1 (Local):** OpenCLIP para pratos cadastrados (ex: Cibi Sana), com limiar de 90% para respostas em ~200-300ms.
+        *   **Nível 2 (API Rápida):** Tentativa de integração com uma API do Hugging Face para ser um nível intermediário rápido e barato. **Atualmente quebrado.**
+        *   **Nível 3 (IA Genérica):** Gemini Vision  como fallback, que foi otimizado (compressão de imagem) mas ainda leva ~3.7 segundos.
+    *   Sistema **Premium** completo: endpoints para registro de perfil (), login com **Nome + PIN** (), e registro de refeições. Gera alertas nutricionais em tempo real baseados no perfil e histórico do usuário.
+    *   Endpoint de download de arquivos ().
+
+*   **Frontend:**
+    *   Interface de câmera funcional com modo Único e Multi-Item.
+    *   Exibição condicional de informações: dados básicos para todos, e informações científicas/alertas avançados apenas para usuários Premium.
+    *   Modal de login/registro Premium com uma paleta de cores exclusiva (dourado/âmbar).
+    *   Dashboard Premium que exibe o contador de calorias/macros, refeições do dia e um botão Início para voltar à câmera.
+    *   O badge Made with Emergent foi ajustado (menor e com opacidade) para ser menos intrusivo.
 
 **Last working item**:
--   **Last item agent was working**: Melhoria da precisão do reconhecimento de alimentos. Isso envolveu a implementação de uma arquitetura de reconhecimento em cascata, a substituição do GPT-4o pelo Gemini Vision para melhor desempenho, e o ajuste do limiar de confiança do Nível 1 (OpenCLIP) para 95% para reduzir falsos positivos em pratos não cadastrados.
--   **Status**: USER VERIFICATION PENDING
--   **Agent Testing Done**: Y (O agente realizou uma bateria de testes com imagens aleatórias que validaram o funcionamento da nova arquitetura em cascata e o limiar de 95%.)
--   **Which testing method agent to use?**: both. O usuário precisa testar o reconhecimento para os pratos do Cibi Sana para validar o novo limiar. O agente pode precisar realizar mais testes de backend com imagens aleatórias se o usuário relatar imprecisões.
+-   **Last item agent was working**: O agente estava tentando consertar a integração com a API de inferência do Hugging Face para o modelo . O objetivo era criar um Nível 2 na cascata de reconhecimento que fosse rápido (< 1s) e gratuito, resolvendo o problema de lentidão (~3.7s) do Gemini Vision para pratos não cadastrados.
+-   **Status**: BLOCKED
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: backend testing agent. Usar  para testar o novo endpoint da API de inferência do Hugging Face. O teste anterior falhou porque a URL da API estava desatualizada.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) Validação da precisão do reconhecimento.
--   Issue 2: (P1) Travamentos ocasionais do app.
+-   Issue 1: (P0) Lentidão inaceitável na identificação de pratos não cadastrados.
+-   Issue 2: (P1) Imprecisões da IA na classificação de pratos (ex: vegano/não vegano).
+-   Issue 3: (P2) Travamentos ocasionais do app.
+-   Issue 4: (P2) Falta botão de Ação ou Voltar na tela do Premium.
 
 **Issues Detail**:
--   **Issue 1: Validação da precisão do reconhecimento**
-    -   **Attempted fixes**: A arquitetura foi alterada para um sistema em cascata (Nível 1: OpenCLIP, Nível 3: Gemini Vision). O limiar de confiança do Nível 1 foi aumentado para 95%. O Gemini Vision substituiu o GPT-4o.
+-   **Issue 1: Lentidão na identificação de pratos não cadastrados**
+    -   **Attempted fixes**: A otimização do Gemini Vision (modelo  + compressão de imagem) reduziu o tempo de 7s para ~3.7s, o que ainda é considerado inaceitável pelo usuário. O agente pesquisou APIs alternativas (Calorie Mama, FatSecret, Clarifai) e decidiu tentar uma gratuita do Hugging Face, mas a implementação falhou devido a um endpoint de API desatualizado.
     -   **Next debug checklist**:
-        1.  Aguardar o feedback do usuário sobre os testes com os pratos do Cibi Sana.
-        2.  Se o usuário relatar erros, analisar os logs para ver qual nível da cascata está falhando e por quê.
-        3.  Considerar ajustar o limiar (entre 92% e 95%) ou melhorar o prompt do Gemini Vision se necessário.
-    -   **Why fix this issue and what will be achieved with the fix?**: É a premissa fundamental do projeto. Sem precisão, o app não tem valor.
-    -   **Status**: USER VERIFICATION PENDING
+        1.  Pesquisar a documentação da API de inferência do Hugging Face para encontrar a URL e o formato de requisição corretos para o modelo .
+        2.  Atualizar o arquivo  com o endpoint correto.
+        3.  Executar um teste com  para validar a velocidade e a precisão da resposta da API.
+        4.  Se for bem-sucedido, integrar o serviço no  como o Nível 2 da cascata de reconhecimento.
+    -   **Why fix this issue and what will be achieved with the fix?**: É o principal bloqueador para a escalabilidade do app. O usuário não aceita um tempo de resposta de 3-4 segundos.
+    -   **Status**: IN PROGRESS
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Should Test frontend/backend/both after fix?**: backend
     -   **Blocked on other issue**: Não.
 
--   **Issue 2: Travamentos do App**
-    -   **Attempted fixes**: Nenhum. O agente analisou o código e levantou hipóteses (falta de timeout, race conditions), mas não implementou correções.
+-   **Issue 2: Imprecisões da IA na classificação de pratos**
+    -   **Attempted fixes**: O prompt do Gemini Vision em  foi aprimorado para ser mais rigoroso nas classificações e retornar um JSON estruturado com mais detalhes.
     -   **Next debug checklist**:
-        1.  Reproduzir o problema. Pedir ao usuário passos específicos se necessário.
-        2.  Analisar os logs do frontend e backend no momento do travamento.
-        3.  Implementar  com  nas chamadas  no frontend () para evitar que a UI fique presa em requisições longas.
-        4.  Revisar o gerenciamento de estado (, , etc.) para evitar loops de renderização.
-    -   **Why fix this issue and what will be achieved with the fix?**: A estabilidade é crucial para a experiência do usuário e para os testes em grupo planejados.
+        1.  Após resolver o problema de performance (Issue 1), realizar uma bateria de testes com imagens de pratos enganosos (ex: lasanha vegetariana que parece ter carne, saladas com queijo escondido).
+        2.  Analisar o JSON de resposta para verificar a correção das tags ,  e .
+        3.  Refinar o prompt em  com mais exemplos ou instruções negativas, se necessário.
+    -   **Why fix this issue and what will be achieved with the fix?**: Informações incorretas sobre restrições alimentares são um risco crítico à segurança do usuário e minam a confiança no app.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Should Test frontend/backend/both after fix?**: backend
+    -   **Blocked on other issue**: Issue 1: Lentidão na identificação de pratos não cadastrados.
+
+-   **Issue 3: Travamentos ocasionais do app**
+    -   **Attempted fixes**: Nenhum. Este é um problema recorrente de forks anteriores que ainda não foi abordado.
+    -   **Next debug checklist**:
+        1.  Revisar  e implementar um  com  nas chamadas  para a API de identificação.
+        2.  Analisar o gerenciamento de estados de  para prevenir loops de renderização ou estados inconsistentes durante requisições longas ou falhas.
+        3.  Adicionar logs no frontend para capturar o estado do aplicativo no momento do travamento.
+    -   **Why fix this issue and what will be achieved with the fix?**: Melhora a estabilidade e a experiência do usuário, que é crucial para a retenção.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: Não.
+
+-   **Issue 4: Falta botão de Ação ou Voltar na tela do Premium**
+    -   **Attempted fixes**: O agente adicionou um botão Voltar para Câmera e depois o renomeou para Início. O usuário ainda reportou que falta uma ação para sair da tela do dashboard premium.
+    -   **Next debug checklist**:
+        1.  Verificar o screenshot e o código em  para confirmar a presença e funcionalidade do botão Início ().
+        2.  Confirmar que a função  está sendo passada corretamente de  para .
+        3.  Se o problema persistir, pode ser um bug de estado que impede o fechamento do modal.
+    -   **Why fix this issue and what will be achieved with the fix?**: Usabilidade básica. O usuário não pode ficar preso em uma tela.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Blocked on other issue**: Não.
 
 **In progress Task List**:
-- Nenhuma.
+-   **Task 1: Integrar API de reconhecimento rápida e barata**
+    -   **Where to resume**: . É preciso encontrar a nova URL da API de inferência do Hugging Face e corrigir a implementação.
+    -   **What will be achieved with this?**: Reduzir drasticamente o tempo de resposta para pratos não cadastrados, tornando a experiência do usuário viável para escalar o aplicativo.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: backend
+    -   **Blocked on something**: Requer pesquisa na web para encontrar a documentação da API atualizada.
 
 **Upcoming and Future Tasks**
-- **Upcoming Tasks:**
-    - (P1) Investigar e corrigir os travamentos ocasionais do app (Issue 2).
-    - (P2) Implementar a UI para o link Veja esta notícia que deve aparecer junto a alertas de risco/curiosidades.
-    - (P2) Implementar um **histórico de pratos identificados**, como primeiro passo para a versão Premium.
-- **Future Tasks:**
-    - (P1) Implementar a versão **Premium** completa, incluindo o perfil do usuário e o contador nutricional que monitora o consumo em tempo real.
-    - (P2) Desenvolver um processo para retreinar o índice visual () usando as imagens coletadas pelo sistema de feedback.
-    - (P3) Implementar reconhecimento de múltiplos itens em um prato.
+-   **Upcoming Tasks:**
+    -   (P1) Implementar uma seção de **Receitas Nutritivas** no modo Premium, com filtros (vegana, vegetariana, etc.) e dicas de preparo.
+    -   (P2) Adicionar um link clicável Veja esta pesquisa para a  nos resultados Premium.
+    -   (P2) Desenvolver o **histórico semanal** com gráficos de consumo para a área Premium.
+    -   (P3) Implementar a divulgação de **notícias recentes** sobre os ingredientes identificados.
+-   **Future Tasks:**
+    -   (P1) Desenvolver um modelo **YOLOv8 customizado** para rodar no dispositivo do cliente, eliminando custos de API e latência de rede (objetivo de longo prazo).
+    -   (P2) Criar um pipeline para retreinar o índice OpenCLIP local com as imagens e correções enviadas pelos usuários.
 
 **Completed work in this session**
-- **Arquitetura de Reconhecimento em Cascata**: Implementado um sistema de múltiplos níveis para melhorar a precisão. Atualmente usa OpenCLIP (Nível 1) e Gemini Vision (Nível 3).
-- **Enriquecimento de Dados Concluído**: Todos os 115 pratos no MongoDB foram preenchidos com informações científicas.
-- **Melhora da IA Genérica**: O sistema de fallback foi migrado de GPT-4o para Gemini Vision, com prompts aprimorados para focar na precisão da identificação.
-- **Ajuste de Precisão**: O limiar de confiança do OpenCLIP foi elevado para 95% para evitar falsos positivos.
-- **Melhorias de UI**:
-    - Exibição das informações científicas no resultado.
-    - Adicionado um botão para compartilhar a curiosidade científica.
-    - Corrigido o modal de feedback, garantindo que o botão Descartar foto esteja sempre visível.
-- **Documentação de Decisões**: Criado o arquivo  para salvar todas as premissas, decisões estratégicas e requisitos do usuário para o próximo agente.
+-   **Modo Multi-Item**: Implementado no backend e frontend para identificar vários alimentos em uma única imagem.
+-   **Correção de Bug da Câmera**: Resolvido problema que impedia a câmera de abrir em alguns dispositivos e adicionado tratamento de erro.
+-   **Implementação do Sistema Premium Completo**:
+    -   Login seguro com **Nome + PIN** para resolver o problema de PINs duplicados.
+    -   Criação de perfil de usuário com dados físicos (idade, peso, altura, etc.) e cálculo automático de meta calórica.
+    -   Contador nutricional diário no frontend (calorias e macros).
+    -   Funcionalidade para mover **informações científicas e alertas para acesso exclusivo Premium**.
+-   **Melhorias de UI/UX**:
+    -   Criada uma paleta de cores **dourada/âmbar** para a interface Premium, tornando-a mais exclusiva.
+    -   Adicionado botão **Início** no dashboard Premium para retornar à tela da câmera.
+    -   Corrigido um erro de digitação de Sala de ovos para Salada de Ovos nos dados.
+    -   Badge Made with Emergent ajustado para ser mais discreto.
+-   **Otimização de Performance**:
+    -   **Pratos Cadastrados**: O limiar do OpenCLIP foi ajustado para 90%, atingindo tempos de resposta de **~200-300ms**.
+    -   **Pratos Não Cadastrados**: O tempo foi reduzido de ~7s para **~3.7s** usando o modelo Gemini  e compressão de imagem.
+-   **Pesquisa e Documentação**:
+    -   Realizada pesquisa extensiva sobre APIs de reconhecimento de alimentos (Calorie Mama, FatSecret, Clarifai, Hugging Face).
+    -   Criados documentos de análise (, ) e um documento de marketing ().
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1: Travamentos do App**
-    -   **Debug checklist**: Implementar timeouts nas chamadas de API no frontend; revisar o gerenciamento de estado do React.
-    -   **Why to solve this issue and what will be achieved with this?**: A estabilidade é crítica para a usabilidade e para os testes planejados com grupos de usuários.
-    -   **Should Test frontend/backend/both after fix**: Both.
+-   **Issue 1: Travamentos ocasionais do app**
+    -   **Debug checklist**: Implementar  com timeout no frontend; revisar gerenciamento de estado do React.
+    -   **Why to solve this issue and what will be achieved with this?**: A estabilidade é crucial para a experiência do usuário.
+    -   **Should Test frontend/backend/both after fix**: frontend
     -   **Is recurring issue?**: Y
 
 **Known issue recurrence from previous fork**
--   **Recognition Accuracy**: O problema foi o foco principal desta sessão. A nova arquitetura em cascata é a solução implementada, mas aguarda validação final do usuário.
--   **App Stability**: O problema de travamentos foi mencionado novamente, mas não foi resolvido.
+-   **App Stability**: O problema de travamentos ocasionais foi mencionado novamente pelo usuário em forks anteriores e continua pendente.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Backend**: FastAPI, MongoDB (pymongo)
+-   **Backend**: FastAPI, MongoDB (pymono)
 -   **Frontend**: React
 -   **ML/CV**:
-    -   **Arquitetura em Cascata**: Padrão de design para reconhecimento de imagem.
-    -   **Nível 1**: OpenCLIP para busca de similaridade vetorial (índice local).
-    -   **Nível 3**: Gemini Vision (via ) como fallback de IA genérica.
--   **Infraestrutura**: As dependências agora incluem .
+    -   **Arquitetura em Cascata**: OpenCLIP (Local) -> HuggingFace (API Rápida) -> Gemini Vision (IA Genérica).
+    -   **Otimização de Performance**: Compressão de imagem antes de enviar para a API; uso de modelos de IA mais rápidos ().
+    -   **APIs pesquisadas**: Calorie Mama, FatSecret, Clarifai, Hugging Face, Google Vision.
+-   **Autenticação**: Sistema simples de  com dados salvos no  do navegador.
 
 **key DB schema**
--   **Database**: 
-    -   **collection: **:
-        -   : String (identificador único)
-        -   : String
-        -   : String
-        -   : String (informação educativa principal)
-        -   : String (alerta ou fato interessante)
-        -   : String (URL ou citação para fonte)
-        -   ... (outros campos como ingredientes, etc.)
-
-**changes in tech stack**
--   O serviço de IA genérico foi alterado de **GPT-4o Vision** para **Gemini Vision** devido à melhor compatibilidade da API para envio de imagens e resultados de testes.
--   Tentativas de integração com **LogMeal** e **Clarifai** foram feitas, e o código-fonte existe, mas estão desabilitadas por questões de custo e ativação.
+-   **collection: **: Contém os dados dos pratos.
+-   **collection: **: (NOVO) Armazena os perfis dos usuários Premium.
+    -   : String
+    -   : String (hash do PIN)
+    -   : Dict (idade, peso, altura, sexo, nível de atividade)
+    -   : Float (meta calórica calculada)
+    -   : List (histórico de refeições do dia)
+    -   : Dict (histórico de consumo semanal de nutrientes)
 
 **All files of reference**
--   : **LEITURA OBRIGATÓRIA**. Contém todas as premissas, visão de produto e decisões estratégicas do usuário.
--   : Contém a implementação central da lógica de cascata de reconhecimento.
--   : Contém a lógica de chamada para o Gemini Vision e o prompt aprimorado.
--   : Contém as mudanças de UI para exibir os dados científicos e o botão de compartilhar.
--   : Documento com os requisitos do produto, atualizado ao longo da sessão.
+-   : Contém a lógica central da cascata e todos os endpoints.
+-   : Contém o prompt otimizado para o Gemini Vision.
+-   : **Arquivo que precisa de correção.**
+-   : Componente principal do frontend, gerencia o estado Premium.
+-   : Componente que renderiza toda a interface Premium.
+-   : Fonte da verdade sobre as decisões estratégicas do projeto.
+-   : Resumo das APIs pesquisadas e seus custos.
 
 **Areas that need refactoring**:
--   A lógica de cascata em  possui código comentado para LogMeal e Clarifai. Isso poderia ser limpo ou encapsulado de forma mais elegante para facilitar a reativação futura.
--   O arquivo  ainda contém lógica antiga e poderia ser simplificado para delegar totalmente aos novos serviços.
+-   O arquivo  foi criado, mas não é utilizado e pode ser removido.
+-   A lógica da cascata no  está se tornando complexa. Poderia ser refatorada para uma classe ou módulo de Política de Reconhecimento para facilitar a adição/remoção de níveis.
 
 **key api endpoints**
--   : Endpoint principal, agora executa a lógica de reconhecimento em cascata.
+-   : Endpoint principal de identificação.
+-   : Cria um novo perfil de usuário Premium.
+-   : Autentica um usuário Premium com nome e PIN.
+-   : Endpoint para baixar o documento de marketing.
 
 **Critical Info for New Agent**
--   **A PRECISÃO É TUDO:** A prioridade máxima do usuário é a precisão do reconhecimento. A frase dele é: O erro no reconhecimento é veneno do app. A arquitetura em cascata é a abordagem aprovada para resolver isso.
--   **CUSTO É IMPORTANTE:** O usuário é muito sensível aos custos de crédito da plataforma (meus créditos estão sendo engolidos sem mastigar). Não habilite ou integre novas APIs pagas sem discutir e obter aprovação explícita. O sistema atual (OpenCLIP + Gemini Vision) foi acordado como a solução de melhor custo-benefício.
--   **LEIA AS DIRETRIZES:** O arquivo  é a fonte da verdade para a visão do produto e as decisões tomadas. Consulte-o antes de propor qualquer mudança estratégica.
--   **SEU PAPEL:** O usuário espera que o agente seja o executor técnico, enquanto ele atua como o validador estratégico. Siga as diretrizes definidas e foque na implementação.
+-   **A PRIORIDADE MÁXIMA É A VELOCIDADE:** O usuário considera a lentidão (~3.7s) em pratos não cadastrados inaceitável. A principal tarefa é consertar a integração com uma API rápida e barata (provavelmente Hugging Face) para servir como Nível 2.
+-   **CUSTO É UM FATOR CRÍTICO:** O usuário busca soluções gratuitas ou de muito baixo custo para escalar. APIs caras como Calorie Mama foram rejeitadas. A solução deve ser economicamente viável para milhões de usuários.
+-   **PRECISÃO É INEGOCIÁVEL:** Erros na classificação de alérgenos ou restrições (vegano, etc.) são considerados falhas graves. O aprimoramento do prompt da IA é uma tarefa secundária, mas importante.
+-   **FOCO NO PLANO HÍBRIDO:** A estratégia aprovada é usar o índice local (OpenCLIP), complementar com uma API rápida/barata (a ser implementada), e usar Gemini apenas como último recurso. O objetivo de longo prazo é substituir a API por um modelo local (YOLOv8).
 
 **documents and test reports created in this job**
 -   
+-   
+-   
 -    (atualizado)
--   
--   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário:** Aumentar o threshold para 95% e buscar uma API gratuita para o Nível 2. (DONE)
-2.  **Agente:** Encontra a Clarifai (1000 req/mês grátis) e implementa a estrutura.
-3.  **Usuário:** Fornece o PAT (Personal Access Token) da Clarifai. (DONE)
-4.  **Agente:** Integra a key, mas a API da Clarifai retorna erro .
-5.  **Agente:** Sugere que a conta pode precisar de ativação ou plano, mas ressalta que a cascata com Nível 1 + 3 está funcionando perfeitamente como fallback.
-6.  **Usuário:** Pede para **não usar a Clarifai** por enquanto devido ao alto consumo de créditos na plataforma. Confirma que Nível 1 + Nível 3 é suficiente e competitivo. (DECISION)
-7.  **Agente:** Desabilita a chamada à Clarifai no código para economizar custos. (DONE)
-8.  **Agente:** Resume o que foi feito (threshold 95%, cascata N1+N3, Gemini ok) e os próximos passos.
-9.  **Usuário:** Concorda. Pergunta qual o link atual da URL. Menciona que o botão descartar foto sumiu e o logo Made with Emergent está muito grande. Aprova a sugestão de melhoria (botão de compartilhar). (ISSUES REPORTED)
-10. **Agente:** Analisa as imagens, corrige o problema do botão descartar, implementa o botão compartilhar e informa que não pode remover o logo da Emergent. (FIXED)
+1.  **Usuário**: Informa que o tempo de resposta para pratos não cadastrados é muito lento (inaceitável), o reconhecimento do Cibi Sana tem imprecisões e a classificação de múltiplos itens está confusa. Pede para trocar o botão Voltar por Início no Premium e corrigir Sala de Ovos.
+2.  **Agente**: Concorda e lista as ações: corrigir o nome, trocar o botão, otimizar performance e precisão.
+3.  **Agente**: Implementa as correções de UI e texto. Melhora o prompt do Gemini e otimiza a chamada com compressão de imagem e modelo 'flash'.
+4.  **Agente**: Testa e confirma que a performance para pratos cadastrados está ótima (~200ms), mas para não cadastrados ainda é lenta (~3.7s). Confirma que a UI do Premium está corrigida.
+5.  **Usuário**: Reitera que 3 segundos é inaceitável para escalar e pede para pesquisar como outros apps (Cal AI) resolvem isso.
+6.  **Agente**: Pesquisa e apresenta 3 caminhos: API cara (Calorie Mama), modelo local (YOLOv8, longo prazo), ou uma abordagem híbrida, recomendando a híbrida.
+7.  **Usuário**: Rejeita a Calorie Mama por ser inviável e pede para pesquisar APIs mais baratas enquanto o YOLOv8 não é implementado.
+8.  **Agente**: Pesquisa novamente e encontra o FatSecret como a melhor opção (gratuita para startups). Propõe um plano híbrido com FatSecret.
+9.  **Usuário**: Aprova o teste com FatSecret, mas pede para confirmar a performance.
+10. **Agente**: Descobre que o reconhecimento de imagem do FatSecret não é gratuito. Encontra uma alternativa gratuita no Hugging Face (), tenta implementar, mas a API está descontinuada. O sistema é reiniciado por excesso de memória.
 
 **Project Health Check:**
--   **Broken**: A implantação de produção anterior do usuário (Render) está obsoleta. O domínio personalizado não funcionará até que um novo deploy seja feito via Emergent.
+-   **Broken**: A integração com o Nível 2 da cascata de reconhecimento () está quebrada.
 -   **Mocked**: Nenhum.
 
 **3rd Party Integrations**
 -   **OpenCLIP**: Ativo e funcionando (Nível 1).
 -   **Gemini Vision**: Ativo e funcionando (Nível 3) via , utilizando a .
--   **LogMeal API**: Código implementado, mas **desabilitado**. Requer API Key paga.
--   **Clarifai API**: Código implementado, mas **desabilitado**. Requer ativação do free tier ou plano pago.
+-   **Hugging Face Inference API**: Tentativa de integração em andamento, mas **quebrada** devido a endpoint desatualizado.
+-   **Clarifai API**: Código existe, mas desabilitado por custo.
+-   **FatSecret API**: Investigado, mas abandonado por o reconhecimento de imagem não ser gratuito.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO (O agente fez testes manuais extensivos via bash script).
--   **Troubleshoot agent used after agent stuck in loop**: NO.
+-   **Testing agent used after significant changes**: NO
+-   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: Nenhum.
--   **Known regressions**: Nenhuma nova regressão introduzida nesta sessão. O problema de precisão foi melhorado, e a estabilidade não foi tocada.
+-   **Known regressions**: Nenhuma.
 
 **Credentials to test flow:**
--   N/A
+-   Use o formulário de registro Premium para criar um usuário de teste. Ex: Nome: Tester, PIN: 1234.
 
 **What agent forgot to execute**
-- O agente não investigou nem corrigiu os **travamentos ocasionais do app**, um problema recorrente mencionado no início da sessão e no fork anterior. Apenas foram levantadas hipóteses.</analysis>
+-   O agente não abordou os **travamentos ocasionais do app**, um problema recorrente que foi mencionado nos forks anteriores e novamente nesta sessão. Essa é a Issue 3 e continua com status NOT STARTED.</analysis>

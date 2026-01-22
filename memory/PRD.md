@@ -102,4 +102,4 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 ---
 
 ## URL
-https://nutrivision-39.preview.emergentagent.com
+https://plate-radar.preview.emergentagent.com
