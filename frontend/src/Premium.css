@@ -386,17 +386,18 @@
   font-weight: 600;
 }
 
-/* Premium button in main screen */
+/* Premium button in main screen - DISCRETO */
 .premium-btn {
   position: fixed;
-  bottom: 70px;
-  right: 16px;
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-  border: none;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 1.5rem;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(167, 139, 250, 0.3);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: 8px;
+  width: auto;
+  height: auto;
+  padding: 6px 10px;
+  font-size: 0.7rem;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(167, 139, 250, 0.4);
   z-index: 100;
