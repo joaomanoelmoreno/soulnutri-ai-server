@@ -297,16 +297,29 @@ function App() {
       {/* Câmera com moldura guia */}
       <div 
         className="cam-box" 
-        onClick={handleCameraTouch}
+        onClick={cameraError ? startCamera : handleCameraTouch}
         data-testid="camera-container"
       >
         <video ref={videoRef} autoPlay playsInline muted />
         <canvas ref={canvasRef} hidden />
         
-        <div className="cam-guide">
-          <div className="guide-frame"></div>
-          <span className="guide-text">Posicione o prato aqui</span>
-        </div>
+        {/* Erro de câmera */}
+        {cameraError && (
+          <div className="cam-error" data-testid="camera-error">
+            <span>📷</span>
+            <p>{cameraError}</p>
+            <button onClick={(e) => { e.stopPropagation(); startCamera(); }}>
+              🔄 Tentar novamente
+            </button>
+          </div>
+        )}
+        
+        {!cameraError && (
+          <div className="cam-guide">
+            <div className="guide-frame"></div>
+            <span className="guide-text">Posicione o prato aqui</span>
+          </div>
+        )}
         
         {loading && (
           <div className="cam-loading">
@@ -315,7 +328,7 @@ function App() {
           </div>
         )}
         
-        {!loading && !r && (
+        {!loading && !r && !cameraError && (
           <div className="cam-hint">
             <span>👆</span>
             <p>Toque para fotografar</p>
