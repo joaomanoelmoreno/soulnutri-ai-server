@@ -329,3 +329,43 @@ iframe[src*="emergent"], div[style*="Made with"] {
 .premium-upgrade-hint p{font-size:.75rem;color:#aaa}
 .premium-upgrade-hint strong{color:#a78bfa}
 .premium-upgrade-hint:hover{background:rgba(147,51,234,.15)}
+
+/* ========================================
+   NOVO LAYOUT: PRATO PRINCIPAL + ACOMPANHAMENTOS
+   ======================================== */
+.prato-principal{display:flex;align-items:center;gap:12px;padding:16px;background:linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(59,130,246,0.1) 100%);border-radius:16px;margin-bottom:12px}
+.principal-emoji{font-size:2.5rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+.principal-info{flex:1}
+.principal-nome{font-size:1.3rem;font-weight:700;color:#fff;margin:0 0 4px 0;text-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.acompanhamentos-count{font-size:.85rem;color:#10b981;font-weight:500;background:rgba(16,185,129,0.2);padding:3px 10px;border-radius:20px}
+
+.acompanhamentos-lista{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.acomp-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:6px 12px;border-radius:20px;font-size:.75rem;color:#ddd;transition:all .2s}
+.acomp-tag:hover{background:rgba(255,255,255,0.12)}
+.acomp-tag.proteína-animal{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.3);color:#fca5a5}
+.acomp-tag.vegetariano{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:#fcd34d}
+.acomp-tag.vegano{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.3);color:#86efac}
+
+/* Multi-result ajustes */
+.multi-result .multi-summary{margin:14px 0}
+.multi-result .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.multi-result .summary-item{background:rgba(255,255,255,0.05);border-radius:10px;padding:10px 6px;text-align:center}
+.multi-result .summary-value{display:block;font-size:.95rem;font-weight:700;color:#fff}
+.multi-result .summary-label{font-size:.65rem;color:#888;text-transform:uppercase}
+
+.multi-result .equilibrio-badge{text-align:center;padding:10px;border-radius:10px;font-size:.85rem;font-weight:600;margin:10px 0}
+.multi-result .equilibrio-badge.balanceado{background:rgba(34,197,94,0.15);color:#22c55e}
+.multi-result .equilibrio-badge.rico_em_proteinas{background:rgba(239,68,68,0.15);color:#f87171}
+.multi-result .equilibrio-badge.rico_em_carboidratos{background:rgba(245,158,11,0.15);color:#fbbf24}
+.multi-result .equilibrio-badge.rico_em_gorduras{background:rgba(168,85,247,0.15);color:#c084fc}
+
+.multi-result .multi-alerts{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.multi-result .alert-tag{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:4px 10px;border-radius:15px;font-size:.7rem}
+
+.multi-result .dica-box{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);border-radius:10px;padding:12px;margin:10px 0}
+.multi-result .dica-box p{font-size:.8rem;color:#93c5fd;margin:0;line-height:1.4}
+
+.multi-result .share-btn{width:100%;background:linear-gradient(135deg, #10b981, #059669);border:none;color:#fff;padding:14px;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;margin-top:12px;transition:transform .2s, box-shadow .2s}
+.multi-result .share-btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(16,185,129,0.4)}
+.multi-result .share-btn:active{transform:translateY(0)}
+
