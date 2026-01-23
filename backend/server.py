@@ -466,6 +466,28 @@ async def identify_image(
             except Exception as e:
                 logger.error(f"[PREMIUM] Erro ao gerar alertas: {e}")
         
+        # ═══════════════════════════════════════════════════════════════════════
+        # VERDADE OU MITO - EDUCAÇÃO NUTRICIONAL (PREMIUM)
+        # ═══════════════════════════════════════════════════════════════════════
+        mito_verdade = None
+        if is_premium:
+            try:
+                from services.mitos_verdades import get_mito_verdade
+                
+                ingredientes = decision.get('ingredientes', [])
+                categoria = decision.get('category', '')
+                
+                mito_verdade = get_mito_verdade(
+                    ingredientes=ingredientes,
+                    categoria=categoria
+                )
+                
+                if mito_verdade:
+                    logger.info(f"[PREMIUM] Verdade/Mito: {mito_verdade.get('resposta')}")
+                    
+            except Exception as e:
+                logger.error(f"[PREMIUM] Erro ao buscar mito/verdade: {e}")
+        
         # Preparar nutrition como objeto
         nutrition_data = decision.get('nutrition')
         nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
