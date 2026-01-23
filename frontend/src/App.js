@@ -6,6 +6,9 @@ import { PremiumRegister, PremiumLogin, DailyCounter } from "./Premium";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Timeout para requisições (evita travamentos)
+const REQUEST_TIMEOUT = 15000; // 15 segundos
+
 function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -30,63 +33,98 @@ function App() {
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const loadingRef = useRef(false);
+  const abortControllerRef = useRef(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => { 
+    mountedRef.current = true;
     checkStatus(); 
     startCamera();
     loadDishes();
     checkPremiumSession();
-    return () => stopCamera();
+    return () => {
+      mountedRef.current = false;
+      stopCamera();
+      // Cancelar requisições pendentes
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, []);
 
   const checkStatus = async () => {
     try {
-      const res = await fetch(`${API}/ai/status`);
-      setStatus(await res.json());
-    } catch { setStatus({ ok: false }); }
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API}/ai/status`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (mountedRef.current) setStatus(await res.json());
+    } catch { 
+      if (mountedRef.current) setStatus({ ok: false }); 
+    }
   };
 
   const loadDishes = async () => {
     try {
-      const res = await fetch(`${API}/ai/dishes`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API}/ai/dishes`, { signal: controller.signal });
+      clearTimeout(timeoutId);
       const data = await res.json();
-      if (data.ok) setDishes(data.dishes || []);
+      if (data.ok && mountedRef.current) setDishes(data.dishes || []);
     } catch (e) { console.error('Erro ao carregar pratos:', e); }
   };
 
   // Verificar sessão Premium salva
   const checkPremiumSession = async () => {
-    const pin = localStorage.getItem('soulnutri_pin');
-    const nome = localStorage.getItem('soulnutri_nome');
-    if (pin && nome) {
-      try {
+    try {
+      const pin = localStorage.getItem('soulnutri_pin');
+      const nome = localStorage.getItem('soulnutri_nome');
+      if (pin && nome) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
         const fd = new FormData();
         fd.append('pin', pin);
         fd.append('nome', nome);
-        const res = await fetch(`${API}/premium/login`, { method: 'POST', body: fd });
+        const res = await fetch(`${API}/premium/login`, { 
+          method: 'POST', 
+          body: fd,
+          signal: controller.signal 
+        });
+        clearTimeout(timeoutId);
         const data = await res.json();
-        if (data.ok) {
+        if (data.ok && mountedRef.current) {
           setPremiumUser(data.user);
           loadDailySummary();
         }
-      } catch (e) {
-        console.error('Erro ao verificar sessão:', e);
       }
+    } catch (e) {
+      console.error('Erro ao verificar sessão:', e);
     }
   };
 
   // Carregar resumo diário
   const loadDailySummary = async () => {
-    const pin = localStorage.getItem('soulnutri_pin');
-    const nome = localStorage.getItem('soulnutri_nome');
-    if (!pin || !nome) return;
-    
     try {
+      const pin = localStorage.getItem('soulnutri_pin');
+      const nome = localStorage.getItem('soulnutri_nome');
+      if (!pin || !nome) return;
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
       const fd = new FormData();
       fd.append('pin', pin);
       fd.append('nome', nome);
-      const res = await fetch(`${API}/premium/login`, { method: 'POST', body: fd });
+      const res = await fetch(`${API}/premium/login`, { 
+        method: 'POST', 
+        body: fd,
+        signal: controller.signal 
+      });
+      clearTimeout(timeoutId);
       const data = await res.json();
+      
+      if (!mountedRef.current) return;
+      
       if (data.ok && data.daily_log) {
         setDailySummary({
           nome: data.user.nome,
@@ -178,18 +216,29 @@ function App() {
     if (loadingRef.current || !videoRef.current || !canvasRef.current) return;
     
     const v = videoRef.current, c = canvasRef.current;
+    // Verificar se o vídeo está pronto
+    if (v.videoWidth === 0 || v.videoHeight === 0) {
+      console.warn('Vídeo ainda não está pronto');
+      return;
+    }
+    
     c.width = v.videoWidth; 
     c.height = v.videoHeight;
     c.getContext('2d').drawImage(v, 0, 0);
     c.toBlob(b => {
-      if (b) {
+      if (b && mountedRef.current) {
         setLastImageBlob(b);
         identifyImage(b);
       }
     }, 'image/jpeg', 0.85);
-  }, []);
+  }, [multiMode]);
 
   const identifyImage = async (blob) => {
+    // Cancelar requisição anterior se existir
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
     loadingRef.current = true;
     setLoading(true);
     setResult(null);
@@ -202,17 +251,37 @@ function App() {
     fd.append("file", blob, "photo.jpg");
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
-    const pin = localStorage.getItem('soulnutri_pin');
-    const nome = localStorage.getItem('soulnutri_nome');
-    if (pin && nome && !multiMode) {
-      fd.append("pin", pin);
-      fd.append("nome", nome);
+    try {
+      const pin = localStorage.getItem('soulnutri_pin');
+      const nome = localStorage.getItem('soulnutri_nome');
+      if (pin && nome && !multiMode) {
+        fd.append("pin", pin);
+        fd.append("nome", nome);
+      }
+    } catch (e) {
+      console.warn('localStorage não disponível:', e);
     }
+    
+    // Criar AbortController com timeout
+    abortControllerRef.current = new AbortController();
+    const timeoutId = setTimeout(() => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    }, REQUEST_TIMEOUT);
     
     try {
       const t = Date.now();
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
-      const res = await fetch(endpoint, { method: "POST", body: fd });
+      const res = await fetch(endpoint, { 
+        method: "POST", 
+        body: fd,
+        signal: abortControllerRef.current.signal
+      });
+      clearTimeout(timeoutId);
+      
+      if (!mountedRef.current) return;
+      
       const data = await res.json();
       
       if (multiMode) {
@@ -221,10 +290,19 @@ function App() {
         setResult({ ...data, totalTime: Date.now() - t });
       }
     } catch (e) { 
-      setError(e.message);
+      clearTimeout(timeoutId);
+      if (!mountedRef.current) return;
+      
+      if (e.name === 'AbortError') {
+        setError('Tempo limite excedido. Tente novamente.');
+      } else {
+        setError(e.message || 'Erro de conexão');
+      }
     } finally { 
       loadingRef.current = false;
-      setLoading(false);
+      if (mountedRef.current) {
+        setLoading(false);
+      }
     }
   };
 
