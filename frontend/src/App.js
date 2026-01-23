@@ -382,11 +382,20 @@ function App() {
   };
 
   const clearResult = () => {
+    // Cancelar requisições pendentes
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
     setResult(null);
     setMultiResult(null);
     setError(null);
     setShowFeedback(false);
     setFeedbackSent(false);
+    // Liberar memória do blob
+    if (lastImageBlob) {
+      URL.revokeObjectURL(URL.createObjectURL(lastImageBlob));
+    }
     setLastImageBlob(null);
     setNewDishName("");
     setSearchFilter("");
