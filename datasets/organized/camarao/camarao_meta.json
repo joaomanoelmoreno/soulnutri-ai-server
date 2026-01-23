@@ -1,0 +1,58 @@
+[
+  {
+    "principal": "Camarão",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Tomate",
+      "Cebola roxa",
+      "Queijo",
+      "Nachos",
+      "Guacamole",
+      "Pão",
+      "Azeitonas",
+      "Vol-au-vent"
+    ],
+    "total_itens": 9,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.07.jpeg"
+  },
+  {
+    "principal": "Camarão",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Peixe",
+      "Frango",
+      "Legumes mistos",
+      "Purê de couve-flor",
+      "Macarrão com molho"
+    ],
+    "total_itens": 6,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.11 (2).jpeg"
+  },
+  {
+    "principal": "Camarão",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Peixe",
+      "Frango",
+      "Macarrão com molho branco",
+      "Mix de legumes",
+      "Purê de couve-flor"
+    ],
+    "total_itens": 6,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.11 (4).jpeg"
+  },
+  {
+    "principal": "Camarão",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Lula",
+      "Peixe desfiado",
+      "Ceviche",
+      "Berinjela",
+      "Brócolis",
+      "Batata e Cenoura Assada"
+    ],
+    "total_itens": 7,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.12 (7).jpeg"
+  }
+]

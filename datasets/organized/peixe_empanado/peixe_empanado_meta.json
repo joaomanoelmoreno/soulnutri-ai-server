@@ -1,0 +1,30 @@
+[
+  {
+    "principal": "Peixe Empanado",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Macarrão Oriental",
+      "Purê de Mandioca",
+      "Peixe Assado",
+      "Molho de Manga",
+      "Salada de Alface",
+      "Salada de Tomate",
+      "Salada de Pepino",
+      "Salada de Queijo",
+      "Salada de Uva"
+    ],
+    "total_itens": 10,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.08 (2).jpeg"
+  },
+  {
+    "principal": "Peixe Empanado",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Salada",
+      "Empada",
+      "Camarão Empanado"
+    ],
+    "total_itens": 4,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.09 (3).jpeg"
+  }
+]

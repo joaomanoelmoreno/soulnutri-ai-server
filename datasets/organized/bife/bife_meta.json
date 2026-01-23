@@ -1,0 +1,17 @@
+[
+  {
+    "principal": "Bife",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Torta",
+      "Ovo cozido",
+      "Azeitonas pretas",
+      "Legumes grelhados",
+      "Purê",
+      "Camarão",
+      "Carne com molho"
+    ],
+    "total_itens": 8,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.12 (1).jpeg"
+  }
+]

@@ -1,0 +1,25 @@
+[
+  {
+    "principal": "Peixe grelhado",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Abóbora assada",
+      "Beterraba assada",
+      "Mix de frutos do mar",
+      "Salada de polvo"
+    ],
+    "total_itens": 5,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.08 (1).jpeg"
+  },
+  {
+    "principal": "Peixe grelhado",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Arroz",
+      "Camarão com vegetais",
+      "Lula grelhada"
+    ],
+    "total_itens": 4,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.12 (3).jpeg"
+  }
+]

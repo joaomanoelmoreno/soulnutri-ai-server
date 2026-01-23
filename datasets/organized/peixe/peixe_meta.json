@@ -1,0 +1,32 @@
+[
+  {
+    "principal": "Peixe",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Empanada",
+      "Lentilha",
+      "Abóbora Assada",
+      "Salada de Pepino",
+      "Chips de Milho",
+      "Guacamole",
+      "Sashimi",
+      "Carne Assada"
+    ],
+    "total_itens": 9,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.10 (4).jpeg"
+  },
+  {
+    "principal": "Peixe",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Arroz",
+      "Manga",
+      "Guacamole",
+      "Batata doce",
+      "Ceviche",
+      "Torrada"
+    ],
+    "total_itens": 7,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.12 (6).jpeg"
+  }
+]

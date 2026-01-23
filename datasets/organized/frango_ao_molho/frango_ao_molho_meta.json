@@ -1,0 +1,32 @@
+[
+  {
+    "principal": "Frango ao molho",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Salada mista",
+      "Tabbouleh",
+      "Macarrão de arroz",
+      "Abóbora empanada",
+      "Manga",
+      "Rolinho de abobrinha",
+      "Camarão grelhado"
+    ],
+    "total_itens": 8,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.09 (1).jpeg"
+  },
+  {
+    "principal": "Frango ao molho",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Salada mista",
+      "Tabule",
+      "Macarrão de arroz",
+      "Abóbora empanada",
+      "Manga",
+      "Rolinho de abobrinha",
+      "Camarão"
+    ],
+    "total_itens": 8,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.09 (2).jpeg"
+  }
+]

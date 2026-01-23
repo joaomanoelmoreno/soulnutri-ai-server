@@ -1,0 +1,16 @@
+[
+  {
+    "principal": "Carne",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Torta Salgada",
+      "Legumes Assados",
+      "Purê",
+      "Camarão",
+      "Ovo Cozido",
+      "Azeitonas Pretas"
+    ],
+    "total_itens": 8,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.12 (4).jpeg"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "principal": "Carne de porco",
+    "categoria": "proteína animal",
+    "acompanhamentos": [
+      "Frango assado",
+      "Almôndega",
+      "Salada de ovo",
+      "Salada de tomate",
+      "Berinjela grelhada",
+      "Arroz",
+      "Alface"
+    ],
+    "total_itens": 8,
+    "foto_original": "WhatsApp Image 2026-01-23 at 12.07.08.jpeg"
+  }
+]
