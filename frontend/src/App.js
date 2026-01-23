@@ -1000,117 +1000,123 @@ function App() {
       )}
 
       {/* RESULTADO MULTI-ITEM */}
-      {multiResult?.ok && (
-        <div className="res multi-result" data-testid="multi-result-container">
-          <div className="multi-header">
-            <h2>📊 {multiResult.total_itens} Itens Identificados</h2>
-            <span className="tipo-badge">{multiResult.tipo_refeicao?.replace('_', ' ')}</span>
-          </div>
+      {multiResult?.ok && (() => {
+        // Determinar item principal (proteína > vegetariano > vegano)
+        const itens = multiResult.itens || [];
+        const proteinas = itens.filter(i => i.categoria === 'proteína animal');
+        const vegetarianos = itens.filter(i => i.categoria === 'vegetariano');
+        const veganos = itens.filter(i => i.categoria === 'vegano');
+        
+        const principal = proteinas[0] || vegetarianos[0] || veganos[0] || itens[0];
+        const acompanhamentos = itens.filter(i => i.nome !== principal?.nome);
+        
+        const getCategoryEmoji = (cat) => {
+          if (cat === 'proteína animal') return '🍖';
+          if (cat === 'vegetariano') return '🥚';
+          if (cat === 'vegano') return '🥬';
+          return '🍽️';
+        };
+        
+        return (
+          <div className="res multi-result" data-testid="multi-result-container">
+            {/* Header com item principal */}
+            {principal && (
+              <div className="prato-principal">
+                <span className="principal-emoji">{getCategoryEmoji(principal.categoria)}</span>
+                <div className="principal-info">
+                  <h2 className="principal-nome">{principal.nome}</h2>
+                  {acompanhamentos.length > 0 && (
+                    <span className="acompanhamentos-count">+ {acompanhamentos.length} acompanhamento{acompanhamentos.length > 1 ? 's' : ''}</span>
+                  )}
+                </div>
+              </div>
+            )}
+            
+            {/* Lista de acompanhamentos */}
+            {acompanhamentos.length > 0 && (
+              <div className="acompanhamentos-lista">
+                {acompanhamentos.map((item, idx) => (
+                  <span key={idx} className={`acomp-tag ${item.categoria?.replace(' ', '-')}`}>
+                    {getCategoryEmoji(item.categoria)} {item.nome}
+                  </span>
+                ))}
+              </div>
+            )}
 
-          {/* Lista de itens */}
-          <div className="multi-items-list">
-            {multiResult.itens?.map((item, idx) => (
-              <div key={idx} className="multi-item-card" data-testid={`multi-item-${idx}`}>
-                <div className="item-header">
-                  <span className="item-emoji">{item.category_emoji || '🍽️'}</span>
-                  <div className="item-info">
-                    <h4>{item.nome}</h4>
-                    <span className="item-category">{item.categoria}</span>
+            {/* Resumo nutricional */}
+            {multiResult.resumo_nutricional && (
+              <div className="multi-summary" data-testid="multi-summary">
+                <div className="summary-grid">
+                  <div className="summary-item">
+                    <span className="summary-value">{multiResult.resumo_nutricional.calorias_totais || '~' + (itens.length * 150) + ' kcal'}</span>
+                    <span className="summary-label">Calorias</span>
                   </div>
-                  <span className="item-calories">{item.calorias_estimadas}</span>
-                </div>
-                
-                {item.ingredientes_visiveis?.length > 0 && (
-                  <p className="item-ingredients">
-                    {item.ingredientes_visiveis.join(', ')}
-                  </p>
-                )}
-                
-                {item.beneficio_principal && (
-                  <p className="item-benefit">✨ {item.beneficio_principal}</p>
-                )}
-                
-                {item.alerta && (
-                  <p className="item-alert">⚠️ {item.alerta}</p>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Resumo nutricional */}
-          {multiResult.resumo_nutricional && (
-            <div className="multi-summary" data-testid="multi-summary">
-              <h4>📈 Resumo Nutricional Total</h4>
-              <div className="summary-grid">
-                <div className="summary-item">
-                  <span className="summary-value">{multiResult.resumo_nutricional.calorias_totais}</span>
-                  <span className="summary-label">Calorias</span>
-                </div>
-                <div className="summary-item">
-                  <span className="summary-value">{multiResult.resumo_nutricional.proteinas_totais}</span>
-                  <span className="summary-label">Proteínas</span>
-                </div>
-                <div className="summary-item">
-                  <span className="summary-value">{multiResult.resumo_nutricional.carboidratos_totais}</span>
-                  <span className="summary-label">Carbos</span>
-                </div>
-                <div className="summary-item">
-                  <span className="summary-value">{multiResult.resumo_nutricional.gorduras_totais}</span>
-                  <span className="summary-label">Gorduras</span>
+                  <div className="summary-item">
+                    <span className="summary-value">{multiResult.resumo_nutricional.proteinas_totais || '~' + (proteinas.length * 20) + 'g'}</span>
+                    <span className="summary-label">Proteínas</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-value">{multiResult.resumo_nutricional.carboidratos_totais || '~' + (veganos.length * 15) + 'g'}</span>
+                    <span className="summary-label">Carbos</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-value">{multiResult.resumo_nutricional.gorduras_totais || '~10g'}</span>
+                    <span className="summary-label">Gorduras</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Equilíbrio e alertas */}
-          {multiResult.equilibrio && (
-            <div className={`equilibrio-badge ${multiResult.equilibrio}`}>
-              {multiResult.equilibrio === 'balanceado' && '⚖️ Refeição Balanceada'}
-              {multiResult.equilibrio === 'rico_em_carboidratos' && '🍞 Rico em Carboidratos'}
-              {multiResult.equilibrio === 'rico_em_proteinas' && '💪 Rico em Proteínas'}
-              {multiResult.equilibrio === 'rico_em_gorduras' && '🧈 Rico em Gorduras'}
-            </div>
-          )}
+            {/* Equilíbrio */}
+            {multiResult.equilibrio && (
+              <div className={`equilibrio-badge ${multiResult.equilibrio}`}>
+                {multiResult.equilibrio === 'balanceado' && '⚖️ Refeição Balanceada'}
+                {multiResult.equilibrio === 'rico_em_carboidratos' && '🍞 Rico em Carboidratos'}
+                {multiResult.equilibrio === 'rico_em_proteinas' && '💪 Rico em Proteínas'}
+                {multiResult.equilibrio === 'rico_em_gorduras' && '🧈 Rico em Gorduras'}
+              </div>
+            )}
 
-          {multiResult.alertas_combinados?.length > 0 && (
-            <div className="multi-alerts">
-              <h5>⚠️ Alertas</h5>
-              {multiResult.alertas_combinados.map((alert, i) => (
-                <span key={i} className="alert-tag">{alert}</span>
-              ))}
-            </div>
-          )}
+            {/* Alertas */}
+            {multiResult.alertas_combinados?.length > 0 && (
+              <div className="multi-alerts">
+                {multiResult.alertas_combinados.map((alert, i) => (
+                  <span key={i} className="alert-tag">⚠️ {alert}</span>
+                ))}
+              </div>
+            )}
 
-          {multiResult.dica_nutricional && (
-            <div className="dica-box">
-              <h5>💡 Dica Nutricional</h5>
-              <p>{multiResult.dica_nutricional}</p>
-            </div>
-          )}
+            {/* Dica */}
+            {multiResult.dica_nutricional && (
+              <div className="dica-box">
+                <p>💡 {multiResult.dica_nutricional}</p>
+              </div>
+            )}
 
-          <div className="time" data-testid="multi-response-time">
-            ⚡ {multiResult.search_time_ms?.toFixed(0)}ms
+            <div className="time" data-testid="multi-response-time">
+              ⚡ {multiResult.search_time_ms?.toFixed(0)}ms
+            </div>
+
+            {/* Compartilhar */}
+            <button 
+              className="share-btn"
+              onClick={() => {
+                const acompText = acompanhamentos.map(i => i.nome).join(', ');
+                const text = `🍽️ Meu prato no Cibi Sana:\n\n${getCategoryEmoji(principal?.categoria)} ${principal?.nome}${acompText ? `\n+ ${acompText}` : ''}\n\n📊 ${multiResult.resumo_nutricional?.calorias_totais || 'Calculando calorias...'}\n\nAnalisado pelo SoulNutri!`;
+                if (navigator.share) {
+                  navigator.share({ title: 'SoulNutri', text });
+                } else {
+                  navigator.clipboard.writeText(text);
+                  alert('Texto copiado! Cole para compartilhar.');
+                }
+              }}
+              data-testid="multi-share-button"
+            >
+              📤 Compartilhar meu prato
+            </button>
           </div>
-
-          {/* Botão de compartilhar */}
-          <button 
-            className="share-btn"
-            onClick={() => {
-              const itemsText = multiResult.itens?.map(i => `• ${i.nome}: ${i.calorias_estimadas}`).join('\n') || '';
-              const text = `🍽️ Minha refeição (${multiResult.total_itens} itens)\n\n${itemsText}\n\n📊 Total: ${multiResult.resumo_nutricional?.calorias_totais}\n\n${multiResult.dica_nutricional || ''}\n\nAnalisado pelo SoulNutri!`;
-              if (navigator.share) {
-                navigator.share({ title: 'SoulNutri', text });
-              } else {
-                navigator.clipboard.writeText(text);
-                alert('Texto copiado! Cole para compartilhar.');
-              }
-            }}
-            data-testid="multi-share-button"
-          >
-            📤 Compartilhar análise
-          </button>
-        </div>
-      )}
+        );
+      })()}
 
       {/* MODAL DE CORREÇÃO */}
       {showFeedback && (
