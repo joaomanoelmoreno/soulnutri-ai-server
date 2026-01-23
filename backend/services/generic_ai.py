@@ -13,81 +13,33 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContentWithM
 load_dotenv()
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PROMPT PRINCIPAL - IDENTIFICAÇÃO DE PRATOS (COM DUPLA VERIFICAÇÃO)
+# PROMPT PRINCIPAL - IDENTIFICAÇÃO RÁPIDA DE PRATOS
 # ═══════════════════════════════════════════════════════════════════════════════
 
-SYSTEM_PROMPT_IDENTIFY = """Você é o SoulNutri, especialista RIGOROSO em identificação de pratos.
+SYSTEM_PROMPT_IDENTIFY = """Identifique o prato na imagem.
 
-🎯 TAREFA: Identificar o prato com DUPLA VERIFICAÇÃO de categorização.
+REGRAS DE CATEGORIA:
+- "vegano": ZERO produtos animais
+- "vegetariano": tem ovo/leite/queijo, SEM carne
+- "proteína animal": tem carne/peixe/frango
 
-═══════════════════════════════════════════════════════════════════════════════
-🔍 PROCESSO DE DUPLA VERIFICAÇÃO (OBRIGATÓRIO):
-═══════════════════════════════════════════════════════════════════════════════
+ATENÇÃO:
+- Peixe/camarão = proteína animal
+- Ovo/queijo = vegetariano (não vegano)
+- Bacon/presunto = proteína animal
 
-PASSO 1 - Liste TODOS os ingredientes visíveis na imagem
-PASSO 2 - Para CADA ingrediente, classifique:
-  - 🌱 VEGANO: vegetais, frutas, grãos, legumes, cogumelos, tofu
-  - 🥬 VEGETARIANO: ovo, leite, queijo, manteiga, iogurte, mel
-  - 🍖 ANIMAL: carne, frango, peixe, bacon, presunto, camarão, linguiça
-
-PASSO 3 - REGRA DE CATEGORIZAÇÃO FINAL:
-  - Se TODOS ingredientes são 🌱 → categoria = "vegano"
-  - Se tem 🥬 mas NENHUM 🍖 → categoria = "vegetariano"  
-  - Se tem QUALQUER 🍖 → categoria = "proteína animal"
-
-═══════════════════════════════════════════════════════════════════════════════
-⚠️ INGREDIENTES ARMADILHA (MEMORIZE!):
-═══════════════════════════════════════════════════════════════════════════════
-NÃO SÃO VEGANOS (são vegetarianos):
-- Ovos, omelete, ovo frito → 🥬 VEGETARIANO
-- Queijo, parmesão, mussarela, requeijão → 🥬 VEGETARIANO
-- Maionese (contém ovo) → 🥬 VEGETARIANO
-- Manteiga, creme de leite → 🥬 VEGETARIANO
-- Mel → 🥬 VEGETARIANO
-- Massa com ovo → 🥬 VEGETARIANO
-
-CONTÊM PROTEÍNA ANIMAL (NÃO são vegetarianos):
-- Bacon, pancetta → 🍖 ANIMAL
-- Presunto, mortadela → 🍖 ANIMAL
-- Caldo de carne/galinha → 🍖 ANIMAL
-- Gelatina → 🍖 ANIMAL
-- Anchovas (comum em molhos) → 🍖 ANIMAL
-- Linguiça, salsicha → 🍖 ANIMAL
-
-═══════════════════════════════════════════════════════════════════════════════
-📋 RESPONDA COM ESTE JSON:
-═══════════════════════════════════════════════════════════════════════════════
+JSON obrigatório:
 {
-    "nome": "Nome do prato",
-    "confianca": "alta" | "média" | "baixa",
-    "score": 0.95,
-    "categoria": "vegano" | "vegetariano" | "proteína animal",
-    "descricao": "Descrição breve",
-    
-    "_verificacao_ingredientes": {
-        "ingredientes_visiveis": ["ingrediente1", "ingrediente2"],
-        "ingredientes_veganos": ["lista de 🌱"],
-        "ingredientes_vegetarianos": ["lista de 🥬 se houver"],
-        "ingredientes_animais": ["lista de 🍖 se houver"],
-        "justificativa_categoria": "Explicação da classificação final"
-    },
-    
-    "ingredientes_provaveis": ["ingrediente1", "ingrediente2"],
-    
-    "_analise_ingredientes": [
-        {
-            "nome": "ingrediente",
-            "tipo": "vegano|vegetariano|animal",
-            "beneficio": "benefício principal",
-            "risco": "risco ou alérgeno, se houver",
-            "curiosidade": "fato interessante"
-        }
-    ],
-    
-    "beneficio_principal": "Benefício científico do prato",
-    "curiosidade_cientifica": "Fato interessante baseado em pesquisa",
-    "alerta_saude": "Alerta importante ou null",
-    "beneficios": ["benefício1", "benefício2"],
+    "nome": "Nome do Prato",
+    "categoria": "vegano|vegetariano|proteína animal",
+    "confianca": "alta|média|baixa",
+    "score": 0.9,
+    "ingredientes_provaveis": ["ing1", "ing2", "ing3"],
+    "beneficio_principal": "Benefício principal",
+    "curiosidade_cientifica": "Fato interessante",
+    "riscos": ["Alérgeno: X"],
+    "descricao": "Descrição curta"
+}"""
     "riscos": ["Alérgeno: X", "Risco: Y"],
     "referencia_pesquisa": "Fonte científica (OMS, estudo, etc)",
     "tecnica_preparo": "Preparo típico",
