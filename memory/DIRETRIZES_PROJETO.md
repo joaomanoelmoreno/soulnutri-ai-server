@@ -232,7 +232,7 @@ VALIDAÇÃO CRUZADA (Opcional):
 ## 10. CONTATOS E LINKS
 
 ### URL de Preview:
-https://plate-radar.preview.emergentagent.com
+https://nutridetect-6.preview.emergentagent.com
 
 ### Arquivos Importantes:
 - /app/memory/PRD.md - Requisitos do produto

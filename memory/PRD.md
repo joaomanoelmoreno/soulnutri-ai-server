@@ -1,7 +1,7 @@
 # SoulNutri - Product Requirements Document
 
 **Última atualização**: Janeiro 2026
-**URL**: https://plate-radar.preview.emergentagent.com
+**URL**: https://nutridetect-6.preview.emergentagent.com
 
 ---
 
@@ -109,4 +109,4 @@ Quando ele voltar, provavelmente dirá:
 ---
 
 ## URL
-https://plate-radar.preview.emergentagent.com
+https://nutridetect-6.preview.emergentagent.com
