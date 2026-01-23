@@ -293,28 +293,28 @@ async def identify_image(
                         'category_emoji': generic_result.get('category_emoji', '🍽️'),
                         'descricao': generic_result.get('descricao', ''),
                         'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                            'tecnica': generic_result.get('tecnica_preparo', ''),
-                            'beneficios': generic_result.get('beneficios', []),
-                            'riscos': generic_result.get('riscos', []),
-                            'alternatives': generic_result.get('alternativas', []),
-                            'nutrition': {
-                                'calorias': '~200 kcal',
-                                'proteinas': '~10g',
-                                'carboidratos': '~25g',
-                                'gorduras': '~8g'
-                            },
-                            'aviso_cibi_sana': None,
-                            'source': 'generic_ai',
-                            'cascade_level': 2,
-                            # Dados científicos da IA genérica
-                            'beneficio_principal': generic_result.get('beneficio_principal'),
-                            'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                            'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
-                            'alerta_saude': generic_result.get('alerta_saude')
-                        }
-                        logger.info(f"[CASCATA] Resultado do Gemini Vision")
-                except Exception as e:
-                    logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
+                        'tecnica': generic_result.get('tecnica_preparo', ''),
+                        'beneficios': generic_result.get('beneficios', []),
+                        'riscos': generic_result.get('riscos', []),
+                        'alternatives': generic_result.get('alternativas', []),
+                        'nutrition': {
+                            'calorias': '~200 kcal',
+                            'proteinas': '~10g',
+                            'carboidratos': '~25g',
+                            'gorduras': '~8g'
+                        },
+                        'aviso_cibi_sana': None,
+                        'source': 'generic_ai',
+                        'cascade_level': 2,
+                        # Dados científicos da IA genérica
+                        'beneficio_principal': generic_result.get('beneficio_principal'),
+                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
+                        'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
+                        'alerta_saude': generic_result.get('alerta_saude')
+                    }
+                    logger.info(f"[CASCATA] Resultado do Gemini Vision")
+            except Exception as e:
+                logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
