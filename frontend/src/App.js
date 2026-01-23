@@ -547,16 +547,65 @@ function App() {
     d.name.toLowerCase().includes(searchFilter.toLowerCase())
   );
 
+  // Função para instalar PWA
+  const handleInstallApp = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+      }
+      setDeferredPrompt(null);
+    }
+    setShowMenu(false);
+  };
+
   return (
     <div className="app">
-      {/* Header com Logo */}
+      {/* Header com Logo e Menu */}
       <header className="hdr">
         <div className="logo-container">
           <img src="/images/soulnutri-logo.png" alt="SoulNutri" className="logo" />
           <span className="trademark">®</span>
         </div>
-        {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
+        <div className="header-right">
+          {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
+          <button 
+            className="menu-btn" 
+            onClick={() => setShowMenu(!showMenu)}
+            data-testid="menu-button"
+          >
+            ☰
+          </button>
+        </div>
       </header>
+
+      {/* Menu dropdown */}
+      {showMenu && (
+        <div className="menu-dropdown" data-testid="menu-dropdown">
+          {!isInstalled && deferredPrompt && (
+            <button className="menu-item install" onClick={handleInstallApp}>
+              📲 Adicionar à tela inicial
+            </button>
+          )}
+          {isInstalled && (
+            <div className="menu-item installed">
+              ✅ App instalado
+            </div>
+          )}
+          {!deferredPrompt && !isInstalled && (
+            <div className="menu-item info">
+              📱 Para instalar: use o menu do navegador → "Adicionar à tela inicial"
+            </div>
+          )}
+          <button className="menu-item" onClick={() => { setShowMenu(false); checkStatus(); loadDishes(); }}>
+            🔄 Atualizar pratos
+          </button>
+          <button className="menu-item" onClick={() => setShowMenu(false)}>
+            ✕ Fechar
+          </button>
+        </div>
+      )}
 
       {/* Câmera com moldura guia */}
       <div 
