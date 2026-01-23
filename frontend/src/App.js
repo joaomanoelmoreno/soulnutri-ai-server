@@ -256,9 +256,6 @@ function App() {
       videoRef.current.srcObject = null;
     }
   };
-
-  // Debounce para evitar cliques múltiplos
-  const lastTouchRef = useRef(0);
   
   const handleCameraTouch = useCallback(() => {
     // Prevenir cliques múltiplos (debounce de 1s)
