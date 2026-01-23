@@ -1,113 +1,183 @@
 """
-SoulNutri - Verdade ou Mito Nutricional
-Base de conhecimento científico para educar usuários Premium
+SoulNutri - Verdade ou Mito Nutricional (Versão Premium)
+Conteúdo sofisticado para público de alto nível cultural
+Foco em curiosidades SURPREENDENTES e pouco conhecidas
 """
 
 import random
 from typing import Dict, List, Optional
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# BANCO DE VERDADES E MITOS NUTRICIONAIS
-# Baseado em estudos científicos e diretrizes OMS/ANVISA
+# BANCO DE CONHECIMENTO NUTRICIONAL AVANÇADO
+# Curiosidades surpreendentes, cientificamente embasadas
 # ═══════════════════════════════════════════════════════════════════════════════
 
-MITOS_VERDADES = {
+CONHECIMENTO_AVANCADO = {
     # ─────────────────────────────────────────────────────────────────────
-    # OVOS
+    # OVOS - Curiosidades Surpreendentes
     # ─────────────────────────────────────────────────────────────────────
     "ovo": [
         {
-            "afirmacao": "Comer ovo todo dia faz mal ao coração",
+            "afirmacao": "A cor da casca do ovo indica seu valor nutricional",
             "resposta": "MITO",
-            "explicacao": "Estudos recentes mostram que até 3 ovos por dia são seguros para a maioria das pessoas. O ovo é rico em colina, essencial para o cérebro.",
-            "fonte": "American Heart Association, 2020"
+            "explicacao": "A cor depende apenas da raça da galinha. Ovos brancos e marrons têm exatamente o mesmo perfil nutricional. A diferença é puramente genética.",
+            "fonte": "USDA - Egg Nutrition Center"
         },
         {
-            "afirmacao": "A gema do ovo é a parte mais nutritiva",
+            "afirmacao": "Comer ovo cru aumenta a absorção de proteínas",
+            "resposta": "MITO (e risco!)",
+            "explicacao": "O corpo absorve apenas 51% da proteína do ovo cru, contra 91% do ovo cozido. A avidina do ovo cru ainda bloqueia a absorção de biotina. Além do risco de Salmonella.",
+            "fonte": "Journal of Nutrition, 1998"
+        },
+        {
+            "afirmacao": "O ovo é uma das poucas fontes alimentares de vitamina D",
             "resposta": "VERDADE",
-            "explicacao": "A gema contém a maior parte das vitaminas (A, D, E, K), minerais e antioxidantes como luteína e zeaxantina.",
-            "fonte": "USDA Nutrition Database"
+            "explicacao": "Um ovo fornece 6% da vitamina D diária. Galinhas criadas ao sol livre produzem ovos com até 4x mais vitamina D que galinhas de granja fechada.",
+            "fonte": "Food Chemistry Journal"
         }
     ],
     
     # ─────────────────────────────────────────────────────────────────────
-    # CARBOIDRATOS
+    # CAFÉ E BEBIDAS
+    # ─────────────────────────────────────────────────────────────────────
+    "cafe": [
+        {
+            "afirmacao": "Café desidrata o corpo",
+            "resposta": "MITO",
+            "explicacao": "Estudos mostram que até 4 xícaras/dia não causam desidratação. O leve efeito diurético é compensado pelo volume de água do próprio café.",
+            "fonte": "PLOS One, 2014"
+        },
+        {
+            "afirmacao": "Café depois do almoço atrapalha a absorção de ferro",
+            "resposta": "VERDADE",
+            "explicacao": "Os polifenóis do café podem reduzir a absorção de ferro em até 80% se consumido junto à refeição. Espere pelo menos 1 hora após comer.",
+            "fonte": "American Journal of Clinical Nutrition"
+        }
+    ],
+    
+    "cappuccino": [
+        {
+            "afirmacao": "Cappuccino tem menos cafeína que café expresso",
+            "resposta": "VERDADE",
+            "explicacao": "O leite não só dilui a cafeína, como a caseína do leite se liga às moléculas de cafeína, retardando sua absorção. Efeito mais suave e prolongado.",
+            "fonte": "European Journal of Clinical Nutrition"
+        }
+    ],
+    
+    "chocolate": [
+        {
+            "afirmacao": "Chocolate causa acne",
+            "resposta": "PARCIALMENTE MITO",
+            "explicacao": "Estudos não encontram relação direta. O que piora a acne é o açúcar e leite do chocolate ao leite. Chocolate 70%+ cacau pode até beneficiar a pele pelos flavonoides.",
+            "fonte": "Journal of the American Academy of Dermatology"
+        },
+        {
+            "afirmacao": "Chocolate amargo melhora a função cognitiva",
+            "resposta": "VERDADE",
+            "explicacao": "Flavonoides do cacau aumentam o fluxo sanguíneo cerebral em até 8%. Estudos mostram melhora em memória e tempo de reação após consumo regular.",
+            "fonte": "Frontiers in Nutrition, 2017"
+        },
+        {
+            "afirmacao": "O chocolate foi usado como moeda pelos Maias",
+            "resposta": "VERDADE HISTÓRICA",
+            "explicacao": "Sementes de cacau eram tão valiosas que serviam como moeda. Um coelho custava 10 sementes, um escravo 100. Falsificar sementes era crime grave.",
+            "fonte": "Smithsonian Institution"
+        }
+    ],
+    
+    # ─────────────────────────────────────────────────────────────────────
+    # PROTEÍNAS - Informações Avançadas
+    # ─────────────────────────────────────────────────────────────────────
+    "frango": [
+        {
+            "afirmacao": "Frango orgânico tem mais proteína que convencional",
+            "resposta": "MITO",
+            "explicacao": "O teor proteico é praticamente idêntico. A diferença está no perfil de gorduras (orgânico tem mais ômega-3) e menor resíduo de antibióticos.",
+            "fonte": "Poultry Science Journal"
+        },
+        {
+            "afirmacao": "A carne de frango mais perto do osso é mais nutritiva",
+            "resposta": "VERDADE",
+            "explicacao": "A carne junto ao osso absorve minerais durante o cozimento, especialmente cálcio, fósforo e magnésio. Caldos de osso são particularmente ricos.",
+            "fonte": "Food & Nutrition Research"
+        }
+    ],
+    
+    "peixe": [
+        {
+            "afirmacao": "Peixes de água fria têm mais ômega-3",
+            "resposta": "VERDADE",
+            "explicacao": "Peixes de águas geladas produzem mais gordura insaturada para manter as membranas celulares flexíveis no frio. Salmão do Alasca > Salmão do Chile.",
+            "fonte": "Journal of the American Dietetic Association"
+        },
+        {
+            "afirmacao": "Sushi de salmão sempre é salmão de verdade",
+            "resposta": "NEM SEMPRE",
+            "explicacao": "Estudo da UCLA encontrou que 47% do 'salmão' em restaurantes era na verdade truta ou outros peixes. Mercado de substituição é grande.",
+            "fonte": "Conservation Biology, 2017"
+        }
+    ],
+    
+    "carne": [
+        {
+            "afirmacao": "A cor vermelha da carne indica frescor",
+            "resposta": "NEM SEMPRE",
+            "explicacao": "Supermercados usam embalagens com atmosfera modificada (mais oxigênio) para manter a cor vermelha. Carne marrom pode ser tão fresca quanto a vermelha.",
+            "fonte": "Journal of Food Science"
+        },
+        {
+            "afirmacao": "Deixar a carne 'descansar' depois de assar é frescura de chef",
+            "resposta": "CIÊNCIA REAL",
+            "explicacao": "Durante o descanso, as proteínas relaxam e reabsorvem os sucos. Cortar imediatamente faz perder até 40% dos líquidos. 5-10 minutos fazem diferença.",
+            "fonte": "Food Science & Technology"
+        }
+    ],
+    
+    # ─────────────────────────────────────────────────────────────────────
+    # CARBOIDRATOS - Curiosidades Científicas
     # ─────────────────────────────────────────────────────────────────────
     "arroz": [
         {
-            "afirmacao": "Arroz branco engorda mais que arroz integral",
-            "resposta": "PARCIALMENTE VERDADE",
-            "explicacao": "Ambos têm calorias similares, mas o integral tem mais fibras, o que aumenta a saciedade e controla melhor a glicemia.",
-            "fonte": "Harvard School of Public Health"
+            "afirmacao": "Reaquecer arroz pode ser perigoso",
+            "resposta": "VERDADE (com ressalvas)",
+            "explicacao": "Arroz contém esporos de Bacillus cereus que sobrevivem ao cozimento. Se deixado em temperatura ambiente por horas, produzem toxinas. Refrigere em até 1 hora.",
+            "fonte": "NHS UK - Food Safety"
         },
         {
-            "afirmacao": "Deixar o arroz esfriar reduz as calorias",
+            "afirmacao": "Arroz parboilizado tem mais nutrientes que o branco",
             "resposta": "VERDADE",
-            "explicacao": "Ao esfriar, parte do amido vira 'amido resistente', que não é digerido e alimenta bactérias boas do intestino.",
-            "fonte": "European Journal of Clinical Nutrition"
+            "explicacao": "O processo de parboilização força vitaminas e minerais da casca para dentro do grão antes da polimento. Tem 80% mais vitaminas B que o branco comum.",
+            "fonte": "Journal of Food Composition and Analysis"
         }
     ],
     
     "pao": [
         {
-            "afirmacao": "Pão integral sempre é mais saudável que pão branco",
-            "resposta": "DEPENDE",
-            "explicacao": "Muitos 'pães integrais' têm farinha branca como ingrediente principal. Verifique se 'farinha integral' é o primeiro ingrediente.",
-            "fonte": "ANVISA - Rotulagem de Alimentos"
-        }
-    ],
-    
-    "macarrao": [
+            "afirmacao": "Pão torrado tem menos calorias",
+            "resposta": "PRATICAMENTE MITO",
+            "explicacao": "A diferença é mínima (~2-3 calorias por fatia). O que muda é o índice glicêmico - pão torrado é digerido um pouco mais lentamente devido à modificação do amido.",
+            "fonte": "European Journal of Clinical Nutrition"
+        },
         {
-            "afirmacao": "Macarrão à noite engorda",
-            "resposta": "MITO",
-            "explicacao": "O que importa é o total de calorias do dia, não o horário. Carboidratos à noite podem até melhorar o sono.",
+            "afirmacao": "Pão de fermentação natural (sourdough) é mais saudável",
+            "resposta": "VERDADE",
+            "explicacao": "A fermentação lenta reduz fitatos (que bloqueiam minerais), produz ácidos orgânicos benéficos e pode reduzir o índice glicêmico em até 25%.",
             "fonte": "British Journal of Nutrition"
         }
     ],
     
     "batata": [
         {
-            "afirmacao": "Batata doce é muito melhor que batata inglesa",
-            "resposta": "MITO",
-            "explicacao": "Ambas são nutritivas! A batata inglesa tem mais potássio, enquanto a doce tem mais vitamina A. Varie entre as duas.",
-            "fonte": "USDA Nutrition Comparison"
-        }
-    ],
-    
-    # ─────────────────────────────────────────────────────────────────────
-    # PROTEÍNAS
-    # ─────────────────────────────────────────────────────────────────────
-    "frango": [
-        {
-            "afirmacao": "Peito de frango é a parte mais saudável",
-            "resposta": "PARCIALMENTE VERDADE",
-            "explicacao": "É a parte mais magra, mas coxa e sobrecoxa têm mais ferro e zinco. O segredo é remover a pele.",
-            "fonte": "Academy of Nutrition and Dietetics"
-        }
-    ],
-    
-    "carne": [
-        {
-            "afirmacao": "Carne vermelha causa câncer",
-            "resposta": "CONTEXTO IMPORTANTE",
-            "explicacao": "O risco aumenta com consumo EXCESSIVO (mais de 500g/semana) e carnes PROCESSADAS. Consumo moderado é seguro.",
-            "fonte": "OMS/IARC, 2015"
-        }
-    ],
-    
-    "peixe": [
-        {
-            "afirmacao": "Quanto mais peixe, melhor para a saúde",
-            "resposta": "COM MODERAÇÃO",
-            "explicacao": "2-3 porções/semana é ideal. Peixes grandes (atum, cação) podem acumular mercúrio - evite consumo diário.",
-            "fonte": "FDA Fish Advice"
+            "afirmacao": "Batata tem mais potássio que banana",
+            "resposta": "VERDADE",
+            "explicacao": "Uma batata média tem 926mg de potássio, uma banana média 422mg. A batata é uma das maiores fontes de potássio, mas ninguém fala dela.",
+            "fonte": "USDA Nutrient Database"
         },
         {
-            "afirmacao": "Salmão de cativeiro não é saudável",
-            "resposta": "MITO",
-            "explicacao": "Salmão de cativeiro ainda é rico em ômega-3 e proteínas. A diferença nutricional é pequena.",
-            "fonte": "Journal of Nutrition"
+            "afirmacao": "Batatas verdes são tóxicas",
+            "resposta": "VERDADE",
+            "explicacao": "A cor verde indica presença de solanina, uma toxina natural. Em grandes quantidades causa náusea e vômito. Sempre descarte partes verdes ou brotadas.",
+            "fonte": "Journal of Agricultural and Food Chemistry"
         }
     ],
     
@@ -116,37 +186,37 @@ MITOS_VERDADES = {
     # ─────────────────────────────────────────────────────────────────────
     "salada": [
         {
-            "afirmacao": "Salada sempre é a opção mais saudável",
-            "resposta": "DEPENDE",
-            "explicacao": "Molhos cremosos, queijos e croutons podem transformar uma salada em bomba calórica. Prefira azeite e limão.",
-            "fonte": "American Dietetic Association"
+            "afirmacao": "Salada com azeite absorve mais vitaminas",
+            "resposta": "VERDADE",
+            "explicacao": "Vitaminas A, D, E e K são lipossolúveis - precisam de gordura para serem absorvidas. Salada com azeite pode aumentar absorção de carotenoides em até 15x.",
+            "fonte": "American Journal of Clinical Nutrition"
+        }
+    ],
+    
+    "tomate": [
+        {
+            "afirmacao": "Tomate cozido é mais nutritivo que cru",
+            "resposta": "DEPENDE DO NUTRIENTE",
+            "explicacao": "Cozinhar aumenta o licopeno disponível em até 35%, mas reduz vitamina C em 29%. Para máximo benefício, consuma de ambas as formas.",
+            "fonte": "Journal of Agricultural and Food Chemistry"
         }
     ],
     
     "cenoura": [
         {
-            "afirmacao": "Cenoura melhora a visão",
-            "resposta": "PARCIALMENTE VERDADE",
-            "explicacao": "A vitamina A da cenoura é essencial para a visão, mas não vai te dar 'super visão'. Previne deficiências.",
-            "fonte": "American Academy of Ophthalmology"
+            "afirmacao": "Pilotos da RAF comiam cenoura para enxergar à noite",
+            "resposta": "PROPAGANDA DE GUERRA",
+            "explicacao": "Os britânicos inventaram essa história para esconder que tinham desenvolvido o radar. A vitamina A ajuda a visão, mas não dá superpoderes.",
+            "fonte": "Smithsonian Magazine"
         }
     ],
     
     "espinafre": [
         {
-            "afirmacao": "Espinafre é a melhor fonte de ferro",
-            "resposta": "MITO",
-            "explicacao": "O ferro do espinafre é pouco absorvido pelo corpo. Carnes e feijão são fontes melhores. Combine espinafre com vitamina C!",
-            "fonte": "Journal of Food Science"
-        }
-    ],
-    
-    "brocolis": [
-        {
-            "afirmacao": "Brócolis cru é mais nutritivo que cozido",
-            "resposta": "DEPENDE DO PREPARO",
-            "explicacao": "Cozinhar no vapor preserva nutrientes. Ferver em água perde vitaminas. Cru pode ser difícil de digerir.",
-            "fonte": "Journal of Agricultural and Food Chemistry"
+            "afirmacao": "Popeye popularizou o espinafre por seu ferro",
+            "resposta": "BASEADO EM ERRO",
+            "explicacao": "Um cientista errou a vírgula em 1870, registrando 35mg de ferro em vez de 3.5mg. O erro durou décadas. Espinafre tem ferro, mas não é excepcional.",
+            "fonte": "British Medical Journal"
         }
     ],
     
@@ -155,183 +225,174 @@ MITOS_VERDADES = {
     # ─────────────────────────────────────────────────────────────────────
     "feijao": [
         {
-            "afirmacao": "Arroz com feijão é a combinação perfeita",
+            "afirmacao": "O caldo do feijão é a parte mais nutritiva",
             "resposta": "VERDADE",
-            "explicacao": "Juntos formam proteína completa com todos os aminoácidos essenciais. É a base da dieta brasileira!",
-            "fonte": "FAO - Food and Agriculture Organization"
+            "explicacao": "O caldo contém vitaminas B, ferro e potássio que migraram dos grãos durante o cozimento. Jogar o caldo fora desperdiça até 40% dos nutrientes.",
+            "fonte": "Revista de Nutrição (Unicamp)"
         },
         {
-            "afirmacao": "Feijão dá gases por causa das fibras",
-            "resposta": "PARCIALMENTE VERDADE",
-            "explicacao": "São os oligossacarídeos, não as fibras. Deixar de molho e trocar a água reduz muito os gases.",
-            "fonte": "Journal of Gastroenterology"
+            "afirmacao": "Brasil e Índia são os maiores consumidores de feijão",
+            "resposta": "VERDADE CULTURAL",
+            "explicacao": "O Brasil consome ~16kg/pessoa/ano, a maior média mundial. A combinação arroz+feijão fornece proteína completa equivalente à carne, a custo muito menor.",
+            "fonte": "FAO - Food and Agriculture Organization"
         }
     ],
     
-    "lentilha": [
+    # ─────────────────────────────────────────────────────────────────────
+    # DOCES E SOBREMESAS
+    # ─────────────────────────────────────────────────────────────────────
+    "bombom": [
         {
-            "afirmacao": "Lentilha tem mais proteína que carne",
-            "resposta": "MITO",
-            "explicacao": "100g de lentilha cozida tem ~9g de proteína, enquanto 100g de frango tem ~25g. Mas lentilha é ótima fonte vegetal!",
-            "fonte": "USDA Nutrition Database"
+            "afirmacao": "Chocolate belga é obrigatoriamente melhor",
+            "resposta": "MARKETING",
+            "explicacao": "Não há regulamentação especial. O que importa é o teor de cacau e a qualidade dos ingredientes. Chocolates brasileiros premium competem em qualidade.",
+            "fonte": "Cocoa Research Centre"
         }
     ],
     
-    # ─────────────────────────────────────────────────────────────────────
-    # GORDURAS E ÓLEOS
-    # ─────────────────────────────────────────────────────────────────────
-    "azeite": [
+    "acucar": [
         {
-            "afirmacao": "Azeite perde propriedades quando aquecido",
-            "resposta": "PARCIALMENTE VERDADE",
-            "explicacao": "O azeite extra virgem pode ser aquecido até 180°C. Para frituras em alta temperatura, prefira óleo de coco ou abacate.",
-            "fonte": "Journal of the American Oil Chemists Society"
-        }
-    ],
-    
-    "manteiga": [
+            "afirmacao": "Açúcar mascavo é muito mais saudável que refinado",
+            "resposta": "EXAGERO",
+            "explicacao": "A diferença de minerais é mínima em termos práticos. Para obter benefício significativo do ferro do mascavo, precisaria comer quilos. Ambos são açúcar.",
+            "fonte": "Harvard T.H. Chan School of Public Health"
+        },
         {
-            "afirmacao": "Margarina é mais saudável que manteiga",
-            "resposta": "NÃO NECESSARIAMENTE",
-            "explicacao": "Muitas margarinas têm gordura trans. Manteiga com moderação ou margarina SEM gordura trans são opções válidas.",
-            "fonte": "Harvard Health Publishing"
+            "afirmacao": "Seu corpo não diferencia açúcar natural do adicionado",
+            "resposta": "MOLECULARMENTE VERDADE",
+            "explicacao": "Glicose é glicose. A diferença é que frutas vêm com fibras, vitaminas e água, que moderam a absorção. Suco de fruta sem fibra age como refrigerante.",
+            "fonte": "Journal of the American Medical Association"
         }
     ],
     
     # ─────────────────────────────────────────────────────────────────────
-    # BEBIDAS
-    # ─────────────────────────────────────────────────────────────────────
-    "suco": [
-        {
-            "afirmacao": "Suco natural é tão saudável quanto a fruta",
-            "resposta": "MITO",
-            "explicacao": "O suco perde as fibras e concentra o açúcar. Um copo pode ter açúcar de 3-4 frutas! Prefira comer a fruta inteira.",
-            "fonte": "American Diabetes Association"
-        }
-    ],
-    
-    # ─────────────────────────────────────────────────────────────────────
-    # GENÉRICOS (para qualquer prato)
+    # CONHECIMENTO GERAL AVANÇADO
     # ─────────────────────────────────────────────────────────────────────
     "_geral": [
         {
-            "afirmacao": "Comer à noite engorda mais",
-            "resposta": "MITO",
-            "explicacao": "O corpo não muda o metabolismo à noite. O que importa é o total de calorias do dia, não o horário.",
+            "afirmacao": "O microbioma intestinal pesa mais que o cérebro",
+            "resposta": "VERDADE SURPREENDENTE",
+            "explicacao": "Suas bactérias intestinais pesam cerca de 2kg, mais que o cérebro (1.4kg). Elas produzem 95% da serotonina do corpo e influenciam seu humor.",
+            "fonte": "Nature Reviews Microbiology"
+        },
+        {
+            "afirmacao": "Alimentos 'naturais' não contêm químicos",
+            "resposta": "IMPOSSÍVEL",
+            "explicacao": "Tudo é químico. Uma banana contém acetato de isoamila, ácido málico e formaldeído naturalmente. 'Natural' e 'químico' não são opostos.",
+            "fonte": "Royal Society of Chemistry"
+        },
+        {
+            "afirmacao": "Nossos ancestrais tinham dieta mais saudável",
+            "resposta": "ROMANTIZAÇÃO",
+            "explicacao": "Análises de múmias mostram aterosclerose em egípcios antigos. A expectativa de vida baixa não era só por doenças - má nutrição era comum.",
+            "fonte": "The Lancet, 2013"
+        },
+        {
+            "afirmacao": "Mastigar mais vezes ajuda a emagrecer",
+            "resposta": "VERDADE",
+            "explicacao": "Estudo japonês mostrou que mastigar 40x por garfada (vs 15x) reduziu a ingestão calórica em 12%. O cérebro precisa de tempo para registrar saciedade.",
             "fonte": "American Journal of Clinical Nutrition"
         },
         {
-            "afirmacao": "Beber água durante as refeições atrapalha a digestão",
-            "resposta": "MITO",
-            "explicacao": "Não há evidência científica. A água pode até ajudar na digestão e aumentar a saciedade.",
-            "fonte": "Mayo Clinic"
-        },
-        {
-            "afirmacao": "Alimentos orgânicos são mais nutritivos",
-            "resposta": "INCONCLUSIVO",
-            "explicacao": "Estudos não mostram diferença nutricional significativa. O benefício principal é menor exposição a pesticidas.",
-            "fonte": "Annals of Internal Medicine"
-        },
-        {
-            "afirmacao": "Comer devagar emagrece",
+            "afirmacao": "A cor do prato influencia quanto você come",
             "resposta": "VERDADE",
-            "explicacao": "O cérebro leva ~20 minutos para registrar saciedade. Comer rápido faz você comer mais antes de se sentir satisfeito.",
-            "fonte": "Journal of the Academy of Nutrition and Dietetics"
+            "explicacao": "Pratos vermelhos reduzem o consumo em até 40% (associação com 'pare'). Pratos grandes fazem servir 30% mais. Restaurantes sabem disso.",
+            "fonte": "Journal of Consumer Research"
         },
         {
-            "afirmacao": "Glúten faz mal para todos",
-            "resposta": "MITO",
-            "explicacao": "Apenas ~1% da população tem doença celíaca. Para os demais, glúten é seguro e grãos integrais são saudáveis.",
-            "fonte": "Gastroenterology Journal"
+            "afirmacao": "Jejum intermitente funciona por restrição calórica",
+            "resposta": "PRINCIPALMENTE SIM",
+            "explicacao": "A maioria dos benefícios vem de comer menos no total. Benefícios metabólicos adicionais existem, mas são menores que o marketing sugere.",
+            "fonte": "New England Journal of Medicine"
+        },
+        {
+            "afirmacao": "Superalimentos são uma categoria científica",
+            "resposta": "TERMO DE MARKETING",
+            "explicacao": "Não existe definição científica de 'superalimento'. É termo criado para vender. Todos os vegetais são 'super' quando parte de dieta equilibrada.",
+            "fonte": "European Food Information Council"
+        },
+        {
+            "afirmacao": "Seu estômago pode 'encolher' com dieta",
+            "resposta": "MITO ANATÔMICO",
+            "explicacao": "O estômago é um músculo elástico que retorna ao tamanho original. O que muda é a sensação de saciedade - seu cérebro se adapta a porções menores.",
+            "fonte": "British Journal of Surgery"
         }
     ]
 }
 
 
-def buscar_mito_por_ingrediente(ingredientes: List[str]) -> Optional[Dict]:
-    """
-    Busca um mito/verdade relevante baseado nos ingredientes do prato.
-    """
-    # Normalizar ingredientes
+def buscar_conhecimento_por_ingrediente(ingredientes: List[str]) -> Optional[Dict]:
+    """Busca conhecimento relevante baseado nos ingredientes do prato."""
     ingredientes_norm = [i.lower().strip() for i in ingredientes]
     
-    # Buscar correspondência
     for ingrediente in ingredientes_norm:
-        for chave, mitos in MITOS_VERDADES.items():
-            if chave in ingrediente or ingrediente in chave:
-                if mitos and chave != "_geral":
-                    return random.choice(mitos)
+        for chave, items in CONHECIMENTO_AVANCADO.items():
+            if chave != "_geral" and (chave in ingrediente or ingrediente in chave):
+                if items:
+                    return random.choice(items)
     
-    # Fallback: retornar um mito geral
-    return random.choice(MITOS_VERDADES.get("_geral", []))
+    return random.choice(CONHECIMENTO_AVANCADO.get("_geral", []))
 
 
-def buscar_mito_por_categoria(categoria: str) -> Optional[Dict]:
-    """
-    Busca um mito/verdade baseado na categoria do prato.
-    """
+def buscar_conhecimento_por_categoria(categoria: str) -> Optional[Dict]:
+    """Busca conhecimento baseado na categoria do prato."""
     categoria_norm = categoria.lower().strip()
     
     if "vegano" in categoria_norm or "vegetariano" in categoria_norm:
         opcoes = (
-            MITOS_VERDADES.get("feijao", []) +
-            MITOS_VERDADES.get("salada", []) +
-            MITOS_VERDADES.get("arroz", [])
+            CONHECIMENTO_AVANCADO.get("feijao", []) +
+            CONHECIMENTO_AVANCADO.get("salada", []) +
+            CONHECIMENTO_AVANCADO.get("arroz", []) +
+            CONHECIMENTO_AVANCADO.get("tomate", [])
         )
     elif "proteína" in categoria_norm or "animal" in categoria_norm:
         opcoes = (
-            MITOS_VERDADES.get("carne", []) +
-            MITOS_VERDADES.get("frango", []) +
-            MITOS_VERDADES.get("peixe", []) +
-            MITOS_VERDADES.get("ovo", [])
+            CONHECIMENTO_AVANCADO.get("carne", []) +
+            CONHECIMENTO_AVANCADO.get("frango", []) +
+            CONHECIMENTO_AVANCADO.get("peixe", []) +
+            CONHECIMENTO_AVANCADO.get("ovo", [])
         )
     else:
-        opcoes = MITOS_VERDADES.get("_geral", [])
+        opcoes = CONHECIMENTO_AVANCADO.get("_geral", [])
     
-    if opcoes:
-        return random.choice(opcoes)
-    return None
+    return random.choice(opcoes) if opcoes else None
 
 
 def get_mito_verdade(ingredientes: List[str] = None, categoria: str = None) -> Dict:
     """
-    Retorna um mito/verdade nutricional relevante para o prato.
-    
-    Args:
-        ingredientes: Lista de ingredientes do prato
-        categoria: Categoria do prato (vegano, vegetariano, proteína animal)
-    
-    Returns:
-        Dict com afirmação, resposta, explicação e fonte
+    Retorna conhecimento nutricional avançado relevante para o prato.
+    Prioriza curiosidades surpreendentes e pouco conhecidas.
     """
     resultado = None
     
-    # Primeiro tenta por ingrediente (mais específico)
     if ingredientes:
-        resultado = buscar_mito_por_ingrediente(ingredientes)
+        resultado = buscar_conhecimento_por_ingrediente(ingredientes)
     
-    # Se não encontrou, tenta por categoria
     if not resultado and categoria:
-        resultado = buscar_mito_por_categoria(categoria)
+        resultado = buscar_conhecimento_por_categoria(categoria)
     
-    # Fallback: mito geral
     if not resultado:
-        resultado = random.choice(MITOS_VERDADES.get("_geral", []))
+        resultado = random.choice(CONHECIMENTO_AVANCADO.get("_geral", []))
     
     if resultado:
-        # Formatar emoji de resposta
         resposta = resultado.get("resposta", "")
-        if resposta in ["MITO", "NÃO NECESSARIAMENTE"]:
+        
+        # Determinar emoji e classe CSS
+        if resposta in ["MITO", "MITO (e risco!)", "PRATICAMENTE MITO", "MITO ANATÔMICO"]:
             emoji = "❌"
-        elif resposta in ["VERDADE"]:
+            tipo = "mito"
+        elif resposta in ["VERDADE", "VERDADE SURPREENDENTE", "VERDADE HISTÓRICA", "VERDADE CULTURAL", "CIÊNCIA REAL"]:
             emoji = "✅"
+            tipo = "verdade"
         else:
             emoji = "⚠️"
+            tipo = "parcial"
         
         return {
             "afirmacao": resultado.get("afirmacao"),
             "resposta": resposta,
             "resposta_emoji": emoji,
+            "tipo": tipo,
             "explicacao": resultado.get("explicacao"),
             "fonte": resultado.get("fonte")
         }
@@ -339,27 +400,21 @@ def get_mito_verdade(ingredientes: List[str] = None, categoria: str = None) -> D
     return None
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# TESTE
-# ═══════════════════════════════════════════════════════════════════════════════
-
 if __name__ == "__main__":
-    print("🧪 Testando Verdade ou Mito:\n")
+    print("🧪 Testando Conhecimento Avançado:\n")
     
-    # Teste com ingredientes
-    print("1. Prato com ovo:")
-    result = get_mito_verdade(ingredientes=["ovo", "tomate", "cebola"])
-    print(f"   {result['resposta_emoji']} {result['resposta']}: \"{result['afirmacao']}\"")
-    print(f"   📚 {result['explicacao'][:60]}...")
+    # Teste com chocolate
+    print("1. Prato com chocolate:")
+    result = get_mito_verdade(ingredientes=["chocolate", "leite"])
+    if result:
+        print(f"   {result['resposta_emoji']} {result['resposta']}")
+        print(f"   \"{result['afirmacao']}\"")
+        print(f"   → {result['explicacao'][:80]}...")
     print()
     
-    # Teste com peixe
-    print("2. Prato com peixe:")
-    result = get_mito_verdade(ingredientes=["salmão", "legumes"])
-    print(f"   {result['resposta_emoji']} {result['resposta']}: \"{result['afirmacao']}\"")
-    print()
-    
-    # Teste por categoria
-    print("3. Categoria vegana:")
-    result = get_mito_verdade(categoria="vegano")
-    print(f"   {result['resposta_emoji']} {result['resposta']}: \"{result['afirmacao']}\"")
+    # Teste geral
+    print("2. Conhecimento geral:")
+    result = get_mito_verdade(ingredientes=["algo desconhecido"])
+    if result:
+        print(f"   {result['resposta_emoji']} {result['resposta']}")
+        print(f"   \"{result['afirmacao']}\"")
