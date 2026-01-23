@@ -40,6 +40,7 @@ function App() {
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
   const mountedRef = useRef(true);
+  const lastTouchRef = useRef(0);
 
   useEffect(() => { 
     mountedRef.current = true;
