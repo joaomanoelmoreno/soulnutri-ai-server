@@ -679,6 +679,22 @@ function App() {
             </div>
           )}
 
+          {/* VERDADE OU MITO - Educação Nutricional (PREMIUM) */}
+          {r.mito_verdade && (
+            <div className="mito-verdade-section" data-testid="mito-verdade">
+              <div className="mito-verdade-card">
+                <h4>🤔 Verdade ou Mito?</h4>
+                <p className="mito-afirmacao">"{r.mito_verdade.afirmacao}"</p>
+                <div className={`mito-resposta ${r.mito_verdade.resposta === 'VERDADE' ? 'verdade' : r.mito_verdade.resposta === 'MITO' ? 'mito' : 'parcial'}`}>
+                  <span className="mito-emoji">{r.mito_verdade.resposta_emoji}</span>
+                  <span className="mito-label">{r.mito_verdade.resposta}</span>
+                </div>
+                <p className="mito-explicacao">{r.mito_verdade.explicacao}</p>
+                <p className="mito-fonte">📚 {r.mito_verdade.fonte}</p>
+              </div>
+            </div>
+          )}
+
           {/* Informação Nutricional */}
           {r.nutrition && (
             <div className="nutr" data-testid="nutrition-box">
