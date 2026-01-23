@@ -272,7 +272,7 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
             )
             
             user_message = UserMessage(
-                text="Identifique o prato. JSON apenas.",
+                text="Identifique este prato. Responda APENAS JSON.",
                 file_contents=[image_file]
             )
             
