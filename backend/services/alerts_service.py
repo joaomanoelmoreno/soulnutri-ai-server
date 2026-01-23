@@ -183,13 +183,14 @@ async def gerar_alertas_tempo_real(
             
             if info.get("tipo") == "minimo":
                 # Nutrientes que queremos aumentar
-                if valor_semanal < limite_semanal * 0.5:
+                # SÓ mostra alerta se o prato realmente tem valor significativo
+                if valor_prato > 0 and valor_semanal < limite_semanal * 0.5:
                     alertas.append({
                         "tipo": "positivo",
                         "severidade": "info",
                         "emoji": info["emoji"],
                         "titulo": f"Boa escolha de {info['nome']}!",
-                        "mensagem": f"Este prato tem {valor_prato}{info['unidade']} de {info['nome'].lower()}. Continue assim!",
+                        "mensagem": f"Este prato contribui com {valor_prato}{info['unidade']} de {info['nome'].lower()}. Continue assim!",
                         "nutriente": nutriente
                     })
             else:
