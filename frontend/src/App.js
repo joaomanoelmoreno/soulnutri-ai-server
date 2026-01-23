@@ -230,8 +230,13 @@ function App() {
   const startCamera = async () => {
     try {
       setCameraError(null);
+      // Resolução reduzida para economizar memória em celulares
       const s = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
+        video: { 
+          facingMode: 'environment', 
+          width: { ideal: 640, max: 1280 }, 
+          height: { ideal: 480, max: 720 } 
+        } 
       });
       setStream(s);
       if (videoRef.current) videoRef.current.srcObject = s;
@@ -241,9 +246,25 @@ function App() {
     }
   };
 
-  const stopCamera = () => { stream?.getTracks().forEach(t => t.stop()); };
+  const stopCamera = () => { 
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      setStream(null);
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+  };
 
+  // Debounce para evitar cliques múltiplos
+  const lastTouchRef = useRef(0);
+  
   const handleCameraTouch = useCallback(() => {
+    // Prevenir cliques múltiplos (debounce de 1s)
+    const now = Date.now();
+    if (now - lastTouchRef.current < 1000) return;
+    lastTouchRef.current = now;
+    
     if (loadingRef.current || !videoRef.current || !canvasRef.current) return;
     
     const v = videoRef.current, c = canvasRef.current;
@@ -253,15 +274,30 @@ function App() {
       return;
     }
     
-    c.width = v.videoWidth; 
-    c.height = v.videoHeight;
-    c.getContext('2d').drawImage(v, 0, 0);
+    // Limitar tamanho máximo do canvas para economizar memória
+    const maxSize = 800;
+    let w = v.videoWidth;
+    let h = v.videoHeight;
+    if (w > maxSize || h > maxSize) {
+      const ratio = Math.min(maxSize / w, maxSize / h);
+      w = Math.round(w * ratio);
+      h = Math.round(h * ratio);
+    }
+    
+    c.width = w; 
+    c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(v, 0, 0, w, h);
+    
+    // Qualidade reduzida para economizar memória
     c.toBlob(b => {
       if (b && mountedRef.current) {
         setLastImageBlob(b);
         identifyImage(b);
       }
-    }, 'image/jpeg', 0.85);
+      // Limpar canvas após uso
+      ctx.clearRect(0, 0, w, h);
+    }, 'image/jpeg', 0.7);
   }, [multiMode]);
 
   const identifyImage = async (blob) => {
