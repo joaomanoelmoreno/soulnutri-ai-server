@@ -29,6 +29,11 @@ function App() {
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
+  // Menu e PWA
+  const [showMenu, setShowMenu] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -42,9 +47,23 @@ function App() {
     startCamera();
     loadDishes();
     checkPremiumSession();
+    
+    // Detectar se já está instalado como PWA
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true);
+    }
+    
+    // Capturar evento de instalação PWA
+    const handleBeforeInstall = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    
     return () => {
       mountedRef.current = false;
       stopCamera();
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
       // Cancelar requisições pendentes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
