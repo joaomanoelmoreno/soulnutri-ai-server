@@ -238,8 +238,8 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
         
         img = Image.open(io.BytesIO(image_bytes))
         
-        # Redimensionar se muito grande (max 800px no lado maior)
-        max_size = 800
+        # Redimensionar para menor tamanho (max 512px - mais rápido)
+        max_size = 512
         if max(img.size) > max_size:
             ratio = max_size / max(img.size)
             new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
@@ -249,9 +249,9 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
         if img.mode != 'RGB':
             img = img.convert('RGB')
         
-        # Salvar com compressão
+        # Salvar com compressão alta (mais rápido upload)
         buffer = io.BytesIO()
-        img.save(buffer, format='JPEG', quality=75, optimize=True)
+        img.save(buffer, format='JPEG', quality=60, optimize=True)
         compressed_bytes = buffer.getvalue()
         
         # Salvar arquivo temporário
