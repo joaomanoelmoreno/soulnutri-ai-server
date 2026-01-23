@@ -81,6 +81,9 @@ Quando ele voltar, provavelmente dirá:
 - [x] **Dataset preparado**: 8.145 imagens (5x augmentation)
 - [x] **Correções de estabilidade mobile** (AbortController, cleanup)
 - [x] **PWA básico** (manifest.json, service worker)
+- [x] **Menu com "Adicionar à tela inicial"** (versão gratuita)
+- [x] **Galeria corrigida** (abre fotos do celular, não câmera)
+- [x] **Índice atualizado**: 241 pratos, 756 imagens
 
 ### ⏳ Aguardando
 - [ ] **Modelo YOLOv8 treinado** (usuário vai treinar no Colab)
