@@ -1,24 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="description" content="A product of emergent.sh" />
-        <!--
-        manifest.json provides metadata used when your web app is installed on a
-        user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-        -->
-        <!--
-        Notice the use of %PUBLIC_URL% in the tags above.
-        It will be replaced with the URL of the `public` folder during the build.
-        Only files inside the `public` folder can be referenced from the HTML.
-
-        Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-        work correctly both with client-side routing and a non-root public URL.
-        Learn how to configure a non-root public URL by running `npm run build`.
-        -->
-        <title>Emergent | Fullstack App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        <meta name="theme-color" content="#10b981" />
+        <meta name="description" content="SoulNutri - Seu agente de nutrição virtual. Identifique pratos em tempo real." />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="SoulNutri" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-TileColor" content="#10b981" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        
+        <!-- PWA Manifest -->
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        
+        <!-- Icons -->
+        <link rel="icon" href="%PUBLIC_URL%/images/soulnutri-logo.png" />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/soulnutri-logo.png" />
+        
+        <!-- Open Graph / Social -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="SoulNutri - Agente de Nutrição Virtual" />
+        <meta property="og:description" content="Identifique pratos em tempo real e receba informações nutricionais personalizadas." />
+        <meta property="og:image" content="%PUBLIC_URL%/images/soulnutri-logo.png" />
+        
+        <title>SoulNutri - Seu Agente de Nutrição Virtual</title>
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
         <!--
         These two scripts have been added for the Visual Edits, please do not edit or remove them
