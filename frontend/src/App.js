@@ -158,19 +158,31 @@ function App() {
 
   // Registrar refeição automaticamente após identificar
   const logMealToPremium = async (prato) => {
-    if (!premiumUser) return;
-    
-    const pin = localStorage.getItem('soulnutri_pin');
-    const fd = new FormData();
-    fd.append('pin', pin);
-    fd.append('prato_nome', prato.dish_display || prato.nome || 'Prato');
-    fd.append('calorias', parseFloat(prato.nutrition?.calorias?.replace(/[^\d]/g, '') || 200));
-    fd.append('proteinas', parseFloat(prato.nutrition?.proteinas?.replace(/[^\d]/g, '') || 10));
-    fd.append('carboidratos', parseFloat(prato.nutrition?.carboidratos?.replace(/[^\d]/g, '') || 25));
-    fd.append('gorduras', parseFloat(prato.nutrition?.gorduras?.replace(/[^\d]/g, '') || 8));
+    if (!premiumUser || !mountedRef.current) return;
     
     try {
-      const res = await fetch(`${API}/premium/log-meal`, { method: 'POST', body: fd });
+      const pin = localStorage.getItem('soulnutri_pin');
+      if (!pin) return;
+      
+      const fd = new FormData();
+      fd.append('pin', pin);
+      fd.append('prato_nome', prato.dish_display || prato.nome || 'Prato');
+      fd.append('calorias', parseFloat(prato.nutrition?.calorias?.replace(/[^\d]/g, '') || 200));
+      fd.append('proteinas', parseFloat(prato.nutrition?.proteinas?.replace(/[^\d]/g, '') || 10));
+      fd.append('carboidratos', parseFloat(prato.nutrition?.carboidratos?.replace(/[^\d]/g, '') || 25));
+      fd.append('gorduras', parseFloat(prato.nutrition?.gorduras?.replace(/[^\d]/g, '') || 8));
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API}/premium/log-meal`, { 
+        method: 'POST', 
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      if (!mountedRef.current) return;
+      
       const data = await res.json();
       if (data.ok) {
         setDailySummary(prev => ({
@@ -335,7 +347,17 @@ function App() {
     fd.append("is_correct", "true");
     
     try {
-      const res = await fetch(`${API}/ai/feedback`, { method: "POST", body: fd });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const res = await fetch(`${API}/ai/feedback`, { 
+        method: "POST", 
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      if (!mountedRef.current) return;
+      
       const data = await res.json();
       if (data.ok) {
         setFeedbackSent(true);
@@ -357,7 +379,17 @@ function App() {
     fd.append("original_dish", result?.dish || "");
     
     try {
-      const res = await fetch(`${API}/ai/feedback`, { method: "POST", body: fd });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const res = await fetch(`${API}/ai/feedback`, { 
+        method: "POST", 
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      if (!mountedRef.current) return;
+      
       const data = await res.json();
       if (data.ok) {
         setFeedbackSent(true);
@@ -379,7 +411,17 @@ function App() {
     fd.append("dish_name", newDishName.trim());
     
     try {
-      const res = await fetch(`${API}/ai/create-dish`, { method: "POST", body: fd });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s para criação
+      const res = await fetch(`${API}/ai/create-dish`, { 
+        method: "POST", 
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      if (!mountedRef.current) return;
+      
       const data = await res.json();
       if (data.ok) {
         setFeedbackSent(true);
@@ -406,9 +448,15 @@ function App() {
       }
     } catch (e) {
       console.error('Erro ao criar prato:', e);
-      alert('Erro ao criar prato: ' + e.message);
+      if (e.name === 'AbortError') {
+        alert('Tempo limite excedido. Tente novamente.');
+      } else {
+        alert('Erro ao criar prato: ' + (e.message || 'Erro de conexão'));
+      }
     } finally {
-      setCreatingDish(false);
+      if (mountedRef.current) {
+        setCreatingDish(false);
+      }
     }
   };
 
