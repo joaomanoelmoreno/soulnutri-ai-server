@@ -185,6 +185,73 @@ async def reindex(max_per_dish: int = 10):
             content={"ok": False, "error": str(e)}
         )
 
+
+@api_router.post("/ai/add-to-index")
+async def add_to_index(
+    file: UploadFile = File(...),
+    dish_name: str = Form(...),
+    weight_grams: Optional[int] = Form(None)
+):
+    """
+    Adiciona uma nova foto ao índice local para reconhecimento rápido.
+    Use após identificar um prato na balança.
+    
+    Args:
+        file: Imagem do prato
+        dish_name: Nome do prato (ex: "Frango Grelhado")
+        weight_grams: Peso em gramas (opcional)
+    
+    Returns:
+        Confirmação e tempo estimado de reconhecimento futuro
+    """
+    import hashlib
+    from datetime import datetime
+    
+    try:
+        content = await file.read()
+        
+        # Normalizar nome do prato para diretório
+        dish_slug = dish_name.lower().strip()
+        dish_slug = dish_slug.replace(" ", "_").replace("-", "_")
+        dish_slug = ''.join(c for c in dish_slug if c.isalnum() or c == '_')
+        
+        # Criar diretório se não existe
+        dish_dir = Path(f"/app/datasets/organized/{dish_slug}")
+        dish_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Gerar nome único para o arquivo
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        hash_suffix = hashlib.md5(content).hexdigest()[:8]
+        filename = f"{dish_slug}_{timestamp}_{hash_suffix}.jpg"
+        
+        # Salvar imagem
+        filepath = dish_dir / filename
+        with open(filepath, 'wb') as f:
+            f.write(content)
+        
+        # Contar quantas imagens esse prato já tem
+        existing_images = len(list(dish_dir.glob("*.jpg")))
+        
+        logger.info(f"[ADD-INDEX] Foto adicionada: {dish_name} ({existing_images} fotos)")
+        
+        return {
+            "ok": True,
+            "dish_name": dish_name,
+            "dish_slug": dish_slug,
+            "filename": filename,
+            "total_images": existing_images,
+            "weight_grams": weight_grams,
+            "message": f"Foto adicionada! {dish_name} agora tem {existing_images} foto(s).",
+            "nota": "Execute /api/ai/reindex para atualizar o índice e ter reconhecimento em ~200ms"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao adicionar foto: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
 @api_router.post("/ai/identify")
 async def identify_image(
     file: UploadFile = File(...),
