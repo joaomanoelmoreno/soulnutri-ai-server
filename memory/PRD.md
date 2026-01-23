@@ -1,6 +1,6 @@
 # SoulNutri - Product Requirements Document
 
-**Última atualização**: Janeiro 2026
+**Última atualização**: 23 Janeiro 2026
 **URL**: https://nutridetect-6.preview.emergentagent.com
 
 ---
@@ -12,7 +12,26 @@ O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO 
 
 ---
 
-## 🚨 TAREFA PENDENTE DO USUÁRIO
+## 🚨 ISSUES CORRIGIDOS (23/01/2026)
+
+### ✅ P0 - Travamentos em Dispositivos Móveis
+**Status**: CORRIGIDO
+- Implementado `AbortController` em todas as requisições fetch com timeout de 15s
+- Adicionado `mountedRef` para evitar atualizações de estado após unmount
+- Corrigida dependência faltante no `useCallback` do `handleCameraTouch`
+- Adicionado tratamento de erros robusto para localStorage
+- Cancelamento automático de requisições pendentes no cleanup
+
+### ✅ PWA - Preparativos App Store/Play Store
+**Status**: IMPLEMENTADO (sem pagamentos ainda)
+- Criado `/public/manifest.json` com metadados para PWA
+- Criado `/public/sw.js` (Service Worker) para cache offline
+- Atualizado `index.html` com meta tags para iOS e Android
+- App pode ser "instalado" direto do navegador
+
+---
+
+## 📋 TAREFA PENDENTE DO USUÁRIO
 
 **O usuário está treinando o modelo YOLOv8 no Google Colab.**
 
@@ -60,17 +79,24 @@ Quando ele voltar, provavelmente dirá:
 - [x] Proteção anti-fake news
 - [x] **Endpoint YOLOv8 configurado** (aguardando modelo)
 - [x] **Dataset preparado**: 8.145 imagens (5x augmentation)
+- [x] **Correções de estabilidade mobile** (AbortController, cleanup)
+- [x] **PWA básico** (manifest.json, service worker)
 
 ### ⏳ Aguardando
 - [ ] **Modelo YOLOv8 treinado** (usuário vai treinar no Colab)
+- [ ] **Feedback do usuário** sobre conteúdo "Verdade ou Mito"
+- [ ] **Fotos de teste da balança** para OCR
 
-### 📋 Próximas Tarefas (após YOLOv8)
+### 📋 Próximas Tarefas
 | Prioridade | Tarefa |
 |------------|--------|
+| P1 | Interface do funcionário para captura de fotos na balança |
+| P1 | Recursos Premium: Educação Nutricional, Timing, Medicamentos |
 | P2 | Notícias recentes na UI Premium |
 | P2 | Melhorar alertas visuais |
 | P3 | Histórico semanal com gráficos |
-| P3 | Receitas saudáveis |
+| P3 | Ícones PWA em alta resolução (512x512) |
+| P3 | Publicação efetiva na App Store / Play Store |
 
 ---
 
