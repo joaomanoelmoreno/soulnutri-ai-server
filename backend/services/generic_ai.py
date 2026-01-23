@@ -47,74 +47,27 @@ JSON obrigatório:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 SYSTEM_PROMPT_MULTI_ITEM = """Identifique TODOS os itens visíveis no prato.
-⚠️ REGRAS DE CATEGORIZAÇÃO (MEMORIZE!):
-═══════════════════════════════════════════════════════════════════════════════
 
-🌱 VEGANO = ZERO produtos animais
-   ✓ Vegetais, frutas, grãos, legumes, cogumelos, tofu, leite vegetal
-   ✗ NADA de: ovo, leite, queijo, mel, manteiga
+Para cada item, retorne:
+- nome: Nome do item
+- categoria: "vegano" | "vegetariano" | "proteína animal"
+- ingredientes: Lista de ingredientes visíveis
 
-🥬 VEGETARIANO = Sem carne, pode ter derivados animais
-   ✓ Ovo, leite, queijo, manteiga, mel, iogurte
-   ✗ NADA de: carne, frango, peixe, bacon, presunto
+REGRAS:
+- Peixe/carne/frango = proteína animal
+- Ovo/queijo = vegetariano
+- Só vegetais/grãos = vegano
 
-🍖 PROTEÍNA ANIMAL = Contém carne ou derivados
-   Carne, frango, peixe, bacon, presunto, linguiça, camarão, gelatina
-
-═══════════════════════════════════════════════════════════════════════════════
-🚨 ARMADILHAS COMUNS (CUIDADO!):
-═══════════════════════════════════════════════════════════════════════════════
-- Salada Caesar tem ANCHOVAS e PARMESÃO → NÃO é vegana
-- Maionese tem OVO → NÃO é vegana
-- Pão de queijo tem QUEIJO e OVO → Vegetariano, NÃO vegano
-- Molho pesto tem PARMESÃO → Vegetariano, NÃO vegano
-- Feijão tropeiro tem BACON → Proteína animal
-- Farofa com ovo → Vegetariana
-- Arroz de carreteiro tem CARNE → Proteína animal
-
-═══════════════════════════════════════════════════════════════════════════════
-📋 ESTRUTURA DA RESPOSTA (JSON OBRIGATÓRIO):
-═══════════════════════════════════════════════════════════════════════════════
+JSON obrigatório:
 {
-    "total_itens": número,
-    "tipo_refeicao": "prato_unico" | "prato_composto" | "buffet" | "lanche",
+    "total_itens": 3,
     "itens": [
-        {
-            "nome": "Nome do item",
-            "categoria": "vegano" | "vegetariano" | "proteína animal",
-            "category_emoji": "🌱" | "🥬" | "🍖",
-            "porcao_estimada": "~Xg",
-            "calorias_estimadas": "~X kcal",
-            
-            "_verificacao": {
-                "ingredientes_identificados": ["lista completa"],
-                "ingredientes_animais_encontrados": ["se houver"],
-                "justificativa": "Por que esta categoria"
-            },
-            
-            "ingredientes_visiveis": ["ingrediente1", "ingrediente2"],
-            
-            "analise_ingredientes": [
-                {"nome": "ing", "tipo": "🌱|🥬|🍖", "beneficio": "X", "risco": "Y ou null"}
-            ],
-            
-            "beneficio_principal": "Benefício científico",
-            "alerta": "Alérgeno ou risco, ou null",
-            "curiosidade": "Fato interessante"
-        }
+        {"nome": "Arroz", "categoria": "vegano", "ingredientes": ["arroz"], "calorias": "~150kcal"},
+        {"nome": "Feijão", "categoria": "vegano", "ingredientes": ["feijão"], "calorias": "~100kcal"}
     ],
-    "resumo_nutricional": {
-        "calorias_totais": "~X kcal",
-        "proteinas_totais": "~Xg",
-        "carboidratos_totais": "~Xg",
-        "gorduras_totais": "~Xg"
-    },
-    "alertas_combinados": ["TODOS os alérgenos encontrados"],
-    "dica_nutricional": "Dica sobre a combinação",
-    "equilibrio": "balanceado" | "rico_em_carboidratos" | "rico_em_proteinas" | "rico_em_gorduras"
-}
-
-JSON APENAS, sem texto adicional."""
+    "calorias_totais": "~500kcal",
+    "alertas": ["Alérgeno: X"]
+}"""
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
