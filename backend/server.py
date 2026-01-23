@@ -950,37 +950,65 @@ async def get_feedback_stats():
 async def identify_multiple_items(file: UploadFile = File(...)):
     """
     Identifica MÚLTIPLOS itens em uma imagem de refeição.
-    Útil para buffets, pratos compostos ou quando há vários alimentos no prato.
+    
+    ESTRATÉGIA HÍBRIDA:
+    1. Zoom central (50%) → Identifica item PRINCIPAL no índice local
+    2. Análise por regiões → Busca ACOMPANHAMENTOS por similaridade nos pratos do buffet
+    3. Fallback Gemini → Para itens não reconhecidos
     
     Returns:
-        Lista de itens identificados com informações nutricionais individuais e totais.
+        Item principal + acompanhamentos reconhecidos do buffet do Cibi Sana
     """
     start_time = time.time()
     
     try:
-        from services.generic_ai import identify_multiple_items as identify_multi
+        from services.hybrid_identify import identify_multi_hybrid
         
         content = await file.read()
         
         if len(content) == 0:
             return {"ok": False, "error": "Arquivo de imagem vazio"}
         
-        logger.info("[MULTI-ITEM] Iniciando identificação de múltiplos itens...")
-        result = await identify_multi(content)
+        logger.info("[MULTI-HÍBRIDO] Iniciando identificação com zoom + regiões...")
+        result = await identify_multi_hybrid(content)
         
         elapsed_ms = (time.time() - start_time) * 1000
         result['search_time_ms'] = round(elapsed_ms, 2)
         
         if result.get('ok'):
-            total_itens = result.get('total_itens', 0)
-            logger.info(f"[MULTI-ITEM] {total_itens} itens identificados em {elapsed_ms:.0f}ms")
+            principal = result.get('principal', {})
+            acomp_count = len(result.get('acompanhamentos', []))
+            local_count = result.get('itens_do_buffet', 0)
+            logger.info(f"[MULTI-HÍBRIDO] {principal.get('nome', 'N/A')} + {acomp_count} acomp. ({local_count} do buffet) em {elapsed_ms:.0f}ms")
         else:
-            logger.warning(f"[MULTI-ITEM] Erro: {result.get('error')}")
+            logger.warning(f"[MULTI-HÍBRIDO] Erro: {result.get('error')}")
+        
+        # Formatar para compatibilidade com frontend
+        if result.get('ok'):
+            # Converter para formato esperado pelo frontend
+            itens = []
+            if result.get('principal'):
+                itens.append({
+                    'nome': result['principal']['nome'],
+                    'categoria': result['principal'].get('categoria', 'proteína animal'),
+                    'score': result['principal'].get('score', 0.7),
+                    'source': result['principal'].get('source', 'local')
+                })
+            
+            for acomp in result.get('acompanhamentos', []):
+                itens.append({
+                    'nome': acomp['nome'],
+                    'categoria': acomp.get('categoria', 'vegano'),
+                    'score': acomp.get('score', 0.6),
+                    'source': acomp.get('source', 'local')
+                })
+            
+            result['itens'] = itens
         
         return result
         
     except Exception as e:
-        logger.error(f"Erro na identificação múltipla: {e}")
+        logger.error(f"Erro na identificação múltipla híbrida: {e}")
         return {
             "ok": False,
             "error": str(e),
