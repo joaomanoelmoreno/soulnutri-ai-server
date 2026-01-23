@@ -518,6 +518,8 @@ async def identify_image(
             "curiosidade_cientifica": scientific_data.get('curiosidade_cientifica') if is_premium else None,
             "referencia_pesquisa": scientific_data.get('referencia_pesquisa') if is_premium else None,
             "alerta_saude": scientific_data.get('alerta_saude') if is_premium else None,
+            # Verdade ou Mito - PREMIUM
+            "mito_verdade": mito_verdade if is_premium else None,
             # Dados Premium extras
             "premium": premium_data if is_premium else None,
             "is_premium": is_premium
