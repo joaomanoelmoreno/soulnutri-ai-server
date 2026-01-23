@@ -271,39 +271,15 @@ async def identify_image(
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 1.5: YOLOv8 Local (Se modelo treinado disponível)
+        # NÍVEL 2: Gemini Vision (Fallback para pratos não cadastrados)
+        # NOTA: YOLOv8 desabilitado temporariamente - será reativado com fotos reais do CibiSana
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < THRESHOLD_LOCAL:
-            yolo_used = False
             try:
-                from services.yolo_service import is_available, identify_with_yolo
+                from services.generic_ai import identify_unknown_dish
                 
-                if is_available():
-                    logger.info(f"[NÍVEL 1.5] Consultando YOLOv8 local...")
-                    yolo_result = await identify_with_yolo(content)
-                    
-                    if yolo_result.get('ok') and yolo_result.get('identified'):
-                        yolo_score = yolo_result.get('score', 0)
-                        
-                        # Se YOLOv8 tem confiança >= 70%, usar resultado
-                        if yolo_score >= 0.70:
-                            decision = yolo_result
-                            yolo_used = True
-                            logger.info(f"[CASCATA] ⚡ Resultado do YOLOv8 ({yolo_score:.0%})")
-                        else:
-                            logger.info(f"[NÍVEL 1.5] YOLOv8 confiança baixa ({yolo_score:.0%}), tentando Gemini...")
-            except Exception as e:
-                logger.debug(f"[NÍVEL 1.5] YOLOv8 não disponível: {e}")
-            
-            # ─────────────────────────────────────────────────────────────────────
-            # NÍVEL 2: Gemini Vision (Fallback universal)
-            # ─────────────────────────────────────────────────────────────────────
-            if not yolo_used:
-                try:
-                    from services.generic_ai import identify_unknown_dish
-                    
-                    logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
-                    generic_result = await identify_unknown_dish(content)
+                logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
+                generic_result = await identify_unknown_dish(content)
                     
                     if generic_result.get('ok') and generic_result.get('nome'):
                         decision = {
