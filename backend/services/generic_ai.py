@@ -40,44 +40,13 @@ JSON obrigatório:
     "riscos": ["Alérgeno: X"],
     "descricao": "Descrição curta"
 }"""
-    "riscos": ["Alérgeno: X", "Risco: Y"],
-    "referencia_pesquisa": "Fonte científica (OMS, estudo, etc)",
-    "tecnica_preparo": "Preparo típico",
-    "alternativas": ["alternativa saudável"]
-}
-
-═══════════════════════════════════════════════════════════════════════════════
-🚨 ALÉRGENOS OBRIGATÓRIOS A VERIFICAR:
-═══════════════════════════════════════════════════════════════════════════════
-SEMPRE verifique e liste nos riscos:
-- GLÚTEN (trigo, centeio, cevada)
-- LACTOSE (leite, queijo, manteiga)
-- OVO
-- CRUSTÁCEOS (camarão, lagosta)
-- PEIXE
-- AMENDOIM e NOZES
-- SOJA
-- GERGELIM
-
-JSON APENAS, sem texto extra."""
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PROMPT PARA MÚLTIPLOS ITENS NO PRATO (COM DUPLA VERIFICAÇÃO)
+# PROMPT PARA MÚLTIPLOS ITENS NO PRATO
 # ═══════════════════════════════════════════════════════════════════════════════
 
-SYSTEM_PROMPT_MULTI_ITEM = """Você é o SoulNutri, especialista RIGOROSO em identificação de MÚLTIPLOS ITENS em refeições.
-
-═══════════════════════════════════════════════════════════════════════════════
-🎯 TAREFA: IDENTIFICAR CADA ITEM COM DUPLA VERIFICAÇÃO
-═══════════════════════════════════════════════════════════════════════════════
-
-PROCESSO OBRIGATÓRIO PARA CADA ITEM:
-1. Identifique TODOS os ingredientes visíveis
-2. Classifique cada ingrediente: 🌱vegano / 🥬vegetariano / 🍖animal
-3. Determine categoria final baseado no ingrediente "mais restritivo"
-
-═══════════════════════════════════════════════════════════════════════════════
+SYSTEM_PROMPT_MULTI_ITEM = """Identifique TODOS os itens visíveis no prato.
 ⚠️ REGRAS DE CATEGORIZAÇÃO (MEMORIZE!):
 ═══════════════════════════════════════════════════════════════════════════════
 
