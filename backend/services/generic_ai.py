@@ -264,7 +264,7 @@ async def identify_unknown_dish(image_bytes: bytes) -> dict:
                 api_key=api_key,
                 session_id=f"dish-{id(image_bytes)}",
                 system_message=SYSTEM_PROMPT_IDENTIFY
-            ).with_model("gemini", "gemini-2.0-flash")
+            ).with_model("gemini", "gemini-2.0-flash-lite")
             
             image_file = FileContentWithMimeType(
                 file_path=tmp_path,
