@@ -1476,7 +1476,7 @@ async def admin_get_dish_image(slug: str):
 
 @api_router.put("/admin/dishes/{slug}")
 async def admin_update_dish(slug: str, dish_data: dict):
-    """Atualiza informações de um prato."""
+    """Atualiza TODAS as informações de um prato."""
     try:
         import json
         dataset_dir = Path("/app/datasets/organized") / slug
@@ -1495,22 +1495,28 @@ async def admin_update_dish(slug: str, dish_data: dict):
             except:
                 pass
         
-        # Atualizar campos
+        # Atualizar TODOS os campos
         existing_info.update({
             "nome": dish_data.get("nome", existing_info.get("nome", slug)),
             "slug": slug,
             "categoria": dish_data.get("categoria", existing_info.get("categoria", "")),
-            "category_emoji": dish_data.get("category_emoji", existing_info.get("category_emoji", "🍽️")),
             "descricao": dish_data.get("descricao", existing_info.get("descricao", "")),
-            "ingredientes": dish_data.get("ingredientes", existing_info.get("ingredientes", []))
+            "ingredientes": dish_data.get("ingredientes", existing_info.get("ingredientes", [])),
+            "beneficios": dish_data.get("beneficios", existing_info.get("beneficios", [])),
+            "riscos": dish_data.get("riscos", existing_info.get("riscos", [])),
+            "nutricao": dish_data.get("nutricao", existing_info.get("nutricao", {})),
+            "contem_gluten": dish_data.get("contem_gluten", existing_info.get("contem_gluten", False)),
+            "tecnica": dish_data.get("tecnica", existing_info.get("tecnica", ""))
         })
         
         # Definir emoji baseado na categoria
         cat = existing_info.get("categoria", "").lower()
+        nome_lower = existing_info.get("nome", "").lower()
+        
         if "proteína" in cat:
-            if any(p in existing_info["nome"].lower() for p in ["peixe", "camarão", "bacalhau", "salmão"]):
+            if any(p in nome_lower for p in ["peixe", "camarão", "bacalhau", "salmão", "atum", "tilápia", "pescador"]):
                 existing_info["category_emoji"] = "🐟"
-            elif any(p in existing_info["nome"].lower() for p in ["frango", "galinha"]):
+            elif any(p in nome_lower for p in ["frango", "galinha", "sobrecoxa", "peito"]):
                 existing_info["category_emoji"] = "🍗"
             else:
                 existing_info["category_emoji"] = "🥩"
@@ -1520,6 +1526,8 @@ async def admin_update_dish(slug: str, dish_data: dict):
             existing_info["category_emoji"] = "🥬"
         elif "sobremesa" in cat:
             existing_info["category_emoji"] = "🍰"
+        else:
+            existing_info["category_emoji"] = "🍽️"
         
         # Salvar
         with open(info_file, "w", encoding="utf-8") as f:
