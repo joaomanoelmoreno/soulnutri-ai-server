@@ -984,8 +984,28 @@ def format_dish_name_fallback(slug: str) -> str:
 
 
 def get_category(slug: str) -> str:
-    """Retorna a categoria do prato"""
-    return DISH_CATEGORIES.get(slug, 'não classificado')
+    """Retorna a categoria do prato lendo do dish_info.json"""
+    import os
+    import json
+    
+    # Primeiro tenta do dicionário em memória
+    if slug in DISH_CATEGORIES:
+        return DISH_CATEGORIES[slug]
+    
+    # Se não encontrar, tenta ler do dish_info.json
+    info_path = f"/app/datasets/organized/{slug}/dish_info.json"
+    if os.path.exists(info_path):
+        try:
+            with open(info_path, 'r', encoding='utf-8') as f:
+                info = json.load(f)
+                categoria = info.get('categoria', 'não classificado')
+                # Cachear para próximas consultas
+                DISH_CATEGORIES[slug] = categoria
+                return categoria
+        except:
+            pass
+    
+    return 'não classificado'
 
 
 def get_category_emoji(category: str) -> str:
