@@ -83,7 +83,8 @@ async def identify_multi_v4(image_bytes: bytes) -> dict:
             slug = r['dish']
             score = r['score']
             
-            if score < 0.70:
+            # Threshold de 65% para teste (amanhã)
+            if score < 0.65:
                 continue
             
             # Pular duplicados exatos
