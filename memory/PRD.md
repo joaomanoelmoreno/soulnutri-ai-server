@@ -1,7 +1,7 @@
 # SoulNutri - Product Requirements Document
 
 **Última atualização**: 23 Janeiro 2026
-**URL**: https://nutridetect-6.preview.emergentagent.com
+**URL**: https://nutri-ai-8.preview.emergentagent.com
 
 ---
 
@@ -138,4 +138,4 @@ Quando ele voltar, provavelmente dirá:
 ---
 
 ## URL
-https://nutridetect-6.preview.emergentagent.com
+https://nutri-ai-8.preview.emergentagent.com
