@@ -1,24 +1,30 @@
 {
   "nome": "Costela com mandioca",
-  "slug": "costela_com_mandioca",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Prato de carne cozida em molho saboroso.",
   "ingredientes": [
-    "Carne",
-    "Molho",
-    "Ervas"
+    "Costela bovina",
+    "Mandioca (aipim/macaxeira)",
+    "Tomate",
+    "Pimentão vermelho",
+    "Cheiro verde (salsa e cebolinha)",
+    "Caldo de cozimento (provavelmente com temperos)"
   ],
-  "beneficios": [],
+  "descricao": "Prato que consiste em pedaços de costela cozidos em um caldo, com pedaços de mandioca, tomate e pimentão vermelho, finalizado com cheiro verde. Aparentemente, os ingredientes foram cozidos em panela.",
+  "beneficios": [
+    "A costela é fonte de proteína, importante para a construção e reparação muscular.",
+    "A mandioca é fonte de carboidratos, que fornece energia para o corpo.",
+    "O prato oferece uma variedade de nutrientes, incluindo vitaminas e minerais provenientes dos vegetais."
+  ],
   "riscos": [
-    "Alérgeno: Carne"
+    "Alto teor de gordura saturada, dependendo da quantidade de gordura na costela.",
+    "Pode conter sódio em excesso, dependendo da quantidade de temperos utilizados."
   ],
-  "tecnica": "",
+  "curiosidade": "A mandioca é um alimento versátil e de grande importância na culinária brasileira, sendo utilizada em diversas preparações, como cozida, frita, em purês e bolos.",
+  "slug": "costela_com_mandioca",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": false
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

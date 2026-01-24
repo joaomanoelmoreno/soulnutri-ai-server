@@ -1,25 +1,31 @@
 {
   "nome": "Costela assada com mandioca",
-  "slug": "costela_assada_com_mandioca",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Prato de carne cozida com abacaxi e outros vegetais.",
   "ingredientes": [
-    "Carne",
-    "Abacaxi",
+    "Costela bovina",
+    "Mandioca cozida",
     "Tomate cereja",
-    "Salsa"
+    "Cebolinha",
+    "Caldo de carne (possivelmente)",
+    "Azeite (possivelmente)"
   ],
-  "beneficios": [],
+  "descricao": "Prato de costela bovina cozida, provavelmente assada ou cozida em baixa temperatura, com pedaços de mandioca cozida, tomate cereja e cebolinha picada. A costela parece estar macia e suculenta, indicando um cozimento lento. O prato está em um caldo escuro, possivelmente um molho feito com o próprio suco da carne e temperos.",
+  "beneficios": [
+    "A costela é rica em proteína, essencial para a construção e reparo dos tecidos do corpo.",
+    "A mandioca é fonte de carboidratos complexos, fornecendo energia de forma gradual e prolongada.",
+    "O tomate cereja oferece vitaminas e antioxidantes, importantes para a saúde celular."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter traços de ingredientes com alérgenos."
+    "Alto teor de gordura saturada da costela, se consumida em excesso pode aumentar o colesterol.",
+    "Pode conter sódio em excesso se foram usados temperos industrializados.",
+    "Alérgeno: pode conter traços de ingredientes processados (ex: caldo de carne)."
   ],
-  "tecnica": "",
+  "curiosidade": "A costela bovina, quando cozida lentamente, como possivelmente é o caso, libera colágeno, que beneficia a pele, cabelo e articulações.",
+  "slug": "costela_assada_com_mandioca",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,31 @@
 {
   "nome": "Costela Bovina",
-  "slug": "costela_bovina",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Costela bovina",
+    "Mandioca",
+    "Caldo de carne",
+    "Cebolinha",
+    "Louro",
+    "Pimenta vermelha",
+    "Azeite"
+  ],
+  "descricao": "A costela bovina, cozida lentamente em um caldo saboroso, provavelmente feito com a própria costela e temperos, como louro e pimenta vermelha, é servida com pedaços de mandioca cozida e cebolinha picada para finalizar. O modo de preparo parece ser cozido, possivelmente refogado, resultando em carne macia e suculenta.",
+  "beneficios": [
+    "A costela bovina é rica em proteínas, importantes para a construção e reparo dos tecidos do corpo.",
+    "A mandioca é fonte de carboidratos, que fornecem energia, e fibras, que auxiliam na digestão."
+  ],
+  "riscos": [
+    "Alto teor de gordura, especialmente a saturada, proveniente da costela, o que pode aumentar o colesterol.",
+    "Consumo excessivo pode levar ao ganho de peso.",
+    "Possível presença de sódio em excesso, dependendo do tempero utilizado."
+  ],
+  "curiosidade": "A costela bovina, quando cozida lentamente, pode ficar tão macia que se desfaz ao toque, resultando em uma experiência gastronômica única.",
+  "slug": "costela_bovina",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
