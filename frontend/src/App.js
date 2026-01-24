@@ -1202,7 +1202,7 @@ function App() {
                   }}>
                     ✅ Sim, correto
                   </button>
-                  <button className="fb-btn incorrect" onClick={() => setShowFeedback(true)}>
+                  <button className="fb-btn incorrect" onClick={() => setShowMultiCorrection(true)}>
                     ❌ Não, corrigir
                   </button>
                 </div>
@@ -1217,6 +1217,55 @@ function App() {
           </div>
         );
       })()}
+
+      {/* MODAL DE CORREÇÃO MULTI */}
+      {showMultiCorrection && (
+        <div className="modal-overlay" onClick={() => setShowMultiCorrection(false)}>
+          <div className="modal-content multi-correction" onClick={e => e.stopPropagation()}>
+            <h3>✏️ Corrigir Prato Múltiplo</h3>
+            
+            <div className="correction-form">
+              <div className="form-group">
+                <label>🍖 Prato Principal:</label>
+                <input 
+                  type="text"
+                  placeholder="Ex: Maminha ao Molho"
+                  value={multiCorrections.principal}
+                  onChange={e => setMultiCorrections({...multiCorrections, principal: e.target.value})}
+                  autoFocus
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>🥗 Acompanhamentos (separados por vírgula):</label>
+                <textarea 
+                  placeholder="Ex: Salada de alface, Macarrão oriental, Rolinho vietnamita, Dadinho de tapioca"
+                  value={multiCorrections.acompanhamentos}
+                  onChange={e => setMultiCorrections({...multiCorrections, acompanhamentos: e.target.value})}
+                  rows={3}
+                />
+              </div>
+              
+              <small className="help-text">
+                💡 A IA vai aprender com esta correção e melhorar nas próximas identificações
+              </small>
+            </div>
+            
+            <div className="modal-actions-fixed">
+              <button 
+                className="save-correction-btn" 
+                onClick={saveMultiCorrection}
+                disabled={creatingDish || !multiCorrections.principal.trim()}
+              >
+                {creatingDish ? '⏳ Salvando...' : '💾 Salvar Correção'}
+              </button>
+              <button className="cancel-btn" onClick={() => setShowMultiCorrection(false)}>
+                ✕ Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MODAL DE CORREÇÃO */}
       {showFeedback && (
