@@ -152,6 +152,20 @@ body{font-family:system-ui,sans-serif;background:#0a0a12;color:#fff;min-height:1
 .modal-content h3{text-align:center;margin-bottom:12px;font-size:1.1rem}
 .modal-hint{text-align:center;color:#888;font-size:.75rem;margin-bottom:12px}
 
+/* MODAL CORREÇÃO MULTI */
+.modal-content.multi-correction{padding-bottom:140px}
+.correction-form{display:flex;flex-direction:column;gap:14px}
+.correction-form .form-group{display:flex;flex-direction:column;gap:6px}
+.correction-form label{font-size:.85rem;color:#a78bfa;font-weight:600}
+.correction-form input{padding:12px;border-radius:10px;border:1px solid rgba(168,85,247,0.3);background:rgba(0,0,0,0.4);color:#fff;font-size:1rem}
+.correction-form input:focus{outline:none;border-color:#a78bfa;box-shadow:0 0 0 3px rgba(168,85,247,0.2)}
+.correction-form textarea{padding:12px;border-radius:10px;border:1px solid rgba(168,85,247,0.3);background:rgba(0,0,0,0.4);color:#fff;font-size:.9rem;resize:vertical;font-family:inherit}
+.correction-form textarea:focus{outline:none;border-color:#a78bfa;box-shadow:0 0 0 3px rgba(168,85,247,0.2)}
+.correction-form .help-text{color:#888;font-size:.75rem;text-align:center;padding:8px;background:rgba(255,255,255,0.03);border-radius:8px}
+.save-correction-btn{width:100%;padding:14px;background:linear-gradient(135deg,#a855f7,#7c3aed);border:none;border-radius:10px;color:#fff;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s}
+.save-correction-btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(168,85,247,0.4)}
+.save-correction-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
 /* Seção de novo prato */
 .new-dish-section{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:10px;padding:12px;margin-bottom:12px}
 .section-label{font-size:.85rem;color:#22c55e;margin-bottom:8px;font-weight:600}
