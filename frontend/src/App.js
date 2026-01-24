@@ -375,6 +375,9 @@ function App() {
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Criar URL de preview para mostrar a imagem
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewImageUrl(previewUrl);
       setLastImageBlob(file);
       identifyImage(file);
     }
