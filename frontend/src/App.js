@@ -483,34 +483,37 @@ function App() {
     setCreatingDish(true);
     
     try {
+      // Converter blob para array buffer para evitar "body already read"
+      const arrayBuffer = await lastImageBlob.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+      
       // Salvar prato principal
       const fdPrincipal = new FormData();
-      fdPrincipal.append("file", lastImageBlob, "photo.jpg");
+      fdPrincipal.append("file", blob, "photo.jpg");
       fdPrincipal.append("dish_name", multiCorrections.principal.trim());
       
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      // Adicionar acompanhamentos se existirem
+      if (multiCorrections.acompanhamentos.trim()) {
+        fdPrincipal.append("acompanhamentos", multiCorrections.acompanhamentos.trim());
+      }
+      
       const res = await fetch(`${API}/ai/create-dish`, { 
         method: "POST", 
-        body: fdPrincipal,
-        signal: controller.signal
+        body: fdPrincipal
       });
-      clearTimeout(timeoutId);
+      
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       
       const data = await res.json();
       
       if (data.ok) {
-        // Salvar acompanhamentos como metadados
-        if (multiCorrections.acompanhamentos.trim()) {
-          const acompList = multiCorrections.acompanhamentos.split(',').map(a => a.trim()).filter(a => a);
-          console.log('Acompanhamentos salvos:', acompList);
-          // TODO: Endpoint para salvar acompanhamentos associados
-        }
-        
+        const pratoNome = multiCorrections.principal;
         setFeedbackSent(true);
         setShowMultiCorrection(false);
         setMultiCorrections({ principal: '', acompanhamentos: '' });
-        alert(`✅ Prato "${multiCorrections.principal}" salvo com sucesso!\n\nA IA vai aprender com esta correção.`);
+        alert(`✅ Prato "${pratoNome}" salvo com sucesso!\n\nA IA vai aprender com esta correção.`);
         loadDishes(); // Atualizar lista
       } else {
         alert(data.error || 'Erro ao salvar correção');
