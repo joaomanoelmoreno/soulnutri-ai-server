@@ -149,8 +149,8 @@ async def identify_multi_hybrid_v2(image_bytes: bytes) -> dict:
             slug = result['dish']
             score = result['score']
             
-            # Threshold mais alto para zoom (0.70)
-            if score >= 0.70:
+            # Threshold de 0.60 para zoom
+            if score >= 0.60:
                 if slug not in identified_items or score > identified_items[slug]['score']:
                     identified_items[slug] = {
                         'nome': normalize_dish_name(slug),
