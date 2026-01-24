@@ -1,18 +1,29 @@
 {
   "nome": "Espaguete",
-  "slug": "espaguete",
   "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Espaguete",
+    "Azeite de oliva",
+    "Alho picado",
+    "Pimenta dedo-de-moça",
+    "Salsa picada"
+  ],
+  "descricao": "Espaguete cozido e salteado em azeite de oliva com alho picado, pimenta dedo-de-moça fatiada e salsa fresca. O preparo consiste em refogar o alho no azeite até dourar, adicionar a pimenta e, por fim, misturar com o espaguete cozido. A salsa é adicionada para finalizar.",
+  "beneficios": [
+    "Azeite de oliva: rico em gorduras monoinsaturadas, benéficas para a saúde cardiovascular",
+    "Alho: possui propriedades antioxidantes e pode auxiliar na melhora da imunidade",
+    "Pimenta: contém capsaicina, que pode ter efeito termogênico, auxiliando no metabolismo"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Pimenta pode causar irritação em pessoas sensíveis"
+  ],
+  "curiosidade": "O espaguete é um tipo de massa seca italiana, e o termo 'spaghetti' é o plural de 'spaghetto', que significa 'fio' ou 'barbante' em italiano.",
+  "slug": "espaguete",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

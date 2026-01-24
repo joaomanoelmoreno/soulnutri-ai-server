@@ -1,27 +1,29 @@
 {
   "nome": "Espaguete ao Missô",
-  "slug": "espagueti_ao_misso",
-  "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "Espaguete com molho de missô japonês",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "espaguete",
-    "pasta de missô",
-    "legumes",
-    "cebolinha",
-    "gergelim"
+    "Espaguete",
+    "Ervilhas",
+    "Cubos de bacon",
+    "Molho cremoso (possivelmente à base de leite ou creme de leite)",
+    "Almôndegas"
   ],
+  "descricao": "Prato com espaguete cozido e misturado com molho cremoso, ervilhas e bacon. Acompanha almôndegas.",
   "beneficios": [
-    "Proteínas de alta qualidade",
-    "Rico em nutrientes"
+    "A massa de espaguete fornece carboidratos, que são a principal fonte de energia.",
+    "As ervilhas são ricas em fibras, que auxiliam na digestão e promovem a saciedade."
   ],
-  "riscos": [],
-  "tecnica": "",
+  "riscos": [
+    "Contém glúten",
+    "Possível presença de lactose no molho cremoso",
+    "Alto teor de sódio devido ao bacon e ao missô (se presente no molho)"
+  ],
+  "curiosidade": "O missô, tradicional ingrediente da culinária japonesa, é rico em probióticos que beneficiam a flora intestinal.",
+  "slug": "espagueti_ao_misso",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

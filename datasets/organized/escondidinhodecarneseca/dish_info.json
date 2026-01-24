@@ -1,18 +1,31 @@
 {
   "nome": "Escondidinhodecarneseca",
-  "slug": "escondidinhodecarneseca",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Carne seca desfiada",
+    "Purê de batata (batata, leite, manteiga)",
+    "Cebola roxa picada",
+    "Queijo muçarela ralado",
+    "Azeite",
+    "Sal"
+  ],
+  "descricao": "Escondidinho de carne seca, com carne seca desfiada refogada, coberta por purê de batata e finalizado com queijo muçarela gratinado. A carne seca provavelmente foi refogada com cebola e azeite antes de ser adicionada ao prato.",
+  "beneficios": [
+    "A carne seca é rica em proteínas e ferro, importantes para a saúde muscular e o transporte de oxigênio no corpo.",
+    "O purê de batata fornece carboidratos, que são fonte de energia."
+  ],
+  "riscos": [
+    "Alto teor de sódio devido à carne seca.",
+    "Risco de excesso de gordura saturada, dependendo da quantidade de queijo e manteiga.",
+    "Possível presença de lactose.",
+    "Contém glúten se o purê de batata for preparado com algum ingrediente que o contenha."
+  ],
+  "curiosidade": "O escondidinho é um prato tipicamente brasileiro, com variações regionais. O nome 'escondidinho' vem da camada de purê que 'esconde' o recheio.",
+  "slug": "escondidinhodecarneseca",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,33 @@
 {
   "nome": "Espaguete Parisiense",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Espaguete",
+    "Presunto",
+    "Ervilhas",
+    "Tomate",
+    "Creme de leite",
+    "Queijo ralado (possivelmente parmesão)",
+    "Azeite"
+  ],
+  "descricao": "Espaguete cozido e misturado com um molho cremoso, contendo pedaços de presunto, ervilhas, tomate e possivelmente queijo parmesão ralado. O molho é à base de creme de leite.  Um fio de azeite foi adicionado para finalizar.",
+  "beneficios": [
+    "A ervilha é fonte de fibras, importantes para a saúde intestinal.",
+    "O tomate é rico em licopeno, um antioxidante.",
+    "A combinação de carboidratos (espaguete) com proteína (presunto) e gordura (creme de leite) oferece energia e saciedade."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, devido ao creme de leite e possivelmente ao queijo.",
+    "Contém glúten (espaguete).",
+    "Pode conter alto teor de sódio, dependendo da quantidade de presunto e queijo.",
+    "Alérgenos: glúten, leite, pode conter traços de ovo."
+  ],
+  "curiosidade": "Apesar do nome, a origem da receita não é necessariamente francesa. O termo 'parisiensie' pode se referir ao estilo do prato, que combina ingredientes populares e sabores conhecidos.",
   "slug": "espaguete_parisiense",
-  "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
