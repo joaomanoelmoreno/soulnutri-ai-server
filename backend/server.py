@@ -981,15 +981,15 @@ async def identify_multiple_items(file: UploadFile = File(...)):
     start_time = time.time()
     
     try:
-        from services.hybrid_identify_v2 import identify_multi_hybrid_v2
+        from services.hybrid_identify_v3 import identify_multi_v3
         
         content = await file.read()
         
         if len(content) == 0:
             return {"ok": False, "error": "Arquivo de imagem vazio"}
         
-        logger.info("[MULTI-HÍBRIDO v2] Iniciando identificação com múltiplas buscas no índice local...")
-        result = await identify_multi_hybrid_v2(content)
+        logger.info("[v3] Identificação simplificada - imagem completa...")
+        result = await identify_multi_v3(content)
         
         elapsed_ms = (time.time() - start_time) * 1000
         result['search_time_ms'] = round(elapsed_ms, 2)
