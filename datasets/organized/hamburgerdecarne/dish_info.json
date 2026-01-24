@@ -1,18 +1,27 @@
 {
   "nome": "Hamburgerdecarne",
-  "slug": "hamburgerdecarne",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Carne bovina Angus",
+    "Tomate",
+    "Ervas frescas (manjericão ou similar)",
+    "Azeite"
+  ],
+  "descricao": "Hambúrgueres grelhados feitos com carne Angus, acompanhados de tomate refogado e ervas frescas picadas. O modo de preparo visível é o grelhado.",
+  "beneficios": [
+    "A carne Angus é rica em proteínas, importantes para a construção e reparação muscular.",
+    "O tomate é fonte de licopeno, um antioxidante que pode auxiliar na prevenção de doenças."
+  ],
+  "riscos": [
+    "A carne vermelha em excesso pode aumentar o risco de doenças cardiovasculares.",
+    "Pode conter glúten dependendo dos temperos utilizados."
+  ],
+  "curiosidade": "A raça bovina Angus é conhecida pela qualidade e maciez da carne, devido à sua capacidade de marmoreio (gordura entre as fibras).",
+  "slug": "hamburgerdecarne",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
