@@ -1,18 +1,24 @@
 {
   "nome": "Romeu",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Queijo branco cremoso"
+  ],
+  "descricao": "O prato 'Romeu' é composto unicamente por queijo branco cremoso, servido em uma tigela de vidro.",
+  "beneficios": [
+    "Fonte de proteína.",
+    "Rico em cálcio."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo do tipo de queijo.",
+    "Pode conter lactose."
+  ],
+  "curiosidade": "O 'Romeu' tradicionalmente é servido com goiabada, criando um contraste de sabores e texturas.",
   "slug": "romeu",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

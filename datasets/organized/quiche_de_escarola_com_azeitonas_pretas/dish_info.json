@@ -1,29 +1,32 @@
 {
   "nome": "Quiche de escarola com azeitonas pretas",
-  "slug": "quiche_de_escarola_com_azeitonas_pretas",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Prato feito com massa folhada e recheio cremoso à base de ovos e queijo.",
   "ingredientes": [
+    "Massa de torta (farinha de trigo, manteiga, etc.)",
+    "Escarola",
+    "Azeitonas pretas",
     "Ovos",
-    "Queijo",
-    "Massa folhada"
+    "Leite",
+    "Queijo (não especificado)",
+    "Temperos (não especificados)"
   ],
-  "beneficios": [],
+  "descricao": "Quiche com base de massa, recheio de escarola refogada com azeitonas, misturada com creme de ovos, leite e queijo, finalizada com cobertura gratinada.",
+  "beneficios": [
+    "Escarola é rica em fibras, auxiliando na saúde digestiva.",
+    "Azeitonas pretas fornecem gorduras saudáveis e antioxidantes.",
+    "Ovos e queijo fornecem proteínas."
+  ],
   "riscos": [
-    "Alérgeno: Ovo",
-    "Alérgeno: Laticínios",
-    "Alérgeno: Glúten",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo, ovos)"
+    "Contém glúten devido à massa da torta.",
+    "Pode conter lactose dependendo do tipo de queijo utilizado.",
+    "Alto teor de gordura saturada dependendo da receita."
   ],
-  "tecnica": "",
+  "curiosidade": "Quiche é um prato de origem francesa, tradicionalmente feito com uma base de massa e recheio cremoso.",
+  "slug": "quiche_de_escarola_com_azeitonas_pretas",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

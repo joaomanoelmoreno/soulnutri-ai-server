@@ -1,18 +1,29 @@
 {
   "nome": "Repolho",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Repolho branco",
+    "Gergelim preto",
+    "Gergelim branco",
+    "Cebolinha",
+    "Azeite de oliva",
+    "Tempero (possivelmente shoyu ou similar)"
+  ],
+  "descricao": "O prato consiste em repolho branco refogado em azeite de oliva, com tempero (possivelmente shoyu ou similar). É finalizado com gergelim preto e branco, e cebolinha picada. O preparo aparenta ser simples, com o repolho refogado até ficar ligeiramente macio e com um leve tom dourado.",
+  "beneficios": [
+    "O repolho é rico em vitamina C, que atua como antioxidante e fortalece o sistema imunológico.",
+    "O gergelim é fonte de cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Pode conter sódio, dependendo da quantidade de shoyu ou temperos utilizados.",
+    "Não contém glúten (a princípio), mas verificar os ingredientes do tempero."
+  ],
+  "curiosidade": "O repolho é um vegetal crucífero, assim como brócolis e couve-flor, e todos eles compartilham propriedades que ajudam na desintoxicação do organismo.",
   "slug": "repolho",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

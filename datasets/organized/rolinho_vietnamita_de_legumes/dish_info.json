@@ -1,18 +1,31 @@
 {
   "nome": "Rolinho Vietnamita De Legumes",
-  "slug": "rolinho_vietnamita_de_legumes",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Papel de arroz",
+    "Macarrão de arroz",
+    "Cenoura ralada",
+    "Pepino em julienne",
+    "Folhas de hortelã",
+    "Rodelas de abobrinha"
+  ],
+  "descricao": "Rolinhos vietnamitas frescos feitos com papel de arroz, recheados com macarrão de arroz, cenoura e pepino em julienne, folhas de hortelã e acompanhados por rodelas de abobrinha. O preparo é simples, com os ingredientes crus e frescos, enrolados no papel de arroz umedecido.",
+  "beneficios": [
+    "Baixo teor de calorias, ideal para dietas de emagrecimento",
+    "Rico em fibras provenientes dos legumes, auxiliando na saúde digestiva",
+    "Fonte de vitaminas e minerais dos vegetais, importantes para a saúde"
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo do tipo de macarrão de arroz utilizado",
+    "O papel de arroz pode conter ingredientes alergênicos",
+    "Risco de contaminação cruzada se preparado em ambiente com outros alimentos"
+  ],
+  "curiosidade": "Os rolinhos vietnamitas são tradicionalmente servidos com molhos à base de amendoim ou peixe, mas esta versão é naturalmente vegana e leve.",
+  "slug": "rolinho_vietnamita_de_legumes",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

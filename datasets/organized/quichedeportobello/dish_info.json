@@ -1,18 +1,31 @@
 {
   "nome": "Quichedeportobello",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa de torta (provavelmente farinha de trigo, manteiga/óleo, água e sal)",
+    "Ovos",
+    "Leite ou creme de leite",
+    "Queijo (possivelmente queijo parmesão, queijo gruyère ou outro)",
+    "Cogumelos portobello",
+    "Temperos (cebola, alho, ervas frescas ou secas)",
+    "Azeite (para refogar)"
+  ],
+  "descricao": "A quiche de portobello é um prato salgado, geralmente feito com uma base de massa de torta recheada com uma mistura cremosa de ovos, leite, queijo e cogumelos portobello salteados. Os cogumelos são refogados para realçar seu sabor, e o recheio é assado até dourar e firmar. O interior da quiche parece conter uma mistura de cogumelos, o que indica que eles foram incorporados ao recheio.",
+  "beneficios": [
+    "Os cogumelos portobello são ricos em antioxidantes e podem ajudar a fortalecer o sistema imunológico.",
+    "O queijo fornece cálcio e proteínas, importantes para a saúde óssea e muscular."
+  ],
+  "riscos": [
+    "Contém glúten (na massa da torta).",
+    "Alto teor de gordura, dependendo da quantidade de queijo e creme utilizado.",
+    "Potencialmente alto em sódio, dependendo dos ingredientes e temperos utilizados."
+  ],
+  "curiosidade": "O cogumelo portobello é uma variedade de cogumelo comumente usada na culinária devido ao seu sabor rico e textura carnuda, muitas vezes servido como substituto da carne em pratos vegetarianos.",
   "slug": "quichedeportobello",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

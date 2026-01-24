@@ -1,18 +1,31 @@
 {
   "nome": "Quinoa Com Tahine",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Quinoa",
+    "Tahine (pasta de gergelim)",
+    "Lâminas de abobrinha",
+    "Nozes",
+    "Folhas de hortelã",
+    "Grãos de pimenta rosa"
+  ],
+  "descricao": "Prato vegano que consiste em quinoa cozida misturada com tahine, lâminas de abobrinha, nozes picadas, folhas de hortelã e grãos de pimenta rosa. A quinoa é o grão base, e provavelmente foi cozida em água. O tahine adiciona cremosidade e sabor, enquanto as nozes e a hortelã fornecem textura e frescor. A pimenta rosa agrega um toque picante e visual.",
+  "beneficios": [
+    "A quinoa é uma excelente fonte de proteína vegetal completa, fornecendo todos os aminoácidos essenciais.",
+    "O tahine é rico em cálcio, importante para a saúde óssea.",
+    "As nozes oferecem gorduras saudáveis e antioxidantes."
+  ],
+  "riscos": [
+    "Pode conter glúten se a quinoa não for certificada como livre de glúten.",
+    "Alérgicos a nozes devem evitar.",
+    "Pode conter traços de outros alimentos."
+  ],
+  "curiosidade": "A quinoa é um pseudocereal nativo dos Andes, cultivado há milhares de anos, e é uma ótima alternativa ao arroz e outros grãos.",
   "slug": "quinoa_com_tahine",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

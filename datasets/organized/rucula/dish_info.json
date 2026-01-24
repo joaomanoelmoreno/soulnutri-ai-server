@@ -1,18 +1,21 @@
 {
   "nome": "Rucula",
-  "slug": "rucula",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Rúcula"
+  ],
+  "descricao": "A rúcula é apresentada crua, possivelmente lavada e pronta para consumo. Não há nenhum método de preparo visível.",
+  "beneficios": [
+    "Rica em vitamina K, essencial para a coagulação sanguínea e saúde óssea.",
+    "Fonte de antioxidantes que combatem os radicais livres."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A rúcula, também conhecida como agrião-da-terra, pertence à família das Brassicaceae, a mesma do brócolis, couve-flor e repolho.",
+  "slug": "rucula",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

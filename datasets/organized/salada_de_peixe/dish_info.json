@@ -1,18 +1,31 @@
 {
   "nome": "Salada De Peixe",
-  "slug": "salada_de_peixe",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Peixe desfiado",
+    "Tomate picado",
+    "Cebola roxa picada",
+    "Coentro picado",
+    "Suco de limão",
+    "Rodelas de limão (para decorar)"
+  ],
+  "descricao": "Salada de peixe com pedaços de peixe desfiado, misturado com tomate picado, cebola roxa e coentro fresco. A receita é temperada com suco de limão, resultando em um sabor cítrico e refrescante. A salada é decorada com rodelas de limão.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade",
+    "Rica em ômega-3 (dependendo do peixe)",
+    "Fonte de vitaminas e minerais"
+  ],
+  "riscos": [
+    "Pode conter espinhas de peixe",
+    "Risco de contaminação por toxinas de peixes (dependendo da procedência)",
+    "Alérgeno: peixe"
+  ],
+  "curiosidade": "O peixe é uma excelente fonte de selênio, um antioxidante que protege as células do corpo contra danos.",
+  "slug": "salada_de_peixe",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

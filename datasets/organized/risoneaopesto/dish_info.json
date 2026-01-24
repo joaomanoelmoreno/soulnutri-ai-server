@@ -1,18 +1,30 @@
 {
   "nome": "Risoneaopesto",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Risone (grão em formato de arroz)",
+    "Pesto (provavelmente feito com manjericão, alho, azeite de oliva, pinoli/castanha de caju e sal)",
+    "Tomate seco",
+    "Nozes",
+    "Rúcula (ou outra folha verde)"
+  ],
+  "descricao": "Prato que consiste em risone (grão) misturado com pesto, tomate seco, nozes e folhas verdes. O risone é cozido e misturado ao pesto, que pode ter como base manjericão, alho, azeite de oliva, pinoli/castanha de caju e sal. Tomates secos são adicionados para um sabor adocicado e as nozes para crocância. O prato é finalizado com folhas verdes frescas.",
+  "beneficios": [
+    "Fonte de carboidratos complexos, fornecendo energia de liberação lenta.",
+    "Rico em gorduras saudáveis das nozes e azeite de oliva, benéficas para a saúde cardiovascular.",
+    "Fornece antioxidantes e vitaminas provenientes dos tomates secos e folhas verdes.",
+    "Boa fonte de fibras, auxiliando na saciedade e saúde digestiva."
+  ],
+  "riscos": [
+    "Contém glúten (caso o risone seja feito com trigo).",
+    "Pode conter alérgenos como nozes e pinoli (se presente no pesto)."
+  ],
+  "curiosidade": "O tomate seco passa por um processo de desidratação que intensifica seu sabor e concentra seus nutrientes.",
   "slug": "risoneaopesto",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

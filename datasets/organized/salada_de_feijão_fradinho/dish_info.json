@@ -1,18 +1,27 @@
 {
   "nome": "Salada De Feijão Fradinho",
-  "slug": "salada_de_feijão_fradinho",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "ingredientes": [
+    "Feijão fradinho cozido",
+    "Tomate picado",
+    "Cebola roxa picada",
+    "Cheiro verde picado",
+    "Azeite de oliva",
+    "Rodelas de cebola roxa (para decoração)"
+  ],
+  "descricao": "Salada colorida feita com feijão fradinho cozido, tomate, cebola roxa e cheiro verde picados. Os ingredientes são misturados com azeite de oliva. O prato é finalizado com rodelas de cebola roxa dispostas em volta.",
+  "beneficios": [
+    "Rico em proteínas vegetais e fibras",
+    "Fonte de ferro e outros minerais",
+    "O feijão fradinho ajuda a controlar o açúcar no sangue"
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "O feijão fradinho é uma leguminosa muito utilizada na culinária brasileira, especialmente em pratos típicos do Nordeste. É uma excelente fonte de nutrientes e versátil no preparo de diversas receitas.",
+  "slug": "salada_de_feijão_fradinho",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

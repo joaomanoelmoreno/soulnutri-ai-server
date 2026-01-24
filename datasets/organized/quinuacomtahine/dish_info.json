@@ -1,18 +1,32 @@
 {
   "nome": "Quinuacomtahine",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Quinoa cozida",
+    "Nozes",
+    "Pepino em espiral",
+    "Ervas frescas picadas (salsa, coentro ou hortelã)",
+    "Molho Tahine (gergelim)",
+    "Azeite de oliva",
+    "Tempero (sal e pimenta do reino)"
+  ],
+  "descricao": "Uma salada colorida e nutritiva, onde a quinoa cozida é combinada com nozes crocantes, pepino em espiral, ervas frescas picadas e um molho cremoso de tahine, azeite e temperos. As nozes podem ser levemente torradas para intensificar o sabor. O pepino em espiral adiciona um toque visual e crocante.",
+  "beneficios": [
+    "Rica em proteínas, fibras e minerais (magnésio, ferro)",
+    "Fonte de gorduras saudáveis (ômega-3) provenientes das nozes",
+    "O tahine fornece cálcio e contribui para a saciedade",
+    "A quinoa é um grão sem glúten e de fácil digestão"
+  ],
+  "riscos": [
+    "Alérgeno: gergelim (tahine)",
+    "Calórico: devido às nozes e ao tahine"
+  ],
+  "curiosidade": "A quinoa é um grão ancestral dos Andes, considerado um superalimento por seu perfil nutricional completo, contendo todos os aminoácidos essenciais.",
   "slug": "quinuacomtahine",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

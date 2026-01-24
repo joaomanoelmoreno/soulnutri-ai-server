@@ -1,28 +1,28 @@
 {
   "nome": "Radicais ao molho de mel e lamina de amendoas",
-  "slug": "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Barquetes de massa folhada com recheio de mel, rúcula e lâminas de amêndoas.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Massa folhada",
-    "Mel",
-    "Amêndoas",
-    "Rúcula",
+    "Radicchio",
+    "Molho de mel",
+    "Lâminas de amêndoas",
+    "Tomate seco",
     "Pimentão"
   ],
-  "beneficios": [],
-  "riscos": [
-    "Alérgeno: Amêndoas",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: NOZES (amêndoa, amendoa)"
+  "descricao": "Prato composto por folhas de radicchio, cobertas com molho de mel, tomate seco, pimentão e lâminas de amêndoas. O radicchio é uma folha com sabor amargo, que confere um toque especial ao prato.",
+  "beneficios": [
+    "Radicchio é rica em antioxidantes, que combatem os radicais livres.",
+    "As amêndoas são fonte de gorduras saudáveis e vitamina E."
   ],
-  "tecnica": "",
+  "riscos": [
+    "Pode conter traços de outros ingredientes.",
+    "Alérgeno: amêndoas"
+  ],
+  "curiosidade": "O radicchio é frequentemente usado em saladas, mas também pode ser grelhado ou assado para realçar seu sabor.",
+  "slug": "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

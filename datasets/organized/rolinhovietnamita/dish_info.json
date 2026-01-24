@@ -1,18 +1,30 @@
 {
   "nome": "Rolinhovietnamita",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Massa de arroz (papel de arroz)",
+    "Abobrinha",
+    "Cenoura",
+    "Hortelã fresca",
+    "Outras folhas verdes (rúcula ou alface)",
+    "Pepino"
+  ],
+  "descricao": "Rolinhos vietnamitas preparados com massa de arroz translúcida, recheados com cenoura ralada, abobrinha em julienne, folhas verdes e hortelã fresca. Servidos sobre fatias de pepino.",
+  "beneficios": [
+    "Rico em fibras provenientes dos vegetais, que auxiliam na digestão e promovem a saciedade.",
+    "Fonte de vitaminas e minerais, especialmente vitamina A (cenoura) e antioxidantes (folhas verdes e hortelã).",
+    "Baixo em calorias e gorduras, ideal para dietas de emagrecimento ou manutenção do peso."
+  ],
+  "riscos": [
+    "A massa de arroz pode conter glúten, dependendo da marca e ingredientes.",
+    "Não possui, se preparado com ingredientes 100% vegetais."
+  ],
+  "curiosidade": "Os rolinhos vietnamitas são tradicionalmente servidos com molhos à base de amendoim ou peixe, mas podem ser facilmente adaptados para opções veganas com molhos à base de soja ou tahini.",
   "slug": "rolinhovietnamita",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

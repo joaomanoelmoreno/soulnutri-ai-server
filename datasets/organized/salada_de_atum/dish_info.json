@@ -1,18 +1,30 @@
 {
   "nome": "Salada De Atum",
-  "slug": "salada_de_atum",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Atum",
+    "Batata",
+    "Ervilhas",
+    "Cenoura",
+    "Cheiro verde",
+    "Maionese",
+    "Rodelas de cenoura (para decorar)"
+  ],
+  "descricao": "Salada preparada com pedaços de atum, batata cozida picada, ervilhas, cenoura ralada, cheiro verde picado, e maionese. Decorada com rodelas de cenoura.",
+  "beneficios": [
+    "Fonte de proteínas de alta qualidade provenientes do atum.",
+    "Fornece vitaminas e minerais das verduras e legumes"
+  ],
+  "riscos": [
+    "Alto teor de sódio se a maionese for industrializada",
+    "Possível presença de conservantes na maionese"
+  ],
+  "curiosidade": "O atum é rico em ômega-3, um ácido graxo essencial para a saúde do coração e do cérebro.",
+  "slug": "salada_de_atum",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

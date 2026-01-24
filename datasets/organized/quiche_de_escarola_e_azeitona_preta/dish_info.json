@@ -1,31 +1,29 @@
 {
   "nome": "Quiche de escarola e azeitona preta",
-  "slug": "quiche_de_escarola_e_azeitona_preta",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Mini quiches com recheio de tomate e azeitonas pretas, provavelmente com queijo e ovos, em uma base de massa.",
   "ingredientes": [
-    "Massa",
-    "Ovos",
-    "Tomate",
-    "Azeitonas Pretas",
-    "Queijo"
+    "Escarola",
+    "Azeitonas pretas",
+    "Massa da quiche (provavelmente farinha, ovos, manteiga)",
+    "Recheio cremoso (provavelmente ovos, creme de leite)"
   ],
-  "beneficios": [],
+  "descricao": "Quiche individual com base de massa folhada, recheio cremoso com escarola refogada e azeitonas pretas. O topo da quiche apresenta uma coloração dourada, indicando que foi assada no forno.",
+  "beneficios": [
+    "A escarola é rica em fibras, auxiliando na saúde digestiva.",
+    "Azeitonas pretas são fonte de gorduras saudáveis e antioxidantes.",
+    "Ovos são fonte de proteína e nutrientes essenciais."
+  ],
   "riscos": [
-    "Alérgeno: Ovo",
-    "Alérgeno: Glúten (se a massa for feita com trigo)",
-    "Intolerância à lactose (se tiver queijo)",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo, ovos)"
+    "Pode conter glúten, dependendo da composição da massa.",
+    "Contém lactose, caso utilize creme de leite na receita.",
+    "Alérgeno: ovos."
   ],
-  "tecnica": "",
+  "curiosidade": "A escarola, parente da alface, é rica em vitamina K, essencial para a coagulação sanguínea.",
+  "slug": "quiche_de_escarola_e_azeitona_preta",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

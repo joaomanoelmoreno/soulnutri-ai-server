@@ -1,24 +1,27 @@
 {
   "nome": "Requeijão",
-  "slug": "requeijão",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Sobremesa ou lanche popular no Brasil, que combina o sabor suave do queijo com a doçura da goiabada.",
   "ingredientes": [
-    "Queijo branco",
-    "Goiabada"
+    "Leite",
+    "Coalho",
+    "Cultura láctea",
+    "Sal"
   ],
-  "beneficios": [],
+  "descricao": "O requeijão é um queijo fresco cremoso, feito a partir do soro do leite (do processo de fabricação de outros queijos) ou do leite integral. O produto é cozido e depois coalhado com ácido cítrico ou vinagre, resultando em sua consistência cremosa.",
+  "beneficios": [
+    "Fonte de proteínas, importantes para a construção e reparação dos tecidos do corpo.",
+    "Rico em cálcio, essencial para a saúde dos ossos e dentes."
+  ],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: LACTOSE (queijo)"
+    "Alto teor de gordura saturada, que em excesso pode aumentar o colesterol.",
+    "Alérgeno: lactose e proteína do leite (caseína)."
   ],
-  "tecnica": "",
+  "curiosidade": "O requeijão é um alimento muito popular no Brasil, sendo consumido puro, com pães, torradas, ou em receitas como recheios e patês.",
+  "slug": "requeijão",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": false
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }
