@@ -1,18 +1,29 @@
 {
   "nome": "Farofa De Bacon",
-  "slug": "farofa_de_bacon",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Farinha de mandioca",
+    "Bacon",
+    "Gordura (possivelmente óleo vegetal ou azeite)",
+    "Temperos (cebola, alho, salsinha, pimenta do reino - possibilidade)"
+  ],
+  "descricao": "Farofa preparada, provavelmente, refogando bacon picado em gordura até dourar, adicionando cebola e alho picados. Em seguida, a farinha de mandioca é adicionada e misturada até dourar e adquirir a textura crocante desejada. Temperos podem ser adicionados.",
+  "beneficios": [
+    "Fonte de energia devido à farinha de mandioca",
+    "O bacon pode adicionar sabor e crocância ao prato"
+  ],
+  "riscos": [
+    "Alto teor de sódio devido ao bacon",
+    "Rica em gorduras saturadas, dependendo da quantidade de bacon e tipo de gordura utilizada",
+    "Pode conter glúten, dependendo da farinha de mandioca utilizada",
+    "Alérgeno: pode conter traços de ingredientes com alérgenos caso a farinha seja contaminada durante o processo"
+  ],
+  "curiosidade": "A farofa é um acompanhamento tradicional da culinária brasileira, presente em diversas regiões do país e consumida em celebrações e refeições do dia a dia. A farinha de mandioca é um alimento versátil, rico em carboidratos e de fácil acesso no Brasil.",
+  "slug": "farofa_de_bacon",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,24 +1,30 @@
 {
   "nome": "Espetinho de legumes e molho pesto",
-  "slug": "espetinho_de_legumes_e_molho_pesto",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Espetinhos coloridos de legumes grelhados, acompanhados de molho verde.",
   "ingredientes": [
-    "Pimentão",
-    "Cebola",
-    "Abobrinha",
-    "Tomate",
-    "Azeite"
+    "Pimentão (vermelho, amarelo, verde), cebola, abobrinha, tomate cereja, azeite de oliva, alho, manjericão, pinoli, queijo parmesão (opcional)",
+    "sal",
+    "pimenta do reino",
+    "palitos de madeira"
   ],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "descricao": "Espetinhos de legumes grelhados, intercalando pedaços de pimentão, cebola, abobrinha e tomate cereja. Acompanha molho pesto cremoso, preparado com manjericão fresco, alho, pinoli e azeite de oliva. Opcionalmente, pode conter queijo parmesão ralado.",
+  "beneficios": [
+    "Os legumes fornecem vitaminas, minerais e antioxidantes.",
+    "O manjericão do pesto possui propriedades anti-inflamatórias e antioxidantes.",
+    "A abobrinha é rica em fibras, auxiliando na saúde digestiva.",
+    "Os pimentões são ricos em vitamina C, que fortalece o sistema imunológico."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo do tipo de palito utilizado (verificar o rótulo).",
+    "Alérgenos: pinoli (nozes)",
+    "Caso o pesto contenha queijo, pode conter lactose."
+  ],
+  "curiosidade": "O pesto tradicional italiano leva manjericão fresco, pinoli, alho, queijo parmesão ralado e azeite de oliva, resultando em um molho vibrante e aromático.",
+  "slug": "espetinho_de_legumes_e_molho_pesto",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
