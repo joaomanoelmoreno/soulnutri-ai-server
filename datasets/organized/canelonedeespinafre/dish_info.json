@@ -1,18 +1,31 @@
 {
   "nome": "Canelonedeespinafre",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa de canelone (provavelmente com farinha de trigo)",
+    "Espinafre",
+    "Recheio cremoso (possivelmente ricota, queijo ou creme de leite)",
+    "Molho de tomate",
+    "Queijo ralado (possivelmente mussarela ou parmesão)",
+    "Azeite de oliva (para untar ou refogar)",
+    "Temperos (alho, cebola, sal, pimenta)"
+  ],
+  "descricao": "O prato é composto por canelones recheados com espinafre e um recheio cremoso, provavelmente à base de queijo ou ricota. Os canelones são cobertos com molho de tomate e queijo ralado, e gratinados até dourar. O preparo envolve o cozimento da massa, o preparo do recheio e molho, a montagem e o gratinado no forno.",
+  "beneficios": [
+    "O espinafre é rico em vitaminas, minerais e antioxidantes, benéficos para a saúde.",
+    "O tomate, no molho, é fonte de licopeno, um antioxidante que pode ajudar a proteger contra doenças."
+  ],
+  "riscos": [
+    "Contém glúten (na massa do canelone)",
+    "Alto teor de gordura e calorias (dependendo do tipo de queijo e recheio)",
+    "Pode conter lactose (se o queijo utilizado for derivado do leite)"
+  ],
+  "curiosidade": "O canelone é uma variação do famoso macarrão italiano, a lasanha. A diferença é que, em vez de camadas, o recheio é enrolado na massa em formato cilíndrico.",
   "slug": "canelonedeespinafre",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

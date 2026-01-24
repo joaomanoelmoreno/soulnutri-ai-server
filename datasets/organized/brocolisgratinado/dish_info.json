@@ -1,18 +1,29 @@
 {
   "nome": "Brocolisgratinado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Brócolis",
+    "Queijo (possivelmente cheddar ou outro queijo de sabor marcante)",
+    "Cebolinha (para decorar)",
+    "Molho (possivelmente à base de queijo e leite)"
+  ],
+  "descricao": "O prato consiste em brócolis cozido ou levemente cozido, coberto com um molho cremoso à base de queijo e gratinado no forno. A cebolinha é usada para dar um toque fresco e visualmente agradável.",
+  "beneficios": [
+    "Brócolis é rico em fibras, vitaminas C e K, e antioxidantes, que auxiliam na saúde cardiovascular e imunológica.",
+    "Queijo é fonte de cálcio, importante para a saúde óssea e dental.",
+    "A cebolinha adiciona um sabor suave e contém vitaminas e minerais."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo do tipo e quantidade de queijo utilizado.",
+    "Pode conter alto teor de sódio, dependendo dos ingredientes do molho e do queijo.",
+    "Alérgeno: leite"
+  ],
+  "curiosidade": "O brócolis é um vegetal da família do repolho, couve-flor e couve. Ele recebeu este nome do italiano 'broccolo', que significa 'broto de couve'.",
   "slug": "brocolisgratinado",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

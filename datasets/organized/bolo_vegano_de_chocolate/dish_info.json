@@ -1,18 +1,28 @@
 {
   "nome": "Bolo Vegano De Chocolate",
-  "slug": "bolo_vegano_de_chocolate",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Farinha de trigo",
+    "Chocolate (possivelmente vegano)",
+    "Açúcar (possivelmente mascavo ou de coco)",
+    "Morango",
+    "Calda de chocolate"
+  ],
+  "descricao": "Bolo vegano de chocolate cortado em pequenos pedaços, coberto com calda de chocolate e decorado com fatias de morango. A massa do bolo parece ser escura e úmida, indicando a presença de ingredientes como chocolate em pó ou cacau.",
+  "beneficios": [
+    "A fruta adiciona vitaminas e antioxidantes.",
+    "Opção de sobremesa sem produtos de origem animal."
+  ],
+  "riscos": [
+    "Contém glúten (se usar farinha de trigo)",
+    "Alto teor de açúcar."
+  ],
+  "curiosidade": "Bolos veganos podem usar ingredientes como purê de frutas, óleo vegetal e substitutos de ovo (como sementes de chia ou linhaça) para criar uma textura macia.",
+  "slug": "bolo_vegano_de_chocolate",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

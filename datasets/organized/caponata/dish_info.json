@@ -1,18 +1,35 @@
 {
   "nome": "Caponata",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Berinjela",
+    "Abobrinha",
+    "Pimentão (amarelo e vermelho)",
+    "Tomate",
+    "Azeitonas pretas",
+    "Passas",
+    "Cebola",
+    "Alcaparras",
+    "Azeite de oliva",
+    "Salsa picada",
+    "Vinagre"
+  ],
+  "descricao": "A caponata é um antepasto siciliano, geralmente feito com berinjela como ingrediente principal. Na imagem, os vegetais parecem ter sido refogados em azeite de oliva e vinagre, resultando em uma textura macia e um sabor agridoce. A presença de salsa picada indica um toque fresco e aromático.",
+  "beneficios": [
+    "Rica em antioxidantes, principalmente das berinjelas e pimentões.",
+    "Boa fonte de fibras, auxiliando na digestão.",
+    "Baixa em calorias e gorduras, se preparada com azeite de oliva em moderação."
+  ],
+  "riscos": [
+    "Pode conter alta quantidade de sódio devido às azeitonas e alcaparras.",
+    "Alergênicos: Nenhum identificado."
+  ],
+  "curiosidade": "A caponata tradicionalmente leva vinagre, que ajuda a realçar os sabores dos vegetais e a equilibrar a doçura das passas. O nome 'caponata' pode vir do italiano 'capone', um tipo de peixe, sugerindo que o prato originalmente continha peixe, mas evoluiu para uma receita vegetariana.",
   "slug": "caponata",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

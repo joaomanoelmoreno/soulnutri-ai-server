@@ -1,18 +1,34 @@
 {
   "nome": "Camarao",
-  "slug": "camarao",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Camarões salteados com ervas (salsa)",
+    "Tomate fatiado",
+    "Abacate amassado (guacamole) com tomate picado e azeitonas",
+    "Cubos de queijo branco (talvez queijo coalho) com cebola roxa em conserva e azeite",
+    "Tomate cereja",
+    "Vol-au-vent com recheio cremoso (possivelmente à base de camarão)",
+    "Torradas",
+    "Tortillas de milho crocantes",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "descricao": "O prato apresenta camarões salteados e uma variedade de acompanhamentos. Os camarões parecem ter sido cozidos rapidamente em uma frigideira com ervas. A guacamole e o queijo com cebola roxa oferecem opções de sabor. O vol-au-vent sugere um recheio cremoso.",
+  "beneficios": [
+    "Camarão é fonte de proteínas e selênio, um antioxidante importante.",
+    "Abacate é rico em gorduras saudáveis e fibras.",
+    "Tomates fornecem vitaminas e licopeno, um antioxidante."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarão)",
+    "Pode conter glúten dependendo da preparação do vol-au-vent e das torradas."
+  ],
+  "curiosidade": "O camarão, apesar de ser um crustáceo, é uma fonte relativamente baixa em calorias e rica em nutrientes como vitamina B12 e ômega-3.",
+  "slug": "camarao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

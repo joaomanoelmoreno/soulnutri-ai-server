@@ -1,18 +1,32 @@
 {
   "nome": "Cestinhasdecamarao",
-  "slug": "cestinhasdecamarao",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Camarão",
+    "Massa filo (provavelmente)",
+    "Queijo (possivelmente muçarela ou similar)",
+    "Salsa picada (ou outro tempero verde)",
+    "Azeite (provável)",
+    "Tempero (não identificável, mas presente)"
+  ],
+  "descricao": "As cestinhas de camarão parecem ser preparadas com massa filo, recheadas com camarões refogados (ou cozidos) e queijo, possivelmente gratinadas. Há indícios de temperos e salsa picada para finalizar.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade (camarão).",
+    "Rico em vitaminas do complexo B, importantes para o metabolismo.",
+    "A massa filo, se integral, pode fornecer fibras."
+  ],
+  "riscos": [
+    "Contém glúten (massa filo).",
+    "Alérgeno: crustáceos (camarão).",
+    "Alto teor de sódio (devido ao queijo e possíveis temperos).",
+    "Pode conter lactose (queijo)."
+  ],
+  "curiosidade": "O camarão é rico em selênio, um antioxidante que protege as células contra danos.",
+  "slug": "cestinhasdecamarao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

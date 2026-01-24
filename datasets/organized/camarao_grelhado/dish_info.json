@@ -1,18 +1,35 @@
 {
   "nome": "Camarao Grelhado",
-  "slug": "camarao_grelhado",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Camarão grelhado",
+    "Filé de peixe empanado e gratinado com molho cremoso",
+    "Macarrão tipo yakisoba",
+    "Farofa",
+    "Abobrinha grelhada",
+    "Tomate cereja",
+    "Mini torta (provavelmente quiche)",
+    "Tiras de frango ou atum"
+  ],
+  "descricao": "Prato com diversos componentes: camarões grelhados, peixe empanado e gratinado, macarrão tipo yakisoba, farofa, abobrinha e tomate grelhados, e uma mini torta.",
+  "beneficios": [
+    "Camarão é fonte de proteínas e selênio.",
+    "Macarrão pode fornecer energia (carboidratos)."
+  ],
+  "riscos": [
+    "Contém glúten (macarrão, possível farinha na farofa e empanados).",
+    "Alérgeno: crustáceos (camarão).",
+    "Possível alérgeno: leite e ovos (na torta, empanados e molhos).",
+    "Alto teor de sódio (molhos, temperos).",
+    "Potencialmente alto teor de gordura (empanados, molhos).",
+    "Possível presença de açúcar (molhos, yakisoba)."
+  ],
+  "curiosidade": "O camarão, além de saboroso, é uma boa fonte de astaxantina, um antioxidante com potencial benefício para a saúde ocular.",
+  "slug": "camarao_grelhado",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

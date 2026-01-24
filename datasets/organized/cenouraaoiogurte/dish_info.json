@@ -1,18 +1,25 @@
 {
   "nome": "Cenouraaoiogurte",
-  "slug": "cenouraaoiogurte",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Cenoura",
+    "Iogurte",
+    "Ervas finas picadas (salsa e cebolinha)",
+    "Gomos de laranja"
+  ],
+  "descricao": "O prato consiste em duas cenouras grandes, provavelmente assadas ou grelhadas, cortadas longitudinalmente e cobertas com ervas picadas. Elas são servidas sobre uma base de iogurte, possivelmente misturado com um molho verde, e decoradas com gomos de laranja.",
+  "beneficios": [
+    "A cenoura é rica em betacaroteno, precursor da vitamina A, importante para a visão e a saúde da pele. ",
+    "O iogurte oferece probióticos, que auxiliam na saúde intestinal.",
+    "A combinação de cenoura com laranja potencializa a absorção de vitamina C e a formação de colágeno."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A cenoura, originalmente roxa, foi sendo gradualmente cultivada na cor laranja no século XVII, nos Países Baixos, em homenagem à família real holandesa, a Casa de Orange.",
+  "slug": "cenouraaoiogurte",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,31 @@
 {
   "nome": "Arroz integral com egumes",
-  "slug": "arrozintlegumes",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Arroz integral",
+    "Cenoura em cubos",
+    "Abobrinha em cubos",
+    "Pimentão amarelo em cubos",
+    "Salsa picada",
+    "Cebolinha picada",
+    "Grãos de trigo"
+  ],
+  "descricao": "Prato vegano colorido e nutritivo. O arroz integral e os grãos de trigo estão cozidos e misturados com cubos de legumes (cenoura, abobrinha e pimentão) e finalizado com ervas frescas picadas (salsa e cebolinha).",
+  "beneficios": [
+    "Alto teor de fibras, auxiliando na digestão e controle glicêmico.",
+    "Rico em vitaminas e antioxidantes provenientes dos vegetais.",
+    "Fonte de energia de liberação lenta."
+  ],
+  "riscos": [
+    "Contém glúten (nos grãos de trigo), devendo ser evitado por celíacos ou pessoas com sensibilidade.",
+    "Pode conter traços de outros ingredientes se preparado em utensílios compartilhados."
+  ],
+  "curiosidade": "O arroz integral é considerado um alimento completo, pois preserva o farelo e o gérmen, ricos em nutrientes que são retirados no arroz branco.",
+  "slug": "arrozintlegumes",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

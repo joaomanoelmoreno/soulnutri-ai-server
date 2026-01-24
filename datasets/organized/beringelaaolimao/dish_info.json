@@ -1,18 +1,25 @@
 {
   "nome": "Beringelaaolimao",
-  "slug": "beringelaaolimao",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Beringela",
+    "Ervas picadas (salsa e/ou coentro)",
+    "Fatias de limão",
+    "Pimenta dedo-de-moça (opcional)",
+    "Azeite de oliva"
+  ],
+  "descricao": "A beringela é cortada ao meio (ou em porções), recheada com um mix de ervas picadas e temperos, e finalizada com fatias de limão e pimenta. O prato parece ter sido finalizado com azeite de oliva.",
+  "beneficios": [
+    "A beringela é rica em antioxidantes, como as antocianinas, que combatem os radicais livres.",
+    "O limão é fonte de vitamina C, que fortalece o sistema imunológico."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A beringela é um fruto originário da Índia, pertencente à família das solanáceas, a mesma do tomate e da batata.",
+  "slug": "beringelaaolimao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

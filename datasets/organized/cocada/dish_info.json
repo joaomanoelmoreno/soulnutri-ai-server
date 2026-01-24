@@ -1,26 +1,27 @@
 {
   "nome": "Cocada",
-  "slug": "cocada",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Doce cremoso feito com coco ralado, açúcar e leite condensado.",
   "ingredientes": [
     "Coco ralado",
     "Açúcar",
-    "Leite condensado"
+    "Leite condensado",
+    "Água"
   ],
-  "beneficios": [],
+  "descricao": "A cocada é um doce tradicional brasileiro, preparado cozinhando coco ralado com açúcar e, em algumas versões, leite condensado e água. O modo de preparo pode variar, resultando em cocadas mais macias ou mais duras, dependendo do tempo de cozimento e da proporção dos ingredientes.",
+  "beneficios": [
+    "Fornece energia devido ao açúcar.",
+    "O coco é fonte de fibras e gorduras saudáveis, que auxiliam na saciedade."
+  ],
   "riscos": [
-    "Alto teor de açúcar",
-    "Alérgeno: Leite",
-    "Alérgeno: LACTOSE (leite)"
+    "Alto teor de açúcar, o que pode contribuir para o ganho de peso e o aumento da glicemia.",
+    "Contém lactose (conforme informação no rótulo), um alérgeno comum."
   ],
-  "tecnica": "",
+  "curiosidade": "Existem diversas variações de cocada, incluindo versões com adição de frutas, como abacaxi ou maracujá, e especiarias, como canela.",
+  "slug": "cocada",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": false
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

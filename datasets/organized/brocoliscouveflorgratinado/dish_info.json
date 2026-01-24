@@ -1,18 +1,27 @@
 {
   "nome": "Brocoliscouveflorgratinado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Brocolis",
+    "Couve-flor",
+    "Molho branco (possivelmente leite, farinha de trigo e manteiga)"
+  ],
+  "descricao": "O prato consiste em brocolis e couve-flor, possivelmente cozidos ou pré-cozidos, cobertos com molho branco (à base de leite, manteiga e farinha) e gratinados, possivelmente no forno.",
+  "beneficios": [
+    "Couve-flor e brócolis são fontes ricas em fibras, importantes para a saúde intestinal.",
+    "A couve-flor é uma boa fonte de vitamina C e antioxidantes, que combatem os radicais livres."
+  ],
+  "riscos": [
+    "Molho branco pode conter glúten (se usar farinha de trigo).",
+    "O prato pode ter alto teor de gordura, dependendo da quantidade de manteiga e queijo utilizada no preparo.",
+    "Possível presença de lactose (se o molho for feito com leite)."
+  ],
+  "curiosidade": "A couve-flor, apesar de parecer branca, pertence à mesma espécie do brócolis, repolho, couve-de-bruxelas e couve, todos originários da Europa e Ásia.",
   "slug": "brocoliscouveflorgratinado",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

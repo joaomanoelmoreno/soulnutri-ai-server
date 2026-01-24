@@ -1,18 +1,26 @@
 {
   "nome": "Carpaccio De Abobrinha Com Queijo Vegano",
-  "slug": "carpaccio_de_abobrinha_com_queijo_vegano",
-  "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Abobrinha fatiada",
+    "Queijo vegano ralado",
+    "Azeite de oliva",
+    "Ervas finas desidratadas (ex: manjericão, orégano)",
+    "Pimenta rosa em grãos"
+  ],
+  "descricao": "Carpaccio de abobrinha crua, fatiada finamente e disposta em um prato. É temperado com azeite, ervas finas, pimenta rosa e queijo vegano ralado. Não há sinais de cozimento.",
+  "beneficios": [
+    "A abobrinha é rica em fibras, que auxiliam na digestão e promovem a saciedade.",
+    "O azeite de oliva é fonte de gorduras saudáveis, benéficas para a saúde cardiovascular.",
+    "A pimenta rosa, apesar de não ser picante, possui antioxidantes."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "O carpaccio, originalmente, era feito com carne crua e foi criado na Itália. A versão com abobrinha é uma alternativa vegana e refrescante.",
+  "slug": "carpaccio_de_abobrinha_com_queijo_vegano",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,31 @@
 {
   "nome": "Bolobrownie",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Chocolate",
+    "Açúcar",
+    "Farinha de trigo",
+    "Manteiga de amendoim",
+    "Óleo vegetal",
+    "Fermento",
+    "Cobertura de chocolate"
+  ],
+  "descricao": "O Bolobrownie é um doce cortado em quadrados, com uma base de brownie escura e densa, coberta com uma cobertura de chocolate. A cobertura apresenta um padrão de linhas finas e irregulares. A massa do brownie parece ter textura porosa.",
+  "beneficios": [
+    "A porção de chocolate pode oferecer antioxidantes, como flavonoides, que ajudam a proteger as células contra danos.",
+    "A presença de farinha de trigo fornece carboidratos, que são fonte de energia."
+  ],
+  "riscos": [
+    "Alto teor de açúcar e gordura.",
+    "Contém glúten (proveniente da farinha de trigo).",
+    "Alérgenos: pode conter traços de leite e ovos (dependendo da receita)."
+  ],
+  "curiosidade": "Brownies surgiram no final do século XIX nos Estados Unidos, com receitas que variavam entre bolos macios e densos, como os que vemos na imagem.",
   "slug": "bolobrownie",
-  "categoria": "sobremesa",
-  "category_emoji": "🍰",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

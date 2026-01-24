@@ -1,18 +1,28 @@
 {
   "nome": "Farofa com bacon",
-  "slug": "abobrinha_grelhada__copia",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Farinha de mandioca",
+    "Bacon",
+    "Gordura (possivelmente óleo vegetal ou azeite, dependendo do preparo)",
+    "Temperos (cebola, alho, sal e pimenta são ingredientes comuns)"
+  ],
+  "descricao": "Farofa preparada com bacon frito e desfiado, misturado à farinha de mandioca e temperos, geralmente refogada em gordura.",
+  "beneficios": [
+    "A farinha de mandioca é fonte de carboidratos, fornecendo energia.",
+    "O bacon, em quantidades moderadas, pode contribuir com sabor e gorduras que auxiliam na absorção de vitaminas lipossolúveis."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada proveniente do bacon, podendo aumentar o colesterol.",
+    "Rico em sódio, especialmente se utilizar temperos industrializados e bacon com excesso de sal.",
+    "Pode conter glúten, dependendo da farinha de mandioca utilizada (verificar o rótulo)"
+  ],
+  "curiosidade": "A farofa é um acompanhamento tradicional da culinária brasileira, presente em diversas regiões com variações de ingredientes e preparo. Sua origem é atribuída aos indígenas brasileiros, que utilizavam a farinha de mandioca como base para suas refeições.",
+  "slug": "abobrinha_grelhada__copia",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

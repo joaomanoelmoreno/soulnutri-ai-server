@@ -1,18 +1,34 @@
 {
   "nome": "Bacalhaucomnatas",
-  "slug": "bacalhaucomnatas",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Bacalhau desfiado",
+    "Batata",
+    "Creme de leite/natas",
+    "Cebola",
+    "Alho",
+    "Queijo ralado (possivelmente queijo prato ou similar)",
+    "Salsa picada",
+    "Azeite de oliva",
+    "Pimenta do reino (possivelmente)"
+  ],
+  "descricao": "O prato Bacalhau com Natas é um clássico da culinária portuguesa. Nesta imagem, o bacalhau desfiado, misturado com batatas cozidas e fatiadas, é coberto por um creme de natas (creme de leite fresco) e queijo ralado, e gratinado no forno até dourar.  A salsa picada é utilizada para finalizar o prato, adicionando frescor e sabor. A cebola e o alho, refogados em azeite de oliva, provavelmente são usados como base para o molho cremoso.",
+  "beneficios": [
+    "Fonte de proteína (bacalhau)",
+    "Fonte de carboidratos (batata)"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada devido às natas e ao queijo.",
+    "Alto teor de sódio (principalmente se o bacalhau for dessalgado de maneira inadequada).",
+    "Contém lactose (do creme de leite e queijo)",
+    "Pode conter glúten (se for usado algum espessante no creme)"
+  ],
+  "curiosidade": "O bacalhau, ingrediente principal, não é pescado em águas portuguesas. O bacalhau utilizado no prato vem do Atlântico Norte e precisa ser dessalgado antes do preparo.",
+  "slug": "bacalhaucomnatas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

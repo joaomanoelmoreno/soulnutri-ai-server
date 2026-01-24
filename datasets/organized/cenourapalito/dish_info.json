@@ -1,18 +1,26 @@
 {
   "nome": "Cenourapalito",
-  "slug": "cenourapalito",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "ingredientes": [
+    "Cenoura",
+    "Sementes de abóbora",
+    "Salsa picada",
+    "Azeite de oliva",
+    "Sal"
+  ],
+  "descricao": "Prato composto por cenoura cortada em palitos, aparentemente cozida ou levemente refogada em azeite de oliva. Apresenta sementes de abóbora e salsa picada, indicando finalização com ervas frescas. O sal é provável tempero.",
+  "beneficios": [
+    "Rica em betacaroteno, precursor da vitamina A, essencial para a saúde da visão e pele.",
+    "As sementes de abóbora fornecem zinco, importante para o sistema imunológico.",
+    "As cenouras são ricas em fibras, auxiliando na saúde digestiva."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A cenoura cozida libera mais betacaroteno do que crua, tornando-a mais biodisponível para o corpo.",
+  "slug": "cenourapalito",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

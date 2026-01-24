@@ -1,18 +1,29 @@
 {
   "nome": "Capuccino Com Chocolate",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Café (possivelmente expresso)",
+    "Leite vaporizado",
+    "Chocolate em pó",
+    "Canela em pó",
+    "Chocolate em barra"
+  ],
+  "descricao": "Capuccino preparado com café expresso e leite vaporizado, coberto com chocolate em pó e canela. Acompanha um pedaço de chocolate em barra.",
+  "beneficios": [
+    "O café pode melhorar o desempenho físico e mental, além de ser rico em antioxidantes.",
+    "A canela possui propriedades anti-inflamatórias e pode auxiliar no controle glicêmico."
+  ],
+  "riscos": [
+    "Contém lactose (do leite).",
+    "O chocolate pode conter glúten, dependendo da marca e ingredientes.",
+    "Alto teor de açúcar, especialmente se houver adição de açúcar ou chocolate ao leite."
+  ],
+  "curiosidade": "O capuccino tradicional é italiano e recebe esse nome devido à semelhança da cor com a vestimenta dos monges capuchinhos.",
   "slug": "capuccino_com_chocolate",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

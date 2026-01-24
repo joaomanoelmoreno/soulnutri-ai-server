@@ -1,18 +1,35 @@
 {
   "nome": "Bolinho De Siri",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Bolinho de siri (provavelmente com carne de siri, farinha, ovo e temperos)",
+    "Salada de tomate cereja",
+    "Salada de pepino",
+    "Salada com ovos cozidos",
+    "Salada com palmito",
+    "Batata cozida",
+    "Molho cremoso (provavelmente a base de tomate e especiarias)",
+    "cebolinha picada",
+    "massa folhada assada"
+  ],
+  "descricao": "O prato apresenta uma variedade de preparos e ingredientes. O bolinho de siri, principal item, é provavelmente frito ou assado. Acompanhamentos incluem saladas frescas com tomate cereja, pepino, e palmito, além de ovos cozidos. Há também batatas cozidas e uma massa folhada assada. Um molho cremoso, provavelmente à base de tomate, cobre parte dos alimentos, enriquecido com cebolinha picada.",
+  "beneficios": [
+    "Fonte de proteína (siri e ovos)",
+    "Variedade de vitaminas e minerais provenientes dos vegetais",
+    "Fibras das saladas, auxiliando na digestão"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (siri)",
+    "Contém glúten (possível na farinha do bolinho ou na massa folhada)",
+    "Alto teor de sódio (em temperos e molhos)",
+    "Alto teor de gordura (fritura do bolinho e molhos cremosos)"
+  ],
+  "curiosidade": "A carne de siri é rica em selênio, um antioxidante que protege as células do corpo contra danos.",
   "slug": "bolinho_de_siri",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

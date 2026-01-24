@@ -1,18 +1,29 @@
 {
   "nome": "Ceviche De Banana Da Terra",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Banana da Terra em rodelas",
+    "Cebola roxa em rodelas",
+    "Cebolinha picada",
+    "Pimenta dedo-de-moça (vermelha) em fatias finas",
+    "Tempero líquido (provavelmente à base de limão, azeite e ervas)"
+  ],
+  "descricao": "O prato consiste em rodelas de banana da terra, marinadas em um tempero ácido, provavelmente cítrico (como limão), com cebola roxa, cebolinha e pimenta dedo-de-moça. A banana da terra parece estar crua ou levemente cozida, e a combinação de ingredientes sugere um preparo fresco e leve.",
+  "beneficios": [
+    "Fonte de fibras, auxiliando na digestão e saciedade.",
+    "A banana da terra é rica em potássio, importante para a saúde cardiovascular.",
+    "As cebolas roxas contêm antioxidantes que combatem radicais livres."
+  ],
+  "riscos": [
+    "Alergia a ingredientes, como cebola ou pimenta.",
+    "Potencialmente alto teor de sódio, dependendo do tempero utilizado."
+  ],
+  "curiosidade": "O ceviche é tradicionalmente feito com peixe cru marinado em suco cítrico. Esta versão, usando banana da terra, é uma adaptação criativa e vegana, com sabores e texturas contrastantes.",
   "slug": "ceviche_de_banana_da_terra",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

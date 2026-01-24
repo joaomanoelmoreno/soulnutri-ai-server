@@ -1,18 +1,32 @@
 {
   "nome": "Bacalhaugomesdesa",
-  "slug": "bacalhaugomesdesa",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Bacalhau desfiado",
+    "Batata cozida",
+    "Ovos cozidos",
+    "Azeitonas pretas",
+    "Brócolis",
+    "Salsa picada",
+    "Cebolinha picada",
+    "Azeite de oliva",
+    "Pimenta dedo de moça"
+  ],
+  "descricao": "O Bacalhau à Gomes de Sá é um prato tradicional português, feito com bacalhau desfiado, batatas cozidas em cubos, ovos cozidos, azeitonas pretas, brócolis, salsa e cebolinha picadas, refogados em azeite de oliva. Os ingredientes são geralmente misturados e finalizados com um toque de pimenta.",
+  "beneficios": [
+    "O bacalhau é rico em proteínas de alta qualidade e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
+    "A batata fornece carboidratos para energia e potássio, essencial para a função muscular e nervosa."
+  ],
+  "riscos": [
+    "Alto teor de sódio, devido ao bacalhau dessalgado.",
+    "Alérgeno: peixe."
+  ],
+  "curiosidade": "O nome do prato homenageia o comerciante português José Luís Gomes de Sá, que teria criado a receita no século XIX.",
+  "slug": "bacalhaugomesdesa",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

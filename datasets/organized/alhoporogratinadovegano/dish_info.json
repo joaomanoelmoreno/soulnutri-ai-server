@@ -1,26 +1,31 @@
 {
   "nome": "Alho-poró Gratinado Vegano",
-  "slug": "alhoporogratinadovegano",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "Alho-poró gratinado com creme vegano",
   "ingredientes": [
-    "alho-poró",
-    "creme vegano",
-    "farinha de rosca",
-    "azeite"
+    "Alho-poró",
+    "Tomates cereja",
+    "Cebolinha fresca",
+    "Queijo vegano ralado (possivelmente à base de castanhas ou soja)",
+    "Azeite de oliva",
+    "Possivelmente cogumelos (não totalmente visíveis)"
   ],
+  "descricao": "Prato de alho-poró gratinado, com alho-poró cozido ou refogado, possivelmente com cogumelos, coberto com queijo vegano ralado e tomates cereja frescos, finalizado com cebolinha picada. O preparo sugere gratinação, provavelmente no forno, para dourar o queijo vegano e aquecer os ingredientes.",
   "beneficios": [
-    "Proteínas de alta qualidade",
-    "Rico em nutrientes"
+    "Fonte de fibras e prebióticos, promovendo a saúde intestinal (alho-poró).",
+    "Rico em antioxidantes e vitaminas, como a vitamina C (tomates).",
+    "Versão vegana, ideal para quem busca uma alimentação sem produtos de origem animal."
   ],
-  "riscos": [],
-  "tecnica": "",
+  "riscos": [
+    "Dependendo dos ingredientes do queijo vegano, pode conter alto teor de gorduras.",
+    "Pode conter sódio em excesso, dependendo do tempero e tipo de queijo vegano.",
+    "Alérgenos: observar ingredientes do queijo vegano, como castanhas ou soja."
+  ],
+  "curiosidade": "O alho-poró é um alimento versátil, rico em compostos sulfurados que, além de sabor, possuem propriedades antioxidantes e anti-inflamatórias.",
+  "slug": "alhoporogratinadovegano",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

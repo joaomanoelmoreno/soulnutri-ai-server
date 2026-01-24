@@ -1,18 +1,34 @@
 {
   "nome": "Carne De Porco",
-  "slug": "carne_de_porco",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Carne de porco (partes variadas)",
+    "Ovos cozidos",
+    "Tomate",
+    "Alface",
+    "Batata doce",
+    "Arroz branco",
+    "Amêndoas laminadas",
+    "Limão (cunha)",
+    "Azeite de oliva",
+    "Sal e temperos (possivelmente)"
+  ],
+  "descricao": "O prato é composto por diversas partes de carne de porco, possivelmente grelhadas ou assadas, ovos cozidos picados, salada de tomate com alface, batata doce cozida e arroz com amêndoas. O prato está acompanhado de uma cunha de limão.",
+  "beneficios": [
+    "A carne de porco é rica em proteínas, importantes para a construção e reparação dos tecidos do corpo.",
+    "Ovos são fontes de proteínas de alta qualidade e nutrientes como colina, importante para a saúde cerebral.",
+    "A batata doce é rica em fibras e antioxidantes."
+  ],
+  "riscos": [
+    "A carne de porco pode ser rica em gordura saturada, dependendo da parte utilizada, o consumo em excesso pode aumentar o colesterol.",
+    "Contém ovos, que são um alérgeno comum."
+  ],
+  "curiosidade": "A carne de porco é uma excelente fonte de tiamina (vitamina B1), que é essencial para o metabolismo energético.",
+  "slug": "carne_de_porco",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

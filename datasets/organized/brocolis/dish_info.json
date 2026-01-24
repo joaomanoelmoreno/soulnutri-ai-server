@@ -1,18 +1,28 @@
 {
   "nome": "Brocolis",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Brócolis",
+    "Queijo (tipo não especificado)",
+    "Ingrediente de molho branco (possivelmente leite, farinha e manteiga)"
+  ],
+  "descricao": "Prato de brócolis cozido e coberto com molho branco e queijo, levado ao forno para gratinar.",
+  "beneficios": [
+    "Brócolis é rico em vitamina C, que atua como antioxidante",
+    "O cálcio do queijo auxilia na saúde óssea",
+    "Fonte de fibras, auxiliando na saciedade e saúde intestinal."
+  ],
+  "riscos": [
+    "Contém lactose (se o molho branco for feito com leite)",
+    "Pode conter glúten (se o molho branco for feito com farinha de trigo)",
+    "Excesso de gordura (devido ao queijo e possivelmente ao molho)"
+  ],
+  "curiosidade": "O brócolis é um alimento crucífero, assim como a couve-flor e o repolho, e estudos indicam que o consumo regular desses alimentos pode estar associado à redução do risco de certos tipos de câncer.",
   "slug": "brocolis",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

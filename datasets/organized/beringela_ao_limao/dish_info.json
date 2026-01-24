@@ -1,18 +1,28 @@
 {
   "nome": "Beringela Ao Limao",
-  "slug": "beringela_ao_limao",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Beringela",
+    "Ervas picadas (salsa, cebolinha)",
+    "Azeite de oliva",
+    "Suco de limão",
+    "Rodelas de limão (para decorar)",
+    "Tomate (fatiado)",
+    "Pimenta vermelha"
+  ],
+  "descricao": "Beringelas cortadas ao meio e recheadas com um mix de ervas frescas e possivelmente outros temperos. As beringelas parecem ter sido assadas ou cozidas, e são finalizadas com fatias de limão. O prato também inclui tomates fatiados.",
+  "beneficios": [
+    "A beringela é rica em antioxidantes, como as antocianinas, que protegem as células do corpo.",
+    "As ervas frescas adicionam vitaminas e minerais, além de propriedades anti-inflamatórias.",
+    "O limão é rico em vitamina C, que fortalece o sistema imunológico."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A beringela é um fruto originário da Índia, e seu nome vem do árabe 'al-bāḏinjān'.",
+  "slug": "beringela_ao_limao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

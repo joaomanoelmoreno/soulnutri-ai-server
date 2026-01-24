@@ -1,25 +1,31 @@
 {
   "nome": "Cogumelo recheado de com legumes",
-  "slug": "cogumelo_recheado_de_com_legumes",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Cogumelos Portobello recheados com vegetais e queijo, assados em molho.",
   "ingredientes": [
-    "cogumelos",
-    "vegetais picados (cenoura, salsinha)",
-    "queijo ralado"
+    "Cogumelos Portobello (visível)",
+    "Cenoura (visível, picada)",
+    "Salsa picada (visível)",
+    "Queijo ralado (visível)",
+    "Azeite de oliva (provável no refogado)",
+    "Cebola (provável no refogado)",
+    "Alho (provável no refogado)",
+    "Caldo de legumes (provável no cozimento)"
   ],
-  "beneficios": [],
+  "descricao": "Prato composto por cogumelos portobello recheados com legumes. Os cogumelos são provavelmente refogados com azeite, cebola e alho, e recheados com uma mistura de cenoura picada, salsa e temperos. Finalizados com queijo ralado e cozidos até dourar. O prato está em um molho escuro que pode ser caldo de legumes, realçando o sabor dos cogumelos e legumes.",
+  "beneficios": [
+    "Fonte de vitaminas do complexo B, importantes para o metabolismo energético, presentes nos cogumelos.",
+    "Rico em fibras, especialmente da cenoura, auxiliando na digestão e saciedade."
+  ],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: LACTOSE (queijo)"
+    "Possível presença de glúten, dependendo do tempero utilizado.",
+    "Alérgeno: leite, devido ao queijo ralado."
   ],
-  "tecnica": "",
+  "curiosidade": "O cogumelo portobello é um cogumelo comestível comumente usado como substituto da carne devido à sua textura firme e sabor rico.",
+  "slug": "cogumelo_recheado_de_com_legumes",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": false
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

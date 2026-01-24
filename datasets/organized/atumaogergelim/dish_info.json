@@ -1,18 +1,29 @@
 {
   "nome": "Atumaogergelim",
-  "slug": "atumaogergelim",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Atum fresco",
+    "Gergelim preto",
+    "Gergelim branco",
+    "Molho Sewpie (possivelmente à base de maionese)",
+    "Molho Tare (molho agridoce, possivelmente à base de shoyu)"
+  ],
+  "descricao": "O prato consiste em cubos de atum fresco, possivelmente selados ou levemente grelhados, revestidos por uma crosta de gergelim preto e branco. É finalizado com o molho Sewpie, que parece ser um creme branco, e acompanhado por molho Tare.",
+  "beneficios": [
+    "O atum é rico em ômega-3, importante para a saúde cardiovascular.",
+    "O gergelim é fonte de cálcio, ferro e fibras."
+  ],
+  "riscos": [
+    "O molho Sewpie pode conter glúten e ser feito à base de ovo, dependendo da receita.",
+    "Alérgeno: peixe.",
+    "Alérgeno: gergelim."
+  ],
+  "curiosidade": "O atum é um peixe de carne escura, rico em proteínas e gorduras saudáveis. A qualidade do atum fresco é crucial para o sabor e segurança do prato.",
+  "slug": "atumaogergelim",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

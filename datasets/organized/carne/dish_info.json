@@ -1,18 +1,35 @@
 {
   "nome": "Carne",
-  "slug": "carne",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Carne grelhada",
+    "Frutos do mar (camarão)",
+    "Ovo cozido",
+    "Azeitonas pretas",
+    "Abobrinha grelhada",
+    "Pimentão amarelo grelhado",
+    "Cebola grelhada",
+    "Tomate grelhado",
+    "Purê de batata doce (aprox.)",
+    "Torta salgada (aprox.)"
+  ],
+  "descricao": "Prato composto por diferentes tipos de proteínas animais (carne e frutos do mar), acompanhados de vegetais grelhados e purê. Possui também um ovo cozido, azeitonas e um pedaço de torta salgada. A carne parece ter sido grelhada e temperada.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparação dos tecidos do corpo.",
+    "Os vegetais grelhados fornecem vitaminas, minerais e fibras importantes para a saúde.",
+    "A variedade de alimentos contribui para uma dieta mais equilibrada e completa."
+  ],
+  "riscos": [
+    "Potencialmente alto em gorduras saturadas, dependendo do corte da carne.",
+    "Alérgenos: ovo, crustáceos (camarão), glúten (torta).",
+    "Pode conter sódio em excesso, dependendo da forma de preparo e temperos utilizados."
+  ],
+  "curiosidade": "O camarão é uma excelente fonte de selênio, um antioxidante importante para a saúde da tireoide e do sistema imunológico.",
+  "slug": "carne",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

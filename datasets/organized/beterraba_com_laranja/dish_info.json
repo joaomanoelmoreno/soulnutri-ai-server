@@ -1,18 +1,30 @@
 {
   "nome": "Beterraba Com Laranja",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Beterraba cozida e cortada em cubos",
+    "Gomos de laranja",
+    "Ervas frescas picadas (possivelmente salsinha ou hortelã)",
+    "Azeite de oliva (possível)",
+    "Sal (possível)"
+  ],
+  "descricao": "Uma salada vibrante com cubos de beterraba cozida, gomos de laranja, possivelmente temperada com azeite de oliva e sal, e finalizada com ervas frescas picadas. A beterraba parece ter sido cozida, provavelmente fervida ou assada, e cortada em cubos.",
+  "beneficios": [
+    "Rica em antioxidantes, como a betalaína da beterraba, que combate os radicais livres.",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "A laranja fornece vitamina C, fortalecendo o sistema imunológico.",
+    "As ervas frescas podem adicionar vitaminas e minerais, além de propriedades anti-inflamatórias."
+  ],
+  "riscos": [
+    "Não há riscos aparentes, salvo alergia aos ingredientes.",
+    "Se a salada for temperada com muito sal, pode ser prejudicial para pessoas com problemas de pressão alta."
+  ],
+  "curiosidade": "A combinação de beterraba e laranja é excelente para a saúde, pois a vitamina C da laranja auxilia na absorção do ferro presente na beterraba.",
   "slug": "beterraba_com_laranja",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

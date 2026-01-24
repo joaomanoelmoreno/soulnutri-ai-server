@@ -1,18 +1,32 @@
 {
   "nome": "Carne Moida",
-  "slug": "carne_moida",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Carne moída refogada",
+    "Camarão grelhado com molho cremoso",
+    "Ovo cozido",
+    "Folhas verdes (alface americana)",
+    "Brócolis cozidos",
+    "Beterraba cozida",
+    "Queijo parmesão ralado",
+    "Pastel frito"
+  ],
+  "descricao": "O prato é composto por carne moída refogada, camarão grelhado com molho cremoso, ovo cozido, salada de folhas verdes, brócolis cozidos, beterraba cozida, queijo parmesão ralado e pastel frito. A carne moída provavelmente foi refogada com temperos, o camarão grelhado, e o pastel frito.",
+  "beneficios": [
+    "A carne moída é rica em proteínas e ferro, importantes para a construção e manutenção dos tecidos e para o transporte de oxigênio no sangue.",
+    "Os vegetais (brócolis, beterraba, folhas verdes) fornecem vitaminas, minerais e fibras, que auxiliam na digestão e na saúde geral."
+  ],
+  "riscos": [
+    "O pastel contém glúten e pode ser frito em óleo, aumentando o teor de gordura.",
+    "Ovos podem ser alergênicos para algumas pessoas.",
+    "Alérgeno: crustáceos (camarão)"
+  ],
+  "curiosidade": "A beterraba, além de nutritiva, contém betalaínas, pigmentos que atuam como antioxidantes e ajudam na proteção celular.",
+  "slug": "carne_moida",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

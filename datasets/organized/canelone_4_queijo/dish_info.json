@@ -1,28 +1,30 @@
 {
   "nome": "Canelone 4 queijo",
-  "slug": "canelone_4_queijo",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Cannelloni recheado com queijo e coberto com molho de tomate.",
   "ingredientes": [
-    "Massa de cannelloni",
-    "Queijo",
+    "Massa de canelone (provavelmente à base de trigo)",
+    "Recheio cremoso (provavelmente mistura de 4 queijos)",
     "Molho de tomate",
-    "Ervas"
+    "Queijo gratinado",
+    "Salsinha picada"
   ],
-  "beneficios": [],
+  "descricao": "Canelone recheado com uma mistura de queijos, coberto com molho de tomate e gratinado com queijo. A salsinha picada adiciona frescor ao prato. Apresenta-se assado em uma travessa.",
+  "beneficios": [
+    "Fonte de cálcio (dos queijos)",
+    "Carboidratos da massa fornecem energia",
+    "O molho de tomate oferece licopeno, um antioxidante"
+  ],
   "riscos": [
-    "Alérgeno: Glúten (massa)",
-    "Alérgeno: Laticínios (queijo)",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)"
+    "Alto teor de gordura saturada (dos queijos)",
+    "Contém glúten (na massa)",
+    "Possível alto teor de sódio (nos queijos e molhos)"
   ],
-  "tecnica": "",
+  "curiosidade": "O canelone é uma variação do macarrão, com origem italiana. A palavra 'canelone' significa 'canudo grande'.",
+  "slug": "canelone_4_queijo",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

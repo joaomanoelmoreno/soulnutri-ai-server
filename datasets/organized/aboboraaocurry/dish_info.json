@@ -1,20 +1,26 @@
 {
   "nome": "Abobora ao curry",
-  "slug": "aboboraaocurry",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "Abobora assada ao forno com curries",
   "ingredientes": [
-    "abobora, azeite e curry indiano"
+    "Abóbora",
+    "Curry (possivelmente em pó, composto por especiarias)",
+    "Cebolinha (parte verde)",
+    "Azeite (provavelmente usado para cozinhar)"
   ],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "descricao": "Fatias de abóbora assadas ou grelhadas, com tempero de curry e finalizadas com cebolinha picada. O preparo pode ter envolvido o uso de azeite para cozinhar a abóbora.",
+  "beneficios": [
+    "A abóbora é rica em vitamina A e antioxidantes, que contribuem para a saúde da visão e proteção celular.",
+    "O curry, dependendo da mistura de especiarias, pode ter propriedades anti-inflamatórias e antioxidantes."
+  ],
+  "riscos": [
+    "Nenhum risco aparente, exceto se houver alergia a alguma especiaria do curry."
+  ],
+  "curiosidade": "A abóbora é um fruto versátil, com diversas variedades e cores, rica em fibras e com baixo valor calórico.",
+  "slug": "aboboraaocurry",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

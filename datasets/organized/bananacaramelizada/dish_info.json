@@ -1,18 +1,29 @@
 {
   "nome": "Bananacaramelizada",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Banana nanica madura",
+    "Açúcar (para caramelizar)",
+    "Água",
+    "Tomatinhos cereja",
+    "Anis estrelado"
+  ],
+  "descricao": "Prato vegano que consiste em bananas nanicas caramelizadas em calda de açúcar, acompanhadas de tomatinhos cereja e anis estrelado para aromatizar. As bananas são cozidas em fogo baixo com açúcar até caramelizar, criando uma calda. Os tomatinhos cereja podem ser adicionados no final para aquecer, ou servidos frios como contraste. O anis estrelado é usado para finalizar e aromatizar o prato.",
+  "beneficios": [
+    "A banana é rica em potássio, que auxilia na saúde muscular e na pressão arterial.",
+    "Os tomatinhos cereja são fontes de antioxidantes, como o licopeno, que protegem contra danos celulares.",
+    "O anis estrelado possui propriedades digestivas e pode aliviar desconfortos gastrointestinais."
+  ],
+  "riscos": [
+    "Alto teor de açúcar, o que pode impactar os níveis de glicose no sangue.",
+    "Consumir com moderação devido ao alto valor calórico."
+  ],
+  "curiosidade": "A banana nanica é uma das variedades mais consumidas no Brasil, apreciada por sua doçura e textura macia, sendo uma excelente fonte de energia.",
   "slug": "bananacaramelizada",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,30 @@
 {
   "nome": "Arroz7Graoscomfrutassecas",
-  "slug": "arroz7graoscomfrutassecas",
   "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Arroz 7 grãos (arroz integral, arroz selvagem, aveia em flocos, centeio, trigo, linhaça e quinoa)",
+    "Damasco seco",
+    "Nozes",
+    "Cebolinha picada",
+    "Azeite de oliva (possivelmente)",
+    "Sal (possivelmente)"
+  ],
+  "descricao": "Prato de arroz 7 grãos cozido, misturado com damasco seco picado, nozes picadas e cebolinha fresca. Os grãos provavelmente foram cozidos em água ou caldo vegetal, e finalizados com azeite.",
+  "beneficios": [
+    "Rico em fibras, auxiliando na saúde digestiva e controle glicêmico.",
+    "Fonte de antioxidantes, provenientes das frutas secas e grãos.",
+    "Versátil, pode ser servido como acompanhamento ou prato principal."
+  ],
+  "riscos": [
+    "Contém glúten, devido à presença de trigo e centeio.",
+    "Alérgenos: nozes"
+  ],
+  "curiosidade": "O arroz selvagem, um dos grãos presentes, não é um arroz de fato, mas uma semente aquática, rica em proteínas e fibras.",
+  "slug": "arroz7graoscomfrutassecas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

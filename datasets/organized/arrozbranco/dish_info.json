@@ -1,18 +1,26 @@
 {
   "nome": "Arrozbranco",
-  "slug": "arrozbranco",
   "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Arroz branco",
+    "Água",
+    "Sal (possivelmente)"
+  ],
+  "descricao": "Arroz branco cozido. O arroz é cozido em água fervente até ficar macio, possivelmente com adição de sal para tempero. A ausência de outros ingredientes indica que é uma preparação básica.",
+  "beneficios": [
+    "Fonte de carboidratos, fornecendo energia para o corpo.",
+    "Fácil digestibilidade."
+  ],
+  "riscos": [
+    "Alto índice glicêmico, o que pode causar picos de açúcar no sangue.",
+    "Pode ser carente em nutrientes essenciais se consumido isoladamente."
+  ],
+  "curiosidade": "O arroz branco é o resultado do polimento do arroz integral, que remove a casca, o farelo e o gérmen, resultando em menor teor de fibras e nutrientes, mas em uma textura mais macia e sabor mais suave.",
+  "slug": "arrozbranco",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

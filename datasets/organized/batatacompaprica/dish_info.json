@@ -1,18 +1,29 @@
 {
   "nome": "Batatacompaprica",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Batatas",
+    "Páprica",
+    "Ervas finas (salsa, manjericão, alecrim)",
+    "Azeite de oliva",
+    "Cebolinha picada",
+    "Sal"
+  ],
+  "descricao": "Batatas cortadas em pedaços, temperadas com páprica, ervas finas, sal e azeite de oliva. As batatas são assadas no forno até dourarem. Finalizado com cebolinha picada.",
+  "beneficios": [
+    "Batatas são fontes de carboidratos, que fornecem energia.",
+    "A páprica é rica em antioxidantes, como a vitamina C, que ajudam a proteger as células do corpo."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo do tempero utilizado.",
+    "Excesso de sal pode ser prejudicial à saúde."
+  ],
+  "curiosidade": "A páprica é feita a partir de pimentões secos e moídos, e pode ter diferentes níveis de picância, dependendo da variedade do pimentão utilizado.",
   "slug": "batatacompaprica",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,28 @@
 {
   "nome": "Cebola",
-  "slug": "cebola",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cebola roxa",
+    "Pimentão vermelho",
+    "Pimenta dedo-de-moça",
+    "Salsinha",
+    "Azeite de oliva",
+    "Azeitonas verdes",
+    "Alho"
+  ],
+  "descricao": "Cebolas roxas cortadas ao meio e assadas até ficarem macias e levemente caramelizadas. O recheio é composto por uma mistura picante de pimentões, pimenta dedo-de-moça, azeitonas, salsinha, alho picado e azeite.  O prato é servido em uma travessa com gelo.",
+  "beneficios": [
+    "Cebolas são ricas em antioxidantes e compostos sulfurados benéficos para a saúde cardiovascular.",
+    "Pimentões e pimentas são fontes de vitamina C, que fortalece o sistema imunológico.",
+    "Azeite de oliva fornece gorduras saudáveis e propriedades anti-inflamatórias."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A cebola roxa, além de saborosa, possui antocianinas, que são pigmentos com propriedades antioxidantes e anti-inflamatórias.",
+  "slug": "cebola",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

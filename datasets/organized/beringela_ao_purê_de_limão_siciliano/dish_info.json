@@ -1,18 +1,29 @@
 {
   "nome": "Beringela Ao Purê De Limão Siciliano",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Beringela",
+    "Purê de limão siciliano (provavelmente com azeite)",
+    "Salsa picada",
+    "Rodelas de pimenta vermelha",
+    "Rodelas de limão siciliano"
+  ],
+  "descricao": "Beringelas assadas ou grelhadas, cobertas com um purê de limão siciliano, salsa picada, pimenta vermelha e rodelas de limão siciliano para decorar.",
+  "beneficios": [
+    "A berinjela é rica em antioxidantes, como a nasunina, que pode proteger as células cerebrais.",
+    "O limão siciliano é uma excelente fonte de vitamina C, que fortalece o sistema imunológico.",
+    "As fibras da berinjela auxiliam na digestão e promovem a saciedade."
+  ],
+  "riscos": [
+    "Pode conter traços de glúten, dependendo do preparo do purê e dos temperos utilizados.",
+    "Não é recomendado para pessoas com alergia ao limão."
+  ],
+  "curiosidade": "A berinjela é um alimento versátil que absorve bem os sabores dos outros ingredientes, tornando-a ideal para diversas preparações culinárias.",
   "slug": "beringela_ao_purê_de_limão_siciliano",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,29 @@
 {
   "nome": "Ceviche De Manga",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Manga madura",
+    "Cebola roxa fatiada",
+    "Coentro picado",
+    "Pimenta dedo-de-moça picada",
+    "Suco cítrico (provavelmente limão)",
+    "Azeite"
+  ],
+  "descricao": "Ceviche de manga preparado com cubos de manga madura, cebola roxa em finas fatias, coentro fresco picado e pimenta dedo-de-moça, tudo misturado com suco cítrico e azeite.  A preparação é fria, sem cozimento.",
+  "beneficios": [
+    "Rico em vitamina C da manga e do limão, fortalecendo o sistema imunológico",
+    "Fonte de fibras, auxiliando na digestão e saciedade",
+    "Contém antioxidantes da manga e do coentro"
+  ],
+  "riscos": [
+    "Pode ser alergênico para pessoas com sensibilidade a frutas cítricas ou coentro"
+  ],
+  "curiosidade": "O ceviche, tradicionalmente feito com peixe, ganhou versões com frutas, como a manga, que trazem um sabor agridoce e refrescante.",
   "slug": "ceviche_de_manga",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

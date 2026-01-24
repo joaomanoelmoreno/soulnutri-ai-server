@@ -1,18 +1,29 @@
 {
   "nome": "Capuccino",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Leite",
+    "Café (expresso)",
+    "Chocolate em pó",
+    "Canela em pó",
+    "Açúcar (opcional)"
+  ],
+  "descricao": "O capuccino é preparado com café expresso, leite vaporizado e uma camada de espuma de leite. Na imagem, observa-se o capuccino com chocolate em pó polvilhado por cima e acompanhado de canela em pó. Pode conter açúcar adicionado.",
+  "beneficios": [
+    "O café presente no capuccino pode aumentar o estado de alerta e a concentração.",
+    "O leite fornece cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Intolerância à lactose (se preparado com leite de vaca)",
+    "Excesso de açúcar (se adicionado)",
+    "Contém cafeína, que pode causar insônia ou ansiedade em pessoas sensíveis"
+  ],
+  "curiosidade": "O nome 'capuccino' vem da cor da vestimenta dos monges capuchinhos, que se assemelha à cor do café com leite.",
   "slug": "capuccino",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

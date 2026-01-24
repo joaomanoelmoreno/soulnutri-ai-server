@@ -1,18 +1,35 @@
 {
   "nome": "Arroz 7 Graos",
-  "slug": "arroz7graos",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Arroz integral",
+    "Arroz selvagem",
+    "Trigo em grão",
+    "Cevada em grão",
+    "Aveia em grão",
+    "Semente de linhaça",
+    "Semente de girassol",
+    "Salsa picada",
+    "Água",
+    "Sal"
+  ],
+  "descricao": "Prato de arroz 7 grãos cozido em água com sal. Apresenta grãos variados e é finalizado com salsa picada fresca. O preparo consiste em cozinhar os grãos até que estejam macios, mas ainda com textura.",
+  "beneficios": [
+    "Alto teor de fibras, auxiliando na digestão e controle do colesterol.",
+    "Fonte de vitaminas do complexo B, importantes para o metabolismo energético e saúde do sistema nervoso.",
+    "Rico em minerais como magnésio, selênio e zinco, essenciais para diversas funções do corpo."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo dos grãos utilizados.",
+    "A presença de sementes pode causar alergias em pessoas sensíveis.",
+    "Excesso no consumo pode levar ao aumento calórico."
+  ],
+  "curiosidade": "O arroz selvagem, presente em algumas misturas de 7 grãos, não é um arroz propriamente dito, mas sim a semente de uma gramínea aquática.",
+  "slug": "arroz7graos",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

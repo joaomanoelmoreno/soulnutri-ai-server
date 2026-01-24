@@ -1,18 +1,25 @@
 {
   "nome": "Brocoliscomparmesao",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Brócolis",
+    "Queijo parmesão"
+  ],
+  "descricao": "O prato consiste em brócolis cozidos ou levemente refogados, cobertos com queijo parmesão ralado. O preparo do brócolis pode variar, sendo cozido no vapor, refogado em azeite ou até mesmo assado.",
+  "beneficios": [
+    "Brócolis: Rico em vitaminas C e K, fibras e antioxidantes, que auxiliam na imunidade e saúde óssea.",
+    "Queijo Parmesão: Fonte de cálcio e proteína, importante para a saúde dos ossos e músculos."
+  ],
+  "riscos": [
+    "Intolerância à lactose (se o parmesão não for isento)",
+    "Alérgeno: leite (no parmesão)"
+  ],
+  "curiosidade": "O brócolis é um alimento versátil, sendo uma boa fonte de sulforafano, composto que pode ter propriedades anticancerígenas.",
   "slug": "brocoliscomparmesao",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

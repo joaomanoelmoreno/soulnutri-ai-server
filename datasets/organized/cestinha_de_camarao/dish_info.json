@@ -1,25 +1,31 @@
 {
   "nome": "cestinha de camarao",
-  "slug": "cestinha_de_camarao",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Prato composto por carne grelhada, acompanhada por legumes e batata.",
   "ingredientes": [
-    "carne grelhada",
-    "legumes",
-    "batata"
+    "Camarão (ingrediente principal da cestinha)",
+    "Massa filo (base da cestinha)",
+    "Queijo (gratinado na cestinha)",
+    "Carne grelhada",
+    "Salada de batata com maionese e cebolinha",
+    "Bolinho frito (possivelmente de peixe ou carne)",
+    "Azeite de oliva (possível ingrediente de preparo)"
   ],
-  "beneficios": [],
+  "descricao": "Prato composto por cestinha crocante de massa filo recheada com camarão e gratinada com queijo. Acompanha carne grelhada, salada de batata com maionese e cebolinha, e um bolinho frito. A carne parece ter sido grelhada, e o bolinho frito.",
+  "beneficios": [
+    "Camarão: Rico em proteínas e selênio, importante para a função da tireóide.",
+    "Salada de batata: Fornece carboidratos para energia e potássio, essencial para a saúde muscular e nervosa.",
+    "Carne: Fonte de ferro, essencial para a saúde sanguínea."
+  ],
   "riscos": [
-    "Alérgeno: Possíveis alérgenos nos acompanhamentos.",
-    "Colesterol: Consumo em excesso pode aumentar o colesterol."
+    "Alto teor de sódio: Provavelmente devido à maionese e temperos utilizados.",
+    "Alérgenos: Contém glúten (massa filo e possivelmente no bolinho), crustáceos (camarão) e possivelmente lactose (queijo)."
   ],
-  "tecnica": "",
+  "curiosidade": "A massa filo, apesar de leve, é feita com farinha de trigo, exigindo cuidado com quem tem restrições ao glúten.",
+  "slug": "cestinha_de_camarao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

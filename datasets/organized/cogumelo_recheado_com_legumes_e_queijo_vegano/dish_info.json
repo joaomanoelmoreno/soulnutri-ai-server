@@ -1,27 +1,32 @@
 {
   "nome": "Cogumelo recheado com legumes e queijo vegano",
-  "slug": "cogumelo_recheado_com_legumes_e_queijo_vegano",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Cogumelos recheados com ingredientes saborosos, cobertos com queijo ralado.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Cogumelos",
-    "Queijo ralado",
-    "Ovos",
-    "Ervas"
+    "Cogumelos Portobello",
+    "Cenoura",
+    "Pimentão",
+    "Cebola",
+    "Cheiro-verde (cebolinha)",
+    "Queijo vegano ralado",
+    "Azeite de oliva",
+    "Tempero (sal, pimenta do reino)"
   ],
-  "beneficios": [],
+  "descricao": "Cogumelos Portobello são limpos e recheados com legumes picados e refogados em azeite de oliva, temperados e cobertos com queijo vegano ralado. São levados ao forno ou grelhados até que os cogumelos estejam macios e o queijo derretido.",
+  "beneficios": [
+    "Rico em antioxidantes provenientes dos cogumelos e legumes",
+    "Fonte de fibras, importante para a saúde intestinal",
+    "Baixo teor de gorduras saturadas, dependendo do tipo de queijo vegano utilizado"
+  ],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo, ovos)"
+    "Pode conter sódio em excesso dependendo do tempero e tipo de queijo vegano",
+    "Alérgenos: pode conter traços de soja ou outros ingredientes utilizados no queijo vegano"
   ],
-  "tecnica": "",
+  "curiosidade": "O cogumelo Portobello é um cogumelo grande e carnudo, frequentemente usado como substituto da carne em pratos vegetarianos e veganos, rico em vitaminas do complexo B e selênio.",
+  "slug": "cogumelo_recheado_com_legumes_e_queijo_vegano",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

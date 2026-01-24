@@ -1,18 +1,31 @@
 {
   "nome": "Carpacciodeabobrinha",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Abobrinha fatiada",
+    "Queijo parmesão ralado",
+    "Azeite de oliva",
+    "Ervas frescas picadas (salsa e/ou manjericão)",
+    "Pimenta rosa",
+    "Temperos (sal e pimenta do reino)"
+  ],
+  "descricao": "Carpaccio de abobrinha crua, fatiada finamente e disposta no prato.  É temperada com azeite de oliva, queijo parmesão ralado, ervas frescas picadas (salsa e/ou manjericão), pimenta rosa e temperos.",
+  "beneficios": [
+    "A abobrinha é rica em água e fibras, auxiliando na hidratação e digestão.",
+    "O azeite de oliva é fonte de gorduras saudáveis, benéficas para o coração.",
+    "A pimenta rosa possui propriedades antioxidantes."
+  ],
+  "riscos": [
+    "Alérgeno: leite (parmesão)",
+    "Pode conter traços de glúten, dependendo dos temperos utilizados.",
+    "Consumir com moderação devido ao teor de gordura, mesmo que seja de boa qualidade (azeite)."
+  ],
+  "curiosidade": "O carpaccio, tradicionalmente feito com carne crua, foi criado na Itália e recebeu esse nome em homenagem ao pintor Vittore Carpaccio, conhecido por suas obras com cores vibrantes.",
   "slug": "carpacciodeabobrinha",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

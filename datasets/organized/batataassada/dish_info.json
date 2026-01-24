@@ -1,18 +1,28 @@
 {
   "nome": "Batataassada",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Batata doce",
+    "Cebolinha",
+    "Azeite de oliva",
+    "Sal"
+  ],
+  "descricao": "Batata doce cortada em pedaços e assada, com aparência de levemente dourada, possivelmente no forno ou air fryer, finalizada com cebolinha picada. O preparo provavelmente envolveu o uso de azeite de oliva e sal para temperar.",
+  "beneficios": [
+    "Fonte de carboidratos complexos, fornecendo energia de forma gradual",
+    "Rica em vitamina A, importante para a saúde da visão e da pele",
+    "Boa fonte de fibras, auxiliando na saúde digestiva e na saciedade"
+  ],
+  "riscos": [
+    "A batata doce, embora nutritiva, pode elevar os níveis de glicose no sangue, especialmente se consumida em excesso.",
+    "Pessoas com sensibilidade ou alergia à cebolinha devem evitar o consumo."
+  ],
+  "curiosidade": "A batata doce é rica em antioxidantes, como o betacaroteno, que combate os radicais livres no organismo, prevenindo o envelhecimento precoce.",
   "slug": "batataassada",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,27 +1,25 @@
 {
   "nome": "Caneleira quatro queijos",
-  "slug": "caneleira_quatro_queijos",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Ravioli cozido, coberto com molho de tomate e possivelmente queijo, com ervas frescas.",
   "ingredientes": [
-    "Massa de ravioli",
-    "Molho de tomate",
-    "Queijo",
-    "Ervas"
+    "Caneleira (massa à base de farinha de trigo), quatro tipos de queijo (não especificados), molho de tomate, manjericão fresco, azeite de oliva (possivelmente)"
   ],
-  "beneficios": [],
+  "descricao": "Caneleira recheada com quatro tipos de queijo, coberta com molho de tomate e finalizada com manjericão fresco. Aparentemente, a massa e os queijos foram assados e o molho de tomate foi adicionado após o cozimento.",
+  "beneficios": [
+    "Os queijos fornecem cálcio e proteínas, importantes para a saúde óssea e muscular.",
+    "O molho de tomate é fonte de licopeno, um antioxidante que pode ajudar na prevenção de doenças."
+  ],
   "riscos": [
-    "Alérgeno: Glúten, Lácteos",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)"
+    "Contém glúten, devido à massa da caneleira.",
+    "Rico em gorduras saturadas, dependendo dos queijos utilizados.",
+    "Pode conter alto teor de sódio, dependendo do queijo e do molho."
   ],
-  "tecnica": "",
+  "curiosidade": "O manjericão, além de saboroso, é rico em antioxidantes e possui propriedades anti-inflamatórias.",
+  "slug": "caneleira_quatro_queijos",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

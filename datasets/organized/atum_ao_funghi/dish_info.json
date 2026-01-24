@@ -1,18 +1,31 @@
 {
   "nome": "Atum Ao Funghi",
-  "slug": "atum_ao_funghi",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Atum",
+    "Funghi (cogumelos)",
+    "Alho",
+    "Folhas de louro",
+    "Azeite de oliva",
+    "Salsa picada"
+  ],
+  "descricao": "O prato consiste em pedaços de atum cozidos, provavelmente assados no forno, misturados com cogumelos funghi, alho picado, folhas de louro, e temperados com azeite de oliva e salsa picada. A coloração sugere que os ingredientes foram refogados ou assados até dourar. Os cogumelos e o alho contribuem com sabor intenso e aromático.",
+  "beneficios": [
+    "O atum é rico em ômega-3, que é benéfico para a saúde cardiovascular.",
+    "Cogumelos funghi são fontes de vitaminas do complexo B e selênio, com propriedades antioxidantes.",
+    "A salsa fresca adiciona vitamina C e compostos antioxidantes ao prato."
+  ],
+  "riscos": [
+    "Pessoas com alergia a peixes devem evitar este prato.",
+    "Consumir em excesso pode levar à ingestão excessiva de sódio, dependendo da quantidade de sal utilizada no preparo.",
+    "O atum pode conter mercúrio, portanto, moderação é recomendada, especialmente para mulheres grávidas e crianças."
+  ],
+  "curiosidade": "O atum é um peixe de carne escura, rico em proteínas e gorduras saudáveis. A escolha do método de cozimento, como no forno, ajuda a preservar seus nutrientes e sabor.",
+  "slug": "atum_ao_funghi",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

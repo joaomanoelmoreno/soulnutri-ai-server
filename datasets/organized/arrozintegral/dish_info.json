@@ -1,18 +1,22 @@
 {
   "nome": "Arrozintegral",
-  "slug": "arrozintegral",
   "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "ingredientes": [
+    "Arroz integral",
+    "Cebolinha"
+  ],
+  "descricao": "Arroz integral cozido, possivelmente em água ou caldo vegetal, finalizado com cebolinha picada fresca para agregar sabor e aroma. O arroz integral é cozido até ficar macio, mas ainda com alguma textura.",
+  "beneficios": [
+    "Rico em fibras, auxiliando na saúde digestiva e controle glicêmico.",
+    "Fonte de manganês, um mineral importante para o metabolismo e a saúde óssea."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "O arroz integral preserva a camada de farelo, onde estão concentradas a maioria das fibras e nutrientes, ao contrário do arroz branco que tem essa camada removida no processo de polimento.",
+  "slug": "arrozintegral",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

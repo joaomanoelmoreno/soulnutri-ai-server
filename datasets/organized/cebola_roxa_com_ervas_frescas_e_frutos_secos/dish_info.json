@@ -1,23 +1,30 @@
 {
   "nome": "Cebola roxa com ervas frescas e frutos secos",
-  "slug": "cebola_roxa_com_ervas_frescas_e_frutos_secos",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Cebolas roxas recheadas com ervas frescas e frutos secos, uma opção vegana saborosa e saudável.",
   "ingredientes": [
     "Cebola roxa",
-    "Ervas frescas",
-    "Frutos secos",
-    "Azeite"
+    "Azeite de oliva",
+    "Ervas frescas (manjericão, hortelã - possível)",
+    "Frutos secos (nozes ou pinoli - possível)",
+    "Pimenta dedo-de-moça (fatiada)",
+    "Sal"
   ],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "descricao": "As cebolas roxas foram cortadas ao meio e grelhadas. Após, foram preenchidas com uma mistura de ervas frescas picadas, pedaços de pimenta dedo-de-moça, pedaços de frutos secos e azeite de oliva. Salpicos de sal.",
+  "beneficios": [
+    "A cebola roxa é rica em antioxidantes, como a quercetina, que combatem os radicais livres.",
+    "As ervas frescas adicionam vitaminas e minerais, além de propriedades anti-inflamatórias.",
+    "Os frutos secos contribuem com gorduras saudáveis e fibras."
+  ],
+  "riscos": [
+    "Alérgeno: frutos secos",
+    "Pode conter traços de outros ingredientes, dependendo do preparo."
+  ],
+  "curiosidade": "A cebola roxa, além de saborosa, contém compostos que podem ajudar na saúde do coração e na redução do colesterol.",
+  "slug": "cebola_roxa_com_ervas_frescas_e_frutos_secos",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

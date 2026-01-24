@@ -1,29 +1,34 @@
 {
   "nome": "Bolinho de bacalhau",
-  "slug": "bolinho_de_bacalhau",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Bolinhos de batata fritos, crocantes por fora e macios por dentro, geralmente temperados e acompanhados de cheiro verde.",
+  "categoria": "proteína animal",
   "ingredientes": [
+    "Bacalhau dessalgado e desfiado",
     "Batata",
-    "Farinha",
-    "Ovo",
-    "Tempero",
-    "Cheiro Verde"
+    "Cebola",
+    "Salsa picada",
+    "Ovos",
+    "Farinha de trigo",
+    "Óleo vegetal (para fritar)",
+    "Sal",
+    "Pimenta do reino",
+    "Cebolinha picada (para decorar)"
   ],
-  "beneficios": [],
+  "descricao": "O bolinho de bacalhau é preparado com bacalhau desfiado, batata cozida, cebola, ovos, salsa e temperos. Os ingredientes são misturados, moldados em formato de bolinhos e fritos em óleo quente até dourar. Neste prato, os bolinhos estão decorados com cebolinha picada.",
+  "beneficios": [
+    "O bacalhau é fonte de proteínas de alta qualidade e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
+    "A batata fornece carboidratos, que são a principal fonte de energia."
+  ],
   "riscos": [
-    "Alérgeno: Ovo",
-    "Alérgeno: Glúten",
-    "Alérgeno: GLÚTEN (farinha)",
-    "Alérgeno: OVO (ovo)"
+    "Alto teor de gordura devido à fritura.",
+    "Contém glúten (na farinha de trigo).",
+    "Alérgenos: peixe (bacalhau), ovos."
   ],
-  "tecnica": "",
+  "curiosidade": "O bolinho de bacalhau é um prato tradicional da culinária portuguesa, muito popular no Brasil, especialmente em datas festivas como o Natal.",
+  "slug": "bolinho_de_bacalhau",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

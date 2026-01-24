@@ -1,28 +1,29 @@
 {
   "nome": "Cestinha de camarão",
-  "slug": "cestinha_de_camarão",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Cestinhas crocantes feitas com massa folhada, recheadas com uma mistura saborosa de ingredientes.",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "massa folhada",
-    "ovo",
-    "queijo",
-    "vegetais"
+    "Camarão",
+    "Massa filo",
+    "Recheio cremoso (possivelmente à base de queijo)",
+    "Temperos (ervas frescas, possivelmente)",
+    "Azeite para assar"
   ],
-  "beneficios": [],
+  "descricao": "As cestinhas são preparadas com massa filo, um tipo de massa muito fina e crocante. Elas são recheadas com um creme que contém camarão e outros ingredientes, possivelmente queijo, e temperos. Aparentemente, as cestinhas foram assadas para dourar e ficar crocantes.",
+  "beneficios": [
+    "Camarão é fonte de proteína e selênio, um antioxidante importante.",
+    "Massa filo pode ser uma alternativa mais leve às massas tradicionais, dependendo da receita."
+  ],
   "riscos": [
-    "Alérgeno: Glúten, ovo, lactose (dependendo do recheio)",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo)"
+    "Alto teor de gordura, dependendo do preparo e ingredientes utilizados.",
+    "Alérgeno: crustáceos (camarão).",
+    "Contém glúten (massa filo)."
   ],
-  "tecnica": "",
+  "curiosidade": "A massa filo é uma massa de origem grega, conhecida por sua leveza e versatilidade.",
+  "slug": "cestinha_de_camarão",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

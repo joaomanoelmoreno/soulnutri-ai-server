@@ -1,18 +1,34 @@
 {
   "nome": "Almdegasmolhosugo",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne moída (ingrediente principal das almôndegas)",
+    "Tomates frescos (molho)",
+    "Cebolinha picada",
+    "Manjericão fresco",
+    "Tomate cereja",
+    "Alho (provavelmente no molho)",
+    "Cebola (provavelmente no molho)",
+    "Azeite de oliva (provavelmente no molho)"
+  ],
+  "descricao": "Prato com almôndegas cozidas em molho de tomate caseiro. As almôndegas parecem ter sido grelhadas antes de serem adicionadas ao molho, dando uma aparência levemente dourada. O molho é espesso e rico em tomate, com pedaços visíveis de cebolinha e manjericão fresco. É decorado com tomates cereja cortados ao meio e folhas de manjericão inteiras, sugerindo um preparo cuidadoso.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade (carne)",
+    "Rico em licopeno, um antioxidante presente no tomate",
+    "Fonte de fibras e vitaminas presentes no tomate e nos vegetais adicionados",
+    "O manjericão adiciona antioxidantes e pode ter propriedades anti-inflamatórias"
+  ],
+  "riscos": [
+    "Potencialmente alto em gordura saturada, dependendo do tipo de carne usada",
+    "Pode conter sódio em excesso se o molho for industrializado",
+    "Alérgico potencial: ingredientes podem conter glúten, dependendo do preparo das almôndegas"
+  ],
+  "curiosidade": "O manjericão fresco, usado na finalização do prato, é uma erva aromática que realça o sabor dos tomates e do molho. Além disso, a combinação de tomate e manjericão é clássica na culinária italiana, de onde o prato provavelmente se originou.",
   "slug": "almdegasmolhosugo",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,26 +1,25 @@
 {
   "nome": "Azeitona preta",
-  "slug": "azeitona_preta",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Azeitonas pretas marinadas em azeite e temperos.",
   "ingredientes": [
-    "Azeitonas",
-    "Azeite",
-    "Vinagre",
-    "Ervas"
+    "Azeitonas pretas",
+    "Líquido de conserva (água, sal, vinagre)"
   ],
-  "beneficios": [],
+  "descricao": "Azeitonas pretas conservadas em uma solução, provavelmente salmoura com vinagre. O líquido escuro indica a presença dos ingredientes da conserva.",
+  "beneficios": [
+    "Ricas em antioxidantes, especialmente polifenóis, que combatem os radicais livres.",
+    "Fonte de gorduras saudáveis, benéficas para a saúde cardiovascular."
+  ],
   "riscos": [
-    "Pode conter fragmentos de caroço",
-    "Alérgeno: Pode conter sulfitos (conservante)"
+    "Alto teor de sódio, que pode ser prejudicial para pessoas com pressão alta.",
+    "Podem conter sulfitos como conservantes, que podem causar reações alérgicas em pessoas sensíveis."
   ],
-  "tecnica": "",
+  "curiosidade": "As azeitonas pretas são, na verdade, azeitonas verdes que amadureceram na árvore. A cor escura é resultado da maturação completa e do processo de conservação.",
+  "slug": "azeitona_preta",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

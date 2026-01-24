@@ -1,18 +1,26 @@
 {
   "nome": "Bolochocolatevegano",
-  "slug": "bolochocolatevegano",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Fatia de bolo de chocolate",
+    "Cobertura de chocolate (possivelmente à base de cacau, leite vegetal e açúcar)",
+    "Morango"
+  ],
+  "descricao": "O prato é composto por pequenos pedaços de bolo de chocolate, cobertos por uma camada de cobertura de chocolate e decorados com fatias de morango. O bolo e a cobertura, por serem veganos, não contêm ingredientes de origem animal.",
+  "beneficios": [
+    "O morango é fonte de vitamina C e antioxidantes.",
+    "O cacau, presente no bolo e na cobertura, pode ter benefícios para a saúde cardiovascular."
+  ],
+  "riscos": [
+    "Alto teor de açúcar, proveniente do bolo e da cobertura.",
+    "Contém glúten, caso o bolo seja feito com farinha de trigo."
+  ],
+  "curiosidade": "O cacau, ingrediente principal do bolo e da cobertura, é rico em flavonoides, que podem melhorar a função cerebral e reduzir o risco de doenças cardíacas.",
+  "slug": "bolochocolatevegano",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

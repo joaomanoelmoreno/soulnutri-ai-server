@@ -1,29 +1,33 @@
 {
   "nome": "Bacalhau com natas e Champions",
-  "slug": "bacalhau_com_natas_e_champions",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Prato feito com ovos e queijo, com textura leve e saborosa.",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "Ovos",
-    "Queijo",
-    "Farinha",
-    "Leite"
+    "Bacalhau desfiado",
+    "Batatas cozidas",
+    "Creme de leite/natas",
+    "Champignons",
+    "Cebolinha picada",
+    "Queijo ralado (possivelmente parmesão)",
+    "Azeite (provavelmente usado para refogar)"
   ],
-  "beneficios": [],
+  "descricao": "Prato cremoso com bacalhau desfiado misturado com batatas cozidas e champignons, tudo coberto com creme de leite e gratinado com queijo. A cebolinha picada é utilizada para finalizar.",
+  "beneficios": [
+    "Bacalhau é uma boa fonte de proteínas de alta qualidade.",
+    "Champignons fornecem vitaminas do complexo B e minerais.",
+    "Cebolinha contribui com antioxidantes."
+  ],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: Ovos",
-    "Alérgeno: GLÚTEN (farinha)",
-    "Alérgeno: LACTOSE (queijo, leite)",
-    "Alérgeno: OVO (ovo, ovos)"
+    "Alto teor de gordura devido ao creme de leite e ao queijo.",
+    "Alto teor de sódio devido ao bacalhau (geralmente dessalgado).",
+    "Pode conter lactose.",
+    "Alérgeno: peixe."
   ],
-  "tecnica": "",
+  "curiosidade": "O bacalhau é um peixe tradicionalmente consumido em Portugal, sendo um dos ingredientes mais emblemáticos da culinária portuguesa. Curiosamente, apesar de ser amplamente consumido em Portugal, o bacalhau fresco não existe em suas águas, sendo importado, normalmente seco e salgado.",
+  "slug": "bacalhau_com_natas_e_champions",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

@@ -1,18 +1,28 @@
 {
   "nome": "Carpacciodelaranja",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Laranja",
+    "Salsa picada",
+    "Pimenta dedo-de-moça",
+    "Raspas de chocolate amargo"
+  ],
+  "descricao": "O Carpaccio de Laranja é uma preparação que exalta a doçura e acidez da laranja em fatias finas. As rodelas de laranja são dispostas em um prato e recebem uma cobertura de salsa picada e pimenta dedo-de-moça. Para finalizar, raspas de chocolate amargo adicionam um toque de amargor e complexidade.",
+  "beneficios": [
+    "A laranja é rica em vitamina C, fortalecendo o sistema imunológico e atuando como antioxidante.",
+    "A pimenta dedo-de-moça pode acelerar o metabolismo e possui propriedades anti-inflamatórias.",
+    "As raspas de chocolate amargo (com alto teor de cacau) fornecem antioxidantes e podem melhorar o humor."
+  ],
+  "riscos": [
+    "Sensibilidade ao chocolate.",
+    "Alergia a ingredientes picantes (pimenta dedo-de-moça)."
+  ],
+  "curiosidade": "O carpaccio, originalmente, é uma receita italiana que consiste em fatias finas de carne crua. Adaptar essa técnica com frutas como a laranja é uma forma criativa de explorar novos sabores e texturas.",
   "slug": "carpacciodelaranja",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

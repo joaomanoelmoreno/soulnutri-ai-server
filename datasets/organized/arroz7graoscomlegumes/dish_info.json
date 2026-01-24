@@ -1,18 +1,30 @@
 {
   "nome": "Arroz7Graoscomlegumes",
-  "slug": "arroz7graoscomlegumes",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Arroz 7 grãos (arroz integral, arroz selvagem, quinoa, amaranto, chia, linhaça, painço)",
+    "Brócolis",
+    "Cenoura",
+    "Pimentão amarelo",
+    "Azeite de oliva",
+    "Tempero verde (salsa e cebolinha)"
+  ],
+  "descricao": "Prato vegano que consiste em arroz 7 grãos cozido e misturado com legumes frescos e cortados, possivelmente refogados em azeite de oliva e temperados com ervas frescas. A presença de brócolis, cenoura e pimentão amarelo adiciona cor, textura e nutrientes.",
+  "beneficios": [
+    "Alto teor de fibras, auxiliando na digestão e saciedade",
+    "Rico em vitaminas e minerais provenientes dos grãos e legumes",
+    "Fonte de antioxidantes, devido aos vegetais coloridos"
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo da mistura de grãos",
+    "Alérgicos devem verificar os ingredientes para identificar possíveis alergênicos"
+  ],
+  "curiosidade": "O arroz selvagem, presente na mistura de grãos, não é um arroz, mas sim a semente de uma gramínea aquática, rica em proteínas e fibras.",
+  "slug": "arroz7graoscomlegumes",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
