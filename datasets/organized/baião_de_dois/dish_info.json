@@ -1,0 +1,30 @@
+{
+  "nome": "Baião de dois",
+  "slug": "baião_de_dois",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato popular que combina diversos ingredientes, como frango desfiado, legumes e maionese.",
+  "ingredientes": [
+    "Frango",
+    "batata palha",
+    "cenoura",
+    "milho",
+    "maionese",
+    "salsinha",
+    "pimenta biquinho"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alto teor de sódio",
+    "Alérgeno: OVO (maionese)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}
