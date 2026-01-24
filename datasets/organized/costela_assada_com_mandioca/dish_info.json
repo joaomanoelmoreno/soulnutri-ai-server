@@ -1,0 +1,25 @@
+{
+  "nome": "Costela assada com mandioca",
+  "slug": "costela_assada_com_mandioca",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato de carne cozida com abacaxi e outros vegetais.",
+  "ingredientes": [
+    "Carne",
+    "Abacaxi",
+    "Tomate cereja",
+    "Salsa"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter traços de ingredientes com alérgenos."
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,0 +1,29 @@
+{
+  "nome": "Bolinho de bacalhau",
+  "slug": "bolinho_de_bacalhau",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Bolinhos de batata fritos, crocantes por fora e macios por dentro, geralmente temperados e acompanhados de cheiro verde.",
+  "ingredientes": [
+    "Batata",
+    "Farinha",
+    "Ovo",
+    "Tempero",
+    "Cheiro Verde"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

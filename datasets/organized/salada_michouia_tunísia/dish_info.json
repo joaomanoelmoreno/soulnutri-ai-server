@@ -1,0 +1,30 @@
+{
+  "nome": "Salada michouia Tunísia",
+  "slug": "salada_michouia_tunísia",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Uma salada saborosa com atum, ovos cozidos, azeitonas e vegetais frescos.",
+  "ingredientes": [
+    "Atum",
+    "Ovos",
+    "Azeitonas",
+    "Milho",
+    "Ervilhas",
+    "Maionese"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: Peixe",
+    "Alérgeno: OVO (ovo, maionese)",
+    "Alérgeno: PEIXE (atum)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

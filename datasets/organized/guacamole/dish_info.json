@@ -1,0 +1,28 @@
+{
+  "nome": "Guacamole",
+  "slug": "guacamole",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Um dip mexicano feito com abacate amassado, temperado com tomate, cebola, coentro e limão.",
+  "ingredientes": [
+    "Abacate",
+    "Tomate",
+    "Cebola",
+    "Coentro",
+    "Suco de limão",
+    "Pimenta"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter traços de pimenta (picante)",
+    "Alérgeno: GLÚTEN (massa)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

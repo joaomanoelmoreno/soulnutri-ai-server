@@ -1,0 +1,28 @@
+{
+  "nome": "Pão de alho negro e cumaru",
+  "slug": "pão_de_alho_negro_e_cumaru",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Uma variedade de pães artesanais, acompanhados por nozes, damascos e ervas frescas, ideal para um lanche ou aperitivo.",
+  "ingredientes": [
+    "Pão artesanal",
+    "Nozes",
+    "Damasco",
+    "Ervas frescas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten (pão)",
+    "Alérgeno: Nozes",
+    "Alérgeno: GLÚTEN (pão, pao)",
+    "Alérgeno: NOZES (nozes, noz)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

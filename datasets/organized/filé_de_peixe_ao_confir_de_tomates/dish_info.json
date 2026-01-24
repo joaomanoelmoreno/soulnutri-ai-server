@@ -1,0 +1,27 @@
+{
+  "nome": "Filé de peixe ao confir de tomates",
+  "slug": "filé_de_peixe_ao_confir_de_tomates",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato de peixe cozido, com tomate cereja e ervas aromáticas.",
+  "ingredientes": [
+    "Peixe",
+    "Tomate cereja",
+    "Azeite",
+    "Ervas",
+    "Alho"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alérgeno: PEIXE (peixe)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}
