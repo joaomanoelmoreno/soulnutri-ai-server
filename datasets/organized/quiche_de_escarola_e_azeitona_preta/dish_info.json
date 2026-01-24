@@ -1,0 +1,31 @@
+{
+  "nome": "Quiche de escarola e azeitona preta",
+  "slug": "quiche_de_escarola_e_azeitona_preta",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Mini quiches com recheio de tomate e azeitonas pretas, provavelmente com queijo e ovos, em uma base de massa.",
+  "ingredientes": [
+    "Massa",
+    "Ovos",
+    "Tomate",
+    "Azeitonas Pretas",
+    "Queijo"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: Glúten (se a massa for feita com trigo)",
+    "Intolerância à lactose (se tiver queijo)",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

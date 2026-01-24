@@ -1,0 +1,26 @@
+{
+  "nome": "Conchiglione ao creme com sálvia e avelã",
+  "slug": "conchiglione_ao_creme_com_sálvia_e_avelã",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Conchiglione recheado com molho cremoso.",
+  "ingredientes": [
+    "Massa conchiglione",
+    "Recheio (provavelmente queijo)",
+    "Molho cremoso"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten, Leite",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

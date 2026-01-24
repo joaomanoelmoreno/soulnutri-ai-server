@@ -1,0 +1,29 @@
+{
+  "nome": "Estrogonofe vegano",
+  "slug": "estrogonofe_vegano",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Clássico prato cremoso com pedaços de carne e cogumelos.",
+  "ingredientes": [
+    "carne",
+    "creme de leite",
+    "champignon",
+    "cebola",
+    "alcaparras",
+    "molho de tomate"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Leite",
+    "Alérgeno: Glúten (em alguns casos)",
+    "Alérgeno: LACTOSE (leite, creme)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}
