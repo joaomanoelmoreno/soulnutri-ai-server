@@ -48,19 +48,19 @@ def apply_center_zoom(image_bytes: bytes, zoom_factor: float = 0.6) -> bytes:
 
 
 def extract_quadrants(image_bytes: bytes) -> List[bytes]:
-    """Divide a imagem em 4 quadrantes para busca localizada"""
+    """Divide a imagem em 9 regiões (grid 3x3) para busca localizada"""
     try:
         img = Image.open(io.BytesIO(image_bytes))
         width, height = img.size
         
-        # 4 quadrantes
+        # 9 regiões (3x3)
         regions = []
-        for row in range(2):
-            for col in range(2):
-                left = col * width // 2
-                top = row * height // 2
-                right = left + width // 2
-                bottom = top + height // 2
+        for row in range(3):
+            for col in range(3):
+                left = col * width // 3
+                top = row * height // 3
+                right = left + width // 3
+                bottom = top + height // 3
                 
                 region = img.crop((left, top, right, bottom))
                 region = region.resize((224, 224), Image.Resampling.LANCZOS)
