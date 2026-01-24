@@ -1,0 +1,26 @@
+{
+  "nome": "Azeitona preta",
+  "slug": "azeitona_preta",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Azeitonas pretas marinadas em azeite e temperos.",
+  "ingredientes": [
+    "Azeitonas",
+    "Azeite",
+    "Vinagre",
+    "Ervas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Pode conter fragmentos de caroço",
+    "Alérgeno: Pode conter sulfitos (conservante)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false
+}

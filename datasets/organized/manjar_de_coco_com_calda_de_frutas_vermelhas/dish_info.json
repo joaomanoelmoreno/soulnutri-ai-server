@@ -3,20 +3,16 @@
   "slug": "manjar_de_coco_com_calda_de_frutas_vermelhas",
   "categoria": "outros",
   "category_emoji": "🍽️",
-  "descricao": "Manjar De Coco Com Calda De Frutas Vermelhas - prato do buffet Cibi Sana",
-  "ingredientes": [
-    "Ingredientes selecionados"
-  ],
-  "beneficios": [
-    "Nutritivo"
-  ],
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
   "riscos": [],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~20g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
   "contem_gluten": false
 }

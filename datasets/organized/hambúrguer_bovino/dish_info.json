@@ -2,21 +2,27 @@
   "nome": "Hambúrguer Bovino",
   "slug": "hambúrguer_bovino",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "Hambúrguer Bovino - prato do buffet Cibi Sana",
+  "category_emoji": "🍖",
+  "descricao": "Bolinhos fritos ou assados, provavelmente feitos de carne.",
   "ingredientes": [
-    "Ingredientes selecionados"
+    "carne moída",
+    "temperos",
+    "ovo",
+    "farinha de rosca"
   ],
-  "beneficios": [
-    "Nutritivo"
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Risco: Alto consumo de carne vermelha pode estar associado a aumento do risco de doenças cardiovasculares",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: OVO (ovo)"
   ],
-  "riscos": [],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~20g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
-  "contem_gluten": false
+  "contem_gluten": true
 }

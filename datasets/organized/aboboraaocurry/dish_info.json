@@ -1,22 +1,20 @@
 {
   "nome": "Abobora ao curry",
   "slug": "aboboraaocurry",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "Aboboraaocurry - prato do buffet Cibi Sana",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Abobora assada ao forno com curries",
   "ingredientes": [
     "abobora, azeite e curry indiano"
   ],
-  "beneficios": [
-    "Nutritivo"
-  ],
+  "beneficios": [],
   "riscos": [],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~20g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
   "contem_gluten": false
 }

@@ -1,0 +1,23 @@
+{
+  "nome": "Pimenta biquinho",
+  "slug": "pimenta_biquinho",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Pimentas biquinho conservadas em vinagre e temperos, geralmente servidas como petisco.",
+  "ingredientes": [
+    "Pimenta Biquinho",
+    "Vinagre",
+    "Azeite",
+    "Sal"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false
+}

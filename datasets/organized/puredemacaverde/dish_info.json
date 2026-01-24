@@ -3,20 +3,16 @@
   "slug": "puredemacaverde",
   "categoria": "outros",
   "category_emoji": "🍽️",
-  "descricao": "Puredemacaverde - prato do buffet Cibi Sana",
-  "ingredientes": [
-    "Ingredientes selecionados"
-  ],
-  "beneficios": [
-    "Nutritivo"
-  ],
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
   "riscos": [],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~20g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
   "contem_gluten": false
 }

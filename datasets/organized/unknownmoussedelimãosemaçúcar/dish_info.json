@@ -3,20 +3,16 @@
   "slug": "unknownmoussedelimãosemaçúcar",
   "categoria": "sobremesa",
   "category_emoji": "🍰",
-  "descricao": "Moussedelimãosemaçúcar - prato do buffet Cibi Sana",
-  "ingredientes": [
-    "Ingredientes selecionados"
-  ],
-  "beneficios": [
-    "Nutritivo"
-  ],
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
   "riscos": [],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~20g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
   "contem_gluten": false
 }

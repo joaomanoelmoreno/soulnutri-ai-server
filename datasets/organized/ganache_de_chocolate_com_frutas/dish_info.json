@@ -3,25 +3,26 @@
   "slug": "ganache_de_chocolate_com_frutas",
   "categoria": "vegetariano",
   "category_emoji": "🥬",
-  "descricao": "Torta rica em frutas, com creme e coberta com raspas de chocolate.",
+  "descricao": "Sobremesa rica em chocolate com adição de frutas frescas.",
   "ingredientes": [
-    "Massa de bolo",
-    "Creme de confeiteiro",
-    "Frutas frescas",
-    "Raspas de chocolate"
+    "Chocolate",
+    "Frutas",
+    "Creme de Leite",
+    "Açúcar"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Glúten (se a massa contiver farinha de trigo), Alérgeno: Lácteos (se o creme de confeiteiro ou chocolate contiverem leite)",
-    "Alérgeno: GLÚTEN (torta, bolo)",
-    "Alérgeno: LACTOSE (creme)"
+    "Alérgeno: Leite",
+    "Alérgeno: Frutas (se houver alguma fruta específica)",
+    "Alto teor de açúcar",
+    "Alérgeno: LACTOSE (leite, creme)"
   ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
-  "contem_gluten": true
+  "contem_gluten": false
 }

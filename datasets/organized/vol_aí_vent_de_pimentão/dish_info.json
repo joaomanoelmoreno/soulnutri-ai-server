@@ -1,0 +1,28 @@
+{
+  "nome": "Vol aí vent de pimentão",
+  "slug": "vol_aí_vent_de_pimentão",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Pequenos salgados, possivelmente recheados com queijo e outros ingredientes.",
+  "ingredientes": [
+    "Massa folhada",
+    "Queijo",
+    "Ovo",
+    "Tempero verde"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten, Lácteos, Ovos",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": true
+}

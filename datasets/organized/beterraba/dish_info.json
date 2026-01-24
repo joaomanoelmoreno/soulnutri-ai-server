@@ -1,0 +1,22 @@
+{
+  "nome": "Beterraba",
+  "slug": "beterraba",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Beterrabas cozidas em cubos, prontas para consumo.",
+  "ingredientes": [
+    "Beterraba",
+    "Água",
+    "Sal"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false
+}

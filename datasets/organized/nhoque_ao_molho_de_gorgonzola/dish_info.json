@@ -3,24 +3,28 @@
   "slug": "nhoque_ao_molho_de_gorgonzola",
   "categoria": "vegetariano",
   "category_emoji": "🥬",
-  "descricao": "Nhoque cozido, coberto com molho branco e queijo, gratinado no forno.",
+  "descricao": "Gnocchi cozido em molho cremoso.",
   "ingredientes": [
-    "Nhoque",
-    "Queijo ralado",
-    "Molho branco",
-    "Salsa picada"
+    "Batata",
+    "Farinha",
+    "Ovo",
+    "Leite",
+    "Creme de Leite",
+    "Ervas"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: LACTOSE (queijo)"
+    "Alérgeno: Glúten, Lácteos, Ovos",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (leite, creme)",
+    "Alérgeno: OVO (ovo)"
   ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
-  "contem_gluten": false
+  "contem_gluten": true
 }

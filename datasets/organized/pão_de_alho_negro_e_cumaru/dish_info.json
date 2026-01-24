@@ -3,26 +3,27 @@
   "slug": "pão_de_alho_negro_e_cumaru",
   "categoria": "vegano",
   "category_emoji": "🌱",
-  "descricao": "Uma variedade de pães artesanais, acompanhados por nozes, damascos e ervas frescas, ideal para um lanche ou aperitivo.",
+  "descricao": "Fatias de pão artesanal, com frutas secas e ervas, servido com sálvia fresca e damascos secos.",
   "ingredientes": [
-    "Pão artesanal",
-    "Nozes",
-    "Damasco",
-    "Ervas frescas"
+    "Farinha",
+    "água",
+    "fermento",
+    "frutas secas",
+    "ervas (sálvia)",
+    "sal"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Glúten (pão)",
-    "Alérgeno: Nozes",
-    "Alérgeno: GLÚTEN (pão, pao)",
-    "Alérgeno: NOZES (nozes, noz)"
+    "Pode conter glúten",
+    "Alérgeno: Frutas secas (se houver)",
+    "Alérgeno: GLÚTEN (pao, pão)"
   ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
   },
   "contem_gluten": true
 }

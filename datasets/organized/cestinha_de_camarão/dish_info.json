@@ -1,0 +1,28 @@
+{
+  "nome": "Cestinha de camarão",
+  "slug": "cestinha_de_camarão",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Cestinhas crocantes feitas com massa folhada, recheadas com uma mistura saborosa de ingredientes.",
+  "ingredientes": [
+    "massa folhada",
+    "ovo",
+    "queijo",
+    "vegetais"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten, ovo, lactose (dependendo do recheio)",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": true
+}

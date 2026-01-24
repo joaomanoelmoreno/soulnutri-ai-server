@@ -1,0 +1,24 @@
+{
+  "nome": "Pastel de carne",
+  "slug": "pastel_de_carne",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Pastéis com recheio salgado ou doce.",
+  "ingredientes": [
+    "massa",
+    "recheio"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (massa)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": true
+}
