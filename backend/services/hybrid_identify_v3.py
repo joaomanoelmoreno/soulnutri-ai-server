@@ -52,8 +52,8 @@ async def identify_multi_v3(image_bytes: bytes) -> dict:
             slug = r['dish']
             score = r['score']
             
-            # Threshold de 85% para alta confiança
-            if score < 0.85:
+            # Threshold de 70% para capturar mais itens (pratos múltiplos)
+            if score < 0.70:
                 continue
             
             # Normalizar nome para evitar duplicados
