@@ -1,0 +1,28 @@
+{
+  "nome": "Purê de batata doce",
+  "slug": "purê_de_batata_doce",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Purê de batata cremoso, feito com batatas cozidas e amassadas, misturado com leite e manteiga.",
+  "ingredientes": [
+    "Batata",
+    "Leite",
+    "Manteiga",
+    "Sal"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Leite",
+    "Alto índice glicêmico",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (leite, manteiga)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

@@ -3,26 +3,22 @@
   "slug": "costela_com_mandioca",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Carne cozida em panela com legumes e temperos, geralmente servida com caldo saboroso.",
+  "descricao": "Prato de carne cozida em molho saboroso.",
   "ingredientes": [
-    "carne bovina",
-    "batata",
-    "tomate",
-    "cebola",
-    "salsinha",
-    "pimenta"
+    "Carne",
+    "Molho",
+    "Ervas"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Pode conter vestígios de outros alimentos.",
-    "Alto teor de gordura (dependendo do corte da carne)"
+    "Alérgeno: Carne"
   ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
   "contem_gluten": false
 }

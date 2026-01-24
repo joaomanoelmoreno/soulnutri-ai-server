@@ -1,0 +1,29 @@
+{
+  "nome": "Bacalhau com natas e Champions",
+  "slug": "bacalhau_com_natas_e_champions",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Prato feito com ovos e queijo, com textura leve e saborosa.",
+  "ingredientes": [
+    "Ovos",
+    "Queijo",
+    "Farinha",
+    "Leite"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: Ovos",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (queijo, leite)",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

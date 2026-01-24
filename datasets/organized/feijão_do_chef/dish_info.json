@@ -1,0 +1,26 @@
+{
+  "nome": "Feijão do chef",
+  "slug": "feijão_do_chef",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato típico da culinária brasileira, feito com feijão preto e diversos tipos de carne.",
+  "ingredientes": [
+    "Feijão preto",
+    "Carnes salgadas (ex: paio, bacon)",
+    "Linguiça",
+    "Temperos"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alto teor de sódio",
+    "Alérgeno: Pode conter glúten"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

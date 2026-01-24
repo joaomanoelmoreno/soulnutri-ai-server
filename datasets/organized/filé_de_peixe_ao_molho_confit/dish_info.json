@@ -1,0 +1,27 @@
+{
+  "nome": "Filé de peixe ao molho confit",
+  "slug": "filé_de_peixe_ao_molho_confit",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Filetes de peixe cozidos com tomate cereja, alho, azeite e ervas frescas.",
+  "ingredientes": [
+    "Peixe branco",
+    "Tomate cereja",
+    "Azeite",
+    "Alho",
+    "Salsinha"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alérgeno: PEIXE (peixe)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

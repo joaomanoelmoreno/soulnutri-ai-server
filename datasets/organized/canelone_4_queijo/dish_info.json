@@ -1,18 +1,28 @@
 {
-  "nome": "Canelone 4 Queijo",
+  "nome": "Canelone 4 queijo",
   "slug": "canelone_4_queijo",
   "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
+  "category_emoji": "🥬",
+  "descricao": "Cannelloni recheado com queijo e coberto com molho de tomate.",
+  "ingredientes": [
+    "Massa de cannelloni",
+    "Queijo",
+    "Molho de tomate",
+    "Ervas"
+  ],
   "beneficios": [],
-  "riscos": [],
+  "riscos": [
+    "Alérgeno: Glúten (massa)",
+    "Alérgeno: Laticínios (queijo)",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "contem_gluten": false
+  "contem_gluten": true
 }

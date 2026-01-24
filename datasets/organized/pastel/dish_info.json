@@ -1,0 +1,26 @@
+{
+  "nome": "Pastel",
+  "slug": "pastel",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Pastel de carne é uma opção saborosa e popular, geralmente recheado com carne moída temperada e outros ingredientes.",
+  "ingredientes": [
+    "carne",
+    "massa",
+    "temperos"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten (massa)",
+    "Alérgeno: Carne",
+    "Alérgeno: GLÚTEN (massa)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

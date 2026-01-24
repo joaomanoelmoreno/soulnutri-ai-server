@@ -3,23 +3,25 @@
   "slug": "maminha_ao_molho_madeira",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Carne cozida em caldo com cogumelos.",
+  "descricao": "Carne cozida em um molho saboroso, geralmente servida em ocasiões especiais.",
   "ingredientes": [
-    "Carne",
-    "Caldo",
-    "Cogumelos",
-    "Temperos"
+    "Carne bovina",
+    "Caldo de carne",
+    "Cebola",
+    "Alho",
+    "Tomate",
+    "Cogumelos"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Carne"
+    "Alérgeno: Pode conter glúten dependendo dos ingredientes do molho."
   ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "contem_gluten": false
+  "contem_gluten": true
 }
