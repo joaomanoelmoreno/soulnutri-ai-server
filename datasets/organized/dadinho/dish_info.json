@@ -1,0 +1,10 @@
+{
+  "nome": "Dadinho de Tapioca",
+  "slug": "dadinho",
+  "categoria": "vegetariano",
+  "ingredientes": ["Tapioca", "Queijo coalho", "Temperos"],
+  "descricao": "Cubos crocantes de tapioca com queijo coalho, fritos até dourar. Pode ser servido com camarão.",
+  "beneficios": ["Sem glúten", "Fonte de cálcio"],
+  "riscos": ["Contém lactose", "Fritura"],
+  "curiosidade": "Inspirado no tradicional queijo coalho nordestino."
+}
