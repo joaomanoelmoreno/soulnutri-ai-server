@@ -1,18 +1,29 @@
 {
   "nome": "Maminhamolhocebola",
-  "slug": "maminhamolhocebola",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Maminha bovina",
+    "Cebola",
+    "Salsinha fresca picada",
+    "Molho cremoso (possivelmente à base de creme de leite)",
+    "Azeite (provavelmente utilizado no preparo)"
+  ],
+  "descricao": "A maminha, corte nobre da carne bovina, parece ter sido grelhada ou selada, mantendo uma crosta dourada e suculenta. Ela está coberta por um molho cremoso, possivelmente à base de creme de leite, onde se destacam a cebola refogada em formato de pétalas e a salsinha fresca picada, usada como finalização.",
+  "beneficios": [
+    "A maminha é fonte de proteína, importante para a construção e reparação muscular.",
+    "A cebola contém compostos sulfurados com propriedades antioxidantes e anti-inflamatórias."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo da quantidade de creme de leite utilizado no molho.",
+    "Pessoas com intolerância à lactose devem ter cuidado com o creme de leite.",
+    "Pode conter glúten, dependendo do tempero ou espessante utilizado no molho."
+  ],
+  "curiosidade": "A maminha é um corte localizado na parte traseira do boi, próximo à picanha, mas com um sabor e textura distintos.",
+  "slug": "maminhamolhocebola",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

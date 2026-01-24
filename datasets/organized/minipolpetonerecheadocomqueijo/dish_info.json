@@ -1,18 +1,29 @@
 {
   "nome": "Minipolpetonerecheadocomqueijo",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne moída",
+    "Queijo (tipo não especificado)",
+    "Molho de tomate",
+    "Cebolinha picada",
+    "Queijo gratinado (tipo não especificado)"
+  ],
+  "descricao": "Minipolpetones recheados com queijo, cobertos com molho de tomate e gratinados com queijo. Decorados com cebolinha picada. O modo de preparo parece ser assado, possivelmente no forno.",
+  "beneficios": [
+    "A carne moída é fonte de proteína e ferro, nutrientes importantes para a saúde.",
+    "O queijo fornece cálcio, essencial para a saúde dos ossos."
+  ],
+  "riscos": [
+    "Alto teor de gordura, dependendo do tipo de carne e queijo utilizados.",
+    "Pode conter glúten se a carne moída for preparada com farinha ou se o molho de tomate for industrializado.",
+    "Possível presença de lactose, dependendo do tipo de queijo."
+  ],
+  "curiosidade": "O polpetone, uma variação do famoso bolinho de carne italiano, é uma opção saborosa e versátil que pode ser adaptada a diferentes recheios e acompanhamentos.",
   "slug": "minipolpetonerecheadocomqueijo",
-  "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

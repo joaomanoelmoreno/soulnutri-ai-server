@@ -1,27 +1,27 @@
 {
   "nome": "Maminha ao molho madeira",
-  "slug": "maminha_ao_molho_madeira",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Carne cozida em um molho saboroso, geralmente servida em ocasiões especiais.",
   "ingredientes": [
-    "Carne bovina",
-    "Caldo de carne",
-    "Cebola",
-    "Alho",
-    "Tomate",
-    "Cogumelos"
+    "Maminha bovina",
+    "Molho madeira (ingredientes não totalmente visíveis, mas possivelmente vinho tinto, caldo de carne, cebola, alho)",
+    "Champignon",
+    "Cebolinha picada"
   ],
-  "beneficios": [],
+  "descricao": "Maminha cozida em molho madeira. O corte da carne parece ter sido feito após o cozimento para facilitar o consumo. O molho, à base de vinho tinto e/ou caldo de carne, envolve a carne, com adição de champignon fatiado e cebolinha picada para finalização e aroma.",
+  "beneficios": [
+    "A maminha é fonte de proteína, importante para a construção e reparo dos tecidos do corpo.",
+    "O champignon, rico em nutrientes e antioxidantes, contribui para a saúde geral."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter glúten dependendo dos ingredientes do molho."
+    "A maminha é rica em gordura saturada, devendo ser consumida com moderação.",
+    "Molho madeira pode conter sódio em excesso, dependendo da receita."
   ],
-  "tecnica": "",
+  "curiosidade": "A maminha é um corte nobre, macio e saboroso, retirado da parte traseira do boi.",
+  "slug": "maminha_ao_molho_madeira",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

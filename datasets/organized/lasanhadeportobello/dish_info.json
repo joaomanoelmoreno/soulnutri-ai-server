@@ -1,18 +1,31 @@
 {
   "nome": "Lasanhadeportobello",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa de lasanha (provavelmente com farinha de trigo)",
+    "Cogumelos portobello salteados (visíveis na lasanha)",
+    "Molho branco (possivelmente à base de leite, manteiga e farinha)",
+    "Queijo gratinado (provavelmente queijo mussarela ou similar)",
+    "Cebolinha picada (para finalizar)",
+    "Azeite (provavelmente usado no preparo dos cogumelos e molho)",
+    "Temperos (sal, pimenta e possivelmente outros temperos na preparação)"
+  ],
+  "descricao": "A lasanha de portobello é um prato vegetariano, onde as camadas de massa são intercaladas com um recheio cremoso de cogumelos salteados, molho branco e queijo gratinado. A cebolinha picada é utilizada como finalização, adicionando frescor e sabor. O prato é gratinado no forno para obter a camada de queijo dourada.",
+  "beneficios": [
+    "Os cogumelos portobello são fontes de vitaminas do complexo B, importantes para o metabolismo energético e saúde do sistema nervoso.",
+    "O queijo fornece cálcio, essencial para a saúde dos ossos e dentes."
+  ],
+  "riscos": [
+    "Contém glúten, devido à presença da massa de lasanha.",
+    "Pode ser rico em gorduras saturadas, dependendo da quantidade de queijo e manteiga utilizada no molho branco.",
+    "Possível presença de lactose, dependendo dos ingredientes do molho branco e queijo."
+  ],
+  "curiosidade": "O cogumelo portobello é uma variação mais madura do cogumelo champignon, com sabor mais intenso e textura mais carnosa.",
   "slug": "lasanhadeportobello",
-  "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,32 @@
 {
   "nome": "Kibe",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne moída",
+    "Trigo para kibe (sêmola de trigo)",
+    "Hortelã fresca picada",
+    "Cebola",
+    "Pimenta Síria (ou tempero)",
+    "Sal",
+    "Azeite",
+    "Queijo"
+  ],
+  "descricao": "Kibes preparados, possivelmente fritos ou assados, com recheio de queijo. Observa-se pedaços de pimenta e hortelã fresca picada ao redor.",
+  "beneficios": [
+    "A carne oferece proteína de alta qualidade, essencial para a construção e reparação dos tecidos do corpo.",
+    "O trigo para kibe (sêmola de trigo) fornece carboidratos, que são a principal fonte de energia."
+  ],
+  "riscos": [
+    "Alto teor de gordura, dependendo do corte da carne e do método de preparo.",
+    "Pode conter glúten, dependendo da receita e do trigo utilizado.",
+    "Contém lactose para quem tem intolerância e/ou alergia."
+  ],
+  "curiosidade": "O kibe é um prato de origem árabe, popularizado no Brasil, e pode ser preparado de diversas formas, como frito, assado ou cru (kibe cru).",
   "slug": "kibe",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

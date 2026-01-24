@@ -1,18 +1,30 @@
 {
   "nome": "Lasanhadeespinafre",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa de lasanha (provavelmente contendo glúten)",
+    "Espinafre",
+    "Queijo muçarela",
+    "Queijo parmesão",
+    "Creme de leite",
+    "Cebolinha (para finalizar)"
+  ],
+  "descricao": "Lasanha feita em camadas, com recheio cremoso de espinafre e queijo, coberta com queijo muçarela gratinado. A cebolinha é usada para decorar e adicionar frescor.",
+  "beneficios": [
+    "Espinafre é fonte de vitaminas (A, C, K) e minerais (ferro, cálcio).",
+    "Queijos fornecem cálcio e proteínas."
+  ],
+  "riscos": [
+    "Contém glúten (na massa da lasanha)",
+    "Rico em gorduras saturadas (dos queijos e creme de leite)",
+    "Pode conter sódio em excesso, dependendo da quantidade de queijo e temperos usados"
+  ],
+  "curiosidade": "O espinafre é uma excelente fonte de luteína e zeaxantina, antioxidantes importantes para a saúde dos olhos.",
   "slug": "lasanhadeespinafre",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

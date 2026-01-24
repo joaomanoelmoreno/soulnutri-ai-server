@@ -1,18 +1,28 @@
 {
   "nome": "Lasanha De Berinjela",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Berinjela",
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "descricao": "Lasanha feita com camadas de berinjela no lugar da massa tradicional, intercaladas com molho de tomate e coberta com queijo, possivelmente gratinada no forno.",
+  "beneficios": [
+    "A berinjela é rica em antioxidantes, como a nasunina.",
+    "O prato pode ser uma boa fonte de fibras, dependendo da quantidade de berinjela.",
+    "A presença de queijo adiciona cálcio e proteínas."
+  ],
+  "riscos": [
+    "Dependendo do tipo de queijo utilizado, pode ser rico em gorduras saturadas.",
+    "Intolerância ao glúten, se o molho de tomate tiver espessantes.",
+    "Alérgicos a lactose, se usar queijo com leite."
+  ],
+  "curiosidade": "A berinjela é um vegetal versátil, pertencente à família das solanáceas, assim como o tomate e a batata.",
   "slug": "lasanha_de_berinjela",
-  "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

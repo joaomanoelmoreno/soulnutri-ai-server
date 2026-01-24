@@ -1,18 +1,28 @@
 {
   "nome": "Maminhaaomolhomostarda",
-  "slug": "maminhaaomolhomostarda",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Maminha bovina",
+    "Molho de mostarda",
+    "Cebolinha picada",
+    "Possível purê de acompanhamento (não totalmente visível)"
+  ],
+  "descricao": "O prato consiste em fatias de maminha, provavelmente grelhadas ou seladas, cobertas por um molho cremoso à base de mostarda. O prato é finalizado com cebolinha picada, adicionando frescor e sabor. Há um acompanhamento cremoso e amarelado, provavelmente um purê.",
+  "beneficios": [
+    "A maminha é fonte de proteína, importante para a construção e reparo dos tecidos do corpo.",
+    "O molho de mostarda pode conter antioxidantes e auxiliar na digestão."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo do corte da carne e ingredientes do molho.",
+    "Possível presença de sódio em excesso, dependendo da quantidade de molho e temperos.",
+    "Alérgeno: pode conter mostarda."
+  ],
+  "curiosidade": "A maminha é um corte de carne bovina localizado na parte traseira do boi, com sabor marcante e maciez, sendo muito apreciada em churrascos e preparações diversas.",
+  "slug": "maminhaaomolhomostarda",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,30 @@
 {
   "nome": "Maminhanacervejapreta",
-  "slug": "maminhanacervejapreta",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Maminha",
+    "Cerveja preta",
+    "Ervas frescas (salsa)",
+    "Caldo de carne (possivelmente)",
+    "Alho (possivelmente)",
+    "Cebola (possivelmente)"
+  ],
+  "descricao": "O prato é composto por fatias de maminha cozidas em um molho escuro, provavelmente à base de cerveja preta. O preparo parece ter envolvido o cozimento da carne no molho, possivelmente em fogo baixo, permitindo que a carne absorva os sabores da cerveja e dos temperos. Finalizado com ervas frescas picadas.",
+  "beneficios": [
+    "A maminha é fonte de proteína de alta qualidade, essencial para a construção e reparação muscular.",
+    "A cerveja preta pode conter antioxidantes que combatem radicais livres."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo do corte da carne e do modo de preparo.",
+    "Pode conter glúten, dependendo da cerveja utilizada.",
+    "Pessoas com restrições ao consumo de álcool devem evitar."
+  ],
+  "curiosidade": "A maminha é um corte nobre do boi, conhecido por sua maciez e sabor marcante. A cerveja preta adiciona um toque adocicado e amargo ao prato.",
+  "slug": "maminhanacervejapreta",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

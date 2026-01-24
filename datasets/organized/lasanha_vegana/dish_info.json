@@ -1,29 +1,31 @@
 {
   "nome": "Lasanha vegana",
-  "slug": "lasanha_vegana",
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Lasanha vegana com massa, molho de tomate, legumes e queijo vegano.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Massa de lasanha",
+    "Massa de lasanha (provavelmente à base de trigo)",
     "Molho de tomate",
-    "Legumes",
-    "Queijo vegano",
-    "Manjericão"
+    "Recheio à base de proteína vegetal (possivelmente soja, grão de bico ou lentilha)",
+    "Queijo vegano ralado",
+    "Ervas frescas (salsa e cebolinha)",
+    "Azeite de oliva (possivelmente usado no preparo)",
+    "Temperos (não especificados, mas comuns em lasanhas)"
   ],
-  "beneficios": [],
+  "descricao": "Lasanha vegana preparada com massa, recheio de proteína vegetal e coberta com queijo vegano ralado e ervas frescas. O preparo provavelmente envolve montagem em camadas e cozimento no forno.",
+  "beneficios": [
+    "Opção sem produtos de origem animal, ideal para veganos e vegetarianos.",
+    "Boa fonte de fibras, dependendo da quantidade de vegetais e da qualidade da massa.",
+    "Pode ser rica em proteínas, dependendo do tipo de proteína vegetal usada no recheio."
+  ],
   "riscos": [
-    "Alérgeno: Glúten (se a massa não for de outro tipo)",
-    "Alérgeno: Soja (se o queijo vegano for feito de soja)",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)"
+    "Pode conter glúten, dependendo da massa utilizada.",
+    "O valor nutricional varia dependendo dos ingredientes, podendo ser alta em sódio e gorduras saturadas."
   ],
-  "tecnica": "",
+  "curiosidade": "A lasanha é um prato italiano que ganhou diversas adaptações ao redor do mundo, incluindo versões veganas. A proteína vegetal é uma alternativa nutritiva e saborosa para substituir a carne.",
+  "slug": "lasanha_vegana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

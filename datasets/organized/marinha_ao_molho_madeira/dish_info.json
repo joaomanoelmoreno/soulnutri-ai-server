@@ -1,25 +1,29 @@
 {
   "nome": "Marinha ao molho madeira",
-  "slug": "marinha_ao_molho_madeira",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Carne cozida com cogumelos e tomates, provavelmente em um molho.",
   "ingredientes": [
-    "carne",
-    "cogumelos",
-    "tomate",
-    "temperos"
+    "Carne bovina (marinha)",
+    "Molho madeira (ingredientes não totalmente visíveis)",
+    "Champignon",
+    "Tomate cereja",
+    "Salsinha picada"
   ],
-  "beneficios": [],
+  "descricao": "O prato consiste em fatias de marinha bovina, cozida em molho madeira, acompanhada por champignon fatiado, tomate cereja e salsinha picada. O molho madeira geralmente é preparado com vinho tinto, caldo de carne, cogumelos, e outros temperos.",
+  "beneficios": [
+    "A carne bovina é fonte de proteína de alto valor biológico e de ferro heme, importante para prevenir anemias.",
+    "Os cogumelos champignon são ricos em antioxidantes e podem fortalecer o sistema imunológico."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter traços de glúten (se o molho for espessado com farinha)."
+    "Contém proteína animal",
+    "Pode conter glúten dependendo da receita do molho madeira",
+    "Pessoas com restrição de sódio devem moderar o consumo devido ao molho."
   ],
-  "tecnica": "",
+  "curiosidade": "O corte 'marinha' é um dos mais macios e saborosos da carne bovina, ideal para preparos que exigem cozimento lento para realçar seu sabor.",
+  "slug": "marinha_ao_molho_madeira",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

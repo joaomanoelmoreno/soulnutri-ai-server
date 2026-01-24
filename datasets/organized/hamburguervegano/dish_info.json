@@ -1,18 +1,27 @@
 {
   "nome": "Hamburguervegano",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Base do hambúrguer (possivelmente à base de grãos, leguminosas e/ou vegetais)",
+    "Tomate cereja",
+    "Cebolinha fresca",
+    "Azeite de oliva (possivelmente para finalizar)"
+  ],
+  "descricao": "Hambúrgueres veganos grelhados, com tomate cereja fatiado e cebolinha fresca picada para finalizar. O hambúrguer parece ter uma textura rica em ingredientes, possivelmente contendo grãos, leguminosas e/ou vegetais.",
+  "beneficios": [
+    "Rico em fibras, dependendo dos ingredientes do hambúrguer, o que contribui para a saúde digestiva e saciedade.",
+    "Fonte de vitaminas e minerais, principalmente se contiver vegetais na composição."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo dos ingredientes do hambúrguer.",
+    "Teor de sódio pode ser elevado dependendo da receita."
+  ],
+  "curiosidade": "Hambúrgueres veganos são uma alternativa sustentável e ética, reduzindo o impacto ambiental e a crueldade animal associados à produção de carne.",
   "slug": "hamburguervegano",
-  "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

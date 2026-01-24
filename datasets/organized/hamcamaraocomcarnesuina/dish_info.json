@@ -1,18 +1,29 @@
 {
   "nome": "Hamcamaraocomcarnesuina",
-  "slug": "hamcamaraocomcarnesuina",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Camarão",
+    "Carne suína",
+    "Salsinha",
+    "Cebolinha",
+    "Pimenta dedo-de-moça",
+    "Limão"
+  ],
+  "descricao": "Bolinhos fritos ou grelhados de camarão e carne suína, temperados com ervas frescas e pimenta, e decorados com limão.",
+  "beneficios": [
+    "Camarão é rico em proteínas e selênio, um antioxidante importante.",
+    "A carne suína fornece proteínas e vitaminas do complexo B."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos.",
+    "Risco de contaminação por manipulação inadequada da carne crua."
+  ],
+  "curiosidade": "O camarão é uma boa fonte de ácidos graxos ômega-3, que são benéficos para a saúde do coração.",
+  "slug": "hamcamaraocomcarnesuina",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

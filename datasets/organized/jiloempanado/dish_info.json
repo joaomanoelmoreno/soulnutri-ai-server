@@ -1,18 +1,28 @@
 {
   "nome": "Jiloempanado",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Jiló",
+    "Farinha de rosca",
+    "Tempero",
+    "Cheiro verde picado",
+    "Óleo vegetal para fritar"
+  ],
+  "descricao": "Fatias de jiló empanadas e fritas. O jiló é cortado em fatias, temperado, empanado na farinha de rosca e frito em óleo vegetal até dourar.  Finalizado com cheiro verde picado.",
+  "beneficios": [
+    "O jiló é rico em fibras, auxiliando na saúde digestiva.",
+    "Farinha de rosca pode fornecer carboidratos para energia."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura.",
+    "Pode conter glúten dependendo da farinha de rosca utilizada."
+  ],
+  "curiosidade": "O jiló é um fruto nativo da África e Ásia, consumido em diversas culinárias ao redor do mundo.",
   "slug": "jiloempanado",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

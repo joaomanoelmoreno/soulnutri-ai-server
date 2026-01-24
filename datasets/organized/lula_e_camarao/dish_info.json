@@ -1,18 +1,36 @@
 {
   "nome": "Lula E Camarao",
-  "slug": "lula_e_camarao",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Lula (anéis e tentáculos)",
+    "Camarão",
+    "Arroz branco",
+    "Molho amarelo cremoso (possivelmente à base de queijo ou creme de leite)",
+    "Peixe à milanesa (possivelmente merluza ou pescada)",
+    "Queijo gratinado",
+    "Tomate cereja",
+    "Folha de manjericão",
+    "Ervas frescas (cebolinha picada)",
+    "Pimentão vermelho"
+  ],
+  "descricao": "Prato composto por frutos do mar (lula e camarão) grelhados/refogados, acompanhados por arroz branco, um molho cremoso amarelo, peixe à milanesa gratinado com queijo, pimentão e tomate. Os frutos do mar parecem ter sido temperados com ervas frescas. O peixe pode ter sido preparado com farinha de rosca para empanar, seguido por fritura ou assado.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade (lula, camarão e peixe).",
+    "Camarão é rico em selênio, um antioxidante importante.",
+    "Arroz branco fornece carboidratos para energia."
+  ],
+  "riscos": [
+    "Contém glúten (possível na farinha de rosca ou empanamento).",
+    "Alérgeno: crustáceos (camarão, lula).",
+    "Alto teor de sódio (potencial no tempero dos frutos do mar e molhos).",
+    "Alto teor de gordura (dependendo do modo de preparo e ingredientes dos molhos e do peixe à milanesa)."
+  ],
+  "curiosidade": "A lula, assim como o camarão, é uma excelente fonte de proteínas e possui pouca gordura, além de ser rica em minerais como selênio, fósforo e zinco.",
+  "slug": "lula_e_camarao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

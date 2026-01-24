@@ -1,27 +1,29 @@
 {
   "nome": "Lasanha vegana (beringela e proteína de soja)",
-  "slug": "lasanha_vegana_beringela_e_proteína_de_soja",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Prato com proteína de soja, coberto com queijo ralado e cebolinha.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Proteína de soja",
-    "Queijo ralado",
-    "Cebolinha",
-    "Tomate"
+    "Berinjela (fatiada)",
+    "Proteína de soja (texturizada)",
+    "Molho de tomate",
+    "Cebolinha (picada)",
+    "Queijo vegano ralado"
   ],
-  "beneficios": [],
+  "descricao": "Lasanha vegana com camadas de berinjela grelhada e proteína de soja refogada em molho de tomate. Coberta com queijo vegano ralado e cebolinha picada.",
+  "beneficios": [
+    "Rica em fibras (berinjela)",
+    "Fonte de proteína vegetal (proteína de soja)",
+    "Opção com baixo teor de gordura saturada (se preparado com azeite de oliva)"
+  ],
   "riscos": [
-    "Alérgeno: Soja, Lácteos",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: SOJA (soja)"
+    "Pode conter glúten, dependendo do preparo da proteína de soja e molho de tomate.",
+    "Alergênicos: verificar composição do queijo vegano (amêndoas, castanhas, etc)."
   ],
-  "tecnica": "",
+  "curiosidade": "A berinjela é rica em antioxidantes, como a nasunina, que pode ajudar a proteger as células do corpo.",
+  "slug": "lasanha_vegana_beringela_e_proteína_de_soja",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

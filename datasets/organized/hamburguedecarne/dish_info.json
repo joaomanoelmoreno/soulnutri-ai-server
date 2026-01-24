@@ -1,18 +1,30 @@
 {
   "nome": "Hamburguedecarne",
-  "slug": "hamburguedecarne",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Carne moída",
+    "Tomate cereja (vermelho)",
+    "Tomate cereja (amarelo/laranja)",
+    "Cebolinha picada"
+  ],
+  "descricao": "O prato consiste em hambúrgueres de carne, provavelmente grelhados ou selados, servidos com tomates cereja cortados ao meio e cebolinha picada por cima. O hambúrguer pode ter sido temperado com sal e pimenta do reino. Há um molho, possivelmente resultante do cozimento da carne, na base do prato.",
+  "beneficios": [
+    "A carne é rica em proteínas de alto valor biológico, essenciais para a construção e reparo dos tecidos.",
+    "O tomate cereja é fonte de licopeno, um antioxidante que pode auxiliar na proteção contra danos celulares.",
+    "A cebolinha contribui com vitaminas e minerais, além de um sabor característico.",
+    "O preparo grelhado/selado evita o uso excessivo de óleos, reduzindo a ingestão de gorduras."
+  ],
+  "riscos": [
+    "A carne pode ser rica em gorduras saturadas, dependendo do corte utilizado.",
+    "Consumir carne em excesso pode aumentar o risco de doenças cardiovasculares.",
+    "Alergia ao tomate e/ou cebolinha"
+  ],
+  "curiosidade": "O licopeno presente no tomate é melhor absorvido pelo organismo quando o tomate é aquecido e combinado com gordura (como a presente na carne). ",
+  "slug": "hamburguedecarne",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

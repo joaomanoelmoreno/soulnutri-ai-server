@@ -1,25 +1,29 @@
 {
   "nome": "Hambúrguer vegano de nozes",
-  "slug": "hambúrguer_vegano_de_nozes",
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Hambúrguer de carne, acompanhado de tomates e molho.",
+  "categoria": "vegano",
   "ingredientes": [
-    "carne moída",
-    "tempero",
-    "tomate cereja",
-    "pimenta"
+    "Hambúrguer de nozes (provavelmente com nozes, grãos, legumes, e temperos)",
+    "Tomates cereja frescos",
+    "Pimenta dedo-de-moça",
+    "Salsa picada",
+    "Molho cremoso alaranjado (possivelmente à base de vegetais, como abóbora ou cenoura)"
   ],
-  "beneficios": [],
+  "descricao": "Hambúrgueres veganos de nozes, grelhados ou assados, servidos com tomates cereja frescos cortados ao meio, pimenta dedo-de-moça e salsa picada, acompanhados de um molho cremoso alaranjado. O hambúrguer parece ter uma textura rústica e é possivelmente feito com nozes moídas, leguminosas e/ou grãos, com temperos.",
+  "beneficios": [
+    "Fonte de proteínas vegetais, especialmente se contiver leguminosas.",
+    "Rico em fibras, dependendo dos ingredientes.",
+    "Pode ser uma boa fonte de gorduras saudáveis se contiver nozes e sementes."
+  ],
   "riscos": [
-    "Alérgeno: Carne"
+    "Pode conter glúten, dependendo dos ingredientes (se tiver farinha ou derivados).",
+    "Alérgenos: nozes e/ou outros ingredientes do hambúrguer, dependendo da receita."
   ],
-  "tecnica": "",
+  "curiosidade": "Nozes são ricas em antioxidantes e podem ajudar a reduzir o colesterol LDL (o \"colesterol ruim\") e a inflamação.",
+  "slug": "hambúrguer_vegano_de_nozes",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

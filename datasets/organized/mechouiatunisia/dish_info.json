@@ -1,27 +1,34 @@
 {
   "nome": "Mechouia-Tunisia",
-  "slug": "mechouiatunisia",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Salada composta por ovos cozidos, milho, azeitonas, alcaparras e outros vegetais.",
   "ingredientes": [
-    "ovos",
-    "milho",
-    "azeitonas",
-    "alcaparras",
-    "tomate"
+    "Tomate",
+    "Pimentão",
+    "Cebola",
+    "Alho",
+    "Azeite de oliva",
+    "Azeitonas verdes",
+    "Alcaparras",
+    "Ovos cozidos",
+    "Milho verde"
   ],
-  "beneficios": [],
+  "descricao": "A Mechouia Tunisiana é uma salada cremosa, originária da Tunísia, feita tradicionalmente com tomates, pimentões e cebolas assados ou grelhados. Após o cozimento, os vegetais são amassados e misturados com azeite de oliva, alho e especiarias. A versão apresentada na imagem é adornada com azeitonas verdes, alcaparras, ovos cozidos e milho verde.",
+  "beneficios": [
+    "Rica em vitaminas e antioxidantes dos vegetais, como vitamina C do tomate e pimentão",
+    "Fonte de gorduras saudáveis do azeite de oliva, benéficas para a saúde cardiovascular",
+    "As azeitonas verdes fornecem fibras e minerais",
+    "Ovos cozidos oferecem proteínas de alta qualidade e colina, importante para a saúde do cérebro"
+  ],
   "riscos": [
-    "Alérgeno: Ovo",
-    "Alérgeno: OVO (ovo, ovos)"
+    "Pode conter alta quantidade de sódio devido ao uso de azeitonas e alcaparras",
+    "Alérgeno: ovos"
   ],
-  "tecnica": "",
+  "curiosidade": "O nome 'Mechouia' vem do verbo árabe 'chawa', que significa 'assar' ou 'grelhar', referindo-se ao método tradicional de preparo dos vegetais.",
+  "slug": "mechouiatunisia",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
