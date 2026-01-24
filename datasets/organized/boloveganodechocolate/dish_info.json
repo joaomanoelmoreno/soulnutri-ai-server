@@ -1,0 +1,30 @@
+{
+  "nome": "Unknownboloveganodechocolate",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Farinha de trigo",
+    "Açúcar mascavo",
+    "Chocolate (possivelmente cacau em pó ou chocolate amargo)",
+    "Morango",
+    "Pêra",
+    "Ingrediente para calda caramelizada (possivelmente açúcar mascavo)",
+    "Possível óleo vegetal (ex: girassol, coco)"
+  ],
+  "descricao": "Bolo de chocolate vegano, cortado em quadrados, com cobertura de uma calda caramelizada (possivelmente feita com açúcar mascavo). Cada pedaço é decorado com uma fatia de morango e um pedaço de pêra.",
+  "beneficios": [
+    "A adição de frutas (morango e pêra) oferece vitaminas e antioxidantes.",
+    "O uso de açúcar mascavo em vez de açúcar refinado pode fornecer um pouco mais de minerais."
+  ],
+  "riscos": [
+    "Contém glúten (provavelmente da farinha de trigo).",
+    "Apesar de ser vegano, deve ser consumido com moderação devido ao teor de açúcar."
+  ],
+  "curiosidade": "O morango é rico em vitamina C, importante para a imunidade e saúde da pele. A pêra, por sua vez, é uma boa fonte de fibras, auxiliando na digestão.",
+  "slug": "boloveganodechocolate",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

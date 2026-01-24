@@ -1,0 +1,27 @@
+{
+  "nome": "Carnecomfritas",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne bovina",
+    "Batata frita",
+    "Óleo vegetal"
+  ],
+  "descricao": "Prato composto por pedaços de carne bovina, possivelmente grelhada ou frita, e batata frita. A carne parece ter uma coloração escura e pode ter sido temperada antes do preparo. A batata frita parece ser caseira, cortada em palitos e frita em óleo vegetal.",
+  "beneficios": [
+    "A carne bovina é rica em proteínas, importantes para a construção e reparação muscular",
+    "A batata fornece energia através dos carboidratos"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo do corte da carne e do óleo utilizado na fritura",
+    "Pode conter excesso de sódio, dependendo do tempero da carne e da batata frita",
+    "Pode conter glúten, dependendo do tempero da carne"
+  ],
+  "curiosidade": "A batata frita, apesar de popular, deve ser consumida com moderação devido ao seu alto teor de gordura e calorias.",
+  "slug": "carnecomfritas",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

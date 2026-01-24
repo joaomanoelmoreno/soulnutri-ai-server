@@ -1,0 +1,28 @@
+{
+  "nome": "Linguiça de lombo",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Linguiça de lombo",
+    "Cebola roxa",
+    "Cebolinha picada",
+    "Azeite (possível)"
+  ],
+  "descricao": "Prato composto por linguiça de lombo fatiada, misturada com cebola roxa em fatias e cebolinha picada. Possivelmente, a linguiça foi salteada em azeite ou cozida. A combinação é uma salada refrescante e saborosa.",
+  "beneficios": [
+    "A linguiça de lombo é fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
+    "A cebola roxa contém antioxidantes, que combatem os radicais livres."
+  ],
+  "riscos": [
+    "A linguiça pode conter alto teor de sódio.",
+    "Contém glúten (geralmente a linguiça)",
+    "Alérgenos: pode conter traços de produtos derivados de leite e soja (verificar rótulo)"
+  ],
+  "curiosidade": "A linguiça de lombo é feita com carne suína, geralmente do lombo, que é uma parte magra do porco. A adição de temperos e especiarias varia de acordo com a receita, conferindo diferentes sabores e aromas ao produto.",
+  "slug": "linguica_de_lombo",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

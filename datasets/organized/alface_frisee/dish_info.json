@@ -1,0 +1,22 @@
+{
+  "nome": "Alface Frisée",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Alface Frisée"
+  ],
+  "descricao": "Alface Frisée fresca, provavelmente lavada e servida crua. Não há indícios de temperos ou outros ingredientes visíveis na imagem.",
+  "beneficios": [
+    "Rica em fibras, auxiliando na digestão.",
+    "Fonte de vitamina K, importante para a coagulação sanguínea.",
+    "Baixa em calorias, ideal para dietas de emagrecimento."
+  ],
+  "riscos": [],
+  "curiosidade": "A Alface Frisée, com suas folhas encaracoladas e sabor levemente amargo, é parente da chicória e é frequentemente usada em saladas, agregando textura e um toque de amargor.",
+  "slug": "alface_frisee",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

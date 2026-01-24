@@ -1,0 +1,29 @@
+{
+  "nome": "Unknowntomateseco",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Tomate seco",
+    "Azeite de oliva",
+    "Ervas frescas (salsa)",
+    "Alho",
+    "Vinagre"
+  ],
+  "descricao": "Tomates secos hidratados e marinados em azeite de oliva, alho e ervas frescas. O processo de secagem do tomate concentra seus nutrientes e intensifica seu sabor. No preparo, o tomate seco é reidratado e marinado, resultando em um prato com textura macia e sabor marcante.",
+  "beneficios": [
+    "Rico em antioxidantes, como o licopeno, que combate os radicais livres.",
+    "Fonte de fibras, que auxiliam na digestão e promovem a saciedade.",
+    "Pode conter vitaminas do complexo B, importantes para o metabolismo energético."
+  ],
+  "riscos": [
+    "Pode conter sódio em excesso, dependendo do processo de preparo.",
+    "Alérgeno: pode conter traços de ingredientes usados na marinada, como alho e ervas."
+  ],
+  "curiosidade": "O tomate seco, originalmente, era produzido para conservar tomates na ausência de refrigeração. A secagem concentra os sabores e nutrientes do tomate, tornando-o um ingrediente versátil na culinária.",
+  "slug": "tomateseco",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

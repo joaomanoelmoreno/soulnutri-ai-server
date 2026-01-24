@@ -1,0 +1,27 @@
+{
+  "nome": "Cannelloniquatroqueijos",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa de cannelloni (possivelmente à base de trigo)",
+    "Quatro tipos de queijos (não especificados)",
+    "Molho de tomate",
+    "Ervas frescas (salsa e cebolinha)"
+  ],
+  "descricao": "Cannelloni recheado com quatro tipos de queijo, coberto com molho de tomate e gratinado. Apresenta finalização com ervas frescas picadas.",
+  "beneficios": [
+    "Os queijos podem fornecer cálcio, essencial para a saúde óssea.",
+    "O molho de tomate é fonte de licopeno, um antioxidante."
+  ],
+  "riscos": [
+    "Contém glúten (na massa).",
+    "Pode ser rico em gorduras saturadas, dependendo dos queijos utilizados."
+  ],
+  "curiosidade": "O cannelloni é uma variação do macarrão, tradicionalmente recheado e gratinado.",
+  "slug": "cannelloniquatroqueijos",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

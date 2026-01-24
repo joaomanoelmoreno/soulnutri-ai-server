@@ -1,0 +1,33 @@
+{
+  "nome": "Kiberecheado",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Trigo para kibe",
+    "Carne moída",
+    "Cebola",
+    "Hortelã",
+    "Tempero sírio",
+    "Queijo muçarela",
+    "Azeite",
+    "Cheiro verde"
+  ],
+  "descricao": "O Kibe recheado é preparado com uma mistura de carne moída, trigo para kibe, cebola, hortelã e temperos sírios, moldada em formato oval e recheada com queijo muçarela antes de ser frita ou assada. É finalizado com cheiro verde.",
+  "beneficios": [
+    "Fonte de proteína",
+    "Contém fibras do trigo para kibe",
+    "O queijo muçarela oferece cálcio"
+  ],
+  "riscos": [
+    "Alto teor de gordura (dependendo do modo de preparo)",
+    "Contém glúten",
+    "Alérgeno: leite"
+  ],
+  "curiosidade": "O kibe é um prato de origem árabe, muito popular no Brasil, especialmente em festas e eventos.",
+  "slug": "kiberecheado",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

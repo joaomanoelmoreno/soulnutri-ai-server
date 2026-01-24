@@ -1,0 +1,26 @@
+{
+  "nome": "Gelatinademorango",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Gelatina em pó (colágeno hidrolisado, pode conter corantes, aromatizantes e edulcorantes)",
+    "Água",
+    "Morango (opcional)"
+  ],
+  "descricao": "Gelatina de morango, preparada com gelatina em pó, água e corante. A sobremesa é servida em formato de anel.",
+  "beneficios": [
+    "Pode auxiliar na saúde da pele, unhas e cabelos, devido ao colágeno.",
+    "Pode ser uma opção de sobremesa de baixa caloria."
+  ],
+  "riscos": [
+    "Pode conter corantes artificiais e edulcorantes, que em excesso podem causar alergias.",
+    "Não é uma fonte significativa de nutrientes."
+  ],
+  "curiosidade": "A gelatina em pó é rica em colágeno, uma proteína que o corpo produz naturalmente e que ajuda a manter a pele firme e elástica.",
+  "slug": "gelatinademorango",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

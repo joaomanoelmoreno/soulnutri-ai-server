@@ -1,0 +1,25 @@
+{
+  "nome": "Aligot Purê De Batata Inglesa Com Queijo",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Batata inglesa",
+    "Queijo"
+  ],
+  "descricao": "O prato é um purê de batata com queijo gratinado. O purê parece ser cremoso e pode conter outros ingredientes como manteiga e leite.",
+  "beneficios": [
+    "A batata é rica em carboidratos, que fornecem energia.",
+    "O queijo é fonte de cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Alto teor de gordura e calorias, dependendo da quantidade de queijo e outros ingredientes adicionados.",
+    "Pode conter lactose, dependendo do queijo usado."
+  ],
+  "curiosidade": "O Aligot é um prato tradicional da região de Aubrac, na França, conhecido por sua textura cremosa e elástica, que é alcançada ao misturar o purê de batata com queijo e outros ingredientes.",
+  "slug": "aligot_pure_de_batata_inglesa_com_queijo",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

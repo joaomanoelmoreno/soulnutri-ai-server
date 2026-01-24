@@ -1,0 +1,31 @@
+{
+  "nome": "Melhoria Tunísia",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Ovos cozidos",
+    "Azeitonas verdes",
+    "Milho",
+    "Ervilhas",
+    "Tomate (provavelmente cozido e triturado)",
+    "Pimenta (possivelmente)",
+    "Alho (possivelmente)"
+  ],
+  "descricao": "A Mechouia é uma salada tunisiana tradicional, aparentemente feita com base em tomate cozido, pimentões e alho, que pode ser moída ou triturada até atingir uma consistência semelhante a um purê. É comumente decorada com ovos cozidos, azeitonas, milho e ervilhas.",
+  "beneficios": [
+    "Os ovos são uma boa fonte de proteína e nutrientes essenciais.",
+    "A salada oferece uma variedade de vitaminas e minerais provenientes dos vegetais.",
+    "As azeitonas contêm gorduras saudáveis e antioxidantes."
+  ],
+  "riscos": [
+    "Contém glúten (de acordo com a etiqueta).",
+    "Alérgenos: ovos."
+  ],
+  "curiosidade": "Mechouia significa \"assado\" em árabe, referindo-se ao método tradicional de assar os vegetais em fogo aberto antes de serem processados.",
+  "slug": "melhoria_tunisia",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

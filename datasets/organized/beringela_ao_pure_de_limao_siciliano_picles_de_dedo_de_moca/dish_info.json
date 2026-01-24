@@ -1,0 +1,26 @@
+{
+  "nome": "Beringela Ao Purê De Limão Siciliano Picles De Dedo De Moça",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Beringela",
+    "Purê de Limão Siciliano",
+    "Picles de Dedo de Moça (pimenta dedo de moça)",
+    "Ervas picadas (salsa ou cheiro verde)",
+    "Azeite de oliva",
+    "Limão siciliano (rodelas)"
+  ],
+  "descricao": "Fatias de beringela grelhadas cobertas por um purê cremoso de limão siciliano, pedaços de picles de dedo de moça e finalizadas com ervas picadas e rodelas de limão siciliano. O prato parece ser finalizado com azeite.",
+  "beneficios": [
+    "A beringela é rica em antioxidantes e fibras, que auxiliam na saúde cardiovascular e na digestão. O limão siciliano é fonte de vitamina C, que fortalece o sistema imunológico.",
+    "A pimenta dedo de moça pode auxiliar no metabolismo."
+  ],
+  "riscos": [],
+  "curiosidade": "A beringela absorve muito óleo, por isso, ao preparar, é importante usar métodos de cozimento com menos gordura, como grelhar ou assar.",
+  "slug": "beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

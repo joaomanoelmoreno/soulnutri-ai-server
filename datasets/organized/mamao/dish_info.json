@@ -1,0 +1,22 @@
+{
+  "nome": "Mamão",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Mamão"
+  ],
+  "descricao": "Cubos de mamão papaya, servidos crus e prontos para consumo.",
+  "beneficios": [
+    "Rico em vitamina C, um poderoso antioxidante.",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "Contém papaína, enzima que facilita a digestão de proteínas."
+  ],
+  "riscos": [],
+  "curiosidade": "O mamão é conhecido por suas propriedades medicinais, sendo utilizado em algumas culturas para tratar problemas digestivos e de pele.",
+  "slug": "mamao",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

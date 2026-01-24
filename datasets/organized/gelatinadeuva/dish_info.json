@@ -1,0 +1,27 @@
+{
+  "nome": "Gelatinadeuva",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Uva (possivelmente suco de uva)",
+    "Gelatina em pó (sem sabor, geralmente de origem vegetal)",
+    "Água"
+  ],
+  "descricao": "Gelatina de uva feita a partir do suco da fruta, misturada com gelatina em pó e água, resfriada até solidificar. A versão vegana utiliza gelatina vegetal, enquanto a tradicional utiliza gelatina de origem animal.",
+  "beneficios": [
+    "Fonte de água, auxiliando na hidratação.",
+    "A uva é rica em antioxidantes, como o resveratrol, que combatem os radicais livres.",
+    "Pode ser consumida como sobremesa leve e refrescante."
+  ],
+  "riscos": [
+    "A gelatina industrializada pode conter corantes e aromatizantes artificiais.",
+    "Em excesso, o consumo pode levar ao aumento de glicose no sangue."
+  ],
+  "curiosidade": "A gelatina de origem vegetal, feita a partir de algas marinhas (agar-agar), é uma alternativa para vegetarianos e veganos, e tem menos calorias que a gelatina tradicional.",
+  "slug": "gelatinadeuva",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

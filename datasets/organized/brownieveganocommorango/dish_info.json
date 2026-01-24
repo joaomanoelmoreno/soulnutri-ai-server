@@ -1,0 +1,28 @@
+{
+  "nome": "Brownieveganocommorango",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Chocolate (provavelmente cacau em pó, nibs de cacau ou chocolate amargo vegano)",
+    "Açúcar (possivelmente açúcar de coco, mascavo ou outro)",
+    "Farinha (pode ser de trigo, aveia, amêndoas ou outra)",
+    "Óleo vegetal (possivelmente coco, girassol ou outro)",
+    "Morango"
+  ],
+  "descricao": "Brownies veganos cortados em pedaços quadrados, cobertos com calda de chocolate e decorados com fatias de morango fresco. O preparo envolve provavelmente o cozimento em forno.",
+  "beneficios": [
+    "Os morangos são ricos em vitamina C e antioxidantes, que combatem os radicais livres.",
+    "A presença de cacau pode oferecer benefícios para a saúde cardiovascular."
+  ],
+  "riscos": [
+    "Pode conter glúten dependendo da farinha utilizada.",
+    "Rico em açúcares, o consumo excessivo pode levar ao aumento de peso e outros problemas de saúde."
+  ],
+  "curiosidade": "O brownie, originalmente, foi criado nos Estados Unidos no final do século XIX, e sua versão vegana adapta a receita original, substituindo ingredientes de origem animal por alternativas vegetais.",
+  "slug": "brownieveganocommorango",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

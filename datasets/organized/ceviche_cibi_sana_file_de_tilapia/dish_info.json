@@ -1,0 +1,30 @@
+{
+  "nome": "Ceviche Cibi Sana Filé De Tilápia",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Filé de tilápia",
+    "Suco de limão",
+    "Cebola roxa",
+    "Rodelas de limão",
+    "Pimenta dedo de moça",
+    "Maracujá"
+  ],
+  "descricao": "O ceviche de tilápia é preparado com filés de peixe frescos, marinados em suco de limão, que 'cozinha' o peixe por meio da acidez. O prato é finalizado com cebola roxa em tiras finas, rodelas de limão, pimenta dedo de moça e sementes de maracujá, resultando em um prato com sabor cítrico e refrescante.",
+  "beneficios": [
+    "A tilápia é uma boa fonte de proteína magra, importante para a saúde muscular.",
+    "O limão é rico em vitamina C, que fortalece o sistema imunológico.",
+    "As cebolas roxas contêm antioxidantes que ajudam a combater os radicais livres."
+  ],
+  "riscos": [
+    "Alérgeno: peixe.",
+    "Pode conter traços de outros ingredientes."
+  ],
+  "curiosidade": "O ceviche é um prato tradicional da culinária peruana, e a tilápia é um peixe de água doce popular no Brasil.",
+  "slug": "ceviche_cibi_sana_file_de_tilapia",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

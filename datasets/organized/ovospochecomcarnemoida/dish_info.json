@@ -1,0 +1,30 @@
+{
+  "nome": "Ovospochêcomcarnemoída",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Ovos",
+    "Carne moída (aparentemente bovina)",
+    "Cebolinha picada",
+    "Salsa picada (talvez)",
+    "Azeite de oliva (provavelmente)",
+    "Cenoura ralada (possivelmente)"
+  ],
+  "descricao": "O prato consiste em ovos pochê servidos sobre uma base de carne moída refogada. A carne moída parece ter sido refogada com temperos, possivelmente cebola, alho e cenoura ralada, e é finalizada com ervas picadas, como cebolinha e salsa. Os ovos pochê têm a gema líquida, indicando um cozimento cuidadoso.",
+  "beneficios": [
+    "Os ovos são ricos em proteínas de alta qualidade e colina, importante para a saúde cerebral.",
+    "A carne moída fornece proteínas e ferro, nutrientes essenciais para a saúde.",
+    "A cebolinha e a salsa adicionam vitaminas e antioxidantes, além de sabor."
+  ],
+  "riscos": [
+    "A carne pode conter gordura saturada, consuma com moderação.",
+    "Alérgeno: ovos."
+  ],
+  "curiosidade": "O ovo pochê, quando bem feito, tem uma textura incrivelmente cremosa, com a clara cozida e a gema líquida, ideal para ser apreciada.",
+  "slug": "ovospochecomcarnemoida",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

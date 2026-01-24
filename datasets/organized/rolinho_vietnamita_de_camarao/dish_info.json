@@ -1,0 +1,30 @@
+{
+  "nome": "Rolinho Vietnamita De Camarão",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Camarão cozido",
+    "Folhas verdes (alface ou similar)",
+    "Cenoura ralada",
+    "Macarrão de arroz",
+    "Pepino"
+  ],
+  "descricao": "Rolinhos vietnamitas frescos, recheados com camarões cozidos, folhas verdes, cenoura ralada e macarrão de arroz, enrolados em finas folhas de arroz. Servidos com rodelas de pepino.",
+  "beneficios": [
+    "Camarão é fonte de proteína e selênio, um antioxidante importante.",
+    "Cenoura fornece betacaroteno, precursor da vitamina A, essencial para a saúde da visão.",
+    "Macarrão de arroz é uma opção sem glúten para quem tem restrições."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos",
+    "Pode conter glúten, dependendo do molho servido.",
+    "Perigo de contaminação cruzada se preparado em ambiente com outros alimentos alergênicos."
+  ],
+  "curiosidade": "Os rolinhos vietnamitas, também conhecidos como 'gỏi cuốn', são uma comida de rua popular no Vietnã, apreciados por sua leveza e frescor.",
+  "slug": "rolinho_vietnamita_de_camarao",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

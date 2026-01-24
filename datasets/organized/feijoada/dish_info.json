@@ -1,0 +1,36 @@
+{
+  "nome": "Feijoada",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Feijão preto",
+    "Carne seca",
+    "Linguiça calabresa",
+    "Paio",
+    "Orelha de porco",
+    "Pé de porco",
+    "Pimenta dedo-de-moça",
+    "Alho",
+    "Cebola",
+    "Louro"
+  ],
+  "descricao": "Feijoada é um ensopado de feijão preto com diversas partes do porco (carnes salgadas e defumadas), cozido lentamente. Apresenta pedaços de carne e embutidos cozidos no caldo escuro de feijão. O preparo é finalizado com temperos como alho, cebola, louro e pimenta.",
+  "beneficios": [
+    "Fonte de proteínas",
+    "Fonte de ferro (especialmente do feijão e carnes)",
+    "Rica em fibras (auxilia na digestão e saciedade)"
+  ],
+  "riscos": [
+    "Alto teor de sódio (principalmente devido às carnes salgadas e embutidos)",
+    "Alto teor de gordura saturada",
+    "Contém glúten (em alguns embutidos)",
+    "Alérgenos: pode conter traços de leite (em alguns embutidos)"
+  ],
+  "curiosidade": "A feijoada é um prato tipicamente brasileiro, mas sua origem é controversa. Acredita-se que tenha surgido nos engenhos de cana-de-açúcar, onde os escravos aproveitavam as sobras do porco para preparar um cozido.",
+  "slug": "feijoada",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

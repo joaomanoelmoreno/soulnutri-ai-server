@@ -1,0 +1,30 @@
+{
+  "nome": "Feijão do chef",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Feijão preto",
+    "Carnes (presumivelmente bacon, linguiça calabresa, carne seca)",
+    "Água",
+    "Temperos (cebola, alho, louro, pimenta do reino, etc.)",
+    "Gordura (possivelmente azeite ou óleo vegetal)"
+  ],
+  "descricao": "Feijão preto cozido com carnes e temperos, servido em panela de barro. O preparo envolve a imersão do feijão em água, seguido do cozimento lento com as carnes e temperos, resultando em um caldo espesso e saboroso.",
+  "beneficios": [
+    "Fonte de proteínas, provenientes das carnes e do feijão.",
+    "Rico em fibras, auxilia na saúde digestiva.",
+    "Fornece ferro, importante para a prevenção da anemia."
+  ],
+  "riscos": [
+    "Alto teor de sódio, devido aos ingredientes como bacon e linguiça.",
+    "Pode conter glúten, dependendo do tempero utilizado nas carnes.",
+    "Alto teor de gordura saturada, proveniente das carnes."
+  ],
+  "curiosidade": "O feijão preto é um alimento símbolo da culinária brasileira, presente em diversas receitas regionais e apreciado por sua versatilidade e sabor único.",
+  "slug": "feijao_do_chef",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

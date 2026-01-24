@@ -1,0 +1,30 @@
+{
+  "nome": "Cuscuz marroquino com amêndoas",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cuscuz marroquino",
+    "Amêndoas laminadas",
+    "Tomate cereja",
+    "Hortelã fresca",
+    "Azeite de oliva",
+    "Tempero (provavelmente cúrcuma e açafrão)"
+  ],
+  "descricao": "O cuscuz marroquino é preparado com sêmola de trigo e hidratado, geralmente com água fervente e azeite de oliva. Na imagem, ele parece ser temperado com especiarias, possivelmente cúrcuma e açafrão, que lhe dão a cor amarelada. É finalizado com amêndoas laminadas, tomate cereja e folhas de hortelã fresca.",
+  "beneficios": [
+    "Cuscuz: rico em carboidratos, fornece energia.",
+    "Amêndoas: fonte de gorduras saudáveis e vitamina E.",
+    "Hortelã: propriedades digestivas e refrescantes."
+  ],
+  "riscos": [
+    "Contém glúten (do cuscuz).",
+    "Potencial alérgeno: amêndoas."
+  ],
+  "curiosidade": "O cuscuz marroquino é originário do Magrebe, região do noroeste africano, e é um alimento básico na culinária local.",
+  "slug": "cuscuz_marroquino_com_amendoas",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

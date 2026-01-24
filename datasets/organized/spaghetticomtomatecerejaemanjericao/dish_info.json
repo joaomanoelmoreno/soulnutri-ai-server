@@ -1,0 +1,30 @@
+{
+  "nome": "Spaghetticomtomatecerejaemanjericão",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Spaghetti (provavelmente feito com farinha de trigo)",
+    "Tomates cereja frescos",
+    "Folhas de manjericão fresco",
+    "Possivelmente azeite de oliva",
+    "Temperos (sal, pimenta do reino, possivelmente alho)"
+  ],
+  "descricao": "Prato de massa italiana, onde o spaghetti é cozido e misturado com tomates cereja cortados ao meio, folhas de manjericão fresco e possivelmente azeite de oliva e temperos.",
+  "beneficios": [
+    "O tomate cereja é rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
+    "O manjericão é fonte de antioxidantes e pode ter propriedades anti-inflamatórias.",
+    "A massa pode fornecer energia através dos carboidratos."
+  ],
+  "riscos": [
+    "Contém glúten, dependendo do tipo de massa utilizada.",
+    "Pode ter alto teor de carboidratos, dependendo da porção.",
+    "O consumo excessivo pode levar ao ganho de peso."
+  ],
+  "curiosidade": "O manjericão fresco perde seu sabor rapidamente após o corte, por isso é importante adicioná-lo ao final do preparo.",
+  "slug": "spaghetticomtomatecerejaemanjericao",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

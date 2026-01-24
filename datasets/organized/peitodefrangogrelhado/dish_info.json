@@ -1,0 +1,26 @@
+{
+  "nome": "Peitodefrangogrelhado",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Peito de frango",
+    "Cebolinha picada",
+    "Molho cremoso (não identificável - possivelmente à base de leite)"
+  ],
+  "descricao": "Peitos de frango grelhados, cortados em fatias e aparentemente temperados com especiarias. Decorados com cebolinha picada. Acompanhado por um molho cremoso branco, possivelmente um molho à base de leite.",
+  "beneficios": [
+    "Alto teor de proteínas, essenciais para a construção e reparação muscular",
+    "O frango é uma boa fonte de vitaminas do complexo B, importantes para o metabolismo energético"
+  ],
+  "riscos": [
+    "A presença de molho cremoso pode aumentar o teor de gordura e calorias do prato.",
+    "Potencial presença de lactose no molho cremoso"
+  ],
+  "curiosidade": "O frango é uma das carnes mais versáteis e consumidas no mundo, sendo uma excelente fonte de proteína magra e pode ser preparada de diversas formas.",
+  "slug": "peitodefrangogrelhado",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

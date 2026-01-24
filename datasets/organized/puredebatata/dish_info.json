@@ -1,0 +1,27 @@
+{
+  "nome": "Purêdebatata",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Batata",
+    "Leite",
+    "Manteiga",
+    "Sal"
+  ],
+  "descricao": "Purê de batata cremoso, possivelmente preparado fervendo as batatas até amaciarem, amassando-as e misturando com leite e manteiga para obter a consistência desejada. Temperado com sal.",
+  "beneficios": [
+    "Fonte de carboidratos, fornecendo energia",
+    "Rico em potássio, importante para a saúde cardiovascular"
+  ],
+  "riscos": [
+    "Alto índice glicêmico",
+    "Contém lactose (se preparado com leite)"
+  ],
+  "curiosidade": "Batatas são nativas da América do Sul e existem milhares de variedades diferentes.",
+  "slug": "puredebatata",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

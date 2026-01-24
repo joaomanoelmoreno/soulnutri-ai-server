@@ -1,0 +1,29 @@
+{
+  "nome": "Pudimdeleitecondensado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Leite condensado",
+    "Ovos",
+    "Açúcar (para a calda)",
+    "Leite integral",
+    "Extrato de baunilha (opcional)"
+  ],
+  "descricao": "Pudim cremoso, preparado com leite condensado, ovos, leite e açúcar. A calda, feita com açúcar caramelizado, envolve o pudim. O preparo envolve a mistura dos ingredientes, cozimento em banho-maria no forno e resfriamento para firmar.",
+  "beneficios": [
+    "Fornece energia devido ao açúcar.",
+    "Fonte de proteína pelos ovos."
+  ],
+  "riscos": [
+    "Alto teor de açúcar, podendo aumentar o risco de diabetes.",
+    "Rico em gorduras saturadas do leite condensado.",
+    "Alérgeno: ovos e leite."
+  ],
+  "curiosidade": "O pudim tem origem na Europa, e sua receita se adaptou em diversos países, inclusive no Brasil. A adição do leite condensado é uma variação popular.",
+  "slug": "pudimdeleitecondensado",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "nome": "Coxinha saudável de frango",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Frango desfiado",
+    "Massa (provavelmente de batata doce ou similar)",
+    "Farinha de rosca para empanar",
+    "Tempero verde (salsa, cebolinha)"
+  ],
+  "descricao": "A coxinha é um salgado frito, neste caso, com proposta mais saudável. É feita com frango desfiado, temperado e envolto em massa, possivelmente de batata doce ou outro tubérculo, e empanada com farinha de rosca, sendo provavelmente frita.",
+  "beneficios": [
+    "A utilização do frango como ingrediente principal, confere uma boa fonte de proteína, essencial para a construção e reparação muscular",
+    "O uso de massa de batata doce pode adicionar fibras e nutrientes, dependendo da receita",
+    "O tempero verde, como salsa e cebolinha, adiciona vitaminas e antioxidantes."
+  ],
+  "riscos": [
+    "Alto teor de carboidratos, dependendo da receita",
+    "Gordura da fritura",
+    "Alérgeno: glúten, caso a farinha de rosca não seja isenta"
+  ],
+  "curiosidade": "A coxinha é um salgado tipicamente brasileiro, originário de São Paulo, e sua popularidade se espalhou por todo o país. A coxinha é um exemplo da versatilidade da culinária brasileira, que adapta receitas com ingredientes locais.",
+  "slug": "coxinha_saudavel_de_frango",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

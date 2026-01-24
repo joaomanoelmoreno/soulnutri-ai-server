@@ -1,0 +1,30 @@
+{
+  "nome": "Arrozintegralcomlegumes",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Arroz integral",
+    "Brócolis",
+    "Tomate cereja",
+    "Amêndoas laminadas",
+    "Cebolinha",
+    "Azeite de oliva",
+    "Tempero verde (salsa e cebolinha)"
+  ],
+  "descricao": "O prato consiste em arroz integral cozido, salteado com brócolis, tomate cereja, cebolinha e temperado com azeite de oliva e tempero verde. As amêndoas laminadas adicionam crocância.",
+  "beneficios": [
+    "Alto teor de fibras, auxiliando na digestão e saciedade",
+    "Rico em vitaminas e minerais, provenientes dos legumes e arroz integral"
+  ],
+  "riscos": [
+    "Contém glúten, caso o arroz não seja integral",
+    "Alérgeno: amêndoas (frutos secos)"
+  ],
+  "curiosidade": "O arroz integral preserva mais nutrientes do que o arroz branco, pois mantém a casca, que é rica em fibras e vitaminas do complexo B.",
+  "slug": "arrozintegralcomlegumes",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

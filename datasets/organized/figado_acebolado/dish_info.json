@@ -1,0 +1,28 @@
+{
+  "nome": "Fígado Acebolado",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Fígado bovino",
+    "Cebola branca",
+    "Tomate cereja",
+    "Cebolinha fresca",
+    "Óleo vegetal"
+  ],
+  "descricao": "O prato consiste em fígado bovino refogado com cebola em rodelas, finalizado com tomate cereja cortado ao meio e cebolinha picada para decorar. O fígado parece ter sido cortado em fatias finas e temperado antes do cozimento. O método de preparo principal parece ser o refogado, utilizando óleo vegetal para cozinhar os ingredientes.",
+  "beneficios": [
+    "O fígado é rico em ferro, essencial para a prevenção da anemia.",
+    "A cebola possui propriedades antioxidantes e anti-inflamatórias."
+  ],
+  "riscos": [
+    "O fígado pode ser rico em colesterol.",
+    "A cebola pode causar desconforto gástrico em algumas pessoas."
+  ],
+  "curiosidade": "O fígado é uma excelente fonte de vitamina A, importante para a visão e a saúde da pele.",
+  "slug": "figado_acebolado",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

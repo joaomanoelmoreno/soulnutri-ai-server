@@ -1,0 +1,28 @@
+{
+  "nome": "Pancettacrocante",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Pancetta (barriga de porco curada)",
+    "Tomates cereja",
+    "Cebolinha",
+    "Temperos (possivelmente sal, pimenta do reino, ervas)"
+  ],
+  "descricao": "A pancetta é preparada por meio de cura e pode ser defumada. Neste prato, a pancetta é cortada e frita ou assada até ficar crocante, resultando em uma textura crocante por fora e macia por dentro. O prato é finalizado com tomates cereja frescos e cebolinha picada, possivelmente salpicado com temperos.",
+  "beneficios": [
+    "A pancetta, sendo um tipo de carne suína, oferece proteínas de alta qualidade e uma boa quantidade de gordura, que fornece energia.",
+    "Os tomates cereja são ricos em vitamina C e antioxidantes, como o licopeno."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL.",
+    "Alto teor de sódio, dependendo da quantidade de sal na cura.",
+    "Possível presença de nitratos e nitritos utilizados na cura, que podem ter riscos à saúde em excesso."
+  ],
+  "curiosidade": "A pancetta é um ingrediente essencial em diversas receitas italianas, como carbonara e amatriciana, sendo apreciada por seu sabor intenso e textura única.",
+  "slug": "pancettacrocante",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

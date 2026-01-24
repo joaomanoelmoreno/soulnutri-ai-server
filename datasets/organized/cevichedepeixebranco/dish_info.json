@@ -1,0 +1,31 @@
+{
+  "nome": "Cevichedepeixebranco",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Peixe branco cru",
+    "Suco de limão",
+    "Pimenta dedo-de-moça",
+    "Cebola roxa",
+    "Cebolinha",
+    "Rodelas de limão"
+  ],
+  "descricao": "Ceviche é um prato latino-americano, onde o peixe branco é marinado em suco cítrico, geralmente limão, que 'cozinha' o peixe por meio da acidez. O prato é finalizado com cebola roxa, pimenta dedo-de-moça, cebolinha e rodelas de limão para decorar.",
+  "beneficios": [
+    "Rico em proteínas, importantes para a construção e reparação dos tecidos.",
+    "O limão fornece vitamina C, um antioxidante que fortalece o sistema imunológico.",
+    "O peixe branco é uma boa fonte de ômega-3, que beneficia a saúde cardiovascular."
+  ],
+  "riscos": [
+    "Alérgeno: peixe.",
+    "A conservação inadequada do peixe cru pode causar intoxicação alimentar.",
+    "Pessoas com sensibilidade ao ácido cítrico podem sentir desconforto."
+  ],
+  "curiosidade": "A acidez do limão desnatura as proteínas do peixe, mudando sua textura, mas não elimina a necessidade de cuidado na manipulação e conservação do alimento.",
+  "slug": "cevichedepeixebranco",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

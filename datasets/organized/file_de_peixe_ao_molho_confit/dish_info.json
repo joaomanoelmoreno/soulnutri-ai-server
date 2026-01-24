@@ -1,0 +1,29 @@
+{
+  "nome": "Filé de peixe ao molho confit",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Filé de peixe",
+    "Tomate cereja",
+    "Azeite de oliva",
+    "Alho",
+    "Salsa picada"
+  ],
+  "descricao": "O prato é composto por filés de peixe cozidos em azeite de oliva, com tomates cereja, alho e salsa picada. O termo 'confit' indica que o peixe é cozido lentamente em seu próprio óleo ou em gordura, geralmente em baixa temperatura.",
+  "beneficios": [
+    "Rico em ômega-3, importante para a saúde cardiovascular (peixe)",
+    "Fonte de vitaminas e antioxidantes (tomate)",
+    "O alho possui propriedades anti-inflamatórias e antimicrobianas."
+  ],
+  "riscos": [
+    "Alérgeno: peixe",
+    "Pode conter espinhas, dependendo do corte do peixe"
+  ],
+  "curiosidade": "A técnica confit é tradicionalmente usada para conservar alimentos. O azeite de oliva usado no confit do peixe ajuda a realçar o sabor e a textura do peixe, além de contribuir com gorduras saudáveis.",
+  "slug": "file_de_peixe_ao_molho_confit",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "nome": "Saladadequinoacomlegumes",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Quinoa cozida",
+    "Cenoura em cubos",
+    "Salsão em cubos",
+    "Pimentão amarelo em cubos",
+    "Salsa picada",
+    "Azeite de oliva",
+    "Sal"
+  ],
+  "descricao": "Salada de quinoa com legumes cozidos, picados e misturados. A quinoa parece ter sido cozida e os legumes foram adicionados posteriormente, possivelmente refogados ou salteados em azeite de oliva e temperados com sal e salsa.",
+  "beneficios": [
+    "A quinoa é uma excelente fonte de proteína vegetal completa, fornecendo todos os aminoácidos essenciais.",
+    "Os legumes oferecem vitaminas, minerais e fibras, importantes para a saúde digestiva e imunidade."
+  ],
+  "riscos": [
+    "Pode conter traços de glúten se a quinoa não for certificada como livre de glúten.",
+    "O consumo excessivo de sal pode ser prejudicial à saúde cardiovascular."
+  ],
+  "curiosidade": "A quinoa é um pseudocereal, uma semente que é consumida como um grão, rica em nutrientes e com baixo índice glicêmico, o que ajuda a controlar os níveis de açúcar no sangue.",
+  "slug": "saladadequinoacomlegumes",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "nome": "Peixe Ao Molho De Três Alhos Manteiga E Tomate",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Filé de peixe",
+    "Tomate cereja",
+    "Alho (picado e inteiro)",
+    "Manteiga",
+    "Azeite de oliva",
+    "Ervas frescas (salsa/cebolinha)",
+    "Azeitonas pretas"
+  ],
+  "descricao": "O prato consiste em filés de peixe grelhados ou salteados, cobertos por um molho cremoso à base de manteiga, alho (picado e inteiro) e tomate cereja. O peixe é finalizado com ervas frescas e azeitonas pretas.",
+  "beneficios": [
+    "O peixe é uma excelente fonte de proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
+    "O alho possui propriedades antioxidantes e pode fortalecer o sistema imunológico.",
+    "O tomate cereja é rico em licopeno, um antioxidante que protege contra danos celulares."
+  ],
+  "riscos": [
+    "Intolerância a lactose (manteiga)",
+    "Alérgenos: peixe"
+  ],
+  "curiosidade": "O alho, um dos ingredientes principais, era usado pelos egípcios antigos para aumentar a força e a resistência dos trabalhadores, além de ser considerado um remédio para diversas doenças.",
+  "slug": "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

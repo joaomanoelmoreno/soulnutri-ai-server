@@ -1,0 +1,33 @@
+{
+  "nome": "Conchiglionirecheados",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Conchiglioni (massa de sêmola de trigo)",
+    "Recheio (possivelmente carne moída)",
+    "Molho cremoso (possivelmente à base de creme de leite)",
+    "Folhas de sálvia frescas",
+    "Queijo ralado (possivelmente parmesão)",
+    "Nozes picadas",
+    "Azeite",
+    "Tempero"
+  ],
+  "descricao": "Prato de conchiglioni recheados com carne e cobertos por um molho cremoso. Os conchiglioni são cozidos e recheados, e provavelmente gratinados no forno com queijo ralado. O molho pode ser à base de creme de leite ou molho branco. Acompanha folhas de sálvia e nozes.",
+  "beneficios": [
+    "As nozes fornecem gorduras saudáveis e antioxidantes.",
+    "A sálvia possui propriedades anti-inflamatórias."
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Rico em gorduras saturadas (dependendo do molho)",
+    "Possível presença de lactose (no queijo e creme de leite)",
+    "Pode conter sódio em excesso (dependendo dos temperos)"
+  ],
+  "curiosidade": "O conchiglioni é um tipo de massa em formato de concha, ideal para rechear com diversos ingredientes, desde carne e queijos até vegetais.",
+  "slug": "conchiglionirecheados",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

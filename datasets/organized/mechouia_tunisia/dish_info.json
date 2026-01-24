@@ -1,0 +1,35 @@
+{
+  "nome": "Mechouia Tunísia",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Tomate",
+    "Pimentão",
+    "Cebola",
+    "Alho",
+    "Ovo cozido",
+    "Azeitonas verdes",
+    "Alcaparras",
+    "Milho verde",
+    "Azeite de oliva",
+    "Especiarias (possivelmente cominho, coentro, páprica)"
+  ],
+  "descricao": "Prato tunisiano que consiste em uma salada de vegetais cozidos e triturados.  Na imagem, os vegetais parecem ter sido grelhados ou assados para intensificar o sabor. A base é uma mistura de tomate, pimentão, cebola e alho, que são moídos e temperados. O prato é finalizado com ovos cozidos cortados, azeitonas, alcaparras e milho verde. Possivelmente temperado com azeite de oliva e especiarias. ",
+  "beneficios": [
+    "Rico em antioxidantes: devido aos tomates e pimentões, que são fontes de licopeno e vitaminas.",
+    "Fonte de fibras: proveniente dos vegetais, auxilia na digestão e saciedade.",
+    "Versátil e saboroso: pode ser consumido como entrada, acompanhamento ou lanche."
+  ],
+  "riscos": [
+    "Possível presença de alto teor de sódio, dependendo da quantidade de temperos e ingredientes utilizados.",
+    "Pode conter glúten, dependendo das especiarias e temperos utilizados.",
+    "Alérgenos: ovos, possibilidade de alergia a temperos e especiarias."
+  ],
+  "curiosidade": "Mechouia é frequentemente servida fria e é um prato popular durante o verão no norte da África, pois os vegetais grelhados são leves e refrescantes.",
+  "slug": "mechouia_tunisia",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "nome": "Molhosugo",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Tomate (ingrediente principal, provavelmente processado em molho)",
+    "Possível adição de cebola e alho (ingredientes base em molhos)",
+    "Possível adição de azeite de oliva",
+    "Sal e especiarias (para temperar)"
+  ],
+  "descricao": "Molho de tomate cozido, de textura homogênea e cor avermelhada, servido em recipiente próprio para buffet. O preparo envolve o cozimento dos tomates, podendo incluir outros ingredientes como cebola, alho e temperos, resultando em um molho saboroso e versátil.",
+  "beneficios": [
+    "Fonte de licopeno, um antioxidante associado à saúde cardiovascular e proteção contra certos tipos de câncer.",
+    "Pode conter vitamina C e outros nutrientes, dependendo dos ingredientes adicionados."
+  ],
+  "riscos": [
+    "Pode conter sódio em excesso, dependendo da quantidade de sal adicionada.",
+    "Pode conter açúcar adicionado, dependendo da receita.",
+    "Alérgeno: Pode conter traços de outros ingredientes utilizados na preparação."
+  ],
+  "curiosidade": "O licopeno, presente em abundância no tomate cozido, é melhor absorvido pelo organismo quando o tomate é cozido em óleo.",
+  "slug": "molhosugo",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

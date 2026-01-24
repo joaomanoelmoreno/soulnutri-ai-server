@@ -1,0 +1,29 @@
+{
+  "nome": "Atumseladocomgergelim",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Atum",
+    "Sementes de gergelim preto e branco",
+    "Maionese",
+    "Molho à base de shoyu"
+  ],
+  "descricao": "O atum é selado em sementes de gergelim, grelhado rapidamente para manter o interior cru e rosado. Acompanha maionese e molho à base de shoyu.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade, importante para a construção e reparo muscular.",
+    "Rico em ômega-3, que contribui para a saúde cardiovascular.",
+    "As sementes de gergelim fornecem cálcio e outros minerais."
+  ],
+  "riscos": [
+    "Pode conter mercúrio, especialmente em peixes grandes como o atum. Consumir com moderação.",
+    "Alérgeno: peixe e gergelim.",
+    "Contém sódio (shoyu)."
+  ],
+  "curiosidade": "O atum selado é uma técnica culinária que visa criar uma crosta saborosa e crocante na parte externa do peixe, preservando a textura macia e o sabor delicado do interior.",
+  "slug": "atumseladocomgergelim",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

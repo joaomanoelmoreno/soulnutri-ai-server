@@ -1,0 +1,33 @@
+{
+  "nome": "Batatafrita",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Batata inglesa",
+    "Óleo vegetal (para fritura)",
+    "Arroz branco cozido",
+    "Cebola branca fatiada",
+    "Azeite de oliva",
+    "Pão francês",
+    "Prato principal não identificado (possivelmente proteína animal)"
+  ],
+  "descricao": "Batata frita feita com batatas inglesas cortadas em palitos e fritas em óleo vegetal. Acompanhada de arroz branco cozido, cebola crua fatiada e outros acompanhamentos, incluindo pão francês. Prato principal não identificado, que parece conter proteína animal.",
+  "beneficios": [
+    "Batata: Fonte de carboidratos, que fornecem energia para o corpo.",
+    "Arroz: Também rico em carboidratos, contribui para o fornecimento de energia.",
+    "Cebola: Contém antioxidantes e pode ter propriedades anti-inflamatórias."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura.",
+    "Pode conter glúten (no pão)",
+    "Dependendo do acompanhamento, pode conter alto teor de sódio.",
+    "Provável presença de proteínas animais"
+  ],
+  "curiosidade": "A batata frita, apesar de ser um acompanhamento popular, pode variar significativamente em termos de valor nutricional dependendo do método de preparo e dos ingredientes adicionados.",
+  "slug": "batatafrita",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

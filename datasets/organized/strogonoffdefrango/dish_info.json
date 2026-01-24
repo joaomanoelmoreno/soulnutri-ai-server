@@ -1,0 +1,30 @@
+{
+  "nome": "Unknownstrogonoffdefrango",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Frango em tiras",
+    "Molho cremoso (provavelmente creme de leite, tomate, cebola, champignon, ketchup)",
+    "Champignon picado",
+    "Temperos (possivelmente sal, pimenta do reino, páprica)",
+    "Azeite ou óleo vegetal"
+  ],
+  "descricao": "O prato consiste em tiras de frango cozidas em um molho cremoso de cor avermelhada/alaranjada. O molho aparenta ter pedaços de champignon e, provavelmente, tomate e cebola. O frango parece ter sido cozido no próprio molho. O prato está sendo servido em uma travessa branca com uma colher metálica.",
+  "beneficios": [
+    "O frango é uma excelente fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
+    "O champignon, presente no prato, pode oferecer nutrientes e antioxidantes.",
+    "O molho, dependendo dos ingredientes, pode conter vitaminas e minerais."
+  ],
+  "riscos": [
+    "Alto teor de gordura, dependendo da quantidade de creme de leite utilizada.",
+    "Contém glúten, dependendo do ketchup utilizado",
+    "Alérgenos: leite (creme de leite)"
+  ],
+  "curiosidade": "O strogonoff é um prato de origem russa, mas se popularizou no Brasil, ganhando diversas variações.",
+  "slug": "strogonoffdefrango",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

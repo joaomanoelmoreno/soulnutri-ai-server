@@ -1,0 +1,36 @@
+{
+  "nome": "Pão de alho negro e cumaru",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Farinha de trigo",
+    "Alho negro",
+    "Cumaru",
+    "Água",
+    "Fermento biológico",
+    "Azeite",
+    "Sal",
+    "Sálvia fresca",
+    "Damasco seco",
+    "Nozes"
+  ],
+  "descricao": "Pão caseiro com alho negro e cumaru, cortado em fatias e servido com folhas de sálvia fresca, damascos secos e nozes. O alho negro confere um sabor adocicado e complexo, enquanto o cumaru, também conhecido como fava tonka, adiciona um toque aromático e adocicado com notas de baunilha e amêndoas. O preparo envolve a mistura dos ingredientes, a fermentação da massa e o cozimento no forno.",
+  "beneficios": [
+    "O alho negro possui propriedades antioxidantes e anti-inflamatórias.",
+    "O cumaru pode auxiliar na digestão e possui propriedades relaxantes.",
+    "A sálvia fresca pode auxiliar na memória e concentração.",
+    "As nozes são ricas em gorduras saudáveis e fibras.",
+    "O damasco seco é fonte de vitaminas e minerais."
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Pode conter traços de outros ingredientes alérgenos devido ao local de preparo."
+  ],
+  "curiosidade": "O alho negro é obtido através de um processo de fermentação do alho branco, que lhe confere a cor escura e o sabor adocicado. O cumaru é uma semente nativa da Amazônia, muito utilizada na culinária por seu aroma marcante.",
+  "slug": "pao_de_alho_negro_e_cumaru",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

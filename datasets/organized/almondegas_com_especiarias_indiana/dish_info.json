@@ -1,0 +1,28 @@
+{
+  "nome": "Almôndegas Com Especiarias Indianas",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne moída (ingrediente principal)",
+    "Especiarias indianas (cúrcuma, cominho, coentro, etc.)",
+    "Caldo (provavelmente de carne)",
+    "Ervas frescas (cebolinha picada)",
+    "Raspa de limão (para finalizar)"
+  ],
+  "descricao": "As almôndegas, provavelmente de carne bovina, são cozidas em um caldo cremoso com especiarias indianas, que conferem sabor e aroma característicos. O prato é finalizado com raspas de limão e cebolinha picada.",
+  "beneficios": [
+    "A carne bovina é fonte de proteína de alta qualidade, essencial para a construção e reparação muscular.",
+    "As especiarias indianas, como a cúrcuma, possuem propriedades anti-inflamatórias e antioxidantes."
+  ],
+  "riscos": [
+    "A depender dos ingredientes da carne moída, pode conter altos níveis de gordura saturada, aumentando o risco de doenças cardiovasculares.",
+    "Contém sódio, proveniente do caldo e das especiarias. Consumir com moderação."
+  ],
+  "curiosidade": "A combinação de especiarias indianas com carne moída cria um prato rico em sabor e aroma, transportando a culinária indiana para a sua mesa. Experimente adicionar um toque de iogurte natural para um sabor ainda mais autêntico.",
+  "slug": "almondegas_com_especiarias_indiana",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "nome": "Pernilsuínoaomolhodelimão",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Pernil suíno",
+    "Molho de limão (provavelmente com caldo de carne/legumes, limão, alho, cebola e outros temperos)",
+    "Cebolinha picada"
+  ],
+  "descricao": "O prato consiste em fatias de pernil suíno cozido em um molho à base de limão. O molho aparenta ter uma consistência espessa e pode conter outros temperos e ingredientes que intensificam o sabor. A cebolinha picada serve como um acompanhamento fresco.",
+  "beneficios": [
+    "O pernil suíno é fonte de proteína, essencial para a construção e reparo dos tecidos do corpo.",
+    "O limão pode auxiliar na digestão e fornecer vitamina C."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, dependendo da parte do pernil utilizada.",
+    "O molho pode conter sódio em excesso.",
+    "Alérgenos: Pode conter glúten e traços de outros ingredientes."
+  ],
+  "curiosidade": "O pernil suíno é uma carne versátil, que pode ser preparada de diversas formas, sendo uma tradição em muitas culturas, especialmente em celebrações.",
+  "slug": "pernilsuinoaomolhodelimao",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "nome": "Unknownespaguetecomtomatecereja",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Espaguete (provavelmente de trigo)",
+    "Tomate cereja",
+    "Manjericão fresco",
+    "Azeite de oliva (possível)",
+    "Molho de tomate (possível)"
+  ],
+  "descricao": "O prato consiste em espaguete cozido e misturado com tomate cereja frescos e folhas de manjericão. Possivelmente temperado com azeite de oliva e, opcionalmente, com molho de tomate. A preparação parece simples, com os ingredientes misturados após o cozimento da massa.",
+  "beneficios": [
+    "Fonte de carboidratos, fornecendo energia.",
+    "O tomate cereja é rico em licopeno, um antioxidante associado à saúde cardiovascular.",
+    "O manjericão oferece vitaminas e antioxidantes, além de contribuir com sabor e aroma."
+  ],
+  "riscos": [
+    "Contém glúten, proveniente do espaguete (se for feito de trigo).",
+    "Pode conter alto teor de sódio, dependendo do molho de tomate utilizado.",
+    "Alérgeno: Pode conter traços de ingredientes processados no mesmo ambiente."
+  ],
+  "curiosidade": "O manjericão, além de seu sabor marcante, é uma erva aromática com propriedades anti-inflamatórias e antioxidantes, amplamente utilizada na culinária italiana para realçar o sabor de diversos pratos.",
+  "slug": "espaguetecomtomatecereja",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

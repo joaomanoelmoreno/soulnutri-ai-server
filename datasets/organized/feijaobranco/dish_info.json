@@ -1,0 +1,26 @@
+{
+  "nome": "Feijãobranco",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Feijão branco",
+    "Água",
+    "Folha de louro",
+    "Possível presença de temperos (alho, cebola, azeite)"
+  ],
+  "descricao": "Feijão branco cozido em água, com uma folha de louro e possivelmente outros temperos. O modo de preparo visível é o cozimento.",
+  "beneficios": [
+    "Rico em fibras, auxiliando na digestão e controle glicêmico.",
+    "Fonte de proteínas vegetais, importante para a construção e reparo de tecidos."
+  ],
+  "riscos": [
+    "Pode causar gases e inchaço devido à alta concentração de fibras. Recomenda-se demolhar o feijão antes do cozimento para reduzir esse efeito."
+  ],
+  "curiosidade": "O feijão branco é uma excelente fonte de ferro, mineral essencial para a produção de glóbulos vermelhos e transporte de oxigênio no corpo.",
+  "slug": "feijaobranco",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

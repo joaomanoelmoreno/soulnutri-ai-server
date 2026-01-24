@@ -1,0 +1,27 @@
+{
+  "nome": "Unknownhambúrguerangusaoponto",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne bovina Angus",
+    "Tomate (pedaços)",
+    "Ervas finas (salsa, cebolinha)",
+    "Azeite"
+  ],
+  "descricao": "Hambúrguer de carne Angus grelhado ou assado, servido com pedaços de tomate e ervas. Apresenta-se ao ponto, com interior rosado e suculento.",
+  "beneficios": [
+    "A carne Angus é rica em proteínas, essenciais para a construção e reparação dos tecidos do corpo.",
+    "Boa fonte de ferro, mineral importante para prevenir anemia e transportar oxigênio."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL.",
+    "Pode conter traços de glúten se houver adição de condimentos ou se for usado em pão."
+  ],
+  "curiosidade": "A raça Angus é conhecida pela qualidade e maciez da carne, devido à infiltração de gordura entre as fibras musculares.",
+  "slug": "hamburguerangusaoponto",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

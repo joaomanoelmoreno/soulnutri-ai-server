@@ -1,0 +1,32 @@
+{
+  "nome": "Dadinhodetapiocacomcamarão",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Tapioca",
+    "Queijo coalho",
+    "Leite",
+    "Camarão",
+    "Tempero (possivelmente sal, pimenta do reino e ervas)",
+    "Óleo vegetal para fritar/assar"
+  ],
+  "descricao": "Dadinhos de tapioca, provavelmente feitos com tapioca hidratada, queijo coalho, leite e temperos, e recheados com camarão. Aparentemente, os dadinhos foram fritos ou assados, como indica a coloração dourada e crocante. O prato pode ser servido com alguma guarnição não visível na imagem.",
+  "beneficios": [
+    "Tapioca: fonte de energia rápida e de fácil digestão, ideal para quem busca energia sem glúten.",
+    "Camarão: rico em proteínas e nutrientes como selênio e vitamina B12, importantes para a saúde.",
+    "Queijo coalho: fonte de cálcio, essencial para a saúde dos ossos e dentes."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarão)",
+    "Contém lactose (se utilizar leite de vaca)",
+    "Alto teor de gordura (dependendo do método de preparo)",
+    "Teor de sódio (pelo queijo e temperos)"
+  ],
+  "curiosidade": "O queijo coalho utilizado na receita é um queijo típico da culinária nordestina, conhecido por sua textura firme e sabor suave, sendo ideal para ser grelhado ou frito sem derreter completamente.",
+  "slug": "dadinhodetapiocacomcamarao",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

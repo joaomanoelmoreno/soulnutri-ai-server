@@ -1,0 +1,32 @@
+{
+  "nome": "Espetinhosdelegumesgrelhados",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Abobrinha",
+    "Tomate",
+    "Pimentão vermelho",
+    "Cebola",
+    "Berinjela",
+    "Azeite de oliva",
+    "Tempero verde (salsa e cebolinha)",
+    "Palitos de madeira"
+  ],
+  "descricao": "Espetinhos com legumes variados, cortados em pedaços e grelhados. Os legumes aparentam ter sido pincelados com azeite de oliva e temperados com ervas finas antes de serem grelhados, apresentando marcas de grelha. Acompanha molho.",
+  "beneficios": [
+    "Rico em antioxidantes, devido aos pimentões e tomates",
+    "Fonte de fibras, auxiliando na saúde digestiva",
+    "Baixo teor de calorias, ideal para dietas de controle de peso"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten, dependendo do tempero utilizado",
+    "Palitos de madeira podem ser um risco de engasgo em crianças pequenas"
+  ],
+  "curiosidade": "Grelhar os legumes intensifica seu sabor e carameliza os açúcares naturais, tornando-os mais saborosos.",
+  "slug": "espetinhosdelegumesgrelhados",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}
