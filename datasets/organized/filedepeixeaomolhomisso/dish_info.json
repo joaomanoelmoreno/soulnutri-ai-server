@@ -1,18 +1,30 @@
 {
   "nome": "Filedepeixeaomolhomisso",
-  "slug": "filedepeixeaomolhomisso",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe (tipo de peixe não especificado)",
+    "Cogumelos (fatiados e salteados)",
+    "Farinha de rosca (para empanar, possivelmente contendo glúten)",
+    "Cebolinha picada (para finalizar)",
+    "Tempero (possivelmente páprica ou similar)",
+    "Óleo vegetal (para fritar/assar)"
+  ],
+  "descricao": "O prato consiste em filés de peixe empanados e assados/fritos, cobertos com cogumelos salteados e finalizados com cebolinha picada. O molho missô não é visível, mas está implícito no nome.",
+  "beneficios": [
+    "Peixe é fonte de proteínas de alta qualidade e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
+    "Cogumelos são ricos em vitaminas do complexo B, selênio e antioxidantes, que fortalecem o sistema imunológico."
+  ],
+  "riscos": [
+    "Contém glúten (se a farinha de rosca for feita com trigo).",
+    "Pode conter alto teor de sódio, dependendo dos temperos e do molho missô.",
+    "A forma de preparo, se frita, pode aumentar o valor calórico e a quantidade de gordura."
+  ],
+  "curiosidade": "O missô é um condimento japonês fermentado, rico em probióticos que auxiliam na saúde intestinal. Além disso, o missô é fonte de proteínas e minerais.",
+  "slug": "filedepeixeaomolhomisso",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

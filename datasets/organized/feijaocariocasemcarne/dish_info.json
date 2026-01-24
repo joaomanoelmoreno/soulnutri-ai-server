@@ -1,18 +1,27 @@
 {
   "nome": "Feijaocariocasemcarne",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Feijão carioca",
+    "Água",
+    "Folhas de louro"
+  ],
+  "descricao": "Feijão carioca cozido em água, com folhas de louro para aromatizar. O modo de preparo é simples, com cozimento lento para que os grãos fiquem macios e o caldo encorpado. É um prato tradicional da culinária brasileira, servido tipicamente com arroz.",
+  "beneficios": [
+    "Rico em proteínas vegetais, importante para a saúde muscular.",
+    "Fonte de fibras, auxiliando na saúde digestiva e controle glicêmico.",
+    "Contém ferro, mineral essencial para o transporte de oxigênio no corpo."
+  ],
+  "riscos": [
+    "Pode causar gases e inchaço devido à presença de oligossacarídeos, que são fermentados no intestino.",
+    "O feijão pode conter fitatos, que podem reduzir a absorção de minerais. A imersão em água por algumas horas antes do cozimento pode ajudar a reduzir esse efeito."
+  ],
+  "curiosidade": "O feijão carioca, também conhecido como feijão-rajado, é um dos tipos de feijão mais consumidos no Brasil, devido ao seu sabor suave e textura macia após o cozimento.",
   "slug": "feijaocariocasemcarne",
-  "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

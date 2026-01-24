@@ -1,18 +1,28 @@
 {
   "nome": "Figadoacebolado",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Fígado bovino",
+    "Cebola",
+    "Pimenta",
+    "Cheiro-verde",
+    "Óleo vegetal"
+  ],
+  "descricao": "O fígado bovino é refogado em óleo vegetal com cebola em rodelas, pimenta e cheiro-verde. Apresenta uma coloração marrom escura e a cebola está caramelizada, indicando que foi cozida por tempo suficiente para dourar.",
+  "beneficios": [
+    "O fígado é rico em ferro, importante para prevenir e tratar anemias.",
+    "Fonte de vitaminas do complexo B, essenciais para o metabolismo energético e saúde do sistema nervoso."
+  ],
+  "riscos": [
+    "Alto teor de colesterol, deve ser consumido com moderação.",
+    "Pessoas com gota devem evitar devido ao alto teor de purinas."
+  ],
+  "curiosidade": "O fígado é um dos órgãos mais nutritivos, sendo rico em vitaminas A, D, B12 e minerais como ferro e zinco.",
   "slug": "figadoacebolado",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

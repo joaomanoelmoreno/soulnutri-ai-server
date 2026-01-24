@@ -1,18 +1,35 @@
 {
   "nome": "Feijaotropeiro",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Feijão cozido (provavelmente feijão carioca)",
+    "Bacon frito/salsicha calabresa",
+    "Ovos cozidos",
+    "Farinha de mandioca",
+    "Cebola picada",
+    "Alho picado",
+    "Tomate cereja",
+    "Salsa fresca",
+    "Azeite (provavelmente utilizado para refogar a cebola e o alho)"
+  ],
+  "descricao": "O prato consiste em uma base de feijão cozido, misturado com farinha de mandioca, bacon/salsicha calabresa, cebola e alho refogados. É finalizado com ovos cozidos e tomate cereja. A salsa fresca é utilizada para decorar.",
+  "beneficios": [
+    "Fonte de carboidratos complexos provenientes do feijão e da farinha de mandioca, que fornecem energia de liberação lenta.",
+    "Rico em proteínas, especialmente devido aos ovos e à adição de bacon/salsicha calabresa.",
+    "Fornece vitaminas e minerais através dos ovos e do tomate cereja."
+  ],
+  "riscos": [
+    "Alto teor de sódio devido à presença do bacon/salsicha calabresa e aos temperos adicionais.",
+    "Potencialmente alto em gorduras saturadas, dependendo da quantidade de bacon/salsicha calabresa e do método de preparo.",
+    "Contém glúten, dependendo da adição de outros ingredientes (como linguiça ou farinha de trigo)",
+    "Alérgeno: ovo"
+  ],
+  "curiosidade": "O Feijão Tropeiro é um prato tradicional da culinária mineira, originado durante o período da tropeira, quando os tropeiros, viajantes que transportavam mercadorias, preparavam a refeição para se manterem energizados durante as longas viagens.",
   "slug": "feijaotropeiro",
-  "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

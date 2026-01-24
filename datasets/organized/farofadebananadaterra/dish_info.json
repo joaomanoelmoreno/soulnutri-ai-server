@@ -1,18 +1,28 @@
 {
   "nome": "Farofadebananadaterra",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Banana da terra frita",
+    "Farinha de mandioca",
+    "Uva passa",
+    "Cebolinha",
+    "Azeite de oliva (possivelmente)"
+  ],
+  "descricao": "Farofa feita com banana da terra frita em pedaços, farinha de mandioca, uvas passas e cebolinha picada. A farinha de mandioca é levemente torrada, resultando em uma textura crocante e saborosa. Possivelmente foi usado azeite de oliva no preparo.",
+  "beneficios": [
+    "A banana da terra é rica em fibras, promovendo a saciedade e auxiliando na digestão.",
+    "A farinha de mandioca é fonte de carboidratos, fornecendo energia."
+  ],
+  "riscos": [
+    "Alto teor de carboidratos",
+    "Pode conter glúten, dependendo da farinha de mandioca utilizada"
+  ],
+  "curiosidade": "A farofa é um acompanhamento tradicional da culinária brasileira, presente em diversas regiões e com variações nos ingredientes.",
   "slug": "farofadebananadaterra",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

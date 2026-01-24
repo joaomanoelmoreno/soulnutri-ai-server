@@ -1,18 +1,26 @@
 {
   "nome": "Feijaopretosemcarne",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Feijão preto",
+    "cebola",
+    "salsa picada"
+  ],
+  "descricao": "Feijão preto cozido em água, com cebola e salsa picada, resultando em um caldo escuro e feijões macios. O modo de preparo é por cozimento.",
+  "beneficios": [
+    "Rico em ferro, importante para a prevenção da anemia.",
+    "Fonte de fibras, auxiliando na saúde intestinal e no controle do colesterol.",
+    "Boa fonte de proteína vegetal, importante para a saúde e o funcionamento do organismo."
+  ],
+  "riscos": [
+    "Pode causar gases e inchaço em pessoas com sensibilidade a leguminosas."
+  ],
+  "curiosidade": "O feijão preto é um alimento muito popular no Brasil, especialmente no Rio de Janeiro, onde é ingrediente fundamental da feijoada.",
   "slug": "feijaopretosemcarne",
-  "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

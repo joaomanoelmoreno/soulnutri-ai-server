@@ -1,26 +1,32 @@
 {
   "nome": "Filé à Parmegiana",
-  "slug": "file_a_parmegiana",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "Filé empanado gratinado com molho de tomate e queijo",
   "ingredientes": [
-    "filé bovino",
-    "queijo parmesão",
-    "molho de tomate",
-    "presunto"
+    "Filé de carne empanado e frito (provavelmente bovino)",
+    "Molho de tomate",
+    "Queijo muçarela derretido",
+    "Tomate fatiado",
+    "Alface americana",
+    "Pimenta dedo-de-moça",
+    "Purê de algum vegetal amarelo (possivelmente abóbora ou cenoura)",
+    "Massa folhada recheada (possivelmente com carne)"
   ],
+  "descricao": "O prato é composto por um filé de carne empanado e coberto com molho de tomate e queijo muçarela gratinado. Acompanha tomate fatiado, salada de alface, purê e uma massa folhada recheada. A pimenta dedo-de-moça adiciona um toque picante.",
   "beneficios": [
-    "Proteínas de alta qualidade",
-    "Rico em nutrientes"
+    "A carne bovina é fonte de proteína, essencial para a construção e reparo dos tecidos do corpo.",
+    "O tomate é rico em licopeno, um antioxidante que pode ajudar a proteger contra doenças."
   ],
-  "riscos": [],
-  "tecnica": "",
+  "riscos": [
+    "Alto teor de gordura devido à fritura do filé e da massa.",
+    "Pode conter alto teor de sódio, dependendo dos temperos e molhos utilizados.",
+    "Alérgenos: glúten (na farinha do empanado e da massa), lactose (no queijo)."
+  ],
+  "curiosidade": "O Filé à Parmegiana é um prato popular no Brasil, com influência da culinária italiana. O nome 'Parmegiana' se refere ao queijo parmesão, tradicionalmente usado na receita.",
+  "slug": "file_a_parmegiana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

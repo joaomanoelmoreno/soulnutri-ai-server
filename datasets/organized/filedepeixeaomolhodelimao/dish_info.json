@@ -1,18 +1,30 @@
 {
   "nome": "Filedepeixeaomolhodelimao",
-  "slug": "filedepeixeaomolhodelimao",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe (tipo de peixe não identificado)",
+    "Limão (rodelas e suco)",
+    "Ervas frescas picadas (salsa, manjericão)",
+    "Pimenta dedo-de-moça",
+    "Azeite de oliva"
+  ],
+  "descricao": "O prato consiste em filés de peixe cozidos em azeite de oliva e finalizados com um molho cítrico. O preparo parece ser feito em uma panela, onde o peixe é cozido no azeite com rodelas de limão e o molho é finalizado com ervas frescas picadas e pimenta. O peixe está cozido, e não frito.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparação de tecidos.",
+    "Rico em ácidos graxos ômega-3, que contribuem para a saúde cardiovascular e cerebral.",
+    "As ervas frescas adicionam vitaminas e antioxidantes, que combatem os radicais livres."
+  ],
+  "riscos": [
+    "Alérgeno: peixe.",
+    "O teor de sódio pode ser alto, dependendo da quantidade de sal utilizada no preparo.",
+    "Pode conter espinhas, dependendo do tipo de peixe e forma de preparo."
+  ],
+  "curiosidade": "O limão, além de dar sabor ao prato, é rico em vitamina C, que auxilia na absorção do ferro presente nos alimentos, e também possui propriedades antioxidantes.",
+  "slug": "filedepeixeaomolhodelimao",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

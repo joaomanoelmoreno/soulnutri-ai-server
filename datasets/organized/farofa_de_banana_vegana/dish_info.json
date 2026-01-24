@@ -1,18 +1,28 @@
 {
   "nome": "Farofa De Banana Vegana",
-  "slug": "farofa_de_banana_vegana",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Banana",
+    "Farinha de mandioca",
+    "Cebolinha",
+    "Uva passa"
+  ],
+  "descricao": "Farofa preparada com banana cozida ou refogada, farinha de mandioca, cebolinha picada e uva passa. A farofa pode ser feita com outros temperos e ingredientes, mas, por ser vegana, não contém nenhum produto de origem animal.",
+  "beneficios": [
+    "Fonte de energia",
+    "Rica em fibras (se for utilizada farinha de mandioca integral)",
+    "A banana é fonte de potássio, que auxilia na saúde muscular e na pressão arterial"
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo do tipo de farinha de mandioca utilizada",
+    "Apesar de ser vegana, o consumo em excesso pode levar ao ganho de peso."
+  ],
+  "curiosidade": "A farinha de mandioca é um alimento tradicional da culinária brasileira, consumida há séculos por diferentes grupos étnicos. A banana, por sua vez, é uma fruta rica em carboidratos e potássio, que fornece energia para o corpo.",
+  "slug": "farofa_de_banana_vegana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

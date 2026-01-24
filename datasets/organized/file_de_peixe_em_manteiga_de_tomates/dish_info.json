@@ -1,27 +1,32 @@
 {
   "nome": "Filé de Peixe em Manteiga de Tomates",
-  "slug": "file_de_peixe_em_manteiga_de_tomates",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "Filé de peixe preparado com manteiga aromatizada e tomates frescos",
   "ingredientes": [
-    "filé de peixe",
-    "manteiga",
-    "tomates",
-    "alho",
-    "ervas"
+    "Filé de peixe (aparentemente grelhado)",
+    "Camarão (grelhado)",
+    "Lula (grelhada)",
+    "Arroz branco",
+    "Tomate cereja",
+    "Brócolis",
+    "Manjericão (decorativo)",
+    "Manteiga"
   ],
+  "descricao": "Prato composto por filé de peixe, camarão e lula grelhados, acompanhados de arroz branco, tomate cereja, brócolis e uma possível manteiga de tomate. O peixe e os frutos do mar parecem ter sido grelhados e temperados com ervas.",
   "beneficios": [
-    "Proteínas de alta qualidade",
-    "Rico em nutrientes"
+    "Peixe rico em ômega-3, importante para a saúde cardiovascular",
+    "Camarão e lula fontes de proteína e minerais como selênio e zinco",
+    "Arroz branco fornece energia"
   ],
-  "riscos": [],
-  "tecnica": "",
+  "riscos": [
+    "Pode conter alto teor de sódio dependendo do tempero",
+    "Alérgenos: peixe, crustáceos (camarão) e moluscos (lula)"
+  ],
+  "curiosidade": "O manjericão, erva aromática utilizada na decoração, é rica em antioxidantes e possui propriedades anti-inflamatórias.",
+  "slug": "file_de_peixe_em_manteiga_de_tomates",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

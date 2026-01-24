@@ -1,25 +1,32 @@
 {
   "nome": "file de peixe ao confit de tomates",
-  "slug": "file_de_peixe_ao_confit_de_tomates",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Prato composto por peixe grelhado e acompanhamentos.",
   "ingredientes": [
-    "Peixe",
+    "Filé de peixe (tipo não especificado)",
+    "Tomate (confitado)",
+    "Cebola (refogada)",
+    "Ervas frescas (tomilho)",
     "Purê de batata",
-    "Vegetais"
+    "Vegetais refogados (não identificados)",
+    "Queijo gratinado (no acompanhamento)",
+    "Azeite de oliva"
   ],
-  "beneficios": [],
+  "descricao": "O prato consiste em um filé de peixe cozido, possivelmente grelhado ou assado, acompanhado por tomates confitados (cozidos lentamente em azeite), cebola refogada e ervas frescas. Apresenta ainda acompanhamentos, como purê de batata, vegetais refogados e uma porção gratinada com queijo.",
+  "beneficios": [
+    "O peixe é uma excelente fonte de proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
+    "O tomate confitado preserva seus nutrientes e libera licopeno, um antioxidante benéfico."
+  ],
   "riscos": [
-    "Alérgeno: Peixe",
-    "Alérgeno: PEIXE (peixe)"
+    "Alérgeno: peixe",
+    "O prato pode ser rico em sódio, dependendo da forma de preparo e temperos utilizados.",
+    "Contém lactose (se houver queijo)."
   ],
-  "tecnica": "",
+  "curiosidade": "O método 'confit' é tradicionalmente usado para conservar alimentos em sua própria gordura ou em azeite, resultando em um sabor mais intenso.",
+  "slug": "file_de_peixe_ao_confit_de_tomates",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
