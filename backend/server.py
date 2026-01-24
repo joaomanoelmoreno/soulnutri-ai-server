@@ -786,6 +786,25 @@ async def create_new_dish(
         with open(file_path, "wb") as f:
             f.write(content)
         
+        # Salvar dish_info.json na pasta
+        import json
+        dish_info_for_file = {
+            "nome": dish_info["nome"],
+            "slug": dish_info["slug"],
+            "categoria": dish_info["categoria"],
+            "category_emoji": dish_info["category_emoji"],
+            "descricao": dish_info["descricao"],
+            "ingredientes": dish_info["ingredientes"],
+            "beneficios": dish_info["beneficios"],
+            "riscos": dish_info["riscos"],
+            "tecnica": dish_info["tecnica"],
+            "nutricao": dish_info["nutricao"],
+            "contem_gluten": dish_info["contem_gluten"]
+        }
+        dish_info_path = dataset_dir / "dish_info.json"
+        with open(dish_info_path, "w", encoding="utf-8") as f:
+            json.dump(dish_info_for_file, f, ensure_ascii=False, indent=2)
+        
         logger.info(f"Novo prato criado: {dish_name} -> {slug}")
         
         return {
