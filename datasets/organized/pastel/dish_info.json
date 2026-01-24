@@ -1,28 +1,10 @@
 {
   "nome": "Pastel",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Massa de pastel (farinha de trigo, água, sal, gordura vegetal)",
-    "Carne moída",
-    "Temperos (cebola, alho, cheiro verde)",
-    "Ovo (possível ingrediente da massa)"
-  ],
-  "descricao": "Pastel frito, recheado com carne moída temperada. A massa é geralmente frita em óleo vegetal até dourar. O recheio de carne é cozido com temperos antes de ser colocado na massa.",
-  "beneficios": [
-    "A carne oferece proteína, essencial para a construção e reparação muscular.",
-    "Pode ser fonte de ferro, dependendo do corte da carne utilizada."
-  ],
-  "riscos": [
-    "Alto teor de gordura devido à fritura, especialmente se for utilizada gordura hidrogenada.",
-    "Contém glúten, proveniente da farinha de trigo.",
-    "Alérgenos: glúten, pode conter traços de soja e ovo (se presentes na massa)"
-  ],
-  "curiosidade": "O pastel é um salgado popular no Brasil, com origem em diversas influências culturais, como a chinesa e a japonesa, onde os imigrantes adaptaram o preparo para utilizar ingredientes locais.",
   "slug": "pastel",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "categoria": "proteína animal",
+  "ingredientes": ["Massa de pastel", "Recheio variado", "Óleo para fritura"],
+  "descricao": "Massa fina e crocante recheada e frita. Pode ter recheios de carne, queijo, frango ou palmito.",
+  "beneficios": ["Fonte de energia", "Proteínas (dependendo do recheio)"],
+  "riscos": ["Contém glúten", "Fritura"],
+  "curiosidade": "O pastel brasileiro é diferente do chinês que o inspirou - a massa é mais fina e crocante."
 }

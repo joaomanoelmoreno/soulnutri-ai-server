@@ -1,33 +1,10 @@
 {
-  "nome": "Saladamediterranea",
-  "categoria": "vegetariano",
-  "ingredientes": [
-    "Tomate cereja",
-    "Pepino",
-    "Queijo branco em cubos",
-    "Azeitonas verdes",
-    "Cebola roxa",
-    "Ervas frescas picadas (salsa/salsinha)",
-    "Azeite de oliva",
-    "Sal",
-    "Pimenta do reino"
-  ],
-  "descricao": "Salada fresca e colorida com tomates cereja cortados ao meio, pepinos fatiados, cubos de queijo branco, azeitonas verdes, cebola roxa picada, e ervas frescas. Os ingredientes são temperados com azeite de oliva, sal e pimenta do reino. A preparação envolve apenas o corte dos ingredientes e a mistura, não requer cozimento.",
-  "beneficios": [
-    "Rica em vitaminas e antioxidantes devido aos tomates e pepinos.",
-    "Fonte de cálcio e proteínas do queijo.",
-    "As azeitonas contribuem com gorduras saudáveis."
-  ],
-  "riscos": [
-    "Potenciais alérgenos: Laticínios (queijo).",
-    "Ovos (se o queijo for feito com ovo)."
-  ],
-  "curiosidade": "A salada mediterrânea é conhecida por sua simplicidade e frescor, utilizando ingredientes típicos da região do Mediterrâneo, valorizando sabores naturais e ingredientes frescos.",
+  "nome": "Salada Mediterranea",
   "slug": "saladamediterranea",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "categoria": "vegano",
+  "ingredientes": ["Pepino", "Tomate", "Cebola roxa", "Azeitonas", "Azeite", "Orégano"],
+  "descricao": "Salada fresca inspirada na culinária mediterrânea com legumes frescos e temperados com azeite e ervas.",
+  "beneficios": ["Baixa caloria", "Rica em fibras", "Fonte de vitaminas"],
+  "riscos": [],
+  "curiosidade": "A dieta mediterrânea é considerada uma das mais saudáveis do mundo pela UNESCO."
 }
