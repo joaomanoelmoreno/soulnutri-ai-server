@@ -1,18 +1,27 @@
 {
   "nome": "Saladeovos",
-  "slug": "saladeovos",
   "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Ovos cozidos",
+    "Cebolinha picada",
+    "Páprica em pó"
+  ],
+  "descricao": "Salada de ovos feita com ovos cozidos picados e misturados, aparentemente com um pouco de gema desfeita para dar cremosidade, decorada com cebolinha picada e páprica em pó. Ovos cozidos podem ser preparados de diversas formas, como cozidos em água fervente ou no vapor.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade",
+    "Contém colina, importante para a saúde cerebral",
+    "Os ovos são ricos em vitaminas e minerais essenciais."
+  ],
+  "riscos": [
+    "Alto teor de colesterol (na gema)",
+    "Alérgeno: ovo"
+  ],
+  "curiosidade": "O ovo cozido é uma excelente fonte de proteína, com todos os aminoácidos essenciais, e sua digestão é facilitada pelo cozimento.",
+  "slug": "saladeovos",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

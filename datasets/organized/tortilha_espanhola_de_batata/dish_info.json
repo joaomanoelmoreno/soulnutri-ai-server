@@ -1,18 +1,30 @@
 {
   "nome": "Tortilha Espanhola De Batata",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Batatas",
+    "Ovos",
+    "Cebola",
+    "Azeite de oliva",
+    "Sal",
+    "Pimenta do reino"
+  ],
+  "descricao": "A Tortilla Espanhola é um prato clássico da culinária espanhola, feito com batatas, cebola e ovos, cozidos lentamente em azeite de oliva e, em seguida, assados ou fritos. A versão na imagem parece ter sido assada, resultando em uma textura macia por dentro e dourada por fora.",
+  "beneficios": [
+    "Fonte de carboidratos complexos, fornecendo energia.",
+    "Ovos são ricos em proteínas de alta qualidade.",
+    "Contém antioxidantes da cebola."
+  ],
+  "riscos": [
+    "Alto teor de gordura, dependendo da quantidade de azeite utilizada.",
+    "Pode conter alto teor de sódio, dependendo da quantidade de sal utilizada."
+  ],
+  "curiosidade": "A Tortilla Espanhola é muitas vezes servida fria, sendo um lanche popular ou parte de tapas na Espanha.",
   "slug": "tortilha_espanhola_de_batata",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

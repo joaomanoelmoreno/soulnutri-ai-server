@@ -1,18 +1,22 @@
 {
   "nome": "Tomate",
-  "slug": "tomate",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "ingredientes": [
+    "Tomate",
+    "Cebolinha picada"
+  ],
+  "descricao": "O prato consiste em tomates fatiados, possivelmente tomate italiano, e decorados com cebolinha picada. O preparo é simples, com os tomates cortados em rodelas e a cebolinha picada fresca. Pode ser servido como salada ou acompanhamento.",
+  "beneficios": [
+    "Rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
+    "Fonte de vitaminas A e C, importantes para a saúde da pele, visão e sistema imunológico."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "O tomate, embora muitas vezes usado como vegetal, é botanicamente uma fruta.",
+  "slug": "tomate",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

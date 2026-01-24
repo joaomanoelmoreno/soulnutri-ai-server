@@ -1,18 +1,32 @@
 {
   "nome": "Sushivietnamita",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Arroz para sushi",
+    "Alga nori",
+    "Gergelim preto e branco",
+    "Camarão",
+    "Legumes (cenoura e abacate)",
+    "Maionese",
+    "Cebolinha picada",
+    "Molho para sushi (provavelmente à base de soja)"
+  ],
+  "descricao": "Sushi vietnamita, provavelmente com camarão como proteína principal. O sushi é enrolado com alga nori, arroz temperado e recheado com camarão, legumes e maionese, finalizado com gergelim e cebolinha. O prato é servido com molho para sushi.",
+  "beneficios": [
+    "Fonte de carboidratos do arroz, fornecendo energia.",
+    "O gergelim é fonte de cálcio, fibras e antioxidantes."
+  ],
+  "riscos": [
+    "Contém glúten (molho shoyu).",
+    "Alérgenos: crustáceos (camarão), gergelim.",
+    "Alto teor de sódio (molho shoyu)."
+  ],
+  "curiosidade": "O camarão, ingrediente comum no sushi, é uma excelente fonte de proteínas e selênio, um antioxidante importante para a saúde.",
   "slug": "sushivietnamita",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

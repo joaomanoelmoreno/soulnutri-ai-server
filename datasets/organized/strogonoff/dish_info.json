@@ -1,18 +1,30 @@
 {
   "nome": "Strogonoff",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne bovina em tiras",
+    "Creme de leite",
+    "Molho de tomate",
+    "Cebola (não visível)",
+    "Alho (não visível)",
+    "Manteiga (possivelmente utilizada)",
+    "Cheiro-verde picado (salsa e cebolinha)"
+  ],
+  "descricao": "Strogonoff de carne preparado com carne bovina cortada em tiras, cozida em molho cremoso à base de creme de leite e molho de tomate. É finalizado com cheiro-verde picado. O modo de preparo visível na imagem é o cozimento dos ingredientes no molho cremoso.",
+  "beneficios": [
+    "A carne bovina é fonte de proteína de alta qualidade, essencial para a construção e reparo de tecidos",
+    "O molho de tomate oferece licopeno, um antioxidante que pode auxiliar na saúde cardiovascular"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada proveniente do creme de leite, se consumido em excesso, pode aumentar o colesterol",
+    "Pode conter glúten, dependendo dos temperos e espessantes utilizados"
+  ],
+  "curiosidade": "O strogonoff, apesar de popular no Brasil, tem origem russa, mas as receitas variam significativamente de acordo com a região e os ingredientes disponíveis.",
   "slug": "strogonoff",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

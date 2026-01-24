@@ -1,28 +1,32 @@
 {
   "nome": "Tabule de trigo",
-  "slug": "tabule_de_trigo",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Salada refrescante do Oriente Médio, feita com trigo, tomate, pepino, cebola e ervas frescas.",
   "ingredientes": [
-    "Trigo",
+    "Trigo para kibe (bulgur)",
     "Tomate",
     "Pepino",
-    "Cebola",
+    "Cebola roxa",
     "Salsa",
-    "Hortelã"
+    "Hortelã",
+    "Suco de limão",
+    "Azeite de oliva"
   ],
-  "beneficios": [],
+  "descricao": "Tabule é uma salada refrescante da culinária árabe, tradicionalmente feita com trigo para kibe (bulgur), tomate, pepino, cebola roxa, salsa, hortelã, suco de limão e azeite de oliva. Os ingredientes são finamente picados e misturados, resultando em uma salada leve e saborosa. Neste prato, fatias de pepino decoram a borda, adicionando um toque visual e crocante.",
+  "beneficios": [
+    "Rico em fibras, auxiliando na saúde digestiva e na saciedade.",
+    "Fonte de vitaminas e minerais provenientes dos vegetais frescos.",
+    "O trigo para kibe (bulgur) é uma boa fonte de carboidratos complexos, fornecendo energia de forma gradual."
+  ],
   "riscos": [
-    "Alérgeno: Glúten",
-    "Alérgeno: GLÚTEN (trigo)"
+    "Contém glúten, proveniente do trigo.",
+    "Pode conter traços de outros ingredientes se for preparado em um ambiente com contaminação cruzada."
   ],
-  "tecnica": "",
+  "curiosidade": "O tabule é tradicionalmente preparado com bulgur, um grão de trigo que passa por um processo de cozimento e secagem, tornando-o mais fácil de preparar e com um sabor levemente adocicado.",
+  "slug": "tabule_de_trigo",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

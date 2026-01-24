@@ -1,18 +1,33 @@
 {
   "nome": "Saladatailandesa",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Camarões grelhados",
+    "Tomates cereja cortados ao meio",
+    "Vagem cozida",
+    "Macarrão de arroz",
+    "Amendoim torrado e picado",
+    "Cebolinha picada",
+    "Molho (provavelmente à base de limão, peixe e pimenta)"
+  ],
+  "descricao": "A salada tailandesa com camarões é um prato vibrante e saboroso, com camarões grelhados como estrela. Os camarões são temperados e grelhados até atingirem o ponto ideal. Acompanhados por tomates cereja frescos cortados ao meio e vagem cozida, que adicionam frescor e textura. A base é de macarrão de arroz, que absorve os sabores do molho. O amendoim torrado e picado oferece crocância e sabor extra, enquanto a cebolinha picada finaliza com um toque fresco. O molho, geralmente à base de limão, peixe e pimenta, une todos os ingredientes.",
+  "beneficios": [
+    "Os camarões são fonte de proteína e selênio, um antioxidante importante.",
+    "O tomate cereja é rico em licopeno, um antioxidante que pode ajudar a proteger contra certos tipos de câncer.",
+    "A vagem fornece fibras, que auxiliam na digestão e promovem a saciedade.",
+    "O amendoim é fonte de gorduras saudáveis e proteínas."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarão)",
+    "Pode conter glúten, dependendo do molho ou de outros ingredientes adicionados.",
+    "Alto teor de sódio, dependendo do molho."
+  ],
+  "curiosidade": "A salada tailandesa é conhecida por seus sabores balanceados: doce, azedo, salgado e picante.",
   "slug": "saladatailandesa",
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,23 +1,30 @@
 {
   "nome": "salada verde",
-  "slug": "salada_verde",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Uma salada colorida com legumes grelhados e folhas verdes frescas.",
   "ingredientes": [
-    "folhas verdes",
-    "tomate",
-    "berinjela",
-    "cebola"
+    "Folhas verdes (alface e rúcula)",
+    "Tomate picado",
+    "Cebola roxa grelhada",
+    "Berinjela recheada e grelhada",
+    "Azeite de oliva",
+    "Tempero (sal e pimenta)"
   ],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "descricao": "Prato vegano composto por uma base de folhas verdes, rúcula e alface, tomate picado, cebola roxa grelhada e berinjela recheada e grelhada. A berinjela parece estar recheada com um composto verde, possivelmente ervas e vegetais.",
+  "beneficios": [
+    "Rico em vitaminas e minerais provenientes das folhas e legumes",
+    "Alto teor de fibras, auxiliando na digestão e saciedade",
+    "Azeite de oliva, fonte de gorduras saudáveis"
+  ],
+  "riscos": [
+    "Alergia a tomate",
+    "Alergia a cebola"
+  ],
+  "curiosidade": "A rúcula, presente na salada, é rica em antioxidantes e possui um sabor levemente picante, que combina bem com pratos frescos.",
+  "slug": "salada_verde",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

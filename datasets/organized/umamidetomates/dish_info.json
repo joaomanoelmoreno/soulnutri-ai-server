@@ -1,18 +1,31 @@
 {
   "nome": "Umamidetomates",
-  "slug": "umamidetomates",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Tomates fatiados",
+    "Cebola branca em pedaços",
+    "Cebolinha picada",
+    "Alho picado",
+    "Tomate cereja",
+    "Folhas verdes (possivelmente louro ou manjericão)",
+    "Azeite (não visível, mas presumido)",
+    "Sal e pimenta do reino (não visíveis, mas presumidos)"
+  ],
+  "descricao": "Prato simples, composto por tomates frescos fatiados e tomates cereja, temperados com cebola picada, cebolinha, alho e folhas verdes (possivelmente louro ou manjericão). O preparo parece envolver temperar os ingredientes frescos com azeite, sal e pimenta do reino.",
+  "beneficios": [
+    "Rico em licopeno, um antioxidante associado à prevenção de doenças cardiovasculares e certos tipos de câncer.",
+    "Fonte de vitaminas A e C, importantes para a imunidade e saúde da pele."
+  ],
+  "riscos": [
+    "Pode conter traços de alérgenos se contaminado durante o preparo.",
+    "Ingredientes crus podem ser um risco para pessoas com sensibilidade alimentar."
+  ],
+  "curiosidade": "O tomate é uma fruta, mas é frequentemente utilizado como um vegetal em culinária. A intensidade do sabor dos tomates pode variar dependendo da sua variedade e grau de maturação.",
+  "slug": "umamidetomates",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

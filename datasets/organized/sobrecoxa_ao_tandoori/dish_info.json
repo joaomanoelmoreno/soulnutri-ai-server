@@ -1,26 +1,28 @@
 {
   "nome": "sobrecoxa ao tandoori",
-  "slug": "sobrecoxa_ao_tandoori",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Prato com carne grelhada, purê, salada e um bolinho frito.",
   "ingredientes": [
-    "carne grelhada",
-    "purê",
-    "salada",
-    "bolinho"
+    "Sobrecoxa de frango marinada em temperos tandoori (provavelmente iogurte, especiarias como páprica, cúrcuma, gengibre, alho, cominho e pimenta)",
+    "Purê de batata ou outro tubérculo",
+    "Bolinho frito (provavelmente recheado com carne)",
+    "Salada com vegetais (tomate, cebola roxa, azeitonas pretas)",
+    "Guacamole (abacate, tomate, cebola, coentro, limão)"
   ],
-  "beneficios": [],
+  "descricao": "O prato consiste em sobrecoxas de frango cozidas, provavelmente grelhadas ou assadas, após serem marinadas em uma mistura de especiarias tandoori e iogurte. Acompanha purê, bolinho frito e salada de vegetais com guacamole. O bolinho, possivelmente recheado com carne, indica a presença de proteína animal.",
+  "beneficios": [
+    "A sobrecoxa de frango é fonte de proteínas de alta qualidade.",
+    "O abacate na guacamole fornece gorduras saudáveis e fibras."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter glúten nos acompanhamentos.",
-    "Alérgeno: Pode conter traços de leite/ovo nos acompanhamentos."
+    "A sobrecoxa de frango, por ser uma carne mais gordurosa, pode aumentar o consumo de gorduras saturadas.",
+    "O prato pode conter glúten, dependendo do preparo do bolinho e temperos."
   ],
-  "tecnica": "",
+  "curiosidade": "O tandoori é uma técnica de cozimento originária da Índia, onde os alimentos são marinados em iogurte e especiarias e assados em um forno de barro chamado tandoor.",
+  "slug": "sobrecoxa_ao_tandoori",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

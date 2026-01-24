@@ -1,18 +1,29 @@
 {
   "nome": "Salada Oriental De Biffun",
-  "slug": "salada_oriental_de_biffun",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Macarrão Biffun (macarrão de arroz)",
+    "Cenoura ralada",
+    "Cebolinha picada",
+    "Sementes (possivelmente gergelim)",
+    "Rodelas de pepino"
+  ],
+  "descricao": "Salada com macarrão de arroz (biffun) refogado com cenoura ralada, cebolinha e sementes. Decorada com rodelas de pepino.",
+  "beneficios": [
+    "Fonte de carboidratos, fornecendo energia.",
+    "A cenoura é rica em betacaroteno, precursor da vitamina A, importante para a visão e saúde da pele.",
+    "O pepino é hidratante e rico em vitaminas e minerais."
+  ],
+  "riscos": [
+    "Pode conter sódio, dependendo do tempero utilizado.",
+    "Não contém glúten, mas pode haver risco de contaminação cruzada se preparado em ambiente com alimentos com glúten."
+  ],
+  "curiosidade": "Biffun é um tipo de macarrão de arroz muito popular na culinária asiática, conhecido por sua textura leve e sabor neutro.",
+  "slug": "salada_oriental_de_biffun",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,29 @@
 {
   "nome": "Saladadeovos",
-  "slug": "saladadeovos",
   "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Ovos cozidos",
+    "Maionese",
+    "Cebolinha picada",
+    "Páprica doce (para decorar)"
+  ],
+  "descricao": "Salada de ovos preparada com ovos cozidos picados e misturados com maionese, cebolinha picada e páprica para decorar. Os ovos são cozidos, geralmente em água fervente, até que a gema esteja firme. A maionese pode ser caseira ou comprada, adicionando sabor e cremosidade à salada.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade",
+    "Contém colina, importante para a saúde do cérebro",
+    "Ovos são ricos em vitaminas e minerais"
+  ],
+  "riscos": [
+    "Alto teor de gordura e calorias (dependendo da quantidade de maionese)",
+    "Alérgeno: ovos",
+    "Potencial risco de contaminação por Salmonella se os ovos não forem bem cozidos"
+  ],
+  "curiosidade": "A salada de ovos é um prato versátil, popular em lanches, sanduíches e como acompanhamento. É um alimento relativamente rápido e fácil de preparar.",
+  "slug": "saladadeovos",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

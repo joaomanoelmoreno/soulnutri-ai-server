@@ -1,18 +1,31 @@
 {
   "nome": "Umame De Tomate",
-  "slug": "umame_de_tomate",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Tomate (fatiado e tomates cereja)",
+    "Cebola branca (picada)",
+    "Manjericão fresco",
+    "Alho",
+    "Azeite de oliva",
+    "Cebolinha (picada)",
+    "Tempero verde (folha)",
+    "Sal"
+  ],
+  "descricao": "Prato vegano simples e refrescante, composto por fatias de tomate intercaladas com tomates cereja. Os tomates são temperados com cebola picada, folhas de manjericão, alho, azeite de oliva, cebolinha picada e tempero verde. O preparo parece ser cru, realçando o sabor natural dos ingredientes.",
+  "beneficios": [
+    "Rico em licopeno, um antioxidante associado à redução do risco de certos tipos de câncer.",
+    "Fonte de vitamina C, que fortalece o sistema imunológico.",
+    "Baixo em calorias e rico em fibras, auxiliando na saciedade."
+  ],
+  "riscos": [
+    "Alergia: tomates podem causar reações alérgicas em algumas pessoas."
+  ],
+  "curiosidade": "O tomate é tecnicamente uma fruta, apesar de ser frequentemente usado como vegetal na culinária. Sua versatilidade permite que seja consumido cru, cozido, em molhos e saladas, como neste prato.",
+  "slug": "umame_de_tomate",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

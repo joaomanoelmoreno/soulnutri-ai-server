@@ -1,18 +1,28 @@
 {
   "nome": "Saladadeovoscombatata",
-  "slug": "saladadeovoscombatata",
   "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Ovos cozidos",
+    "Cebolinha picada",
+    "Maionese (possivelmente)"
+  ],
+  "descricao": "Salada de ovos cozidos picados e misturados com cebolinha, possivelmente maionese. Os ovos parecem ter sido cozidos, picados e misturados com os outros ingredientes.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade",
+    "Contém colina, importante para a saúde cerebral",
+    "Os ovos são ricos em vitaminas e minerais essenciais."
+  ],
+  "riscos": [
+    "Alto teor de colesterol (na gema do ovo)",
+    "Contém potencial alérgeno (ovo)",
+    "A maionese pode conter alto teor de gordura e sódio"
+  ],
+  "curiosidade": "Os ovos são classificados como um alimento completo, pois contêm quase todos os nutrientes essenciais que o corpo precisa.",
+  "slug": "saladadeovoscombatata",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

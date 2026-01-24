@@ -1,30 +1,33 @@
 {
   "nome": "Salada michouia Tunísia",
-  "slug": "salada_michouia_tunísia",
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Uma salada saborosa com atum, ovos cozidos, azeitonas e vegetais frescos.",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Atum",
-    "Ovos",
-    "Azeitonas",
-    "Milho",
+    "Tomate",
+    "Pimentão",
+    "Cebola",
+    "Alho",
+    "Ovo cozido",
+    "Azeitonas verdes",
     "Ervilhas",
-    "Maionese"
+    "Milho",
+    "Azeite de oliva",
+    "Pimenta"
   ],
-  "beneficios": [],
+  "descricao": "A Salada Michouia é um prato tradicional da culinária tunisiana. É feita a partir de vegetais grelhados ou assados, como tomate, pimentão e cebola, que são amassados e temperados com alho, azeite e especiarias, como pimenta. É finalizada com ingredientes frescos, como azeitonas e ovos cozidos. Neste prato, os vegetais parecem ter sido triturados ou amassados, formando uma base espessa, e cobertos com azeitonas, milho, ervilhas e ovos cozidos cortados.",
+  "beneficios": [
+    "Rico em antioxidantes: devido ao tomate e pimentão, fontes de vitamina C e licopeno.",
+    "Boa fonte de fibras: auxiliam na saúde digestiva."
+  ],
   "riscos": [
-    "Alérgeno: Ovo",
-    "Alérgeno: Peixe",
-    "Alérgeno: OVO (ovo, maionese)",
-    "Alérgeno: PEIXE (atum)"
+    "Pode conter glúten, dependendo do tempero utilizado",
+    "Alto teor de sódio, devido aos temperos e azeitonas"
   ],
-  "tecnica": "",
+  "curiosidade": "O nome 'Michouia' vem do verbo 'choui', que significa grelhar em árabe. A técnica de grelhar os vegetais antes de prepará-los confere um sabor defumado característico ao prato.",
+  "slug": "salada_michouia_tunísia",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

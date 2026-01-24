@@ -1,26 +1,27 @@
 {
   "nome": "Torta de manga",
-  "slug": "torta_de_manga",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Uma pequena torta ou pastelaria doce, geralmente recheada com frutas ou creme.",
   "ingredientes": [
-    "massa folhada",
-    "creme de confeiteiro",
-    "frutas"
+    "Manga em pedaços",
+    "Massa de torta (provavelmente com farinha de trigo, manteiga e ovos)",
+    "Geleia ou calda (possivelmente com açúcar)"
   ],
-  "beneficios": [],
+  "descricao": "Torta individual com base de massa, recheada com manga em pedaços e coberta com geleia ou calda. A massa parece ter sido assada, e a manga pode ter sido previamente cozida ou caramelizada.",
+  "beneficios": [
+    "A manga é rica em vitamina C, que fortalece o sistema imunológico",
+    "A massa pode fornecer energia através dos carboidratos"
+  ],
   "riscos": [
-    "Alérgeno: Glúten, Ovos, Laticínios",
-    "Alérgeno: GLÚTEN (massa, torta)",
-    "Alérgeno: LACTOSE (creme)"
+    "Alto teor de açúcar devido à geleia/calda",
+    "Contém glúten",
+    "Pode conter lactose na massa"
   ],
-  "tecnica": "",
+  "curiosidade": "A manga, originária da Ásia, é uma fruta tropical com diversas variedades e sabores, sendo uma ótima fonte de antioxidantes.",
+  "slug": "torta_de_manga",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

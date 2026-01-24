@@ -1,18 +1,36 @@
 {
   "nome": "Umamidetomate",
-  "slug": "umamidetomate",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Tomates fatiados",
+    "Cebola branca",
+    "Alho",
+    "Manjericão fresco",
+    "Cebolinha",
+    "Tomilho fresco",
+    "Azeite de oliva",
+    "Sal (não visível)",
+    "Pimenta do reino (não visível)"
+  ],
+  "descricao": "O prato Umamidetomate apresenta tomates fatiados, possivelmente temperados com azeite de oliva, sal e pimenta do reino. A cebola e o alho foram refogados, provavelmente com azeite, até ficarem translúcidos e ligeiramente macios, adicionando umami e complexidade ao prato. O manjericão, a cebolinha e o tomilho frescos são adicionados crus, para realçar o sabor e aroma, adicionando frescor e acidez.",
+  "beneficios": [
+    "Tomate: rico em licopeno, um antioxidante associado à prevenção de certos tipos de câncer e doenças cardíacas.",
+    "Cebola e alho: contêm compostos sulfurados que possuem propriedades anti-inflamatórias e antimicrobianas.",
+    "Azeite de oliva: fonte de gorduras saudáveis, benéficas para a saúde cardiovascular.",
+    "Manjericão: rico em antioxidantes e pode ter propriedades anti-inflamatórias.",
+    "Tomilho: pode auxiliar na digestão e possui propriedades antimicrobianas."
+  ],
+  "riscos": [
+    "Pessoas com alergia a tomate devem evitar o prato.",
+    "Não contém glúten.",
+    "O consumo excessivo de alho e cebola pode causar desconforto gastrointestinal em algumas pessoas."
+  ],
+  "curiosidade": "O termo 'umami' refere-se ao quinto sabor básico, que é o sabor saboroso e salgado. O tomate, quando maduro, contém naturalmente glutamato, que é responsável pelo sabor umami.",
+  "slug": "umamidetomate",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

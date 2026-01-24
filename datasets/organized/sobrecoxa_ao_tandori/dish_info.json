@@ -1,18 +1,30 @@
 {
   "nome": "Sobrecoxa Ao Tandori",
-  "slug": "sobrecoxa_ao_tandori",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Sobrecoxa de frango",
+    "Pimentão vermelho",
+    "Especiarias tandori (cúrcuma, cominho, coentro, pimenta)",
+    "Azeite (provavelmente)",
+    "Ervas frescas (salsa ou coentro)"
+  ],
+  "descricao": "Sobrecoxas de frango marinadas e grelhadas em especiarias tandori. Apresenta pedaços de pimentão vermelho e possivelmente outras ervas e temperos. O preparo parece ter sido feito em uma frigideira.",
+  "beneficios": [
+    "Boa fonte de proteína, essencial para a construção e reparação dos tecidos.",
+    "A cúrcuma presente no tempero tandori possui propriedades anti-inflamatórias e antioxidantes."
+  ],
+  "riscos": [
+    "Alto teor de sódio, dependendo da quantidade de temperos e marinada.",
+    "Potenciais alergênicos: pode conter traços de ingredientes com glúten (se o tempero tandori for industrializado)",
+    "Alergênicos: pode ter contato com outros alimentos (na cozinha)",
+    "Pode conter gordura saturada, dependendo do corte da carne e método de preparo."
+  ],
+  "curiosidade": "O tempero Tandori é um mix de especiarias originário da culinária indiana, conhecido por sua cor avermelhada e sabor exótico.",
+  "slug": "sobrecoxa_ao_tandori",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

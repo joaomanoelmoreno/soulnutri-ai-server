@@ -1,18 +1,31 @@
 {
   "nome": "Tabuledequinoa",
-  "slug": "tabuledequinoa",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Quinoa",
+    "Tomate picado",
+    "Pepino picado",
+    "Cebola roxa picada",
+    "Salsinha picada",
+    "Azeite de oliva",
+    "Suco de limão",
+    "Sal",
+    "Fatias de pepino (decoração)"
+  ],
+  "descricao": "O tabule de quinoa é uma salada refrescante e nutritiva. A quinoa, cozida, é combinada com tomate, pepino, cebola roxa e salsinha picados. A receita é temperada com azeite de oliva, suco de limão e sal. O prato é servido com fatias de pepino ao redor para decoração.",
+  "beneficios": [
+    "A quinoa é uma excelente fonte de proteína vegetal completa, fornecendo todos os aminoácidos essenciais.",
+    "A combinação de ingredientes oferece uma boa dose de fibras, promovendo a saúde digestiva.",
+    "O prato é rico em antioxidantes, provenientes dos tomates e outros vegetais.",
+    "O limão e a salsinha contribuem com vitamina C."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A quinoa é um pseudocereal nativo da região dos Andes, conhecido por sua alta qualidade nutricional. É uma ótima alternativa para quem busca substituir o trigo e o arroz em suas refeições.",
+  "slug": "tabuledequinoa",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

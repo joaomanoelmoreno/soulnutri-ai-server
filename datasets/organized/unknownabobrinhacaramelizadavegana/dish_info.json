@@ -1,18 +1,25 @@
 {
   "nome": "Abobrinhacaramelizadavegana",
-  "slug": "unknownabobrinhacaramelizadavegana",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "ingredientes": [
+    "Abobrinha",
+    "Tomate cereja",
+    "Azeite de oliva",
+    "Cebola roxa",
+    "Manjericão fresco"
+  ],
+  "descricao": "Abobrinhas cortadas ao meio e grelhadas. Recheadas com uma mistura de cebola roxa caramelizada e outros ingredientes. Decoradas com tomates cereja cortados e folhas de manjericão fresco.",
+  "beneficios": [
+    "Abobrinha é rica em fibras, que auxiliam na saciedade e na saúde digestiva.",
+    "Cebola roxa contém antioxidantes, que combatem os radicais livres."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A caramelização da cebola roxa libera açúcares naturais, proporcionando um sabor adocicado ao prato, sem adição de açúcar.",
+  "slug": "unknownabobrinhacaramelizadavegana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

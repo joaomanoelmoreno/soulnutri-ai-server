@@ -1,26 +1,32 @@
 {
   "nome": "Strogonoff vegano",
-  "slug": "strogonoff_vegano",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Couve-flor gratinada com queijo cremoso e temperos.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Couve-flor",
-    "Queijo",
-    "Creme de leite",
-    "Temperos"
+    "Brócolis",
+    "Cogumelos",
+    "Creme de castanha de caju (possível)",
+    "Mostarda",
+    "Azeite de oliva",
+    "Tempero verde (salsa e cebolinha)",
+    "Tomate (possível)"
   ],
-  "beneficios": [],
+  "descricao": "O prato consiste em brócolis e cogumelos cozidos em um molho cremoso, provavelmente feito com creme de castanha de caju, mostarda e temperos. O preparo parece ser refogado, onde os ingredientes são cozidos juntos em azeite de oliva.",
+  "beneficios": [
+    "Rico em fibras (brócolis e cogumelos)",
+    "Fonte de vitaminas e minerais (brócolis)",
+    "Opção com baixo teor de colesterol e gorduras saturadas (versão vegana)"
+  ],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: LACTOSE (creme, leite)"
+    "Pode conter sódio (dependendo dos temperos)",
+    "Alérgenos: castanhas (se utilizar creme de castanha de caju)",
+    "Pode conter glúten (se o molho for espessado com farinha)"
   ],
-  "tecnica": "",
+  "curiosidade": "Cogumelos são ricos em vitamina D, essencial para a saúde óssea e o sistema imunológico.",
+  "slug": "strogonoff_vegano",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

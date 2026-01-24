@@ -1,18 +1,23 @@
 {
   "nome": "Steakdecouveflor",
-  "slug": "steakdecouveflor",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Couve-flor",
+    "Ervas frescas picadas (salsa, cebolinha)",
+    "Tempero em pó (páprica, alho em pó, pimenta do reino)"
+  ],
+  "descricao": "O prato consiste em floretes de couve-flor assados até dourar. Os floretes são provavelmente temperados com uma mistura de temperos em pó e, em seguida, assados no forno ou grelhados até obterem uma textura crocante por fora e macia por dentro. O prato é finalizado com ervas frescas picadas.",
+  "beneficios": [
+    "A couve-flor é rica em antioxidantes e nutrientes, como vitamina C e fibras, que promovem a saúde geral.",
+    "As ervas frescas adicionam sabor e contêm vitaminas e minerais."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A couve-flor, apesar de ser um vegetal, pertence à mesma família do brócolis, da couve e da rúcula, conhecida como Brassicaceae.",
+  "slug": "steakdecouveflor",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
