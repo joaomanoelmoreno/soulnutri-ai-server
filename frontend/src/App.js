@@ -1114,6 +1114,30 @@ function App() {
             >
               📤 Compartilhar meu prato
             </button>
+
+            {/* BOTÕES DE FEEDBACK - MULTI */}
+            {!feedbackSent && (
+              <div className="feedback-section">
+                <p className="feedback-question">O reconhecimento está correto?</p>
+                <div className="feedback-btns">
+                  <button className="fb-btn correct" onClick={() => {
+                    // Salvar feedback positivo para treino
+                    setFeedbackSent(true);
+                  }}>
+                    ✅ Sim, correto
+                  </button>
+                  <button className="fb-btn incorrect" onClick={() => setShowFeedback(true)}>
+                    ❌ Não, corrigir
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {feedbackSent && (
+              <div className="feedback-thanks">
+                ✅ Obrigado! Isso melhora o reconhecimento.
+              </div>
+            )}
           </div>
         );
       })()}
