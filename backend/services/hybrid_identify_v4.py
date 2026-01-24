@@ -75,7 +75,7 @@ async def identify_multi_v4(image_bytes: bytes) -> dict:
         # ═══════════════════════════════════════════════════════════════════
         results = index.search(image_bytes, top_k=50)
         
-        # Fase 1: Coletar todos os candidatos com score >= 70%
+        # Fase 1: Coletar todos os candidatos com score >= 65%
         candidatos = []
         seen_slugs: Set[str] = set()
         
