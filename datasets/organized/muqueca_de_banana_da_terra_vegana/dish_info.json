@@ -1,0 +1,28 @@
+{
+  "nome": "Muqueca de banana da terra vegana",
+  "slug": "muqueca_de_banana_da_terra_vegana",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Prato cremoso com banana da terra cozida em molho com legumes, possivelmente com leite de coco.",
+  "ingredientes": [
+    "Banana da Terra",
+    "Pimentão",
+    "Cebola",
+    "Leite de Coco",
+    "Coentro",
+    "Azeite de Dende"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter traços de leite de coco ou outros ingredientes.",
+    "Alérgeno: LACTOSE (leite)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

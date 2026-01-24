@@ -1,0 +1,27 @@
+{
+  "nome": "Cogumelo recheado com legumes e queijo vegano",
+  "slug": "cogumelo_recheado_com_legumes_e_queijo_vegano",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Cogumelos recheados com ingredientes saborosos, cobertos com queijo ralado.",
+  "ingredientes": [
+    "Cogumelos",
+    "Queijo ralado",
+    "Ovos",
+    "Ervas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

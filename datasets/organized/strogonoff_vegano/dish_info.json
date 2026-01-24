@@ -1,0 +1,26 @@
+{
+  "nome": "Strogonoff vegano",
+  "slug": "strogonoff_vegano",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Couve-flor gratinada com queijo cremoso e temperos.",
+  "ingredientes": [
+    "Couve-flor",
+    "Queijo",
+    "Creme de leite",
+    "Temperos"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: LACTOSE (creme, leite)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

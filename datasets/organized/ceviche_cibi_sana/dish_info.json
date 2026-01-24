@@ -1,0 +1,27 @@
+{
+  "nome": "Ceviche Cibi sana",
+  "slug": "ceviche_cibi_sana",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato feito com peixe cru marinado em suco de limão, cebola roxa e pimenta.",
+  "ingredientes": [
+    "Peixe branco",
+    "Suco de limão",
+    "Cebola roxa",
+    "Pimenta",
+    "Coentro"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alérgeno: PEIXE (peixe)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

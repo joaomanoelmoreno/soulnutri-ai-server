@@ -1,0 +1,23 @@
+{
+  "nome": "salada verde",
+  "slug": "salada_verde",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Uma salada colorida com legumes grelhados e folhas verdes frescas.",
+  "ingredientes": [
+    "folhas verdes",
+    "tomate",
+    "berinjela",
+    "cebola"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,0 +1,26 @@
+{
+  "nome": "Linguiça de lombo",
+  "slug": "linguiça_de_lombo",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Salada que contém linguiça fatiada, cebola roxa e salsa.",
+  "ingredientes": [
+    "Linguiça",
+    "Cebola roxa",
+    "Salsa",
+    "Azeite"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter glúten.",
+    "Alto teor de sódio e gordura"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

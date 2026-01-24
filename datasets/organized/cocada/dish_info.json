@@ -1,0 +1,26 @@
+{
+  "nome": "Cocada",
+  "slug": "cocada",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Doce cremoso feito com coco ralado e açúcar, podendo conter leite.",
+  "ingredientes": [
+    "coco",
+    "açúcar",
+    "leite"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alergênico: Leite",
+    "Alto teor de açúcar.",
+    "Alérgeno: LACTOSE (leite)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,27 +1,26 @@
 {
-  "nome": "Sobrecoxa ao Tandoori",
+  "nome": "sobrecoxa ao tandoori",
   "slug": "sobrecoxa_ao_tandoori",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "Sobrecoxa de frango marinada em especiarias indianas tandoori",
+  "category_emoji": "🍖",
+  "descricao": "Prato com carne grelhada, purê, salada e um bolinho frito.",
   "ingredientes": [
-    "sobrecoxa de frango",
-    "especiarias tandoori",
-    "iogurte",
-    "gengibre",
-    "alho"
+    "carne grelhada",
+    "purê",
+    "salada",
+    "bolinho"
   ],
-  "beneficios": [
-    "Proteínas de alta qualidade",
-    "Rico em nutrientes"
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter glúten nos acompanhamentos.",
+    "Alérgeno: Pode conter traços de leite/ovo nos acompanhamentos."
   ],
-  "riscos": [],
   "tecnica": "",
   "nutricao": {
     "calorias": "~200 kcal",
-    "proteinas": "~15g",
-    "carboidratos": "~10g",
-    "gorduras": "~10g"
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "contem_gluten": false
+  "contem_gluten": true
 }

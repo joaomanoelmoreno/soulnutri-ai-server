@@ -1,0 +1,26 @@
+{
+  "nome": "Radicchio ao molho de mel e lamina de amendoas",
+  "slug": "radicchio_ao_molho_de_mel_e_lamina_de_amendoas",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Ostras frescas cobertas com vegetais frescos e temperos.",
+  "ingredientes": [
+    "Ostras",
+    "Vegetais verdes",
+    "Alho",
+    "Tomate"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ostras",
+    "Risco de contaminação por toxinas marinhas"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

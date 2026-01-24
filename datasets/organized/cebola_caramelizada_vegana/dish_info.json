@@ -1,0 +1,26 @@
+{
+  "nome": "Cebola caramelizada vegana",
+  "slug": "cebola_caramelizada_vegana",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Cebolinhas cozidas em calda caramelizada com ervas frescas.",
+  "ingredientes": [
+    "cebolas",
+    "caldo de legumes",
+    "açúcar",
+    "azeite",
+    "ervas frescas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Pode conter alérgenos (ex: amido)."
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

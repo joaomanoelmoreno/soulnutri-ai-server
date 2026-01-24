@@ -1,27 +1,29 @@
 {
-  "nome": "Grelhado dos Pescadores",
+  "nome": "grelhado dos pescadores",
   "slug": "grelhado_dos_pescadores",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "Seleção de frutos do mar grelhados ao estilo dos pescadores",
+  "category_emoji": "🍖",
+  "descricao": "Um prato com uma variedade de proteínas animais, vegetais e acompanhamentos, incluindo peixe, frango, camarão e outros ingredientes.",
   "ingredientes": [
-    "mix de frutos do mar",
-    "peixes",
-    "camarão",
-    "lula",
-    "temperos"
+    "Peixe (atum)",
+    "Frango",
+    "Camarão",
+    "Tomate",
+    "Abacate",
+    "Tortilla chips"
   ],
-  "beneficios": [
-    "Proteínas de alta qualidade",
-    "Rico em nutrientes"
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe, frutos do mar",
+    "Alérgeno: CRUSTÁCEOS (camarão, camarao)",
+    "Alérgeno: PEIXE (atum, peixe)"
   ],
-  "riscos": [],
   "tecnica": "",
   "nutricao": {
     "calorias": "~200 kcal",
-    "proteinas": "~15g",
-    "carboidratos": "~10g",
-    "gorduras": "~10g"
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
   "contem_gluten": false
 }

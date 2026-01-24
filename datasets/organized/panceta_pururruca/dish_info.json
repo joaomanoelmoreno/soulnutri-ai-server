@@ -1,0 +1,27 @@
+{
+  "nome": "panceta pururruca",
+  "slug": "panceta_pururruca",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato com arroz, carne e outros acompanhamentos.",
+  "ingredientes": [
+    "Arroz",
+    "Carne",
+    "Legumes",
+    "Massa"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter glúten na massa.",
+    "Alérgeno: Pode conter soja no molho.",
+    "Alérgeno: GLÚTEN (massa)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

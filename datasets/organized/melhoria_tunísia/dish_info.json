@@ -1,0 +1,29 @@
+{
+  "nome": "Melhoria Tunísia",
+  "slug": "melhoria_tunísia",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Salada tunisiana de vegetais cozidos e ovos cozidos, rica em sabor e nutrientes.",
+  "ingredientes": [
+    "Tomates",
+    "Pimentões",
+    "Cebola",
+    "Ovos",
+    "Azeitonas",
+    "Milho",
+    "Ervilhas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

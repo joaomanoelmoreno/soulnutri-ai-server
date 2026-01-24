@@ -1,0 +1,27 @@
+{
+  "nome": "hamburger de carne",
+  "slug": "hamburger_de_carne",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato com carne grelhada, arroz, feijão, linguiça, e acompanhamentos, provavelmente servido em um restaurante.",
+  "ingredientes": [
+    "Carne",
+    "Arroz",
+    "Feijão",
+    "Linguiça",
+    "Vegetais"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter glúten, dependendo dos ingredientes.",
+    "Risco: Alto teor de gordura e sódio, dependendo do preparo."
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

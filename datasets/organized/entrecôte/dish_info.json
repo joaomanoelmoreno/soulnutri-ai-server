@@ -1,0 +1,26 @@
+{
+  "nome": "Entrecôte",
+  "slug": "entrecôte",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Fatias de carne bovina grelhada com tomates cereja e cebolinha.",
+  "ingredientes": [
+    "Carne bovina",
+    "Tomate cereja",
+    "Cebolinha",
+    "Azeite"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter traços de ingredientes com alérgenos.",
+    "Colesterol alto"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

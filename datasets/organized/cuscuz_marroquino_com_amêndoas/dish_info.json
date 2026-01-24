@@ -1,0 +1,28 @@
+{
+  "nome": "Cuscuz marroquino com amêndoas",
+  "slug": "cuscuz_marroquino_com_amêndoas",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Cuscuz preparado com sêmola de trigo, e ingredientes frescos como tomate cereja, hortelã e amêndoas.",
+  "ingredientes": [
+    "Sêmola de trigo",
+    "Água",
+    "Tomate cereja",
+    "Hortelã",
+    "Amêndoas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (trigo)",
+    "Alérgeno: NOZES (amêndoa, amendoa)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

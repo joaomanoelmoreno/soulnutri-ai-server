@@ -1,0 +1,26 @@
+{
+  "nome": "vermicelli",
+  "slug": "vermicelli",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Salada colorida com mix de folhas, tomate e macarrão de arroz.",
+  "ingredientes": [
+    "Alface",
+    "Tomate",
+    "Beterraba",
+    "Macarrão de arroz",
+    "Broto de feijão"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: GLÚTEN (macarrao, macarrão)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

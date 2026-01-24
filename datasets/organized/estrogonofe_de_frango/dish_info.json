@@ -1,0 +1,29 @@
+{
+  "nome": "Estrogonofe de frango",
+  "slug": "estrogonofe_de_frango",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato cremoso com pedaços de carne em um molho à base de creme de leite e outros ingredientes.",
+  "ingredientes": [
+    "carne",
+    "creme de leite",
+    "champignon",
+    "cebola",
+    "alhop",
+    "mostarda"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: Soja",
+    "Alérgeno: LACTOSE (leite, creme)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

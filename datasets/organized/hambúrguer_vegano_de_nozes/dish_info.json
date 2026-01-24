@@ -1,0 +1,25 @@
+{
+  "nome": "Hambúrguer vegano de nozes",
+  "slug": "hambúrguer_vegano_de_nozes",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Hambúrguer de carne, acompanhado de tomates e molho.",
+  "ingredientes": [
+    "carne moída",
+    "tempero",
+    "tomate cereja",
+    "pimenta"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Carne"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

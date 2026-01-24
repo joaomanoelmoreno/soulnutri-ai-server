@@ -1,18 +1,19 @@
 {
-  "nome": "guacamole",
-  "slug": "guacamole",
+  "nome": "Caneleira quatro queijos",
+  "slug": "caneleira_quatro_queijos",
   "categoria": "vegetariano",
   "category_emoji": "🥬",
-  "descricao": "Prato com uma seleção de acompanhamentos e saladas, incluindo guacamole e tortilhas, possivelmente com queijo.",
+  "descricao": "Ravioli cozido, coberto com molho de tomate e possivelmente queijo, com ervas frescas.",
   "ingredientes": [
-    "Guacamole",
-    "Tortilhas",
-    "Legumes",
-    "Possível Queijo"
+    "Massa de ravioli",
+    "Molho de tomate",
+    "Queijo",
+    "Ervas"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Pode conter glúten nas tortilhas",
+    "Alérgeno: Glúten, Lácteos",
+    "Alérgeno: GLÚTEN (massa)",
     "Alérgeno: LACTOSE (queijo)"
   ],
   "tecnica": "",

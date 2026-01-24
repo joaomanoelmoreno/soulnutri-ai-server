@@ -1,0 +1,27 @@
+{
+  "nome": "Lasanha vegana (beringela e proteína de soja)",
+  "slug": "lasanha_vegana_beringela_e_proteína_de_soja",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Prato com proteína de soja, coberto com queijo ralado e cebolinha.",
+  "ingredientes": [
+    "Proteína de soja",
+    "Queijo ralado",
+    "Cebolinha",
+    "Tomate"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Soja, Lácteos",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: SOJA (soja)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

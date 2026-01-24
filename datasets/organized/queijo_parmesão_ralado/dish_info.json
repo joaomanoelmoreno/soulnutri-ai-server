@@ -1,0 +1,20 @@
+{
+  "nome": "Queijo parmesão ralado",
+  "slug": "queijo_parmesão_ralado",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Gengibre cru cortado em palitos finos, ideal para acompanhamento em diversos pratos.",
+  "ingredientes": [
+    "Gengibre"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

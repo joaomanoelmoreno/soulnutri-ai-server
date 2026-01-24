@@ -1,0 +1,24 @@
+{
+  "nome": "panceta pururuca",
+  "slug": "panceta_pururuca",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Carne assada, geralmente bovina, servida em pedaços.",
+  "ingredientes": [
+    "carne",
+    "temperos",
+    "óleo"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter traços de ingredientes processados"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

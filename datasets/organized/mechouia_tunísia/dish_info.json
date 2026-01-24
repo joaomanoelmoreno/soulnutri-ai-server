@@ -1,0 +1,29 @@
+{
+  "nome": "Mechouia Tunísia",
+  "slug": "mechouia_tunísia",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Salada tunisiana vibrante, feita com pimentões e tomates assados, com ovos cozidos e azeitonas.",
+  "ingredientes": [
+    "Pimentão",
+    "Tomate",
+    "Cebola",
+    "Ovos",
+    "Azeitonas",
+    "Milho",
+    "Alcaparras"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

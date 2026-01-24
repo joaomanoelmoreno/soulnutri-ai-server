@@ -1,0 +1,23 @@
+{
+  "nome": "Radicchio ao molho de mel e lâmina de amêndoas",
+  "slug": "radicchio_ao_molho_de_mel_e_lâmina_de_amêndoas",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Prato colorido com vegetais e ervas frescas.",
+  "ingredientes": [
+    "folhas verdes",
+    "vegetais",
+    "alimentos cozidos",
+    "ervas"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

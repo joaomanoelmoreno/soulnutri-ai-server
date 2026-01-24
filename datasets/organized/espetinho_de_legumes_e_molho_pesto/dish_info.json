@@ -1,0 +1,24 @@
+{
+  "nome": "Espetinho de legumes e molho pesto",
+  "slug": "espetinho_de_legumes_e_molho_pesto",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Espetinhos coloridos de legumes grelhados, acompanhados de molho verde.",
+  "ingredientes": [
+    "Pimentão",
+    "Cebola",
+    "Abobrinha",
+    "Tomate",
+    "Azeite"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

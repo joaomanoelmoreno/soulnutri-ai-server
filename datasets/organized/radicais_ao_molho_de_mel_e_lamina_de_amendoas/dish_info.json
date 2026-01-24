@@ -1,0 +1,28 @@
+{
+  "nome": "Radicais ao molho de mel e lamina de amendoas",
+  "slug": "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Barquetes de massa folhada com recheio de mel, rúcula e lâminas de amêndoas.",
+  "ingredientes": [
+    "Massa folhada",
+    "Mel",
+    "Amêndoas",
+    "Rúcula",
+    "Pimentão"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Amêndoas",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: NOZES (amêndoa, amendoa)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

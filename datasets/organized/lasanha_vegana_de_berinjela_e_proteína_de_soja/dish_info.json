@@ -1,0 +1,28 @@
+{
+  "nome": "Lasanha vegana de berinjela e proteína de soja",
+  "slug": "lasanha_vegana_de_berinjela_e_proteína_de_soja",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato de macarrão com carne moída, coberto com queijo ralado e cebolinha.",
+  "ingredientes": [
+    "macarrão",
+    "carne moída",
+    "molho de tomate",
+    "queijo ralado",
+    "cebolinha"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: GLÚTEN (macarrao, macarrão)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

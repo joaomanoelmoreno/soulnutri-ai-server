@@ -1,0 +1,25 @@
+{
+  "nome": "file de peixe ao confit de tomates",
+  "slug": "file_de_peixe_ao_confit_de_tomates",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato composto por peixe grelhado e acompanhamentos.",
+  "ingredientes": [
+    "Peixe",
+    "Purê de batata",
+    "Vegetais"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alérgeno: PEIXE (peixe)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

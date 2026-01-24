@@ -1,0 +1,28 @@
+{
+  "nome": "Vol au vent de pimentão",
+  "slug": "vol_au_vent_de_pimentão",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Pequenos pedaços de pão com recheio cremoso e decoração de ervas.",
+  "ingredientes": [
+    "Pão",
+    "Queijo creme",
+    "Ervas",
+    "Ovo"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten, Lácteos, Ovos",
+    "Alérgeno: GLÚTEN (pao, pão)",
+    "Alérgeno: LACTOSE (creme, queijo)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

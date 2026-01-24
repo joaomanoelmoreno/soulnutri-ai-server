@@ -1,0 +1,25 @@
+{
+  "nome": "cestinha de camarao",
+  "slug": "cestinha_de_camarao",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato composto por carne grelhada, acompanhada por legumes e batata.",
+  "ingredientes": [
+    "carne grelhada",
+    "legumes",
+    "batata"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Possíveis alérgenos nos acompanhamentos.",
+    "Colesterol: Consumo em excesso pode aumentar o colesterol."
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

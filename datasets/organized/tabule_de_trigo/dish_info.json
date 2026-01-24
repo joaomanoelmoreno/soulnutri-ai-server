@@ -1,0 +1,28 @@
+{
+  "nome": "Tabule de trigo",
+  "slug": "tabule_de_trigo",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Salada refrescante do Oriente Médio, feita com trigo, tomate, pepino, cebola e ervas frescas.",
+  "ingredientes": [
+    "Trigo",
+    "Tomate",
+    "Pepino",
+    "Cebola",
+    "Salsa",
+    "Hortelã"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (trigo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

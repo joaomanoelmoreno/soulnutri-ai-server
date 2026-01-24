@@ -1,0 +1,29 @@
+{
+  "nome": "Lasanha vegana",
+  "slug": "lasanha_vegana",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Lasanha vegana com massa, molho de tomate, legumes e queijo vegano.",
+  "ingredientes": [
+    "Massa de lasanha",
+    "Molho de tomate",
+    "Legumes",
+    "Queijo vegano",
+    "Manjericão"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Glúten (se a massa não for de outro tipo)",
+    "Alérgeno: Soja (se o queijo vegano for feito de soja)",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}
