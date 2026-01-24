@@ -1,18 +1,28 @@
 {
   "nome": "Gelatinadecereja",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Gelatina em pó sem sabor",
+    "Água",
+    "Adoçante",
+    "Essência de cereja",
+    "Cerejas picadas (opcional)"
+  ],
+  "descricao": "A Gelatina de Cereja é um doce simples feito a partir da gelatina em pó, que é misturada com água quente até dissolver. Em seguida, adiciona-se o adoçante, essência de cereja e, opcionalmente, cerejas picadas. A mistura é resfriada em uma forma até solidificar, resultando em uma sobremesa gelatinosa e saborosa.",
+  "beneficios": [
+    "A gelatina é rica em colágeno, importante para a saúde da pele, cabelos e unhas.",
+    "Pode ser uma sobremesa de baixa caloria, dependendo do adoçante utilizado."
+  ],
+  "riscos": [
+    "Contém alto teor de açúcar se for utilizado açúcar refinado.",
+    "A gelatina tradicional pode conter ingredientes de origem animal."
+  ],
+  "curiosidade": "A gelatina é derivada do colágeno animal, proteína presente em tecidos como pele e ossos.",
   "slug": "gelatinadecereja",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

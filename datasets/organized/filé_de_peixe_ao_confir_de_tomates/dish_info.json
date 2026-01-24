@@ -1,27 +1,29 @@
 {
   "nome": "Filé de peixe ao confir de tomates",
-  "slug": "filé_de_peixe_ao_confir_de_tomates",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Prato de peixe cozido, com tomate cereja e ervas aromáticas.",
   "ingredientes": [
-    "Peixe",
-    "Tomate cereja",
-    "Azeite",
-    "Ervas",
-    "Alho"
+    "Filés de peixe branco",
+    "Tomates cereja",
+    "Azeite de oliva",
+    "Alho",
+    "Cebola",
+    "Ervas frescas picadas (salsa e alecrim)"
   ],
-  "beneficios": [],
+  "descricao": "Prato que consiste em filés de peixe cozidos lentamente em azeite de oliva com tomates cereja, alho, cebola e ervas frescas. O método 'confit' é tradicionalmente utilizado para conservar alimentos, cozinhando-os em gordura a baixa temperatura, neste caso, o azeite.",
+  "beneficios": [
+    "Peixe: Rico em ômega-3, essencial para a saúde cardiovascular e cerebral.",
+    "Tomates: Boa fonte de licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
+    "Azeite de oliva: Contém gorduras saudáveis e antioxidantes."
+  ],
   "riscos": [
-    "Alérgeno: Peixe",
-    "Alérgeno: PEIXE (peixe)"
+    "Alérgeno: peixe"
   ],
-  "tecnica": "",
+  "curiosidade": "O método 'confit' pode ser aplicado a diversos ingredientes, não apenas peixes. O resultado é um alimento com textura macia e sabor intensificado.",
+  "slug": "filé_de_peixe_ao_confir_de_tomates",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

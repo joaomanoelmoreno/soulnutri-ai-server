@@ -1,18 +1,30 @@
 {
   "nome": "Graodebicotomatesecoespinafre",
-  "slug": "graodebicotomatesecoespinafre",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Grão-de-bico cozido",
+    "Tomate seco",
+    "Espinafre",
+    "Caldo (possivelmente vegetal)",
+    "Ervas picadas (salsa ou coentro, possivelmente)",
+    "Líquido cremoso (possivelmente leite vegetal)"
+  ],
+  "descricao": "Sopa cremosa com grão-de-bico, tomate seco e espinafre. O grão-de-bico parece estar cozido, os tomates secos mostram a textura desidratada e o espinafre está cozido, possivelmente refogado. A base cremosa pode ser um leite vegetal, resultando em um prato rico em nutrientes e fibras.",
+  "beneficios": [
+    "Rico em proteínas vegetais e fibras do grão-de-bico, promovendo a saciedade e a saúde digestiva.",
+    "Fonte de vitaminas e minerais do espinafre, como ferro e vitamina K.",
+    "Tomate seco é rico em antioxidantes, como o licopeno, que protegem as células do corpo."
+  ],
+  "riscos": [
+    "Pode conter sódio, dependendo da quantidade de temperos e do caldo usado.",
+    "Pode conter glúten, dependendo do caldo utilizado"
+  ],
+  "curiosidade": "O grão-de-bico é um alimento versátil e consumido em diversas culturas, sendo um dos ingredientes chave na culinária do Oriente Médio e do Mediterrâneo.",
+  "slug": "graodebicotomatesecoespinafre",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

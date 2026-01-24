@@ -1,30 +1,33 @@
 {
   "nome": "Granola",
-  "slug": "granola",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Mistura de grãos, frutas secas, nozes e sementes, geralmente assada e consumida com iogurte ou leite.",
+  "categoria": "vegano",
   "ingredientes": [
-    "aveia",
-    "frutas secas",
-    "nozes",
-    "sementes",
-    "mel"
+    "Flocos de aveia",
+    "Nozes",
+    "Amêndoas",
+    "Maçã desidratada",
+    "Frutas secas (provavelmente passas ou cranberry)",
+    "Sementes (possivelmente abóbora ou girassol)",
+    "Açúcar ou mel (não visível, mas comum em granolas)",
+    "Óleo vegetal (para torrar, não especificado)"
   ],
-  "beneficios": [],
+  "descricao": "Granola caseira ou industrializada. Apresenta ingredientes torrados, provavelmente no forno, com textura crocante. A presença de frutas secas e oleaginosas indica uma combinação de sabores e texturas.",
+  "beneficios": [
+    "Rica em fibras, auxiliando na saúde digestiva.",
+    "Fonte de gorduras saudáveis provenientes das oleaginosas, benéficas para o coração.",
+    "Pode conter antioxidantes das frutas secas, combatendo radicais livres."
+  ],
   "riscos": [
-    "Alérgeno: Nozes",
-    "Alérgeno: Glúten (se não for sem glúten)",
-    "Alérgeno: GLÚTEN (aveia)",
-    "Alérgeno: LACTOSE (leite, iogurte)",
-    "Alérgeno: NOZES (noz, nozes)"
+    "Alto teor calórico devido às oleaginosas e adição de açúcar ou mel.",
+    "Pode conter glúten, dependendo da aveia utilizada.",
+    "Alérgenos: contém oleaginosas."
   ],
-  "tecnica": "",
+  "curiosidade": "A granola se tornou popular nos Estados Unidos no final do século XIX, como um alimento saudável para o café da manhã. Originalmente, era feita com trigo, mas hoje existem muitas variações com outros grãos e ingredientes.",
+  "slug": "granola",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

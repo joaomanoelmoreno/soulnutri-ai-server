@@ -1,18 +1,29 @@
 {
   "nome": "Filé A Parmegiana",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Filé de carne bovina empanado",
+    "Molho de tomate",
+    "Queijo mussarela",
+    "Arroz branco",
+    "Pão"
+  ],
+  "descricao": "O Filé à Parmegiana consiste em filé de carne bovina empanado e frito, coberto com molho de tomate e queijo mussarela gratinado. Acompanha arroz branco e pão.",
+  "beneficios": [
+    "A carne bovina é rica em proteínas, importantes para a construção e reparação dos tecidos.",
+    "O queijo mussarela é fonte de cálcio, essencial para a saúde óssea."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura e queijo. ",
+    "Contém glúten (no empanado e pão)",
+    "Alérgeno: leite"
+  ],
+  "curiosidade": "O Filé à Parmegiana é um prato popular no Brasil, com origem incerta, mas que se assemelha a preparos da culinária italiana.",
   "slug": "filé_a_parmegiana",
-  "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

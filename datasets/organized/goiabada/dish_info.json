@@ -1,26 +1,25 @@
 {
   "nome": "Goiabada",
-  "slug": "goiabada",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Molho de tomate caseiro.",
   "ingredientes": [
-    "Tomate",
-    "Alho",
-    "Cebola",
-    "Azeite",
-    "Ervas"
+    "Goiaba",
+    "Açúcar"
   ],
-  "beneficios": [],
+  "descricao": "A goiabada é uma conserva feita a partir da goiaba, cozida com açúcar até atingir uma consistência espessa e firme. O preparo envolve a remoção de sementes e o cozimento lento da fruta com açúcar, resultando em uma geleia doce e saborosa.",
+  "beneficios": [
+    "Fonte de energia devido ao alto teor de açúcar.",
+    "Contém fibras que auxiliam na digestão (especialmente se for feita com a fruta com casca)."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter traços de ingredientes se for feito em cozinha compartilhada."
+    "Alto teor de açúcar, portanto, deve ser consumida com moderação. Pode causar picos de glicose no sangue.",
+    "Risco de cáries devido ao alto teor de açúcar."
   ],
-  "tecnica": "",
+  "curiosidade": "A goiabada é um doce tradicional no Brasil, frequentemente consumida com queijo coalho ou queijo minas, formando a famosa combinação 'Romeu e Julieta'.",
+  "slug": "goiabada",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": false
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

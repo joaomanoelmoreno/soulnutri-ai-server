@@ -1,18 +1,30 @@
 {
   "nome": "Filé De Frango Parmegiana",
-  "slug": "filé_de_frango_parmegiana",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de frango empanado",
+    "Molho de tomate",
+    "Queijo muçarela",
+    "Tomate cereja",
+    "Folhas de manjericão",
+    "Cebolinha (para decorar)"
+  ],
+  "descricao": "Prato composto por filés de frango empanados, cobertos com molho de tomate e queijo muçarela derretido, gratinados no forno. Decorado com tomates cereja, folhas de manjericão e cebolinha picada.",
+  "beneficios": [
+    "Fonte de proteína (frango).",
+    "A adição de tomate cereja e manjericão oferece antioxidantes e vitaminas."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo do tipo de empanado usado.",
+    "Alto teor de gordura saturada, devido ao queijo e fritura/empanado.",
+    "Rico em sódio, devido ao queijo e molho de tomate industrializado."
+  ],
+  "curiosidade": "O Filé à Parmegiana é uma adaptação de receitas italianas, como a 'melanzane alla parmigiana' (berinjela à parmegiana), originalmente sem carne.",
+  "slug": "filé_de_frango_parmegiana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

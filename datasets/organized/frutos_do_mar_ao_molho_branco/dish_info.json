@@ -1,18 +1,31 @@
 {
   "nome": "Frutos Do Mar Ao Molho Branco",
-  "slug": "frutos_do_mar_ao_molho_branco",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Camarão",
+    "Mexilhão",
+    "Vieiras",
+    "Tomate cereja",
+    "Cebolinha",
+    "Molho branco (possivelmente à base de leite, farinha e manteiga)",
+    "Ervas frescas"
+  ],
+  "descricao": "Prato com frutos do mar cozidos em molho branco, acompanhado de tomate cereja e cebolinha picada para finalizar. O camarão parece estar grelhado. O molho branco provavelmente foi feito com leite, farinha e manteiga.",
+  "beneficios": [
+    "Os frutos do mar são fontes de proteínas de alta qualidade e ricos em ômega-3, importante para a saúde cardiovascular.",
+    "O molho branco, dependendo dos ingredientes, pode fornecer cálcio e gorduras que auxiliam na absorção de vitaminas lipossolúveis."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarão)",
+    "Potencialmente contém glúten (se o molho branco for feito com farinha de trigo)",
+    "Intolerantes à lactose devem verificar os ingredientes do molho branco"
+  ],
+  "curiosidade": "O camarão é rico em astaxantina, um antioxidante que dá a cor avermelhada e oferece proteção contra danos celulares.",
+  "slug": "frutos_do_mar_ao_molho_branco",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

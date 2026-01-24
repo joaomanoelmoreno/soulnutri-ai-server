@@ -1,18 +1,32 @@
 {
   "nome": "Gratinado De Peixefrutos Do Mar",
-  "slug": "gratinado_de_peixefrutos_do_mar",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Camarão grelhado",
+    "Lula grelhada",
+    "Arroz branco com brócolis",
+    "Peixe branco empanado e gratinado com queijo",
+    "Ceviche de peixe branco com maracujá e cebola roxa",
+    "Guacamole (abacate, tomate, cebola)",
+    "Limão"
+  ],
+  "descricao": "Prato composto por frutos do mar grelhados (camarão e lula), arroz branco com brócolis, gratinado de peixe com queijo e cebola roxa, guacamole e ceviche de peixe com maracujá.",
+  "beneficios": [
+    "Fonte de proteínas de alta qualidade dos frutos do mar.",
+    "Rico em antioxidantes (cebola roxa, limão).",
+    "Camarão e peixe são fontes de ômega-3, importante para saúde cardiovascular."
+  ],
+  "riscos": [
+    "Alto teor de sódio, devido aos temperos e molhos.",
+    "Alérgeno: crustáceos (camarão).",
+    "Contém lactose (queijo do gratinado)."
+  ],
+  "curiosidade": "O ceviche, presente no prato, é uma receita tradicional da culinária peruana, onde o peixe é marinado em suco cítrico, geralmente limão, o que 'cozinha' o peixe sem necessidade de calor.",
+  "slug": "gratinado_de_peixefrutos_do_mar",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

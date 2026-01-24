@@ -1,18 +1,33 @@
 {
   "nome": "Filedepeixemolhofrutassecas",
-  "slug": "filedepeixemolhofrutassecas",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe (não especificado)",
+    "Damasco seco",
+    "Uva passa preta",
+    "Cebolinha",
+    "Caldo (provavelmente de legumes ou peixe)",
+    "Azeite (possivelmente)",
+    "Temperos (não especificados)"
+  ],
+  "descricao": "O prato consiste em filés de peixe cozidos em um molho amarelo vibrante. O molho é enriquecido com damascos secos fatiados e uvas passas pretas, adicionando doçura e textura. Cebolinha picada é utilizada como guarnição, adicionando frescor ao prato. O método de preparo parece envolver o cozimento do peixe no molho, possivelmente refogado ou cozido lentamente.",
+  "beneficios": [
+    "Peixe: Rico em proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular e cerebral.",
+    "Damasco: Fonte de fibras, vitaminas e minerais, como potássio, que auxilia na saúde muscular e na pressão arterial.",
+    "Uva passa: Fornece energia rápida e antioxidantes.",
+    "Cebolinha: Contribui com vitaminas, minerais e compostos sulfurados que podem ter efeitos benéficos na saúde."
+  ],
+  "riscos": [
+    "Alérgenos: peixe (se você tem alergia)",
+    "Sódio: se o caldo utilizado for muito salgado",
+    "Pode conter sulfitos, conservantes comuns em frutas secas. Pessoas com sensibilidade a sulfitos devem estar atentas."
+  ],
+  "curiosidade": "O damasco seco é uma excelente fonte de vitamina A, essencial para a visão, crescimento e sistema imunológico.",
+  "slug": "filedepeixemolhofrutassecas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

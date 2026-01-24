@@ -1,18 +1,31 @@
 {
   "nome": "Guacamole Com Manga",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Abacate",
+    "Manga",
+    "Cebola roxa picada",
+    "Pimenta vermelha picada",
+    "Suco de limão",
+    "Coentro fresco picado",
+    "Rodelas de limão para decorar"
+  ],
+  "descricao": "Guacamole cremoso com pedaços de manga, cebola roxa e pimenta, temperado com suco de limão e coentro fresco. Servido em uma tigela e decorado com rodelas de limão.",
+  "beneficios": [
+    "Rico em gorduras saudáveis do abacate, que auxiliam na absorção de vitaminas lipossolúveis.",
+    "A manga adiciona vitaminas, antioxidantes e fibras.",
+    "Fonte de antioxidantes e vitaminas, provenientes dos pimentões e limão."
+  ],
+  "riscos": [
+    "Pode causar reações alérgicas em pessoas sensíveis a abacate, manga ou outros ingredientes.",
+    "Deve ser consumido com moderação devido ao teor calórico"
+  ],
+  "curiosidade": "O abacate é uma fruta rica em gorduras monoinsaturadas, que podem ajudar a reduzir os níveis de colesterol ruim (LDL) no sangue, e é um alimento denso em nutrientes, oferecendo diversos benefícios para a saúde.",
   "slug": "guacamole_com_manga",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

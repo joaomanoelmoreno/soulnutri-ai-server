@@ -1,18 +1,31 @@
 {
   "nome": "Granola Cibi Sana",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Aveia em flocos",
+    "Frutas secas (uva passa, pedaços de maçã desidratada, frutas cristalizadas)",
+    "Sementes (abóbora, girassol, linhaça)",
+    "Castanhas (amêndoas, nozes, castanha de caju)",
+    "Açúcar mascavo",
+    "Óleo vegetal"
+  ],
+  "descricao": "Granola caseira, provavelmente assada, com diversos tipos de grãos, sementes e frutas secas. Apresenta uma coloração dourada escura, indicando o uso de açúcar mascavo e possível adição de especiarias.",
+  "beneficios": [
+    "Rica em fibras, auxiliando na saúde intestinal e proporcionando saciedade",
+    "Fonte de antioxidantes provenientes das frutas secas e sementes",
+    "Fornece energia de liberação gradual devido aos carboidratos complexos da aveia"
+  ],
+  "riscos": [
+    "Alto teor de açúcares, dependendo da quantidade de frutas secas e açúcar adicionado",
+    "Calorias elevadas, consumir com moderação",
+    "Possível presença de glúten (verificar rótulo se for celíaco)"
+  ],
+  "curiosidade": "A granola caseira pode ser personalizada com diversos ingredientes, como diferentes tipos de frutas secas, sementes e especiarias (canela, noz-moscada), tornando-a um alimento versátil e saboroso para o café da manhã ou lanches.",
   "slug": "granola_cibi_sana",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

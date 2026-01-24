@@ -1,28 +1,29 @@
 {
   "nome": "Ganache de chocolate com frutas",
-  "slug": "ganache_de_chocolate_com_frutas",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Sobremesa rica em chocolate com adição de frutas frescas.",
   "ingredientes": [
-    "Chocolate",
-    "Frutas",
-    "Creme de Leite",
-    "Açúcar"
+    "Chocolate (provavelmente com leite)",
+    "Morango",
+    "Raspas de chocolate",
+    "Frutas picadas (manga, kiwi, mirtilos, provavelmente)",
+    "Açúcar de confeiteiro (para polvilhar)"
   ],
-  "beneficios": [],
+  "descricao": "Sobremesa composta por ganache de chocolate, frutas picadas e raspas de chocolate. O ganache cobre a base de frutas picadas. O prato é finalizado com morangos fatiados e polvilhado com açúcar de confeiteiro.",
+  "beneficios": [
+    "A fruta fresca fornece vitaminas, minerais e fibras, importantes para a saúde.",
+    "O chocolate amargo (se utilizado) pode conter antioxidantes."
+  ],
   "riscos": [
-    "Alérgeno: Leite",
-    "Alérgeno: Frutas (se houver alguma fruta específica)",
-    "Alto teor de açúcar",
-    "Alérgeno: LACTOSE (leite, creme)"
+    "Alto teor de açúcar, proveniente do chocolate e possivelmente das frutas em calda.",
+    "Alérgenos: pode conter lactose (do leite do chocolate) e traços de outros alérgenos dependendo da produção.",
+    "Risco de excesso de calorias"
   ],
-  "tecnica": "",
+  "curiosidade": "O ganache é uma mistura versátil de chocolate e creme de leite, que pode ser utilizada em diversas sobremesas, bolos, tortas, etc.",
+  "slug": "ganache_de_chocolate_com_frutas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

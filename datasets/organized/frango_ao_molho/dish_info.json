@@ -1,18 +1,36 @@
 {
   "nome": "Frango Ao Molho",
-  "slug": "frango_ao_molho",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Peito de frango grelhado",
+    "Camarões grelhados",
+    "Filé de peixe grelhado",
+    "Abóbora assada",
+    "Cebola roxa fatiada",
+    "Folhas verdes (rúcula e alface)",
+    "Tomate cereja",
+    "Grãos cozidos (quinoa)",
+    "Macarrão tipo cabelo de anjo",
+    "Queijo ralado",
+    "Enrolado de pepino com recheio branco (provavelmente cream cheese)",
+    "Temperos e especiarias (orégano, salsinha)"
+  ],
+  "descricao": "Prato composto por diferentes preparos: peito de frango grelhado e coberto com molho cremoso, camarões grelhados e filé de peixe grelhado, acompanhados de legumes assados e salada fresca com grãos. A abóbora e o peixe parecem ter sido finalizados com queijo ralado.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade proveniente do frango, peixe e camarão, essencial para a construção e reparação dos tecidos.",
+    "Variedade de nutrientes fornecidos pelos acompanhamentos, como vitaminas e minerais das verduras e carboidratos da quinoa."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarão)",
+    "Pode conter glúten, dependendo do tempero do frango, camarão e peixe",
+    "Teor de sódio possivelmente alto devido a temperos e molhos"
+  ],
+  "curiosidade": "A quinoa, presente no prato, é um grão andino considerado um superalimento por ser rico em proteínas, fibras e minerais, além de ser um dos poucos alimentos de origem vegetal que contêm todos os nove aminoácidos essenciais.",
+  "slug": "frango_ao_molho",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
