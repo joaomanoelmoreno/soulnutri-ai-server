@@ -1234,14 +1234,14 @@ function App() {
       {showMultiCorrection && (
         <div className="modal-overlay" onClick={() => setShowMultiCorrection(false)}>
           <div className="modal-content multi-correction" onClick={e => e.stopPropagation()}>
-            <h3>✏️ Corrigir Prato Múltiplo</h3>
+            <h3>✏️ Corrigir Identificação</h3>
             
             <div className="correction-form">
               <div className="form-group">
-                <label>🍖 Prato Principal:</label>
+                <label>🍽️ Item Principal (ou primeiro item):</label>
                 <input 
                   type="text"
-                  placeholder="Ex: Maminha ao Molho"
+                  placeholder="Ex: Maminha ao Molho, Peixe Grelhado..."
                   value={multiCorrections.principal}
                   onChange={e => setMultiCorrections({...multiCorrections, principal: e.target.value})}
                   autoFocus
@@ -1249,17 +1249,17 @@ function App() {
               </div>
               
               <div className="form-group">
-                <label>🥗 Acompanhamentos (separados por vírgula):</label>
+                <label>🥗 Outros itens do prato (separados por vírgula):</label>
                 <textarea 
-                  placeholder="Ex: Salada de alface, Macarrão oriental, Rolinho vietnamita, Dadinho de tapioca"
+                  placeholder="Ex: Arroz, Salada, Feijão, Camarão..."
                   value={multiCorrections.acompanhamentos}
                   onChange={e => setMultiCorrections({...multiCorrections, acompanhamentos: e.target.value})}
-                  rows={3}
+                  rows={4}
                 />
               </div>
               
               <small className="help-text">
-                💡 A IA vai aprender com esta correção e melhorar nas próximas identificações
+                💡 Edite apenas o que está errado. O cliente pode misturar proteínas e veganos no mesmo prato.
               </small>
             </div>
             
