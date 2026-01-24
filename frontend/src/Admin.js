@@ -10,6 +10,8 @@ export default function Admin() {
   const [search, setSearch] = useState('');
   const [editingDish, setEditingDish] = useState(null);
   const [stats, setStats] = useState(null);
+  const [filterCategory, setFilterCategory] = useState('');
+  const [viewMode, setViewMode] = useState('grid'); // grid ou list
 
   useEffect(() => {
     loadDishes();
@@ -18,7 +20,7 @@ export default function Admin() {
 
   const loadDishes = async () => {
     try {
-      const res = await fetch(`${API}/admin/dishes`);
+      const res = await fetch(`${API}/admin/dishes-full`);
       const data = await res.json();
       if (data.ok) {
         setDishes(data.dishes || []);
@@ -61,7 +63,7 @@ export default function Admin() {
   };
 
   const deleteDish = async (slug) => {
-    if (!window.confirm(`Excluir "${slug}"?`)) return;
+    if (!window.confirm(`Excluir "${slug}" e todas as fotos?`)) return;
     try {
       const res = await fetch(`${API}/admin/dishes/${slug}`, { method: 'DELETE' });
       const data = await res.json();
@@ -82,6 +84,7 @@ export default function Admin() {
       const data = await res.json();
       alert(`✅ Reindexado: ${data.total_dishes} pratos, ${data.total_images} imagens`);
       loadStats();
+      loadDishes();
     } catch (e) {
       alert('Erro: ' + e.message);
     } finally {
@@ -89,15 +92,22 @@ export default function Admin() {
     }
   };
 
-  const filteredDishes = dishes.filter(d => 
-    d.nome?.toLowerCase().includes(search.toLowerCase()) ||
-    d.slug?.toLowerCase().includes(search.toLowerCase())
-  );
+  // Filtros
+  const filteredDishes = dishes.filter(d => {
+    const matchSearch = d.nome?.toLowerCase().includes(search.toLowerCase()) ||
+                       d.slug?.toLowerCase().includes(search.toLowerCase());
+    const matchCategory = !filterCategory || d.categoria === filterCategory;
+    return matchSearch && matchCategory;
+  });
+
+  // Categorias únicas
+  const categories = [...new Set(dishes.map(d => d.categoria).filter(Boolean))];
 
   const getCategoryColor = (cat) => {
     if (cat === 'proteína animal') return '#ef4444';
     if (cat === 'vegetariano') return '#f59e0b';
     if (cat === 'vegano') return '#22c55e';
+    if (cat === 'sobremesa') return '#ec4899';
     return '#6b7280';
   };
 
@@ -131,113 +141,289 @@ export default function Admin() {
         </div>
       )}
 
-      {/* Search */}
-      <div className="search-bar">
+      {/* Search & Filters */}
+      <div className="filters-bar">
         <input 
           type="text"
           placeholder="🔍 Buscar pratos..."
           value={search}
           onChange={e => setSearch(e.target.value)}
+          className="search-input"
         />
+        <select 
+          value={filterCategory} 
+          onChange={e => setFilterCategory(e.target.value)}
+          className="filter-select"
+        >
+          <option value="">Todas categorias</option>
+          {categories.map(cat => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
+        <div className="view-toggle">
+          <button 
+            className={viewMode === 'grid' ? 'active' : ''} 
+            onClick={() => setViewMode('grid')}
+          >▦</button>
+          <button 
+            className={viewMode === 'list' ? 'active' : ''} 
+            onClick={() => setViewMode('list')}
+          >☰</button>
+        </div>
         <span className="result-count">{filteredDishes.length} pratos</span>
       </div>
 
-      {/* Dishes List */}
+      {/* Dishes */}
       {loading ? (
         <div className="loading">Carregando...</div>
       ) : (
-        <div className="dishes-grid">
+        <div className={`dishes-container ${viewMode}`}>
           {filteredDishes.map(dish => (
-            <div key={dish.slug} className="dish-card">
-              <div className="dish-header">
-                <span className="dish-emoji">{dish.category_emoji || '🍽️'}</span>
-                <div className="dish-info">
+            <div key={dish.slug} className="dish-card-full" onClick={() => setEditingDish({...dish})}>
+              {/* Foto */}
+              <div className="dish-photo">
+                {dish.first_image ? (
+                  <img src={`${API}/admin/dish-image/${dish.slug}`} alt={dish.nome} />
+                ) : (
+                  <div className="no-photo">{dish.category_emoji || '🍽️'}</div>
+                )}
+                <span className="photo-count">📷 {dish.image_count}</span>
+              </div>
+              
+              {/* Info */}
+              <div className="dish-content">
+                <div className="dish-title">
+                  <span className="dish-emoji">{dish.category_emoji || '🍽️'}</span>
                   <h3>{dish.nome || dish.slug}</h3>
-                  <span 
-                    className="dish-category"
-                    style={{ backgroundColor: getCategoryColor(dish.categoria) }}
-                  >
-                    {dish.categoria || 'Não classificado'}
-                  </span>
+                </div>
+                
+                <span 
+                  className="dish-category-badge"
+                  style={{ backgroundColor: getCategoryColor(dish.categoria) }}
+                >
+                  {dish.categoria || '❓ Não classificado'}
+                </span>
+                
+                <p className="dish-slug-text">📁 {dish.slug}</p>
+                
+                {dish.descricao && (
+                  <p className="dish-desc">{dish.descricao.slice(0, 100)}...</p>
+                )}
+                
+                {/* Ingredientes */}
+                {dish.ingredientes?.length > 0 && (
+                  <div className="dish-ingredients">
+                    <strong>📝 Ingredientes:</strong>
+                    <p>{dish.ingredientes.slice(0, 5).join(', ')}{dish.ingredientes.length > 5 ? '...' : ''}</p>
+                  </div>
+                )}
+                
+                {/* Nutrição */}
+                {dish.nutricao && (
+                  <div className="dish-nutrition">
+                    <span>🔥 {dish.nutricao.calorias || '?'}</span>
+                    <span>💪 {dish.nutricao.proteinas || '?'}</span>
+                    <span>🍞 {dish.nutricao.carboidratos || '?'}</span>
+                  </div>
+                )}
+                
+                {/* Benefícios */}
+                {dish.beneficios?.length > 0 && (
+                  <div className="dish-benefits">
+                    {dish.beneficios.slice(0, 2).map((b, i) => (
+                      <span key={i} className="benefit-tag">✨ {b}</span>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Riscos/Alertas */}
+                {dish.riscos?.length > 0 && (
+                  <div className="dish-risks">
+                    {dish.riscos.slice(0, 2).map((r, i) => (
+                      <span key={i} className="risk-tag">⚠️ {r}</span>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Glúten */}
+                <div className="dish-gluten">
+                  {dish.contem_gluten ? '🌾 Contém glúten' : '✅ Sem glúten'}
                 </div>
               </div>
               
-              <div className="dish-details">
-                <p className="dish-slug">📁 {dish.slug}</p>
-                <p className="dish-images">🖼️ {dish.image_count || '?'} fotos</p>
-                {dish.ingredientes?.length > 0 && (
-                  <p className="dish-ingredients">
-                    📝 {dish.ingredientes.slice(0, 3).join(', ')}
-                    {dish.ingredientes.length > 3 && '...'}
-                  </p>
-                )}
-              </div>
-
-              <div className="dish-actions">
-                <button onClick={() => setEditingDish({...dish})}>✏️ Editar</button>
-                <button className="delete" onClick={() => deleteDish(dish.slug)}>🗑️</button>
+              {/* Actions */}
+              <div className="dish-actions-bar">
+                <button onClick={(e) => { e.stopPropagation(); setEditingDish({...dish}); }}>
+                  ✏️ Editar
+                </button>
+                <button className="delete-btn" onClick={(e) => { e.stopPropagation(); deleteDish(dish.slug); }}>
+                  🗑️
+                </button>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Edit Modal */}
+      {/* Edit Modal - Completo */}
       {editingDish && (
         <div className="modal-overlay" onClick={() => setEditingDish(null)}>
-          <div className="edit-modal" onClick={e => e.stopPropagation()}>
-            <h2>✏️ Editar: {editingDish.nome}</h2>
+          <div className="edit-modal-full" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>✏️ Editar: {editingDish.nome}</h2>
+              <button className="close-btn" onClick={() => setEditingDish(null)}>✕</button>
+            </div>
             
-            <div className="form-group">
-              <label>Nome:</label>
-              <input 
-                value={editingDish.nome || ''}
-                onChange={e => setEditingDish({...editingDish, nome: e.target.value})}
-              />
+            <div className="modal-body">
+              {/* Foto do prato */}
+              <div className="edit-photo-section">
+                {editingDish.first_image ? (
+                  <img src={`${API}/admin/dish-image/${editingDish.slug}`} alt={editingDish.nome} />
+                ) : (
+                  <div className="no-photo-large">{editingDish.category_emoji || '🍽️'}</div>
+                )}
+                <p className="photo-info">📷 {editingDish.image_count} fotos</p>
+              </div>
+              
+              <div className="edit-fields">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Nome do Prato:</label>
+                    <input 
+                      value={editingDish.nome || ''}
+                      onChange={e => setEditingDish({...editingDish, nome: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Categoria:</label>
+                    <select 
+                      value={editingDish.categoria || ''}
+                      onChange={e => setEditingDish({...editingDish, categoria: e.target.value})}
+                    >
+                      <option value="">Selecione...</option>
+                      <option value="proteína animal">🍖 Proteína Animal</option>
+                      <option value="vegetariano">🥚 Vegetariano</option>
+                      <option value="vegano">🥬 Vegano</option>
+                      <option value="sobremesa">🍰 Sobremesa</option>
+                      <option value="outros">🍽️ Outros</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Descrição:</label>
+                  <textarea 
+                    value={editingDish.descricao || ''}
+                    onChange={e => setEditingDish({...editingDish, descricao: e.target.value})}
+                    rows={2}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Ingredientes (um por linha):</label>
+                  <textarea 
+                    value={(editingDish.ingredientes || []).join('\n')}
+                    onChange={e => setEditingDish({
+                      ...editingDish, 
+                      ingredientes: e.target.value.split('\n').filter(i => i.trim())
+                    })}
+                    rows={4}
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Benefícios (um por linha):</label>
+                    <textarea 
+                      value={(editingDish.beneficios || []).join('\n')}
+                      onChange={e => setEditingDish({
+                        ...editingDish, 
+                        beneficios: e.target.value.split('\n').filter(i => i.trim())
+                      })}
+                      rows={3}
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Riscos/Alertas (um por linha):</label>
+                    <textarea 
+                      value={(editingDish.riscos || []).join('\n')}
+                      onChange={e => setEditingDish({
+                        ...editingDish, 
+                        riscos: e.target.value.split('\n').filter(i => i.trim())
+                      })}
+                      rows={3}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-row nutrition-row">
+                  <div className="form-group small">
+                    <label>🔥 Calorias:</label>
+                    <input 
+                      value={editingDish.nutricao?.calorias || ''}
+                      onChange={e => setEditingDish({
+                        ...editingDish, 
+                        nutricao: {...(editingDish.nutricao || {}), calorias: e.target.value}
+                      })}
+                      placeholder="~200 kcal"
+                    />
+                  </div>
+                  <div className="form-group small">
+                    <label>💪 Proteínas:</label>
+                    <input 
+                      value={editingDish.nutricao?.proteinas || ''}
+                      onChange={e => setEditingDish({
+                        ...editingDish, 
+                        nutricao: {...(editingDish.nutricao || {}), proteinas: e.target.value}
+                      })}
+                      placeholder="~15g"
+                    />
+                  </div>
+                  <div className="form-group small">
+                    <label>🍞 Carbos:</label>
+                    <input 
+                      value={editingDish.nutricao?.carboidratos || ''}
+                      onChange={e => setEditingDish({
+                        ...editingDish, 
+                        nutricao: {...(editingDish.nutricao || {}), carboidratos: e.target.value}
+                      })}
+                      placeholder="~20g"
+                    />
+                  </div>
+                  <div className="form-group small">
+                    <label>🧈 Gorduras:</label>
+                    <input 
+                      value={editingDish.nutricao?.gorduras || ''}
+                      onChange={e => setEditingDish({
+                        ...editingDish, 
+                        nutricao: {...(editingDish.nutricao || {}), gorduras: e.target.value}
+                      })}
+                      placeholder="~8g"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group checkbox-group">
+                  <label>
+                    <input 
+                      type="checkbox"
+                      checked={editingDish.contem_gluten || false}
+                      onChange={e => setEditingDish({...editingDish, contem_gluten: e.target.checked})}
+                    />
+                    🌾 Contém Glúten
+                  </label>
+                </div>
+              </div>
             </div>
 
-            <div className="form-group">
-              <label>Categoria:</label>
-              <select 
-                value={editingDish.categoria || ''}
-                onChange={e => setEditingDish({...editingDish, categoria: e.target.value})}
-              >
-                <option value="">Selecione...</option>
-                <option value="proteína animal">🍖 Proteína Animal</option>
-                <option value="vegetariano">🥚 Vegetariano</option>
-                <option value="vegano">🥬 Vegano</option>
-                <option value="sobremesa">🍰 Sobremesa</option>
-                <option value="outros">🍽️ Outros</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Ingredientes (um por linha):</label>
-              <textarea 
-                value={(editingDish.ingredientes || []).join('\n')}
-                onChange={e => setEditingDish({
-                  ...editingDish, 
-                  ingredientes: e.target.value.split('\n').filter(i => i.trim())
-                })}
-                rows={4}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Descrição:</label>
-              <textarea 
-                value={editingDish.descricao || ''}
-                onChange={e => setEditingDish({...editingDish, descricao: e.target.value})}
-                rows={2}
-              />
-            </div>
-
-            <div className="modal-actions">
+            <div className="modal-footer">
               <button className="save-btn" onClick={() => saveDish(editingDish)}>
-                💾 Salvar
+                💾 Salvar Alterações
               </button>
               <button className="cancel-btn" onClick={() => setEditingDish(null)}>
-                ✕ Cancelar
+                Cancelar
               </button>
             </div>
           </div>
