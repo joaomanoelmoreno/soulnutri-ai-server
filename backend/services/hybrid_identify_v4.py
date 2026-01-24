@@ -8,7 +8,7 @@ PROBLEMA: Pratos corretos aparecem com scores entre 70-85%,
 
 SOLUÇÃO v4:
 1. Buscar top-50 resultados (não apenas 15)
-2. Threshold de 70% para capturar mais itens
+2. Threshold de 65% para capturar mais itens
 3. Filtrar pratos genéricos quando existem específicos
 4. Limitar a 10 itens mais relevantes
 5. Priorizar diversidade (não repetir categorias similares)
