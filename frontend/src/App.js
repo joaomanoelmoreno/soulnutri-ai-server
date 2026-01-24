@@ -473,6 +473,56 @@ function App() {
     }
   };
 
+  // SALVAR CORREÇÃO DE PRATO MÚLTIPLO
+  const saveMultiCorrection = async () => {
+    if (!lastImageBlob || !multiCorrections.principal.trim()) {
+      alert('Por favor, informe pelo menos o prato principal');
+      return;
+    }
+    
+    setCreatingDish(true);
+    
+    try {
+      // Salvar prato principal
+      const fdPrincipal = new FormData();
+      fdPrincipal.append("file", lastImageBlob, "photo.jpg");
+      fdPrincipal.append("dish_name", multiCorrections.principal.trim());
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const res = await fetch(`${API}/ai/create-dish`, { 
+        method: "POST", 
+        body: fdPrincipal,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      const data = await res.json();
+      
+      if (data.ok) {
+        // Salvar acompanhamentos como metadados
+        if (multiCorrections.acompanhamentos.trim()) {
+          const acompList = multiCorrections.acompanhamentos.split(',').map(a => a.trim()).filter(a => a);
+          console.log('Acompanhamentos salvos:', acompList);
+          // TODO: Endpoint para salvar acompanhamentos associados
+        }
+        
+        setFeedbackSent(true);
+        setShowMultiCorrection(false);
+        setMultiCorrections({ principal: '', acompanhamentos: '' });
+        alert(`✅ Prato "${multiCorrections.principal}" salvo com sucesso!\n\nA IA vai aprender com esta correção.`);
+        loadDishes(); // Atualizar lista
+      } else {
+        alert(data.error || 'Erro ao salvar correção');
+      }
+    } catch (e) {
+      console.error('Erro ao salvar correção:', e);
+      alert('Erro ao salvar: ' + (e.message || 'Tente novamente'));
+    } finally {
+      setCreatingDish(false);
+    }
+  };
+
   // CRIAR PRATO NOVO com IA
   const createNewDish = async () => {
     if (!lastImageBlob || !newDishName.trim()) return;
