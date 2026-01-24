@@ -967,8 +967,29 @@ def get_dish_info(slug: str) -> dict:
 
 
 def get_dish_name(slug: str) -> str:
-    """Retorna o nome correto do prato"""
-    return DISH_NAMES.get(slug, format_dish_name_fallback(slug))
+    """Retorna o nome correto do prato lendo do dish_info.json"""
+    import os
+    import json
+    
+    # Primeiro tenta do dicionário em memória
+    if slug in DISH_NAMES:
+        return DISH_NAMES[slug]
+    
+    # Se não encontrar, tenta ler do dish_info.json
+    info_path = f"/app/datasets/organized/{slug}/dish_info.json"
+    if os.path.exists(info_path):
+        try:
+            with open(info_path, 'r', encoding='utf-8') as f:
+                info = json.load(f)
+                nome = info.get('nome', '')
+                if nome:
+                    # Cachear para próximas consultas
+                    DISH_NAMES[slug] = nome
+                    return nome
+        except:
+            pass
+    
+    return format_dish_name_fallback(slug)
 
 
 def format_dish_name_fallback(slug: str) -> str:
