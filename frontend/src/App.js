@@ -1205,7 +1205,16 @@ function App() {
                   }}>
                     ✅ Sim, correto
                   </button>
-                  <button className="fb-btn incorrect" onClick={() => setShowMultiCorrection(true)}>
+                  <button className="fb-btn incorrect" onClick={() => {
+                    // Pré-preencher com o que a IA identificou
+                    const principalNome = principal?.nome || '';
+                    const acompNomes = acompanhamentos.map(a => a.nome).join(', ');
+                    setMultiCorrections({
+                      principal: principalNome,
+                      acompanhamentos: acompNomes
+                    });
+                    setShowMultiCorrection(true);
+                  }}>
                     ❌ Não, corrigir
                   </button>
                 </div>
