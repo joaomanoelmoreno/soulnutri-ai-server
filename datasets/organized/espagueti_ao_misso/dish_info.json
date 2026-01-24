@@ -1,0 +1,27 @@
+{
+  "nome": "Espaguete ao Missô",
+  "slug": "espagueti_ao_misso",
+  "categoria": "vegano",
+  "category_emoji": "🍝",
+  "descricao": "Espaguete com molho de missô japonês",
+  "ingredientes": [
+    "espaguete",
+    "pasta de missô",
+    "legumes",
+    "cebolinha",
+    "gergelim"
+  ],
+  "beneficios": [
+    "Proteínas de alta qualidade",
+    "Rico em nutrientes"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~15g",
+    "carboidratos": "~10g",
+    "gorduras": "~10g"
+  },
+  "contem_gluten": false
+}

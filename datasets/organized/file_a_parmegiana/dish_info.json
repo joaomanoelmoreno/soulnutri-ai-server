@@ -1,0 +1,26 @@
+{
+  "nome": "Filé à Parmegiana",
+  "slug": "file_a_parmegiana",
+  "categoria": "proteína animal",
+  "category_emoji": "🥩",
+  "descricao": "Filé empanado gratinado com molho de tomate e queijo",
+  "ingredientes": [
+    "filé bovino",
+    "queijo parmesão",
+    "molho de tomate",
+    "presunto"
+  ],
+  "beneficios": [
+    "Proteínas de alta qualidade",
+    "Rico em nutrientes"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~15g",
+    "carboidratos": "~10g",
+    "gorduras": "~10g"
+  },
+  "contem_gluten": false
+}

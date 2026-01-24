@@ -1,0 +1,27 @@
+{
+  "nome": "Filé de Peixe em Manteiga de Tomates",
+  "slug": "file_de_peixe_em_manteiga_de_tomates",
+  "categoria": "proteína animal",
+  "category_emoji": "🐟",
+  "descricao": "Filé de peixe preparado com manteiga aromatizada e tomates frescos",
+  "ingredientes": [
+    "filé de peixe",
+    "manteiga",
+    "tomates",
+    "alho",
+    "ervas"
+  ],
+  "beneficios": [
+    "Proteínas de alta qualidade",
+    "Rico em nutrientes"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~15g",
+    "carboidratos": "~10g",
+    "gorduras": "~10g"
+  },
+  "contem_gluten": false
+}

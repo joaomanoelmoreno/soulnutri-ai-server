@@ -1,0 +1,26 @@
+{
+  "nome": "Alho-poró Gratinado Vegano",
+  "slug": "alhoporogratinadovegano",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Alho-poró gratinado com creme vegano",
+  "ingredientes": [
+    "alho-poró",
+    "creme vegano",
+    "farinha de rosca",
+    "azeite"
+  ],
+  "beneficios": [
+    "Proteínas de alta qualidade",
+    "Rico em nutrientes"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~15g",
+    "carboidratos": "~10g",
+    "gorduras": "~10g"
+  },
+  "contem_gluten": false
+}
