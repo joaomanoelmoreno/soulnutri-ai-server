@@ -26,6 +26,8 @@ function App() {
   const [multiResult, setMultiResult] = useState(null);
   const [cameraError, setCameraError] = useState(null);
   const [previewImageUrl, setPreviewImageUrl] = useState(null); // Preview da imagem selecionada
+  const [showMultiCorrection, setShowMultiCorrection] = useState(false); // Modal correção multi
+  const [multiCorrections, setMultiCorrections] = useState({ principal: '', acompanhamentos: '' }); // Correções
   // Premium states
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
   const [premiumUser, setPremiumUser] = useState(null);
