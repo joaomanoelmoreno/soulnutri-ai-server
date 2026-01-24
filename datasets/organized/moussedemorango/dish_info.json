@@ -1,18 +1,30 @@
 {
   "nome": "Moussedemorango",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Morangos frescos",
+    "Creme de leite",
+    "Leite condensado",
+    "Claras de ovo (possivelmente)",
+    "Geleia de morango (possivelmente)",
+    "Açúcar (possivelmente)"
+  ],
+  "descricao": "Sobremesa cremosa, possivelmente preparada com morangos frescos, creme de leite, leite condensado, e claras de ovos, resultando em uma textura leve e areada. Apresenta pedaços de morango e possivelmente é decorado com mais morangos frescos.",
+  "beneficios": [
+    "Morango: Rico em vitamina C, antioxidantes e fibras, que auxiliam na saúde da pele, sistema imunológico e digestão.",
+    "Creme de leite: Fonte de gorduras que auxiliam na absorção de vitaminas lipossolúveis (A, D, E e K)."
+  ],
+  "riscos": [
+    "Alto teor de açúcar devido ao leite condensado e possivelmente açúcar adicional.",
+    "Alto teor de gordura saturada proveniente do creme de leite, que, em excesso, pode aumentar o colesterol.",
+    "Alérgeno: leite"
+  ],
+  "curiosidade": "O morango é uma fruta com baixo teor calórico e alta concentração de nutrientes, sendo uma ótima opção para incluir em dietas equilibradas.",
   "slug": "moussedemorango",
-  "categoria": "sobremesa",
-  "category_emoji": "🍰",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,27 @@
 {
   "nome": "Puredemandioquinha",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Mandioquinha",
+    "Leite de coco",
+    "Sal"
+  ],
+  "descricao": "Purê cremoso de mandioquinha cozida, possivelmente amassada e misturada com leite de coco para dar cremosidade e sabor adocicado. O sal é utilizado para realçar os sabores.",
+  "beneficios": [
+    "Fonte de carboidratos complexos, fornecendo energia de forma gradual.",
+    "A mandioquinha é rica em fibras, auxiliando na saúde digestiva.",
+    "O leite de coco adiciona gorduras saudáveis, que contribuem para a saciedade e a absorção de nutrientes."
+  ],
+  "riscos": [
+    "Pode conter sódio, dependendo da quantidade de sal adicionada.",
+    "Pessoas com alergia ou intolerância ao coco devem evitar."
+  ],
+  "curiosidade": "A mandioquinha, também conhecida como batata baroa, é um tubérculo nativo da América do Sul, rico em vitaminas e minerais.",
   "slug": "puredemandioquinha",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

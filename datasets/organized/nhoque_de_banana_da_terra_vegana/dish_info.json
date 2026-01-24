@@ -1,18 +1,29 @@
 {
   "nome": "Nhoque De Banana Da Terra Vegana",
-  "slug": "nhoque_de_banana_da_terra_vegana",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Banana da terra",
+    "Molho de tomate",
+    "Salsa picada",
+    "Acompanhamento similar a queijo ralado vegano",
+    "Macarrão tipo cabelo de anjo"
+  ],
+  "descricao": "Nhoque de banana da terra cozido e servido em molho de tomate, acompanhado de 'queijo' ralado vegano e fios de macarrão.",
+  "beneficios": [
+    "A banana da terra é rica em fibras, promovendo a saúde digestiva.",
+    "O molho de tomate fornece licopeno, um antioxidante benéfico.",
+    "Opção vegana, livre de colesterol e rica em nutrientes vegetais."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo da receita do nhoque ou do 'queijo' vegano.",
+    "Alérgenos podem estar presentes nos ingredientes do nhoque ou no 'queijo' vegano."
+  ],
+  "curiosidade": "A banana da terra, quando cozida, adquire uma textura mais firme e um sabor adocicado, tornando-a um ingrediente versátil para pratos doces e salgados.",
+  "slug": "nhoque_de_banana_da_terra_vegana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,24 +1,30 @@
 {
   "nome": "Pastel de carne",
-  "slug": "pastel_de_carne",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Pastéis com recheio salgado ou doce.",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "massa",
-    "recheio"
+    "Massa de pastel (farinha de trigo, água, sal, gordura vegetal)",
+    "Carne moída",
+    "Temperos (cebola, alho, cheiro verde)",
+    "Ovo (para empanar)",
+    "Óleo vegetal (para fritar)"
   ],
-  "beneficios": [],
+  "descricao": "Pastéis fritos, com massa crocante e recheio de carne moída temperada. A massa é preparada com farinha de trigo, água, sal e gordura vegetal. O recheio é geralmente feito com carne moída, cebola, alho, cheiro verde e outros temperos a gosto. São fritos em óleo vegetal até dourar.",
+  "beneficios": [
+    "A carne bovina é fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
+    "Os temperos como cebola e alho possuem propriedades antioxidantes e anti-inflamatórias."
+  ],
   "riscos": [
-    "Alérgeno: Glúten",
-    "Alérgeno: GLÚTEN (massa)"
+    "Alto teor de gordura devido à fritura.",
+    "Contém glúten (na massa).",
+    "Pode conter alto teor de sódio.",
+    "Calorias podem ser elevadas."
   ],
-  "tecnica": "",
+  "curiosidade": "O pastel é um salgado popular no Brasil, com origem possivelmente na culinária chinesa, mas adaptado com ingredientes locais.",
+  "slug": "pastel_de_carne",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

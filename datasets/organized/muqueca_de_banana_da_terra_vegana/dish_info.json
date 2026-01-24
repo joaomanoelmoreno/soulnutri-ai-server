@@ -1,28 +1,35 @@
 {
   "nome": "Muqueca de banana da terra vegana",
-  "slug": "muqueca_de_banana_da_terra_vegana",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Prato cremoso com banana da terra cozida em molho com legumes, possivelmente com leite de coco.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Banana da Terra",
-    "Pimentão",
+    "Banana da terra",
+    "Pimentão amarelo",
+    "Pimentão vermelho",
+    "Pimentão verde",
     "Cebola",
-    "Leite de Coco",
-    "Coentro",
-    "Azeite de Dende"
+    "Leite de coco",
+    "Azeite de oliva",
+    "Coentro fresco picado",
+    "Tempeiros (alho, sal, pimenta do reino)"
   ],
-  "beneficios": [],
+  "descricao": "A moqueca é um prato cozido, geralmente em panela de barro. Neste caso, a banana da terra é a estrela, cozida em um molho cremoso à base de leite de coco, com pimentões coloridos e cebola. O coentro fresco finaliza o prato. O azeite de oliva é usado para refogar os vegetais e dar sabor.",
+  "beneficios": [
+    "A banana da terra é rica em fibras, promovendo a saciedade e a saúde digestiva.",
+    "O pimentão é fonte de vitamina C e antioxidantes, que combatem os radicais livres.",
+    "O leite de coco oferece gorduras saudáveis e um sabor adocicado.",
+    "A ausência de ingredientes de origem animal torna este prato leve e de fácil digestão."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter traços de leite de coco ou outros ingredientes.",
-    "Alérgeno: LACTOSE (leite)"
+    "Pode conter traços de glúten, dependendo dos temperos utilizados.",
+    "Alérgenos: nenhum identificado.",
+    "Intolerância: pode causar desconforto em pessoas sensíveis ao coco ou a alguns legumes."
   ],
-  "tecnica": "",
+  "curiosidade": "A moqueca é um prato de origem africana, com forte influência indígena e portuguesa, e ganhou diversas variações regionais no Brasil.",
+  "slug": "muqueca_de_banana_da_terra_vegana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

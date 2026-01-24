@@ -1,18 +1,28 @@
 {
   "nome": "Pepinocomiogurte",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Pepino",
+    "Morango",
+    "Iogurte",
+    "Hortelã"
+  ],
+  "descricao": "Prato simples e refrescante. O pepino é cortado em rodelas finas e misturado com morangos fatiados. Adiciona-se iogurte cremoso e folhas frescas de hortelã para finalizar.",
+  "beneficios": [
+    "Alto teor de água e fibras, auxiliando na hidratação e digestão",
+    "Rico em antioxidantes provenientes dos morangos",
+    "Probióticos do iogurte contribuem para a saúde intestinal"
+  ],
+  "riscos": [
+    "Intolerância à lactose (caso o iogurte contenha lactose)",
+    "Alérgeno: morango"
+  ],
+  "curiosidade": "O pepino é composto por cerca de 96% de água, tornando-o um alimento extremamente hidratante e com baixa caloria.",
   "slug": "pepinocomiogurte",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

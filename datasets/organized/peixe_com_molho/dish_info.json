@@ -1,18 +1,36 @@
 {
   "nome": "Peixe Com Molho",
-  "slug": "peixe_com_molho",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe grelhado com molho cremoso (possivelmente à base de queijo ou creme de leite)",
+    "Camarões grelhados",
+    "Lula grelhada",
+    "Brócolis refogado",
+    "Arroz branco cozido",
+    "Tomate cereja",
+    "Azeite de oliva",
+    "Ervas frescas (salsa ou manjericão)",
+    "Possível presença de alho e temperos diversos"
+  ],
+  "descricao": "Prato composto por filé de peixe grelhado com molho, camarões e lulas grelhadas, acompanhados de arroz branco e brócolis refogado. O peixe e frutos do mar parecem ter sido preparados com azeite de oliva e temperos. O molho do peixe pode conter ingredientes lácteos.",
+  "beneficios": [
+    "Fonte de proteínas de alta qualidade (peixe e frutos do mar).",
+    "Fornece ácidos graxos ômega-3 (peixe).",
+    "Rico em vitaminas e minerais (arroz e vegetais).",
+    "Oferece variedade de nutrientes através dos diferentes ingredientes."
+  ],
+  "riscos": [
+    "Contém lactose (se o molho for à base de ingredientes lácteos).",
+    "Alérgeno: crustáceos (camarão e lula).",
+    "Pode conter sódio em excesso, dependendo dos temperos utilizados.",
+    "A quantidade de gordura saturada pode ser alta, dependendo do molho."
+  ],
+  "curiosidade": "O camarão é rico em astaxantina, um antioxidante que dá a ele sua cor avermelhada e oferece benefícios para a saúde cardiovascular.",
+  "slug": "peixe_com_molho",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,31 @@
 {
   "nome": "Peixe Empanado",
-  "slug": "peixe_empanado",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe empanado (provavelmente farinha de trigo, ovo e temperos)",
+    "Camarão empanado",
+    "Massa folhada (possivelmente recheada)",
+    "Mix de folhas verdes (rúcula)",
+    "Tomate cereja",
+    "Pepino",
+    "Queijo branco"
+  ],
+  "descricao": "O prato consiste em filé de peixe empanado frito, camarões empanados, uma massa folhada (possivelmente um pastel), salada com folhas verdes, tomate cereja, pepino e queijo branco. O peixe e o camarão foram empanados e fritos, resultando em uma textura crocante. A salada adiciona frescor ao prato. A massa folhada parece ser recheada.",
+  "beneficios": [
+    "O peixe é fonte de proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
+    "A salada fornece vitaminas, minerais e fibras, essenciais para a saúde intestinal."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura dos alimentos.",
+    "Contém glúten (na farinha de trigo do empanado e da massa folhada).",
+    "Alérgeno: crustáceos (camarão)."
+  ],
+  "curiosidade": "O método de empanar alimentos como o peixe, além de dar uma textura crocante, ajuda a reter a umidade interna, deixando-o mais suculento.",
+  "slug": "peixe_empanado",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

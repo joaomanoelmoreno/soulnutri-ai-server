@@ -1,25 +1,33 @@
 {
   "nome": "Muqueca de banana da terra",
-  "slug": "muqueca_de_banana_da_terra",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Ensopado de legumes em molho cremoso.",
+  "categoria": "vegano",
   "ingredientes": [
-    "legumes",
-    "pimentão",
-    "molho cremoso",
-    "cebola"
+    "Banana da terra cozida",
+    "Tomate",
+    "Cebola",
+    "Azeite de dendê",
+    "Leite de coco",
+    "Coentro (possivelmente)",
+    "Pimentão vermelho (possivelmente)",
+    "Alho (possivelmente)"
   ],
-  "beneficios": [],
+  "descricao": "A moqueca de banana da terra é um prato cremoso e saboroso, com pedaços de banana da terra cozidos em um molho à base de azeite de dendê, leite de coco e legumes. Os ingredientes são cozidos em fogo baixo para que os sabores se misturem e a banana da terra fique macia. O prato geralmente não leva ingredientes de origem animal, tornando-o vegano.",
+  "beneficios": [
+    "A banana da terra é rica em fibras, que auxiliam na digestão e promovem a saciedade.",
+    "O azeite de dendê é fonte de gorduras saudáveis e antioxidantes.",
+    "O leite de coco adiciona cremosidade e sabor, além de ser fonte de nutrientes como potássio."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter leite ou derivados"
+    "Alergia ao coco (embora rara)",
+    "Pode conter alto teor de gordura, especialmente se preparado com muito azeite de dendê e leite de coco.",
+    "Ingredientes como tomate e cebola podem causar desconforto em pessoas com sensibilidade a esses alimentos."
   ],
-  "tecnica": "",
+  "curiosidade": "A banana da terra é uma fruta versátil, usada em pratos doces e salgados. Ela é rica em amido resistente, que funciona como um prebiótico, alimentando as bactérias boas do intestino.",
+  "slug": "muqueca_de_banana_da_terra",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": false
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

@@ -1,18 +1,34 @@
 {
   "nome": "Peixe Grelhado",
-  "slug": "peixe_grelhado",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe (grelhado)",
+    "Camarões (grelhados)",
+    "Lula (grelhada)",
+    "Brócolis",
+    "Tomate cereja",
+    "Arroz branco",
+    "Ervas (salsa/cebolinha?)",
+    "Azeite de oliva (possivelmente)",
+    "Temperos (sal, pimenta)"
+  ],
+  "descricao": "Prato composto por filé de peixe grelhado, camarões e lula também grelhados, acompanhados de arroz branco, brócolis cozido e tomate cereja. O peixe e os frutos do mar parecem ter sido temperados com ervas e possivelmente azeite de oliva antes de grelhar.",
+  "beneficios": [
+    "Fonte de proteínas de alta qualidade",
+    "Rico em ômega-3 (peixe)",
+    "Boa fonte de vitaminas e minerais (principalmente nos vegetais)"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarão)",
+    "Pode conter espinhas (peixe)",
+    "Sódio em excesso (dependendo da quantidade de sal)"
+  ],
+  "curiosidade": "O ômega-3 presente no peixe é essencial para a saúde do cérebro e coração, além de ter propriedades anti-inflamatórias.",
+  "slug": "peixe_grelhado",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

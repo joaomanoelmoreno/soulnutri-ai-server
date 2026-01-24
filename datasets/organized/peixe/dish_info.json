@@ -1,18 +1,32 @@
 {
   "nome": "Peixe",
-  "slug": "peixe",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Filé de peixe grelhado (não identificado)",
+    "Arroz branco cozido",
+    "Tomate cereja",
+    "Manga em cubos",
+    "Guacamole (abacate, cebola roxa, coentro, limão)",
+    "Batata doce assada",
+    "Cebola roxa",
+    "Maracujá",
+    "Pão em triângulos"
+  ],
+  "descricao": "Prato composto por filé de peixe grelhado, provavelmente temperado com ervas. Acompanhado por arroz branco cozido, manga em cubos, guacamole, batata doce assada, um molho à base de maracujá e cebola roxa, e pão.",
+  "beneficios": [
+    "Peixe: Rico em ômega-3, que contribui para a saúde cardiovascular e cerebral.",
+    "Guacamole: Fonte de gorduras saudáveis, fibras e antioxidantes."
+  ],
+  "riscos": [
+    "Alérgeno: Pode conter glúten dependendo do preparo do peixe e do pão.",
+    "Alergênicos: Pode conter traços de outros ingredientes dependendo do preparo."
+  ],
+  "curiosidade": "O maracujá, presente no molho, é rico em antioxidantes e auxilia na redução do estresse e ansiedade.",
+  "slug": "peixe",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

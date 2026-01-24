@@ -1,26 +1,28 @@
 {
   "nome": "Pastel",
-  "slug": "pastel",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "descricao": "Pastel de carne é uma opção saborosa e popular, geralmente recheado com carne moída temperada e outros ingredientes.",
   "ingredientes": [
-    "carne",
-    "massa",
-    "temperos"
+    "Massa de pastel (farinha de trigo, água, sal, gordura vegetal)",
+    "Carne moída",
+    "Temperos (cebola, alho, cheiro verde)",
+    "Ovo (possível ingrediente da massa)"
   ],
-  "beneficios": [],
+  "descricao": "Pastel frito, recheado com carne moída temperada. A massa é geralmente frita em óleo vegetal até dourar. O recheio de carne é cozido com temperos antes de ser colocado na massa.",
+  "beneficios": [
+    "A carne oferece proteína, essencial para a construção e reparação muscular.",
+    "Pode ser fonte de ferro, dependendo do corte da carne utilizada."
+  ],
   "riscos": [
-    "Alérgeno: Glúten (massa)",
-    "Alérgeno: Carne",
-    "Alérgeno: GLÚTEN (massa)"
+    "Alto teor de gordura devido à fritura, especialmente se for utilizada gordura hidrogenada.",
+    "Contém glúten, proveniente da farinha de trigo.",
+    "Alérgenos: glúten, pode conter traços de soja e ovo (se presentes na massa)"
   ],
-  "tecnica": "",
+  "curiosidade": "O pastel é um salgado popular no Brasil, com origem em diversas influências culturais, como a chinesa e a japonesa, onde os imigrantes adaptaram o preparo para utilizar ingredientes locais.",
+  "slug": "pastel",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

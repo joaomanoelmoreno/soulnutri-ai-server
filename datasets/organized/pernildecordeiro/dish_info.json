@@ -1,18 +1,30 @@
 {
   "nome": "Pernildecordeiro",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Pernil de cordeiro",
+    "Caldo de carne (provavelmente)",
+    "Ervas frescas picadas (salsinha ou cheiro verde)",
+    "Especiarias (possivelmente)",
+    "Cebola (provavelmente)"
+  ],
+  "descricao": "O prato consiste em pernil de cordeiro cozido em um caldo saboroso. A carne foi desfiada e está visivelmente macia. O caldo parece ser caseiro e enriquecido com ervas frescas picadas. Aparentemente, a receita é simples, focada na qualidade da carne e no sabor do caldo.",
+  "beneficios": [
+    "Rica fonte de proteína de alta qualidade, essencial para a construção e reparo de tecidos",
+    "Fornece ferro, importante para a prevenção da anemia",
+    "Contém zinco, que fortalece o sistema imunológico"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL",
+    "Pessoas com gota devem moderar o consumo devido ao teor de purinas",
+    "Possível presença de sódio em excesso, dependendo do caldo utilizado"
+  ],
+  "curiosidade": "O pernil de cordeiro é uma carne versátil, que pode ser preparada de diversas formas. No Brasil, o cordeiro é mais consumido em festas e ocasiões especiais.",
   "slug": "pernildecordeiro",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

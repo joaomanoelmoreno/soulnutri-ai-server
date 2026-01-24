@@ -1,23 +1,24 @@
 {
   "nome": "Pimenta biquinho",
-  "slug": "pimenta_biquinho",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Pimentas biquinho conservadas em vinagre e temperos, geralmente servidas como petisco.",
   "ingredientes": [
-    "Pimenta Biquinho",
-    "Vinagre",
-    "Azeite",
-    "Sal"
+    "Pimenta biquinho",
+    "Azeite de oliva",
+    "Alho",
+    "Vinagre"
   ],
-  "beneficios": [],
+  "descricao": "As pimentas biquinho, pequenas e arredondadas, são servidas conservadas em azeite, alho e vinagre. O preparo pode incluir um processo de cozimento leve para suavizar o sabor e facilitar a conservação.",
+  "beneficios": [
+    "Rica em antioxidantes, como a vitamina C, que protege as células contra danos.",
+    "Contém capsaicina, que pode auxiliar na redução da dor e inflamação."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A pimenta biquinho, apesar do nome, não possui ardência significativa, sendo apreciada pelo seu sabor adocicado e aroma suave.",
+  "slug": "pimenta_biquinho",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

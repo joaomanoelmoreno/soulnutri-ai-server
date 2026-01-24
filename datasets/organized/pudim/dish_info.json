@@ -1,18 +1,27 @@
 {
   "nome": "Pudim",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Leite",
+    "Ovos",
+    "Açúcar (caramelo)",
+    "Essência de baunilha (opcional)"
+  ],
+  "descricao": "Pudim de leite cremoso, preparado com uma base de ovos, leite e açúcar. O caramelo, feito com açúcar derretido, é colocado no fundo da forma antes do cozimento em banho-maria. Apresenta uma textura suave e um sabor adocicado característico.",
+  "beneficios": [
+    "Fonte de cálcio, proveniente do leite, essencial para a saúde óssea.",
+    "Rico em proteínas, fornecidas pelos ovos, importantes para a construção e reparação dos tecidos corporais."
+  ],
+  "riscos": [
+    "Alto teor de açúcar, o que pode contribuir para o ganho de peso e o aumento do risco de diabetes.",
+    "Contém lactose, o que pode ser um problema para pessoas com intolerância."
+  ],
+  "curiosidade": "O pudim tem origem na Roma Antiga, onde era feito com ovos, mel e leite. A versão moderna, com caramelo, se popularizou na França e se espalhou pelo mundo.",
   "slug": "pudim",
-  "categoria": "sobremesa",
-  "category_emoji": "🍰",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

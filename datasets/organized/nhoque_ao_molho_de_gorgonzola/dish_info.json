@@ -1,30 +1,31 @@
 {
   "nome": "Nhoque ao molho de gorgonzola",
-  "slug": "nhoque_ao_molho_de_gorgonzola",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Gnocchi cozido em molho cremoso.",
   "ingredientes": [
-    "Batata",
-    "Farinha",
-    "Ovo",
-    "Leite",
-    "Creme de Leite",
-    "Ervas"
+    "Nhoque (provavelmente feito com batata, farinha de trigo e ovo)",
+    "Queijo gorgonzola",
+    "Creme de leite",
+    "Queijo parmesão ralado (possivelmente)",
+    "Pimenta do reino",
+    "Sal",
+    "Ervas frescas (possivelmente)"
   ],
-  "beneficios": [],
+  "descricao": "O prato consiste em nhoque coberto por um molho cremoso à base de queijo gorgonzola. O molho é provavelmente preparado com creme de leite, o queijo gorgonzola e temperos. O nhoque parece ter sido cozido e então misturado ao molho.",
+  "beneficios": [
+    "O queijo gorgonzola é fonte de cálcio, importante para a saúde óssea.",
+    "O nhoque, dependendo da receita, pode ser fonte de carboidratos, fornecendo energia."
+  ],
   "riscos": [
-    "Alérgeno: Glúten, Lácteos, Ovos",
-    "Alérgeno: GLÚTEN (farinha)",
-    "Alérgeno: LACTOSE (leite, creme)",
-    "Alérgeno: OVO (ovo)"
+    "Alto teor de gordura saturada, devido ao creme de leite e ao queijo gorgonzola.",
+    "Contém glúten, caso o nhoque seja feito com farinha de trigo.",
+    "Alérgeno: leite e derivados, glúten e ovos (se o nhoque for feito com ovos)."
   ],
-  "tecnica": "",
+  "curiosidade": "O queijo gorgonzola, de origem italiana, é um queijo de mofo azul, conhecido por seu sabor forte e característico.",
+  "slug": "nhoque_ao_molho_de_gorgonzola",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

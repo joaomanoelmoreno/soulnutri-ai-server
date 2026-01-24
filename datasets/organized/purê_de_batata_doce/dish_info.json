@@ -1,28 +1,25 @@
 {
   "nome": "Purê de batata doce",
-  "slug": "purê_de_batata_doce",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Purê de batata cremoso, feito com batatas cozidas e amassadas, misturado com leite e manteiga.",
+  "categoria": "vegano",
   "ingredientes": [
-    "Batata",
-    "Leite",
-    "Manteiga",
-    "Sal"
+    "Batata doce",
+    "Água (provavelmente)",
+    "Sal (possivelmente)",
+    "Azeite de oliva (possivelmente)"
   ],
-  "beneficios": [],
-  "riscos": [
-    "Alérgeno: Leite",
-    "Alto índice glicêmico",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (leite, manteiga)"
+  "descricao": "Purê de batata doce com textura cremosa, aparentemente feito por cozimento e amassamento das batatas doces. A presença de ingredientes adicionais, como sal e azeite de oliva, é provável para temperar e dar cremosidade.",
+  "beneficios": [
+    "Rico em vitamina A, importante para a visão e imunidade.",
+    "Fonte de fibras, que auxiliam na digestão e promovem saciedade.",
+    "A batata doce tem baixo índice glicêmico, o que ajuda a controlar os níveis de açúcar no sangue."
   ],
-  "tecnica": "",
+  "riscos": [],
+  "curiosidade": "A batata doce, além de saborosa, é uma excelente fonte de energia de liberação lenta, ideal para quem busca um alimento que forneça energia por mais tempo.",
+  "slug": "purê_de_batata_doce",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }

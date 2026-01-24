@@ -1,28 +1,28 @@
 {
   "nome": "Mousse de maracujá",
-  "slug": "mousse_de_maracujá",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Uma fatia de torta de maracujá com uma cobertura cremosa e sementes de maracujá.",
   "ingredientes": [
-    "Maracujá",
+    "Maracujá (polpa e sementes)",
     "Creme de leite",
-    "Ovos",
-    "Açúcar"
+    "Leite condensado",
+    "Gelatina em pó sem sabor (opcional)"
   ],
-  "beneficios": [],
+  "descricao": "O mousse de maracujá é um doce cremoso e refrescante, preparado a partir da polpa do maracujá, misturada com creme de leite e leite condensado. A gelatina sem sabor é adicionada para dar consistência ao mousse. A receita tradicional não leva clara de ovo, sendo um doce vegetariano.",
+  "beneficios": [
+    "O maracujá é rico em antioxidantes, que combatem os radicais livres.",
+    "O maracujá possui propriedades calmantes, auxiliando no relaxamento e no combate à ansiedade.",
+    "O mousse, quando feito com ingredientes de qualidade e em porções adequadas, pode ser uma sobremesa saborosa e fonte de energia."
+  ],
   "riscos": [
-    "Alérgeno: Ovos, Laticínios",
-    "Alérgeno: GLÚTEN (torta)",
-    "Alérgeno: LACTOSE (leite, creme)",
-    "Alérgeno: OVO (ovo, ovos)"
+    "Alto teor de açúcar devido ao leite condensado.",
+    "O consumo em excesso pode levar ao ganho de peso."
   ],
-  "tecnica": "",
+  "curiosidade": "O maracujá é uma fruta nativa do Brasil e seu nome vem do tupi-guarani, que significa 'alimento que se come na cuia' devido à forma como a polpa é consumida.",
+  "slug": "mousse_de_maracujá",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "contem_gluten": true
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
 }
