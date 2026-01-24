@@ -163,9 +163,9 @@ async def identify_multi_hybrid_v2(image_bytes: bytes) -> dict:
         logger.info(f"[HÍBRIDO v2] Após zoom: {len(identified_items)} itens")
         
         # ═══════════════════════════════════════════════════════════════════
-        # PASSO 3: Busca por QUADRANTES (itens nas bordas/cantos)
+        # PASSO 3: Busca por REGIÕES (itens nas bordas/cantos)
         # ═══════════════════════════════════════════════════════════════════
-        logger.info("[HÍBRIDO v2] Buscando por quadrantes...")
+        logger.info("[HÍBRIDO v2] Buscando por regiões...")
         quadrants = extract_quadrants(image_bytes)
         
         for i, quad_bytes in enumerate(quadrants):
@@ -175,18 +175,18 @@ async def identify_multi_hybrid_v2(image_bytes: bytes) -> dict:
                 slug = result['dish']
                 score = result['score']
                 
-                # Threshold de 0.65 para quadrantes
-                if score >= 0.65:
+                # Threshold de 0.55 para regiões
+                if score >= 0.55:
                     if slug not in identified_items or score > identified_items[slug]['score']:
                         identified_items[slug] = {
                             'nome': normalize_dish_name(slug),
                             'slug': slug,
                             'score': score,
                             'categoria': get_category(slug),
-                            'source': f'local_quad_{i}'
+                            'source': f'local_region_{i}'
                         }
         
-        logger.info(f"[HÍBRIDO v2] Após quadrantes: {len(identified_items)} itens")
+        logger.info(f"[HÍBRIDO v2] Após regiões: {len(identified_items)} itens")
         
         # ═══════════════════════════════════════════════════════════════════
         # PASSO 4: Ordenar por score e separar principal de acompanhamentos
