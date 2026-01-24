@@ -1,18 +1,29 @@
 {
   "nome": "Arrozcombrócoliseamêndoas",
-  "slug": "unknownarrozcombrócoliseamêndoas",
   "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Arroz integral cozido",
+    "Brócolis cozido",
+    "Amêndoas laminadas",
+    "Azeite de oliva (possivelmente)",
+    "Temperos (sal, pimenta, etc.)"
+  ],
+  "descricao": "Prato simples e nutritivo, o arroz integral é cozido e misturado com brócolis também cozido e amêndoas laminadas torradas, tudo finalizado com azeite e temperos.",
+  "beneficios": [
+    "Arroz integral é rico em fibras, auxiliando na digestão e controle glicêmico.",
+    "Brócolis é fonte de vitaminas C e K, além de antioxidantes que combatem radicais livres.",
+    "Amêndoas fornecem gorduras saudáveis, vitamina E e minerais."
+  ],
+  "riscos": [
+    "Pode conter traços de glúten, dependendo do processamento do arroz.",
+    "Alérgeno: amêndoas"
+  ],
+  "curiosidade": "As amêndoas são ricas em vitamina E, um antioxidante que protege as células do corpo contra danos.",
+  "slug": "unknownarrozcombrócoliseamêndoas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

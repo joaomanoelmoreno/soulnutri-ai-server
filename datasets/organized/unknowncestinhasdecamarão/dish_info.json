@@ -1,18 +1,28 @@
 {
   "nome": "Cestinhasdecamarão",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Camarão",
+    "Massa filo",
+    "Recheio cremoso (possivelmente queijo, ovos e outros ingredientes)",
+    "Azeite (para untar e/ou finalização)"
+  ],
+  "descricao": "Cestinhas feitas com massa filo, recheadas com um creme que contém camarão e outros ingredientes (possivelmente queijo, ovos, temperos). A massa filo é assada ou frita até ficar crocante. Apresenta uma aparência dourada e convidativa.",
+  "beneficios": [
+    "Fonte de proteína do camarão, essencial para a construção e reparo dos tecidos do corpo.",
+    "A massa filo, se integral, pode fornecer fibras, importantes para a saúde intestinal."
+  ],
+  "riscos": [
+    "Contém glúten (na massa filo)",
+    "Alérgeno: crustáceos (camarão)",
+    "Pode conter lactose (se houver queijo no recheio)"
+  ],
+  "curiosidade": "A massa filo é uma massa muito fina e delicada, originária da culinária do Oriente Médio e Mediterrâneo. É conhecida por sua textura crocante após ser assada.",
   "slug": "unknowncestinhasdecamarão",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

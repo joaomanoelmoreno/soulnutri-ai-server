@@ -1,18 +1,36 @@
 {
   "nome": "Bacalhauàportuguesa",
-  "slug": "unknownbacalhauàportuguesa",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Bacalhau dessalgado",
+    "Batatas",
+    "Cebola",
+    "Alho",
+    "Pimentão vermelho",
+    "Azeite de oliva",
+    "Azeitonas pretas",
+    "Folhas de louro",
+    "Brócolis",
+    "Salsa picada (possivelmente)",
+    "Ovo cozido (possivelmente)"
+  ],
+  "descricao": "Prato tradicional português com lascas de bacalhau cozidas, refogadas com batatas, cebola, alho, pimentão vermelho, azeite de oliva e temperos. Azeitonas pretas e folhas de louro são geralmente adicionadas para sabor. A imagem sugere também a presença de brócolis, adicionando um toque de vegetal. A receita pode, opcionalmente, conter ovo cozido.",
+  "beneficios": [
+    "Fonte de proteínas de alta qualidade provenientes do bacalhau.",
+    "Rico em ômega-3, benéfico para a saúde cardiovascular.",
+    "Batatas fornecem carboidratos, importantes para energia."
+  ],
+  "riscos": [
+    "Alto teor de sódio devido ao bacalhau (mesmo dessalgado).",
+    "Pode conter alto teor de gordura, dependendo da quantidade de azeite utilizada.",
+    "Alérgeno: peixe."
+  ],
+  "curiosidade": "O bacalhau, apesar de ser um peixe de águas frias do Atlântico Norte, é um ingrediente muito popular na culinária portuguesa, sendo consumido de diversas formas.",
+  "slug": "unknownbacalhauàportuguesa",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

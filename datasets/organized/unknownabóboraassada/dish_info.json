@@ -1,18 +1,29 @@
 {
   "nome": "Abóboraassada",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Abóbora (possivelmente cabotiá)",
+    "Azeite de oliva",
+    "Pimenta dedo-de-moça (fresca)",
+    "Ervas frescas (salsinha ou afins)",
+    "Sal e temperos a gosto"
+  ],
+  "descricao": "Fatias de abóbora assadas, possivelmente no forno ou air fryer, temperadas com azeite de oliva, sal, pimenta e ervas frescas. A abóbora apresenta uma textura macia por dentro e levemente caramelizada por fora. A pimenta dedo-de-moça adiciona um toque picante.",
+  "beneficios": [
+    "Rica em vitamina A, importante para a visão e imunidade.",
+    "Fonte de fibras, auxiliando na digestão e controle glicêmico.",
+    "O azeite de oliva contribui com gorduras saudáveis e antioxidantes."
+  ],
+  "riscos": [
+    "Pode conter traços de glúten, dependendo do preparo e temperos utilizados.",
+    "Alérgeno: pimenta (pode causar irritação em pessoas sensíveis)."
+  ],
+  "curiosidade": "A abóbora cabotiá é rica em antioxidantes, como carotenoides, que combatem os radicais livres e protegem as células do corpo.",
   "slug": "unknownabóboraassada",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

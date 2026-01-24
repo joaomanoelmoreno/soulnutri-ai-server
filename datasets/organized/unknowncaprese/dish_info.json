@@ -1,0 +1,29 @@
+{
+  "nome": "Unknowncaprese",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Tomate cereja",
+    "Queijo mussarela",
+    "Folhas de manjericão fresco",
+    "Azeite de oliva",
+    "Palitos de dente"
+  ],
+  "descricao": "Mini caprese, consistindo em tomates cereja, pedaços de queijo mussarela e folhas de manjericão fresco, presos em palitos de dente. O prato é finalizado com azeite de oliva. Os ingredientes são cortados e montados em camadas.",
+  "beneficios": [
+    "O tomate cereja é rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
+    "O manjericão fresco possui propriedades anti-inflamatórias e antioxidantes.",
+    "O queijo mussarela é fonte de cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Intolerância à lactose (se a mussarela for feita com leite de vaca).",
+    "Alérgeno: leite."
+  ],
+  "curiosidade": "O nome 'Caprese' vem da ilha de Capri, Itália, onde a salada caprese tradicional teria se originado.",
+  "slug": "unknowncaprese",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

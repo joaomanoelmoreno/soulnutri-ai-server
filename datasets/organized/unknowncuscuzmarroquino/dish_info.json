@@ -1,18 +1,29 @@
 {
   "nome": "Cuscuzmarroquino",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cuscuz marroquino",
+    "Tomate cereja assado",
+    "Hortelã fresca",
+    "Amêndoas laminadas",
+    "Temperos (provavelmente açafrão ou cúrcuma)"
+  ],
+  "descricao": "O prato consiste em cuscuz marroquino soltinho, temperado com especiarias (possivelmente açafrão ou cúrcuma), amêndoas laminadas, tomates cereja assados e folhas de hortelã fresca para decorar. O preparo do cuscuz provavelmente envolve a hidratação da sêmola e o cozimento a vapor, seguido da mistura com os demais ingredientes.",
+  "beneficios": [
+    "Fonte de carboidratos complexos, fornecendo energia de forma gradual.",
+    "As amêndoas são ricas em gorduras saudáveis, vitamina E e magnésio.",
+    "A hortelã auxilia na digestão e possui propriedades antioxidantes."
+  ],
+  "riscos": [
+    "Contém glúten, caso o cuscuz não seja de milho ou outro grão sem glúten.",
+    "Potenciais alergênicos: amêndoas (frutos secos)."
+  ],
+  "curiosidade": "O cuscuz marroquino é uma sêmola de trigo duro, um alimento básico no Norte da África, frequentemente consumido com legumes, carnes e peixes. No Brasil, ele ganhou diversas versões, incluindo preparos veganos e vegetarianos.",
   "slug": "unknowncuscuzmarroquino",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

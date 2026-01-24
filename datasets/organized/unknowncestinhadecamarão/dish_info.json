@@ -1,0 +1,29 @@
+{
+  "nome": "Unknowncestinhadecamarão",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Camarão",
+    "Massa folhada (possivelmente filo)",
+    "Recheio cremoso (possivelmente à base de queijo)",
+    "Tempero verde (salsa ou cebolinha)"
+  ],
+  "descricao": "Cestinhas individuais feitas com massa folhada, recheadas com camarão e um creme que aparenta conter queijo. Apresentam um aspecto dourado e crocante, indicando que foram assadas ou gratinadas. O tempero verde adiciona frescor ao prato.",
+  "beneficios": [
+    "Camarão é fonte de proteína e selênio, um antioxidante importante.",
+    "A massa folhada, dependendo da receita, pode ser fonte de carboidratos."
+  ],
+  "riscos": [
+    "Contém lactose (conforme informação na imagem).",
+    "Alérgeno: crustáceos (camarão).",
+    "A massa folhada pode conter glúten.",
+    "Alto teor de gordura, dependendo da quantidade de gordura na massa folhada e no creme."
+  ],
+  "curiosidade": "O camarão é uma boa fonte de ômega-3, um tipo de gordura que é benéfica para a saúde cardiovascular.",
+  "slug": "unknowncestinhadecamarão",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

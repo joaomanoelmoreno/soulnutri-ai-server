@@ -1,18 +1,24 @@
 {
   "nome": "Brownieemelancia",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Brownie",
+    "Melancia"
+  ],
+  "descricao": "Prato composto por brownie e pedaços de melancia. O brownie, que parece ser caseiro, possui uma cobertura de creme.",
+  "beneficios": [
+    "A melancia é rica em água, contribuindo para a hidratação e contém licopeno, um antioxidante.",
+    "O brownie, dependendo da receita, pode oferecer energia e prazer."
+  ],
+  "riscos": [
+    "Alergênicos: Pode conter glúten, leite, ovos ou oleaginosas no brownie."
+  ],
+  "curiosidade": "A melancia é uma fruta com baixo teor calórico e rica em vitaminas e minerais.",
   "slug": "unknownbrownieemelancia",
-  "categoria": "sobremesa",
-  "category_emoji": "🍰",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,28 @@
 {
   "nome": "Almôndegasaomolhodeespeciariasindianas",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Almôndegas (provavelmente carne bovina ou mista)",
+    "Molho cremoso à base de especiarias indianas (cúrcuma, cominho, coentro, etc.)",
+    "Raspas de limão (ornamento)"
+  ],
+  "descricao": "Almôndegas cozidas em um molho cremoso e aromático, com temperos indianos, decoradas com raspas de limão. O molho provavelmente foi feito a partir de uma base de leite de coco ou creme de leite, o que lhe dá uma textura rica e cremosa.",
+  "beneficios": [
+    "A carne vermelha (se for o caso) é rica em ferro, essencial para a saúde sanguínea.",
+    "As especiarias indianas possuem propriedades anti-inflamatórias e antioxidantes.",
+    "A presença de raspas de limão adiciona vitamina C e um toque cítrico refrescante."
+  ],
+  "riscos": [
+    "Contém lactose (se o molho tiver creme de leite ou similar)",
+    "Potencialmente alto teor de sódio (dependendo dos temperos e condimentos)",
+    "Alérgeno: pode conter glúten (se as almôndegas tiverem farinha)"
+  ],
+  "curiosidade": "A combinação de almôndegas com especiarias indianas demonstra a versatilidade da culinária, que adapta e mistura sabores de diferentes culturas. As especiarias indianas, além do sabor, oferecem benefícios à saúde, como a curcumina da cúrcuma, conhecida por suas propriedades anti-inflamatórias.",
   "slug": "unknownalmôndegasaomolhodeespeciariasindianas",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

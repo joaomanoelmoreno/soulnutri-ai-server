@@ -1,0 +1,31 @@
+{
+  "nome": "Unknownazeitonasverdes",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Azeitonas verdes",
+    "Azeitonas pretas",
+    "Tomate picado",
+    "Grãos (não especificados)",
+    "Líquido de conservação das azeitonas (salmoura, azeite ou vinagre)"
+  ],
+  "descricao": "O prato apresenta uma variedade de azeitonas verdes e pretas, possivelmente conservadas em salmoura, azeite ou vinagre.  Complementam a seleção tomate picado e grãos (não identificados na imagem).",
+  "beneficios": [
+    "As azeitonas são ricas em gorduras monoinsaturadas, benéficas para a saúde cardiovascular.",
+    "Fonte de antioxidantes, como a vitamina E, que ajudam a proteger as células do corpo contra danos.",
+    "O tomate é fonte de licopeno, um antioxidante associado à redução do risco de certos tipos de câncer.",
+    "Grãos adicionam nutrientes importantes, dependendo do tipo."
+  ],
+  "riscos": [
+    "As azeitonas podem ser ricas em sódio, dependendo do método de conservação. Consumir com moderação por pessoas com restrição de sódio.",
+    "Possível presença de conservantes nos produtos.",
+    "Alérgenos: verificar a presença de outros ingredientes no conservante (ex: mostarda)."
+  ],
+  "curiosidade": "As azeitonas são o fruto da oliveira e a cor da azeitona (verde ou preta) depende do grau de maturação no momento da colheita.",
+  "slug": "unknownazeitonasverdes",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

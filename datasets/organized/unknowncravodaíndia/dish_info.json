@@ -1,18 +1,25 @@
 {
   "nome": "Cravodaíndia",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cravo-da-Índia (Syzygium aromaticum)"
+  ],
+  "descricao": "O cravo-da-Índia é uma especiaria obtida dos botões florais secos da árvore Syzygium aromaticum. É comumente utilizado como especiaria em culinária, em preparos doces e salgados, e na produção de óleos essenciais.",
+  "beneficios": [
+    "Rico em antioxidantes, como eugenol, que combate os radicais livres.",
+    "Pode ter propriedades anti-inflamatórias.",
+    "Pode auxiliar no controle do açúcar no sangue."
+  ],
+  "riscos": [
+    "Pode causar reações alérgicas em algumas pessoas.",
+    "Em excesso, o eugenol pode ser tóxico."
+  ],
+  "curiosidade": "O cravo-da-Índia é nativo das Ilhas Molucas, na Indonésia, e foi uma especiaria muito valiosa durante séculos, sendo objeto de comércio e disputa.",
   "slug": "unknowncravodaíndia",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

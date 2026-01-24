@@ -1,18 +1,28 @@
 {
   "nome": "Couveflorgratinada",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Couve-flor cozida",
+    "Molho branco (leite, farinha de trigo, manteiga)",
+    "Queijo ralado (possivelmente queijo mussarela ou parmesão)",
+    "Temperos (sal, pimenta do reino)"
+  ],
+  "descricao": "A couve-flor, possivelmente cozida, é misturada com molho branco cremoso e coberta com queijo ralado, levando ao forno para gratinar.",
+  "beneficios": [
+    "A couve-flor é rica em fibras, promovendo a saúde digestiva.",
+    "O queijo oferece cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Contém glúten (na farinha do molho branco).",
+    "Rico em gorduras saturadas (manteiga e queijo), dependendo da quantidade.",
+    "Pode ter alto teor de sódio, dependendo dos temperos e do queijo utilizado."
+  ],
+  "curiosidade": "A couve-flor pertence à família das Brassicaceae, a mesma do brócolis e da couve, e é uma excelente fonte de vitamina C e antioxidantes.",
   "slug": "unknowncouveflorgratinada",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

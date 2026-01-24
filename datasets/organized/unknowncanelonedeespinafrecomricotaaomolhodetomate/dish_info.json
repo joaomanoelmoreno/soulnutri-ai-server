@@ -1,18 +1,30 @@
 {
   "nome": "Canelonedeespinafrecomricotaaomolhodetomate",
-  "slug": "unknowncanelonedeespinafrecomricotaaomolhodetomate",
   "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Massa de canelone (provavelmente à base de trigo)",
+    "Espinafre",
+    "Ricota",
+    "Molho de tomate",
+    "Queijo (gratinado)"
+  ],
+  "descricao": "Canelones recheados com espinafre e ricota, cobertos com molho de tomate e gratinados com queijo. O prato é assado em forno.",
+  "beneficios": [
+    "Espinafre: rico em ferro, vitaminas A e C, e antioxidantes.",
+    "Ricota: fonte de proteína e cálcio.",
+    "Molho de tomate: rico em licopeno, um antioxidante."
+  ],
+  "riscos": [
+    "Contém glúten (na massa do canelone)",
+    "Alto teor de gordura (devido ao queijo)",
+    "Pode conter lactose (na ricota e/ou queijo)"
+  ],
+  "curiosidade": "O espinafre é uma excelente fonte de vitamina K, essencial para a coagulação sanguínea e a saúde óssea.",
+  "slug": "unknowncanelonedeespinafrecomricotaaomolhodetomate",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

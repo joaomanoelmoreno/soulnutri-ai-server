@@ -1,18 +1,30 @@
 {
   "nome": "Atumcomgergelimemolhotare",
-  "slug": "unknownatumcomgergelimemolhotare",
   "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Atum",
+    "Sementes de gergelim (preto e branco)",
+    "Molho tarê",
+    "Maionese (para decoração)",
+    "Tomate (fatiado)"
+  ],
+  "descricao": "O prato consiste em fatias de atum seladas em sementes de gergelim, servidas com molho tarê e decoração de maionese. Ao lado, fatias de tomate fresco. O atum parece ter sido selado rapidamente para manter seu interior rosado e suculento.",
+  "beneficios": [
+    "O atum é rico em ômega-3, importante para a saúde cardiovascular.",
+    "O gergelim fornece cálcio e antioxidantes.",
+    "O tomate é fonte de licopeno, um antioxidante que pode ajudar a proteger contra certos tipos de câncer."
+  ],
+  "riscos": [
+    "O atum pode conter mercúrio, por isso, o consumo deve ser moderado, especialmente por mulheres grávidas e crianças.",
+    "Contém glúten (verificar se o molho tarê é feito com shoyu, que contém glúten).",
+    "Alérgeno: peixe, gergelim e, possivelmente, soja (no molho tarê)."
+  ],
+  "curiosidade": "O molho tarê, tradicional na culinária japonesa, é feito à base de shoyu, açúcar e mirin (um tipo de sake doce), resultando em um sabor adocicado e levemente salgado.",
+  "slug": "unknownatumcomgergelimemolhotare",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,30 @@
 {
   "nome": "Cevichedemanga",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Manga madura em cubos",
+    "Cebola roxa fatiada",
+    "Pimenta dedo-de-moça picada",
+    "Coentro picado",
+    "Hortelã fresca",
+    "Suco de limão (possivelmente)",
+    "Azeite (possivelmente)"
+  ],
+  "descricao": "Ceviche de manga preparado com manga madura em cubos, cebola roxa fatiada, pimenta dedo-de-moça picada, coentro picado e hortelã fresca. Aparentemente marinado em um molho cítrico, possivelmente com suco de limão e azeite.",
+  "beneficios": [
+    "Rico em vitamina C da manga e limão, importante para a imunidade.",
+    "Fonte de antioxidantes e compostos anti-inflamatórios da cebola roxa e pimenta."
+  ],
+  "riscos": [
+    "Pimenta pode causar irritação em pessoas sensíveis.",
+    "Pode conter alto teor de açúcar, dependendo da maturação da manga."
+  ],
+  "curiosidade": "A manga é uma fruta tropical rica em fibras e antioxidantes, além de ser uma excelente fonte de vitamina A e vitamina C.",
   "slug": "unknowncevichedemanga",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

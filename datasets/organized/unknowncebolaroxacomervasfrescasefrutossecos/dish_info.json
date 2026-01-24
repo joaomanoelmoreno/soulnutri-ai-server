@@ -1,18 +1,29 @@
 {
   "nome": "Cebolaroxacomervasfrescasefrutossecos",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cebolas roxas",
+    "Ervas frescas picadas (salsa, cebolinha, etc)",
+    "Frutos secos picados (nozes, amêndoas, etc)",
+    "Azeite de oliva",
+    "Pimenta vermelha (opcional)",
+    "Sal"
+  ],
+  "descricao": "As cebolas roxas são cortadas ao meio e assadas até ficarem macias e levemente caramelizadas.  A cavidade de cada cebola é preenchida com uma mistura de ervas frescas picadas e frutos secos. Rega-se com azeite de oliva e, opcionalmente, finaliza-se com pimenta vermelha picada.  O sal é adicionado para realçar o sabor.",
+  "beneficios": [
+    "Cebolas roxas são ricas em antioxidantes, que combatem os radicais livres.",
+    "Frutos secos fornecem gorduras saudáveis e fibras."
+  ],
+  "riscos": [
+    "Pode conter glúten, dependendo de como os frutos secos foram processados.",
+    "Alérgenos: frutos secos"
+  ],
+  "curiosidade": "As cebolas roxas, quando assadas, liberam açúcares naturais, tornando-as um acompanhamento saboroso e nutritivo.",
   "slug": "unknowncebolaroxacomervasfrescasefrutossecos",
-  "categoria": "proteína animal",
-  "category_emoji": "🐟",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
