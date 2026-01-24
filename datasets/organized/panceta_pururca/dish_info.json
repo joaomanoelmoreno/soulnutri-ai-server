@@ -1,17 +1,17 @@
 {
-  "nome": "Carne",
-  "slug": "carne",
+  "nome": "Panceta pururca",
+  "slug": "panceta_pururca",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Prato composto por carne grelhada, acompanhamentos e um bolinho frito.",
+  "descricao": "Pedaços de carne assada, possivelmente acompanhados de molho.",
   "ingredientes": [
-    "Carne",
-    "Batata",
-    "Vegetais"
+    "carne",
+    "temperos",
+    "óleo"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Pode conter traços de ingredientes alergênicos."
+    "Alérgeno: Pode conter traços de ingredientes com alergênicos."
   ],
   "tecnica": "",
   "nutricao": {

@@ -1,0 +1,30 @@
+{
+  "nome": "bacalhau com natsa",
+  "slug": "bacalhau_com_natsa",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato cremoso e gratinado com salmão desfiado e queijo.",
+  "ingredientes": [
+    "Salmão",
+    "Queijo",
+    "Ovo",
+    "Leite",
+    "Manteiga"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alérgeno: Laticínios",
+    "Alérgeno: LACTOSE (leite, manteiga)",
+    "Alérgeno: OVO (ovo)",
+    "Alérgeno: PEIXE (salmao, salmão)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

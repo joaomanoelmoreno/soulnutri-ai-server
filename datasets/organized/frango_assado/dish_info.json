@@ -1,17 +1,17 @@
 {
-  "nome": "Carne",
-  "slug": "carne",
+  "nome": "Frango Assado",
+  "slug": "frango_assado",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Prato composto por carne grelhada, acompanhamentos e um bolinho frito.",
+  "descricao": "Um prato com carne, acompanhamentos e salada.",
   "ingredientes": [
-    "Carne",
-    "Batata",
-    "Vegetais"
+    "carne",
+    "purê",
+    "salada"
   ],
   "beneficios": [],
   "riscos": [
-    "Alérgeno: Pode conter traços de ingredientes alergênicos."
+    "Alérgeno: Carne"
   ],
   "tecnica": "",
   "nutricao": {

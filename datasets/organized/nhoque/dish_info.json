@@ -1,30 +1,26 @@
 {
   "nome": "nhoque",
-  "categoria": "vegetariano",
-  "ingredientes": [
-    "Nhoque (provavelmente feito com batata e farinha)",
-    "Ervas picadas (salsa, cebolinha)",
-    "Queijo ralado (possivelmente parmesão)",
-    "Croquete (recheio não identificado, possivelmente vegetariano)",
-    "Cesta feita com massa folhada",
-    "Recheio da cesta (não identificado, possivelmente vegetariano)"
-  ],
-  "descricao": "O prato consiste em nhoque cozido, provavelmente servido com ervas frescas e queijo ralado. Acompanha um croquete, possivelmente frito, e uma cesta feita com massa folhada recheada. O modo de preparo do nhoque é cozido, o croquete é frito e a cesta é assada.",
-  "beneficios": [
-    "A batata no nhoque é fonte de carboidratos, fornecendo energia.",
-    "As ervas frescas adicionam vitaminas e minerais, além de sabor."
-  ],
-  "riscos": [
-    "Contém glúten (na farinha do nhoque e na massa folhada).",
-    "O croquete pode ser frito, aumentando o teor de gordura.",
-    "Pode conter lactose (no queijo)."
-  ],
-  "curiosidade": "O nhoque, tradicionalmente consumido no dia 29 de cada mês, é associado à fartura e prosperidade.",
   "slug": "nhoque",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Prato composto por diferentes preparações, possivelmente purê de batata, bolinho frito e algo cremoso.",
+  "ingredientes": [
+    "Purê de batata",
+    "Bolinho frito",
+    "Creme de queijo"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: Glúten (se o bolinho for empanado)",
+    "Alérgeno: LACTOSE (creme, queijo)"
+  ],
+  "tecnica": "",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
 }
