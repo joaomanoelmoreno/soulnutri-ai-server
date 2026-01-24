@@ -1035,6 +1035,14 @@ function App() {
         
         return (
           <div className="res multi-result" data-testid="multi-result-container">
+            
+            {/* Preview da imagem selecionada da galeria */}
+            {previewImageUrl && (
+              <div className="preview-image-container">
+                <img src={previewImageUrl} alt="Foto do prato" className="preview-image" />
+              </div>
+            )}
+            
             {/* Header com item principal */}
             {principal && (
               <div className="prato-principal">
