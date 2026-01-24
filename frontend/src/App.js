@@ -746,6 +746,13 @@ function App() {
       {r?.ok && (
         <div className={`res ${r.confidence}`} data-testid="result-container">
           
+          {/* Preview da imagem selecionada da galeria */}
+          {previewImageUrl && (
+            <div className="preview-image-container">
+              <img src={previewImageUrl} alt="Foto do prato" className="preview-image" />
+            </div>
+          )}
+          
           {/* Indicador de fonte */}
           {r.source === 'generic_ai' && (
             <div className="source-badge" data-testid="source-badge">
