@@ -1,26 +1,33 @@
 {
   "nome": "Conchiglione ao creme com sálvia e avelã",
-  "slug": "conchiglione_ao_creme_com_sálvia_e_avelã",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Conchiglione recheado com molho cremoso.",
   "ingredientes": [
-    "Massa conchiglione",
-    "Recheio (provavelmente queijo)",
-    "Molho cremoso"
+    "Conchiglione (massa de trigo)",
+    "Creme de leite",
+    "Sálvia fresca picada",
+    "Avelãs picadas",
+    "Queijo ralado (possivelmente parmesão)",
+    "Azeite de oliva",
+    "Cebola picada (provavelmente usada no creme)"
   ],
-  "beneficios": [],
+  "descricao": "O prato consiste em conchigliones cozidos e recheados (o recheio não é totalmente visível, mas pode conter legumes e queijo), cobertos por um creme cremoso. O creme parece ser à base de creme de leite, possivelmente com cebola refogada para dar sabor. A sálvia fresca e as avelãs picadas são adicionadas para aromatizar e dar textura. Queijo ralado finaliza o prato. O modo de preparo envolve cozinhar a massa, preparar o creme, montar o prato e finalizar com os ingredientes.",
+  "beneficios": [
+    "Avelãs são ricas em gorduras saudáveis e vitamina E, um antioxidante importante.",
+    "Sálvia possui propriedades antioxidantes e anti-inflamatórias.",
+    "O queijo, dependendo do tipo, pode ser fonte de cálcio e proteínas."
+  ],
   "riscos": [
-    "Alérgeno: Glúten, Leite",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)"
+    "Contém glúten, devido à massa de trigo.",
+    "Rico em gorduras saturadas, provenientes do creme de leite.",
+    "Pode conter lactose, dependendo do tipo de queijo e creme.",
+    "Potencialmente alto em sódio, dependendo do queijo e temperos usados."
   ],
-  "tecnica": "",
+  "curiosidade": "A sálvia é uma erva aromática muito utilizada na culinária italiana, conhecida por seu sabor marcante e aroma agradável, combinando muito bem com massas e pratos cremosos.",
+  "slug": "conchiglione_ao_creme_com_sálvia_e_avelã",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

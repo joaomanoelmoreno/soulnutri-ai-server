@@ -1,18 +1,31 @@
 {
   "nome": "Costela  Cibi Sana",
-  "slug": "costela__cibi_sana",
   "categoria": "proteína animal",
-  "category_emoji": "🥩",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Costela bovina",
+    "Tomate cereja",
+    "Cebolinha",
+    "Molho escuro (possivelmente à base de shoyu, vinagre balsâmico ou similares)",
+    "Açúcar (possivelmente)"
+  ],
+  "descricao": "Costela bovina cozida em molho escuro, possivelmente caramelizado, com adição de tomates cereja e cebolinha picada para finalização. O modo de preparo parece ser lento, para garantir a maciez da carne.",
+  "beneficios": [
+    "A costela é fonte de proteína, essencial para a construção e reparo dos tecidos do corpo.",
+    "Tomates cereja são ricos em licopeno, um antioxidante que pode ajudar a proteger as células contra danos.",
+    "A cebolinha adiciona vitaminas e minerais.",
+    "O molho, dependendo dos ingredientes, pode fornecer antioxidantes e sabor."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada da carne.",
+    "Pode conter sódio em excesso, dependendo do molho utilizado.",
+    "Alérgenos: pode conter glúten e soja (se o molho for à base de shoyu)."
+  ],
+  "curiosidade": "A costela bovina é uma das carnes mais saborosas devido à quantidade de gordura entre as fibras, que derrete durante o cozimento, proporcionando maciez e suculência.",
+  "slug": "costela__cibi_sana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
