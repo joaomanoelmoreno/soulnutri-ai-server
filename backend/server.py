@@ -1327,6 +1327,142 @@ async def get_history(pin: str, dias: int = 7):
         return {"ok": False, "error": str(e)}
 
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADMIN - Endpoints de administração do banco de dados
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/dishes")
+async def admin_list_dishes():
+    """Lista todos os pratos com informações detalhadas para admin."""
+    try:
+        import json
+        dataset_dir = Path("/app/datasets/organized")
+        dishes = []
+        
+        for dish_dir in sorted(dataset_dir.iterdir()):
+            if not dish_dir.is_dir():
+                continue
+            
+            slug = dish_dir.name
+            info_file = dish_dir / "dish_info.json"
+            
+            # Contar imagens
+            image_count = len(list(dish_dir.glob("*.jpg"))) + len(list(dish_dir.glob("*.jpeg")))
+            
+            dish_data = {
+                "slug": slug,
+                "nome": slug.replace("_", " ").title(),
+                "categoria": "",
+                "category_emoji": "🍽️",
+                "ingredientes": [],
+                "descricao": "",
+                "image_count": image_count
+            }
+            
+            # Carregar info se existir
+            if info_file.exists():
+                try:
+                    with open(info_file, "r", encoding="utf-8") as f:
+                        info = json.load(f)
+                        dish_data.update({
+                            "nome": info.get("nome", dish_data["nome"]),
+                            "categoria": info.get("categoria", ""),
+                            "category_emoji": info.get("category_emoji", "🍽️"),
+                            "ingredientes": info.get("ingredientes", []),
+                            "descricao": info.get("descricao", "")
+                        })
+                except:
+                    pass
+            
+            dishes.append(dish_data)
+        
+        return {"ok": True, "dishes": dishes, "total": len(dishes)}
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar pratos admin: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.put("/admin/dishes/{slug}")
+async def admin_update_dish(slug: str, dish_data: dict):
+    """Atualiza informações de um prato."""
+    try:
+        import json
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            return {"ok": False, "error": "Prato não encontrado"}
+        
+        info_file = dataset_dir / "dish_info.json"
+        
+        # Carregar info existente ou criar nova
+        existing_info = {}
+        if info_file.exists():
+            try:
+                with open(info_file, "r", encoding="utf-8") as f:
+                    existing_info = json.load(f)
+            except:
+                pass
+        
+        # Atualizar campos
+        existing_info.update({
+            "nome": dish_data.get("nome", existing_info.get("nome", slug)),
+            "slug": slug,
+            "categoria": dish_data.get("categoria", existing_info.get("categoria", "")),
+            "category_emoji": dish_data.get("category_emoji", existing_info.get("category_emoji", "🍽️")),
+            "descricao": dish_data.get("descricao", existing_info.get("descricao", "")),
+            "ingredientes": dish_data.get("ingredientes", existing_info.get("ingredientes", []))
+        })
+        
+        # Definir emoji baseado na categoria
+        cat = existing_info.get("categoria", "").lower()
+        if "proteína" in cat:
+            if any(p in existing_info["nome"].lower() for p in ["peixe", "camarão", "bacalhau", "salmão"]):
+                existing_info["category_emoji"] = "🐟"
+            elif any(p in existing_info["nome"].lower() for p in ["frango", "galinha"]):
+                existing_info["category_emoji"] = "🍗"
+            else:
+                existing_info["category_emoji"] = "🥩"
+        elif "vegetariano" in cat:
+            existing_info["category_emoji"] = "🥚"
+        elif "vegano" in cat:
+            existing_info["category_emoji"] = "🥬"
+        elif "sobremesa" in cat:
+            existing_info["category_emoji"] = "🍰"
+        
+        # Salvar
+        with open(info_file, "w", encoding="utf-8") as f:
+            json.dump(existing_info, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"[ADMIN] Prato atualizado: {slug}")
+        return {"ok": True, "message": "Prato atualizado"}
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar prato: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/dishes/{slug}")
+async def admin_delete_dish(slug: str):
+    """Exclui um prato e todas suas fotos."""
+    try:
+        import shutil
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            return {"ok": False, "error": "Prato não encontrado"}
+        
+        # Remover pasta e todos os arquivos
+        shutil.rmtree(dataset_dir)
+        
+        logger.info(f"[ADMIN] Prato excluído: {slug}")
+        return {"ok": True, "message": f"Prato {slug} excluído"}
+        
+    except Exception as e:
+        logger.error(f"Erro ao excluir prato: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 # Incluir router
 app.include_router(api_router)
 
