@@ -1,18 +1,35 @@
 {
   "nome": "Salpicãodefrango",
-  "slug": "unknownsalpicãodefrango",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Frango desfiado",
+    "Maionese",
+    "Cenoura ralada",
+    "Milho",
+    "Ervilhas",
+    "Cebola roxa picada",
+    "Salsa picada",
+    "Uva passa",
+    "Tomate cereja",
+    "Rodelas de cenoura (decoração)"
+  ],
+  "descricao": "O salpicão de frango é uma salada cremosa, feita com frango desfiado misturado com legumes e geralmente coberta com maionese. Neste prato, o frango desfiado é misturado com cenoura ralada, milho, ervilha, cebola roxa, salsa e uva passa. A base cremosa é a maionese, e a decoração é feita com rodelas de cenoura e tomate cereja.",
+  "beneficios": [
+    "O frango é uma boa fonte de proteína, essencial para a construção e reparação dos tecidos.",
+    "A cenoura é rica em vitamina A, importante para a saúde da visão e da pele.",
+    "As ervilhas e o milho fornecem fibras, que auxiliam na digestão."
+  ],
+  "riscos": [
+    "A maionese pode ser rica em gorduras, dependendo da receita.",
+    "Pode conter altos níveis de sódio, dependendo dos temperos utilizados.",
+    "Alérgenos: ovo (na maionese)."
+  ],
+  "curiosidade": "O salpicão é um prato versátil, e seus ingredientes podem variar dependendo da região e preferências pessoais. Existem versões vegetarianas e veganas, substituindo o frango por outros ingredientes.",
+  "slug": "unknownsalpicãodefrango",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

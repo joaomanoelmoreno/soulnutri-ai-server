@@ -1,18 +1,22 @@
 {
   "nome": "Uvas",
-  "slug": "uvas",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Uvas verdes"
+  ],
+  "descricao": "As uvas verdes são apresentadas em um cumbuca de vidro, frescas e sem preparo adicional.",
+  "beneficios": [
+    "Ricas em antioxidantes, como polifenóis, que combatem os radicais livres.",
+    "Boa fonte de vitaminas C e K, importantes para a saúde imunológica e coagulação sanguínea.",
+    "Contêm resveratrol, associado à saúde cardiovascular."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "As uvas verdes são uma excelente opção para hidratação devido ao seu alto teor de água.",
+  "slug": "uvas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

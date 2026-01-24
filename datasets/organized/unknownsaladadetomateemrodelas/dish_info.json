@@ -1,18 +1,22 @@
 {
   "nome": "Saladadetomateemrodelas",
-  "slug": "unknownsaladadetomateemrodelas",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "ingredientes": [
+    "Tomate",
+    "Cebolinha picada"
+  ],
+  "descricao": "Salada simples composta por rodelas de tomate fresco, possivelmente tomate italiano, decorada com cebolinha picada. O preparo é cru, sem adição de temperos visíveis.",
+  "beneficios": [
+    "Rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
+    "Fonte de vitaminas A e C, que auxiliam na saúde da pele e na imunidade."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "O tomate é na verdade uma fruta, embora seja frequentemente usado como um vegetal em culinária.",
+  "slug": "unknownsaladadetomateemrodelas",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

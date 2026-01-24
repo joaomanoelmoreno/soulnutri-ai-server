@@ -1,18 +1,35 @@
 {
   "nome": "Saladadefrangocomlegumes",
-  "slug": "unknownsaladadefrangocomlegumes",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Frango desfiado",
+    "Cenoura em rodelas",
+    "Ervilha",
+    "Milho",
+    "Cebola roxa",
+    "Salsinha picada",
+    "Uva passa preta",
+    "Tomate cereja",
+    "Maionese",
+    "Sal"
+  ],
+  "descricao": "Salada de frango desfiado com legumes frescos e uva passa, misturados com maionese. A cenoura em rodelas decora a borda. O frango provavelmente foi cozido ou desfiado antes de ser misturado com os demais ingredientes. A salsinha fresca adiciona sabor e aroma.",
+  "beneficios": [
+    "Fonte de proteína para construção e reparo muscular",
+    "Rica em fibras e vitaminas fornecidas pelos legumes",
+    "Cenoura oferece vitamina A, importante para a visão e a pele"
+  ],
+  "riscos": [
+    "A maionese pode conter ovos e ser um risco para alérgicos",
+    "Contém glúten (se a maionese for industrializada)",
+    "Alto teor de sódio, dependendo da quantidade de sal adicionada"
+  ],
+  "curiosidade": "A adição de uvas passas traz um toque adocicado e contraste de sabores à salada, além de fornecer antioxidantes.",
+  "slug": "unknownsaladadefrangocomlegumes",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

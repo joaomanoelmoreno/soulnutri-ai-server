@@ -1,18 +1,26 @@
 {
   "nome": "Saladadebifumcompepino",
-  "slug": "unknownsaladadebifumcompepino",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Bifum (macarrão de arroz)",
+    "Pepino",
+    "Cebolinha (aparente)"
+  ],
+  "descricao": "O prato é composto por macarrão de arroz (bifum) aparentemente refogado ou salteado, possivelmente com molho shoyu, devido à sua coloração marrom. É decorado com fatias de pepino em volta e cebolinha picada. O preparo do bifum pode incluir outros ingredientes e temperos, mas não são visíveis na imagem.",
+  "beneficios": [
+    "O bifum é uma boa fonte de carboidratos, fornecendo energia.",
+    "O pepino é rico em água, auxiliando na hidratação, e contém vitaminas e minerais."
+  ],
+  "riscos": [
+    "Pode conter alto teor de sódio, dependendo do molho utilizado no preparo.",
+    "Pessoas com restrição a carboidratos devem consumir com moderação."
+  ],
+  "curiosidade": "O bifum é um tipo de macarrão fino feito de farinha de arroz, popular na culinária asiática, e é naturalmente livre de glúten.",
+  "slug": "unknownsaladadebifumcompepino",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

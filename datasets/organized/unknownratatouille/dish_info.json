@@ -1,18 +1,33 @@
 {
   "nome": "Ratatouille",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Abobrinha",
+    "Berinjela",
+    "Tomate",
+    "Tomate cereja",
+    "Cebola",
+    "Alho",
+    "Ervas frescas (tomilho, manjericão)",
+    "Azeite de oliva",
+    "Sal e pimenta do reino a gosto"
+  ],
+  "descricao": "O ratatouille é um prato provençal que consiste em vegetais fatiados e cozidos lentamente em camadas. Os vegetais são geralmente salteados em azeite de oliva e temperados com ervas frescas. Na imagem, observa-se as fatias de abobrinha e berinjela, com tomates cereja sobrepostos, em um molho rico e aromático, possivelmente cozidos no forno ou em uma panela.",
+  "beneficios": [
+    "Rico em antioxidantes, especialmente devido ao tomate e berinjela, que combatem os radicais livres.",
+    "Fonte de fibras que auxiliam na saúde digestiva e na saciedade.",
+    "Baixo em calorias e rico em nutrientes essenciais, como vitaminas e minerais."
+  ],
+  "riscos": [
+    "Pode conter sódio em excesso dependendo da quantidade de sal utilizada no preparo.",
+    "Alérgicos a tomate devem evitar o consumo."
+  ],
+  "curiosidade": "O nome 'ratatouille' vem do termo francês 'ratouiller', que significa 'mexer' ou 'remover', indicando a forma como os vegetais são misturados no prato.",
   "slug": "unknownratatouille",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

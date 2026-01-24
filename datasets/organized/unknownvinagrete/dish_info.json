@@ -1,18 +1,32 @@
 {
   "nome": "Vinagrete",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Tomate",
+    "Cebola roxa",
+    "Pimentão verde",
+    "Cebolinha",
+    "Azeite de oliva",
+    "Vinagre",
+    "Sal",
+    "Pimenta do reino"
+  ],
+  "descricao": "O vinagrete é uma salada composta por tomate, cebola roxa, pimentão verde e cebolinha picados em cubos e temperados com azeite de oliva, vinagre, sal e pimenta do reino. A imagem não mostra a presença de outros ingredientes, como ovos, que poderiam alterar a classificação.",
+  "beneficios": [
+    "Rico em antioxidantes, especialmente do tomate (licopeno)",
+    "Boa fonte de vitamina C (pimentão e tomate)",
+    "Pode auxiliar na digestão devido ao vinagre"
+  ],
+  "riscos": [
+    "Alergênico: cebola (para pessoas sensíveis)",
+    "Excesso de sódio (se temperado com muito sal)"
+  ],
+  "curiosidade": "O vinagrete é um acompanhamento tradicional no churrasco brasileiro, equilibrando a gordura da carne com sua acidez e frescor.",
   "slug": "unknownvinagrete",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

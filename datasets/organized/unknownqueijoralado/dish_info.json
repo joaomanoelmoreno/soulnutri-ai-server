@@ -1,0 +1,24 @@
+{
+  "nome": "Unknownqueijoralado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Queijo"
+  ],
+  "descricao": "O prato consiste em queijo ralado. O tipo de queijo não pode ser determinado na imagem, mas a cor sugere que pode ser queijo prato, mussarela ou similar.",
+  "beneficios": [
+    "Fonte de cálcio, importante para a saúde óssea.",
+    "Fornece proteínas, essenciais para a construção e reparação dos tecidos."
+  ],
+  "riscos": [
+    "Alto teor de sódio, dependendo do tipo de queijo.",
+    "Alérgeno: leite"
+  ],
+  "curiosidade": "O queijo é um dos alimentos mais antigos do mundo, com evidências de produção datando de mais de 7.000 anos atrás.",
+  "slug": "unknownqueijoralado",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

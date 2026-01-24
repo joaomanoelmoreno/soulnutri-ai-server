@@ -1,18 +1,31 @@
 {
   "nome": "Saladadefeijãobrancocomtomateecebola",
-  "slug": "unknownsaladadefeijãobrancocomtomateecebola",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Feijão branco cozido",
+    "Tomate picado",
+    "Cebola roxa em rodelas",
+    "Salsa picada (salsinha)",
+    "Azeite de oliva (possível)",
+    "Sal (possível)",
+    "Pimenta do reino (possível)"
+  ],
+  "descricao": "Uma salada refrescante e nutritiva, com feijão branco cozido e misturado com tomate picado, cebola roxa e salsa. Possivelmente temperada com azeite, sal e pimenta do reino. A cebola roxa em rodelas decora a apresentação.",
+  "beneficios": [
+    "Rica em fibras, auxiliando na saúde intestinal",
+    "Fonte de proteínas vegetais, importante para a saciedade",
+    "Contém antioxidantes do tomate e da cebola, que combatem radicais livres"
+  ],
+  "riscos": [
+    "Pode causar gases devido ao consumo de feijão",
+    "Alérgenos: não se aplica"
+  ],
+  "curiosidade": "O feijão branco é rico em ferro e pode ser um aliado no combate à anemia.",
+  "slug": "unknownsaladadefeijãobrancocomtomateecebola",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

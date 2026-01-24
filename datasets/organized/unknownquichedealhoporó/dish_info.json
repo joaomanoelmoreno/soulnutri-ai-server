@@ -1,18 +1,32 @@
 {
   "nome": "Quichedealhoporó",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa (provavelmente farinha de trigo, manteiga, ovo)",
+    "Alho poró",
+    "Ovo",
+    "Queijo",
+    "Creme de leite",
+    "Sal",
+    "Pimenta do reino"
+  ],
+  "descricao": "A quiche é preparada com uma massa base (provavelmente tipo brisée), recheada com alho poró refogado, creme de ovos e queijo, e assada até dourar.",
+  "beneficios": [
+    "O alho poró é fonte de antioxidantes e vitaminas",
+    "Pode ser fonte de cálcio, dependendo do queijo usado",
+    "Ovo, fonte de proteína e nutrientes."
+  ],
+  "riscos": [
+    "Contém glúten (na massa)",
+    "Alto teor de gordura (devido à manteiga, creme de leite e queijo)",
+    "Pode conter lactose (se o queijo for derivado do leite de vaca)"
+  ],
+  "curiosidade": "A quiche lorraine, uma variação da quiche, tradicionalmente leva bacon, tornando-a não vegetariana. A quiche de alho poró é uma versão que substitui o bacon por alho poró.",
   "slug": "unknownquichedealhoporó",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

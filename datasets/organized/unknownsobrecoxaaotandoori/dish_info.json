@@ -1,0 +1,30 @@
+{
+  "nome": "Unknownsobrecoxaaotandoori",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Sobrecoxa de frango",
+    "Especiarias Tandoori (cúrcuma, cominho, coentro, páprica, gengibre, pimenta caiena, cardamomo)",
+    "Iogurte (possível ingrediente, mas não visível)",
+    "Alho (possível ingrediente, mas não visível)",
+    "Gengibre (possível ingrediente, mas não visível)",
+    "Óleo vegetal"
+  ],
+  "descricao": "Sobrecoxas de frango marinadas em especiarias tandoori e possivelmente iogurte, alho e gengibre, e depois grelhadas ou assadas. O prato apresenta uma coloração avermelhada característica devido às especiarias e ao processo de cozimento.",
+  "beneficios": [
+    "Boa fonte de proteína, essencial para a construção e reparo dos tecidos do corpo.",
+    "As especiarias tandoori podem conter antioxidantes e propriedades anti-inflamatórias."
+  ],
+  "riscos": [
+    "A adição de óleo vegetal pode aumentar o teor de gordura.",
+    "Alérgenos podem estar presentes nas especiarias (ex: mostarda)",
+    "Consumo excessivo pode levar ao aumento do colesterol."
+  ],
+  "curiosidade": "O Tandoori é um método de cozimento originário da Índia, no qual os alimentos são preparados em um forno de barro cilíndrico chamado tandoor.",
+  "slug": "unknownsobrecoxaaotandoori",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

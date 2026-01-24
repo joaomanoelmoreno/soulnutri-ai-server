@@ -1,18 +1,27 @@
 {
   "nome": "Vermicelli",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Macarrão Vermicelli (provavelmente feito de arroz ou feijão mungo)",
+    "Cebolinha picada",
+    "Rodelas de pepino"
+  ],
+  "descricao": "O prato Vermicelli, neste caso, parece ser uma preparação simples de macarrão fino, possivelmente de origem asiática. É decorado com rodelas de pepino fresco e cebolinha picada, indicando um toque de frescor e sabor. O macarrão parece ter sido levemente salteado ou cozido.",
+  "beneficios": [
+    "Baixo teor de gordura, especialmente se preparado sem óleos adicionais.",
+    "Fonte de carboidratos, fornecendo energia.",
+    "A cebolinha e o pepino agregam vitaminas e minerais, além de fibras."
+  ],
+  "riscos": [
+    "Pode conter glúten dependendo da composição do macarrão.",
+    "Pode conter sódio, dependendo do tempero usado no preparo."
+  ],
+  "curiosidade": "Vermicelli significa 'pequenos vermes' em italiano, mas o termo é usado para descrever diferentes tipos de macarrão fino em várias cozinhas ao redor do mundo. O macarrão de arroz, frequentemente usado no Vermicelli, é uma boa alternativa sem glúten.",
   "slug": "unknownvermicelli",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

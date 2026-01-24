@@ -1,18 +1,29 @@
 {
   "nome": "Saladadebeterrabacomlaranjaehortelã",
-  "slug": "unknownsaladadebeterrabacomlaranjaehortelã",
   "categoria": "vegano",
-  "category_emoji": "🥬",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Beterraba cozida cortada em cubos",
+    "Gomos de laranja",
+    "Folhas frescas de hortelã",
+    "Azeite de oliva (possível)",
+    "Sal (possível)"
+  ],
+  "descricao": "A salada consiste em cubos de beterraba cozida, gomos de laranja, folhas frescas de hortelã. Pode ser temperada com azeite de oliva e sal.",
+  "beneficios": [
+    "A beterraba é rica em nitratos, que podem melhorar o desempenho atlético e a saúde cardiovascular.",
+    "A laranja é uma excelente fonte de vitamina C, que fortalece o sistema imunológico.",
+    "A hortelã auxilia na digestão e possui propriedades antioxidantes."
+  ],
+  "riscos": [
+    "Nenhum risco aparente.",
+    "Pode conter traços de outros ingredientes."
+  ],
+  "curiosidade": "A beterraba tem um pigmento avermelhado chamado betalaína, que é um antioxidante poderoso e pode ajudar a proteger as células do corpo contra danos.",
+  "slug": "unknownsaladadebeterrabacomlaranjaehortelã",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
