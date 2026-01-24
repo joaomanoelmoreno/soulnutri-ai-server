@@ -1,18 +1,26 @@
 {
   "nome": "Cuscuzdetapioca",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Tapioca granulada",
+    "Leite de coco",
+    "Leite condensado",
+    "Coco ralado"
+  ],
+  "descricao": "O cuscuz de tapioca é um doce cremoso, preparado com tapioca granulada, que é hidratada e cozida em leite de coco. O leite condensado é adicionado para adoçar e dar cremosidade, e o coco ralado é utilizado para finalizar, tanto na massa quanto na cobertura. A apresentação é geralmente em forma de pudim, com o cuscuz no centro e a calda ao redor.",
+  "beneficios": [
+    "A tapioca é fonte de carboidratos, que fornece energia. O coco é rico em fibras e gorduras saudáveis, que auxiliam na saciedade e na saúde intestinal."
+  ],
+  "riscos": [
+    "Alto teor de açúcar devido ao leite condensado. Pode ser rico em calorias.",
+    "Alérgeno: coco"
+  ],
+  "curiosidade": "A tapioca é um alimento versátil, extraído da mandioca, e muito consumido na culinária brasileira, principalmente nas regiões Norte e Nordeste. Ela não contém glúten e é uma boa opção para quem tem restrições alimentares.",
   "slug": "cuscuzdetapioca",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

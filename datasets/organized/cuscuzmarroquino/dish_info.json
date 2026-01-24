@@ -1,18 +1,30 @@
 {
   "nome": "Cuscuzmarroquino",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cuscuz marroquino",
+    "Tomate cereja (grelhado)",
+    "Amêndoas em lascas",
+    "Hortelã fresca",
+    "Azeite",
+    "Tempero (cúrcuma)"
+  ],
+  "descricao": "Cuscuz marroquino cozido, misturado com tomate cereja grelhado, amêndoas em lascas, hortelã fresca e temperado com azeite e cúrcuma (provavelmente). O cuscuz aparenta estar levemente úmido e soltinho.",
+  "beneficios": [
+    "A cúrcuma possui propriedades anti-inflamatórias e antioxidantes.",
+    "Amêndoas são ricas em gorduras saudáveis e vitamina E.",
+    "Hortelã auxilia na digestão."
+  ],
+  "riscos": [
+    "Contém glúten (do cuscuz)",
+    "Pode conter traços de outros ingredientes, dependendo do local de preparo"
+  ],
+  "curiosidade": "O cuscuz marroquino é feito a partir de sêmola de trigo, um grão rico em carboidratos e fibras.",
   "slug": "cuscuzmarroquino",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
