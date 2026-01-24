@@ -1,20 +1,14 @@
 {
-  "nome": "Goiabada",
-  "slug": "goiabada",
+  "nome": "Mamão",
+  "slug": "mamão",
   "categoria": "vegano",
   "category_emoji": "🌱",
-  "descricao": "Molho de tomate caseiro.",
+  "descricao": "Cubos de mamão fresco, uma opção leve e refrescante.",
   "ingredientes": [
-    "Tomate",
-    "Alho",
-    "Cebola",
-    "Azeite",
-    "Ervas"
+    "Mamão"
   ],
   "beneficios": [],
-  "riscos": [
-    "Alérgeno: Pode conter traços de ingredientes se for feito em cozinha compartilhada."
-  ],
+  "riscos": [],
   "tecnica": "",
   "nutricao": {
     "calorias": "~200 kcal",

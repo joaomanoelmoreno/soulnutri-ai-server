@@ -1,19 +1,18 @@
 {
-  "nome": "Cocada",
-  "slug": "cocada",
+  "nome": "Muqueca de banana da terra",
+  "slug": "muqueca_de_banana_da_terra",
   "categoria": "vegetariano",
   "category_emoji": "🥬",
-  "descricao": "Doce cremoso feito com coco ralado, açúcar e leite condensado.",
+  "descricao": "Ensopado de legumes em molho cremoso.",
   "ingredientes": [
-    "Coco ralado",
-    "Açúcar",
-    "Leite condensado"
+    "legumes",
+    "pimentão",
+    "molho cremoso",
+    "cebola"
   ],
   "beneficios": [],
   "riscos": [
-    "Alto teor de açúcar",
-    "Alérgeno: Leite",
-    "Alérgeno: LACTOSE (leite)"
+    "Alérgeno: Pode conter leite ou derivados"
   ],
   "tecnica": "",
   "nutricao": {

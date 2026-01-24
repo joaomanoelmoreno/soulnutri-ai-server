@@ -1,0 +1,28 @@
+{
+  "nome": "Couve -flor gratinada",
+  "slug": "couve_flor_gratinada",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Macarrão coberto com molho de queijo cremoso e gratinado.",
+  "ingredientes": [
+    "macarrão",
+    "queijo",
+    "leite",
+    "manteiga"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Leite",
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (macarrão, macarrao)",
+    "Alérgeno: LACTOSE (queijo, leite)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

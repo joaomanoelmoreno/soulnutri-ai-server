@@ -1,0 +1,28 @@
+{
+  "nome": "Mousse de maracujá",
+  "slug": "mousse_de_maracujá",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Uma fatia de torta de maracujá com uma cobertura cremosa e sementes de maracujá.",
+  "ingredientes": [
+    "Maracujá",
+    "Creme de leite",
+    "Ovos",
+    "Açúcar"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovos, Laticínios",
+    "Alérgeno: GLÚTEN (torta)",
+    "Alérgeno: LACTOSE (leite, creme)",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

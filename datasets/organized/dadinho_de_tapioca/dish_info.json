@@ -1,0 +1,30 @@
+{
+  "nome": "Dadinho de tapioca",
+  "slug": "dadinho_de_tapioca",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Bolinhos saborosos e crocantes feitos com queijo.",
+  "ingredientes": [
+    "queijo",
+    "farinha",
+    "ovo",
+    "temperos"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: Ovo",
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}

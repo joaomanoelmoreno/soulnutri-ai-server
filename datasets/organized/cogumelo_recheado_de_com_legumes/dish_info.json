@@ -1,0 +1,25 @@
+{
+  "nome": "Cogumelo recheado de com legumes",
+  "slug": "cogumelo_recheado_de_com_legumes",
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "descricao": "Cogumelos Portobello recheados com vegetais e queijo, assados em molho.",
+  "ingredientes": [
+    "cogumelos",
+    "vegetais picados (cenoura, salsinha)",
+    "queijo ralado"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Laticínios",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

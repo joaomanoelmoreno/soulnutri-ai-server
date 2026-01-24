@@ -1,19 +1,17 @@
 {
-  "nome": "Cocada",
-  "slug": "cocada",
+  "nome": "Requeijão",
+  "slug": "requeijão",
   "categoria": "vegetariano",
   "category_emoji": "🥬",
-  "descricao": "Doce cremoso feito com coco ralado, açúcar e leite condensado.",
+  "descricao": "Sobremesa ou lanche popular no Brasil, que combina o sabor suave do queijo com a doçura da goiabada.",
   "ingredientes": [
-    "Coco ralado",
-    "Açúcar",
-    "Leite condensado"
+    "Queijo branco",
+    "Goiabada"
   ],
   "beneficios": [],
   "riscos": [
-    "Alto teor de açúcar",
-    "Alérgeno: Leite",
-    "Alérgeno: LACTOSE (leite)"
+    "Alérgeno: Laticínios",
+    "Alérgeno: LACTOSE (queijo)"
   ],
   "tecnica": "",
   "nutricao": {
