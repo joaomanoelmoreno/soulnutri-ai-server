@@ -1383,6 +1383,97 @@ async def admin_list_dishes():
         return {"ok": False, "error": str(e)}
 
 
+@api_router.get("/admin/dishes-full")
+async def admin_list_dishes_full():
+    """Lista todos os pratos com TODAS as informações para admin."""
+    try:
+        import json
+        dataset_dir = Path("/app/datasets/organized")
+        dishes = []
+        
+        for dish_dir in sorted(dataset_dir.iterdir()):
+            if not dish_dir.is_dir():
+                continue
+            
+            slug = dish_dir.name
+            info_file = dish_dir / "dish_info.json"
+            
+            # Contar e listar imagens
+            images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg"))
+            image_count = len(images)
+            first_image = images[0].name if images else None
+            
+            dish_data = {
+                "slug": slug,
+                "nome": slug.replace("_", " ").title(),
+                "categoria": "",
+                "category_emoji": "🍽️",
+                "ingredientes": [],
+                "descricao": "",
+                "beneficios": [],
+                "riscos": [],
+                "nutricao": {},
+                "contem_gluten": False,
+                "tecnica": "",
+                "image_count": image_count,
+                "first_image": first_image
+            }
+            
+            # Carregar info completa se existir
+            if info_file.exists():
+                try:
+                    with open(info_file, "r", encoding="utf-8") as f:
+                        info = json.load(f)
+                        dish_data.update({
+                            "nome": info.get("nome", dish_data["nome"]),
+                            "categoria": info.get("categoria", ""),
+                            "category_emoji": info.get("category_emoji", "🍽️"),
+                            "ingredientes": info.get("ingredientes", []),
+                            "descricao": info.get("descricao", ""),
+                            "beneficios": info.get("beneficios", []),
+                            "riscos": info.get("riscos", []),
+                            "nutricao": info.get("nutricao", {}),
+                            "contem_gluten": info.get("contem_gluten", False),
+                            "tecnica": info.get("tecnica", "")
+                        })
+                except:
+                    pass
+            
+            dishes.append(dish_data)
+        
+        return {"ok": True, "dishes": dishes, "total": len(dishes)}
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar pratos admin full: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/dish-image/{slug}")
+async def admin_get_dish_image(slug: str):
+    """Retorna a primeira imagem de um prato."""
+    from fastapi.responses import FileResponse
+    
+    try:
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            raise HTTPException(status_code=404, detail="Prato não encontrado")
+        
+        # Buscar primeira imagem
+        images = list(dataset_dir.glob("*.jpg")) + list(dataset_dir.glob("*.jpeg"))
+        
+        if not images:
+            raise HTTPException(status_code=404, detail="Sem imagens")
+        
+        return FileResponse(images[0], media_type="image/jpeg")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao buscar imagem: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @api_router.put("/admin/dishes/{slug}")
 async def admin_update_dish(slug: str, dish_data: dict):
     """Atualiza informações de um prato."""
