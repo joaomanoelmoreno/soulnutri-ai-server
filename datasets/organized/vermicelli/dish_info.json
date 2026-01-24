@@ -1,26 +1,34 @@
 {
   "nome": "vermicelli",
-  "slug": "vermicelli",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Salada colorida com mix de folhas, tomate e macarrão de arroz.",
   "ingredientes": [
+    "Vermicelli (macarrão de arroz frito)",
     "Alface",
     "Tomate",
     "Beterraba",
-    "Macarrão de arroz",
-    "Broto de feijão"
+    "Mix de folhas (rúcula/espinafre)",
+    "Abacate",
+    "Azeite de oliva (provável)"
   ],
-  "beneficios": [],
+  "descricao": "Prato composto por vermicelli frito, salada com mix de folhas, tomate, abacate e beterraba assada ou cozida. Possivelmente temperado com azeite de oliva.",
+  "beneficios": [
+    "Aumento da ingestão de fibras (salada + beterraba)",
+    "Fonte de vitaminas e minerais (folhas, tomate, abacate)",
+    "Opção leve e com baixo teor de gordura (se o vermicelli for frito em óleo vegetal)",
+    "A beterraba é rica em antioxidantes e pode ajudar na saúde cardiovascular"
+  ],
   "riscos": [
-    "Alérgeno: GLÚTEN (macarrao, macarrão)"
+    "Contém carboidratos (macarrão)",
+    "Pode conter glúten dependendo do preparo do vermicelli",
+    "O excesso de carboidratos pode levar ao ganho de peso",
+    "Alérgenos: não identificados"
   ],
-  "tecnica": "",
+  "curiosidade": "Vermicelli é um tipo de macarrão, geralmente feito de arroz, mas pode haver variações com outros ingredientes. A forma como é preparado, como frito, altera seu valor nutricional.",
+  "slug": "vermicelli",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }

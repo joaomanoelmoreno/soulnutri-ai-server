@@ -1,28 +1,30 @@
 {
   "nome": "Vol aí vent de pimentão",
-  "slug": "vol_aí_vent_de_pimentão",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
-  "descricao": "Pequenos salgados, possivelmente recheados com queijo e outros ingredientes.",
   "ingredientes": [
     "Massa folhada",
-    "Queijo",
-    "Ovo",
-    "Tempero verde"
+    "Pimentão",
+    "Cebola",
+    "Creme de leite",
+    "Queijo parmesão ralado",
+    "Salsa picada"
   ],
-  "beneficios": [],
+  "descricao": "Vol au Vent, tradicionalmente, é feito com massa folhada, recheado com creme de pimentão, cebola refogada e finalizado com queijo parmesão. No prato, os vol au vents foram finalizados com salsa picada para dar um toque fresco e visualmente agradável.",
+  "beneficios": [
+    "O pimentão é rico em vitamina C e antioxidantes, que fortalecem o sistema imunológico.",
+    "A massa folhada, apesar de ser calórica, pode oferecer uma pequena quantidade de cálcio dependendo da receita."
+  ],
   "riscos": [
-    "Alérgeno: Glúten, Lácteos, Ovos",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo)"
+    "Alto teor de gordura devido à massa folhada e ao creme de leite.",
+    "Contém glúten.",
+    "Alérgenos: Laticínios (leite e derivados)."
   ],
-  "tecnica": "",
+  "curiosidade": "O termo 'vol-au-vent' significa 'voa ao vento' em francês, em referência à leveza da massa folhada.",
+  "slug": "vol_aí_vent_de_pimentão",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": true
+  }
 }
