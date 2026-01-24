@@ -394,6 +394,11 @@ function App() {
     setError(null);
     setShowFeedback(false);
     setFeedbackSent(false);
+    // Limpar preview da imagem
+    if (previewImageUrl) {
+      URL.revokeObjectURL(previewImageUrl);
+      setPreviewImageUrl(null);
+    }
     // Liberar memória do blob
     if (lastImageBlob) {
       URL.revokeObjectURL(URL.createObjectURL(lastImageBlob));
