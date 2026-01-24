@@ -1,0 +1,25 @@
+{
+  "nome": "Unknownpurêdebatatadoce",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Batata doce",
+    "Ingredientes adicionais (não visíveis, mas a ausência de lactose sugere alternativas veganas como azeite, creme vegetal ou leite vegetal)"
+  ],
+  "descricao": "Purê de batata doce cremoso, provavelmente preparado por cozimento e amassamento das batatas doces, com adição de ingredientes para dar cremosidade. A ausência de lactose no rótulo indica que não há ingredientes de origem animal.",
+  "beneficios": [
+    "Alto teor de vitamina A, essencial para a saúde da visão e da pele.",
+    "Fonte de fibras, auxiliando na digestão e na sensação de saciedade."
+  ],
+  "riscos": [
+    "Possível adição de açúcares, dependendo da receita.",
+    "Pode conter sódio, dependendo dos temperos utilizados."
+  ],
+  "curiosidade": "A batata doce é um alimento versátil, rico em antioxidantes e com baixo índice glicêmico quando comparado à batata inglesa, sendo uma ótima opção para diabéticos e para quem busca uma alimentação equilibrada.",
+  "slug": "unknownpurêdebatatadoce",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

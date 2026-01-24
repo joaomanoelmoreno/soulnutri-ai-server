@@ -1,18 +1,28 @@
 {
   "nome": "Fígadoaceboladocompimentabiquinho",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Fígado bovino fatiado",
+    "Cebola em rodelas",
+    "Pimenta biquinho",
+    "Cebolinha picada",
+    "Azeite (provavelmente usado para refogar)"
+  ],
+  "descricao": "Prato de fígado bovino, refogado com cebola e pimenta biquinho. A cebolinha picada é adicionada no final para dar frescor.",
+  "beneficios": [
+    "O fígado é rico em ferro, importante para prevenir anemia.",
+    "A cebola possui compostos sulfurados que auxiliam na saúde cardiovascular."
+  ],
+  "riscos": [
+    "O fígado, por ser um órgão, pode acumular toxinas, então moderação é importante.",
+    "Pessoas com problemas de gota devem moderar o consumo devido ao teor de purinas."
+  ],
+  "curiosidade": "O fígado é uma excelente fonte de vitamina A, essencial para a visão e a imunidade.",
   "slug": "unknownfígadoaceboladocompimentabiquinho",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

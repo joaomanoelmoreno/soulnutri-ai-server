@@ -1,18 +1,30 @@
 {
   "nome": "Frangoàparmegiana",
-  "slug": "unknownfrangoàparmegiana",
   "categoria": "proteína animal",
-  "category_emoji": "🍗",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "ingredientes": [
+    "Frango empanado",
+    "Molho de tomate",
+    "Queijo muçarela",
+    "Temperos (orégano, possivelmente)",
+    "Azeite"
+  ],
+  "descricao": "O Frango à Parmegiana é preparado com filés de frango empanados e fritos, cobertos com molho de tomate caseiro e queijo muçarela derretido. A imagem sugere que o prato foi gratinado no forno para um efeito cremoso e dourado.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade (frango)",
+    "Rico em cálcio (queijo muçarela)",
+    "Pode fornecer licopeno (molho de tomate, se feito com tomates frescos)"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada (fritura e queijo)",
+    "Contém glúten (se o empanado for feito com farinha)",
+    "Possível alto teor de sódio (molho de tomate industrializado)"
+  ],
+  "curiosidade": "O nome 'Parmegiana' vem do queijo parmesão, mas neste prato, geralmente se usa muçarela. A receita evoluiu ao longo do tempo, e existem variações regionais significativas.",
+  "slug": "unknownfrangoàparmegiana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

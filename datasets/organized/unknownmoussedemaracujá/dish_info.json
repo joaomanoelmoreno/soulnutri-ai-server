@@ -1,18 +1,30 @@
 {
   "nome": "Moussedemaracujá",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Polpa de maracujá",
+    "Leite condensado",
+    "Creme de leite",
+    "Gelatina incolor e sem sabor",
+    "Açúcar ou adoçante",
+    "Sementes de maracujá"
+  ],
+  "descricao": "Mousse de maracujá cremoso, com uma base de leite condensado, creme de leite e gelatina para dar consistência. A polpa e as sementes de maracujá são adicionadas para sabor e decoração. Geralmente adoçado com açúcar ou adoçante.",
+  "beneficios": [
+    "Fonte de vitamina C, que auxilia na imunidade.",
+    "O maracujá tem propriedades calmantes, podendo auxiliar no relaxamento."
+  ],
+  "riscos": [
+    "Alto teor de açúcar, especialmente se feito com leite condensado.",
+    "Contém lactose.",
+    "Pode conter glúten, dependendo do preparo da gelatina ou de outros ingredientes adicionados."
+  ],
+  "curiosidade": "O maracujá é rico em antioxidantes, que combatem os radicais livres no organismo.",
   "slug": "unknownmoussedemaracujá",
-  "categoria": "sobremesa",
-  "category_emoji": "🍰",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

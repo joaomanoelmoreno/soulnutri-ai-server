@@ -1,0 +1,21 @@
+{
+  "nome": "Unknownmelancia",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Melancia"
+  ],
+  "descricao": "A melancia é cortada em cubos e servida em uma tigela.",
+  "beneficios": [
+    "Rica em hidratação devido ao alto teor de água.",
+    "Fonte de vitaminas A e C, antioxidantes que protegem as células do corpo."
+  ],
+  "riscos": [],
+  "curiosidade": "A melancia é composta por cerca de 92% de água, o que a torna uma excelente opção para se manter hidratado, especialmente em dias quentes.",
+  "slug": "unknownmelancia",
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  }
+}

@@ -1,18 +1,34 @@
 {
   "nome": "Massaladecamarões",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Camarões",
+    "Creme de leite",
+    "Leite de coco",
+    "Tomate",
+    "Cebola",
+    "Alho",
+    "Coentro fresco",
+    "Especiarias (ex: açafrão, pimenta, curry)",
+    "Azeite"
+  ],
+  "descricao": "A Massala de Camarões é um prato cremoso e aromático, de origem indiana, adaptado à culinária brasileira. Os camarões são cozidos em um molho à base de creme de leite, leite de coco e especiarias. O preparo geralmente começa com o refogado de cebola, alho e especiarias em azeite. Em seguida, adiciona-se os camarões, tomate, e o creme de leite e leite de coco, deixando cozinhar até os camarões ficarem rosados e o molho adquirir consistência cremosa. Finaliza-se com coentro fresco picado.",
+  "beneficios": [
+    "Os camarões são ricos em proteínas, selênio e vitamina B12.",
+    "O leite de coco e o azeite de oliva podem fornecer gorduras saudáveis e antioxidantes.",
+    "O coentro fresco contém antioxidantes e pode auxiliar na digestão."
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos (camarões)",
+    "Pode ser rico em gorduras saturadas, dependendo da quantidade de creme de leite e leite de coco.",
+    "Pode conter sódio, dependendo da quantidade de temperos utilizados."
+  ],
+  "curiosidade": "Massala é um termo hindi que se refere a uma mistura de especiarias em pó, geralmente utilizadas para dar sabor a pratos indianos. A composição da massala pode variar muito, dependendo da região e da receita.",
   "slug": "unknownmassaladecamarões",
-  "categoria": "vegano",
-  "category_emoji": "🍝",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

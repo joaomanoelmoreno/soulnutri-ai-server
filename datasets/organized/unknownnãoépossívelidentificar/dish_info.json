@@ -1,18 +1,16 @@
 {
   "nome": "Nãoépossívelidentificar",
-  "slug": "unknownnãoépossívelidentificar",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
+  "categoria": "não identificado",
   "ingredientes": [],
+  "descricao": "A imagem não fornece informações suficientes para identificar os ingredientes ou o modo de preparo de qualquer prato. A foto mostra o interior de um restaurante, com pessoas e mobiliário, mas nenhum alimento visível.",
   "beneficios": [],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "A qualidade da foto e a ausência de um prato dificultam qualquer análise nutricional ou gastronômica.",
+  "slug": "unknownnãoépossívelidentificar",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
