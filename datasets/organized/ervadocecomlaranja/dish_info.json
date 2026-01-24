@@ -1,18 +1,25 @@
 {
   "nome": "Ervadocecomlaranja",
-  "slug": "ervadocecomlaranja",
-  "categoria": "sobremesa",
-  "category_emoji": "🍰",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Ervadoce (Bulbo)",
+    "Laranja",
+    "Azeite de oliva",
+    "Dill (endro) fresco"
+  ],
+  "descricao": "O prato é composto por fatias de ervadoce, acompanhadas de gomos de laranja e folhas de dill, tudo levemente temperado com azeite. O ervadoce pode ter sido ligeiramente cozido ou salteado para amaciar, mas a preparação é simples, visando preservar os sabores naturais.",
+  "beneficios": [
+    "Rico em vitamina C (da laranja), importante para a imunidade e antioxidante.",
+    "Fonte de fibras (ervadoce), auxiliando na digestão e saciedade.",
+    "A ervadoce é conhecida por suas propriedades anti-inflamatórias e digestivas."
+  ],
   "riscos": [],
-  "tecnica": "",
+  "curiosidade": "O ervadoce, também conhecido como funcho, tem um sabor que lembra anis e é amplamente utilizado na culinária mediterrânea. As sementes de ervadoce também são usadas como especiaria e para fazer chá, conhecido por suas propriedades digestivas.",
+  "slug": "ervadocecomlaranja",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

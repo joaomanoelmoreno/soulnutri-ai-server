@@ -1,18 +1,31 @@
 {
   "nome": "Empanada",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Massa de empanada (possivelmente à base de farinha de trigo)",
+    "Recheio de empanada (não identificado, mas com possibilidade de carne)",
+    "Queijo (no acompanhamento)",
+    "Tomate fatiado",
+    "Alface americana",
+    "Pimenta dedo-de-moça",
+    "Molho amarelo (possivelmente à base de mostarda)"
+  ],
+  "descricao": "Prato composto por uma empanada dourada, possivelmente assada ou frita, acompanhada por uma porção de queijo gratinado, tomate fatiado, folhas de alface americana, pimentas dedo-de-moça e um molho amarelo cremoso (provavelmente mostarda).",
+  "beneficios": [
+    "A alface americana é fonte de vitaminas e minerais, como vitamina K, que auxilia na coagulação sanguínea.",
+    "O tomate é rico em licopeno, um antioxidante que pode ajudar a proteger contra doenças."
+  ],
+  "riscos": [
+    "Contém glúten (na massa da empanada)",
+    "Potencialmente alto teor de gordura (na massa e/ou recheio da empanada)",
+    "Alérgeno: laticínios (queijo)"
+  ],
+  "curiosidade": "Empanadas são tradicionais em diversos países da América Latina, variando o recheio de acordo com a cultura local.",
   "slug": "empanada",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }

@@ -1,18 +1,27 @@
 {
   "nome": "Entrecotegrelhado",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Entrecotegrelhado",
+    "Tomate cereja",
+    "Alecrim",
+    "Cebolinha picada"
+  ],
+  "descricao": "Prato composto por cortes de entrecôte grelhados, decorados com tomate cereja fatiado, ramos de alecrim fresco e cebolinha picada. O preparo do entrecôte envolve o processo de grelhar a carne, resultando em um exterior selado e interior suculento.",
+  "beneficios": [
+    "A carne bovina é fonte de proteína de alta qualidade, essencial para a construção e reparo dos tecidos do corpo.",
+    "O alecrim contém antioxidantes, que ajudam a proteger as células contra danos."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL.",
+    "Consumo excessivo de carne vermelha tem sido associado a um maior risco de certas doenças, como doenças cardíacas."
+  ],
+  "curiosidade": "O entrecôte, que em francês significa 'entre as costelas', é um corte retirado da parte dianteira do contrafilé, conhecido por sua maciez e sabor acentuado devido à presença de gordura entre as fibras.",
   "slug": "entrecotegrelhado",
-  "categoria": "outros",
-  "category_emoji": "🍽️",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  },
-  "contem_gluten": false
+  }
 }
