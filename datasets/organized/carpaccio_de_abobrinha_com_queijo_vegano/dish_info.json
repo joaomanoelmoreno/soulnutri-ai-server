@@ -1,0 +1,22 @@
+{
+  "nome": "Carpaccio De Abobrinha Com Queijo Vegano",
+  "slug": "carpaccio_de_abobrinha_com_queijo_vegano",
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "descricao": "Carpaccio De Abobrinha Com Queijo Vegano - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

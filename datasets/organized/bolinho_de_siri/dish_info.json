@@ -1,0 +1,22 @@
+{
+  "nome": "Bolinho De Siri",
+  "slug": "bolinho_de_siri",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Bolinho De Siri - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,0 +1,22 @@
+{
+  "nome": "Beterraba Com Laranja",
+  "slug": "beterraba_com_laranja",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Beterraba Com Laranja - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

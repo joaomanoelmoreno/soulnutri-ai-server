@@ -1,0 +1,22 @@
+{
+  "nome": "Salada De Feijão Fradinho",
+  "slug": "salada_de_feijão_fradinho",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Salada De Feijão Fradinho - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

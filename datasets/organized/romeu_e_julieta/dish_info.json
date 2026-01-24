@@ -1,0 +1,22 @@
+{
+  "nome": "Romeu E Julieta",
+  "slug": "romeu_e_julieta",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Romeu E Julieta - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

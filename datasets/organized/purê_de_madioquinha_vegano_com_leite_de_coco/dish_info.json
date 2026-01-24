@@ -1,0 +1,22 @@
+{
+  "nome": "Purê De Madioquinha Vegano Com Leite De Coco",
+  "slug": "purê_de_madioquinha_vegano_com_leite_de_coco",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Purê De Madioquinha Vegano Com Leite De Coco - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

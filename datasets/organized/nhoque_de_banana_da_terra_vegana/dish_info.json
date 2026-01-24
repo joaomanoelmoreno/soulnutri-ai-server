@@ -1,0 +1,22 @@
+{
+  "nome": "Nhoque De Banana Da Terra Vegana",
+  "slug": "nhoque_de_banana_da_terra_vegana",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Nhoque De Banana Da Terra Vegana - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

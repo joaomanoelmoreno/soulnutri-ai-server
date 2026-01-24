@@ -1,0 +1,22 @@
+{
+  "nome": "Abobrinha Caramelizada Vegana",
+  "slug": "abobrinha_caramelizada_vegana",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Abobrinha Caramelizada Vegana - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

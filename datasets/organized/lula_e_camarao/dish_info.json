@@ -1,0 +1,22 @@
+{
+  "nome": "Lula E Camarao",
+  "slug": "lula_e_camarao",
+  "categoria": "proteína animal",
+  "category_emoji": "🐟",
+  "descricao": "Lula E Camarao - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

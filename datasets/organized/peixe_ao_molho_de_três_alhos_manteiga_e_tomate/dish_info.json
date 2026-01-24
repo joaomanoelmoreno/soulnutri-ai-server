@@ -1,0 +1,22 @@
+{
+  "nome": "Peixe Ao Molho De Três Alhos Manteiga E Tomate",
+  "slug": "peixe_ao_molho_de_três_alhos_manteiga_e_tomate",
+  "categoria": "proteína animal",
+  "category_emoji": "🐟",
+  "descricao": "Peixe Ao Molho De Três Alhos Manteiga E Tomate - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

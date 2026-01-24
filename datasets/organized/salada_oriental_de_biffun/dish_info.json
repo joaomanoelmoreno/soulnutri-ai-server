@@ -1,0 +1,22 @@
+{
+  "nome": "Salada Oriental De Biffun",
+  "slug": "salada_oriental_de_biffun",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Salada Oriental De Biffun - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,0 +1,22 @@
+{
+  "nome": "Maminha Ao Molho Mostarda",
+  "slug": "maminha_ao_molho_mostarda",
+  "categoria": "proteína animal",
+  "category_emoji": "🥩",
+  "descricao": "Maminha Ao Molho Mostarda - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

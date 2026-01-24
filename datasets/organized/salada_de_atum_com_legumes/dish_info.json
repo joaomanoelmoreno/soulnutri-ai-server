@@ -1,0 +1,22 @@
+{
+  "nome": "Salada De Atum Com Legumes",
+  "slug": "salada_de_atum_com_legumes",
+  "categoria": "proteína animal",
+  "category_emoji": "🐟",
+  "descricao": "Salada De Atum Com Legumes - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,0 +1,22 @@
+{
+  "nome": "Tortilha Espanhola De Batata",
+  "slug": "tortilha_espanhola_de_batata",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Tortilha Espanhola De Batata - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

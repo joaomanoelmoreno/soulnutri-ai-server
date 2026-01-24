@@ -1,0 +1,22 @@
+{
+  "nome": "Frango Ao Molho",
+  "slug": "frango_ao_molho",
+  "categoria": "proteína animal",
+  "category_emoji": "🍗",
+  "descricao": "Frango Ao Molho - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

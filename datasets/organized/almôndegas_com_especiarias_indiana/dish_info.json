@@ -1,0 +1,22 @@
+{
+  "nome": "Almôndegas Com Especiarias Indiana",
+  "slug": "almôndegas_com_especiarias_indiana",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Almôndegas Com Especiarias Indiana - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

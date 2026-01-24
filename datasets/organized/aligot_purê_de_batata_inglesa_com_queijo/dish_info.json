@@ -1,0 +1,22 @@
+{
+  "nome": "Aligot Purê De Batata Inglesa Com Queijo",
+  "slug": "aligot_purê_de_batata_inglesa_com_queijo",
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "descricao": "Aligot Purê De Batata Inglesa Com Queijo - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

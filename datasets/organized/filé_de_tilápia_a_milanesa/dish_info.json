@@ -1,0 +1,22 @@
+{
+  "nome": "Filé De Tilápia A Milanesa",
+  "slug": "filé_de_tilápia_a_milanesa",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Filé De Tilápia A Milanesa - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

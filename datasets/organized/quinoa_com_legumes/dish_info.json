@@ -1,0 +1,22 @@
+{
+  "nome": "Quinoa Com Legumes",
+  "slug": "quinoa_com_legumes",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Quinoa Com Legumes - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

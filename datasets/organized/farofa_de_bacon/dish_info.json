@@ -1,0 +1,22 @@
+{
+  "nome": "Farofa De Bacon",
+  "slug": "farofa_de_bacon",
+  "categoria": "proteína animal",
+  "category_emoji": "🥩",
+  "descricao": "Farofa De Bacon - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

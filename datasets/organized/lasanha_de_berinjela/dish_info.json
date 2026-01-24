@@ -1,0 +1,22 @@
+{
+  "nome": "Lasanha De Berinjela",
+  "slug": "lasanha_de_berinjela",
+  "categoria": "vegano",
+  "category_emoji": "🍝",
+  "descricao": "Lasanha De Berinjela - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

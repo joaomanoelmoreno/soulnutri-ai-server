@@ -1,0 +1,22 @@
+{
+  "nome": "Ceviche Cibi Sana Filé De Tilápia",
+  "slug": "ceviche_cibi_sana_filé_de_tilápia",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Ceviche Cibi Sana Filé De Tilápia - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

@@ -1,0 +1,22 @@
+{
+  "nome": "Ceviche De Banana Da Terra",
+  "slug": "ceviche_de_banana_da_terra",
+  "categoria": "outros",
+  "category_emoji": "🍽️",
+  "descricao": "Ceviche De Banana Da Terra - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

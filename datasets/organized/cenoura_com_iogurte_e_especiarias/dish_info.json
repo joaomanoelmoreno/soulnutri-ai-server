@@ -1,0 +1,22 @@
+{
+  "nome": "Cenoura Com Iogurte E Especiarias",
+  "slug": "cenoura_com_iogurte_e_especiarias",
+  "categoria": "vegano",
+  "category_emoji": "🥬",
+  "descricao": "Cenoura Com Iogurte E Especiarias - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

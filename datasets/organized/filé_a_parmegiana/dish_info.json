@@ -1,0 +1,22 @@
+{
+  "nome": "Filé A Parmegiana",
+  "slug": "filé_a_parmegiana",
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "descricao": "Filé A Parmegiana - prato do buffet Cibi Sana",
+  "ingredientes": [
+    "Ingredientes selecionados"
+  ],
+  "beneficios": [
+    "Nutritivo"
+  ],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~20g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}
