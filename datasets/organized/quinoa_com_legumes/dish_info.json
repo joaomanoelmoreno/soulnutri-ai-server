@@ -1,32 +1,23 @@
 {
-  "nome": "Quinoa Com Legumes",
-  "categoria": "vegano",
-  "ingredientes": [
-    "Quinoa cozida",
-    "Cenoura em cubos",
-    "Abóbora em cubos",
-    "Cebolinha picada",
-    "Salsinha picada",
-    "Azeite de oliva (possivelmente)",
-    "Sal (possivelmente)",
-    "Pimenta do reino (possivelmente)"
-  ],
-  "descricao": "Prato vegano que consiste em quinoa cozida misturada com legumes picados e temperados. Os legumes visíveis incluem cenoura e abóbora em cubos, cebolinha picada e salsinha. Possivelmente temperado com azeite de oliva, sal e pimenta do reino. Apresenta-se em uma travessa branca, pronto para servir.",
-  "beneficios": [
-    "A quinoa é uma excelente fonte de proteína vegetal completa, fornecendo todos os aminoácidos essenciais.",
-    "Rico em fibras, que auxiliam na digestão e promovem a saciedade.",
-    "Os legumes fornecem vitaminas, minerais e antioxidantes importantes para a saúde."
-  ],
-  "riscos": [
-    "Pode conter traços de glúten, dependendo do local de preparo.",
-    "Possível presença de contaminação cruzada em ambientes com outros alimentos."
-  ],
-  "curiosidade": "A quinoa é um pseudocereal, ou seja, uma semente que é consumida como um grão, e é um alimento completo com bom perfil nutricional.",
+  "nome": "Quinoa com legumes",
   "slug": "quinoa_com_legumes",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Uma salada colorida e nutritiva, rica em quinoa, com pedaços de vegetais.",
+  "ingredientes": [
+    "Quinoa",
+    "Cenoura",
+    "Pimentão",
+    "Azeite"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
 }
