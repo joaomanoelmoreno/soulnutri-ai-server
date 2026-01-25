@@ -1,141 +1,162 @@
 # SoulNutri - Product Requirements Document
 
-**Última atualização**: 23 Janeiro 2026
-**URL**: https://food-radar-5.preview.emergentagent.com
+**Última atualização:** 25 Janeiro 2026
+**Versão:** 2.0
 
 ---
 
-## Visão
-**"SOULNUTRI - O SEU AGENTE DE NUTRIÇÃO VIRTUAL"**
+## 1. Visão do Produto
 
-O SoulNutri é um agente de nutrição virtual que acompanha o cliente em TEMPO REAL durante as refeições, fornecendo informações científicas, alertas personalizados e educação nutricional.
+**SoulNutri** é um agente de nutrição virtual que identifica pratos em tempo real a partir de imagens, fornecendo informações nutricionais detalhadas e personalizadas.
 
----
+**Slogan:** "Porque nutre também a sua alma"
 
-## 🚨 ISSUES CORRIGIDOS (23/01/2026)
-
-### ✅ P0 - Travamentos em Dispositivos Móveis
-**Status**: CORRIGIDO
-- Implementado `AbortController` em todas as requisições fetch com timeout de 15s
-- Adicionado `mountedRef` para evitar atualizações de estado após unmount
-- Corrigida dependência faltante no `useCallback` do `handleCameraTouch`
-- Adicionado tratamento de erros robusto para localStorage
-- Cancelamento automático de requisições pendentes no cleanup
-
-### ✅ PWA - Preparativos App Store/Play Store
-**Status**: IMPLEMENTADO (sem pagamentos ainda)
-- Criado `/public/manifest.json` com metadados para PWA
-- Criado `/public/sw.js` (Service Worker) para cache offline
-- Atualizado `index.html` com meta tags para iOS e Android
-- App pode ser "instalado" direto do navegador
+**Missão:** Atuar como um "radar do prato", focando em segurança alimentar e informação de valor em tempo real.
 
 ---
 
-## 📋 TAREFA PENDENTE DO USUÁRIO
+## 2. Requisitos Principais
 
-**O usuário está treinando o modelo YOLOv8 no Google Colab.**
+### Performance
+- Identificação < 500ms
+- Precisão > 90% para pratos únicos cadastrados
+- Funcionar offline (PWA)
 
-Quando ele voltar, provavelmente dirá:
-- "Terminei o treinamento" → Pedir o arquivo `best.pt` e integrar
-- "Tive problemas no Colab" → Ver `/app/ml/GUIA_TREINAMENTO_YOLOV8.md`
+### Funcionalidades Core (FREE)
+- ✅ Identificação de pratos por imagem
+- ✅ Nome, categoria, ingredientes
+- ✅ Informações nutricionais básicas
+- ✅ Alertas de alérgenos
+- ✅ Modo multi-item (buffet)
 
-**Arquivos para o usuário baixar:**
-- `/app/ml/dataset.zip` (148 MB)
-- `/app/ml/SoulNutri_YOLOv8_Training.ipynb`
-
----
-
-## Funcionalidades por Versão
-
-### 🆓 VERSÃO GRATUITA
-- Identificação de pratos por imagem
-- Nome, categoria e ingredientes do prato
-- Alérgenos básicos
-- Modo Multi-Item (buffet)
-
-### ⭐ VERSÃO PREMIUM
-**Exclusivo Premium - Alertas em Tempo Real:**
-- ✅ Informações científicas (curiosidade, benefício, referência)
-- ✅ Alertas de alérgenos baseados no PERFIL do usuário
-- ✅ Alertas de nutrientes baseados no HISTÓRICO semanal
-- ✅ Combinações inteligentes
-- ✅ Substituições saudáveis
-- ✅ Meta calórica automática (Harris-Benedict)
-- ✅ Contador nutricional diário
-- ✅ Histórico de consumo
+### Funcionalidades Premium (R$14,90/mês)
+- ✅ Contador de calorias diário
+- ✅ Alertas personalizados (alergias cadastradas)
+- ✅ Perfil nutricional completo
+- ✅ Check-in de Refeição (modo buffet guiado)
+- ✅ Novidades/Notícias em tempo real
+- ✅ "Verdade ou Mito" educativo
+- ⏳ Histórico semanal com gráficos
+- ⏳ Interação com medicamentos
 
 ---
 
-## Status Atual
+## 3. Status Atual
 
-### ✅ Implementado
-- [x] Identificação em cascata (Cache → OpenCLIP → YOLOv8 → Gemini)
-- [x] Sistema de Cache (~0ms para repetidos)
-- [x] Login com Nome + PIN
-- [x] Perfil com dados físicos e alergias
-- [x] Contador nutricional diário
-- [x] Alertas Premium em tempo real
-- [x] Seção "Você Sabia?" com visual melhorado
-- [x] Proteção anti-fake news
-- [x] **Endpoint YOLOv8 configurado** (aguardando modelo)
-- [x] **Dataset preparado**: 8.145 imagens (5x augmentation)
-- [x] **Correções de estabilidade mobile** (AbortController, cleanup)
-- [x] **PWA básico** (manifest.json, service worker)
-- [x] **Menu com "Adicionar à tela inicial"** (versão gratuita)
-- [x] **Galeria corrigida** (abre fotos do celular, não câmera)
-- [x] **Índice atualizado**: 241 pratos, 756 imagens
+### Dataset
+- **488 pratos** cadastrados
+- **1747+ imagens** indexadas
+- Pratos do CibiSana + pratos genéricos
 
-### ⏳ Aguardando
-- [ ] **Modelo YOLOv8 treinado** (usuário vai treinar no Colab)
-- [ ] **Feedback do usuário** sobre conteúdo "Verdade ou Mito"
-- [ ] **Fotos de teste da balança** para OCR
+### Tecnologia
+- Frontend: React (PWA)
+- Backend: FastAPI + MongoDB
+- IA: OpenCLIP (embeddings) + Gemini Vision (fallback)
+- Cache: Sistema de cache para reduzir chamadas API
 
-### 📋 Próximas Tarefas
-| Prioridade | Tarefa |
-|------------|--------|
-| P1 | Interface do funcionário para captura de fotos na balança |
-| P1 | Recursos Premium: Educação Nutricional, Timing, Medicamentos |
-| P2 | Notícias recentes na UI Premium |
-| P2 | Melhorar alertas visuais |
-| P3 | Histórico semanal com gráficos |
-| P3 | Ícones PWA em alta resolução (512x512) |
-| P3 | Publicação efetiva na App Store / Play Store |
-
----
-
-## Arquitetura de Identificação
-
-```
-┌─────────────────────────────────────────────────────────┐
-│           CASCATA DE IDENTIFICAÇÃO                       │
-├─────────────────────────────────────────────────────────┤
-│ 0. CACHE       │ Hash MD5            │ ~0ms             │
-│ 1. OpenCLIP    │ Pratos cadastrados  │ ~200-300ms       │
-│ 1.5 YOLOv8     │ Modelo local (⏳)   │ ~50-100ms        │
-│ 2. Gemini      │ Fallback universal  │ ~3-5s            │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Para ativar YOLOv8:
-1. Usuário treina no Colab
-2. Faz upload de `best.pt` 
-3. Mover para `/app/ml/models/best.pt`
-4. Reiniciar backend
-5. Automático!
-
----
-
-## Arquivos Importantes
-
-| Arquivo | Descrição |
-|---------|-----------|
-| `/app/memory/CONTINUIDADE.md` | Documento completo de continuidade |
-| `/app/ml/GUIA_TREINAMENTO_YOLOV8.md` | Guia para iniciantes |
-| `/app/ml/dataset.zip` | Dataset para treinar |
-| `/app/ml/SoulNutri_YOLOv8_Training.ipynb` | Notebook Colab |
-| `/app/backend/services/yolo_service.py` | Serviço YOLOv8 |
-
----
-
-## URL
+### URL Atual
 https://food-radar-5.preview.emergentagent.com
+
+---
+
+## 4. O que foi Implementado
+
+### Sessão 25/01/2026
+- [x] Processamento de 344 novas fotos do WeTransfer
+- [x] Check-in de Refeição (Premium) - modo buffet guiado
+- [x] Sistema de Novidades Premium - alertas em tempo real
+- [x] Painel Admin - gerenciamento de novidades
+- [x] Logo colorida atualizada no PWA
+
+### Sessões Anteriores
+- [x] Sistema de reconhecimento otimizado (v5)
+- [x] Limpeza e consolidação do dataset
+- [x] Regeneração de metadados via Gemini
+- [x] Sistema Premium completo
+- [x] PWA com instalação offline
+
+---
+
+## 5. Backlog Priorizado
+
+### P0 - Crítico (Próximas Semanas)
+- [ ] Teste no CibiSana com clientes reais
+- [ ] QR codes para mesas
+- [ ] Ajustes baseados em feedback
+
+### P1 - Importante (Próximo Mês)
+- [ ] Criar contas Apple Developer e Google Play
+- [ ] Preparar assets para lojas (ícones, screenshots)
+- [ ] Integrar sistema de pagamentos (In-App Purchase)
+- [ ] Publicar nas lojas
+
+### P2 - Desejável (Futuro)
+- [ ] Histórico semanal com gráficos
+- [ ] Fluxo de coleta de dados na balança (OCR)
+- [ ] Melhorar reconhecimento de pratos múltiplos
+- [ ] Treinar modelo YOLOv8 customizado
+
+---
+
+## 6. Problemas Conhecidos
+
+### Resolvido
+- ✅ Precisão de pratos únicos (agora 95-100%)
+- ✅ Dataset desorganizado (agora limpo e padronizado)
+
+### Em Aberto
+- ⚠️ Reconhecimento de múltiplos itens (acompanhamentos) ainda desafiador
+- ⚠️ Travamentos em alguns dispositivos móveis (não investigado)
+
+---
+
+## 7. Plano de Lançamento
+
+### Fase 1: CibiSana (Atual)
+- Foco: Validação com clientes reais
+- Meta: 100 downloads, 10 assinantes Premium
+- Tática: QR codes nas mesas + garçons apresentando
+
+### Fase 2: Boca a Boca (Meses 2-3)
+- Programa de indicação
+- Depoimentos de clientes
+- Parcerias com nutricionistas
+
+### Fase 3: Lojas (Meses 2-4)
+- Apple App Store ($99/ano)
+- Google Play ($25 único)
+
+### Fase 4: Escala (Meses 4-6)
+- Outros restaurantes
+- Campanhas pagas
+- Influenciadores
+
+---
+
+## 8. Preços
+
+| Plano | Preço |
+|-------|-------|
+| FREE | R$0 |
+| Premium Mensal | R$14,90/mês |
+| Premium Anual | R$99,90/ano |
+| Promoção Lançamento | R$9,90/mês (3 meses) |
+
+---
+
+## 9. Integrações
+
+- **Gemini Vision:** Análise de imagens e geração de metadados
+- **OpenCLIP:** Embeddings para busca por similaridade
+- **MongoDB:** Armazenamento de dados
+- **Emergent Platform:** Hospedagem e deploy
+
+---
+
+## 10. Arquivos Importantes
+
+- `/app/backend/services/hybrid_identify_v5.py` - Lógica de reconhecimento
+- `/app/datasets/organized/` - Dataset de pratos
+- `/app/frontend/src/App.js` - Interface principal
+- `/app/frontend/src/CheckinRefeicao.jsx` - Check-in de refeição
+- `/app/memory/BUSINESS_PLAN.md` - Plano de negócios completo
