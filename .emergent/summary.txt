@@ -1,185 +1,147 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo que funciona como um agente de nutrição virtual. A funcionalidade principal é a identificação de pratos em tempo real por meio de imagens, fornecendo ao consumidor informações detalhadas e personalizadas (ingredientes, alérgenos, dados nutricionais, fatos científicos) antes da escolha do prato. A aplicação deve ser extremamente rápida (< 500ms) e precisa. Uma versão Premium foi introduzida, contendo funcionalidades avançadas como perfil de usuário, contador nutricional, histórico e alertas em tempo real. O usuário também planeja lançar o app no seu restaurante (Cibi Sana) e tem planos ambiciosos de negócio, incluindo marketing, precificação e publicação nas app stores.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta velocidade (< 500ms) e precisão (> 90%). O projeto inclui uma versão Premium e um fluxo para capturar fotos de pratos na balança do restaurante (Cibi Sana) para treinar continuamente a IA. O foco principal atual é melhorar a precisão do reconhecimento de pratos compostos (buffet), onde a precisão para itens acompanhantes ainda é baixa. O usuário solicitou explicitamente que o próximo passo seja treinar um modelo YOLOv8 para melhorar a detecção de múltiplos itens.
 
 **PRODUCT REQUIREMENTS:**
 1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
-2.  **Performance e Precisão:** A identificação deve ser quase instantânea (< 500ms) e com mais de 90% de precisão. Erros de classificação, especialmente de alérgenos ou restrições (ex: vegano), são inaceitáveis.
-3.  **Coleta de Dados na Balança:** Implementar um fluxo para fotografar todos os pratos na balança do restaurante para treinar continuamente o modelo de IA e calcular calorias com base no peso exato.
-4.  **Qualidade da Informação:** As informações devem ser educativas, cientificamente embasadas, surpreendentes e despertar curiosidade, evitando obviedades.
-5.  **UX/UI:** Interface com o mínimo de cliques, fluida e estável, sem travamentos.
-6.  **Versão Premium:** Oferecer funcionalidades de alto valor que justifiquem uma assinatura paga, como educação nutricional contínua, Verdade ou Mito, interações medicamentosas, etc.
+2.  **Performance e Precisão:** A identificação deve ser quase instantânea (< 500ms) e com mais de 90% de precisão.
+3.  **Coleta de Dados na Balança:** Implementar um fluxo para fotografar pratos na balança para treinar a IA.
+4.  **Qualidade da Informação:** As informações devem ser educativas e cientificamente embasadas.
+5.  **UX/UI:** Interface com o mínimo de cliques, fluida e estável.
+6.  **Versão Premium:** Oferecer funcionalidades de alto valor que justifiquem uma assinatura.
+7.  **Flexibilidade de Buffet:** O sistema deve reconhecer pratos compostos por múltiplos itens escolhidos pelo cliente.
 
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-Um aplicativo full-stack (React + FastAPI + MongoDB) com funcionalidades gratuitas e Premium. A arquitetura de reconhecimento foi simplificada para uma cascata de 3 níveis:
-1.  **Cache em Memória (~0ms):** Retorna resultados para imagens idênticas já processadas.
-2.  **Índice Local OpenCLIP (~200ms):** Identifica pratos específicos do restaurante (Cibi Sana) que já foram cadastrados.
-3.  **IA Genérica Gemini (~2-4s):** Um fallback para pratos novos ou desconhecidos, com prompt e compressão de imagem otimizados para velocidade.
-
-- **Backend:** Inclui um Safety Validator que faz uma dupla checagem nos resultados da IA para corrigir erros críticos de classificação (ex: peixe como vegano). Foram criados endpoints para adicionar novas imagens ao índice local e para reindexar, suportando a estratégia de aprendizado contínuo.
-- **Frontend:** Possui uma UI funcional com modo de câmera, resultados detalhados e uma interface Premium com login (Nome+PIN) e dashboard. A seção Verdade ou Mito foi adicionada.
-- **ML Pipeline:** Foi criado um pipeline completo para treinar um modelo YOLOv8, incluindo data augmentation e um script de treinamento em background. Um treinamento inicial foi concluído, mas o modelo ainda não está performando bem e está desabilitado na cascata principal.
+Um aplicativo full-stack (React + FastAPI + MongoDB). O sistema de reconhecimento foi drasticamente otimizado, culminando no , que usa uma busca OpenCLIP na imagem completa. Isso resultou em performance excelente para pratos únicos, com tempo de resposta de ~100-150ms e precisão de 95-100%. No entanto, a identificação de múltiplos itens (acompanhamentos) continua sendo um desafio. Todo o dataset foi limpo e expandido: os metadados de todos os pratos foram regenerados via Gemini, e centenas de novas fotos foram adicionadas e organizadas. O dataset agora está consolidado e padronizado, contendo **401 pratos** e **1982 imagens**, com nomes de pastas e de exibição corrigidos. Foi gerado um relatório () detalhando quais pratos ainda precisam de mais fotos.
 
 **Last working item**:
--   **Last item agent was working**: O agente estava investigando múltiplos bugs críticos reportados pelo usuário após testes em campo:
-    1.  O aplicativo está travando em 2 de 3 celulares diferentes, impedindo o uso.
-    2.  A IA elogia nutrientes (ex: Rico em Proteínas) mas exibe o valor como 0g na interface, causando desconfiança.
-    3.  A qualidade do conteúdo Você Sabia... precisa ser mais sofisticada e menos óbvia.
--   **Status**: BLOCKED
+-   **Last item agent was working**: O agente concluiu uma massiva operação de limpeza, expansão e padronização do dataset. Isso envolveu: processar 178 fotos novas, usar a IA para nomear 100 delas, consolidar dezenas de pratos duplicados (ex: quiches, brownies, pancetta) com base no feedback do usuário, e padronizar todos os nomes de pastas para usar  e os nomes de exibição em  para terem espaços e capitalização corretos. A etapa final foi reindexar este novo dataset limpo.
+-   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: frontend testing agent. O agente precisa depurar o frontend para entender a causa dos travamentos em diferentes dispositivos móveis e a inconsistência na exibição dos dados nutricionais.
--   **User Testing Done**: Y
+-   **Which testing method agent to use?**: both. É preciso testar o backend para ver se a limpeza do dataset melhorou o reconhecimento de pratos múltiplos (usando as 5 fotos do ). O frontend deve ser verificado para garantir que os nomes de exibição padronizados (com espaços) estão sendo mostrados corretamente na interface.
+-   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) App travando em múltiplos dispositivos móveis.
--   Issue 2: (P1) Inconsistência de dados na UI (ex: elogia proteína, mas mostra 0g).
--   Issue 3: (P2) Conteúdo do Verdade ou Mito precisa ser mais relevante e menos óbvio.
--   Issue 4: (P2) Velocidade de reconhecimento de pratos novos ainda é lenta (~2-4s).
--   Issue 5: (P3) Modelo YOLOv8 treinado tem baixa precisão e não está pronto para uso.
+-   Issue 1: (P0) A precisão do reconhecimento de múltiplos itens (acompanhamentos) ainda é baixa.
+-   Issue 2: (P1) O aplicativo continua travando em dispositivos móveis (não foi abordado nesta sessão).
 
 **Issues Detail**:
--   **Issue 1: App travando em múltiplos dispositivos móveis**
-    -   **Attempted fixes**: Nenhum. O agente foi interrompido antes de iniciar a investigação. Este é um problema recorrente.
+-   **Issue 1: A precisão do reconhecimento de múltiplos itens (acompanhamentos) ainda é baixa.**
+    -   **Attempted fixes**: Múltiplas versões da lógica de identificação foram criadas (v2 a v5). A v5 é a mais performática e precisa para o item principal. O dataset foi expandido e massivamente limpo/consolidado para remover ruído. Vários thresholds de score foram testados.
     -   **Next debug checklist**:
-        1.  Revisar o componente  em busca de possíveis memory leaks ou má gestão de estado (useState, useEffect).
-        2.  Implementar  nas chamadas  para evitar que requisições longas travem a UI.
-        3.  Adicionar logs no frontend para capturar o estado do aplicativo e a resposta da API antes do travamento.
-        4.  Usar o  para simular o uso em diferentes viewports e capturar erros de console.
-    -   **Why fix this issue and what will be achieved with the fix?**: É o bloqueador mais crítico. O app é inútil se os usuários não conseguem usá-lo.
+        1.  (CURTO PRAZO) Testar o impacto da limpeza do dataset na precisão. Reavaliar as 5 fotos de teste do usuário para ver se os acompanhamentos melhoraram.
+        2.  (MÉDIO PRAZO) Iniciar os preparativos para treinar um modelo de **detecção** YOLOv8, conforme solicitado pelo usuário. Isso inclui:
+            -   Pesquisar a estrutura de pastas e anotações (labels) necessárias para treinar um modelo de *detecção* YOLOv8.
+            -   Criar scripts para preparar o dataset atual (401 pratos, 1982 imagens) nesse formato.
+            -   Pesquisar e planejar o processo de treinamento em si.
+    -   **Why fix this issue and what will be achieved with the fix?**: É a funcionalidade central do app e o principal bloqueador para o lançamento no restaurante. O usuário acredita que a solução definitiva é um modelo de detecção customizado.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: both
+
+-   **Issue 2: O aplicativo continua travando em dispositivos móveis.**
+    -   **Attempted fixes**: Nenhuma nesta sessão. As otimizações de forks anteriores permanecem.
+    -   **Next debug checklist**: Conforme o handoff anterior: pedir ao usuário para descrever as circunstâncias exatas do travamento e usar o  para testes de estresse.
+    -   **Why fix this issue and what will be achieved with the fix?**: A estabilidade é crítica para a usabilidade do app.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Blocked on other issue**: Não.
 
--   **Issue 2: Inconsistência de dados na UI (elogia proteína, mas mostra 0g)**
-    -   **Attempted fixes**: O agente identificou que o problema está na lógica de , que gera o alerta mesmo se o valor do nutriente for zero. O agente aplicou uma correção para verificar se o  é maior que um limiar antes de gerar o elogio.
-    -   **Next debug checklist**:
-        1.  Validar se a correção em  foi suficiente.
-        2.  Testar o fluxo de ponta a ponta: identificar um prato, verificar a resposta da API e confirmar que a UI exibe os dados corretamente, sem contradições.
-    -   **Why fix this issue and what will be achieved with the fix?**: Aumenta a confiança do usuário no app. Informações contraditórias destroem a credibilidade.
-    -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: both
-    -   **Blocked on other issue**: Não.
-
--   **Issue 3: Conteúdo do Verdade ou Mito precisa ser mais relevante**
-    -   **Attempted fixes**: O agente substituiu o conteúdo em  por uma base de conhecimento com fatos mais avançados e surpreendentes, como solicitado pelo usuário.
-    -   **Next debug checklist**:
-        1.  Aguardar feedback do usuário sobre o novo conteúdo.
-        2.  Expandir a base de conhecimento com mais fatos e associá-los a mais ingredientes.
-    -   **Why fix this issue and what will be achieved with the fix?**: Aumenta o engajamento e a percepção de valor do app, especialmente para o público-alvo.
-    -   **Status**: USER VERIFICATION PENDING
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: backend
-    -   **Blocked on other issue**: Não.
-
 **In progress Task List**:
--   **Task 1: Implementar fluxo de coleta de dados na balança**
-    -   **Where to resume**: O usuário irá testar a captura de fotos que incluam o prato e o visor da balança.
-    -   **What will be achieved with this?**: Criar um dataset de alta qualidade com milhares de imagens de pratos reais e seus pesos exatos. Isso é fundamental para treinar um modelo local preciso e rápido, resolvendo o principal gargalo do app.
-    -   **Status**: BLOCKED (Aguardando fotos de teste do usuário)
-    -   **Should Test frontend/backend/both after fix?**: backend (para processar as imagens com OCR)
-    -   **Blocked on something**: Ação do usuário (enviar fotos de teste).
+- N/A. A tarefa de limpeza de dados foi concluída. A próxima é uma nova tarefa.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   (P0) Criar a interface do funcionário para capturar fotos na balança.
-    -   (P1) Concluir os recursos Premium pendentes: Educação Nutricional Contínua, Timing Nutricional e Interação com Medicamentos.
-    -   (P1) Retreinar o modelo YOLOv8 com o novo dataset de pratos compostos da balança.
-    -   (P2) Revisar e expandir o  com projeções de crescimento mais agressivas.
-    -   (P2) Criar os materiais de marketing para o lançamento no CibiSana (QR code para mesas, roteiro para garçons).
+    -   **(P0) Treinar modelo de detecção YOLOv8:** Conforme solicitado pelo usuário, preparar o dataset atual e treinar um modelo de detecção de objetos para identificar itens individuais em um prato múltiplo.
+    -   **(P1) Coletar mais fotos:** Utilizar o relatório () para guiar a coleta de mais imagens dos pratos com poucas amostras.
+    -   **(P1) Implementar fluxo de coleta de dados na balança:** Incluindo OCR para extrair peso e calcular calorias.
 -   **Future Tasks:**
-    -   (P1) Implementar o histórico semanal com gráficos na área Premium.
-    -   (P2) Preparar o aplicativo para publicação na Apple App Store e Google Play Store (PWA como solução intermediária).
-    -   (P2) Conectar o domínio personalizado  após o deploy em produção.
+    -   Aprimorar o painel Admin.
+    -   Implementar salvamento automático de fotos na galeria do celular.
+    -   Concluir os recursos Premium.
+    -   Preparar para publicação nas lojas de aplicativos.
 
 **Completed work in this session**
--   **Otimização de Performance:** Reduzido o tempo de resposta do Gemini de ~12s para ~2-4s através da otimização de prompt, compressão de imagem e atualização do modelo.
--   **Implementação de Cache:** Adicionado um cache em memória que reduz o tempo de resposta para imagens repetidas para ~0ms.
--   **Sistema de Segurança (Safety Validator):** Criado um serviço () que faz uma dupla checagem nos resultados da IA, corrigindo erros críticos de classificação (ex: peixe classificado como vegano) e logando as correções.
--   **Pipeline de Treinamento YOLOv8:** Criado um pipeline completo () para data augmentation e treinamento. Um treinamento inicial foi concluído em background.
--   **Recurso Premium Verdade ou Mito:** Implementado de ponta a ponta (backend e frontend) com uma base de conhecimento inicial.
--   **Estratégia de Negócio:** Criado o documento  com análise de concorrência, custos e projeções.
--   **Melhoria Contínua do Índice:** Criados endpoints (, ) para permitir que o índice local (OpenCLIP) seja atualizado com novas fotos, melhorando a velocidade e precisão ao longo do tempo.
+-   **Qualidade dos Dados Restaurada:** Executado com sucesso o script , que usou Gemini para gerar metadados de alta qualidade (ingredientes, descrição, etc.) para todos os pratos, resolvendo a maior frustração do usuário.
+-   **Expansão Massiva do Dataset:** Processadas e adicionadas ao sistema cerca de 180 novas fotos enviadas pelo usuário via WeTransfer.
+-   **Limpeza e Consolidação do Dataset:** Dezenas de pratos duplicados ou com nomes similares foram consolidados (ex: , , ), e todas as pastas de pratos foram renomeadas para um padrão , com os nomes de exibição corretos salvos no . O dataset final ficou com 401 pratos e 1982 imagens.
+-   **Otimização do Reconhecimento:** A lógica de identificação foi reescrita (até a versão v5), resultando em um sistema extremamente rápido (~100-150ms) e preciso (95-100%) para **pratos únicos**.
+-   **Criação de Relatório:** Gerado um relatório completo em markdown e Word (/) listando todos os pratos que necessitam de mais fotos para melhorar a IA.
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1: Travamentos ocasionais do app**
-    -   **Debug checklist**: Implementar  com timeout no frontend; revisar gerenciamento de estado do React.
-    -   **Why to solve this issue and what will be achieved with this?**: A estabilidade é crucial para a experiência do usuário.
+-   **Issue 1: Travamentos do app em dispositivos móveis.**
+    -   **Debug checklist**: Conforme detalhado na seção All Pending/In progress Issue list.
+    -   **Why to solve this issue and what will be achieved with this?**: A estabilidade é crítica para a usabilidade do app.
     -   **Should Test frontend/backend/both after fix**: frontend
     -   **Is recurring issue?**: Y
 
 **Known issue recurrence from previous fork**
--   **App Stability**: O problema de travamentos ocasionais foi mencionado novamente pelo usuário em forks anteriores e se manifestou de forma crítica nesta sessão, sendo a principal prioridade agora.
+-   **Multi-Dish Accuracy**: A dificuldade em reconhecer acompanhamentos em pratos de buffet é o desafio central e contínuo do projeto.
+-   **App Stability**: O problema de travamentos em dispositivos móveis persiste, embora não tenha sido o foco desta sessão.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Arquitetura em Cascata**: Cache -> OpenCLIP (local) -> Gemini Vision (fallback).
--   **Aprendizado Contínuo**: Estratégia de capturar fotos na balança para alimentar e retreinar os modelos locais (OpenCLIP e YOLOv8).
--   **Validação de Segurança**: Uma camada de lógica () que audita e corrige a saída da IA para garantir a precisão em casos críticos (alérgenos, restrições dietéticas).
--   **Treinamento em Background**: O treinamento do YOLOv8 foi executado como um processo de fundo no servidor, sem a necessidade de intervenção do usuário ou GPUs externas.
+-   **Identificação v5**: A lógica atual () usa OpenCLIP na imagem completa e analisa o gap de score entre os principais resultados para determinar se um prato é ÚNICO ou MÚLTIPLO. É muito rápido e preciso para pratos únicos.
+-   **Limpeza de Dados em Lote**: Uso de scripts (, etc.) para consolidar duplicatas, padronizar nomes de arquivos e pastas, e mover centenas de imagens, garantindo a consistência do dataset.
+-   **Identificação Automática para Rótulos**: Uso do próprio endpoint de IA do app para pré-identificar 136 imagens enviadas pelo usuário, acelerando o processo de adição de dados.
 
 **key DB schema**
--   **collection: **: Contém os dados dos pratos para o índice local.
--   **collection: **: Armazena os perfis dos usuários Premium.
+-   **collection: **: Os dados são lidos diretamente do sistema de arquivos (), onde cada prato é uma pasta contendo imagens e um arquivo  com metadados.
 
 **All files of reference**
--   : **Arquivo crítico para depurar os travamentos.**
--   : Contém a lógica que gera elogios para nutrientes com valor 0g.
--   : Onde a cascata de identificação é orquestrada.
--   : Implementação da camada de segurança da IA.
--   : Todo o diretório é novo e contém o pipeline para o modelo YOLOv8.
--   : Documento com a estratégia de negócio.
+-   : Contém a lógica de reconhecimento atual que precisa ser avaliada.
+-   : Onde a lógica de identificação é chamada.
+-   : Documento crucial para a próxima tarefa de coleta de dados.
+-   : O diretório do dataset, agora limpo e expandido.
 
 **key api endpoints**
--   : Endpoint principal de identificação.
--   : (NOVO) Adiciona uma nova imagem de prato ao dataset para futuro re-treinamento.
--   : (NOVO) Recria o índice local do OpenCLIP.
+-   : Endpoint para identificar um **prato único**. Rápido e preciso.
+-   : Endpoint para identificar **pratos de buffet**. Onde a baixa precisão dos acompanhamentos ainda é um problema.
+-   : Inicia a reindexação do dataset (usado extensivamente nesta sessão).
 
 **Critical Info for New Agent**
--   **PRIORIDADE MÁXIMA:** Corrigir os travamentos do app em dispositivos móveis (Issue 1). Nada mais importa se o app não abre.
--   **CONFIANÇA É TUDO:** O usuário enfatizou que a reputação é construída em anos e destruída em minutos. Erros de classificação ou dados inconsistentes (como elogiar 0g de proteína) são inaceitáveis. O  é um passo importante, mas a precisão geral precisa melhorar.
--   **ESTRATÉGIA DE VELOCIDADE:** A única forma de atingir a meta de <500ms é através de modelos locais. A estratégia central do projeto agora é o fluxo de captura de fotos na balança para treinar massivamente os modelos com dados reais do CibiSana.
--   **O USUÁRIO TESTA ATIVAMENTE:** O usuário e sua equipe estão testando o app em campo. Espere feedback direto, rápido e crítico.
+-   **MUDANÇA DE ESTRATÉGIA**: O usuário está convencido de que a abordagem atual com OpenCLIP, embora excelente para pratos únicos, atingiu seu limite para pratos múltiplos. A prioridade agora é mudar a estratégia para treinar um modelo de **detecção de objetos (YOLOv8)**.
+-   **DATASET PRONTO (PARA CLASSIFICAÇÃO)**: O dataset foi massivamente melhorado e limpo. Ele está em um estado excelente para modelos de *classificação*, mas precisará ser adaptado (com anotações/bounding boxes) para treinar um modelo de *detecção*.
+-   **ECONOMIA DE CRÉDITOS**: O usuário está ciente do consumo de créditos e pediu para evitar retrabalho. As próximas etapas devem ser bem planejadas.
+-   **RECONHECIMENTO DE PRATO ÚNICO ESTÁ RESOLVIDO**: A precisão e velocidade para pratos únicos cadastrados são excelentes. O foco é exclusivamente nos pratos múltiplos.
 
 **documents and test reports created in this job**
 -   
 -   
 -   
--   
--   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário**: Informa que o app está travando em 2 de 3 celulares, o que é um problema crítico.
-2.  **Usuário**: Reporta que o app elogia nutrientes (fibras, proteínas) mas mostra 0g, o que não faz sentido e gera desconfiança.
-3.  **Usuário**: Fornece feedback sobre o recurso Você Sabia..., pedindo conteúdo mais sofisticado, relevante e sem obviedades ou fake news.
-4.  **Usuário**: Reitera a importância da reputação e da precisão da IA, afirmando que a confiança é crucial.
-5.  **Usuário**: Pergunta se é necessário fazer o fork e se o problema de travamento foi resolvido.
-6.  **Agente**: Confirma que o problema de travamento NÃO foi resolvido e que precisa investigar.
-7.  **Usuário**: Expressa preocupação com a precisão da IA, que não pode depender de revisão manual.
-8.  **Agente**: Concorda e reconhece a importância da reputação.
-9.  **Usuário**: Pergunta sobre o andamento do treinamento do YOLOv8 e se está pronto para teste.
-10. **Usuário**: Fornece feedback sobre o Business Plan, achando as projeções muito conservadoras e pede para pesquisar o crescimento de apps concorrentes como o Cal AI.
+1.  **Usuário:** Pede para consolidar/padronizar uma lista de pratos (quiches, ceviches). Pede um relatório de todas as fotos necessárias e concorda em testar com um threshold de 65%.
+2.  **Agente:** Consolida pratos, gera o relatório e aplica o novo threshold.
+3.  **Usuário:** Pergunta por que ceviche não é encontrado, apesar de ter muitas fotos.
+4.  **Agente:** Investiga, confirma que ceviche é encontrado com 100% em foto isolada e gera um relatório completo e um arquivo Word.
+5.  **Usuário:** Reclama que a lógica com threshold de 65% está errada e pede para o agente analisar as capturas de tela.
+6.  **Agente:** Cria a lógica v5, muito mais restritiva, que se mostra excelente para pratos únicos.
+7.  **Usuário:** Confirma que pratos únicos estão ótimos (100%), mas os múltiplos ainda não identificam os acompanhamentos.
+8.  **Agente:** Ajusta a lógica (v5.1, v5.2, v5.3) e conclui que a melhor abordagem é usar os endpoints separados de único e múltiplo que já existem.
+9.  **Usuário:** Concorda em testar (Opção A), mas logo em seguida relata que ainda há muitos erros nos acompanhamentos. Afirma que a solução é treinar o YOLOv8 e aumentar o dataset. Pede instruções para compartilhar arquivos grandes via Google Drive/WeTransfer.
+10. **Usuário:** Envia um link do WeTransfer com as novas fotos, pede para o agente nomear as fotos que não têm nome, e consolida/padroniza mais nomes de pratos.
 
 **Project Health Check:**
--   **Broken**: A estabilidade do aplicativo em diferentes dispositivos móveis está quebrada. A UI apresenta dados inconsistentes (elogio para 0g de nutrientes).
--   **Mocked**: Nenhum.
+-   **Broken**: A identificação de acompanhamentos em pratos múltiplos continua sendo imprecisa e não atende aos requisitos do usuário para o lançamento.
+-   **Mocked**: Nenhum. Os dados placeholder foram todos substituídos por dados de alta qualidade gerados por IA.
 
 **3rd Party Integrations**
--   **Gemini Vision**: Ativo e funcionando (Nível 3) via , usando a . Otimizado para ~2-4s.
--   **OpenCLIP**: Ativo e funcionando (Nível 2) para o índice local.
+-   **Gemini Vision**: Usado para a regeneração em lote de metadados de todos os pratos. Acessado via  com a .
+-   **OpenCLIP**: Usado como o motor principal para a busca por similaridade visual, que agora está altamente otimizada para pratos únicos.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: Nenhum.
--   **Known regressions**: A performance de reconhecimento para pratos novos piorou temporariamente quando o YOLOv8 foi introduzido, mas foi corrigida ao desabilitá-lo. O problema de travamento é uma regressão grave de estabilidade.
+-   **Test files created**: N/A
+-   **Known regressions**: N/A
 
 **Credentials to test flow:**
--   Use o formulário de registro Premium para criar um usuário de teste. Ex: Nome: Tester, PIN: 1234.
+-   Não há credenciais fixas. O acesso ao painel de administração em  é público.
 
 **What agent forgot to execute**
--   O agente falhou em priorizar o bug de travamento do aplicativo, que é um problema recorrente de forks anteriores e foi reportado novamente pelo usuário. Apesar de reconhecer a criticidade no final, a sessão foi interrompida antes que qualquer ação de depuração fosse tomada.</analysis>
+-   O agente seguiu todas as instruções do usuário de forma reativa e concluiu um ciclo completo de limpeza de dados. A sessão terminou exatamente no ponto de partida para a próxima grande tarefa solicitada pelo usuário: treinar o YOLOv8.</analysis>

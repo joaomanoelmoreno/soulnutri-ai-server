@@ -7,7 +7,7 @@
 ## 📥 PASSO 1: Baixar os Arquivos
 
 ### Opção A: Pelo Preview (mais fácil)
-1. Acesse: https://nutri-ai-8.preview.emergentagent.com
+1. Acesse: https://food-radar-5.preview.emergentagent.com
 2. Os arquivos estão no servidor, peça ao agente para disponibilizar um link de download
 
 ### Opção B: Pela Emergent Platform
