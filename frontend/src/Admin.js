@@ -193,8 +193,24 @@ export default function Admin() {
         <a href="/" className="back-link">← Voltar ao App</a>
       </header>
 
+      {/* Tabs */}
+      <div className="admin-tabs">
+        <button 
+          className={`tab-btn ${activeTab === 'dishes' ? 'active' : ''}`}
+          onClick={() => setActiveTab('dishes')}
+        >
+          🍽️ Pratos ({dishes.length})
+        </button>
+        <button 
+          className={`tab-btn ${activeTab === 'novidades' ? 'active' : ''}`}
+          onClick={() => setActiveTab('novidades')}
+        >
+          📢 Novidades ({novidades.length})
+        </button>
+      </div>
+
       {/* Stats */}
-      {stats && (
+      {stats && activeTab === 'dishes' && (
         <div className="stats-bar">
           <div className="stat">
             <span className="stat-value">{stats.total_dishes}</span>
