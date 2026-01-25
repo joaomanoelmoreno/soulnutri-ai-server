@@ -1430,6 +1430,34 @@ function App() {
         </div>
       )}
 
+      {/* Modal Check-in de Refeição (Premium) */}
+      {showCheckin && premiumUser && (
+        <div className="modal-overlay" onClick={() => setShowCheckin(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <CheckinRefeicao 
+              pin={premiumUser.pin}
+              nome={premiumUser.nome}
+              onClose={() => setShowCheckin(false)}
+              onSuccess={(data) => {
+                // Atualizar o resumo diário após check-in
+                loadDailySummary();
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Botão de Check-in Rápido (Premium logado) */}
+      {premiumUser && !showPremium && !showCheckin && !loading && !result && (
+        <button 
+          className="checkin-btn"
+          onClick={() => setShowCheckin(true)}
+          data-testid="checkin-btn"
+        >
+          🍽️ Check-in
+        </button>
+      )}
+
       {/* Rodapé */}
       <footer className="footer">
         <small>Powered by Emergent</small>
