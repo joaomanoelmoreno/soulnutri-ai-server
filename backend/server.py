@@ -1606,3 +1606,299 @@ async def download_marketing_doc():
         filename="SoulNutri_Premium_Marketing.docx",
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NOVIDADES/NOTÍCIAS PREMIUM - Sistema de alertas em tempo real para o buffet
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/novidades/{dish_slug}")
+async def get_dish_novidade(dish_slug: str):
+    """
+    Retorna novidade/notícia de um prato específico (se houver).
+    Usado na versão Premium para mostrar alertas ao escanear um item.
+    """
+    try:
+        # Buscar novidade do MongoDB
+        novidade = await db.novidades.find_one(
+            {"dish_slug": dish_slug, "ativa": True},
+            {"_id": 0}
+        )
+        
+        if novidade:
+            return {
+                "ok": True,
+                "tem_novidade": True,
+                "novidade": novidade
+            }
+        
+        return {
+            "ok": True,
+            "tem_novidade": False,
+            "novidade": None
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar novidade: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/novidades")
+async def list_novidades():
+    """Lista todas as novidades ativas."""
+    try:
+        novidades = await db.novidades.find(
+            {"ativa": True},
+            {"_id": 0}
+        ).sort("data_criacao", -1).to_list(100)
+        
+        return {
+            "ok": True,
+            "total": len(novidades),
+            "novidades": novidades
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar novidades: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/novidades")
+async def admin_create_novidade(
+    dish_slug: str = Form(...),
+    tipo: str = Form(...),  # "info", "alerta", "dica", "estudo"
+    titulo: str = Form(...),
+    mensagem: str = Form(...),
+    emoji: str = Form("📢"),
+    severidade: str = Form("info"),  # "info", "warning", "danger"
+    ativa: bool = Form(True)
+):
+    """
+    Cria/atualiza uma novidade para um prato.
+    Tipos:
+    - info: Informação positiva (ex: "Novo estudo confirma benefícios")
+    - alerta: Alerta importante (ex: "Lote com problema")
+    - dica: Dica de combinação ou consumo
+    - estudo: Estudo científico recente
+    """
+    from datetime import datetime
+    
+    try:
+        novidade = {
+            "dish_slug": dish_slug,
+            "tipo": tipo,
+            "titulo": titulo,
+            "mensagem": mensagem,
+            "emoji": emoji,
+            "severidade": severidade,
+            "ativa": ativa,
+            "data_criacao": datetime.now().isoformat(),
+            "data_atualizacao": datetime.now().isoformat()
+        }
+        
+        # Upsert - atualiza se existir, insere se não
+        await db.novidades.update_one(
+            {"dish_slug": dish_slug},
+            {"$set": novidade},
+            upsert=True
+        )
+        
+        logger.info(f"[ADMIN] Novidade criada/atualizada: {dish_slug} - {tipo}")
+        
+        return {
+            "ok": True,
+            "message": f"Novidade salva para {dish_slug}",
+            "novidade": novidade
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar novidade: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/novidades/{dish_slug}")
+async def admin_delete_novidade(dish_slug: str):
+    """Remove uma novidade."""
+    try:
+        result = await db.novidades.delete_one({"dish_slug": dish_slug})
+        
+        if result.deleted_count > 0:
+            return {"ok": True, "message": f"Novidade de {dish_slug} removida"}
+        else:
+            return {"ok": False, "error": "Novidade não encontrada"}
+            
+    except Exception as e:
+        logger.error(f"Erro ao remover novidade: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CHECK-IN DE REFEIÇÃO - Registrar consumo com múltiplos itens
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/premium/checkin")
+async def premium_checkin(
+    pin: str = Form(...),
+    nome: str = Form(...),
+    itens: str = Form(...),  # JSON array: [{"nome": "Arroz", "porcao": "media"}, ...]
+    foto: Optional[UploadFile] = File(None)
+):
+    """
+    Check-in de refeição Premium - registra múltiplos itens de uma vez.
+    
+    Args:
+        pin: PIN do usuário Premium
+        nome: Nome do usuário
+        itens: JSON array com itens e porções
+        foto: Foto opcional do prato (para histórico)
+    
+    Returns:
+        Resumo nutricional total e atualização do consumo diário
+    """
+    import json as json_lib
+    from datetime import datetime
+    from services.profile_service import hash_pin
+    
+    try:
+        # Verificar usuário Premium
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"_id": 0}
+        )
+        
+        if not user:
+            return {"ok": False, "error": "Usuário não encontrado"}
+        
+        # Parse dos itens
+        try:
+            itens_list = json_lib.loads(itens)
+        except:
+            return {"ok": False, "error": "Formato de itens inválido"}
+        
+        # Porções estimadas (g)
+        porcoes_g = {
+            "pequena": 50,
+            "media": 100,
+            "grande": 150
+        }
+        
+        # Calcular totais
+        total_calorias = 0
+        total_proteinas = 0
+        total_carboidratos = 0
+        total_gorduras = 0
+        itens_registrados = []
+        
+        for item in itens_list:
+            nome_item = item.get("nome", "")
+            porcao = item.get("porcao", "media")
+            gramas = porcoes_g.get(porcao, 100)
+            
+            # Buscar info nutricional do item
+            # Primeiro tenta no índice local, depois usa estimativa
+            nutri = {"calorias": 150, "proteinas": 8, "carboidratos": 20, "gorduras": 5}
+            
+            # Buscar no dataset organizado
+            from ai.index import get_index
+            index = get_index()
+            
+            for slug, data in index.metadata.items():
+                if nome_item.lower() in data.get('name', '').lower():
+                    # Encontrou - buscar info do dish_info.json
+                    info_path = Path(f"/app/datasets/organized/{slug}/dish_info.json")
+                    if info_path.exists():
+                        with open(info_path, "r", encoding="utf-8") as f:
+                            dish_info = json_lib.load(f)
+                            nutricao = dish_info.get("nutricao", {})
+                            if nutricao.get("calorias"):
+                                try:
+                                    nutri["calorias"] = float(str(nutricao["calorias"]).replace("kcal", "").replace("~", "").strip() or 150)
+                                except:
+                                    pass
+                    break
+            
+            # Ajustar pela porção
+            fator = gramas / 100
+            calorias_item = nutri["calorias"] * fator
+            proteinas_item = nutri["proteinas"] * fator
+            carbos_item = nutri["carboidratos"] * fator
+            gorduras_item = nutri["gorduras"] * fator
+            
+            total_calorias += calorias_item
+            total_proteinas += proteinas_item
+            total_carboidratos += carbos_item
+            total_gorduras += gorduras_item
+            
+            itens_registrados.append({
+                "nome": nome_item,
+                "porcao": porcao,
+                "gramas": gramas,
+                "calorias": round(calorias_item),
+                "proteinas": round(proteinas_item, 1),
+                "carboidratos": round(carbos_item, 1),
+                "gorduras": round(gorduras_item, 1)
+            })
+        
+        # Registrar no histórico diário
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        hora = datetime.now().strftime("%H:%M")
+        
+        # Atualizar ou criar registro do dia
+        await db.daily_logs.update_one(
+            {"pin_hash": pin_hash, "data": hoje},
+            {
+                "$inc": {
+                    "calorias_total": round(total_calorias),
+                    "proteinas_total": round(total_proteinas, 1),
+                    "carboidratos_total": round(total_carboidratos, 1),
+                    "gorduras_total": round(total_gorduras, 1)
+                },
+                "$push": {
+                    "refeicoes": {
+                        "hora": hora,
+                        "itens": itens_registrados,
+                        "total_calorias": round(total_calorias),
+                        "tipo": "checkin"
+                    }
+                },
+                "$setOnInsert": {
+                    "nome": nome,
+                    "data": hoje
+                }
+            },
+            upsert=True
+        )
+        
+        # Buscar novo total do dia
+        daily_log = await db.daily_logs.find_one(
+            {"pin_hash": pin_hash, "data": hoje},
+            {"_id": 0}
+        )
+        
+        meta = user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        consumido = daily_log.get("calorias_total", 0)
+        restante = meta - consumido
+        percentual = (consumido / meta) * 100
+        
+        return {
+            "ok": True,
+            "message": f"Check-in registrado: {len(itens_registrados)} itens",
+            "refeicao": {
+                "itens": itens_registrados,
+                "total_calorias": round(total_calorias),
+                "total_proteinas": round(total_proteinas, 1),
+                "total_carboidratos": round(total_carboidratos, 1),
+                "total_gorduras": round(total_gorduras, 1)
+            },
+            "dia": {
+                "consumido": round(consumido),
+                "meta": meta,
+                "restante": round(restante),
+                "percentual": round(percentual, 1)
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no check-in: {e}")
+        return {"ok": False, "error": str(e)}
