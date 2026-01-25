@@ -1,29 +1,4 @@
 {
-  "nome": "Ganache de chocolate com frutas",
-  "categoria": "vegetariano",
-  "ingredientes": [
-    "Chocolate (provavelmente com leite)",
-    "Morango",
-    "Raspas de chocolate",
-    "Frutas picadas (manga, kiwi, mirtilos, provavelmente)",
-    "Açúcar de confeiteiro (para polvilhar)"
-  ],
-  "descricao": "Sobremesa composta por ganache de chocolate, frutas picadas e raspas de chocolate. O ganache cobre a base de frutas picadas. O prato é finalizado com morangos fatiados e polvilhado com açúcar de confeiteiro.",
-  "beneficios": [
-    "A fruta fresca fornece vitaminas, minerais e fibras, importantes para a saúde.",
-    "O chocolate amargo (se utilizado) pode conter antioxidantes."
-  ],
-  "riscos": [
-    "Alto teor de açúcar, proveniente do chocolate e possivelmente das frutas em calda.",
-    "Alérgenos: pode conter lactose (do leite do chocolate) e traços de outros alérgenos dependendo da produção.",
-    "Risco de excesso de calorias"
-  ],
-  "curiosidade": "O ganache é uma mistura versátil de chocolate e creme de leite, que pode ser utilizada em diversas sobremesas, bolos, tortas, etc.",
-  "slug": "ganache_de_chocolate_com_frutas",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Ganache de Chocolate com Frutas",
+  "slug": "ganache_de_chocolate_com_frutas"
 }
