@@ -233,39 +233,41 @@ export default function Admin() {
       )}
 
       {/* Search & Filters */}
-      <div className="filters-bar">
-        <input 
-          type="text"
-          placeholder="🔍 Buscar pratos..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="search-input"
-        />
-        <select 
-          value={filterCategory} 
-          onChange={e => setFilterCategory(e.target.value)}
-          className="filter-select"
-        >
-          <option value="">Todas categorias</option>
-          {categories.map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
-        <div className="view-toggle">
-          <button 
-            className={viewMode === 'grid' ? 'active' : ''} 
-            onClick={() => setViewMode('grid')}
-          >▦</button>
-          <button 
-            className={viewMode === 'list' ? 'active' : ''} 
-            onClick={() => setViewMode('list')}
-          >☰</button>
+      {activeTab === 'dishes' && (
+        <div className="filters-bar">
+          <input 
+            type="text"
+            placeholder="🔍 Buscar pratos..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="search-input"
+          />
+          <select 
+            value={filterCategory} 
+            onChange={e => setFilterCategory(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Todas categorias</option>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+          <div className="view-toggle">
+            <button 
+              className={viewMode === 'grid' ? 'active' : ''} 
+              onClick={() => setViewMode('grid')}
+            >▦</button>
+            <button 
+              className={viewMode === 'list' ? 'active' : ''} 
+              onClick={() => setViewMode('list')}
+            >☰</button>
+          </div>
+          <span className="result-count">{filteredDishes.length} pratos</span>
         </div>
-        <span className="result-count">{filteredDishes.length} pratos</span>
-      </div>
+      )}
 
       {/* Dishes */}
-      {loading ? (
+      {activeTab === 'dishes' && (loading ? (
         <div className="loading">Carregando...</div>
       ) : (
         <div className={`dishes-container ${viewMode}`}>
