@@ -356,6 +356,152 @@ export default function Admin() {
             </div>
           ))}
         </div>
+      ))}
+
+      {/* Novidades Tab */}
+      {activeTab === 'novidades' && (
+        <div className="novidades-section">
+          {/* Form para criar/editar novidade */}
+          <div className="novidade-form">
+            <h3>{editingNovidade ? '✏️ Editar Novidade' : '➕ Nova Novidade'}</h3>
+            
+            <div className="form-row">
+              <div className="form-group">
+                <label>Prato:</label>
+                <select 
+                  value={novidadeForm.dish_slug}
+                  onChange={e => setNovidadeForm({...novidadeForm, dish_slug: e.target.value})}
+                >
+                  <option value="">Selecione um prato...</option>
+                  {dishes.map(d => (
+                    <option key={d.slug} value={d.slug}>{d.nome}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label>Tipo:</label>
+                <select 
+                  value={novidadeForm.tipo}
+                  onChange={e => setNovidadeForm({...novidadeForm, tipo: e.target.value})}
+                >
+                  <option value="info">ℹ️ Informação</option>
+                  <option value="alerta">⚠️ Alerta</option>
+                  <option value="dica">💡 Dica</option>
+                  <option value="estudo">📚 Estudo Científico</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label>Severidade:</label>
+                <select 
+                  value={novidadeForm.severidade}
+                  onChange={e => setNovidadeForm({...novidadeForm, severidade: e.target.value})}
+                >
+                  <option value="info">🔵 Info</option>
+                  <option value="warning">🟡 Atenção</option>
+                  <option value="danger">🔴 Crítico</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>Emoji:</label>
+                <input 
+                  value={novidadeForm.emoji}
+                  onChange={e => setNovidadeForm({...novidadeForm, emoji: e.target.value})}
+                  placeholder="📢"
+                  maxLength={4}
+                  style={{width: '60px', textAlign: 'center', fontSize: '1.5rem'}}
+                />
+              </div>
+              
+              <div className="form-group" style={{flex: 1}}>
+                <label>Título:</label>
+                <input 
+                  value={novidadeForm.titulo}
+                  onChange={e => setNovidadeForm({...novidadeForm, titulo: e.target.value})}
+                  placeholder="Título da novidade..."
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Mensagem:</label>
+              <textarea 
+                value={novidadeForm.mensagem}
+                onChange={e => setNovidadeForm({...novidadeForm, mensagem: e.target.value})}
+                placeholder="Mensagem detalhada para os usuários Premium..."
+                rows={3}
+              />
+            </div>
+
+            <div className="form-row">
+              <label className="checkbox-inline">
+                <input 
+                  type="checkbox"
+                  checked={novidadeForm.ativa}
+                  onChange={e => setNovidadeForm({...novidadeForm, ativa: e.target.checked})}
+                />
+                Ativa
+              </label>
+              
+              <button className="save-btn" onClick={saveNovidade}>
+                💾 Salvar Novidade
+              </button>
+              
+              {editingNovidade && (
+                <button className="cancel-btn" onClick={() => {
+                  setEditingNovidade(null);
+                  setNovidadeForm({
+                    dish_slug: '',
+                    tipo: 'info',
+                    titulo: '',
+                    mensagem: '',
+                    emoji: '📢',
+                    severidade: 'info',
+                    ativa: true
+                  });
+                }}>
+                  Cancelar
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Lista de novidades */}
+          <div className="novidades-list">
+            <h3>📋 Novidades Ativas ({novidades.length})</h3>
+            
+            {novidades.length === 0 ? (
+              <p className="no-items">Nenhuma novidade cadastrada. Crie uma acima!</p>
+            ) : (
+              novidades.map(n => (
+                <div key={n.dish_slug} className={`novidade-card ${n.severidade}`}>
+                  <div className="novidade-header">
+                    <span className="novidade-emoji">{n.emoji}</span>
+                    <span className="novidade-dish">{n.dish_slug}</span>
+                    <span className={`novidade-tipo ${n.tipo}`}>{n.tipo}</span>
+                  </div>
+                  <h4>{n.titulo}</h4>
+                  <p>{n.mensagem}</p>
+                  <div className="novidade-actions">
+                    <button onClick={() => {
+                      setEditingNovidade(n);
+                      setNovidadeForm(n);
+                    }}>
+                      ✏️ Editar
+                    </button>
+                    <button className="delete-btn" onClick={() => deleteNovidade(n.dish_slug)}>
+                      🗑️ Remover
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       )}
 
       {/* Edit Modal - Completo */}
