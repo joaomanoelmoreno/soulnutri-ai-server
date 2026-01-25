@@ -1006,7 +1006,7 @@ function App() {
             <div className="mito-verdade-section" data-testid="mito-verdade">
               <div className="mito-verdade-card">
                 <h4>🤔 Verdade ou Mito?</h4>
-                <p className="mito-afirmacao">"{r.mito_verdade.afirmacao}"</p>
+                <p className="mito-afirmacao">&quot;{r.mito_verdade.afirmacao}&quot;</p>
                 <div className={`mito-resposta ${r.mito_verdade.resposta === 'VERDADE' ? 'verdade' : r.mito_verdade.resposta === 'MITO' ? 'mito' : 'parcial'}`}>
                   <span className="mito-emoji">{r.mito_verdade.resposta_emoji}</span>
                   <span className="mito-label">{r.mito_verdade.resposta}</span>
