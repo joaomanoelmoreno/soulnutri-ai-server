@@ -882,6 +882,18 @@ function App() {
           {/* ALERTAS PREMIUM EM TEMPO REAL */}
           {r.premium && (
             <div className="premium-alerts-section" data-testid="premium-alerts">
+              {/* NOVIDADE/NOTÍCIA DO PRATO - Aparece primeiro se existir */}
+              {r.premium.novidade && (
+                <div className={`premium-novidade ${r.premium.novidade.severidade || 'info'}`} data-testid="dish-novidade">
+                  <div className="novidade-header">
+                    <span className="novidade-emoji">{r.premium.novidade.emoji || '📢'}</span>
+                    <span className="novidade-tipo">{r.premium.novidade.tipo?.toUpperCase()}</span>
+                  </div>
+                  <h4 className="novidade-titulo">{r.premium.novidade.titulo}</h4>
+                  <p className="novidade-mensagem">{r.premium.novidade.mensagem}</p>
+                </div>
+              )}
+              
               {/* Alertas de alérgenos críticos */}
               {r.premium.alertas_alergenos?.length > 0 && (
                 <div className="premium-alert-group critical">
