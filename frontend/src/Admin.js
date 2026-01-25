@@ -12,6 +12,18 @@ export default function Admin() {
   const [stats, setStats] = useState(null);
   const [filterCategory, setFilterCategory] = useState('');
   const [viewMode, setViewMode] = useState('grid'); // grid ou list
+  const [activeTab, setActiveTab] = useState('dishes'); // dishes, novidades
+  const [novidades, setNovidades] = useState([]);
+  const [editingNovidade, setEditingNovidade] = useState(null);
+  const [novidadeForm, setNovidadeForm] = useState({
+    dish_slug: '',
+    tipo: 'info',
+    titulo: '',
+    mensagem: '',
+    emoji: '📢',
+    severidade: 'info',
+    ativa: true
+  });
 
   useEffect(() => {
     loadDishes();
