@@ -28,6 +28,7 @@ export default function Admin() {
   useEffect(() => {
     loadDishes();
     loadStats();
+    loadNovidades();
   }, []);
 
   const loadDishes = async () => {
@@ -51,6 +52,68 @@ export default function Admin() {
       setStats(data);
     } catch (e) {
       console.error('Erro ao carregar status:', e);
+    }
+  };
+
+  const loadNovidades = async () => {
+    try {
+      const res = await fetch(`${API}/novidades`);
+      const data = await res.json();
+      if (data.ok) {
+        setNovidades(data.novidades || []);
+      }
+    } catch (e) {
+      console.error('Erro ao carregar novidades:', e);
+    }
+  };
+
+  const saveNovidade = async () => {
+    if (!novidadeForm.dish_slug || !novidadeForm.titulo || !novidadeForm.mensagem) {
+      alert('Preencha todos os campos obrigatórios');
+      return;
+    }
+    
+    try {
+      const formData = new FormData();
+      Object.entries(novidadeForm).forEach(([k, v]) => formData.append(k, v));
+      
+      const res = await fetch(`${API}/admin/novidades`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert('✅ Novidade salva!');
+        setNovidadeForm({
+          dish_slug: '',
+          tipo: 'info',
+          titulo: '',
+          mensagem: '',
+          emoji: '📢',
+          severidade: 'info',
+          ativa: true
+        });
+        setEditingNovidade(null);
+        loadNovidades();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro ao salvar: ' + e.message);
+    }
+  };
+
+  const deleteNovidade = async (slug) => {
+    if (!window.confirm(`Remover novidade de "${slug}"?`)) return;
+    try {
+      const res = await fetch(`${API}/admin/novidades/${slug}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.ok) {
+        alert('✅ Novidade removida!');
+        loadNovidades();
+      }
+    } catch (e) {
+      alert('Erro ao remover: ' + e.message);
     }
   };
 
