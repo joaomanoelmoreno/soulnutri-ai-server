@@ -4,13 +4,13 @@
   "description": "Identifique pratos em tempo real e receba informações nutricionais personalizadas, alérgenos e dicas de saúde.",
   "icons": [
     {
-      "src": "/images/soulnutri-logo.png",
+      "src": "/images/soulnutri-logo-cores.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/images/soulnutri-logo.png",
+      "src": "/images/soulnutri-logo-cores.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
