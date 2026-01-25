@@ -705,7 +705,7 @@ function App() {
           )}
           {!deferredPrompt && !isInstalled && (
             <div className="menu-item info">
-              📱 Para instalar: use o menu do navegador → "Adicionar à tela inicial"
+              📱 Para instalar: use o menu do navegador → &quot;Adicionar à tela inicial&quot;
             </div>
           )}
           <button className="menu-item" onClick={() => { setShowMenu(false); checkStatus(); loadDishes(); }}>
