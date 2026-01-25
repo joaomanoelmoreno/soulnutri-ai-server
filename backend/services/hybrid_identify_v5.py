@@ -64,8 +64,8 @@ async def identify_multi_v5(image_bytes: bytes) -> dict:
             threshold = principal_score - 0.03
             max_itens = 2
         else:
-            threshold = max(0.85, principal_score - 0.10)
-            max_itens = 6
+            threshold = max(0.88, principal_score - 0.05)
+            max_itens = 4
         
         itens_filtrados = []
         slugs_adicionados: Set[str] = set()
