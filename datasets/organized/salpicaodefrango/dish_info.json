@@ -1,35 +1,4 @@
 {
-  "nome": "Salpicaodefrango",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Frango desfiado",
-    "Maionese",
-    "Cenoura ralada",
-    "Milho",
-    "Ervilha",
-    "Salsinha picada",
-    "Cebola roxa picada",
-    "Passas",
-    "Tomate cereja",
-    "Rodelas de cenoura"
-  ],
-  "descricao": "Salpicão cremoso com frango desfiado, vegetais e frutas. O frango é cozido e desfiado, misturado com maionese e os demais ingredientes. Decorado com rodelas de cenoura e tomate cereja.",
-  "beneficios": [
-    "Fonte de proteína do frango, essencial para a construção e reparação muscular",
-    "Rico em fibras provenientes dos vegetais, auxiliando na digestão",
-    "Cenoura oferece vitamina A, importante para a saúde da visão e pele"
-  ],
-  "riscos": [
-    "Alto teor de sódio, dependendo da maionese utilizada",
-    "Pode conter glúten, dependendo dos ingredientes da maionese",
-    "Alérgenos: pode conter ovo na maionese"
-  ],
-  "curiosidade": "O salpicão é um prato versátil, que pode ser adaptado com diversos ingredientes, como batata palha, azeitonas e outros vegetais. Originalmente, a receita do salpicão foi criada na França e levada aos Estados Unidos. No Brasil, o prato se tornou popular, sendo consumido em diversas ocasiões.",
-  "slug": "salpicaodefrango",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Salpicão de Frango",
+  "slug": "salpicaodefrango"
 }

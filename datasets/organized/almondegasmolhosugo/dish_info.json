@@ -1,31 +1,4 @@
 {
-  "nome": "Almondegas ao molho sugo",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Carne moída (ingrediente principal das almôndegas)",
-    "Molho de tomate (sugo)",
-    "Tomate cereja",
-    "Manjericão fresco",
-    "Cebolinha picada",
-    "Azeite de oliva (possível ingrediente do molho)"
-  ],
-  "descricao": "Almôndegas cozidas em molho sugo, um molho de tomate caseiro. O prato é finalizado com tomate cereja frescos, folhas de manjericão e cebolinha picada para decorar.",
-  "beneficios": [
-    "As almôndegas fornecem proteínas de alta qualidade, essenciais para a construção e reparação dos tecidos do corpo.",
-    "O molho de tomate é rico em licopeno, um antioxidante que pode ajudar a proteger contra certos tipos de câncer e doenças cardíacas.",
-    "O manjericão adiciona antioxidantes e pode ter propriedades anti-inflamatórias."
-  ],
-  "riscos": [
-    "Dependendo do preparo, pode conter alto teor de sódio, especialmente se o molho de tomate for industrializado.",
-    "O consumo excessivo de carne vermelha pode estar associado a um maior risco de doenças cardíacas e alguns tipos de câncer.",
-    "Possível alérgeno: pode conter glúten, dependendo do uso de farinha ou outros ingredientes na almôndega."
-  ],
-  "curiosidade": "O licopeno do tomate é melhor absorvido pelo corpo quando o tomate é cozido, como no molho sugo.",
-  "slug": "almondegasmolhosugo",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Almôndegas ao Molho Sugo",
+  "slug": "almondegasmolhosugo"
 }

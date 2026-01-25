@@ -1,31 +1,4 @@
 {
-  "nome": "Bolodegengibre",
-  "categoria": "vegetariano",
-  "ingredientes": [
-    "Farinha de trigo",
-    "Gengibre",
-    "Ovos",
-    "Açúcar",
-    "Especiarias (canela, noz-moscada, cravo)",
-    "Manteiga",
-    "Cobertura cremosa amarela (possivelmente creme de manteiga ou de limão)"
-  ],
-  "descricao": "O bolo de gengibre é um doce com textura macia e sabor picante, originado na Inglaterra. Este prato é feito a partir de uma massa rica em especiarias, com gengibre como ingrediente principal. A massa é assada e cortada em pedaços. Cada pedaço é coberto com uma porção de creme amarelo, provavelmente feito à base de manteiga ou de limão, que adiciona um toque adocicado e cremoso.",
-  "beneficios": [
-    "O gengibre possui propriedades anti-inflamatórias e antioxidantes, que podem auxiliar na digestão e reduzir náuseas.",
-    "A presença de especiarias como canela e noz-moscada adiciona antioxidantes e pode auxiliar no controle glicêmico."
-  ],
-  "riscos": [
-    "Contém glúten devido à farinha de trigo.",
-    "Pode conter lactose, dependendo do tipo de creme e da receita utilizada.",
-    "Alto teor de açúcar, o que pode afetar os níveis de glicose no sangue."
-  ],
-  "curiosidade": "O gengibre é utilizado há milhares de anos na culinária e na medicina tradicional, conhecido por suas propriedades terapêuticas e sabor característico.",
-  "slug": "bolodegengibre",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Bolo de Gengibre",
+  "slug": "bolodegengibre"
 }

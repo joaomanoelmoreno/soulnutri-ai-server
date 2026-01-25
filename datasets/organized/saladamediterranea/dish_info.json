@@ -1,10 +1,4 @@
 {
-  "nome": "Salada Mediterranea",
-  "slug": "saladamediterranea",
-  "categoria": "vegano",
-  "ingredientes": ["Pepino", "Tomate", "Cebola roxa", "Azeitonas", "Azeite", "Orégano"],
-  "descricao": "Salada fresca inspirada na culinária mediterrânea com legumes frescos e temperados com azeite e ervas.",
-  "beneficios": ["Baixa caloria", "Rica em fibras", "Fonte de vitaminas"],
-  "riscos": [],
-  "curiosidade": "A dieta mediterrânea é considerada uma das mais saudáveis do mundo pela UNESCO."
+  "nome": "Salada Mediterrânea",
+  "slug": "saladamediterranea"
 }

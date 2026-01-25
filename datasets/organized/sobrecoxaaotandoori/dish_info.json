@@ -1,26 +1,4 @@
 {
-  "nome": "Sobrecoxaaotandoori",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Sobrecoxa de frango",
-    "Tucupi",
-    "Batata",
-    "Cenoura",
-    "Pimenta dedo-de-moça",
-    "Cheiro verde (salsa e cebolinha)"
-  ],
-  "descricao": "Sobrecoxas de frango cozidas em um molho à base de tucupi, um caldo de origem indígena, com legumes como batata e cenoura, temperado com pimenta dedo-de-moça e cheiro verde. A sobrecoxa parece ter sido grelhada antes de ser adicionada ao molho, dando um toque especial.",
-  "beneficios": [
-    "A sobrecoxa de frango é rica em proteínas, importantes para a construção e reparo dos tecidos do corpo.",
-    "A cenoura e o cheiro verde fornecem vitaminas e antioxidantes."
-  ],
-  "riscos": [],
-  "curiosidade": "O tucupi é um caldo extraído da mandioca brava, com sabor marcante e ligeiramente ácido, muito utilizado na culinária do Norte do Brasil.",
-  "slug": "sobrecoxaaotandoori",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Sobrecoxa ao Tandoori",
+  "slug": "sobrecoxaaotandoori"
 }

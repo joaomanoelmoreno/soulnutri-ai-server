@@ -1,32 +1,4 @@
 {
-  "nome": "Bolinhodebacalhau",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Bacalhau dessalgado",
-    "Batata",
-    "Cebola",
-    "Salsa",
-    "Ovos",
-    "Farinha de trigo",
-    "Óleo vegetal (para fritar)"
-  ],
-  "descricao": "Bolinhos de bacalhau fritos, com formato arredondado ou oval. A receita tradicional leva bacalhau desfiado, batata cozida amassada, cebola picada, salsa, ovos para ligar os ingredientes e farinha para dar liga, tudo frito em óleo quente.",
-  "beneficios": [
-    "Fonte de proteína (bacalhau e ovo)",
-    "Fonte de carboidratos (batata)"
-  ],
-  "riscos": [
-    "Alto teor de gordura devido à fritura",
-    "Pode conter alto teor de sódio se o bacalhau não for bem dessalgado",
-    "Contém glúten",
-    "Alérgenos: peixe, ovos"
-  ],
-  "curiosidade": "O bolinho de bacalhau é um petisco muito popular em Portugal, mas também apreciado no Brasil, especialmente em bares e como entrada em restaurantes.",
-  "slug": "bolinhodebacalhau",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Bolinho de Bacalhau",
+  "slug": "bolinhodebacalhau"
 }

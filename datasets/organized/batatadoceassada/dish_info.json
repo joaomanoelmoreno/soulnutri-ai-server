@@ -1,24 +1,4 @@
 {
-  "nome": "Batatadoceassada",
-  "categoria": "vegano",
-  "ingredientes": [
-    "Batata doce",
-    "Azeite (possivelmente)",
-    "Sal (possivelmente)"
-  ],
-  "descricao": "Fatias de batata doce assadas, apresentando bordas levemente douradas e textura macia. O preparo provavelmente envolve o corte da batata doce em fatias, a aplicação de azeite e temperos (possivelmente sal), e o assamento em forno até atingir a consistência desejada.",
-  "beneficios": [
-    "Rica em vitamina A, importante para a visão e saúde da pele.",
-    "Fonte de fibras, auxiliando na digestão e promovendo saciedade.",
-    "Contém antioxidantes que combatem os radicais livres."
-  ],
-  "riscos": [],
-  "curiosidade": "A batata doce, apesar do nome, não é parente da batata inglesa. Ela pertence à família das trepadeiras e é originária da América do Sul.",
-  "slug": "batatadoceassada",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Batata Doce Assada",
+  "slug": "batatadoceassada"
 }

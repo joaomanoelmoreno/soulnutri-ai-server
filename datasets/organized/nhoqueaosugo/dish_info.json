@@ -1,30 +1,4 @@
 {
-  "nome": "Nhoqueaosugo",
-  "categoria": "vegetariano",
-  "ingredientes": [
-    "Nhoque de batata",
-    "Molho de tomate",
-    "Queijo parmesão ralado",
-    "Salsinha picada",
-    "Azeite"
-  ],
-  "descricao": "Nhoque cozido em molho de tomate caseiro. O prato é finalizado com queijo parmesão ralado e salsinha picada para dar frescor.",
-  "beneficios": [
-    "O nhoque, geralmente feito com batata, pode fornecer carboidratos, que são fonte de energia.",
-    "O molho de tomate é fonte de licopeno, um antioxidante que pode ajudar na saúde celular.",
-    "A salsinha é rica em vitamina K e C, que auxiliam na saúde dos ossos e imunidade."
-  ],
-  "riscos": [
-    "Contém glúten, dependendo da receita do nhoque.",
-    "Pode conter lactose, dependendo do tipo de queijo utilizado.",
-    "O molho de tomate industrializado pode ter alto teor de sódio e açúcar."
-  ],
-  "curiosidade": "O nhoque é tradicionalmente consumido no dia 29 de cada mês, e a tradição diz que colocar dinheiro sob o prato atrai prosperidade.",
-  "slug": "nhoqueaosugo",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Nhoque ao Sugo",
+  "slug": "nhoqueaosugo"
 }

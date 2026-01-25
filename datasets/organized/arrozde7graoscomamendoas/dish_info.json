@@ -1,36 +1,4 @@
 {
-  "nome": "Arrozde7Graoscomamendoas",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Filé de peixe (aparentemente, merluza)",
-    "Camarões",
-    "Lulas",
-    "Brócolis",
-    "Tomate cereja",
-    "Rodelas de limão",
-    "Cebolinha",
-    "Farinha para empanar (possivelmente)",
-    "Arroz (provavelmente arroz 7 grãos)",
-    "Temperos (sal, pimenta do reino, etc.)"
-  ],
-  "descricao": "Prato composto por peixes, camarões e lulas grelhados, acompanhados de arroz e vegetais. Os peixes e frutos do mar parecem ter sido temperados e grelhados, e o prato é finalizado com cebolinha picada e rodelas de limão.",
-  "beneficios": [
-    "Fonte de proteína de alta qualidade (peixes e frutos do mar).",
-    "Rico em vitaminas e minerais (vegetais e arroz 7 grãos).",
-    "Fornece ácidos graxos ômega-3 (presente nos peixes).",
-    "Baixo em calorias (se preparado com pouco óleo)."
-  ],
-  "riscos": [
-    "Alérgeno: crustáceos (camarão)",
-    "Alérgeno: peixe",
-    "Pode conter glúten dependendo da farinha utilizada na empanagem."
-  ],
-  "curiosidade": "O peixe merluza é uma excelente fonte de proteínas e possui baixo teor de gordura, sendo uma opção saudável para a alimentação.",
-  "slug": "arrozde7graoscomamendoas",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Arroz de 7 Grãos com Amêndoas",
+  "slug": "arrozde7graoscomamendoas"
 }

@@ -1,28 +1,4 @@
 {
-  "nome": "Beterrabaaobalsamico",
-  "categoria": "vegano",
-  "ingredientes": [
-    "Beterraba cozida (cubos)",
-    "Gomos de laranja",
-    "Folhas de hortelã",
-    "Azeite de oliva",
-    "Vinagre balsâmico"
-  ],
-  "descricao": "Prato composto por cubos de beterraba cozidos e temperados com vinagre balsâmico e azeite de oliva, com adição de gomos de laranja e folhas de hortelã para finalização. A beterraba pode ter sido assada, cozida no vapor ou fervida, e o preparo envolve apenas a mistura dos ingredientes.",
-  "beneficios": [
-    "A beterraba é rica em nitratos, que podem melhorar a saúde cardiovascular.",
-    "Fonte de fibras, que auxiliam na saúde intestinal e promovem a saciedade.",
-    "Contém antioxidantes que combatem radicais livres."
-  ],
-  "riscos": [
-    "Pessoas com tendência a pedras nos rins devem consumir com moderação devido ao teor de oxalatos na beterraba."
-  ],
-  "curiosidade": "A beterraba, além de seu sabor adocicado, possui um pigmento natural, a betalaína, que atua como antioxidante e anti-inflamatório no organismo.",
-  "slug": "beterrabaaobalsamico",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Beterraba ao Balsâmico",
+  "slug": "beterrabaaobalsamico"
 }

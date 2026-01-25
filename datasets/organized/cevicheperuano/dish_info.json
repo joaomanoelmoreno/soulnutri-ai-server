@@ -1,32 +1,4 @@
 {
-  "nome": "Cevicheperuano",
-  "categoria": "proteína animal",
-  "ingredientes": [
-    "Peixe branco cru (provavelmente, corvina ou linguado)",
-    "Suco de limão (principalmente limão Taiti)",
-    "Pimenta (pimenta dedo-de-moça, provavelmente)",
-    "Cebola roxa",
-    "Pimenta amarela",
-    "Maracujá",
-    "Coentro picado"
-  ],
-  "descricao": "O ceviche é um prato de origem peruana, onde o peixe é marinado em suco de limão, resultando em um cozimento pela acidez. A cebola roxa, pimenta, e maracujá (ou outras frutas cítricas) complementam o sabor e a textura do prato. Neste caso, o prato também parece conter pimenta amarela e coentro picado.",
-  "beneficios": [
-    "Rico em proteínas de alta qualidade provenientes do peixe",
-    "Fonte de vitamina C do limão e outros vegetais",
-    "O peixe cru é uma ótima fonte de ômega-3"
-  ],
-  "riscos": [
-    "Intolerância a peixes e frutos do mar",
-    "Alérgeno: peixe",
-    "O consumo de peixe cru pode ter riscos de contaminação bacteriana ou parasitária, se não for preparado e armazenado corretamente"
-  ],
-  "curiosidade": "No Peru, o ceviche é considerado Patrimônio Cultural da Nação. A acidez do limão é o que 'cozinha' o peixe, tornando-o macio e saboroso.",
-  "slug": "cevicheperuano",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nome": "Ceviche Peruano",
+  "slug": "cevicheperuano"
 }
