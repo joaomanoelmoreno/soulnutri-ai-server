@@ -1,29 +1,27 @@
 {
-  "nome": "Granola",
+  "nome": "Granola Cibi Sana",
   "categoria": "vegano",
   "ingredientes": [
-    "Flocos de aveia",
-    "Nozes",
-    "Amêndoas",
-    "Maçã desidratada",
-    "Frutas secas (provavelmente passas ou cranberry)",
-    "Sementes (possivelmente abóbora ou girassol)",
-    "Açúcar ou mel (não visível, mas comum em granolas)",
-    "Óleo vegetal (para torrar, não especificado)"
+    "Aveia em flocos",
+    "Frutas secas (uva passa, pedaços de maçã desidratada, frutas cristalizadas)",
+    "Sementes (abóbora, girassol, linhaça)",
+    "Castanhas (amêndoas, nozes, castanha de caju)",
+    "Açúcar mascavo",
+    "Óleo vegetal"
   ],
-  "descricao": "Granola caseira ou industrializada. Apresenta ingredientes torrados, provavelmente no forno, com textura crocante. A presença de frutas secas e oleaginosas indica uma combinação de sabores e texturas.",
+  "descricao": "Granola caseira, provavelmente assada, com diversos tipos de grãos, sementes e frutas secas. Apresenta uma coloração dourada escura, indicando o uso de açúcar mascavo e possível adição de especiarias.",
   "beneficios": [
-    "Rica em fibras, auxiliando na saúde digestiva.",
-    "Fonte de gorduras saudáveis provenientes das oleaginosas, benéficas para o coração.",
-    "Pode conter antioxidantes das frutas secas, combatendo radicais livres."
+    "Rica em fibras, auxiliando na saúde intestinal e proporcionando saciedade",
+    "Fonte de antioxidantes provenientes das frutas secas e sementes",
+    "Fornece energia de liberação gradual devido aos carboidratos complexos da aveia"
   ],
   "riscos": [
-    "Alto teor calórico devido às oleaginosas e adição de açúcar ou mel.",
-    "Pode conter glúten, dependendo da aveia utilizada.",
-    "Alérgenos: contém oleaginosas."
+    "Alto teor de açúcares, dependendo da quantidade de frutas secas e açúcar adicionado",
+    "Calorias elevadas, consumir com moderação",
+    "Possível presença de glúten (verificar rótulo se for celíaco)"
   ],
-  "curiosidade": "A granola se tornou popular nos Estados Unidos no final do século XIX, como um alimento saudável para o café da manhã. Originalmente, era feita com trigo, mas hoje existem muitas variações com outros grãos e ingredientes.",
-  "slug": "granola",
+  "curiosidade": "A granola caseira pode ser personalizada com diversos ingredientes, como diferentes tipos de frutas secas, sementes e especiarias (canela, noz-moscada), tornando-a um alimento versátil e saboroso para o café da manhã ou lanches.",
+  "slug": "granola_cibi_sana",
   "nutricao": {
     "calorias": "",
     "proteinas": "",

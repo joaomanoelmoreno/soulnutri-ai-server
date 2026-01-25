@@ -1,27 +1,27 @@
 {
-  "nome": "Umamidetomates",
+  "nome": "Umame De Tomate",
   "categoria": "vegano",
   "ingredientes": [
-    "Tomates fatiados",
-    "Cebola branca em pedaços",
-    "Cebolinha picada",
-    "Alho picado",
-    "Tomate cereja",
-    "Folhas verdes (possivelmente louro ou manjericão)",
-    "Azeite (não visível, mas presumido)",
-    "Sal e pimenta do reino (não visíveis, mas presumidos)"
+    "Tomate (fatiado e tomates cereja)",
+    "Cebola branca (picada)",
+    "Manjericão fresco",
+    "Alho",
+    "Azeite de oliva",
+    "Cebolinha (picada)",
+    "Tempero verde (folha)",
+    "Sal"
   ],
-  "descricao": "Prato simples, composto por tomates frescos fatiados e tomates cereja, temperados com cebola picada, cebolinha, alho e folhas verdes (possivelmente louro ou manjericão). O preparo parece envolver temperar os ingredientes frescos com azeite, sal e pimenta do reino.",
+  "descricao": "Prato vegano simples e refrescante, composto por fatias de tomate intercaladas com tomates cereja. Os tomates são temperados com cebola picada, folhas de manjericão, alho, azeite de oliva, cebolinha picada e tempero verde. O preparo parece ser cru, realçando o sabor natural dos ingredientes.",
   "beneficios": [
-    "Rico em licopeno, um antioxidante associado à prevenção de doenças cardiovasculares e certos tipos de câncer.",
-    "Fonte de vitaminas A e C, importantes para a imunidade e saúde da pele."
+    "Rico em licopeno, um antioxidante associado à redução do risco de certos tipos de câncer.",
+    "Fonte de vitamina C, que fortalece o sistema imunológico.",
+    "Baixo em calorias e rico em fibras, auxiliando na saciedade."
   ],
   "riscos": [
-    "Pode conter traços de alérgenos se contaminado durante o preparo.",
-    "Ingredientes crus podem ser um risco para pessoas com sensibilidade alimentar."
+    "Alergia: tomates podem causar reações alérgicas em algumas pessoas."
   ],
-  "curiosidade": "O tomate é uma fruta, mas é frequentemente utilizado como um vegetal em culinária. A intensidade do sabor dos tomates pode variar dependendo da sua variedade e grau de maturação.",
-  "slug": "umamidetomates",
+  "curiosidade": "O tomate é tecnicamente uma fruta, apesar de ser frequentemente usado como vegetal na culinária. Sua versatilidade permite que seja consumido cru, cozido, em molhos e saladas, como neste prato.",
+  "slug": "umame_de_tomate",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
