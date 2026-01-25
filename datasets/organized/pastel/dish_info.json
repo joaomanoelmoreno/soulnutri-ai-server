@@ -1,10 +1,15 @@
 {
   "nome": "Pastel",
-  "slug": "pastel",
-  "categoria": "proteína animal",
-  "ingredientes": ["Massa de pastel", "Recheio variado", "Óleo para fritura"],
-  "descricao": "Massa fina e crocante recheada e frita. Pode ter recheios de carne, queijo, frango ou palmito.",
-  "beneficios": ["Fonte de energia", "Proteínas (dependendo do recheio)"],
-  "riscos": ["Contém glúten", "Fritura"],
-  "curiosidade": "O pastel brasileiro é diferente do chinês que o inspirou - a massa é mais fina e crocante."
+  "categoria": "salgado",
+  "ingredientes": ["massa de pastel", "recheio variado", "óleo para fritura"],
+  "descricao": "Pastel frito crocante com recheio variado",
+  "beneficios": [],
+  "riscos": ["Alimento frito", "Contém glúten"],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "280 kcal",
+    "proteinas": "8g",
+    "carboidratos": "25g",
+    "gorduras": "16g"
+  }
 }
