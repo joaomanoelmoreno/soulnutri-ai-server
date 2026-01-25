@@ -1,10 +1,10 @@
 """
-SoulNutri - Identificação Híbrida de Pratos v5.2
+SoulNutri - Identificação Híbrida de Pratos v5.3
 ================================================
-AJUSTES:
-- Critério mais rigoroso para prato único (gap >= 12%)
-- Threshold menor para acompanhamentos (80%)
-- Mais itens permitidos para múltiplos (6)
+LÓGICA MELHORADA:
+- Prato único: score >= 99% E gap >= 15%
+- Threshold fixo de 85% para acompanhamentos (não relativo ao principal)
+- Máximo 6 itens para múltiplo
 """
 
 import logging
@@ -51,20 +51,25 @@ async def identify_multi_v5(image_bytes: bytes) -> dict:
         # Calcular gap para o segundo lugar
         gap = (principal_score - results[1]['score']) if len(results) > 1 else 1.0
         
-        # Prato único SOMENTE se: score >= 98% OU gap >= 12%
-        is_prato_unico = principal_score >= 0.98 or gap >= 0.12
+        # Contar quantos itens têm score >= 85%
+        high_score_count = sum(1 for r in results[:10] if r['score'] >= 0.85)
         
-        logger.info(f"[v5.2] Principal: {principal_slug} = {principal_score:.2%} | Gap: {gap:.2%} | Único: {is_prato_unico}")
+        # Prato único SOMENTE se:
+        # - score >= 99% E gap >= 15% E menos de 3 itens com score alto
+        is_prato_unico = (principal_score >= 0.99 and gap >= 0.15 and high_score_count < 3)
         
-        # Threshold e limite baseado no tipo
+        logger.info(f"[v5.3] Principal: {principal_slug} = {principal_score:.2%} | Gap: {gap:.2%} | High scores: {high_score_count} | Único: {is_prato_unico}")
+        
+        # Threshold FIXO de 85% para todos
+        threshold = 0.85
+        
+        # Limite de itens
         if is_prato_unico:
-            threshold = principal_score - 0.02  # Muito próximo
             max_itens = 2
         else:
-            threshold = max(0.80, principal_score - 0.15)  # Até 15% abaixo, mínimo 80%
             max_itens = 6
         
-        logger.info(f"[v5.2] Threshold: {threshold:.2%} | Max: {max_itens}")
+        logger.info(f"[v5.3] Threshold: {threshold:.2%} | Max: {max_itens}")
         
         itens_filtrados = []
         slugs_adicionados: Set[str] = set()
@@ -109,11 +114,11 @@ async def identify_multi_v5(image_bytes: bytes) -> dict:
             'acompanhamentos': acompanhamentos,
             'total_itens': len(itens_list),
             'is_prato_unico': is_prato_unico,
-            'metodo': 'local_index_v5.2',
+            'metodo': 'local_index_v5.3',
             'search_time_ms': round(elapsed_ms, 2),
             'itens': itens_list
         }
         
     except Exception as e:
-        logger.error(f"[v5.2] Erro: {e}")
+        logger.error(f"[v5.3] Erro: {e}")
         return {'ok': False, 'error': str(e)}
