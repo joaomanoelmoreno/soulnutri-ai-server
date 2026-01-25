@@ -453,11 +453,26 @@ async def identify_image(
                 # Substituições saudáveis
                 substituicoes = gerar_substituicoes(ingredientes)
                 
+                # ═══════════════════════════════════════════════════════════════════
+                # NOVIDADES/NOTÍCIAS DO PRATO (PREMIUM)
+                # ═══════════════════════════════════════════════════════════════════
+                novidade = None
+                dish_slug = decision.get('dish')
+                if dish_slug:
+                    novidade_doc = await db.novidades.find_one(
+                        {"dish_slug": dish_slug, "ativa": True},
+                        {"_id": 0}
+                    )
+                    if novidade_doc:
+                        novidade = novidade_doc
+                        logger.info(f"[PREMIUM] Novidade encontrada para {dish_slug}: {novidade_doc.get('tipo')}")
+                
                 premium_data = {
                     "alertas_alergenos": alertas_alergenos,
                     "alertas_historico": alertas_historico,
                     "combinacoes_sugeridas": combinacoes,
                     "substituicoes": substituicoes,
+                    "novidade": novidade,
                     "is_premium": True
                 }
                 
