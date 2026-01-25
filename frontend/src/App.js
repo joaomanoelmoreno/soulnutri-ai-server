@@ -34,6 +34,7 @@ function App() {
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
+  const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
   // Menu e PWA
   const [showMenu, setShowMenu] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
