@@ -1447,7 +1447,7 @@ function App() {
         </div>
       )}
 
-      {/* Botão de Check-in Rápido (Premium logado) */}
+      {/* Botão de Check-in Rápido (Premium logado) - DESATIVADO POR ENQUANTO
       {premiumUser && !showPremium && !showCheckin && !loading && !result && (
         <button 
           className="checkin-btn"
@@ -1457,6 +1457,7 @@ function App() {
           🍽️ Check-in
         </button>
       )}
+      */}
 
       {/* Rodapé */}
       <footer className="footer">
