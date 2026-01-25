@@ -1,0 +1,26 @@
+{
+  "nome": "bolinho de camarão, peixe",
+  "slug": "bolinho_de_camarão_peixe",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato com peixe frito, bolinhos e farofa. Uma refeição saborosa e com proteína animal.",
+  "ingredientes": [
+    "Peixe frito",
+    "bolinho",
+    "farofa"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alto teor de gordura (fritura)",
+    "Alérgeno: PEIXE (peixe)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

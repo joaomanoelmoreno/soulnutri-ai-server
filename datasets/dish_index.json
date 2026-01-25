@@ -29,6 +29,7 @@
     "abobrinha_grelhada_copia",
     "abobrinhacaramelizadavegana",
     "abobrinhagrelhada",
+    "abobrinhagrelhada",
     "alface_frisee",
     "alface_frisee",
     "alhoporogratinadovegano",
@@ -154,12 +155,6 @@
     "arrozintlegumes",
     "atum_ao_funghi",
     "atum_ao_gergelim",
-    "atum_gergelim",
-    "atum_selado_com_gergelim",
-    "atum_selado_com_gergelim",
-    "atum_selado_com_gergelim",
-    "atum_selado_com_gergelim",
-    "atum_selado_com_gergelim",
     "atum_selado_com_gergelim_e_molho",
     "atumaogergelim",
     "atumaogergelim",
@@ -233,7 +228,7 @@
     "baiaodedois",
     "baiaodedois",
     "baiaodedois",
-    "banana_grelhada",
+    "bananacaramelizada",
     "bananacaramelizada",
     "bananacaramelizada",
     "bananacaramelizada",
@@ -261,11 +256,6 @@
     "batatafrita",
     "batatafrita",
     "beringela_a_parmegiana",
-    "beringela_ao_limao",
-    "beringela_ao_limao",
-    "beringela_ao_limao",
-    "beringela_ao_pure_de_limao_siciliano",
-    "beringela_ao_pure_de_limao_siciliano",
     "beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca",
     "beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca",
     "beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca",
@@ -278,27 +268,27 @@
     "beringelaaocurrykincam",
     "beringelaaocurrykincam",
     "beringelaaocurrykincam",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
-    "beringelaaolimao",
     "beringelaaopuredelimao",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
     "beterraba",
     "beterraba_com_laranja",
     "beterrabaaobalsamico",
@@ -322,13 +312,8 @@
     "beterrabaaobalsamico",
     "beterrabaaobalsamico",
     "bife",
-    "bife_ao_molho_de_ervas",
-    "bife_com_ervas",
-    "bife_com_ervas",
-    "bife_com_ervas",
-    "bife_com_ervas",
-    "bife_com_ervas",
     "bolinho_de_camarao",
+    "bolinho_de_camarão_peixe",
     "bolinho_de_siri",
     "bolinhodebacalhau",
     "bolinhodebacalhau",
@@ -350,8 +335,6 @@
     "bolinhodebacalhau",
     "bolinhodebacalhau",
     "bolinhodebacalhau",
-    "bolinhos_de_bacalhau",
-    "bolinhos_de_bacalhau",
     "bolo_de_frutas",
     "bolo_de_frutas",
     "bolo_de_gengibre",
@@ -445,9 +428,9 @@
     "brownie",
     "brownie",
     "brownie",
-    "brownie_de_chocolate",
-    "brownie_de_chocolate",
-    "brownie_de_chocolate",
+    "brownie",
+    "brownie",
+    "brownie",
     "browniedechocolate",
     "brownieemelancia",
     "brownieveganocommorango",
@@ -499,9 +482,6 @@
     "capuccino_com_chocolate",
     "carne",
     "carne",
-    "carne_ao_molho",
-    "carne_ao_molho",
-    "carne_com_ervas",
     "carne_de_porco",
     "carne_moida",
     "carne_moida",
@@ -658,6 +638,7 @@
     "cocada",
     "cogumelo_recheado_com_legumes_e_queijo_vegano",
     "cogumelo_recheado_de_com_legumes",
+    "conchiglione_ao_creme_com_salvia_e_avel",
     "conchiglione_ao_creme_com_salvia_e_avela",
     "conchiglioneaocremecomsalviaeavelas",
     "conchiglioneaocremedeavelasesalvia",
@@ -704,6 +685,8 @@
     "coxinha_saudavel_de_frango",
     "cravodaindia",
     "cremedebanana",
+    "cremedebanana",
+    "cremedebanana",
     "cuscuz_marroquino_com_amendoas",
     "cuscuz_marroquino_com_amendoas",
     "cuscuzdetapioca",
@@ -735,6 +718,7 @@
     "cuscuzmarroquino",
     "cuscuzmarroquino",
     "cuscuzmarroquinocomvegetais",
+    "dadinho",
     "dadinho",
     "dadinho",
     "dadinho",
@@ -964,10 +948,18 @@
     "filedepeixemolhofrutassecas",
     "filedepeixemolhofrutassecas",
     "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
     "filé_a_parmegiana",
     "filé_a_parmegiana",
     "filé_a_parmegiana",
-    "flan",
     "frango_ao_molho",
     "frango_ao_molho",
     "frango_assado",
@@ -1002,10 +994,9 @@
     "frutasaoganachedechocolate",
     "frutos_do_mar",
     "frutos_do_mar_ao_molho_branco",
-    "frutos_do_mar_grelhados",
-    "frutos_do_mar_grelhados",
     "ganache_de_chocolate_com_frutas",
     "ganache_de_chocolate_com_frutas",
+    "ganachedechocolatecomfrutas",
     "gelatinadeabacaxi",
     "gelatinadecereja",
     "gelatinadecereja",
@@ -1052,8 +1043,8 @@
     "granola",
     "granola",
     "granola",
-    "granola_cibi_sana",
-    "granola_cibi_sana",
+    "granola",
+    "granola",
     "graodebicotomatesecoespinafre",
     "graodebicotomatesecoespinafre",
     "graodebicotomatesecoespinafre",
@@ -1082,6 +1073,14 @@
     "grelhado_dos_pescadores",
     "grelhado_dos_pescadores",
     "grelhado_dos_pescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
     "grelhadodospescadores",
     "grelhadodospescadores",
     "guacamole",
@@ -1182,9 +1181,6 @@
     "lasanhadeportobello",
     "lasanhadeportobello",
     "lasanhadeportobello",
-    "leitao_a_pururuca",
-    "leitao_assado",
-    "leitao_assado",
     "lentilhacomtofu",
     "lentilhacomtofu",
     "lentilhacomtofu",
@@ -1333,26 +1329,6 @@
     "molhoparaorolinho",
     "molhoparaorolinho",
     "molhosugo",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
-    "molhovinagrete",
     "moquecadebanadaterra",
     "moquecadebanadaterra",
     "moquecadebanadaterra",
@@ -1415,12 +1391,9 @@
     "nhoqueaosugo",
     "ovospochecomcarnemoida",
     "ovospochecomcarnemoida",
-    "paella",
-    "paella",
-    "paella_com_frutos_do_mar",
-    "paella_com_frutos_do_mar",
-    "paella_de_frutos_do_mar",
-    "paella_de_frutos_do_mar",
+    "panceta",
+    "panceta",
+    "panceta",
     "panceta",
     "panceta",
     "panceta",
@@ -1507,7 +1480,8 @@
     "pudim",
     "pudim",
     "pudim",
-    "pudim_de_leite",
+    "pudim",
+    "pudim",
     "pudimdeleitecondensado",
     "pudimdeleitecondensado",
     "pudimdeleitecondensado",
@@ -1805,6 +1779,7 @@
     "saladamediterranea",
     "saladamediterranea",
     "saladamediterranea",
+    "saladamichouiatunísia",
     "saladatailandesa",
     "saladatailandesa",
     "saladatailandesa",
@@ -1902,7 +1877,6 @@
     "strogonoff_vegano",
     "strogonoffdefilemignon",
     "strogonoffdefrango",
-    "sushi_de_atum",
     "sushivietnamita",
     "sushivietnamita",
     "sushivietnamita",
@@ -1925,7 +1899,6 @@
     "tabuledequinoa",
     "tabuledequinoa",
     "tabuledequinoa",
-    "tartaro_de_atum_com_gergelim",
     "tiramisu",
     "tiramisu",
     "tiramisu",
@@ -1951,30 +1924,25 @@
     "tortinhadegongorzolaefigo",
     "tortinhadegongorzolaefigo",
     "tortinhadegongorzolaefigo",
-    "umame_de_tomate",
-    "umami_de_tomate",
-    "umami_de_tomates",
-    "umami_de_tomates",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
-    "umamidetomate",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
     "umamidetomates",
     "unknownbúnchả",
     "unknownkibbehcomarrozehomus",
@@ -1991,11 +1959,30 @@
     "vermicelli",
     "vinagrete",
     "vinagrete",
-    "vinaigrete",
-    "vol_ai_vent_de_pimentao",
-    "vol_au_vent_de_pimentao",
-    "vol_au_vent_de_pimentao",
-    "volauvent"
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "volauuvent",
+    "volauuvent",
+    "volauuvent",
+    "volauuvent",
+    "volauuvent",
+    "volauuvent"
   ],
   "dish_to_idx": {
     "aboboraaocurry": [
@@ -2039,14 +2026,14 @@
       27
     ],
     "abobrinhagrelhada": [
-      28
+      28,
+      29
     ],
     "alface_frisee": [
-      29,
-      30
+      30,
+      31
     ],
     "alhoporogratinadovegano": [
-      31,
       32,
       33,
       34,
@@ -2059,40 +2046,40 @@
       41,
       42,
       43,
-      44
+      44,
+      45
     ],
     "aligot_pure_de_batata_inglesa_com_queijo": [
-      45,
-      46
-    ],
-    "almdegasmolhosugo": [
+      46,
       47
     ],
-    "almondegas_com_especiarias_indiana": [
+    "almdegasmolhosugo": [
       48
     ],
-    "almondegasaomolhodeespeciariasindianas": [
+    "almondegas_com_especiarias_indiana": [
       49
     ],
+    "almondegasaomolhodeespeciariasindianas": [
+      50
+    ],
     "almondegasmolhosugo": [
-      50,
       51,
       52,
       53,
       54,
-      55
+      55,
+      56
     ],
     "arroz7graos": [
-      56,
       57,
       58,
       59,
       60,
       61,
-      62
+      62,
+      63
     ],
     "arroz7graoscomfrutassecas": [
-      63,
       64,
       65,
       66,
@@ -2101,10 +2088,10 @@
       69,
       70,
       71,
-      72
+      72,
+      73
     ],
     "arroz7graoscomlegumes": [
-      73,
       74,
       75,
       76,
@@ -2123,13 +2110,13 @@
       89,
       90,
       91,
-      92
-    ],
-    "arroz_de_7_graos": [
+      92,
       93
     ],
+    "arroz_de_7_graos": [
+      94
+    ],
     "arrozbranco": [
-      94,
       95,
       96,
       97,
@@ -2148,15 +2135,15 @@
       110,
       111,
       112,
-      113
+      113,
+      114
     ],
     "arrozcombrocoliseamendoas": [
-      114,
       115,
-      116
+      116,
+      117
     ],
     "arrozde7graoscomamendoas": [
-      117,
       118,
       119,
       120,
@@ -2164,20 +2151,20 @@
       122,
       123,
       124,
-      125
+      125,
+      126
     ],
     "arrozintegral": [
-      126,
       127,
       128,
       129,
-      130
-    ],
-    "arrozintegralcomlegumes": [
+      130,
       131
     ],
+    "arrozintegralcomlegumes": [
+      132
+    ],
     "arrozintlegumes": [
-      132,
       133,
       134,
       135,
@@ -2196,28 +2183,24 @@
       148,
       149,
       150,
-      151
-    ],
-    "atum_ao_funghi": [
+      151,
       152
     ],
-    "atum_ao_gergelim": [
+    "atum_ao_funghi": [
       153
     ],
-    "atum_gergelim": [
+    "atum_ao_gergelim": [
       154
     ],
-    "atum_selado_com_gergelim": [
-      155,
+    "atum_selado_com_gergelim_e_molho": [
+      155
+    ],
+    "atumaogergelim": [
       156,
       157,
       158,
-      159
-    ],
-    "atum_selado_com_gergelim_e_molho": [
-      160
-    ],
-    "atumaogergelim": [
+      159,
+      160,
       161,
       162,
       163,
@@ -2232,41 +2215,41 @@
       172,
       173,
       174,
-      175,
-      176,
-      177,
-      178,
-      179,
-      180
+      175
     ],
     "atumcomgergelimemolhotare": [
-      181
+      176
     ],
     "atumseladocomgergelim": [
-      182,
-      183
+      177,
+      178
     ],
     "azeitona_preta": [
-      184
+      179
     ],
     "azeitonasverdes": [
-      185,
-      186
+      180,
+      181
     ],
     "bacalhau_com_natas_e_champions": [
-      187
+      182
     ],
     "bacalhau_com_natsa": [
-      188
+      183
     ],
     "bacalhau_gomes_de_sa": [
-      189,
-      190
+      184,
+      185
     ],
     "bacalhauaportuguesa": [
-      191
+      186
     ],
     "bacalhaucomnatas": [
+      187,
+      188,
+      189,
+      190,
+      191,
       192,
       193,
       194,
@@ -2280,102 +2263,100 @@
       202,
       203,
       204,
-      205,
+      205
+    ],
+    "bacalhaugomesdesa": [
       206,
       207,
       208,
       209,
-      210
-    ],
-    "bacalhaugomesdesa": [
+      210,
       211,
       212,
       213,
       214,
       215,
-      216,
-      217,
-      218,
-      219,
-      220,
-      221
+      216
     ],
     "baiao_de_dois": [
-      222,
-      223
+      217,
+      218
     ],
     "baiaodedois": [
+      219,
+      220,
+      221,
+      222,
+      223,
       224,
       225,
       226,
-      227,
+      227
+    ],
+    "bananacaramelizada": [
       228,
       229,
       230,
       231,
-      232
-    ],
-    "banana_grelhada": [
+      232,
       233
     ],
-    "bananacaramelizada": [
-      234,
-      235,
-      236,
-      237,
-      238
-    ],
     "batata_com_paprika": [
-      239
+      234
     ],
     "batataassada": [
-      240
+      235
     ],
     "batatacompaprica": [
+      236,
+      237,
+      238,
+      239,
+      240,
       241,
       242,
       243,
-      244,
+      244
+    ],
+    "batatadoce": [
       245,
       246,
       247,
       248,
       249
     ],
-    "batatadoce": [
+    "batatadoceassada": [
       250,
-      251,
+      251
+    ],
+    "batatafrita": [
       252,
       253,
       254
     ],
-    "batatadoceassada": [
-      255,
-      256
-    ],
-    "batatafrita": [
-      257,
-      258,
-      259
-    ],
     "beringela_a_parmegiana": [
-      260
-    ],
-    "beringela_ao_limao": [
-      261,
-      262,
-      263
-    ],
-    "beringela_ao_pure_de_limao_siciliano": [
-      264,
-      265
+      255
     ],
     "beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca": [
-      266,
-      267,
-      268
+      256,
+      257,
+      258
     ],
     "beringelaaocurrykincam": [
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267
+    ],
+    "beringelaaopuredelimao": [
+      268
+    ],
+    "beringelaaopuredelimaosiciliano": [
       269,
       270,
       271,
@@ -2384,9 +2365,7 @@
       274,
       275,
       276,
-      277
-    ],
-    "beringelaaolimao": [
+      277,
       278,
       279,
       280,
@@ -2397,27 +2376,25 @@
       285,
       286,
       287,
-      288,
-      289,
-      290,
+      288
+    ],
+    "beterraba": [
+      289
+    ],
+    "beterraba_com_laranja": [
+      290
+    ],
+    "beterrabaaobalsamico": [
       291,
       292,
       293,
       294,
       295,
       296,
-      297
-    ],
-    "beringelaaopuredelimao": [
-      298
-    ],
-    "beterraba": [
-      299
-    ],
-    "beterraba_com_laranja": [
-      300
-    ],
-    "beterrabaaobalsamico": [
+      297,
+      298,
+      299,
+      300,
       301,
       302,
       303,
@@ -2427,47 +2404,53 @@
       307,
       308,
       309,
-      310,
-      311,
-      312,
-      313,
-      314,
+      310
+    ],
+    "bife": [
+      311
+    ],
+    "bolinho_de_camarao": [
+      312
+    ],
+    "bolinho_de_camarão_peixe": [
+      313
+    ],
+    "bolinho_de_siri": [
+      314
+    ],
+    "bolinhodebacalhau": [
       315,
       316,
       317,
       318,
       319,
-      320
-    ],
-    "bife": [
-      321
-    ],
-    "bife_ao_molho_de_ervas": [
-      322
-    ],
-    "bife_com_ervas": [
+      320,
+      321,
+      322,
       323,
       324,
       325,
       326,
-      327
-    ],
-    "bolinho_de_camarao": [
-      328
-    ],
-    "bolinho_de_siri": [
-      329
-    ],
-    "bolinhodebacalhau": [
+      327,
+      328,
+      329,
       330,
       331,
       332,
       333,
-      334,
+      334
+    ],
+    "bolo_de_frutas": [
       335,
-      336,
-      337,
-      338,
+      336
+    ],
+    "bolo_de_gengibre": [
+      337
+    ],
+    "bolo_vegano_de_chocolate": [
+      338
+    ],
+    "bolobrownie": [
       339,
       340,
       341,
@@ -2475,26 +2458,20 @@
       343,
       344,
       345,
-      346,
+      346
+    ],
+    "bolochocolatevegano": [
       347,
       348,
-      349
-    ],
-    "bolinhos_de_bacalhau": [
+      349,
       350,
-      351
+      351,
+      352
     ],
-    "bolo_de_frutas": [
-      352,
-      353
-    ],
-    "bolo_de_gengibre": [
-      354
-    ],
-    "bolo_vegano_de_chocolate": [
-      355
-    ],
-    "bolobrownie": [
+    "bolodegengibre": [
+      353,
+      354,
+      355,
       356,
       357,
       358,
@@ -2502,22 +2479,24 @@
       360,
       361,
       362,
-      363
-    ],
-    "bolochocolatevegano": [
+      363,
       364,
       365,
       366,
       367,
       368,
-      369
-    ],
-    "bolodegengibre": [
+      369,
       370,
       371,
-      372,
-      373,
-      374,
+      372
+    ],
+    "boloveganodechocolate": [
+      373
+    ],
+    "brocolis": [
+      374
+    ],
+    "brocoliscomparmesao": [
       375,
       376,
       377,
@@ -2532,18 +2511,14 @@
       386,
       387,
       388,
-      389
-    ],
-    "boloveganodechocolate": [
-      390
-    ],
-    "brocolis": [
-      391
-    ],
-    "brocoliscomparmesao": [
+      389,
+      390,
+      391,
       392,
       393,
-      394,
+      394
+    ],
+    "brocoliscouveflorgratinado": [
       395,
       396,
       397,
@@ -2560,12 +2535,12 @@
       408,
       409,
       410,
-      411
-    ],
-    "brocoliscouveflorgratinado": [
+      411,
       412,
       413,
-      414,
+      414
+    ],
+    "brocolisgratinado": [
       415,
       416,
       417,
@@ -2573,7 +2548,9 @@
       419,
       420,
       421,
-      422,
+      422
+    ],
+    "brownie": [
       423,
       424,
       425,
@@ -2581,167 +2558,169 @@
       427,
       428,
       429,
-      430,
+      430
+    ],
+    "browniedechocolate": [
       431
     ],
-    "brocolisgratinado": [
-      432,
+    "brownieemelancia": [
+      432
+    ],
+    "brownieveganocommorango": [
       433,
-      434,
+      434
+    ],
+    "camarao": [
       435,
       436,
       437,
-      438,
-      439
+      438
     ],
-    "brownie": [
-      440,
-      441,
+    "camarao_grelhado": [
+      439,
+      440
+    ],
+    "caneleira_quatro_queijos": [
+      441
+    ],
+    "canelone_4_queijo": [
       442,
-      443,
-      444
+      443
     ],
-    "brownie_de_chocolate": [
+    "canelonedeespinafre": [
+      444,
       445,
       446,
-      447
-    ],
-    "browniedechocolate": [
-      448
-    ],
-    "brownieemelancia": [
-      449
-    ],
-    "brownieveganocommorango": [
+      447,
+      448,
+      449,
       450,
-      451
-    ],
-    "camarao": [
+      451,
       452,
       453,
       454,
-      455
-    ],
-    "camarao_grelhado": [
+      455,
       456,
-      457
-    ],
-    "caneleira_quatro_queijos": [
-      458
-    ],
-    "canelone_4_queijo": [
+      457,
+      458,
       459,
-      460
-    ],
-    "canelonedeespinafre": [
+      460,
       461,
       462,
-      463,
-      464,
-      465,
-      466,
+      463
+    ],
+    "canelonedeespinafrecomricotaaomolhodetomate": [
+      464
+    ],
+    "canelonequatroqueijos": [
+      465
+    ],
+    "cannelloniquatroqueijos": [
+      466
+    ],
+    "caponata": [
       467,
       468,
       469,
       470,
       471,
       472,
-      473,
+      473
+    ],
+    "caprese": [
       474,
       475,
       476,
-      477,
-      478,
-      479,
-      480
-    ],
-    "canelonedeespinafrecomricotaaomolhodetomate": [
-      481
-    ],
-    "canelonequatroqueijos": [
-      482
-    ],
-    "cannelloniquatroqueijos": [
-      483
-    ],
-    "caponata": [
-      484,
-      485,
-      486,
-      487,
-      488,
-      489,
-      490
-    ],
-    "caprese": [
-      491,
-      492,
-      493,
-      494
+      477
     ],
     "capuccino": [
-      495
+      478
     ],
     "capuccino_com_chocolate": [
-      496
+      479
     ],
     "carne": [
-      497,
-      498
-    ],
-    "carne_ao_molho": [
-      499,
-      500
-    ],
-    "carne_com_ervas": [
-      501
+      480,
+      481
     ],
     "carne_de_porco": [
-      502
+      482
     ],
     "carne_moida": [
-      503,
-      504
+      483,
+      484
     ],
     "carne_seca_com_abobora": [
-      505
+      485
     ],
     "carnecomfritas": [
-      506
+      486
     ],
     "carpaccio_de_abobrinha_com_queijo_vegano": [
-      507
+      487
     ],
     "carpacciodeabobrinha": [
-      508,
-      509,
-      510,
-      511,
-      512
+      488,
+      489,
+      490,
+      491,
+      492
     ],
     "carpacciodelaranja": [
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503
+    ],
+    "carpacciodeperaruculaeamendoas": [
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510
+    ],
+    "cebola": [
+      511,
+      512,
       513,
       514,
       515,
       516,
       517,
-      518,
+      518
+    ],
+    "cebola_caramelizada_vegana": [
       519,
       520,
       521,
-      522,
-      523
+      522
     ],
-    "carpacciodeperaruculaeamendoas": [
-      524,
+    "cebola_roxa_com_ervas_frescas_e_frutos_secos": [
+      523,
+      524
+    ],
+    "cebolaroxacomervasfrescasefrutossecos": [
       525,
       526,
-      527,
-      528,
-      529,
-      530
+      527
     ],
-    "cebola": [
+    "cebolascaramelizadas": [
+      528
+    ],
+    "cenoura_com_iogurte_e_especiarias": [
+      529
+    ],
+    "cenouraaoiogurte": [
+      530,
       531,
       532,
       533,
@@ -2749,41 +2728,37 @@
       535,
       536,
       537,
-      538
-    ],
-    "cebola_caramelizada_vegana": [
+      538,
       539,
       540,
       541,
-      542
-    ],
-    "cebola_roxa_com_ervas_frescas_e_frutos_secos": [
+      542,
       543,
-      544
-    ],
-    "cebolaroxacomervasfrescasefrutossecos": [
+      544,
       545,
       546,
-      547
-    ],
-    "cebolascaramelizadas": [
-      548
-    ],
-    "cenoura_com_iogurte_e_especiarias": [
+      547,
+      548,
       549
     ],
-    "cenouraaoiogurte": [
+    "cenourapalito": [
       550,
       551,
       552,
       553,
       554,
-      555,
+      555
+    ],
+    "cestinha_de_camarão": [
       556,
-      557,
+      557
+    ],
+    "cestinhadecamarao": [
       558,
       559,
-      560,
+      560
+    ],
+    "cestinhasdecamarao": [
       561,
       562,
       563,
@@ -2792,81 +2767,77 @@
       566,
       567,
       568,
-      569
-    ],
-    "cenourapalito": [
+      569,
       570,
       571,
       572,
       573,
       574,
-      575
-    ],
-    "cestinha_de_camarão": [
+      575,
       576,
-      577
-    ],
-    "cestinhadecamarao": [
+      577,
       578,
       579,
       580
     ],
-    "cestinhasdecamarao": [
-      581,
-      582,
+    "ceviche": [
+      581
+    ],
+    "ceviche_cibi_sana": [
+      582
+    ],
+    "ceviche_cibi_sana_file_de_tilapia": [
       583,
       584,
       585,
-      586,
-      587,
-      588,
+      586
+    ],
+    "ceviche_de_banana_da_terra": [
+      587
+    ],
+    "ceviche_de_manga": [
+      588
+    ],
+    "cevichedemanga": [
       589,
       590,
       591,
-      592,
+      592
+    ],
+    "cevichedepeixe": [
       593,
       594,
-      595,
-      596,
+      595
+    ],
+    "cevichedepeixebranco": [
+      596
+    ],
+    "cevicheperuano": [
       597,
       598,
       599,
-      600
-    ],
-    "ceviche": [
-      601
-    ],
-    "ceviche_cibi_sana": [
-      602
-    ],
-    "ceviche_cibi_sana_file_de_tilapia": [
+      600,
+      601,
+      602,
       603,
       604,
       605,
-      606
-    ],
-    "ceviche_de_banana_da_terra": [
-      607
-    ],
-    "ceviche_de_manga": [
-      608
-    ],
-    "cevichedemanga": [
+      606,
+      607,
+      608,
       609,
       610,
       611,
-      612
-    ],
-    "cevichedepeixe": [
+      612,
       613,
       614,
-      615
-    ],
-    "cevichedepeixebranco": [
+      615,
       616
     ],
-    "cevicheperuano": [
-      617,
+    "chocolatequente": [
+      617
+    ],
+    "cocada": [
       618,
       619,
       620,
@@ -2884,123 +2855,123 @@
       632,
       633,
       634,
-      635,
-      636
-    ],
-    "chocolatequente": [
-      637
-    ],
-    "cocada": [
-      638,
-      639,
-      640,
-      641,
-      642,
-      643,
-      644,
-      645,
-      646,
-      647,
-      648,
-      649,
-      650,
-      651,
-      652,
-      653,
-      654,
-      655
+      635
     ],
     "cogumelo_recheado_com_legumes_e_queijo_vegano": [
-      656
+      636
     ],
     "cogumelo_recheado_de_com_legumes": [
-      657
+      637
+    ],
+    "conchiglione_ao_creme_com_salvia_e_avel": [
+      638
     ],
     "conchiglione_ao_creme_com_salvia_e_avela": [
-      658
+      639
     ],
     "conchiglioneaocremecomsalviaeavelas": [
-      659
+      640
     ],
     "conchiglioneaocremedeavelasesalvia": [
-      660
+      641
     ],
     "conchiglioneaocremedevaelasesalvia": [
-      661
+      642
     ],
     "conchiglionirecheados": [
-      662,
-      663
+      643,
+      644
     ],
     "costela_assada_com_mandioca": [
-      664
+      645
     ],
     "costela_bovina": [
-      665
+      646
     ],
     "costela_cibi_sana": [
-      666,
-      667
+      647,
+      648
     ],
     "costela_com_mandioca": [
-      668,
-      669,
-      670
+      649,
+      650,
+      651
     ],
     "costelacommandioca": [
-      671
+      652
     ],
     "costelinhacibisana": [
-      672,
-      673,
-      674,
+      653,
+      654,
+      655,
+      656,
+      657,
+      658,
+      659,
+      660,
+      661,
+      662,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668,
+      669,
+      670,
+      671,
+      672
+    ],
+    "couve_flor_gratinada": [
+      673
+    ],
+    "couveflor_gratinada": [
+      674
+    ],
+    "couveflorgratinada": [
       675,
       676,
       677,
-      678,
+      678
+    ],
+    "coxinha_saudavel_de_frango": [
       679,
       680,
       681,
-      682,
-      683,
+      682
+    ],
+    "cravodaindia": [
+      683
+    ],
+    "cremedebanana": [
       684,
       685,
-      686,
+      686
+    ],
+    "cuscuz_marroquino_com_amendoas": [
       687,
-      688,
+      688
+    ],
+    "cuscuzdetapioca": [
       689,
       690,
-      691
-    ],
-    "couve_flor_gratinada": [
-      692
-    ],
-    "couveflor_gratinada": [
-      693
-    ],
-    "couveflorgratinada": [
+      691,
+      692,
+      693,
       694,
       695,
-      696,
-      697
+      696
     ],
-    "coxinha_saudavel_de_frango": [
+    "cuscuzmarroquino": [
+      697,
       698,
       699,
       700,
-      701
-    ],
-    "cravodaindia": [
-      702
-    ],
-    "cremedebanana": [
-      703
-    ],
-    "cuscuz_marroquino_com_amendoas": [
+      701,
+      702,
+      703,
       704,
-      705
-    ],
-    "cuscuzdetapioca": [
+      705,
       706,
       707,
       708,
@@ -3008,13 +2979,15 @@
       710,
       711,
       712,
-      713
-    ],
-    "cuscuzmarroquino": [
+      713,
       714,
       715,
-      716,
-      717,
+      716
+    ],
+    "cuscuzmarroquinocomvegetais": [
+      717
+    ],
+    "dadinho": [
       718,
       719,
       720,
@@ -3027,17 +3000,23 @@
       727,
       728,
       729,
-      730,
-      731,
+      730
+    ],
+    "dadinhodetapioca": [
+      731
+    ],
+    "docedebananavegano_semacucar": [
       732,
       733
     ],
-    "cuscuzmarroquinocomvegetais": [
+    "empanada": [
       734
     ],
-    "dadinho": [
+    "entrecote": [
       735,
-      736,
+      736
+    ],
+    "entrecotegrelhado": [
       737,
       738,
       739,
@@ -3049,34 +3028,28 @@
       745,
       746
     ],
-    "dadinhodetapioca": [
-      747
-    ],
-    "docedebananavegano_semacucar": [
+    "ervadocecomlaranja": [
+      747,
       748,
-      749
-    ],
-    "empanada": [
-      750
-    ],
-    "entrecote": [
+      749,
+      750,
       751,
-      752
-    ],
-    "entrecotegrelhado": [
+      752,
       753,
       754,
       755,
       756,
       757,
-      758,
+      758
+    ],
+    "escondidinhodecarneseca": [
       759,
       760,
       761,
-      762
+      762,
+      763
     ],
-    "ervadocecomlaranja": [
-      763,
+    "espaguete": [
       764,
       765,
       766,
@@ -3086,68 +3059,74 @@
       770,
       771,
       772,
-      773,
-      774
+      773
     ],
-    "escondidinhodecarneseca": [
-      775,
-      776,
-      777,
-      778,
-      779
+    "espaguete_parisiense": [
+      774,
+      775
     ],
-    "espaguete": [
+    "espaguetecomtomatecereja": [
+      776
+    ],
+    "espagueti_ao_misso": [
+      777
+    ],
+    "espetinho_de_legumes_e_molho_pesto": [
+      778
+    ],
+    "espetinhosdelegumesgrelhados": [
+      779,
       780,
-      781,
+      781
+    ],
+    "estrogonofe_de_frango": [
       782,
-      783,
-      784,
-      785,
+      783
+    ],
+    "estrogonofe_vegano": [
+      784
+    ],
+    "estrogonofedefilemignon": [
+      785
+    ],
+    "farofa_de_bacon": [
       786,
-      787,
+      787
+    ],
+    "farofa_de_banana_da_terra_vegana": [
       788,
       789
     ],
-    "espaguete_parisiense": [
-      790,
-      791
+    "farofa_de_banana_vegana": [
+      790
     ],
-    "espaguetecomtomatecereja": [
-      792
-    ],
-    "espagueti_ao_misso": [
-      793
-    ],
-    "espetinho_de_legumes_e_molho_pesto": [
-      794
-    ],
-    "espetinhosdelegumesgrelhados": [
+    "farofadebacon": [
+      791,
+      792,
+      793,
+      794,
       795,
       796,
       797
     ],
-    "estrogonofe_de_frango": [
+    "farofadebananadaterra": [
       798,
-      799
-    ],
-    "estrogonofe_vegano": [
-      800
-    ],
-    "estrogonofedefilemignon": [
-      801
-    ],
-    "farofa_de_bacon": [
+      799,
+      800,
+      801,
       802,
       803
     ],
-    "farofa_de_banana_da_terra_vegana": [
-      804,
+    "feijao_do_chef": [
+      804
+    ],
+    "feijao_tropeiro": [
       805
     ],
-    "farofa_de_banana_vegana": [
+    "feijaobranco": [
       806
     ],
-    "farofadebacon": [
+    "feijaocariocasemcarne": [
       807,
       808,
       809,
@@ -3156,24 +3135,18 @@
       812,
       813
     ],
-    "farofadebananadaterra": [
+    "feijaopretocomcarne": [
       814,
       815,
       816,
       817,
       818,
-      819
-    ],
-    "feijao_do_chef": [
+      819,
       820
     ],
-    "feijao_tropeiro": [
-      821
-    ],
-    "feijaobranco": [
-      822
-    ],
-    "feijaocariocasemcarne": [
+    "feijaopretosemcarne": [
+      821,
+      822,
       823,
       824,
       825,
@@ -3182,7 +3155,7 @@
       828,
       829
     ],
-    "feijaopretocomcarne": [
+    "feijaotropeiro": [
       830,
       831,
       832,
@@ -3191,47 +3164,57 @@
       835,
       836
     ],
-    "feijaopretosemcarne": [
-      837,
-      838,
-      839,
+    "feijoada": [
+      837
+    ],
+    "figado_acebolad9": [
+      838
+    ],
+    "figado_acebolado": [
+      839
+    ],
+    "figadoacebolado": [
       840,
       841,
       842,
       843,
       844,
-      845
-    ],
-    "feijaotropeiro": [
+      845,
       846,
       847,
       848,
       849,
       850,
       851,
-      852
-    ],
-    "feijoada": [
-      853
-    ],
-    "figado_acebolad9": [
-      854
-    ],
-    "figado_acebolado": [
-      855
-    ],
-    "figadoacebolado": [
+      852,
+      853,
+      854,
+      855,
       856,
       857,
       858,
-      859,
-      860,
-      861,
-      862,
-      863,
+      859
+    ],
+    "figadoaceboladocompimentabiquinho": [
+      860
+    ],
+    "file_a_parmegiana_acompanhamentos": [
+      861
+    ],
+    "file_de_frango_parmegiana": [
+      862
+    ],
+    "file_de_peixe_ao_confir_de_tomates": [
+      863
+    ],
+    "file_de_peixe_ao_confit_de_tomates": [
       864,
-      865,
-      866,
+      865
+    ],
+    "file_de_peixe_ao_molho_confit": [
+      866
+    ],
+    "file_de_peixe_em_manteiga_de_tomates": [
       867,
       868,
       869,
@@ -3242,52 +3225,40 @@
       874,
       875
     ],
-    "figadoaceboladocompimentabiquinho": [
+    "file_de_tilapia_a_milanesa": [
       876
     ],
-    "file_a_parmegiana_acompanhamentos": [
-      877
-    ],
-    "file_de_frango_parmegiana": [
-      878
-    ],
-    "file_de_peixe_ao_confir_de_tomates": [
-      879
-    ],
-    "file_de_peixe_ao_confit_de_tomates": [
+    "filedefrangoaparmegiana": [
+      877,
+      878,
+      879,
       880,
-      881
-    ],
-    "file_de_peixe_ao_molho_confit": [
-      882
-    ],
-    "file_de_peixe_em_manteiga_de_tomates": [
+      881,
+      882,
       883,
       884,
       885,
-      886,
+      886
+    ],
+    "filedepeixeaomisso": [
       887,
       888,
       889,
       890,
-      891
-    ],
-    "file_de_tilapia_a_milanesa": [
-      892
-    ],
-    "filedefrangoaparmegiana": [
+      891,
+      892,
       893,
       894,
       895,
       896,
       897,
       898,
-      899,
+      899
+    ],
+    "filedepeixeaomolhodelimao": [
       900,
       901,
-      902
-    ],
-    "filedepeixeaomisso": [
+      902,
       903,
       904,
       905,
@@ -3295,16 +3266,18 @@
       907,
       908,
       909,
-      910,
+      910
+    ],
+    "filedepeixeaomolhomisso": [
       911,
       912,
       913,
       914,
-      915
-    ],
-    "filedepeixeaomolhodelimao": [
+      915,
       916,
-      917,
+      917
+    ],
+    "filedepeixemolhoconfit": [
       918,
       919,
       920,
@@ -3313,22 +3286,20 @@
       923,
       924,
       925,
-      926
-    ],
-    "filedepeixeaomolhomisso": [
+      926,
       927,
       928,
       929,
       930,
       931,
       932,
-      933
-    ],
-    "filedepeixemolhoconfit": [
+      933,
       934,
       935,
       936,
-      937,
+      937
+    ],
+    "filedepeixemolhofrutassecas": [
       938,
       939,
       940,
@@ -3337,64 +3308,60 @@
       943,
       944,
       945,
-      946,
+      946
+    ],
+    "filemignonemmanteigadeervas": [
       947,
       948,
       949,
       950,
       951,
       952,
-      953
-    ],
-    "filedepeixemolhofrutassecas": [
+      953,
       954,
       955,
-      956,
-      957,
-      958,
-      959,
-      960,
-      961,
-      962
-    ],
-    "filemignonemmanteigadeervas": [
-      963
+      956
     ],
     "filé_a_parmegiana": [
-      964,
+      957,
+      958,
+      959
+    ],
+    "frango_ao_molho": [
+      960,
+      961
+    ],
+    "frango_assado": [
+      962
+    ],
+    "frango_com_batatas": [
+      963
+    ],
+    "frango_com_legumes": [
+      964
+    ],
+    "frango_frito": [
       965,
       966
     ],
-    "flan": [
+    "frango_no_tacho": [
       967
     ],
-    "frango_ao_molho": [
-      968,
-      969
-    ],
-    "frango_assado": [
-      970
-    ],
-    "frango_com_batatas": [
-      971
-    ],
-    "frango_com_legumes": [
-      972
-    ],
-    "frango_frito": [
-      973,
-      974
-    ],
-    "frango_no_tacho": [
-      975
-    ],
     "frangoaparmegiana": [
-      976
+      968
     ],
     "frangoassado": [
-      977
+      969
     ],
     "frangocremedelimaosalnegro": [
+      970,
+      971,
+      972,
+      973,
+      974,
+      975,
+      976,
+      977,
       978,
       979,
       980,
@@ -3406,65 +3373,65 @@
       986,
       987,
       988,
-      989,
-      990,
-      991,
-      992,
-      993,
-      994,
-      995,
-      996,
-      997
+      989
     ],
     "frutas_ao_ganache_de_chocolate": [
-      998
+      990
     ],
     "frutasaoganachedechocolate": [
-      999
+      991
     ],
     "frutos_do_mar": [
-      1000
+      992
     ],
     "frutos_do_mar_ao_molho_branco": [
-      1001
-    ],
-    "frutos_do_mar_grelhados": [
-      1002,
-      1003
+      993
     ],
     "ganache_de_chocolate_com_frutas": [
-      1004,
-      1005
+      994,
+      995
+    ],
+    "ganachedechocolatecomfrutas": [
+      996
     ],
     "gelatinadeabacaxi": [
-      1006
+      997
     ],
     "gelatinadecereja": [
+      998,
+      999,
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
       1007,
       1008,
       1009,
       1010,
       1011,
       1012,
-      1013,
-      1014,
+      1013
+    ],
+    "gelatinademorango": [
+      1014
+    ],
+    "gelatinadeuva": [
       1015,
-      1016,
+      1016
+    ],
+    "goiabada": [
       1017,
       1018,
       1019,
       1020,
       1021,
-      1022
-    ],
-    "gelatinademorango": [
-      1023
-    ],
-    "gelatinadeuva": [
+      1022,
+      1023,
       1024,
-      1025
-    ],
-    "goiabada": [
+      1025,
       1026,
       1027,
       1028,
@@ -3475,7 +3442,9 @@
       1033,
       1034,
       1035,
-      1036,
+      1036
+    ],
+    "granola": [
       1037,
       1038,
       1039,
@@ -3483,10 +3452,10 @@
       1041,
       1042,
       1043,
-      1044,
-      1045
+      1044
     ],
-    "granola": [
+    "graodebicotomatesecoespinafre": [
+      1045,
       1046,
       1047,
       1048,
@@ -3494,23 +3463,19 @@
       1050,
       1051
     ],
-    "granola_cibi_sana": [
-      1052,
-      1053
+    "gratinado_de_peixefrutos_do_mar": [
+      1052
     ],
-    "graodebicotomatesecoespinafre": [
+    "grelhado_dos_pescadores": [
+      1053,
       1054,
       1055,
       1056,
       1057,
       1058,
       1059,
-      1060
-    ],
-    "gratinado_de_peixefrutos_do_mar": [
-      1061
-    ],
-    "grelhado_dos_pescadores": [
+      1060,
+      1061,
       1062,
       1063,
       1064,
@@ -3521,7 +3486,9 @@
       1069,
       1070,
       1071,
-      1072,
+      1072
+    ],
+    "grelhadodospescadores": [
       1073,
       1074,
       1075,
@@ -3530,27 +3497,25 @@
       1078,
       1079,
       1080,
-      1081
-    ],
-    "grelhadodospescadores": [
-      1082,
-      1083
+      1081,
+      1082
     ],
     "guacamole": [
+      1083,
       1084,
       1085,
       1086,
       1087,
-      1088,
-      1089
+      1088
     ],
     "guacamole_com_manga": [
-      1090
+      1089
     ],
     "hamburger_de_carne": [
-      1091
+      1090
     ],
     "hamburgerdecarne": [
+      1091,
       1092,
       1093,
       1094,
@@ -3569,56 +3534,56 @@
       1107,
       1108,
       1109,
-      1110,
-      1111
+      1110
     ],
     "hamburguedecarne": [
+      1111,
       1112,
       1113,
       1114,
-      1115,
-      1116
+      1115
     ],
     "hamburguer_bovino": [
+      1116,
       1117,
-      1118,
-      1119
+      1118
     ],
     "hamburguer_vegano_de_nozes": [
-      1120,
-      1121
+      1119,
+      1120
     ],
     "hamburguerangusaoponto": [
-      1122
+      1121
     ],
     "hamburguervegano": [
+      1122,
       1123,
       1124,
       1125,
       1126,
       1127,
-      1128,
-      1129
+      1128
     ],
     "hamcamaraocomcarnesuina": [
+      1129,
       1130,
       1131,
       1132,
       1133,
       1134,
       1135,
-      1136,
-      1137
+      1136
     ],
     "jiloempanado": [
+      1137,
       1138,
       1139,
       1140,
       1141,
-      1142,
-      1143
+      1142
     ],
     "kibe": [
+      1143,
       1144,
       1145,
       1146,
@@ -3626,40 +3591,40 @@
       1148,
       1149,
       1150,
-      1151,
-      1152
+      1151
     ],
     "kiberecheado": [
-      1153
+      1152
     ],
     "lasanha_de_berinjela": [
-      1154,
-      1155
+      1153,
+      1154
     ],
     "lasanha_de_espinafre": [
-      1156
+      1155
     ],
     "lasanha_vegana": [
-      1157
+      1156
     ],
     "lasanha_vegana_beringela_e_proteina_de_soja": [
-      1158,
-      1159
+      1157,
+      1158
     ],
     "lasanha_vegana_de_berinjela_e_proteina_de_soja": [
-      1160
+      1159
     ],
     "lasanhadeespinafre": [
+      1160,
       1161,
       1162,
       1163,
       1164,
       1165,
       1166,
-      1167,
-      1168
+      1167
     ],
     "lasanhadeportobello": [
+      1168,
       1169,
       1170,
       1171,
@@ -3671,84 +3636,80 @@
       1177,
       1178,
       1179,
-      1180,
-      1181
-    ],
-    "leitao_a_pururuca": [
-      1182
-    ],
-    "leitao_assado": [
-      1183,
-      1184
+      1180
     ],
     "lentilhacomtofu": [
+      1181,
+      1182,
+      1183,
+      1184,
       1185,
       1186,
       1187,
       1188,
-      1189,
-      1190,
-      1191,
-      1192,
-      1193
+      1189
     ],
     "linguica_de_lombo": [
-      1194,
-      1195
+      1190,
+      1191
     ],
     "linguicaacebolada": [
-      1196
+      1192
     ],
     "lula_e_camarao": [
-      1197
+      1193
     ],
     "mamao": [
-      1198
+      1194
     ],
     "mamaoemcubos": [
-      1199
+      1195
     ],
     "maminha_ao_molho_de_cebola": [
+      1196,
+      1197
+    ],
+    "maminha_ao_molho_madeira": [
+      1198,
+      1199,
       1200,
       1201
     ],
-    "maminha_ao_molho_madeira": [
-      1202,
-      1203,
-      1204,
-      1205
-    ],
     "maminha_ao_molho_mostarda": [
-      1206
+      1202
     ],
     "maminhaaomolhomongolia": [
+      1203,
+      1204,
+      1205,
+      1206
+    ],
+    "maminhaaomolhomostarda": [
       1207,
       1208,
       1209,
-      1210
-    ],
-    "maminhaaomolhomostarda": [
+      1210,
       1211,
       1212,
       1213,
       1214,
-      1215,
+      1215
+    ],
+    "maminhamolhocebola": [
       1216,
       1217,
       1218,
-      1219
-    ],
-    "maminhamolhocebola": [
+      1219,
       1220,
       1221,
       1222,
-      1223,
+      1223
+    ],
+    "maminhanacervejapreta": [
       1224,
       1225,
       1226,
-      1227
-    ],
-    "maminhanacervejapreta": [
+      1227,
       1228,
       1229,
       1230,
@@ -3764,52 +3725,52 @@
       1240,
       1241,
       1242,
-      1243,
+      1243
+    ],
+    "mandioquinhaassada": [
       1244,
       1245,
       1246,
-      1247
-    ],
-    "mandioquinhaassada": [
+      1247,
       1248,
       1249,
       1250,
       1251,
-      1252,
+      1252
+    ],
+    "mandioquinhacomcamarao": [
       1253,
       1254,
       1255,
-      1256
-    ],
-    "mandioquinhacomcamarao": [
+      1256,
       1257,
       1258,
-      1259,
-      1260,
-      1261,
-      1262,
-      1263
+      1259
     ],
     "manjar_de_coco": [
-      1264
+      1260
     ],
     "manjar_de_coco_com_calda_de_frutas_vermelhas": [
-      1265,
-      1266
+      1261,
+      1262
     ],
     "manjardecococomcaldadeameixa": [
-      1267
+      1263
     ],
     "marinha_ao_molho_madeira": [
-      1268
+      1264
     ],
     "massaladecamaroes": [
-      1269
+      1265
     ],
     "mechouia_tunisia": [
-      1270
+      1266
     ],
     "mechouiatunisia": [
+      1267,
+      1268,
+      1269,
+      1270,
       1271,
       1272,
       1273,
@@ -3825,22 +3786,22 @@
       1283,
       1284,
       1285,
-      1286,
-      1287,
-      1288,
-      1289,
-      1290
+      1286
     ],
     "melancia": [
-      1291
+      1287
     ],
     "melhoria_tunisia": [
-      1292
+      1288
     ],
     "michouiatunisia": [
-      1293
+      1289
     ],
     "minipolpetonerecheadocomqueijo": [
+      1290,
+      1291,
+      1292,
+      1293,
       1294,
       1295,
       1296,
@@ -3856,44 +3817,44 @@
       1306,
       1307,
       1308,
-      1309,
-      1310,
-      1311,
-      1312,
-      1313
+      1309
     ],
     "mixdegraos": [
-      1314
+      1310
     ],
     "molho_tartaro": [
-      1315,
-      1316
+      1311,
+      1312
     ],
     "molhocaeiro": [
+      1313,
+      1314,
+      1315,
+      1316,
       1317,
       1318,
-      1319,
-      1320,
-      1321,
-      1322,
-      1323
+      1319
     ],
     "molhodecebola": [
-      1324
+      1320
     ],
     "molhoparaorolinho": [
+      1321,
+      1322,
+      1323,
+      1324,
       1325,
       1326,
-      1327,
-      1328,
-      1329,
-      1330,
-      1331
+      1327
     ],
     "molhosugo": [
-      1332
+      1328
     ],
-    "molhovinagrete": [
+    "moquecadebanadaterra": [
+      1329,
+      1330,
+      1331,
+      1332,
       1333,
       1334,
       1335,
@@ -3909,13 +3870,17 @@
       1345,
       1346,
       1347,
-      1348,
-      1349,
-      1350,
-      1351,
-      1352
+      1348
     ],
-    "moquecadebanadaterra": [
+    "mousse_de_maracuja": [
+      1349
+    ],
+    "moussedelimaosemacucar": [
+      1350
+    ],
+    "moussedemaracuja": [
+      1351,
+      1352,
       1353,
       1354,
       1355,
@@ -3923,180 +3888,182 @@
       1357,
       1358,
       1359,
-      1360,
+      1360
+    ],
+    "moussedemorango": [
       1361,
       1362,
       1363,
       1364,
       1365,
       1366,
-      1367,
-      1368,
+      1367
+    ],
+    "muqueca_de_banana_da_terra": [
+      1368
+    ],
+    "muqueca_de_banana_da_terra_vegana": [
       1369,
-      1370,
-      1371,
+      1370
+    ],
+    "nachos": [
+      1371
+    ],
+    "naoepossivelidentificar": [
       1372
     ],
-    "mousse_de_maracuja": [
-      1373
-    ],
-    "moussedelimaosemacucar": [
+    "nhoque": [
+      1373,
       1374
     ],
-    "moussedemaracuja": [
+    "nhoque_ao_molho_de_gorgonzola": [
       1375,
-      1376,
+      1376
+    ],
+    "nhoque_de_banana_da_terra_vegana": [
       1377,
-      1378,
+      1378
+    ],
+    "nhoqueaosugo": [
       1379,
       1380,
       1381,
       1382,
       1383,
-      1384
-    ],
-    "moussedemorango": [
+      1384,
       1385,
       1386,
       1387,
-      1388,
+      1388
+    ],
+    "ovospochecomcarnemoida": [
       1389,
-      1390,
-      1391
+      1390
     ],
-    "muqueca_de_banana_da_terra": [
-      1392
-    ],
-    "muqueca_de_banana_da_terra_vegana": [
+    "panceta": [
+      1391,
+      1392,
       1393,
-      1394
-    ],
-    "nachos": [
-      1395
-    ],
-    "naoepossivelidentificar": [
-      1396
-    ],
-    "nhoque": [
+      1394,
+      1395,
+      1396,
       1397,
-      1398
-    ],
-    "nhoque_ao_molho_de_gorgonzola": [
+      1398,
       1399,
-      1400
-    ],
-    "nhoque_de_banana_da_terra_vegana": [
+      1400,
       1401,
-      1402
-    ],
-    "nhoqueaosugo": [
+      1402,
       1403,
       1404,
       1405,
       1406,
       1407,
       1408,
-      1409,
-      1410,
-      1411,
-      1412
+      1409
     ],
-    "ovospochecomcarnemoida": [
-      1413,
-      1414
+    "pancetapururca": [
+      1410
     ],
-    "paella": [
+    "pancettacrocante": [
+      1411
+    ],
+    "pao_de_alho_negro_e_cumaru": [
+      1412,
+      1413
+    ],
+    "pastel": [
+      1414,
       1415,
-      1416
-    ],
-    "paella_com_frutos_do_mar": [
+      1416,
       1417,
-      1418
+      1418,
+      1419
     ],
-    "paella_de_frutos_do_mar": [
-      1419,
+    "peitodefrangogrelhado": [
       1420
     ],
-    "panceta": [
+    "peixe": [
       1421,
-      1422,
-      1423,
-      1424,
-      1425,
-      1426,
+      1422
+    ],
+    "peixe_a_milanesa": [
+      1423
+    ],
+    "peixe_ao_molho_branco": [
+      1424
+    ],
+    "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate": [
+      1425
+    ],
+    "peixe_com_molho": [
+      1426
+    ],
+    "peixe_empanado": [
       1427,
-      1428,
+      1428
+    ],
+    "peixe_grelhado": [
       1429,
-      1430,
+      1430
+    ],
+    "peixecomtomatecereja": [
       1431,
-      1432,
+      1432
+    ],
+    "pepinocomiogurte": [
       1433,
       1434,
       1435,
-      1436
+      1436,
+      1437,
+      1438,
+      1439
     ],
-    "pancetapururca": [
-      1437
-    ],
-    "pancettacrocante": [
-      1438
-    ],
-    "pao_de_alho_negro_e_cumaru": [
-      1439,
+    "pernil_assado_com_legumes": [
       1440
     ],
-    "pastel": [
+    "pernildecordeiro": [
       1441,
       1442,
       1443,
       1444,
       1445,
-      1446
-    ],
-    "peitodefrangogrelhado": [
-      1447
-    ],
-    "peixe": [
+      1446,
+      1447,
       1448,
-      1449
-    ],
-    "peixe_a_milanesa": [
-      1450
-    ],
-    "peixe_ao_molho_branco": [
-      1451
-    ],
-    "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate": [
-      1452
-    ],
-    "peixe_com_molho": [
-      1453
-    ],
-    "peixe_empanado": [
+      1449,
+      1450,
+      1451,
+      1452,
+      1453,
       1454,
-      1455
+      1455,
+      1456
     ],
-    "peixe_grelhado": [
-      1456,
+    "pernildecordeiroassado": [
       1457
     ],
-    "peixecomtomatecereja": [
-      1458,
+    "pernilsuinoaomolhodelimao": [
+      1458
+    ],
+    "pimenta_biquinho": [
       1459
     ],
-    "pepinocomiogurte": [
+    "portobellorecheado": [
       1460,
       1461,
       1462,
       1463,
-      1464,
-      1465,
+      1464
+    ],
+    "pratofeito_pf": [
+      1465
+    ],
+    "proteina_de_soja_ao_sugo": [
       1466
     ],
-    "pernil_assado_com_legumes": [
-      1467
-    ],
-    "pernildecordeiro": [
+    "pudim": [
+      1467,
       1468,
       1469,
       1470,
@@ -4110,66 +4077,54 @@
       1478,
       1479,
       1480,
-      1481,
+      1481
+    ],
+    "pudimdeleitecondensado": [
       1482,
-      1483
-    ],
-    "pernildecordeiroassado": [
-      1484
-    ],
-    "pernilsuinoaomolhodelimao": [
+      1483,
+      1484,
       1485
     ],
-    "pimenta_biquinho": [
+    "pure_de_batata_doce": [
       1486
     ],
-    "portobellorecheado": [
-      1487,
-      1488,
+    "pure_de_madioquinha_vegano_com_leite_de_coco": [
+      1487
+    ],
+    "puredebatata": [
+      1488
+    ],
+    "puredebatatadoce": [
       1489,
       1490,
-      1491
-    ],
-    "pratofeito_pf": [
-      1492
-    ],
-    "proteina_de_soja_ao_sugo": [
-      1493
-    ],
-    "pudim": [
+      1491,
+      1492,
+      1493,
       1494,
       1495,
       1496,
       1497,
       1498,
       1499,
-      1500,
+      1500
+    ],
+    "puredemacaverde": [
       1501,
       1502,
       1503,
       1504,
       1505,
-      1506
+      1506,
+      1507,
+      1508
     ],
-    "pudim_de_leite": [
-      1507
-    ],
-    "pudimdeleitecondensado": [
-      1508,
+    "puredemandioquinha": [
       1509,
       1510,
-      1511
-    ],
-    "pure_de_batata_doce": [
-      1512
-    ],
-    "pure_de_madioquinha_vegano_com_leite_de_coco": [
-      1513
-    ],
-    "puredebatata": [
-      1514
-    ],
-    "puredebatatadoce": [
+      1511,
+      1512,
+      1513,
+      1514,
       1515,
       1516,
       1517,
@@ -4181,19 +4136,23 @@
       1523,
       1524,
       1525,
-      1526
-    ],
-    "puredemacaverde": [
+      1526,
       1527,
-      1528,
-      1529,
-      1530,
-      1531,
+      1528
+    ],
+    "puredemandioquinhacomleitedecoco": [
+      1529
+    ],
+    "queijo_parmesao_ralado": [
+      1530
+    ],
+    "queijoralado": [
+      1531
+    ],
+    "quiabocomamendoim": [
       1532,
       1533,
-      1534
-    ],
-    "puredemandioquinha": [
+      1534,
       1535,
       1536,
       1537,
@@ -4210,21 +4169,15 @@
       1548,
       1549,
       1550,
-      1551,
+      1551
+    ],
+    "quiaboempanado": [
       1552,
       1553,
-      1554
-    ],
-    "puredemandioquinhacomleitedecoco": [
-      1555
-    ],
-    "queijo_parmesao_ralado": [
-      1556
-    ],
-    "queijoralado": [
-      1557
-    ],
-    "quiabocomamendoim": [
+      1554,
+      1555,
+      1556,
+      1557,
       1558,
       1559,
       1560,
@@ -4238,15 +4191,15 @@
       1568,
       1569,
       1570,
-      1571,
+      1571
+    ],
+    "quiche": [
       1572,
       1573,
       1574,
       1575,
       1576,
-      1577
-    ],
-    "quiaboempanado": [
+      1577,
       1578,
       1579,
       1580,
@@ -4260,25 +4213,35 @@
       1588,
       1589,
       1590,
-      1591,
-      1592,
-      1593,
+      1591
+    ],
+    "quinoa_com_legumes": [
+      1592
+    ],
+    "quinoa_com_tahine": [
+      1593
+    ],
+    "quinuacomtahine": [
       1594,
       1595,
       1596,
-      1597
-    ],
-    "quiche": [
+      1597,
       1598,
       1599,
       1600,
       1601,
       1602,
-      1603,
-      1604,
+      1603
+    ],
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas": [
+      1604
+    ],
+    "radicchio_ao_molho_de_mel_e_lamina_de_amendoas": [
       1605,
       1606,
-      1607,
+      1607
+    ],
+    "ratatouille": [
       1608,
       1609,
       1610,
@@ -4288,18 +4251,16 @@
       1614,
       1615,
       1616,
-      1617
+      1617,
+      1618,
+      1619,
+      1620
     ],
-    "quinoa_com_legumes": [
-      1618
-    ],
-    "quinoa_com_tahine": [
-      1619
-    ],
-    "quinuacomtahine": [
-      1620,
+    "ravioli": [
       1621,
-      1622,
+      1622
+    ],
+    "repolho": [
       1623,
       1624,
       1625,
@@ -4308,15 +4269,13 @@
       1628,
       1629
     ],
-    "radicais_ao_molho_de_mel_e_lamina_de_amendoas": [
-      1630
-    ],
-    "radicchio_ao_molho_de_mel_e_lamina_de_amendoas": [
+    "requeijao": [
+      1630,
       1631,
-      1632,
-      1633
+      1632
     ],
-    "ratatouille": [
+    "risoneaocremedelimao": [
+      1633,
       1634,
       1635,
       1636,
@@ -4329,28 +4288,32 @@
       1643,
       1644,
       1645,
-      1646
-    ],
-    "ravioli": [
+      1646,
       1647,
       1648
     ],
-    "repolho": [
+    "risoneaopesto": [
       1649,
       1650,
       1651,
       1652,
-      1653,
-      1654,
-      1655
+      1653
     ],
-    "requeijao": [
-      1656,
+    "risoto_de_alho_poro": [
+      1654
+    ],
+    "risoto_de_pera_e_gorgonzola": [
+      1655,
+      1656
+    ],
+    "rolinho_vietnamita_de_camarao": [
       1657,
       1658
     ],
-    "risoneaocremedelimao": [
-      1659,
+    "rolinho_vietnamita_de_legumes": [
+      1659
+    ],
+    "rolinhovietnamita": [
       1660,
       1661,
       1662,
@@ -4365,34 +4328,30 @@
       1671,
       1672,
       1673,
-      1674
-    ],
-    "risoneaopesto": [
+      1674,
       1675,
       1676,
       1677,
       1678,
       1679
     ],
-    "risoto_de_alho_poro": [
-      1680
-    ],
-    "risoto_de_pera_e_gorgonzola": [
+    "romeu": [
+      1680,
       1681,
-      1682
-    ],
-    "rolinho_vietnamita_de_camarao": [
+      1682,
       1683,
       1684
     ],
-    "rolinho_vietnamita_de_legumes": [
-      1685
+    "romeu_e_julieta": [
+      1685,
+      1686
     ],
-    "rolinhovietnamita": [
-      1686,
+    "romeuejulieta": [
       1687,
       1688,
-      1689,
+      1689
+    ],
+    "rucula": [
       1690,
       1691,
       1692,
@@ -4400,33 +4359,47 @@
       1694,
       1695,
       1696,
-      1697,
-      1698,
-      1699,
-      1700,
-      1701,
-      1702,
-      1703,
-      1704,
+      1697
+    ],
+    "salada_de_atum": [
+      1698
+    ],
+    "salada_de_atum_com_legumes": [
+      1699
+    ],
+    "salada_de_feijao_fradinho": [
+      1700
+    ],
+    "salada_de_frango": [
+      1701
+    ],
+    "salada_de_peixe": [
+      1702
+    ],
+    "salada_michouia_tunisia": [
+      1703
+    ],
+    "salada_oriental_de_biffun": [
+      1704
+    ],
+    "salada_verde": [
       1705
     ],
-    "romeu": [
-      1706,
+    "saladadebeterrabacomlaranjaehortela": [
+      1706
+    ],
+    "saladadebifumcompepino": [
       1707,
-      1708,
+      1708
+    ],
+    "saladadefeijaobranco": [
       1709,
-      1710
-    ],
-    "romeu_e_julieta": [
+      1710,
       1711,
-      1712
-    ],
-    "romeuejulieta": [
+      1712,
       1713,
       1714,
-      1715
-    ],
-    "rucula": [
+      1715,
       1716,
       1717,
       1718,
@@ -4434,51 +4407,39 @@
       1720,
       1721,
       1722,
-      1723
-    ],
-    "salada_de_atum": [
-      1724
-    ],
-    "salada_de_atum_com_legumes": [
-      1725
-    ],
-    "salada_de_feijao_fradinho": [
-      1726
-    ],
-    "salada_de_frango": [
-      1727
-    ],
-    "salada_de_peixe": [
+      1723,
+      1724,
+      1725,
+      1726,
+      1727,
       1728
     ],
-    "salada_michouia_tunisia": [
+    "saladadefeijaobrancocomtomateecebola": [
       1729
     ],
-    "salada_oriental_de_biffun": [
+    "saladadefrangocomlegumes": [
       1730
     ],
-    "salada_verde": [
-      1731
-    ],
-    "saladadebeterrabacomlaranjaehortela": [
-      1732
-    ],
-    "saladadebifumcompepino": [
+    "saladadegraodebico": [
+      1731,
+      1732,
       1733,
-      1734
-    ],
-    "saladadefeijaobranco": [
+      1734,
       1735,
       1736,
       1737,
       1738,
-      1739,
+      1739
+    ],
+    "saladadelentilha": [
       1740,
       1741,
       1742,
       1743,
       1744,
-      1745,
+      1745
+    ],
+    "saladadeovos": [
       1746,
       1747,
       1748,
@@ -4487,65 +4448,61 @@
       1751,
       1752,
       1753,
-      1754
-    ],
-    "saladadefeijaobrancocomtomateecebola": [
+      1754,
       1755
     ],
-    "saladadefrangocomlegumes": [
-      1756
-    ],
-    "saladadegraodebico": [
+    "saladadeovoscombatata": [
+      1756,
       1757,
       1758,
       1759,
       1760,
       1761,
       1762,
-      1763,
-      1764,
+      1763
+    ],
+    "saladadequinoacomlegumes": [
+      1764
+    ],
+    "saladaderabanetecomlaranja": [
       1765
     ],
-    "saladadelentilha": [
-      1766,
+    "saladadetomateemrodelas": [
+      1766
+    ],
+    "saladamediterranea": [
       1767,
       1768,
       1769,
       1770,
-      1771
-    ],
-    "saladadeovos": [
+      1771,
       1772,
       1773,
       1774,
       1775,
       1776,
       1777,
-      1778,
-      1779,
-      1780,
-      1781
+      1778
     ],
-    "saladadeovoscombatata": [
+    "saladamichouiatunísia": [
+      1779
+    ],
+    "saladatailandesa": [
+      1780,
+      1781,
       1782,
       1783,
       1784,
       1785,
       1786,
       1787,
-      1788,
-      1789
+      1788
     ],
-    "saladadequinoacomlegumes": [
-      1790
-    ],
-    "saladaderabanetecomlaranja": [
-      1791
-    ],
-    "saladadetomateemrodelas": [
-      1792
-    ],
-    "saladamediterranea": [
+    "saladeovos": [
+      1789,
+      1790,
+      1791,
+      1792,
       1793,
       1794,
       1795,
@@ -4557,20 +4514,20 @@
       1801,
       1802,
       1803,
-      1804
-    ],
-    "saladatailandesa": [
+      1804,
       1805,
       1806,
-      1807,
-      1808,
+      1807
+    ],
+    "saldacaprese": [
+      1808
+    ],
+    "salpicaodefrango": [
       1809,
       1810,
       1811,
       1812,
-      1813
-    ],
-    "saladeovos": [
+      1813,
       1814,
       1815,
       1816,
@@ -4585,24 +4542,28 @@
       1825,
       1826,
       1827,
-      1828,
+      1828
+    ],
+    "sobrecoxa": [
       1829,
       1830,
       1831,
-      1832
-    ],
-    "saldacaprese": [
-      1833
-    ],
-    "salpicaodefrango": [
+      1832,
+      1833,
       1834,
       1835,
-      1836,
+      1836
+    ],
+    "sobrecoxa_ao_tandoori": [
       1837,
       1838,
       1839,
-      1840,
-      1841,
+      1840
+    ],
+    "sobrecoxa_ao_tandori": [
+      1841
+    ],
+    "sobrecoxaaotandoori": [
       1842,
       1843,
       1844,
@@ -4614,9 +4575,7 @@
       1850,
       1851,
       1852,
-      1853
-    ],
-    "sobrecoxa": [
+      1853,
       1854,
       1855,
       1856,
@@ -4626,26 +4585,36 @@
       1860,
       1861
     ],
-    "sobrecoxa_ao_tandoori": [
-      1862,
-      1863,
+    "sobrecoxaaotucupi": [
+      1862
+    ],
+    "spaghetticomtomatecerejaemanjericao": [
+      1863
+    ],
+    "steakdecouveflor": [
       1864,
-      1865
-    ],
-    "sobrecoxa_ao_tandori": [
-      1866
-    ],
-    "sobrecoxaaotandoori": [
+      1865,
+      1866,
       1867,
       1868,
-      1869,
+      1869
+    ],
+    "strogonoff": [
       1870,
       1871,
-      1872,
+      1872
+    ],
+    "strogonoff_vegano": [
       1873,
-      1874,
-      1875,
-      1876,
+      1874
+    ],
+    "strogonoffdefilemignon": [
+      1875
+    ],
+    "strogonoffdefrango": [
+      1876
+    ],
+    "sushivietnamita": [
       1877,
       1878,
       1879,
@@ -4654,134 +4623,126 @@
       1882,
       1883,
       1884,
-      1885,
-      1886
+      1885
     ],
-    "sobrecoxaaotucupi": [
-      1887
-    ],
-    "spaghetticomtomatecerejaemanjericao": [
-      1888
-    ],
-    "steakdecouveflor": [
+    "tabule_de_trigo": [
+      1886,
+      1887,
+      1888,
       1889,
-      1890,
+      1890
+    ],
+    "tabuledequinoa": [
       1891,
       1892,
       1893,
-      1894
-    ],
-    "strogonoff": [
+      1894,
       1895,
       1896,
-      1897
+      1897,
+      1898
     ],
-    "strogonoff_vegano": [
-      1898,
-      1899
-    ],
-    "strogonoffdefilemignon": [
-      1900
-    ],
-    "strogonoffdefrango": [
+    "tiramisu": [
+      1899,
+      1900,
       1901
     ],
-    "sushi_de_atum": [
+    "tiramisuvegano": [
       1902
     ],
-    "sushivietnamita": [
-      1903,
-      1904,
-      1905,
-      1906,
-      1907,
-      1908,
-      1909,
-      1910,
-      1911
+    "tofu_frito": [
+      1903
     ],
-    "tabule_de_trigo": [
-      1912,
+    "tomate": [
+      1904
+    ],
+    "tomateseco": [
+      1905
+    ],
+    "tomatesfatiados": [
+      1906
+    ],
+    "torradas": [
+      1907
+    ],
+    "torta_de_legumes": [
+      1908
+    ],
+    "torta_de_manga": [
+      1909
+    ],
+    "tortilha_de_figo_e_gorgonzola": [
+      1910
+    ],
+    "tortilha_espanhola_de_batata": [
+      1911,
+      1912
+    ],
+    "tortinhadegongorzolaefigo": [
       1913,
       1914,
       1915,
-      1916
-    ],
-    "tabuledequinoa": [
+      1916,
       1917,
       1918,
       1919,
       1920,
       1921,
       1922,
-      1923,
-      1924
+      1923
     ],
-    "tartaro_de_atum_com_gergelim": [
-      1925
-    ],
-    "tiramisu": [
+    "umamidetomates": [
+      1924,
+      1925,
       1926,
       1927,
-      1928
-    ],
-    "tiramisuvegano": [
-      1929
-    ],
-    "tofu_frito": [
-      1930
-    ],
-    "tomate": [
-      1931
-    ],
-    "tomateseco": [
-      1932
-    ],
-    "tomatesfatiados": [
-      1933
-    ],
-    "torradas": [
-      1934
-    ],
-    "torta_de_legumes": [
-      1935
-    ],
-    "torta_de_manga": [
-      1936
-    ],
-    "tortilha_de_figo_e_gorgonzola": [
-      1937
-    ],
-    "tortilha_espanhola_de_batata": [
+      1928,
+      1929,
+      1930,
+      1931,
+      1932,
+      1933,
+      1934,
+      1935,
+      1936,
+      1937,
       1938,
-      1939
-    ],
-    "tortinhadegongorzolaefigo": [
+      1939,
       1940,
       1941,
       1942,
-      1943,
-      1944,
+      1943
+    ],
+    "unknownbúnchả": [
+      1944
+    ],
+    "unknownkibbehcomarrozehomus": [
       1945,
-      1946,
+      1946
+    ],
+    "unknownpratofeito": [
       1947,
-      1948,
-      1949,
+      1948
+    ],
+    "unknownpratofeitobrasileiro": [
+      1949
+    ],
+    "unknownpratofeitocomlinguiça": [
       1950
     ],
-    "umame_de_tomate": [
+    "unknownsushi": [
       1951
     ],
-    "umami_de_tomate": [
+    "uvas": [
       1952
     ],
-    "umami_de_tomates": [
+    "vermicelli": [
       1953,
-      1954
-    ],
-    "umamidetomate": [
+      1954,
       1955,
-      1956,
+      1956
+    ],
+    "vinagrete": [
       1957,
       1958,
       1959,
@@ -4799,56 +4760,17 @@
       1971,
       1972,
       1973,
-      1974
-    ],
-    "umamidetomates": [
-      1975
-    ],
-    "unknownbúnchả": [
+      1974,
+      1975,
       1976
     ],
-    "unknownkibbehcomarrozehomus": [
+    "volauuvent": [
       1977,
-      1978
-    ],
-    "unknownpratofeito": [
+      1978,
       1979,
-      1980
-    ],
-    "unknownpratofeitobrasileiro": [
-      1981
-    ],
-    "unknownpratofeitocomlinguiça": [
+      1980,
+      1981,
       1982
-    ],
-    "unknownsushi": [
-      1983
-    ],
-    "uvas": [
-      1984
-    ],
-    "vermicelli": [
-      1985,
-      1986,
-      1987,
-      1988
-    ],
-    "vinagrete": [
-      1989,
-      1990
-    ],
-    "vinaigrete": [
-      1991
-    ],
-    "vol_ai_vent_de_pimentao": [
-      1992
-    ],
-    "vol_au_vent_de_pimentao": [
-      1993,
-      1994
-    ],
-    "volauvent": [
-      1995
     ]
   },
   "metadata": {
@@ -4921,7 +4843,7 @@
       "folder": "/app/datasets/organized/baiaodedois"
     },
     "bananacaramelizada": {
-      "image_count": 5,
+      "image_count": 6,
       "folder": "/app/datasets/organized/bananacaramelizada"
     },
     "batataassada": {
@@ -5249,7 +5171,7 @@
       "folder": "/app/datasets/organized/portobellorecheado"
     },
     "pudim": {
-      "image_count": 13,
+      "image_count": 15,
       "folder": "/app/datasets/organized/pudim"
     },
     "puredebatatadoce": {
@@ -5401,7 +5323,7 @@
       "folder": "/app/datasets/organized/umamidetomate"
     },
     "umamidetomates": {
-      "image_count": 1,
+      "image_count": 20,
       "folder": "/app/datasets/organized/umamidetomates"
     },
     "uvas": {
@@ -6645,7 +6567,7 @@
       "folder": "/app/datasets/organized/gelatinadeuva"
     },
     "granola": {
-      "image_count": 6,
+      "image_count": 8,
       "folder": "/app/datasets/organized/granola"
     },
     "hamburguer_bovino": {
@@ -6933,7 +6855,7 @@
       "folder": "/app/datasets/organized/torta_de_manga"
     },
     "vinagrete": {
-      "image_count": 2,
+      "image_count": 20,
       "folder": "/app/datasets/organized/vinagrete"
     },
     "vinaigrete": {
@@ -6949,11 +6871,11 @@
       "folder": "/app/datasets/organized/vol_au_vent_de_pimentao"
     },
     "dadinho": {
-      "image_count": 12,
+      "image_count": 13,
       "folder": "/app/datasets/organized/dadinho"
     },
     "panceta": {
-      "image_count": 16,
+      "image_count": 19,
       "folder": "/app/datasets/organized/panceta"
     },
     "quiche": {
@@ -6965,7 +6887,7 @@
       "folder": "/app/datasets/organized/abobrinha_grelhada_com_tomate"
     },
     "abobrinhagrelhada": {
-      "image_count": 1,
+      "image_count": 2,
       "folder": "/app/datasets/organized/abobrinhagrelhada"
     },
     "arroz_de_7_graos": {
@@ -7017,7 +6939,7 @@
       "folder": "/app/datasets/organized/bolo_de_gengibre"
     },
     "brownie": {
-      "image_count": 5,
+      "image_count": 8,
       "folder": "/app/datasets/organized/brownie"
     },
     "brownie_de_chocolate": {
@@ -7053,11 +6975,11 @@
       "folder": "/app/datasets/organized/conchiglioneaocremedevaelasesalvia"
     },
     "cremedebanana": {
-      "image_count": 1,
+      "image_count": 3,
       "folder": "/app/datasets/organized/cremedebanana"
     },
     "filemignonemmanteigadeervas": {
-      "image_count": 1,
+      "image_count": 10,
       "folder": "/app/datasets/organized/filemignonemmanteigadeervas"
     },
     "flan": {
@@ -7093,7 +7015,7 @@
       "folder": "/app/datasets/organized/frutos_do_mar_grelhados"
     },
     "grelhadodospescadores": {
-      "image_count": 2,
+      "image_count": 10,
       "folder": "/app/datasets/organized/grelhadodospescadores"
     },
     "leitao_a_pururuca": {
@@ -7191,9 +7113,33 @@
     "volauvent": {
       "image_count": 1,
       "folder": "/app/datasets/organized/volauvent"
+    },
+    "beringelaaopuredelimaosiciliano": {
+      "image_count": 20,
+      "folder": "/app/datasets/organized/beringelaaopuredelimaosiciliano"
+    },
+    "bolinho_de_camarão_peixe": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolinho_de_camarão_peixe"
+    },
+    "conchiglione_ao_creme_com_salvia_e_avel": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/conchiglione_ao_creme_com_salvia_e_avel"
+    },
+    "ganachedechocolatecomfrutas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ganachedechocolatecomfrutas"
+    },
+    "saladamichouiatunísia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladamichouiatunísia"
+    },
+    "volauuvent": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/volauuvent"
     }
   },
   "version": "1.0",
-  "total_items": 1996,
-  "total_dishes": 428
+  "total_items": 1983,
+  "total_dishes": 402
 }
