@@ -1,0 +1,24 @@
+{
+  "nome": "arroz de 7 graos",
+  "slug": "arroz_de_7_graos",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Um prato saudável e nutritivo, com arroz integral e diversos legumes.",
+  "ingredientes": [
+    "arroz integral",
+    "brócolis",
+    "cenoura",
+    "milho",
+    "cebola"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}
