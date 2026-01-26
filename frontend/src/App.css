@@ -1613,3 +1613,23 @@ iframe[src*="emergent"], div[style*="Made with"] {
   font-weight: 600;
   cursor: pointer;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BOTÃO VOLTAR NOS MODAIS
+   ═══════════════════════════════════════════════════════════════════ */
+
+.modal-back-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 8px;
+  display: block;
+  text-align: left;
+}
+
+.modal-back-btn:hover {
+  color: #fff;
+}
