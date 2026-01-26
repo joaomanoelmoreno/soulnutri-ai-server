@@ -7,7 +7,7 @@
 ## 📥 PASSO 1: Baixar os Arquivos
 
 ### Opção A: Pelo Preview (mais fácil)
-1. Acesse: https://soulnutri.preview.emergentagent.com
+1. Acesse: https://foodscan-104.preview.emergentagent.com
 2. Os arquivos estão no servidor, peça ao agente para disponibilizar um link de download
 
 ### Opção B: Pela Emergent Platform
