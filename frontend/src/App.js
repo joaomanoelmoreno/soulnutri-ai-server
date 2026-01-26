@@ -1297,104 +1297,128 @@ function App() {
         </button>
       </div>
 
-      {/* Resumo do Prato (quando tem múltiplos itens) */}
-      {plateItems.length > 0 && (
-        <div className="plate-summary" data-testid="plate-summary">
+      {/* ══════════════════════════════════════════════════════════
+          RESUMO DO PRATO - VISTA MESA (informações CONSOLIDADAS)
+          ══════════════════════════════════════════════════════════ */}
+      {plateItems.length > 0 && viewMode === 'mesa' && (
+        <div className="plate-mesa-view" data-testid="plate-mesa">
           {/* BOTÃO VOLTAR */}
           <button 
             className="back-btn"
             onClick={() => { setViewMode('buffet'); }}
-            data-testid="plate-back-btn"
+            data-testid="mesa-back-btn"
           >
-            ← Voltar
+            ← Voltar ao buffet
           </button>
           
-          <div className="plate-summary-header">
-            <span>🍽️ {t('your_plate', 'Seu Prato')} ({plateItems.length} {t('items', 'itens')})</span>
-            <span className="plate-total-cal">{plateConsolidated?.nutrition?.calorias} <small>(base 100g)</small></span>
-          </div>
+          <h2 className="mesa-title">🍽️ Seu Prato Completo</h2>
+          <p className="mesa-subtitle">{plateItems.length} itens selecionados</p>
           
-          {/* Lista de itens */}
-          <div className="plate-items-list">
+          {/* Lista dos itens escolhidos */}
+          <div className="mesa-items-list">
             {plateItems.map((item, i) => (
-              <div key={item.id} className="plate-item">
-                <span className="plate-item-name">{item.dish_display}</span>
-              </div>
+              <span key={item.id} className="mesa-item-tag">{item.dish_display}</span>
             ))}
           </div>
 
-          {/* VISTA CONSOLIDADA (modo mesa) */}
-          {viewMode === 'mesa' && plateConsolidated && (
-            <div className="plate-consolidated" data-testid="plate-consolidated">
-              
-              {/* Alérgenos do prato todo */}
-              <div className={`plate-allergens ${(plateConsolidated.contemGluten || plateConsolidated.contemLactose) ? 'has-allergens' : 'safe'}`}>
-                {plateConsolidated.contemGluten && <span className="allergen-tag">⚠️ Contém Glúten</span>}
-                {plateConsolidated.contemLactose && <span className="allergen-tag">⚠️ Contém Lactose</span>}
-                {!plateConsolidated.contemGluten && !plateConsolidated.contemLactose && (
-                  <span className="allergen-safe">✅ Sem glúten e lactose</span>
-                )}
-              </div>
+          {/* ALÉRGENOS CONSOLIDADOS */}
+          <div className={`mesa-allergens ${(plateConsolidated?.contemGluten || plateConsolidated?.contemLactose) ? 'has-allergens' : 'safe'}`}>
+            <h4>⚠️ Alérgenos no seu prato</h4>
+            {plateConsolidated?.contemGluten && <span className="allergen-tag">Contém Glúten</span>}
+            {plateConsolidated?.contemLactose && <span className="allergen-tag">Contém Lactose</span>}
+            {!plateConsolidated?.contemGluten && !plateConsolidated?.contemLactose && (
+              <span className="allergen-safe">✅ Sem glúten e lactose detectados</span>
+            )}
+          </div>
 
-              {/* Ficha Nutricional Consolidada */}
-              <div className="plate-nutrition">
-                <h4>📊 Ficha Nutricional (base 100g)</h4>
-                <div className="nutr-grid">
-                  <div><b>{plateConsolidated.nutrition.calorias}</b><small>Calorias</small></div>
-                  <div><b>{plateConsolidated.nutrition.proteinas}</b><small>Proteínas</small></div>
-                  <div><b>{plateConsolidated.nutrition.carboidratos}</b><small>Carbos</small></div>
-                  <div><b>{plateConsolidated.nutrition.gorduras}</b><small>Gorduras</small></div>
-                </div>
-              </div>
+          {/* FICHA NUTRICIONAL CONSOLIDADA */}
+          <div className="mesa-nutrition">
+            <h4>📊 Ficha Nutricional (base 100g)</h4>
+            <div className="nutr-grid">
+              <div><b>{plateConsolidated?.nutrition?.calorias}</b><small>Calorias</small></div>
+              <div><b>{plateConsolidated?.nutrition?.proteinas}</b><small>Proteínas</small></div>
+              <div><b>{plateConsolidated?.nutrition?.carboidratos}</b><small>Carbos</small></div>
+              <div><b>{plateConsolidated?.nutrition?.gorduras}</b><small>Gorduras</small></div>
+            </div>
+          </div>
 
-              {/* Ingredientes do prato todo */}
-              {plateConsolidated.ingredientes.length > 0 && (
-                <div className="plate-section">
-                  <h4>🥗 Ingredientes</h4>
-                  <p>{plateConsolidated.ingredientes.join(', ')}</p>
-                </div>
-              )}
-
-              {/* Benefícios consolidados */}
-              {plateConsolidated.beneficios.length > 0 && (
-                <div className="plate-section good">
-                  <h4>✅ Benefícios do seu prato</h4>
-                  <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
-                </div>
-              )}
-
-              {/* Riscos/Alertas consolidados */}
-              {plateConsolidated.riscos.length > 0 && (
-                <div className="plate-section warning">
-                  <h4>⚠️ Atenção</h4>
-                  <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{r}</li>)}</ul>
-                </div>
-              )}
+          {/* INGREDIENTES CONSOLIDADOS */}
+          {plateConsolidated?.ingredientes?.length > 0 && (
+            <div className="mesa-section">
+              <h4>🥗 Ingredientes do seu prato</h4>
+              <p>{plateConsolidated.ingredientes.join(', ')}</p>
             </div>
           )}
 
-          {/* Botões de ação */}
-          <div className="plate-actions">
-            <button 
-              className="plate-toggle-btn"
-              onClick={() => setViewMode(viewMode === 'buffet' ? 'mesa' : 'buffet')}
-            >
-              {viewMode === 'buffet' ? '📖 Ver análise completa' : '📋 Vista resumida'}
-            </button>
+          {/* BENEFÍCIOS CONSOLIDADOS */}
+          {plateConsolidated?.beneficios?.length > 0 && (
+            <div className="mesa-section good">
+              <h4>✅ Benefícios da sua refeição</h4>
+              <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
+            </div>
+          )}
+
+          {/* RISCOS CONSOLIDADOS */}
+          {plateConsolidated?.riscos?.length > 0 && (
+            <div className="mesa-section warning">
+              <h4>⚠️ Pontos de atenção</h4>
+              <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{r}</li>)}</ul>
+            </div>
+          )}
+
+          {/* BOTÃO COMPARTILHAR */}
+          <button 
+            className="share-btn"
+            onClick={() => {
+              const itens = plateItems.map(i => i.dish_display).join(', ');
+              const text = `🍽️ Meu prato no SoulNutri:\n\n${itens}\n\n📊 ${plateConsolidated?.nutrition?.calorias} | ${plateConsolidated?.nutrition?.proteinas} proteínas\n\nDescubra mais no SoulNutri!`;
+              if (navigator.share) {
+                navigator.share({ title: 'SoulNutri - Meu Prato', text });
+              } else {
+                navigator.clipboard.writeText(text);
+                alert('Texto copiado!');
+              }
+            }}
+          >
+            📤 Compartilhar meu prato
+          </button>
+
+          {/* BOTÕES DE AÇÃO */}
+          <div className="mesa-actions">
             <button 
               className="add-more-btn"
-              onClick={() => { setResult(null); setPreviewImageUrl(null); setViewMode('buffet'); }}
-              data-testid="add-more-item"
+              onClick={() => { setViewMode('buffet'); }}
             >
-              + Adicionar mais item
+              + Adicionar mais itens
             </button>
             <button 
               className="clear-plate-btn"
-              onClick={clearPlate}
+              onClick={() => { clearPlate(); setViewMode('buffet'); }}
             >
               🗑️ Limpar prato
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Mini resumo do prato (quando está no buffet adicionando itens) */}
+      {plateItems.length > 0 && viewMode === 'buffet' && !r && (
+        <div className="plate-mini-summary" data-testid="plate-mini">
+          <div className="mini-header">
+            <span>🍽️ Seu Prato ({plateItems.length})</span>
+            <span>{plateConsolidated?.nutrition?.calorias}</span>
+          </div>
+          <div className="mini-items">
+            {plateItems.map((item) => (
+              <span key={item.id} className="mini-tag">{item.dish_display}</span>
+            ))}
+          </div>
+          <button 
+            className="finish-plate-btn"
+            onClick={() => setViewMode('mesa')}
+          >
+            ✓ Prato completo - Ver análise
+          </button>
         </div>
       )}
 
