@@ -1753,6 +1753,14 @@ function App() {
         </div>
       )}
 
+      {/* Welcome Popup - Seleção de idioma para novos usuários */}
+      {showWelcome && (
+        <WelcomePopup onClose={() => {
+          localStorage.setItem('soulnutri_welcomed', 'true');
+          setShowWelcome(false);
+        }} />
+      )}
+
       {/* Rodapé */}
       <footer className="footer">
         <small>Powered by Emergent</small>
