@@ -273,6 +273,12 @@ export default function Admin() {
         >
           📢 Novidades ({novidades.length})
         </button>
+        <button 
+          className={`tab-btn ${activeTab === 'premium' ? 'active' : ''}`}
+          onClick={() => setActiveTab('premium')}
+        >
+          ⭐ Premium ({premiumUsers.filter(u => u.premium_ativo).length})
+        </button>
       </div>
 
       {/* Stats */}
