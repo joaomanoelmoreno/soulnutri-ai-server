@@ -49,6 +49,10 @@ function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  // Welcome popup com seleção de idioma
+  const [showWelcome, setShowWelcome] = useState(() => {
+    return !localStorage.getItem('soulnutri_welcomed');
+  });
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
