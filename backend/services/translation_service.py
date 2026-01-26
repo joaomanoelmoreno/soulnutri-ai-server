@@ -110,6 +110,7 @@ UI_TRANSLATIONS = {
         "myth": "MYTH",
         "partial": "PARTIALLY",
         "camera_error": "Camera not available",
+        "permission_denied": "Permission denied. Tap to allow.",
         "try_again": "Try again",
         "vegan": "vegan",
         "vegetarian": "vegetarian",
