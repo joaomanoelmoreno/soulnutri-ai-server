@@ -1214,3 +1214,135 @@ iframe[src*="emergent"], div[style*="Made with"] {
   font-size: 0.9rem;
   margin-bottom: 4px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   VISTA CONSOLIDADA DO PRATO (MESA)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.plate-consolidated {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.plate-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.plate-allergens.has-allergens .allergen-tag {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.plate-allergens.safe .allergen-safe {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.plate-nutrition {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.plate-nutrition h4 {
+  font-size: 0.9rem;
+  margin: 0 0 12px 0;
+  color: #a5b4fc;
+}
+
+.plate-section {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.plate-section h4 {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  color: #e2e8f0;
+}
+
+.plate-section p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.plate-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.plate-section ul li {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.plate-section.good {
+  border-left: 3px solid #22c55e;
+}
+
+.plate-section.warning {
+  border-left: 3px solid #f59e0b;
+}
+
+.plate-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.plate-toggle-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.clear-plate-btn {
+  width: 100%;
+  padding: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  color: #ef4444;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.plate-items-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.plate-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+}
