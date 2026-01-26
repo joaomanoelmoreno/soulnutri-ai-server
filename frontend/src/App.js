@@ -30,6 +30,10 @@ function App() {
   const [previewImageUrl, setPreviewImageUrl] = useState(null); // Preview da imagem selecionada
   const [showMultiCorrection, setShowMultiCorrection] = useState(false); // Modal correção multi
   const [multiCorrections, setMultiCorrections] = useState({ principal: '', acompanhamentos: '' }); // Correções
+  // Fluxo Único Inteligente - acumula itens do prato
+  const [plateItems, setPlateItems] = useState([]); // Lista de itens identificados
+  const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
+  const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
   // Premium states
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
   const [premiumUser, setPremiumUser] = useState(null);
