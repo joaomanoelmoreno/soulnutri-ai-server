@@ -5,18 +5,25 @@ Sistema inteligente de identificação de pratos.
 Analogia: Como o Waze para alimentação - mostra o melhor caminho em 100ms.
 
 Endpoints:
+- GET  /health              - Health check para Kubernetes
 - GET  /api/health          - Status do servidor
 - GET  /api/ai/status       - Status do índice de IA
 - POST /api/ai/reindex      - Reconstrói o índice
 - POST /api/ai/identify     - Identifica um prato por imagem
 """
 
+# IMPORTANTE: Forçar CPU ANTES de qualquer import que possa carregar PyTorch
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+os.environ["CUDA_HOME"] = ""
+os.environ["USE_CUDA"] = "0"
+os.environ["FORCE_CPU"] = "1"
+
 from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
-import os
 import time
 import logging
 from pathlib import Path
@@ -45,6 +52,12 @@ app = FastAPI(
     description="Sistema inteligente de identificação de pratos - Como o Waze para alimentação",
     version="1.0.0"
 )
+
+# Health check endpoint na RAIZ (para Kubernetes)
+@app.get("/health")
+async def health_check():
+    """Health check para Kubernetes - responde rapidamente"""
+    return {"status": "healthy", "service": "soulnutri-backend"}
 
 # Router com prefixo /api
 api_router = APIRouter(prefix="/api")
