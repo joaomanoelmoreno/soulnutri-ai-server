@@ -551,8 +551,18 @@ function App() {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
-        categoria: result.categoria,
-        calorias: result.calorias_estimadas || result.nutricao?.calorias || 0,
+        category: result.category,
+        calorias: result.nutrition?.calorias || result.calorias_estimadas || '0 kcal',
+        proteinas: result.nutrition?.proteinas || '0g',
+        carboidratos: result.nutrition?.carboidratos || '0g',
+        gorduras: result.nutrition?.gorduras || '0g',
+        ingredientes: result.ingredientes || [],
+        beneficios: result.beneficios || [],
+        riscos: result.riscos || [],
+        alergenos: {
+          gluten: result.contem_gluten,
+          lactose: result.contem_lactose
+        },
         score: result.score
       };
       setPlateItems(prev => [...prev, newItem]);
@@ -562,7 +572,7 @@ function App() {
     setPreviewImageUrl(null);
   };
 
-  // Fluxo Único: Finalizar prato (não adicionar mais)
+  // Fluxo Único: Finalizar prato e mostrar resumo consolidado
   const finishPlate = () => {
     if (result?.ok && result?.identified) {
       // Adicionar último item se houver
@@ -570,14 +580,25 @@ function App() {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
-        categoria: result.categoria,
-        calorias: result.calorias_estimadas || result.nutricao?.calorias || 0,
+        category: result.category,
+        calorias: result.nutrition?.calorias || result.calorias_estimadas || '0 kcal',
+        proteinas: result.nutrition?.proteinas || '0g',
+        carboidratos: result.nutrition?.carboidratos || '0g',
+        gorduras: result.nutrition?.gorduras || '0g',
+        ingredientes: result.ingredientes || [],
+        beneficios: result.beneficios || [],
+        riscos: result.riscos || [],
+        alergenos: {
+          gluten: result.contem_gluten,
+          lactose: result.contem_lactose
+        },
         score: result.score
       };
       setPlateItems(prev => [...prev, newItem]);
     }
     setShowAddMore(false);
-    // Manter result para mostrar detalhes do último item
+    setResult(null);
+    setViewMode('mesa'); // Mudar para vista consolidada
   };
 
   // Fluxo Único: Limpar prato e começar novo
