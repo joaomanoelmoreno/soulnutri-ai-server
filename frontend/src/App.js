@@ -532,11 +532,7 @@ function App() {
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
         setResult(resultWithTime);
-        
-        // Fluxo Único Inteligente: após identificar, perguntar se quer adicionar mais
-        if (data.ok && data.identified) {
-          setShowAddMore(true);
-        }
+        // NÃO mostrar modal automaticamente - deixar usuário ver as informações primeiro
       }
     } catch (e) { 
       clearTimeout(timeoutId);
