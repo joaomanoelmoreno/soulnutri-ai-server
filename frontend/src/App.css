@@ -1403,3 +1403,213 @@ iframe[src*="emergent"], div[style*="Made with"] {
   font-size: 0.7rem;
   opacity: 0.7;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BOTÕES DE AÇÃO DO BUFFET
+   ═══════════════════════════════════════════════════════════════════ */
+
+.buffet-actions {
+  margin: 16px 0;
+}
+
+.add-to-plate-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-to-plate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VISTA MESA - ANÁLISE CONSOLIDADA
+   ═══════════════════════════════════════════════════════════════════ */
+
+.plate-mesa-view {
+  background: linear-gradient(145deg, #1a1a2e 0%, #0f0f1a 100%);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 16px 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mesa-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #fff;
+  text-align: center;
+}
+
+.mesa-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+.mesa-items-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.mesa-item-tag {
+  background: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.mesa-allergens {
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.mesa-allergens h4 {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  color: #f87171;
+}
+
+.mesa-allergens .allergen-tag {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-right: 8px;
+}
+
+.mesa-allergens.safe {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.mesa-allergens.safe h4 {
+  color: #22c55e;
+}
+
+.mesa-allergens .allergen-safe {
+  color: #22c55e;
+  font-size: 0.85rem;
+}
+
+.mesa-nutrition {
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.mesa-nutrition h4 {
+  font-size: 0.9rem;
+  margin: 0 0 12px 0;
+  color: #a5b4fc;
+}
+
+.mesa-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.mesa-section h4 {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  color: #e2e8f0;
+}
+
+.mesa-section p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.mesa-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.mesa-section ul li {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.mesa-section.good {
+  border-left: 3px solid #22c55e;
+}
+
+.mesa-section.warning {
+  border-left: 3px solid #f59e0b;
+}
+
+.mesa-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MINI RESUMO DO PRATO (enquanto no buffet)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.plate-mini-summary {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  padding: 12px;
+  margin: 12px 0;
+}
+
+.mini-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #a78bfa;
+}
+
+.mini-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.mini-tag {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.finish-plate-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
