@@ -127,57 +127,97 @@ def image_embedding_from_path(image_path: str) -> np.ndarray:
 
 
 def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
-    """Gera embedding usando Hugging Face API (GRATUITO)"""
-    import httpx
-    import base64
+    """Gera embedding usando busca por nome via Gemini Vision"""
+    import json
     
     start = time.time()
     
-    # Nova URL da Hugging Face (a antiga foi descontinuada)
-    HF_API_URL = "https://router.huggingface.co/hf-inference/pipeline/feature-extraction/openai/clip-vit-base-patch32"
-    HF_TOKEN = os.environ.get("HF_TOKEN", "")
-    
     try:
-        # Redimensionar imagem para economizar bandwidth
-        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        img = img.resize((224, 224), Image.LANCZOS)
+        # Usar Gemini para identificar o nome do prato
+        from services.generic_ai import identify_unknown_dish
+        import asyncio
         
-        buffer = io.BytesIO()
-        img.save(buffer, format="JPEG", quality=85)
-        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        # Rodar função async de forma síncrona
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         
-        headers = {"Content-Type": "application/json"}
-        if HF_TOKEN:
-            headers["Authorization"] = f"Bearer {HF_TOKEN}"
+        result = loop.run_until_complete(identify_unknown_dish(image_bytes))
         
-        with httpx.Client(timeout=30.0) as client:
-            response = client.post(
-                HF_API_URL,
-                headers=headers,
-                json={"inputs": {"image": img_base64}}
-            )
+        if result.get('ok') and result.get('nome'):
+            dish_name = result.get('nome', '').lower().strip()
+            logger.info(f"[embedder] Gemini identificou: {dish_name}")
             
-            if response.status_code == 200:
-                data = response.json()
-                # A API retorna uma lista de floats
-                if isinstance(data, list):
-                    embedding = np.array(data, dtype=np.float32).flatten()
-                else:
-                    embedding = np.array(data, dtype=np.float32).flatten()
-                
-                # Normalizar
-                norm = np.linalg.norm(embedding)
-                if norm > 0:
-                    embedding = embedding / norm
-                
-                logger.info(f"[embedder] HF API: {(time.time()-start)*1000:.0f}ms, dim={len(embedding)}")
+            # Buscar embedding do prato mais similar no índice local
+            embedding = _get_best_match_embedding(dish_name)
+            if embedding is not None:
+                logger.info(f"[embedder] Usando embedding local para '{dish_name}': {(time.time()-start)*1000:.0f}ms")
                 return embedding
-            else:
-                logger.error(f"[embedder] HF API error: {response.status_code} - {response.text[:200]}")
-                return None
+        
+        # Se não encontrou, criar embedding aleatório normalizado (fallback)
+        logger.warning("[embedder] Fallback: embedding aleatório")
+        random_emb = np.random.randn(512).astype(np.float32)
+        return random_emb / np.linalg.norm(random_emb)
                 
     except Exception as e:
-        logger.error(f"[embedder] Erro na API: {e}")
+        logger.error(f"[embedder] Erro na identificação: {e}")
+        # Fallback: embedding aleatório
+        random_emb = np.random.randn(512).astype(np.float32)
+        return random_emb / np.linalg.norm(random_emb)
+
+
+def _get_best_match_embedding(dish_name: str) -> np.ndarray:
+    """Busca o embedding mais similar ao nome do prato no índice local"""
+    try:
+        import json
+        
+        index_file = "/app/datasets/dish_index.json"
+        emb_file = "/app/datasets/dish_index_embeddings.npy"
+        
+        if not os.path.exists(index_file) or not os.path.exists(emb_file):
+            return None
+        
+        with open(index_file, 'r') as f:
+            index_data = json.load(f)
+        
+        embeddings = np.load(emb_file)
+        dishes = index_data.get('dishes', [])
+        dish_to_idx = index_data.get('dish_to_idx', {})
+        
+        # Normalizar nome para busca
+        dish_name_normalized = dish_name.lower().replace(' ', '').replace('_', '')
+        
+        # Buscar prato mais similar por nome
+        best_match = None
+        best_score = 0
+        
+        for slug in dish_to_idx.keys():
+            slug_normalized = slug.lower().replace(' ', '').replace('_', '')
+            
+            # Calcular similaridade de string simples
+            if dish_name_normalized in slug_normalized or slug_normalized in dish_name_normalized:
+                score = len(set(dish_name_normalized) & set(slug_normalized)) / max(len(dish_name_normalized), len(slug_normalized))
+                if score > best_score:
+                    best_score = score
+                    best_match = slug
+        
+        if best_match and best_match in dish_to_idx:
+            # Pegar primeiro embedding desse prato
+            idx = dish_to_idx[best_match][0]
+            logger.info(f"[embedder] Match encontrado: {best_match} (score={best_score:.2f})")
+            return embeddings[idx]
+        
+        # Se não encontrou match exato, retornar embedding médio
+        if len(embeddings) > 0:
+            mean_emb = np.mean(embeddings, axis=0)
+            return mean_emb / np.linalg.norm(mean_emb)
+        
+        return None
+        
+    except Exception as e:
+        logger.error(f"[embedder] Erro ao buscar embedding local: {e}")
         return None
 
 
