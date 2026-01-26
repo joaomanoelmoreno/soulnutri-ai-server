@@ -242,6 +242,7 @@ UI_TRANSLATIONS = {
         "myth": "MYTHOS",
         "partial": "TEILWEISE",
         "camera_error": "Kamera nicht verfügbar",
+        "permission_denied": "Berechtigung verweigert. Tippen Sie zum Erlauben.",
         "try_again": "Erneut versuchen",
         "vegan": "vegan",
         "vegetarian": "vegetarisch",
