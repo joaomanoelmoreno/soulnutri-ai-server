@@ -1643,6 +1643,54 @@ async def admin_delete_dish(slug: str):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# AUDITORIA - Análise de qualidade dos dados dos pratos
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/audit")
+async def admin_audit_dishes():
+    """Audita todos os pratos e retorna relatório de problemas de qualidade"""
+    try:
+        from services.audit_service import audit_all_dishes
+        
+        result = audit_all_dishes()
+        return {"ok": True, **result}
+        
+    except Exception as e:
+        logger.error(f"Erro na auditoria: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/fix/{slug}")
+async def admin_fix_dish_with_ai(slug: str):
+    """Usa IA para sugerir correções para um prato específico"""
+    try:
+        from services.audit_service import fix_dish_with_ai
+        
+        result = await fix_dish_with_ai(slug)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao corrigir prato {slug}: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/apply/{slug}")
+async def admin_apply_ai_suggestions(slug: str, suggestions: dict):
+    """Aplica as sugestões da IA ao prato"""
+    try:
+        from services.audit_service import apply_ai_suggestions
+        
+        result = apply_ai_suggestions(slug, suggestions)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao aplicar sugestões para {slug}: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # INTERNACIONALIZAÇÃO - Suporte a múltiplos idiomas (GRATUITO com LibreTranslate)
 # ═══════════════════════════════════════════════════════════════════════════════
 
