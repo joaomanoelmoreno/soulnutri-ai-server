@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://food-radar-5.preview.emergentagent.com
+**URL**: https://soulnutri.preview.emergentagent.com
 
 ---
 
