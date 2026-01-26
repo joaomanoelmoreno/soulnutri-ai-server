@@ -362,7 +362,13 @@ function App() {
       if (multiMode) {
         setMultiResult({ ...data, totalTime: Date.now() - t });
       } else {
-        setResult({ ...data, totalTime: Date.now() - t });
+        const resultWithTime = { ...data, totalTime: Date.now() - t };
+        setResult(resultWithTime);
+        
+        // Fluxo Único Inteligente: após identificar, perguntar se quer adicionar mais
+        if (data.ok && data.identified) {
+          setShowAddMore(true);
+        }
       }
     } catch (e) { 
       clearTimeout(timeoutId);
@@ -380,6 +386,62 @@ function App() {
       }
     }
   };
+
+  // Fluxo Único: Adicionar item atual à lista e preparar para próximo
+  const addItemToPlate = () => {
+    if (result?.ok && result?.identified) {
+      const newItem = {
+        id: Date.now(),
+        dish: result.dish,
+        dish_display: result.dish_display,
+        categoria: result.categoria,
+        calorias: result.calorias_estimadas || result.nutricao?.calorias || 0,
+        score: result.score
+      };
+      setPlateItems(prev => [...prev, newItem]);
+    }
+    setShowAddMore(false);
+    setResult(null);
+    setPreviewImageUrl(null);
+  };
+
+  // Fluxo Único: Finalizar prato (não adicionar mais)
+  const finishPlate = () => {
+    if (result?.ok && result?.identified) {
+      // Adicionar último item se houver
+      const newItem = {
+        id: Date.now(),
+        dish: result.dish,
+        dish_display: result.dish_display,
+        categoria: result.categoria,
+        calorias: result.calorias_estimadas || result.nutricao?.calorias || 0,
+        score: result.score
+      };
+      setPlateItems(prev => [...prev, newItem]);
+    }
+    setShowAddMore(false);
+    // Manter result para mostrar detalhes do último item
+  };
+
+  // Fluxo Único: Limpar prato e começar novo
+  const clearPlate = () => {
+    setPlateItems([]);
+    setResult(null);
+    setMultiResult(null);
+    setPreviewImageUrl(null);
+    setShowAddMore(false);
+  };
+
+  // Calcular totais do prato
+  const plateTotals = plateItems.reduce((acc, item) => {
+    const cal = typeof item.calorias === 'string' 
+      ? parseFloat(item.calorias.replace(/[^\d.]/g, '')) || 0 
+      : item.calorias || 0;
+    return {
+      calorias: acc.calorias + cal,
+      itens: acc.itens + 1
+    };
+  }, { calorias: 0, itens: 0 });
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
