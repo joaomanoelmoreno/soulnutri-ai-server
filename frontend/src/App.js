@@ -72,19 +72,19 @@ function ScannerTutorial({ onClose }) {
     {
       icon: "📡",
       title: t('tutorial_step1_title', 'Scanner Automático'),
-      desc: t('tutorial_step1_desc', 'O SoulNutri detecta automaticamente quando você aponta para um prato diferente e mostra as informações em tempo real.'),
+      desc: t('tutorial_step1_desc', 'Aponte para qualquer prato e descubra instantaneamente ingredientes, benefícios e alertas de alérgenos.'),
       visual: "scan-animation"
     },
     {
-      icon: "👆",
-      title: t('tutorial_step2_title', 'Toque para Detalhes'),
-      desc: t('tutorial_step2_desc', 'Quando o scanner identificar um prato, toque na informação que aparece para ver todos os detalhes nutricionais.'),
+      icon: "✨",
+      title: t('tutorial_step2_title', 'Escolha Consciente'),
+      desc: t('tutorial_step2_desc', 'Veja se contém glúten, lactose ou outros alérgenos. Descubra os benefícios de cada ingrediente para sua saúde.'),
       visual: "tap-animation"
     },
     {
-      icon: "🍽️",
-      title: t('tutorial_step3_title', 'Monte seu Prato'),
-      desc: t('tutorial_step3_desc', 'No buffet, escaneie cada item separadamente. O app soma as calorias automaticamente para você!'),
+      icon: "🎯",
+      title: t('tutorial_step3_title', 'Seu Prato, Sua Escolha'),
+      desc: t('tutorial_step3_desc', 'Monte seu prato ideal com informações completas. Saiba exatamente o que está comendo!'),
       visual: "plate-animation"
     }
   ];
