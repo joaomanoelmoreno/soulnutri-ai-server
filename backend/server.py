@@ -1748,6 +1748,137 @@ async def admin_delete_novidade(dish_slug: str):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ADMIN - GERENCIAMENTO DE PREMIUM
+# Sistema para liberar/bloquear acesso Premium manualmente
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/premium/users")
+async def admin_list_premium_users():
+    """Lista todos os usuários Premium cadastrados."""
+    try:
+        users = await db.users.find(
+            {},
+            {"_id": 0, "pin_hash": 0}
+        ).to_list(500)
+        
+        return {
+            "ok": True,
+            "total": len(users),
+            "users": users
+        }
+    except Exception as e:
+        logger.error(f"Erro ao listar usuários Premium: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/premium/liberar")
+async def admin_liberar_premium(
+    nome: str = Form(...),
+    dias: int = Form(30)
+):
+    """
+    Libera acesso Premium para um usuário por X dias.
+    
+    Args:
+        nome: Nome do usuário (case insensitive)
+        dias: Número de dias de acesso (padrão: 30)
+    """
+    from datetime import datetime, timedelta
+    
+    try:
+        # Buscar usuário pelo nome
+        user = await db.users.find_one(
+            {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"_id": 0}
+        )
+        
+        if not user:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
+        
+        # Calcular data de expiração
+        data_expiracao = datetime.now() + timedelta(days=dias)
+        
+        # Atualizar status Premium
+        await db.users.update_one(
+            {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {
+                "$set": {
+                    "premium_ativo": True,
+                    "premium_liberado_em": datetime.now().isoformat(),
+                    "premium_expira_em": data_expiracao.isoformat(),
+                    "premium_dias": dias
+                }
+            }
+        )
+        
+        logger.info(f"[ADMIN] Premium liberado para {nome} por {dias} dias")
+        
+        return {
+            "ok": True,
+            "message": f"Premium liberado para {nome}",
+            "nome": nome,
+            "dias": dias,
+            "expira_em": data_expiracao.isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao liberar Premium: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/premium/bloquear")
+async def admin_bloquear_premium(nome: str = Form(...)):
+    """
+    Bloqueia/revoga acesso Premium de um usuário.
+    
+    Args:
+        nome: Nome do usuário (case insensitive)
+    """
+    try:
+        result = await db.users.update_one(
+            {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {
+                "$set": {
+                    "premium_ativo": False,
+                    "premium_bloqueado_em": __import__('datetime').datetime.now().isoformat()
+                }
+            }
+        )
+        
+        if result.modified_count > 0:
+            logger.info(f"[ADMIN] Premium bloqueado para {nome}")
+            return {"ok": True, "message": f"Premium bloqueado para {nome}"}
+        else:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
+            
+    except Exception as e:
+        logger.error(f"Erro ao bloquear Premium: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/premium/status/{nome}")
+async def admin_verificar_premium(nome: str):
+    """Verifica status Premium de um usuário específico."""
+    try:
+        user = await db.users.find_one(
+            {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"_id": 0, "pin_hash": 0}
+        )
+        
+        if not user:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
+        
+        return {
+            "ok": True,
+            "user": user
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao verificar Premium: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # CHECK-IN DE REFEIÇÃO - Registrar consumo com múltiplos itens
 # ═══════════════════════════════════════════════════════════════════════════════
 
