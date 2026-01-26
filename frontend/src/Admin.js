@@ -604,6 +604,172 @@ export default function Admin() {
         </div>
       )}
 
+      {/* Audit Tab */}
+      {activeTab === 'audit' && (
+        <div className="audit-section">
+          <div className="audit-header">
+            <h2>🔍 Auditoria de Qualidade dos Dados</h2>
+            <button 
+              className="refresh-btn" 
+              onClick={runAudit}
+              disabled={auditLoading}
+            >
+              {auditLoading ? '⏳ Analisando...' : '🔄 Atualizar Auditoria'}
+            </button>
+          </div>
+
+          {auditLoading && (
+            <div className="audit-loading">
+              <p>⏳ Analisando {dishes.length} pratos... Isso pode levar alguns segundos.</p>
+            </div>
+          )}
+
+          {auditData && !auditLoading && (
+            <>
+              {/* Score de Saúde */}
+              <div className="health-score-card">
+                <div className="health-score" style={{
+                  color: auditData.health_score >= 70 ? '#22c55e' : 
+                         auditData.health_score >= 40 ? '#f59e0b' : '#ef4444'
+                }}>
+                  {auditData.health_score}%
+                </div>
+                <div className="health-label">Saúde dos Dados</div>
+                <p>{auditData.dishes_with_issues} de {auditData.total_dishes} pratos com problemas</p>
+              </div>
+
+              {/* Resumo de Problemas */}
+              <div className="audit-summary">
+                <h3>📊 Resumo dos Problemas</h3>
+                <div className="audit-stats-grid">
+                  <div className="audit-stat critical">
+                    <span className="stat-number">{auditData.summary.missing_info_file}</span>
+                    <span className="stat-label">Sem arquivo de info</span>
+                  </div>
+                  <div className="audit-stat critical">
+                    <span className="stat-number">{auditData.summary.unknown_names}</span>
+                    <span className="stat-label">Nomes "Unknown"</span>
+                  </div>
+                  <div className="audit-stat critical">
+                    <span className="stat-number">{auditData.summary.category_conflicts}</span>
+                    <span className="stat-label">Conflitos de categoria</span>
+                  </div>
+                  <div className="audit-stat warning">
+                    <span className="stat-number">{auditData.summary.empty_nutrition}</span>
+                    <span className="stat-label">Nutrição vazia</span>
+                  </div>
+                  <div className="audit-stat warning">
+                    <span className="stat-number">{auditData.summary.missing_ingredients}</span>
+                    <span className="stat-label">Sem ingredientes</span>
+                  </div>
+                  <div className="audit-stat warning">
+                    <span className="stat-number">{auditData.summary.allergen_conflicts}</span>
+                    <span className="stat-label">Alérgenos incorretos</span>
+                  </div>
+                  <div className="audit-stat info">
+                    <span className="stat-number">{auditData.summary.missing_description}</span>
+                    <span className="stat-label">Sem descrição</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lista de Problemas Críticos */}
+              {auditData.problems.unknown_names.length > 0 && (
+                <div className="audit-problems">
+                  <h3>🔴 Pratos com Nome "Unknown" (Crítico)</h3>
+                  <div className="problems-list">
+                    {auditData.problems.unknown_names.map((p, i) => (
+                      <div key={i} className="problem-item critical">
+                        <span className="problem-slug">{p.slug}</span>
+                        <span className="problem-issue">{p.issue}</span>
+                        <button 
+                          className="edit-btn"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) setEditingDish(dish);
+                            setActiveTab('dishes');
+                          }}
+                        >
+                          ✏️ Editar
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {auditData.problems.category_conflicts.length > 0 && (
+                <div className="audit-problems">
+                  <h3>🔴 Conflitos de Categoria (Crítico)</h3>
+                  <div className="problems-list">
+                    {auditData.problems.category_conflicts.map((p, i) => (
+                      <div key={i} className="problem-item critical">
+                        <span className="problem-slug">{p.nome}</span>
+                        <span className="problem-issue">{p.issue}</span>
+                        <button 
+                          className="edit-btn"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) setEditingDish(dish);
+                            setActiveTab('dishes');
+                          }}
+                        >
+                          ✏️ Corrigir
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {auditData.problems.empty_nutrition.length > 0 && (
+                <div className="audit-problems">
+                  <h3>🟡 Pratos sem Informação Nutricional ({auditData.problems.empty_nutrition.length})</h3>
+                  <p className="problems-note">Estes pratos não mostram calorias corretamente.</p>
+                  <div className="problems-list scrollable">
+                    {auditData.problems.empty_nutrition.slice(0, 20).map((p, i) => (
+                      <div key={i} className="problem-item warning">
+                        <span className="problem-slug">{p.nome || p.slug}</span>
+                        <button 
+                          className="edit-btn small"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) setEditingDish(dish);
+                            setActiveTab('dishes');
+                          }}
+                        >
+                          ✏️
+                        </button>
+                      </div>
+                    ))}
+                    {auditData.problems.empty_nutrition.length > 20 && (
+                      <p className="more-items">...e mais {auditData.problems.empty_nutrition.length - 20} pratos</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {auditData.problems.missing_info_file.length > 0 && (
+                <div className="audit-problems">
+                  <h3>🔴 Pratos sem dish_info.json ({auditData.problems.missing_info_file.length})</h3>
+                  <p className="problems-note">Estes pratos precisam ser configurados manualmente.</p>
+                  <div className="problems-list scrollable">
+                    {auditData.problems.missing_info_file.slice(0, 20).map((p, i) => (
+                      <div key={i} className="problem-item critical">
+                        <span className="problem-slug">{p.slug}</span>
+                      </div>
+                    ))}
+                    {auditData.problems.missing_info_file.length > 20 && (
+                      <p className="more-items">...e mais {auditData.problems.missing_info_file.length - 20} pratos</p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
       {/* Premium Tab */}
       {activeTab === 'premium' && (
         <div className="premium-admin-section">
