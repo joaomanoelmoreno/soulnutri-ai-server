@@ -835,26 +835,37 @@ function App() {
           🖼️ Galeria
         </button>
         <button 
-          className={`action-btn mode ${multiMode ? 'active' : ''}`}
-          onClick={() => setMultiMode(!multiMode)}
-          data-testid="multi-mode-button"
-        >
-          {multiMode ? '🍽️ Multi' : '🍴 Único'}
-        </button>
-        <button 
           className="action-btn clear" 
-          onClick={clearResult}
-          disabled={!r && !multiResult && !error}
+          onClick={() => { clearResult(); clearPlate(); }}
+          disabled={!r && !multiResult && !error && plateItems.length === 0}
           data-testid="clear-button"
         >
           🔄 Nova
         </button>
       </div>
 
-      {/* Indicador de modo */}
-      {multiMode && (
-        <div className="mode-indicator" data-testid="mode-indicator">
-          📊 Modo Multi-Item: Identifica vários alimentos no prato
+      {/* Resumo do Prato (quando tem múltiplos itens) */}
+      {plateItems.length > 0 && (
+        <div className="plate-summary" data-testid="plate-summary">
+          <div className="plate-summary-header">
+            <span>🍽️ Seu Prato ({plateItems.length} {plateItems.length === 1 ? 'item' : 'itens'})</span>
+            <span className="plate-total-cal">{Math.round(plateTotals.calorias)} kcal</span>
+          </div>
+          <div className="plate-items-list">
+            {plateItems.map((item, i) => (
+              <div key={item.id} className="plate-item">
+                <span className="plate-item-name">{item.dish_display}</span>
+                <span className="plate-item-cal">{Math.round(typeof item.calorias === 'string' ? parseFloat(item.calorias) : item.calorias || 0)} kcal</span>
+              </div>
+            ))}
+          </div>
+          <button 
+            className="add-more-btn"
+            onClick={() => { setResult(null); setPreviewImageUrl(null); }}
+            data-testid="add-more-item"
+          >
+            + Adicionar mais item
+          </button>
         </div>
       )}
 
