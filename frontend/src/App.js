@@ -1278,23 +1278,90 @@ function App() {
         <div className="plate-summary" data-testid="plate-summary">
           <div className="plate-summary-header">
             <span>🍽️ {t('your_plate', 'Seu Prato')} ({plateItems.length} {t('items', 'itens')})</span>
-            <span className="plate-total-cal">{Math.round(plateTotals.calorias)} kcal</span>
+            <span className="plate-total-cal">{plateConsolidated?.nutrition?.calorias}</span>
           </div>
+          
+          {/* Lista de itens */}
           <div className="plate-items-list">
             {plateItems.map((item, i) => (
               <div key={item.id} className="plate-item">
                 <span className="plate-item-name">{item.dish_display}</span>
-                <span className="plate-item-cal">{Math.round(typeof item.calorias === 'string' ? parseFloat(item.calorias) : item.calorias || 0)} kcal</span>
               </div>
             ))}
           </div>
-          <button 
-            className="add-more-btn"
-            onClick={() => { setResult(null); setPreviewImageUrl(null); }}
-            data-testid="add-more-item"
-          >
-            + Adicionar mais item
-          </button>
+
+          {/* VISTA CONSOLIDADA (modo mesa) */}
+          {viewMode === 'mesa' && plateConsolidated && (
+            <div className="plate-consolidated" data-testid="plate-consolidated">
+              
+              {/* Alérgenos do prato todo */}
+              <div className={`plate-allergens ${(plateConsolidated.contemGluten || plateConsolidated.contemLactose) ? 'has-allergens' : 'safe'}`}>
+                {plateConsolidated.contemGluten && <span className="allergen-tag">⚠️ Contém Glúten</span>}
+                {plateConsolidated.contemLactose && <span className="allergen-tag">⚠️ Contém Lactose</span>}
+                {!plateConsolidated.contemGluten && !plateConsolidated.contemLactose && (
+                  <span className="allergen-safe">✅ Sem glúten e lactose</span>
+                )}
+              </div>
+
+              {/* Ficha Nutricional Consolidada */}
+              <div className="plate-nutrition">
+                <h4>📊 Ficha Nutricional (base 100g)</h4>
+                <div className="nutr-grid">
+                  <div><b>{plateConsolidated.nutrition.calorias}</b><small>Calorias</small></div>
+                  <div><b>{plateConsolidated.nutrition.proteinas}</b><small>Proteínas</small></div>
+                  <div><b>{plateConsolidated.nutrition.carboidratos}</b><small>Carbos</small></div>
+                  <div><b>{plateConsolidated.nutrition.gorduras}</b><small>Gorduras</small></div>
+                </div>
+              </div>
+
+              {/* Ingredientes do prato todo */}
+              {plateConsolidated.ingredientes.length > 0 && (
+                <div className="plate-section">
+                  <h4>🥗 Ingredientes</h4>
+                  <p>{plateConsolidated.ingredientes.join(', ')}</p>
+                </div>
+              )}
+
+              {/* Benefícios consolidados */}
+              {plateConsolidated.beneficios.length > 0 && (
+                <div className="plate-section good">
+                  <h4>✅ Benefícios do seu prato</h4>
+                  <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
+                </div>
+              )}
+
+              {/* Riscos/Alertas consolidados */}
+              {plateConsolidated.riscos.length > 0 && (
+                <div className="plate-section warning">
+                  <h4>⚠️ Atenção</h4>
+                  <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{r}</li>)}</ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Botões de ação */}
+          <div className="plate-actions">
+            <button 
+              className="plate-toggle-btn"
+              onClick={() => setViewMode(viewMode === 'buffet' ? 'mesa' : 'buffet')}
+            >
+              {viewMode === 'buffet' ? '📖 Ver análise completa' : '📋 Vista resumida'}
+            </button>
+            <button 
+              className="add-more-btn"
+              onClick={() => { setResult(null); setPreviewImageUrl(null); setViewMode('buffet'); }}
+              data-testid="add-more-item"
+            >
+              + Adicionar mais item
+            </button>
+            <button 
+              className="clear-plate-btn"
+              onClick={clearPlate}
+            >
+              🗑️ Limpar prato
+            </button>
+          </div>
         </div>
       )}
 
