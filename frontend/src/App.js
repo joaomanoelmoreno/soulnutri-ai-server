@@ -1757,4 +1757,13 @@ function App() {
   );
 }
 
-export default App;
+// Componente principal com Provider de internacionalização
+function AppWithI18n() {
+  return (
+    <I18nProvider>
+      <App />
+    </I18nProvider>
+  );
+}
+
+export default AppWithI18n;
