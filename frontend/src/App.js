@@ -963,6 +963,16 @@ function App() {
     setNewDishName("");
   };
 
+  // Função para fechar welcome e mostrar tutorial se for primeira vez
+  const handleWelcomeClose = () => {
+    localStorage.setItem('soulnutri_welcomed', 'true');
+    setShowWelcome(false);
+    // Mostrar tutorial se nunca viu
+    if (!localStorage.getItem('soulnutri_tutorial_seen')) {
+      setTimeout(() => setShowScannerTutorial(true), 300);
+    }
+  };
+
   const r = result;
   
   // Config de confiança
