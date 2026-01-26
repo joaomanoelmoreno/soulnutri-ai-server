@@ -382,3 +382,188 @@ async def identify_multiple_items(image_bytes: bytes) -> dict:
             
     except Exception as e:
         return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROMPT PARA CORREÇÃO/PREENCHIMENTO DE DADOS DO PRATO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+SYSTEM_PROMPT_FIX_DISH = """Você é um nutricionista RIGOROSO analisando dados de pratos.
+
+TAREFA: Analisar a imagem do prato e PREENCHER/CORRIGIR as informações faltantes.
+
+REGRAS ESTRITAS:
+1. CATEGORIA - SEJA PRECISO:
+   - "vegano": ZERO ingredientes de origem animal (sem ovo, leite, queijo, mel)
+   - "vegetariano": pode ter ovo, leite, queijo, mel, MAS sem carne/peixe/frango
+   - "proteína animal": contém carne, peixe, frango, bacon, presunto, camarão
+
+2. INGREDIENTES - LISTE TODOS que você consegue identificar visualmente
+
+3. NUTRIÇÃO - Use valores REAIS por 100g (não invente):
+   - Vegetais: 20-50 kcal
+   - Arroz/massa: 130-160 kcal
+   - Carnes magras: 150-200 kcal
+   - Frituras: 250-400 kcal
+
+4. ALÉRGENOS - Marque TRUE apenas se CERTEZA:
+   - contem_gluten: farinha, pão, massa, empanado
+   - contem_lactose: leite, queijo, creme, manteiga
+
+5. RISCOS - Liste alérgenos conhecidos do prato
+
+RESPONDA APENAS JSON:
+{
+    "nome": "Nome Correto do Prato",
+    "categoria": "vegano|vegetariano|proteína animal",
+    "category_emoji": "🥬|🥚|🍖",
+    "descricao": "Descrição em 1-2 frases",
+    "ingredientes": ["ingrediente1", "ingrediente2"],
+    "beneficios": ["benefício1", "benefício2"],
+    "riscos": ["Contém X (alérgeno)", "Alto teor de Y"],
+    "nutricao": {
+        "calorias": "XXX kcal",
+        "proteinas": "XXg",
+        "carboidratos": "XXg",
+        "gorduras": "XXg"
+    },
+    "contem_gluten": true/false,
+    "contem_lactose": true/false
+}"""
+
+
+async def fix_dish_data_with_ai(image_bytes: bytes, current_info: dict) -> dict:
+    """
+    Usa Gemini para corrigir/preencher dados de um prato.
+    Envia a imagem + dados atuais e pede para corrigir/completar.
+    """
+    import tempfile
+    
+    try:
+        api_key = os.environ.get("EMERGENT_LLM_KEY")
+        if not api_key:
+            return {"ok": False, "error": "EMERGENT_LLM_KEY não configurada"}
+        
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+            tmp_file.write(image_bytes)
+            tmp_path = tmp_file.name
+        
+        try:
+            chat = LlmChat(
+                api_key=api_key,
+                session_id=f"fix-dish-{id(image_bytes)}",
+                system_message=SYSTEM_PROMPT_FIX_DISH
+            ).with_model("gemini", "gemini-2.0-flash")
+            
+            image_file = FileContentWithMimeType(
+                file_path=tmp_path,
+                mime_type="image/jpeg"
+            )
+            
+            # Preparar contexto dos dados atuais
+            context = f"""DADOS ATUAIS DO PRATO (podem estar incorretos ou incompletos):
+Nome: {current_info.get('nome', 'NÃO DEFINIDO')}
+Categoria: {current_info.get('categoria', 'NÃO DEFINIDA')}
+Ingredientes: {current_info.get('ingredientes', [])}
+Nutrição: {current_info.get('nutricao', {})}
+
+ANALISE A IMAGEM e CORRIJA/COMPLETE todos os campos.
+Se o nome atual contiver "Unknown", dê o nome correto.
+Se nutrição estiver vazia, preencha com valores realistas.
+Responda APENAS com JSON válido."""
+            
+            user_message = UserMessage(
+                text=context,
+                file_contents=[image_file]
+            )
+            
+            response = await chat.send_message(user_message)
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        
+        # Parse JSON
+        response_clean = response.strip()
+        if response_clean.startswith("```"):
+            response_clean = response_clean.split("```")[1]
+            if response_clean.startswith("json"):
+                response_clean = response_clean[4:]
+        response_clean = response_clean.strip()
+        
+        try:
+            result = json.loads(response_clean)
+            result["ok"] = True
+            return result
+        except json.JSONDecodeError:
+            return {
+                "ok": False,
+                "error": "Erro ao processar resposta da IA",
+                "raw_response": response
+            }
+            
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+async def batch_fix_dishes(slugs: list, max_concurrent: int = 3) -> dict:
+    """
+    Corrige múltiplos pratos em lote.
+    """
+    import asyncio
+    from pathlib import Path
+    
+    results = {"fixed": [], "failed": [], "skipped": []}
+    dataset_dir = Path("/app/datasets/organized")
+    
+    async def fix_single(slug: str) -> dict:
+        dish_dir = dataset_dir / slug
+        info_path = dish_dir / "dish_info.json"
+        
+        # Carregar info atual
+        current_info = {}
+        if info_path.exists():
+            try:
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    current_info = json.load(f)
+            except:
+                pass
+        
+        # Buscar imagem
+        images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg"))
+        if not images:
+            return {"slug": slug, "status": "skipped", "reason": "sem imagem"}
+        
+        # Ler imagem
+        with open(images[0], 'rb') as f:
+            image_bytes = f.read()
+        
+        # Chamar IA
+        result = await fix_dish_data_with_ai(image_bytes, current_info)
+        
+        if result.get("ok"):
+            # Salvar resultado
+            new_info = {**current_info, **result}
+            new_info.pop("ok", None)
+            new_info["slug"] = slug
+            
+            with open(info_path, 'w', encoding='utf-8') as f:
+                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            
+            return {"slug": slug, "status": "fixed", "data": new_info}
+        else:
+            return {"slug": slug, "status": "failed", "error": result.get("error")}
+    
+    # Processar em lotes
+    for i in range(0, len(slugs), max_concurrent):
+        batch = slugs[i:i+max_concurrent]
+        batch_results = await asyncio.gather(*[fix_single(s) for s in batch])
+        
+        for r in batch_results:
+            if r["status"] == "fixed":
+                results["fixed"].append(r["slug"])
+            elif r["status"] == "failed":
+                results["failed"].append({"slug": r["slug"], "error": r.get("error")})
+            else:
+                results["skipped"].append({"slug": r["slug"], "reason": r.get("reason")})
+    
+    return results
