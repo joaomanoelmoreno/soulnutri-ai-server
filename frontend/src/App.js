@@ -1006,7 +1006,7 @@ function App() {
             <span>📷</span>
             <p>{cameraError}</p>
             <button onClick={(e) => { e.stopPropagation(); startCamera(); }}>
-              🔄 Tentar novamente
+              🔄 {t('try_again', 'Tentar novamente')}
             </button>
           </div>
         )}
@@ -1014,14 +1014,14 @@ function App() {
         {!cameraError && (
           <div className="cam-guide">
             <div className="guide-frame"></div>
-            <span className="guide-text">Posicione o prato aqui</span>
+            <span className="guide-text">{t('position_dish', 'Posicione o prato aqui')}</span>
           </div>
         )}
         
         {loading && (
           <div className="cam-loading">
             <span>🔍</span>
-            <p>Identificando...</p>
+            <p>{t('loading', 'Identificando...')}</p>
           </div>
         )}
         
