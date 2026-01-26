@@ -3,17 +3,26 @@ Geração de embeddings visuais usando OpenCLIP (CPU otimizado)
 Meta: resposta em 100ms
 """
 
-import torch
-import open_clip
+import os
 import numpy as np
 from PIL import Image
 import io
 import time
 
+# Forçar uso de CPU antes de importar torch
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
+import torch
+
+# Forçar CPU
+torch.set_default_device('cpu')
+
+import open_clip
+
 # Cache global do modelo (carrega uma vez)
 _MODEL = None
 _PREPROCESS = None
-_DEVICE = None
+_DEVICE = "cpu"  # Sempre CPU
 
 # Otimizações para CPU
 torch.set_num_threads(4)  # Limitar threads para evitar overhead
@@ -23,10 +32,11 @@ def _load_model():
     global _MODEL, _PREPROCESS, _DEVICE
     
     if _MODEL is None:
-        print("[embedder] Carregando modelo OpenCLIP otimizado...")
+        print("[embedder] Carregando modelo OpenCLIP otimizado (CPU)...")
         start = time.time()
         
-        _DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+        # Forçar CPU sempre - não usar CUDA
+        _DEVICE = "cpu"
         
         # ViT-B-32 é um bom equilíbrio entre velocidade e qualidade
         model, _, preprocess = open_clip.create_model_and_transforms(
@@ -45,7 +55,7 @@ def _load_model():
             model = torch.compile(model, mode="reduce-overhead")
             print("[embedder] Modelo compilado com torch.compile!")
         except Exception as e:
-            print(f"[embedder] torch.compile não disponível: {e}")
+            print(f"[embedder] torch.compile não disponível (normal em CPU): {e}")
         
         _MODEL = model
         _PREPROCESS = preprocess
