@@ -34,6 +34,11 @@ function App() {
   const [plateItems, setPlateItems] = useState([]); // Lista de itens identificados
   const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
   const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
+  // Modo Scanner Contínuo para Buffet
+  const [scannerMode, setScannerMode] = useState(true); // Scanner ativo por padrão
+  const [lastScanTime, setLastScanTime] = useState(0);
+  const [scannerResult, setScannerResult] = useState(null); // Resultado do scanner (overlay)
+  const scanIntervalRef = useRef(null);
   // Premium states
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
   const [premiumUser, setPremiumUser] = useState(null);
