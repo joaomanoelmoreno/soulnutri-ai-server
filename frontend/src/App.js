@@ -1322,6 +1322,52 @@ function App() {
         );
       })()}
 
+      {/* MODAL "ADICIONAR MAIS ITENS?" - Fluxo Único Inteligente */}
+      {showAddMore && result?.ok && result?.identified && (
+        <div className="modal-overlay add-more-overlay" data-testid="add-more-modal">
+          <div className="modal-content add-more-modal" onClick={e => e.stopPropagation()}>
+            <div className="add-more-success">
+              <span className="add-more-emoji">✅</span>
+              <h3>{result.dish_display}</h3>
+              <p className="add-more-confidence">
+                {result.confidence === 'alta' ? '🎯 Alta confiança' : 
+                 result.confidence === 'media' ? '👍 Boa confiança' : '🤔 Verificar'}
+              </p>
+            </div>
+            
+            <div className="add-more-question">
+              <p>Seu prato está completo?</p>
+              {plateItems.length > 0 && (
+                <small className="plate-count">
+                  ({plateItems.length} {plateItems.length === 1 ? 'item' : 'itens'} já adicionado{plateItems.length > 1 ? 's' : ''})
+                </small>
+              )}
+            </div>
+            
+            <div className="add-more-actions">
+              <button 
+                className="add-more-finish-btn"
+                onClick={finishPlate}
+                data-testid="finish-plate-btn"
+              >
+                ✓ Sim, está completo
+              </button>
+              <button 
+                className="add-more-continue-btn"
+                onClick={addItemToPlate}
+                data-testid="add-more-btn"
+              >
+                + Adicionar mais itens
+              </button>
+            </div>
+            
+            <p className="add-more-tip">
+              💡 Dica: Para buffet, fotografe cada item separadamente
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* MODAL DE CORREÇÃO MULTI */}
       {showMultiCorrection && (
         <div className="modal-overlay" onClick={() => setShowMultiCorrection(false)}>
