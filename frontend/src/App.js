@@ -1419,22 +1419,10 @@ function App() {
             ← Voltar
           </button>
           
-          {/* Preview da imagem selecionada da galeria */}
+          {/* Preview da imagem */}
           {previewImageUrl && (
             <div className="preview-image-container">
               <img src={previewImageUrl} alt="Foto do prato" className="preview-image" />
-            </div>
-          )}
-          
-          {/* Indicador de fonte */}
-          {r.source === 'generic_ai' && (
-            <div className="source-badge" data-testid="source-badge">
-              🤖 Identificado por IA Genérica (prato não cadastrado)
-            </div>
-          )}
-          {r.source === 'new_dish' && (
-            <div className="source-badge new" data-testid="source-badge">
-              ✨ Novo prato cadastrado com sucesso!
             </div>
           )}
           
@@ -1450,7 +1438,11 @@ function App() {
             {r.category_emoji} {r.category?.toUpperCase()}
           </div>
 
-          {/* ALÉRGENOS - SEMPRE MOSTRAR */}
+          {/* ══════════════════════════════════════════════════════════
+              VISTA BUFFET - Informações para DECISÃO RÁPIDA
+              ══════════════════════════════════════════════════════════ */}
+          
+          {/* ALÉRGENOS */}
           <div className={`allergen-section ${allergenInfo.hasAllergens ? 'has-allergens' : 'no-allergens'}`}>
             {allergenInfo.hasAllergens ? (
               allergenInfo.alerts.map((alert, i) => (
@@ -1468,7 +1460,7 @@ function App() {
           {/* Ingredientes */}
           {r.ingredientes?.length > 0 && (
             <div className="info-box" data-testid="ingredients-box">
-              <h4>🥗 {t('ingredients', 'Ingredientes')}</h4>
+              <h4>🥗 Ingredientes</h4>
               <p>{Array.isArray(r.ingredientes) ? r.ingredientes.join(', ') : r.ingredientes}</p>
             </div>
           )}
@@ -1476,8 +1468,8 @@ function App() {
           {/* Benefícios */}
           {r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
-              <h4>✅ {t('benefits', 'Benefícios')}</h4>
-              <ul>{r.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
+              <h4>✅ Benefícios</h4>
+              <ul>{r.beneficios.slice(0, 3).map((b,i) => <li key={i}>{b}</li>)}</ul>
             </div>
           )}
 
@@ -1486,114 +1478,28 @@ function App() {
             <div className="info-box combo" data-testid="combo-box">
               <h4>💡 Combine com</h4>
               <div className="combo-list">
-                {r.premium.combinacoes_sugeridas.map((c, i) => (
+                {r.premium.combinacoes_sugeridas.slice(0, 2).map((c, i) => (
                   <div key={i} className="combo-item">
-                    <span className="combo-emoji">{c.emoji}</span>
-                    <div>
-                      <strong>{c.titulo}</strong>
-                      {c.exemplos && <small> - Ex: {c.exemplos.join(', ')}</small>}
-                    </div>
+                    <span>{c.emoji} <strong>{c.titulo}</strong></span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Informação Nutricional */}
-          {r.nutrition && (
-            <div className="nutr" data-testid="nutrition-box">
-              <div className="nutr-title">{t('nutrition_info', 'Informação Nutricional (base 100g)')}</div>
-              <div className="nutr-grid">
-                <div><b>{r.nutrition.calorias}</b><small>{t('calories', 'Calorias')}</small></div>
-                <div><b>{r.nutrition.proteinas}</b><small>{t('proteins', 'Proteínas')}</small></div>
-                <div><b>{r.nutrition.carboidratos}</b><small>{t('carbs', 'Carbos')}</small></div>
-                <div><b>{r.nutrition.gorduras}</b><small>{t('fats', 'Gorduras')}</small></div>
-              </div>
-              {r.aviso_cibi_sana && (
-                <div className="cibi-sana-text" data-testid="cibi-sana-badge">{r.aviso_cibi_sana}</div>
-              )}
-            </div>
-          )}
-
-          {/* NOVIDADE/NOTÍCIA DO PRATO */}
-          {r.premium?.novidade && (
-            <div className={`premium-novidade ${r.premium.novidade.severidade || 'info'}`} data-testid="dish-novidade">
-              <div className="novidade-header">
-                <span className="novidade-emoji">{r.premium.novidade.emoji || '📢'}</span>
-                <span className="novidade-tipo">{r.premium.novidade.tipo?.toUpperCase()}</span>
-              </div>
-              <h4 className="novidade-titulo">{r.premium.novidade.titulo}</h4>
-              <p className="novidade-mensagem">{r.premium.novidade.mensagem}</p>
-            </div>
-          )}
-
-          {/* SEÇÃO CIENTÍFICA - Você Sabia? */}
-          {r.beneficio_principal && (
-            <div className="sci-box benefit" data-testid="main-benefit">
-              <h4>🔬 Você Sabia?</h4>
-              <p>{r.beneficio_principal}</p>
-            </div>
-          )}
-          
-          {r.curiosidade_cientifica && (
-            <div className="sci-box curiosity" data-testid="curiosity">
-              <h4>💡 Curiosidade Científica</h4>
-              <p>{r.curiosidade_cientifica}</p>
-            </div>
-          )}
-
-          {/* VERDADE OU MITO */}
-          {r.mito_verdade && (
-            <div className="mito-verdade-section" data-testid="mito-verdade">
-              <div className="mito-verdade-card">
-                <h4>🤔 Verdade ou Mito?</h4>
-                <p className="mito-afirmacao">&quot;{r.mito_verdade.afirmacao}&quot;</p>
-                <div className={`mito-resposta ${r.mito_verdade.resposta === 'VERDADE' ? 'verdade' : r.mito_verdade.resposta === 'MITO' ? 'mito' : 'parcial'}`}>
-                  <span className="mito-emoji">{r.mito_verdade.resposta_emoji}</span>
-                  <span className="mito-label">{r.mito_verdade.resposta}</span>
-                </div>
-                <p className="mito-explicacao">{r.mito_verdade.explicacao}</p>
-                <p className="mito-fonte">📚 {r.mito_verdade.fonte}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Riscos */}
-          {r.riscos?.length > 0 && (
-            <div className="info-box warning" data-testid="risks-box">
-              <h4>⚠️ Riscos e Alertas</h4>
-              <ul>{r.riscos.filter(risco => !risco.toLowerCase().includes('glúten') && !risco.toLowerCase().includes('lactose')).map((risco,i) => <li key={i}>{risco}</li>)}</ul>
-            </div>
-          )}
-
-          {/* BOTÃO DE COMPARTILHAR */}
-          {(r.beneficio_principal || r.curiosidade_cientifica) && (
+          {/* BOTÕES DE AÇÃO - BUFFET */}
+          <div className="buffet-actions">
             <button 
-              className="share-btn"
+              className="add-to-plate-btn"
               onClick={() => {
-                const text = `🍽️ ${r.dish_display}\n\n🔬 ${r.beneficio_principal || ''}\n\n💡 ${r.curiosidade_cientifica || ''}\n\n📚 ${r.referencia_pesquisa || ''}\n\nDescubra mais no SoulNutri - seu agente de nutrição virtual!`;
-                if (navigator.share) {
-                  navigator.share({ title: 'SoulNutri', text });
-                } else {
-                  navigator.clipboard.writeText(text);
-                  alert('Texto copiado! Cole para compartilhar.');
-                }
+                addItemToPlate();
+                setShowAddMore(false);
               }}
-              data-testid="share-button"
+              data-testid="add-to-plate-btn"
             >
-              📤 Compartilhar curiosidade
+              ✓ Adicionar ao prato
             </button>
-          )}
-
-          <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
-
-          {/* Alternativas */}
-          {r.alternatives?.length > 0 && r.confidence !== 'alta' && (
-            <div className="alts" data-testid="alternatives-box">
-              <small>Também pode ser:</small>
-              {r.alternatives.map((a,i) => <span key={i}>{a}</span>)}
-            </div>
-          )}
+          </div>
 
           {/* BOTÕES DE FEEDBACK */}
           {!feedbackSent && r.source !== 'new_dish' && (
@@ -1601,20 +1507,16 @@ function App() {
               <p className="feedback-question">Este reconhecimento está correto?</p>
               <div className="feedback-btns">
                 <button className="fb-btn correct" onClick={sendFeedbackCorrect}>
-                  ✅ Sim, correto
+                  ✅ Sim
                 </button>
                 <button className="fb-btn incorrect" onClick={() => setShowFeedback(true)}>
-                  ❌ Não, corrigir
+                  ❌ Corrigir
                 </button>
               </div>
             </div>
           )}
 
-          {feedbackSent && (
-            <div className="feedback-thanks">
-              ✅ Obrigado pelo feedback! Isso ajuda a melhorar o reconhecimento.
-            </div>
-          )}
+          <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
         </div>
       )}
 
