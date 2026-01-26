@@ -548,7 +548,7 @@ async def identify_image(
             "ok": True,
             "identified": decision['identified'],
             "dish": decision.get('dish'),
-            "dish_display": decision.get('dish_display'),
+            "dish_display": format_dish_name(decision.get('dish_display', '')),
             "confidence": decision['confidence'],
             "score": decision['score'],
             "message": decision['message'],
@@ -561,7 +561,7 @@ async def identify_image(
             "beneficios": decision.get('beneficios'),
             "riscos": decision.get('riscos'),
             "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
-            "alternatives": decision.get('alternatives', []),
+            "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
             "search_time_ms": round(elapsed_ms, 2),
             "source": decision.get('source', 'local_index'),
             # Dados científicos - SÓ PREMIUM
