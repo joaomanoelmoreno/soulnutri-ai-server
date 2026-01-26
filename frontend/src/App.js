@@ -1791,6 +1791,14 @@ function App() {
       {showFeedback && (
         <div className="modal-overlay" onClick={() => setShowFeedback(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
+            {/* BOTÃO VOLTAR */}
+            <button 
+              className="modal-back-btn"
+              onClick={() => setShowFeedback(false)}
+            >
+              ← Voltar
+            </button>
+            
             <h3>Corrigir identificação</h3>
             
             {/* Campo para NOVO PRATO */}
@@ -1842,9 +1850,6 @@ function App() {
             <div className="modal-actions-fixed">
               <button className="discard-btn" onClick={discardPhoto}>
                 🗑️ Descartar foto (inutilizável)
-              </button>
-              <button className="cancel-btn" onClick={() => setShowFeedback(false)}>
-                ✕ Cancelar
               </button>
             </div>
           </div>
