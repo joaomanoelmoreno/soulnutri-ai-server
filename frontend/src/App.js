@@ -1511,10 +1511,7 @@ function App() {
           <div className="buffet-actions">
             <button 
               className="add-to-plate-btn"
-              onClick={() => {
-                addItemToPlate();
-                setShowAddMore(false);
-              }}
+              onClick={() => setShowAddMore(true)}
               data-testid="add-to-plate-btn"
             >
               ✓ Adicionar ao prato
