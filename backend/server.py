@@ -1688,6 +1688,73 @@ async def admin_apply_ai_suggestions(slug: str, suggestions: dict):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.post("/admin/audit/fix-single/{slug}")
+async def admin_fix_single_dish(slug: str):
+    """Usa IA para corrigir dados de um único prato"""
+    try:
+        from services.generic_ai import fix_dish_data_with_ai
+        from pathlib import Path
+        import json
+        
+        dataset_dir = Path("/app/datasets/organized")
+        dish_dir = dataset_dir / slug
+        info_path = dish_dir / "dish_info.json"
+        
+        # Carregar info atual
+        current_info = {}
+        if info_path.exists():
+            with open(info_path, 'r', encoding='utf-8') as f:
+                current_info = json.load(f)
+        
+        # Buscar imagem
+        images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg"))
+        if not images:
+            return {"ok": False, "error": "Nenhuma imagem encontrada"}
+        
+        # Ler imagem
+        with open(images[0], 'rb') as f:
+            image_bytes = f.read()
+        
+        # Chamar IA
+        result = await fix_dish_data_with_ai(image_bytes, current_info)
+        
+        if result.get("ok"):
+            # Mesclar e salvar
+            new_info = {**current_info, **result}
+            new_info.pop("ok", None)
+            new_info["slug"] = slug
+            
+            with open(info_path, 'w', encoding='utf-8') as f:
+                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            
+            return {"ok": True, "message": f"Prato {slug} corrigido", "data": new_info}
+        else:
+            return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao corrigir prato {slug}: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/batch-fix")
+async def admin_batch_fix_dishes(request: dict):
+    """Corrige múltiplos pratos em lote usando IA"""
+    try:
+        from services.generic_ai import batch_fix_dishes
+        
+        slugs = request.get("slugs", [])
+        if not slugs:
+            return {"ok": False, "error": "Nenhum slug fornecido"}
+        
+        # Limitar a 10 por vez para não sobrecarregar
+        slugs = slugs[:10]
+        
+        result = await batch_fix_dishes(slugs, max_concurrent=2)
+        return {"ok": True, **result}
+        
+    except Exception as e:
+        logger.error(f"Erro no batch fix: {e}")
+        return {"ok": False, "error": str(e)}
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
