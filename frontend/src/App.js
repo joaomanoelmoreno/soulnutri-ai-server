@@ -63,6 +63,98 @@ function WelcomePopup({ onClose }) {
   );
 }
 
+// Componente Tutorial do Scanner Contínuo
+function ScannerTutorial({ onClose }) {
+  const [step, setStep] = useState(1);
+  const { t } = useI18n();
+  
+  const steps = [
+    {
+      icon: "📡",
+      title: t('tutorial_step1_title', 'Scanner Automático'),
+      desc: t('tutorial_step1_desc', 'O SoulNutri detecta automaticamente quando você aponta para um prato diferente e mostra as informações em tempo real.'),
+      visual: "scan-animation"
+    },
+    {
+      icon: "👆",
+      title: t('tutorial_step2_title', 'Toque para Detalhes'),
+      desc: t('tutorial_step2_desc', 'Quando o scanner identificar um prato, toque na informação que aparece para ver todos os detalhes nutricionais.'),
+      visual: "tap-animation"
+    },
+    {
+      icon: "🍽️",
+      title: t('tutorial_step3_title', 'Monte seu Prato'),
+      desc: t('tutorial_step3_desc', 'No buffet, escaneie cada item separadamente. O app soma as calorias automaticamente para você!'),
+      visual: "plate-animation"
+    }
+  ];
+  
+  const currentStep = steps[step - 1];
+  
+  const handleNext = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    } else {
+      localStorage.setItem('soulnutri_tutorial_seen', 'true');
+      onClose();
+    }
+  };
+  
+  const handleSkip = () => {
+    localStorage.setItem('soulnutri_tutorial_seen', 'true');
+    onClose();
+  };
+  
+  return (
+    <div className="tutorial-overlay" data-testid="scanner-tutorial">
+      <div className="tutorial-popup">
+        <button className="tutorial-skip" onClick={handleSkip} data-testid="tutorial-skip">
+          {t('skip', 'Pular')} →
+        </button>
+        
+        <div className="tutorial-progress">
+          {[1, 2, 3].map(s => (
+            <div key={s} className={`progress-dot ${s === step ? 'active' : ''} ${s < step ? 'done' : ''}`} />
+          ))}
+        </div>
+        
+        <div className={`tutorial-visual ${currentStep.visual}`}>
+          <span className="tutorial-icon">{currentStep.icon}</span>
+          {currentStep.visual === 'scan-animation' && (
+            <div className="scan-waves">
+              <div className="wave"></div>
+              <div className="wave"></div>
+              <div className="wave"></div>
+            </div>
+          )}
+          {currentStep.visual === 'tap-animation' && (
+            <div className="tap-finger">👆</div>
+          )}
+          {currentStep.visual === 'plate-animation' && (
+            <div className="plate-items-anim">
+              <span>🍗</span><span>🥗</span><span>🍚</span>
+            </div>
+          )}
+        </div>
+        
+        <h2 className="tutorial-title">{currentStep.title}</h2>
+        <p className="tutorial-desc">{currentStep.desc}</p>
+        
+        <div className="tutorial-actions">
+          {step > 1 && (
+            <button className="tutorial-back" onClick={() => setStep(step - 1)}>
+              ← {t('back', 'Voltar')}
+            </button>
+          )}
+          <button className="tutorial-next" onClick={handleNext} data-testid="tutorial-next">
+            {step < 3 ? t('next', 'Próximo') : t('start_using', 'Começar a usar')} →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const { t, currentLang } = useI18n();
   const [result, setResult] = useState(null);
