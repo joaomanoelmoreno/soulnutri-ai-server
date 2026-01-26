@@ -133,6 +133,64 @@ export default function Admin() {
     }
   };
 
+  // Corrigir prato individual com IA
+  const fixDishWithAI = async (slug) => {
+    setFixingSlug(slug);
+    try {
+      const res = await fetch(`${API}/admin/audit/fix-single/${slug}`, { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        alert(`✅ Prato "${slug}" corrigido com sucesso!`);
+        runAudit(); // Atualizar auditoria
+        loadDishes(); // Atualizar lista
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    } finally {
+      setFixingSlug(null);
+    }
+  };
+
+  // Corrigir pratos em lote
+  const batchFixDishes = async (problemType) => {
+    if (!auditData) return;
+    
+    const problems = auditData.problems[problemType] || [];
+    const slugs = problems.slice(0, 10).map(p => p.slug);
+    
+    if (slugs.length === 0) {
+      alert('Nenhum prato para corrigir');
+      return;
+    }
+    
+    if (!window.confirm(`Corrigir ${slugs.length} pratos com IA? Isso pode levar alguns minutos.`)) {
+      return;
+    }
+    
+    setAuditLoading(true);
+    try {
+      const res = await fetch(`${API}/admin/audit/batch-fix`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slugs })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert(`✅ Corrigidos: ${data.fixed?.length || 0}\n❌ Falhas: ${data.failed?.length || 0}\n⏭️ Pulados: ${data.skipped?.length || 0}`);
+        runAudit();
+        loadDishes();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    } finally {
+      setAuditLoading(false);
+    }
+  };
+
   const loadStats = async () => {
     try {
       const res = await fetch(`${API}/ai/status`);
