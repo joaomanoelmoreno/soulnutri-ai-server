@@ -1607,6 +1607,71 @@ async def admin_delete_dish(slug: str):
         return {"ok": False, "error": str(e)}
 
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTERNACIONALIZAÇÃO - Suporte a múltiplos idiomas (GRATUITO com LibreTranslate)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/i18n/languages")
+async def get_languages():
+    """Lista todos os idiomas suportados"""
+    try:
+        from services.translation_service import get_supported_languages
+        languages = get_supported_languages()
+        return {
+            "ok": True,
+            "languages": languages,
+            "default": "pt"
+        }
+    except Exception as e:
+        logger.error(f"Erro ao listar idiomas: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/i18n/ui/{lang}")
+async def get_ui_translations(lang: str = "pt"):
+    """Retorna traduções da interface para o idioma especificado"""
+    try:
+        from services.translation_service import get_ui_translations, SUPPORTED_LANGUAGES
+        
+        if lang not in SUPPORTED_LANGUAGES:
+            lang = "pt"
+        
+        translations = get_ui_translations(lang)
+        return {
+            "ok": True,
+            "lang": lang,
+            "translations": translations
+        }
+    except Exception as e:
+        logger.error(f"Erro ao buscar traduções: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/i18n/translate")
+async def translate_text_endpoint(
+    text: str = Form(...),
+    source: str = Form("pt"),
+    target: str = Form("en")
+):
+    """Traduz texto de um idioma para outro"""
+    try:
+        from services.translation_service import translate_text
+        
+        translated = await translate_text(text, source, target)
+        return {
+            "ok": True,
+            "original": text,
+            "translated": translated,
+            "source": source,
+            "target": target
+        }
+    except Exception as e:
+        logger.error(f"Erro na tradução: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+
 # Incluir router
 app.include_router(api_router)
 
