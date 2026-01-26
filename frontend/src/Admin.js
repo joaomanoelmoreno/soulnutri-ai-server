@@ -814,12 +814,28 @@ export default function Admin() {
 
               {auditData.problems.empty_nutrition.length > 0 && (
                 <div className="audit-problems">
-                  <h3>🟡 Pratos sem Informação Nutricional ({auditData.problems.empty_nutrition.length})</h3>
+                  <div className="problems-header">
+                    <h3>🟡 Pratos sem Informação Nutricional ({auditData.problems.empty_nutrition.length})</h3>
+                    <button 
+                      className="batch-fix-btn"
+                      onClick={() => batchFixDishes('empty_nutrition')}
+                      disabled={auditLoading}
+                    >
+                      🤖 Preencher com IA (10 pratos)
+                    </button>
+                  </div>
                   <p className="problems-note">Estes pratos não mostram calorias corretamente.</p>
                   <div className="problems-list scrollable">
                     {auditData.problems.empty_nutrition.slice(0, 20).map((p, i) => (
                       <div key={i} className="problem-item warning">
                         <span className="problem-slug">{p.nome || p.slug}</span>
+                        <button 
+                          className="ai-fix-btn small"
+                          onClick={() => fixDishWithAI(p.slug)}
+                          disabled={fixingSlug === p.slug}
+                        >
+                          {fixingSlug === p.slug ? '⏳' : '🤖'}
+                        </button>
                         <button 
                           className="edit-btn small"
                           onClick={() => {
@@ -841,12 +857,28 @@ export default function Admin() {
 
               {auditData.problems.missing_info_file.length > 0 && (
                 <div className="audit-problems">
-                  <h3>🔴 Pratos sem dish_info.json ({auditData.problems.missing_info_file.length})</h3>
-                  <p className="problems-note">Estes pratos precisam ser configurados manualmente.</p>
+                  <div className="problems-header">
+                    <h3>🔴 Pratos sem dish_info.json ({auditData.problems.missing_info_file.length})</h3>
+                    <button 
+                      className="batch-fix-btn"
+                      onClick={() => batchFixDishes('missing_info_file')}
+                      disabled={auditLoading}
+                    >
+                      🤖 Criar com IA (10 pratos)
+                    </button>
+                  </div>
+                  <p className="problems-note">Estes pratos precisam ser configurados.</p>
                   <div className="problems-list scrollable">
                     {auditData.problems.missing_info_file.slice(0, 20).map((p, i) => (
                       <div key={i} className="problem-item critical">
                         <span className="problem-slug">{p.slug}</span>
+                        <button 
+                          className="ai-fix-btn small"
+                          onClick={() => fixDishWithAI(p.slug)}
+                          disabled={fixingSlug === p.slug}
+                        >
+                          {fixingSlug === p.slug ? '⏳' : '🤖'}
+                        </button>
                       </div>
                     ))}
                     {auditData.problems.missing_info_file.length > 20 && (
