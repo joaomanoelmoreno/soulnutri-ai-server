@@ -23,7 +23,7 @@
 - Pratos do CibiSana + pratos genéricos
 
 ### URLs
-- **Preview:** https://foodscan-104.preview.emergentagent.com ✅
+- **Preview:** https://virtual-nutritionist-1.preview.emergentagent.com ✅
 - **Produção:** https://soulnutri.app.br ⏳ (aguardando redeploy)
 
 ---

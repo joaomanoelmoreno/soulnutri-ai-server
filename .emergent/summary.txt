@@ -1,5 +1,5 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta velocidade (< 500ms) e precisão (> 90%). O projeto inclui uma versão Premium e um fluxo para capturar fotos de pratos na balança do restaurante (Cibi Sana) para treinar continuamente a IA. O foco principal atual é melhorar a precisão do reconhecimento de pratos compostos (buffet), onde a precisão para itens acompanhantes ainda é baixa.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta velocidade (< 500ms) e precisão (> 90%). O projeto inclui uma versão Premium e um fluxo para capturar fotos de pratos na balança do restaurante (Cibi Sana) para treinar continuamente a IA. O foco principal atual é melhorar a precisão do reconhecimento de pratos e a confiabilidade geral do aplicativo.
 
 **PRODUCT REQUIREMENTS:**
 1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
@@ -14,143 +14,158 @@ O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutriç�
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-Um aplicativo full-stack (React + FastAPI) que enfrenta falhas de implantação recorrentes devido a dependências pesadas de IA. Para resolver isso, o agente realizou uma refatoração arquitetônica significativa, substituindo o modelo de IA local (PyTorch/OpenCLIP) por chamadas a uma API externa e gratuita da Hugging Face. O dataset contém 499 pratos. Funcionalidades como Novidades Premium, um painel de administrador e um Modo Scanner Contínuo foram implementadas, mas sua funcionalidade em produção está bloqueada pelo problema de implantação. Um sistema de internacionalização foi iniciado, com um seletor de 6 idiomas e um popup de boas-vindas, mas a tradução completa da interface ainda está pendente.
+Um aplicativo full-stack (React + FastAPI) onde a lógica de IA local original foi substituída por um sistema híbrido que usa a API Gemini Vision para identificar o nome de um prato e, em seguida, busca os detalhes em um índice local. Esta abordagem resolveu os problemas de implantação, mas introduziu sérios problemas de lentidão (~3-5s por reconhecimento) e baixa precisão, que são as principais queixas do usuário. O fluxo de Scanner Contínuo foi desativado a pedido do usuário em favor de um fluxo mais simples de toque para fotografar. A interface foi revisada várias vezes para diferenciar a visualização de um item individual (modo buffet) da visualização consolidada do prato completo (modo mesa), mas ainda apresenta bugs e inconsistências.
 
 **Last working item**:
--   **Last item agent was working**: Finalizando a migração da lógica de IA de um modelo PyTorch local para uma API de inferência externa da Hugging Face. Isso foi feito para eliminar a dependência do PyTorch, que causava erros de CUDA e timeouts durante o build em produção. O agente removeu as dependências (, , ) do , criou um novo serviço  para chamar a API e ajustou o código existente para usar este novo serviço.
--   **Status**: USER VERIFICATION PENDING
--   **Agent Testing Done**: Y (Localmente. O agente verificou que o servidor inicia sem erros e que os endpoints  e  respondem corretamente após a refatoração.)
--   **Which testing method agent to use?**: O usuário precisa iniciar um novo Replace Deployment. Após a conclusão, o próximo agente deve usar o  para verificar a URL de produção e confirmar que a funcionalidade de reconhecimento de imagem está operacional através da nova API.
--   **User Testing Done**: N (O usuário estava prestes a iniciar um novo deploy com as últimas alterações que removeram o PyTorch.)
+-   **Last item agent was working**: Investigando uma série de bugs críticos relatados pelo usuário após o último teste. O problema mais grave era que os itens não estavam sendo adicionados ao prato, e o contador de calorias não estava sendo atualizado, quebrando a funcionalidade principal do aplicativo. O agente também reconheceu problemas com a precisão da IA e o design da tela Premium.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N (O agente estava no meio da depuração quando a sessão terminou.)
+-   **Which testing method agent to use?**:  para verificar o endpoint  e garantir que ele retorne dados consistentes.  para validar exaustivamente o fluxo de adicionar item ao prato no , verificando a atualização do estado (, ) e a renderização correta do contador de calorias e da lista de itens.
+-   **User Testing Done**: Y (O usuário descobriu os bugs atuais durante os testes.)
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) Falha na implantação em produção.
--   Issue 2: (P1) Internacionalização (i18n) incompleta.
--   Issue 3: (P1) UX para pratos de buffet precisa ser finalizada e validada.
--   Issue 4: (P1) Botão de Check-in pode ainda estar visível.
--   Issue 5: (P2) O aplicativo continua travando em dispositivos móveis.
--   Issue 6: (P2) A paleta de cores da tela Premium precisa ser padronizada.
--   Issue 7: (P2) Implementar estratégias de upsell para a versão Premium (ícones de cadeado).
+-   Issue 1: (P0) O fluxo principal de montar o prato está quebrado.
+-   Issue 2: (P0) A precisão da IA é muito baixa e não confiável.
+-   Issue 3: (P1) Vários problemas de UI/UX persistem.
+-   Issue 4: (P1) O modo Premium não está funcionando corretamente e seu design precisa de revisão.
+-   Issue 5: (P2) O aplicativo trava ou a câmera não abre em dispositivos móveis.
+-   Issue 6: (P2) A internacionalização (i18n) está incompleta.
 
 **Issues Detail**:
--   **Issue 1: Falha na implantação em produção.**
-    -   **Attempted fixes**: Múltiplas tentativas de forçar o modo CPU no PyTorch falharam ou resultaram em timeouts de build (>20 min). A solução final foi uma refatoração completa para remover o PyTorch e usar a API de inferência da Hugging Face.
+-   **Issue 1: O fluxo principal de montar o prato está quebrado.**
+    -   **Attempted fixes**: Nenhuma correção foi implementada ainda.
     -   **Next debug checklist**:
-        1.  Confirmar com o usuário se o último deploy (com a API da Hugging Face) foi bem-sucedido.
-        2.  Se sim, testar exaustivamente a funcionalidade de scan na URL de produção para garantir que a API externa está funcionando e retornando resultados consistentes.
-        3.  Se não, analisar os novos logs de deploy. O erro não será mais relacionado a CUDA/PyTorch; procurar por erros de rede, dependências ausentes () ou problemas de configuração da API da Hugging Face.
-    -   **Why fix this issue and what will be achieved with the fix?**: É um bloqueador crítico. O aplicativo está inutilizável em produção. A correção tornará o aplicativo mais leve, rápido de implantar e estável.
+        1.  Em , investigar a função .
+        2.  Verificar por que a chamada  não está atualizando o estado  corretamente.
+        3.  Analisar o  que calcula  e garantir que ele seja acionado quando  for (corretamente) atualizado.
+        4.  Verificar se existe alguma lógica condicional específica para o modo Premium que possa estar causando o bug.
+    -   **Why fix this issue and what will be achieved with the fix?**: É um bloqueador crítico. O aplicativo é inútil se os usuários não conseguem montar seu prato.
     -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: Y
+    -   **Is recurring issue?**: Y (Regressão)
     -   **Should Test frontend/backend/both after fix?**: both
 
--   **Issue 2: Internacionalização (i18n) incompleta.**
-    -   **Attempted fixes**: Foi criado um serviço de tradução estática (), um seletor de idiomas na UI e um popup de boas-vindas. Alguns textos foram substituídos usando um hook , mas muitos textos fixos permanecem.
+-   **Issue 2: A precisão da IA é muito baixa e não confiável.**
+    -   **Attempted fixes**: A arquitetura da IA foi alterada várias vezes. A solução atual (Gemini para nome -> busca por texto no índice local) é lenta e propensa a erros em cascata, especialmente quando o Gemini erra o nome ou a correspondência de texto é fraca. O agente tentou garantir que os metadados fossem lidos dos arquivos , mas isso não resolveu o problema fundamental.
     -   **Next debug checklist**:
-        1.  Auditar todos os componentes do frontend (, , etc.) para encontrar textos hardcoded em português.
-        2.  Adicionar chaves de tradução para todos os textos encontrados no .
-        3.  Substituir os textos hardcoded por chamadas à função de tradução (ex: ).
-        4.  Considerar como traduzir conteúdo dinâmico vindo do backend (nomes de pratos, ingredientes).
-    -   **Why fix this issue and what will be achieved with the fix?**: O usuário priorizou esta tarefa. Uma funcionalidade parcialmente implementada prejudica a experiência do usuário.
+        1.  Simplificar a lógica em . Em vez do fluxo complexo atual, usar o nome do prato identificado pelo Gemini para buscar diretamente seus metadados ( e ).
+        2.  Se a confiança do Gemini for alta, retorne esses dados diretamente. Isso elimina a etapa de correspondência de texto e busca de embedding visual, que é a principal fonte de erros.
+        3.  Garantir que o painel  esteja totalmente funcional para que o usuário possa corrigir os dados de ingredientes diretamente na fonte ().
+    -   **Why fix this issue and what will be achieved with the fix?**: A principal proposta de valor do aplicativo é fornecer informações precisas sobre os alimentos. Sem confiança, o aplicativo falha.
     -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: backend
 
 **In progress Task List**:
--   **Task 1: Validar a migração para a Hugging Face API em produção.**
-    -   **Where to resume**: Aguardar o resultado do deploy do usuário e, em seguida, testar a funcionalidade na URL de produção.
-    -   **What will be achieved with this?**: Confirmação de que o principal bloqueador técnico foi resolvido, resultando em uma aplicação estável e leve.
-    -   **Status**: USER VERIFICATION PENDING
+-   **Task 1: Depurar e corrigir o fluxo principal e a precisão da IA.**
+    -   **Where to resume**: Começar pelo bug de adicionar ao prato em . Em seguida, abordar a lógica da IA em .
+    -   **What will be achieved with this?**: Tornar o aplicativo funcional e mais confiável, abordando as duas principais queixas do usuário.
+    -   **Status**: IN PROGRESS
     -   **Should Test frontend/backend/both after fix?**: both
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   (P1) Implementar um popup ou overlay explicativo que ensine os usuários a usar o novo Modo Scanner Contínuo.
-    -   (P1) Adicionar indicadores visuais (ex: ícones de cadeado) em recursos Premium para incentivar o upsell.
-    -   (P1) Padronizar a paleta de cores da área Premium.
-    -   (P2) Validar e garantir que o painel Admin () permite edição completa dos pratos, conforme solicitado pelo usuário.
+    -   (P1) Corrigir os problemas de UI/UX restantes: adicionar botão Voltar onde falta, implementar a funcionalidade da galeria, melhorar o texto de compartilhamento.
+    -   (P1) Padronizar a paleta de cores da área Premium para corresponder ao tema principal do aplicativo.
+    -   (P1) Adicionar ícones de cadeado em recursos Premium para incentivar o upsell.
+    -   (P2) Completar a tradução de todos os textos hardcoded na interface (i18n).
 -   **Future Tasks:**
     -   Implementar o sistema de pagamentos In-App Purchase (Stripe/Apple/Google).
     -   Implementar um sistema de trial de 7 dias.
-    -   Preparar todos os assets (ícones, screenshots, textos) para a submissão nas lojas de aplicativos.
+    -   Preparar todos os assets para a submissão nas lojas de aplicativos.
 
 **Completed work in this session**
--   **Resolução do Bloqueio de Deploy (Refatoração):** Substituída a pesada dependência local do PyTorch pela API de inferência da Hugging Face, o que deve resolver os erros de CUDA e os longos tempos de build.
--   **Criação do Endpoint de Health Check:** Adicionado um endpoint  no backend para atender aos requisitos de implantação do Kubernetes.
--   **Implementação Inicial de Internacionalização (i18n):**
-    -   Criado um sistema de tradução para 6 idiomas (PT, EN, ES, FR, DE, ZH).
-    -   Adicionado um popup de boas-vindas para seleção de idioma na primeira visita.
-    -   Implementado um seletor de idiomas no cabeçalho da aplicação.
--   **Análise do Painel de Administração:** Verificado que a funcionalidade de edição de pratos no painel  está implementada.
+-   Resolvido o bloqueador crítico de implantação, permitindo que o aplicativo fique online.
+-   Implementado um tutorial interativo para o fluxo de reconhecimento.
+-   Desativado o Modo Scanner Contínuo a pedido do usuário, revertendo para um fluxo mais simples de toque para fotografar.
+-   Implementado um sistema de visualização com duas etapas (Buffet e Mesa) e uma tela de resumo consolidado para pratos com múltiplos itens.
+-   Utilizado o  para validar os fluxos principais em diversos cenários de uso.
+-   Realizadas várias correções de UI com base no feedback do usuário (ícones, textos, cores).
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1: O aplicativo continua travando em dispositivos móveis.**
-    -   **Debug checklist**: Pedir ao usuário para descrever as circunstâncias exatas do travamento. Usar o  com um viewport móvel para testes de estresse. Investigar possíveis vazamentos de memória na lógica da câmera ( em ).
-    -   **Why to solve this issue and what will be achieved with this?**: A estabilidade em dispositivos móveis é crítica para a usabilidade do app.
+-   **Issue 1: A funcionalidade da Galeria não foi implementada.**
+    -   **Debug checklist**: O botão Galeria existe na UI, mas não há lógica associada a ele em  para salvar ou visualizar imagens. A função precisa ser criada.
+    -   **Why to solve this issue and what will be achieved with this?**: Funcionalidade solicitada pelo usuário.
+    -   **Should Test frontend/backend/both after fix**: frontend
+    -   **Is recurring issue?**: Y
+-   **Issue 2: O aplicativo trava em dispositivos móveis.**
+    -   **Debug checklist**: O agente adicionou um ouvinte de visibilidade da página, mas o problema persiste. É provável que haja um vazamento de memória relacionado ao stream da câmera. Investigar o ciclo de vida do componente da câmera em  e garantir que todos os recursos () sejam interrompidos corretamente no desmonte do componente.
+    -   **Why to solve this issue and what will be achieved with this?**: A usabilidade em dispositivos móveis é fundamental para o sucesso do aplicativo.
     -   **Should Test frontend/backend/both after fix**: frontend
     -   **Is recurring issue?**: Y
 
 **Known issue recurrence from previous fork**
--   **Deployment Failure**: Principal problema desta sessão, que evoluiu de um simples erro de CUDA para um problema de timeout de build, forçando uma refatoração arquitetônica.
--   **App Stability**: O problema de travamentos em dispositivos móveis persiste e não foi abordado.
+-   **AI Accuracy**: Este é o problema central e persistente do projeto. A dificuldade mudou de fazer funcionar para fazer funcionar com precisão.
+-   **App Stability on Mobile**: O problema de travamentos e da câmera não abrir em dispositivos móveis foi relatado em sessões anteriores e continua sem uma solução definitiva.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Migração para API Externa**: A principal mudança foi abandonar o processamento de IA local. O aplicativo agora envia a imagem para a API de inferência da Hugging Face e recebe o vetor de embedding em troca. Isso resolve os problemas de ambiente e dependências pesadas.
--   **Internacionalização Estática**: O sistema de i18n implementado usa um contexto React que busca um dicionário de traduções de um endpoint no backend. O idioma selecionado é salvo no  do navegador para persistência.
+-   **Hybrid AI Model**: O sistema de reconhecimento atual usa Gemini Vision para obter o nome do prato e, em seguida, realiza uma busca local. Este método é lento e impreciso, sendo a principal fonte de insatisfação do usuário.
+-   **Frontend Monolith**: O arquivo  tornou-se excessivamente grande e complexo, dificultando a depuração e manutenção. Ele gerencia todo o estado da aplicação.
+-   **Filesystem as DB**: Os dados dos pratos são armazenados em uma mistura de um dicionário Python e arquivos , acessados pelo backend.
 
 **key DB schema**
--   Sem alterações. O banco de dados de pratos continua baseado no sistema de arquivos () e os usuários premium em um arquivo JSON ().
+-   O projeto não utiliza um banco de dados tradicional.
+-   **Dishes**: Armazenados como arquivos em . Cada subdiretório representa um prato e contém imagens e um arquivo  com metadados (ingredientes, benefícios, etc.).
+-   **Premium Users**: Gerenciados através de .
 
 **All files of reference**
--   : Ponto central da refatoração.
--   : Nova lógica de IA.
--   : Arquivo crítico que teve as dependências de IA removidas.
--   : Modificado para as novas rotas.
--   : Contém a maior parte das novas funcionalidades de UI (i18n, popup).
--   : Arquivo que gerencia o estado da linguagem.
--   : Contém todos os textos traduzidos da UI.
+-   : Arquivo mais crítico. Contém o bug que impede a adição de itens ao prato.
+-   : Contém a lógica de IA que precisa ser simplificada para melhorar a precisão.
+-   : Ponto de entrada da API.
+-   : Painel para o usuário editar os dados dos pratos.
+-   : Último relatório do agente de testes.
+
+**Areas that need refactoring**:
+-    é um monólito com mais de 2000 linhas e precisa urgentemente ser dividido em componentes menores e mais gerenciáveis (ex: , , ). Isso é crucial para a estabilidade e manutenibilidade do projeto.
+-   A lógica de IA no backend é excessivamente complexa e propensa a erros. O fluxo  deve ser substituído por um caminho mais direto para melhorar a precisão e a velocidade.
+
+**key api endpoints**
+-   : Endpoint principal que recebe uma imagem e retorna a análise do prato.
+-   : Salva as alterações feitas no painel de administração.
+-   : Retorna as traduções da UI.
 
 **Critical Info for New Agent**
--   **PRIORIDADE MÁXIMA É VALIDAR O DEPLOY**: A primeira e única tarefa inicial é confirmar se a última implantação, que usa a API da Hugging Face, foi bem-sucedida. O aplicativo está inutilizável até que isso seja resolvido. Não inicie nenhuma outra tarefa antes de verificar a URL de produção.
--   **A CAUSA DO ERRO MUDOU**: Se a implantação falhar novamente, o erro **não será** relacionado a CUDA. A nova arquitetura é muito mais simples. Investigue os logs de deploy em busca de erros de rede, dependências ausentes (como ) ou configuração incorreta da API.
--   **FOCO PÓS-DEPLOY**: Assim que o aplicativo estiver estável em produção, as prioridades são: 1) Completar a internacionalização de toda a interface, e 2) Finalizar e validar a UX do Modo Scanner Contínuo com o usuário.
+-   A prioridade máxima (P0) é consertar os bugs que impedem o usuário de montar um prato (itens não sendo adicionados, calorias não somando). O aplicativo está quebrado.
+-   A segunda maior prioridade (P0) é melhorar drasticamente a precisão da IA. A abordagem atual não é viável. Proponha uma simplificação da lógica no backend para confiar mais diretamente no resultado do Gemini, em vez do fluxo de busca complexo.
+-   O usuário rejeitou o Modo Scanner Contínuo. Mantenha o fluxo simples de toque para fotografar.
+-   O arquivo  é um grande risco técnico. Seja extremamente cuidadoso ao editá-lo e planeje sugerir uma refatoração em componentes menores como uma tarefa futura essencial.
 
 **documents and test reports created in this job**
-- N/A
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário:** Informa que o deploy está demorando 19 minutos.
-2.  **Agente:** Sugere que o build travou e recomenda cancelar e tentar de novo.
-3.  **Usuário:** Conseguiu fazer o redeploy, mas reclamou do consumo de créditos.
-4.  **Usuário:** Informa que o app não roda e a tela está em branco, questionando o reembolso.
-5.  **Agente:** Inicia investigação da tela em branco e consulta o suporte sobre o reembolso.
-6.  **Agente:** Confirma que o erro CUDA ainda persiste e que o deploy anterior não incluiu as correções. Propõe a correção definitiva forçando a versão CPU do PyTorch no .
-7.  **Usuário:** Informa que o novo deploy está demorando 15, depois 21 minutos.
-8.  **Agente:** Propõe a alternativa de usar uma API externa (Hugging Face) para tornar o deploy mais rápido e leve.
-9.  **Usuário:** Informa que o deploy falhou novamente e concorda em seguir com a alternativa da API externa.
-10. **Agente:** Implementa a refatoração para a API da Hugging Face, confirma que funciona localmente e pede para o usuário tentar um novo deploy, explicando que agora deve ser muito mais rápido.
+1.  **Usuário**: Testou o fluxo e identificou que o app reconhece itens únicos, mas ao montar um prato, ele analisa apenas o último item e o fluxo de feedback (corrigir?) é confuso.
+2.  **Usuário**: Esclarece o fluxo desejado: uma vista rápida durante a montagem no buffet e uma vista completa e consolidada na mesa.
+3.  **Usuário**: Reporta um erro no link de preview.
+4.  **Usuário**: Aponta múltiplos problemas: botão voltar faltando, reconhecimento incorreto de pratos, informações para decisão faltando, duplicação de alérgenos, falta de informações (notícias, etc.) e pergunta se o fluxo foi programado corretamente.
+5.  **Usuário**: Reclama que a separação entre buffet e mesa não foi feita como solicitado.
+6.  **Usuário**: Enfatiza a necessidade de um botão voltar em todas as telas para permitir ao usuário desistir de uma ação.
+7.  **Usuário**: Mostra uma captura de tela onde um modal de confirmação (Seu prato está completo?) aparece indevidamente, antes mesmo de o usuário ver as informações do prato.
+8.  **Usuário**: Pede para o agente testar o fluxo em vários cenários (à la carte, lanchonete, etc.) para garantir que seja versátil.
+9.  **Usuário**: Após o relatório do agente de testes, relata uma longa lista de falhas graves: IA ainda errando ingredientes, alérgenos não exibidos, itens faltando na análise, tela verde conflitante, e que o app não está confiável para publicação. Pergunta se pode revisar os dados no admin.
+10. **Usuário**: Concorda que informação errada é um problema sério, reforçando a necessidade de depurar a IA.
+11. **Usuário**: (Mais recente) Reporta bugs críticos: a IA continua errando ingredientes básicos, itens não são adicionados ao prato (e o contador de calorias não soma), o modo premium não funciona direito e tem cores erradas, e a IA precisa ser mais rápida e eficiente para o ambiente do Cibi Sana.
 
 **Project Health Check:**
--   **Broken**: A implantação de produção está quebrada. A última refatoração, que move a lógica de IA para uma API externa, é a tentativa atual de correção e aguarda verificação.
+-   **Broken**: A funcionalidade principal de montar pratos está quebrada (itens não são adicionados ao estado, calorias não são somadas). O modo Premium está disfuncional. A precisão da IA está em um nível inaceitável para o usuário.
 -   **Mocked**: N/A
 
 **3rd Party Integrations**
--   **Hugging Face Inference API (NOVO):** Usada para a funcionalidade principal de embedding de imagens. Utiliza um endpoint gratuito, sem necessidade de chave de API.
--   **Gemini Vision:** Usado anteriormente para tarefas em lote de geração de metadados. (via  com ).
+-   **Gemini Vision**: Utilizado através da biblioteca  com a . É o componente central (e problemático) do sistema de reconhecimento de imagem.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO (mas o  foi usado para diagnosticar erros de implantação).
+-   **Testing agent used after significant changes**: YES, o agente de testes foi usado, mas não detectou os bugs de regressão críticos (itens não sendo adicionados ao prato) que o usuário encontrou logo em seguida.
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: N/A
--   **Known regressions**: A funcionalidade de IA, que funcionava no ambiente de preview, está quebrada em produção devido aos problemas de deploy.
+-   **Test files created**: []
+-   **Known regressions**: A funcionalidade de adicionar itens ao prato e o contador de calorias estão quebrados.
 
 **Credentials to test flow:**
--   O acesso ao painel de administração em  não requer autenticação.
+-   O painel de administração em  não requer autenticação.
 -   O acesso Premium pode ser testado concedendo-o a um PIN através do painel de administração.
 
 **What agent forgot to execute**
--   O agente não realizou uma auditoria completa de todos os textos hardcoded na interface após implementar a internacionalização, resultando em uma tradução parcial.
--   Após a refatoração para a API da Hugging Face, o agente não adicionou uma verificação de erro robusta para a chamada de rede, o que pode causar falhas silenciosas se a API estiver indisponível.</analysis>
+-   O agente não testou o fluxo de ponta a ponta após as últimas alterações na UI, o que permitiu que a regressão crítica (itens não sendo adicionados ao prato) passasse despercebida.
+-   A funcionalidade do botão Galeria nunca foi implementada, apesar de o botão existir na UI.
+-   A adição do botão Voltar ainda estava incompleta em algumas telas, como apontado pelo usuário.</analysis>
