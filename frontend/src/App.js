@@ -718,12 +718,13 @@ function App() {
     }
   }, [stream]);
 
-  // Loop de detecção de mudança (verifica a cada 500ms se imagem mudou)
+  // Loop de detecção de mudança (verifica a cada 1.5s se imagem mudou)
+  // Intervalo maior para reduzir requisições e dar tempo para IA processar
   useEffect(() => {
     if (scannerMode && stream && !result && !loading) {
-      scanIntervalRef.current = setInterval(performScan, 500);
-      // Primeiro scan após 300ms
-      setTimeout(performScan, 300);
+      scanIntervalRef.current = setInterval(performScan, 1500);
+      // Primeiro scan após 500ms
+      setTimeout(performScan, 500);
     }
     
     return () => {
