@@ -286,6 +286,7 @@ UI_TRANSLATIONS = {
         "myth": "谣言",
         "partial": "部分正确",
         "camera_error": "相机不可用",
+        "permission_denied": "权限被拒绝。点击以允许。",
         "try_again": "重试",
         "vegan": "纯素",
         "vegetarian": "素食",
