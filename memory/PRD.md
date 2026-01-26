@@ -1,7 +1,7 @@
 # SoulNutri - Product Requirements Document
 
-**Última atualização:** 25 Janeiro 2026
-**Versão:** 2.0
+**Última atualização:** 26 Janeiro 2026
+**Versão:** 2.1
 
 ---
 
@@ -15,148 +15,122 @@
 
 ---
 
-## 2. Requisitos Principais
+## 2. Status Atual
 
-### Performance
-- Identificação < 500ms
-- Precisão > 90% para pratos únicos cadastrados
-- Funcionar offline (PWA)
+### Dataset
+- **499 pratos** cadastrados
+- **1806+ imagens** indexadas
+- Pratos do CibiSana + pratos genéricos
 
-### Funcionalidades Core (FREE)
+### URLs
+- **Preview:** https://food-radar-5.preview.emergentagent.com ✅
+- **Produção:** https://soulnutri.app.br ❌ (erro CUDA pendente)
+
+---
+
+## 3. BLOQUEADOR CRÍTICO - Erro de Deploy
+
+### Problema
+```
+libcublas.so.*[0-9] not found in the system path
+```
+
+### Causa
+PyTorch está tentando usar bibliotecas CUDA/GPU, mas o ambiente Kubernetes de produção NÃO tem GPU.
+
+### Correções Aplicadas (preview funciona)
+- `/app/backend/ai/embedder.py` - adicionado `os.environ["CUDA_VISIBLE_DEVICES"] = ""`
+
+### Ainda Necessário
+- Forçar CPU em `/app/backend/ai/__init__.py` ANTES de qualquer import
+- Verificar todos os arquivos que importam torch
+
+---
+
+## 4. Funcionalidades Implementadas
+
+### Core (FREE)
 - ✅ Identificação de pratos por imagem
 - ✅ Nome, categoria, ingredientes
 - ✅ Informações nutricionais básicas
 - ✅ Alertas de alérgenos
-- ✅ Modo multi-item (buffet)
+- ✅ **Modo Scanner Contínuo** (detecta mudança de imagem)
 
-### Funcionalidades Premium (R$14,90/mês)
+### Premium (R$14,90/mês)
 - ✅ Contador de calorias diário
-- ✅ Alertas personalizados (alergias cadastradas)
+- ✅ Alertas personalizados
 - ✅ Perfil nutricional completo
-- ✅ Check-in de Refeição (modo buffet guiado)
 - ✅ Novidades/Notícias em tempo real
 - ✅ "Verdade ou Mito" educativo
-- ⏳ Histórico semanal com gráficos
-- ⏳ Interação com medicamentos
-
----
-
-## 3. Status Atual
-
-### Dataset
-- **488 pratos** cadastrados
-- **1747+ imagens** indexadas
-- Pratos do CibiSana + pratos genéricos
-
-### Tecnologia
-- Frontend: React (PWA)
-- Backend: FastAPI + MongoDB
-- IA: OpenCLIP (embeddings) + Gemini Vision (fallback)
-- Cache: Sistema de cache para reduzir chamadas API
-
-### URL Atual
-https://food-radar-5.preview.emergentagent.com
-
----
-
-## 4. O que foi Implementado
-
-### Sessão 25/01/2026
-- [x] Processamento de 344 novas fotos do WeTransfer
-- [x] Check-in de Refeição (Premium) - modo buffet guiado
-- [x] Sistema de Novidades Premium - alertas em tempo real
-- [x] Painel Admin - gerenciamento de novidades
-- [x] Logo colorida atualizada no PWA
-
-### Sessões Anteriores
-- [x] Sistema de reconhecimento otimizado (v5)
-- [x] Limpeza e consolidação do dataset
-- [x] Regeneração de metadados via Gemini
-- [x] Sistema Premium completo
-- [x] PWA com instalação offline
+- ✅ **Sistema de liberação manual** (Admin > Aba Premium)
 
 ---
 
 ## 5. Backlog Priorizado
 
-### P0 - Crítico (Próximas Semanas)
-- [ ] Teste no CibiSana com clientes reais
-- [ ] QR codes para mesas
-- [ ] Ajustes baseados em feedback
+### P0 - BLOQUEADOR
+- [ ] **Resolver erro CUDA no deploy** - forçar CPU em todos os imports de torch
 
-### P1 - Importante (Próximo Mês)
-- [ ] Criar contas Apple Developer e Google Play
-- [ ] Preparar assets para lojas (ícones, screenshots)
-- [ ] Integrar sistema de pagamentos (In-App Purchase)
-- [ ] Publicar nas lojas
+### P1 - Importante
+- [ ] Indicadores Premium (🔒 cadeados) para versão Free
+- [ ] Trial 7 dias grátis
+- [ ] Padronizar cores da tela Premium
 
-### P2 - Desejável (Futuro)
+### P2 - Desejável
+- [ ] Verificar internacionalização (24 idiomas)
 - [ ] Histórico semanal com gráficos
 - [ ] Fluxo de coleta de dados na balança (OCR)
-- [ ] Melhorar reconhecimento de pratos múltiplos
-- [ ] Treinar modelo YOLOv8 customizado
 
 ---
 
-## 6. Problemas Conhecidos
-
-### Resolvido
-- ✅ Precisão de pratos únicos (agora 95-100%)
-- ✅ Dataset desorganizado (agora limpo e padronizado)
-
-### Em Aberto
-- ⚠️ Reconhecimento de múltiplos itens (acompanhamentos) ainda desafiador
-- ⚠️ Travamentos em alguns dispositivos móveis (não investigado)
-
----
-
-## 7. Plano de Lançamento
+## 6. Plano de Lançamento
 
 ### Fase 1: CibiSana (Atual)
-- Foco: Validação com clientes reais
+- Foco: Validação com clientes reais no buffet
 - Meta: 100 downloads, 10 assinantes Premium
 - Tática: QR codes nas mesas + garçons apresentando
 
-### Fase 2: Boca a Boca (Meses 2-3)
-- Programa de indicação
-- Depoimentos de clientes
-- Parcerias com nutricionistas
-
-### Fase 3: Lojas (Meses 2-4)
+### Fase 2: Lojas (Após validação)
 - Apple App Store ($99/ano)
 - Google Play ($25 único)
 
-### Fase 4: Escala (Meses 4-6)
-- Outros restaurantes
-- Campanhas pagas
-- Influenciadores
+---
+
+## 7. Fluxo de Uso no Buffet
+
+```
+Cliente no buffet → Prato na mão + Celular na outra
+→ Aponta para item → Scanner detecta mudança
+→ Info aparece automaticamente (ZERO toques!)
+→ Decide (pega ou não) → Próximo item
+→ Pesa prato → Almoça
+```
+
+### Modo Scanner Contínuo
+- Verifica mudança de imagem a cada 500ms
+- Só faz reconhecimento se mudança > 15%
+- Overlay com info aparece sobre a câmera
+- Toque para ver detalhes completos
 
 ---
 
-## 8. Preços
+## 8. Arquivos Importantes
 
-| Plano | Preço |
-|-------|-------|
-| FREE | R$0 |
-| Premium Mensal | R$14,90/mês |
-| Premium Anual | R$99,90/ano |
-| Promoção Lançamento | R$9,90/mês (3 meses) |
-
----
-
-## 9. Integrações
-
-- **Gemini Vision:** Análise de imagens e geração de metadados
-- **OpenCLIP:** Embeddings para busca por similaridade
-- **MongoDB:** Armazenamento de dados
-- **Emergent Platform:** Hospedagem e deploy
-
----
-
-## 10. Arquivos Importantes
-
-- `/app/backend/services/hybrid_identify_v5.py` - Lógica de reconhecimento
-- `/app/datasets/organized/` - Dataset de pratos
+- `/app/backend/ai/embedder.py` - Modelo OpenCLIP (CORRIGIR CUDA)
+- `/app/backend/ai/__init__.py` - Inicialização (FORÇAR CPU AQUI)
+- `/app/backend/server.py` - API principal
 - `/app/frontend/src/App.js` - Interface principal
-- `/app/frontend/src/CheckinRefeicao.jsx` - Check-in de refeição
-- `/app/memory/BUSINESS_PLAN.md` - Plano de negócios completo
+- `/app/frontend/src/Admin.js` - Painel admin (inclui aba Premium)
+
+---
+
+## 9. Credenciais para Teste
+
+- **Admin:** https://soulnutri.app.br/admin
+- **Premium liberado via:** Admin > Aba ⭐ Premium > Liberar
+
+---
+
+## 10. Contatos
+
+- **Domínio:** soulnutri.app.br (configurado no Registro.br)
