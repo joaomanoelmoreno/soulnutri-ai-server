@@ -1,7 +1,7 @@
 # SoulNutri - Product Requirements Document
 
 **Última atualização:** 26 Janeiro 2026
-**Versão:** 2.2
+**Versão:** 2.3
 
 ---
 
@@ -28,22 +28,11 @@
 
 ---
 
-## 3. ✅ CORREÇÃO APLICADA - Erro de Deploy RESOLVIDO
+## 3. ✅ CORREÇÕES APLICADAS
 
-### Problema Original
-```
-libcublas.so.*[0-9] not found in the system path
-```
-
-### Correção Implementada (26/01/2026)
-- `/app/backend/ai/__init__.py` - Forçar modo CPU ANTES de qualquer import:
-  - `os.environ["CUDA_VISIBLE_DEVICES"] = ""`
-  - `os.environ["USE_CUDA"] = "0"`
-  - `os.environ["FORCE_CPU"] = "1"`
-
-### Status
-- ✅ Preview funcionando sem erros
-- ⏳ **Aguardando REDEPLOY** (usar "Replace Deployment" - SEM custos)
+### Erro de Deploy CUDA - RESOLVIDO
+- `/app/backend/ai/__init__.py` - Forçar modo CPU ANTES de qualquer import
+- **Status:** Aguardando REDEPLOY (usar "Replace Deployment" - SEM custos)
 
 ---
 
@@ -55,7 +44,8 @@ libcublas.so.*[0-9] not found in the system path
 - ✅ Informações nutricionais básicas
 - ✅ Alertas de alérgenos
 - ✅ **Modo Scanner Contínuo** (detecta mudança de imagem)
-- ✅ **Internacionalização** (6 idiomas: PT, EN, ES, FR, DE, ZH)
+- ✅ **Internacionalização** (6 idiomas)
+- ✅ **Popup de Boas-vindas** com seleção de idioma
 
 ### Premium (R$14,90/mês)
 - ✅ Contador de calorias diário
@@ -65,7 +55,7 @@ libcublas.so.*[0-9] not found in the system path
 - ✅ "Verdade ou Mito" educativo
 - ✅ **Sistema de liberação manual** (Admin > Aba Premium)
 
-### Internacionalização (NOVO - 26/01/2026)
+### Internacionalização (26/01/2026)
 - ✅ 🇧🇷 Português (padrão)
 - ✅ 🇺🇸 English
 - ✅ 🇪🇸 Español
@@ -73,6 +63,14 @@ libcublas.so.*[0-9] not found in the system path
 - ✅ 🇩🇪 Deutsch
 - ✅ 🇨🇳 中文 (Mandarim)
 - **Tecnologia:** LibreTranslate (GRATUITO e open-source)
+- **Seletor de idioma** no header
+- **Popup de boas-vindas** para novos usuários
+
+### Painel Admin (/admin)
+- ✅ Gerenciamento de pratos (criar, editar, excluir)
+- ✅ Edição completa: nome, categoria, ingredientes, nutrição, benefícios, riscos
+- ✅ Aba Novidades para informações em tempo real
+- ✅ Aba Premium para liberar/bloquear acesso manualmente
 
 ---
 
@@ -90,6 +88,7 @@ libcublas.so.*[0-9] not found in the system path
 
 ### P2 - Desejável
 - [x] ~~Internacionalização~~ ✅ IMPLEMENTADO (6 idiomas)
+- [x] ~~Popup de boas-vindas~~ ✅ IMPLEMENTADO
 - [ ] Histórico semanal com gráficos
 - [ ] Fluxo de coleta de dados na balança (OCR)
 
@@ -128,12 +127,15 @@ Cliente no buffet → Prato na mão + Celular na outra
 
 ## 8. Arquivos Importantes
 
+### Backend
 - `/app/backend/ai/__init__.py` - Inicialização (FORÇAR CPU) ✅
 - `/app/backend/ai/embedder.py` - Modelo OpenCLIP
 - `/app/backend/server.py` - API principal
-- `/app/backend/services/translation_service.py` - Internacionalização (NOVO)
-- `/app/frontend/src/App.js` - Interface principal
-- `/app/frontend/src/I18nContext.js` - Contexto de idiomas (NOVO)
+- `/app/backend/services/translation_service.py` - Internacionalização
+
+### Frontend
+- `/app/frontend/src/App.js` - Interface principal + WelcomePopup
+- `/app/frontend/src/I18nContext.js` - Contexto de idiomas
 - `/app/frontend/src/Admin.js` - Painel admin
 
 ---
