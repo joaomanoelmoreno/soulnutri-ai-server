@@ -1346,3 +1346,60 @@ iframe[src*="emergent"], div[style*="Made with"] {
   border-radius: 15px;
   font-size: 0.8rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BOTÃO VOLTAR
+   ═══════════════════════════════════════════════════════════════════ */
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Box de combinações */
+.info-box.combo {
+  border-left: 3px solid #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.combo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.combo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.combo-emoji {
+  font-size: 1.2rem;
+}
+
+.combo-item strong {
+  font-size: 0.9rem;
+}
+
+.combo-item small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+/* Ajuste no total de calorias do prato */
+.plate-total-cal small {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
