@@ -33,6 +33,7 @@ export default function Admin() {
     loadDishes();
     loadStats();
     loadNovidades();
+    loadPremiumUsers();
   }, []);
 
   const loadDishes = async () => {
@@ -46,6 +47,67 @@ export default function Admin() {
       console.error('Erro ao carregar pratos:', e);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadPremiumUsers = async () => {
+    try {
+      const res = await fetch(`${API}/admin/premium/users`);
+      const data = await res.json();
+      if (data.ok) {
+        setPremiumUsers(data.users || []);
+      }
+    } catch (e) {
+      console.error('Erro ao carregar usuários Premium:', e);
+    }
+  };
+
+  const liberarPremium = async () => {
+    if (!premiumNome.trim()) {
+      alert('Digite o nome do usuário');
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append('nome', premiumNome);
+      formData.append('dias', premiumDias);
+      
+      const res = await fetch(`${API}/admin/premium/liberar`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert(`✅ Premium liberado para ${premiumNome} por ${premiumDias} dias!`);
+        setPremiumNome('');
+        loadPremiumUsers();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    }
+  };
+
+  const bloquearPremium = async (nome) => {
+    if (!window.confirm(`Bloquear Premium de "${nome}"?`)) return;
+    try {
+      const formData = new FormData();
+      formData.append('nome', nome);
+      
+      const res = await fetch(`${API}/admin/premium/bloquear`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.ok) {
+        alert(`✅ Premium bloqueado para ${nome}`);
+        loadPremiumUsers();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
     }
   };
 
