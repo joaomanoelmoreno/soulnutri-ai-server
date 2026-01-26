@@ -1,0 +1,23 @@
+{
+  "nome": "Abóbora assada",
+  "slug": "abóbora_assada",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Fatias de abóbora assada e temperada, geralmente com ervas e azeite.",
+  "ingredientes": [
+    "abóbora",
+    "temperos",
+    "azeite",
+    "cebolinha"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}
