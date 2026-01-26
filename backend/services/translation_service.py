@@ -154,6 +154,7 @@ UI_TRANSLATIONS = {
         "myth": "MITO",
         "partial": "PARCIALMENTE",
         "camera_error": "Cámara no disponible",
+        "permission_denied": "Permiso denegado. Toque para permitir.",
         "try_again": "Intentar de nuevo",
         "vegan": "vegano",
         "vegetarian": "vegetariano",
