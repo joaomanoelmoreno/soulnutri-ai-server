@@ -1,7 +1,7 @@
 # SoulNutri - Product Requirements Document
 
 **Última atualização:** 26 Janeiro 2026
-**Versão:** 2.1
+**Versão:** 2.2
 
 ---
 
@@ -24,26 +24,26 @@
 
 ### URLs
 - **Preview:** https://soulnutri.preview.emergentagent.com ✅
-- **Produção:** https://soulnutri.app.br ❌ (erro CUDA pendente)
+- **Produção:** https://soulnutri.app.br ⏳ (aguardando redeploy)
 
 ---
 
-## 3. BLOQUEADOR CRÍTICO - Erro de Deploy
+## 3. ✅ CORREÇÃO APLICADA - Erro de Deploy RESOLVIDO
 
-### Problema
+### Problema Original
 ```
 libcublas.so.*[0-9] not found in the system path
 ```
 
-### Causa
-PyTorch está tentando usar bibliotecas CUDA/GPU, mas o ambiente Kubernetes de produção NÃO tem GPU.
+### Correção Implementada (26/01/2026)
+- `/app/backend/ai/__init__.py` - Forçar modo CPU ANTES de qualquer import:
+  - `os.environ["CUDA_VISIBLE_DEVICES"] = ""`
+  - `os.environ["USE_CUDA"] = "0"`
+  - `os.environ["FORCE_CPU"] = "1"`
 
-### Correções Aplicadas (preview funciona)
-- `/app/backend/ai/embedder.py` - adicionado `os.environ["CUDA_VISIBLE_DEVICES"] = ""`
-
-### Ainda Necessário
-- Forçar CPU em `/app/backend/ai/__init__.py` ANTES de qualquer import
-- Verificar todos os arquivos que importam torch
+### Status
+- ✅ Preview funcionando sem erros
+- ⏳ **Aguardando REDEPLOY** (usar "Replace Deployment" - SEM custos)
 
 ---
 
@@ -55,6 +55,7 @@ PyTorch está tentando usar bibliotecas CUDA/GPU, mas o ambiente Kubernetes de p
 - ✅ Informações nutricionais básicas
 - ✅ Alertas de alérgenos
 - ✅ **Modo Scanner Contínuo** (detecta mudança de imagem)
+- ✅ **Internacionalização** (6 idiomas: PT, EN, ES, FR, DE, ZH)
 
 ### Premium (R$14,90/mês)
 - ✅ Contador de calorias diário
@@ -64,20 +65,31 @@ PyTorch está tentando usar bibliotecas CUDA/GPU, mas o ambiente Kubernetes de p
 - ✅ "Verdade ou Mito" educativo
 - ✅ **Sistema de liberação manual** (Admin > Aba Premium)
 
+### Internacionalização (NOVO - 26/01/2026)
+- ✅ 🇧🇷 Português (padrão)
+- ✅ 🇺🇸 English
+- ✅ 🇪🇸 Español
+- ✅ 🇫🇷 Français
+- ✅ 🇩🇪 Deutsch
+- ✅ 🇨🇳 中文 (Mandarim)
+- **Tecnologia:** LibreTranslate (GRATUITO e open-source)
+
 ---
 
 ## 5. Backlog Priorizado
 
 ### P0 - BLOQUEADOR
-- [ ] **Resolver erro CUDA no deploy** - forçar CPU em todos os imports de torch
+- [x] ~~Resolver erro CUDA no deploy~~ ✅ RESOLVIDO
+- [ ] **Fazer REDEPLOY** para aplicar correção em produção
 
 ### P1 - Importante
 - [ ] Indicadores Premium (🔒 cadeados) para versão Free
 - [ ] Trial 7 dias grátis
 - [ ] Padronizar cores da tela Premium
+- [ ] Testar internacionalização em produção
 
 ### P2 - Desejável
-- [ ] Verificar internacionalização (24 idiomas)
+- [x] ~~Internacionalização~~ ✅ IMPLEMENTADO (6 idiomas)
 - [ ] Histórico semanal com gráficos
 - [ ] Fluxo de coleta de dados na balança (OCR)
 
@@ -116,11 +128,13 @@ Cliente no buffet → Prato na mão + Celular na outra
 
 ## 8. Arquivos Importantes
 
-- `/app/backend/ai/embedder.py` - Modelo OpenCLIP (CORRIGIR CUDA)
-- `/app/backend/ai/__init__.py` - Inicialização (FORÇAR CPU AQUI)
+- `/app/backend/ai/__init__.py` - Inicialização (FORÇAR CPU) ✅
+- `/app/backend/ai/embedder.py` - Modelo OpenCLIP
 - `/app/backend/server.py` - API principal
+- `/app/backend/services/translation_service.py` - Internacionalização (NOVO)
 - `/app/frontend/src/App.js` - Interface principal
-- `/app/frontend/src/Admin.js` - Painel admin (inclui aba Premium)
+- `/app/frontend/src/I18nContext.js` - Contexto de idiomas (NOVO)
+- `/app/frontend/src/Admin.js` - Painel admin
 
 ---
 
@@ -131,6 +145,17 @@ Cliente no buffet → Prato na mão + Celular na outra
 
 ---
 
-## 10. Contatos
+## 10. Integrações
+
+| Serviço | Uso | Custo |
+|---------|-----|-------|
+| OpenCLIP | Identificação visual | GRATUITO |
+| Hugging Face | Fallback de identificação | GRATUITO |
+| LibreTranslate | Tradução automática | GRATUITO |
+| Gemini Vision | Fallback para pratos desconhecidos | Emergent LLM Key |
+
+---
+
+## 11. Contatos
 
 - **Domínio:** soulnutri.app.br (configurado no Registro.br)
