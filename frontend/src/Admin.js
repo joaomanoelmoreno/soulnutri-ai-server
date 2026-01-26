@@ -576,6 +576,95 @@ export default function Admin() {
         </div>
       )}
 
+      {/* Premium Tab */}
+      {activeTab === 'premium' && (
+        <div className="premium-admin-section">
+          {/* Formulário para liberar Premium */}
+          <div className="premium-form">
+            <h3>⭐ Liberar Acesso Premium</h3>
+            
+            <div className="form-row">
+              <div className="form-group" style={{flex: 2}}>
+                <label>Nome do Usuário:</label>
+                <input 
+                  value={premiumNome}
+                  onChange={e => setPremiumNome(e.target.value)}
+                  placeholder="Digite o nome exato do usuário..."
+                />
+              </div>
+              
+              <div className="form-group" style={{flex: 1}}>
+                <label>Dias de Acesso:</label>
+                <select value={premiumDias} onChange={e => setPremiumDias(Number(e.target.value))}>
+                  <option value={7}>7 dias</option>
+                  <option value={30}>30 dias</option>
+                  <option value={90}>90 dias</option>
+                  <option value={365}>1 ano</option>
+                  <option value={9999}>Ilimitado</option>
+                </select>
+              </div>
+              
+              <button className="save-btn" onClick={liberarPremium}>
+                ✅ Liberar Premium
+              </button>
+            </div>
+          </div>
+
+          {/* Lista de usuários */}
+          <div className="premium-users-list">
+            <h3>👥 Usuários Cadastrados ({premiumUsers.length})</h3>
+            
+            {premiumUsers.length === 0 ? (
+              <p className="no-items">Nenhum usuário cadastrado ainda.</p>
+            ) : (
+              <table className="premium-table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Expira em</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {premiumUsers.map((user, i) => (
+                    <tr key={i} className={user.premium_ativo ? 'ativo' : 'inativo'}>
+                      <td>{user.nome}</td>
+                      <td>
+                        {user.premium_ativo ? (
+                          <span className="badge ativo">✅ Ativo</span>
+                        ) : (
+                          <span className="badge inativo">🔒 Bloqueado</span>
+                        )}
+                      </td>
+                      <td>
+                        {user.premium_expira_em 
+                          ? new Date(user.premium_expira_em).toLocaleDateString('pt-BR')
+                          : '-'}
+                      </td>
+                      <td>
+                        {user.premium_ativo ? (
+                          <button className="delete-btn" onClick={() => bloquearPremium(user.nome)}>
+                            🔒 Bloquear
+                          </button>
+                        ) : (
+                          <button className="save-btn" onClick={() => {
+                            setPremiumNome(user.nome);
+                            setPremiumDias(30);
+                          }}>
+                            ✅ Liberar
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Edit Modal - Completo */}
       {editingDish && (
         <div className="modal-overlay" onClick={() => setEditingDish(null)}>
