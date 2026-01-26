@@ -1004,7 +1004,9 @@ function App() {
         {cameraError && (
           <div className="cam-error" data-testid="camera-error">
             <span>📷</span>
-            <p>{cameraError}</p>
+            <p>{cameraError === 'permission_denied' 
+              ? t('permission_denied', 'Permissão negada. Toque para permitir.') 
+              : t('camera_error', 'Câmera não disponível')}</p>
             <button onClick={(e) => { e.stopPropagation(); startCamera(); }}>
               🔄 {t('try_again', 'Tentar novamente')}
             </button>
