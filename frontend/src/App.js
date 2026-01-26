@@ -1318,12 +1318,12 @@ function App() {
           </div>
 
           {/* ALÉRGENOS CONSOLIDADOS */}
-          <div className={`mesa-allergens ${(plateConsolidated?.contemGluten || plateConsolidated?.contemLactose) ? 'has-allergens' : 'safe'}`}>
+          <div className="mesa-allergens">
             <h4>⚠️ Alérgenos no seu prato</h4>
-            {plateConsolidated?.contemGluten && <span className="allergen-tag">Contém Glúten</span>}
-            {plateConsolidated?.contemLactose && <span className="allergen-tag">Contém Lactose</span>}
+            {plateConsolidated?.contemGluten && <span className="allergen-tag warning">Contém Glúten</span>}
+            {plateConsolidated?.contemLactose && <span className="allergen-tag warning">Contém Lactose</span>}
             {!plateConsolidated?.contemGluten && !plateConsolidated?.contemLactose && (
-              <span className="allergen-safe">✅ Sem glúten e lactose detectados</span>
+              <span className="allergen-tag neutral">Nenhum alérgeno comum detectado</span>
             )}
           </div>
 
