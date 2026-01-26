@@ -1,22 +1,25 @@
 {
-  "nome": "Unknowntomatesfatiados",
+  "nome": "Tomates Fatiados com Cebolinha",
   "categoria": "vegano",
   "ingredientes": [
     "Tomates",
     "Cebolinha picada"
   ],
-  "descricao": "Tomates frescos fatiados e salpicados com cebolinha picada. O preparo é simples, apenas corte e montagem.",
+  "descricao": "Prato simples e refrescante com fatias de tomate e cebolinha picada.",
   "beneficios": [
-    "Rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
-    "Fonte de vitaminas C e K, importantes para a imunidade e coagulação sanguínea."
+    "Fonte de vitaminas e antioxidantes",
+    "Baixo em calorias"
   ],
   "riscos": [],
   "curiosidade": "O tomate é uma fruta, mas é frequentemente utilizado como um vegetal na culinária.",
   "slug": "tomatesfatiados",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "contem_lactose": false
 }
