@@ -1285,11 +1285,11 @@ function App() {
         </button>
         <button 
           className="action-btn clear" 
-          onClick={() => { clearResult(); clearPlate(); }}
+          onClick={() => { clearResult(); clearPlate(); setViewMode('buffet'); }}
           disabled={!r && !multiResult && !error && plateItems.length === 0}
           data-testid="clear-button"
         >
-          🔄 {t('new_scan', 'Nova')}
+          🗑️ Limpar
         </button>
       </div>
 
