@@ -1332,12 +1332,12 @@ function App() {
           {/* Informação Nutricional */}
           {r.nutrition && (
             <div className="nutr" data-testid="nutrition-box">
-              <div className="nutr-title">Informação Nutricional (100g)</div>
+              <div className="nutr-title">{t('nutrition_info', 'Informação Nutricional (100g)')}</div>
               <div className="nutr-grid">
-                <div><b>{r.nutrition.calorias}</b><small>Calorias</small></div>
-                <div><b>{r.nutrition.proteinas}</b><small>Proteínas</small></div>
-                <div><b>{r.nutrition.carboidratos}</b><small>Carbos</small></div>
-                <div><b>{r.nutrition.gorduras}</b><small>Gorduras</small></div>
+                <div><b>{r.nutrition.calorias}</b><small>{t('calories', 'Calorias')}</small></div>
+                <div><b>{r.nutrition.proteinas}</b><small>{t('proteins', 'Proteínas')}</small></div>
+                <div><b>{r.nutrition.carboidratos}</b><small>{t('carbs', 'Carbos')}</small></div>
+                <div><b>{r.nutrition.gorduras}</b><small>{t('fats', 'Gorduras')}</small></div>
               </div>
               {r.aviso_cibi_sana && (
                 <div className="cibi-sana-text" data-testid="cibi-sana-badge">{r.aviso_cibi_sana}</div>
