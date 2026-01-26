@@ -697,3 +697,122 @@
 .novidade-actions .delete-btn:hover {
   background: rgba(239, 68, 68, 0.2);
 }
+
+/* ========================================
+   PREMIUM ADMIN
+   ======================================== */
+.premium-admin-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .premium-admin-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.premium-form {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05));
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+}
+
+.premium-form h3 {
+  color: #fbbf24;
+  margin-bottom: 16px;
+}
+
+.premium-form .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.premium-form .form-group {
+  width: 100%;
+}
+
+.premium-form label {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.premium-form input,
+.premium-form select {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.premium-users-list {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.premium-users-list h3 {
+  color: #10b981;
+  margin-bottom: 16px;
+}
+
+.premium-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.premium-table th,
+.premium-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.premium-table th {
+  color: #888;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.premium-table tr.ativo {
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.premium-table tr.inativo {
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.ativo {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.badge.inativo {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.premium-table button {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
