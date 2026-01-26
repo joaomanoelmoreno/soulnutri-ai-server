@@ -12,7 +12,7 @@ export default function Admin() {
   const [stats, setStats] = useState(null);
   const [filterCategory, setFilterCategory] = useState('');
   const [viewMode, setViewMode] = useState('grid'); // grid ou list
-  const [activeTab, setActiveTab] = useState('dishes'); // dishes, novidades
+  const [activeTab, setActiveTab] = useState('dishes'); // dishes, novidades, premium
   const [novidades, setNovidades] = useState([]);
   const [editingNovidade, setEditingNovidade] = useState(null);
   const [novidadeForm, setNovidadeForm] = useState({
@@ -24,6 +24,10 @@ export default function Admin() {
     severidade: 'info',
     ativa: true
   });
+  // Premium management
+  const [premiumUsers, setPremiumUsers] = useState([]);
+  const [premiumNome, setPremiumNome] = useState('');
+  const [premiumDias, setPremiumDias] = useState(30);
 
   useEffect(() => {
     loadDishes();
