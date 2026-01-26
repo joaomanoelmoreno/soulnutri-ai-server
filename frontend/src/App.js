@@ -315,7 +315,7 @@ function App() {
       if (videoRef.current) videoRef.current.srcObject = s;
     } catch (err) { 
       console.error("Câmera não disponível:", err);
-      setCameraError(err.name === 'NotAllowedError' ? 'Permissão negada. Toque para permitir.' : 'Câmera não disponível');
+      setCameraError(err.name === 'NotAllowedError' ? 'permission_denied' : 'camera_error');
     }
   };
 
