@@ -176,6 +176,7 @@ def _get_best_match_embedding(dish_name: str) -> np.ndarray:
     """Busca o embedding mais similar ao nome do prato no índice local"""
     try:
         import json
+        from difflib import SequenceMatcher
         
         index_file = "/app/datasets/dish_index.json"
         emb_file = "/app/datasets/dish_index_embeddings.npy"
@@ -191,33 +192,36 @@ def _get_best_match_embedding(dish_name: str) -> np.ndarray:
         dish_to_idx = index_data.get('dish_to_idx', {})
         
         # Normalizar nome para busca
-        dish_name_normalized = dish_name.lower().replace(' ', '').replace('_', '')
+        dish_name_clean = dish_name.lower().replace('_', ' ').strip()
         
-        # Buscar prato mais similar por nome
+        # Buscar prato mais similar por nome usando SequenceMatcher
         best_match = None
         best_score = 0
         
         for slug in dish_to_idx.keys():
-            slug_normalized = slug.lower().replace(' ', '').replace('_', '')
+            slug_clean = slug.lower().replace('_', ' ')
             
-            # Calcular similaridade de string simples
-            if dish_name_normalized in slug_normalized or slug_normalized in dish_name_normalized:
-                score = len(set(dish_name_normalized) & set(slug_normalized)) / max(len(dish_name_normalized), len(slug_normalized))
-                if score > best_score:
-                    best_score = score
-                    best_match = slug
+            # Calcular similaridade com SequenceMatcher (mais preciso)
+            score = SequenceMatcher(None, dish_name_clean, slug_clean).ratio()
+            
+            # Boost se uma string contém a outra
+            if dish_name_clean in slug_clean or slug_clean in dish_name_clean:
+                score = min(1.0, score + 0.3)
+            
+            if score > best_score:
+                best_score = score
+                best_match = slug
         
-        if best_match and best_match in dish_to_idx:
+        # Só usar se tiver uma boa correspondência (>50%)
+        if best_match and best_score > 0.5 and best_match in dish_to_idx:
             # Pegar primeiro embedding desse prato
             idx = dish_to_idx[best_match][0]
-            logger.info(f"[embedder] Match encontrado: {best_match} (score={best_score:.2f})")
+            logger.info(f"[embedder] Match encontrado: '{dish_name_clean}' -> '{best_match}' (score={best_score:.2f})")
             return embeddings[idx]
         
-        # Se não encontrou match exato, retornar embedding médio
-        if len(embeddings) > 0:
-            mean_emb = np.mean(embeddings, axis=0)
-            return mean_emb / np.linalg.norm(mean_emb)
+        logger.warning(f"[embedder] Nenhum match bom encontrado para '{dish_name_clean}' (best: {best_match}, score: {best_score:.2f})")
         
+        # Retornar None para usar fallback do Gemini
         return None
         
     except Exception as e:
