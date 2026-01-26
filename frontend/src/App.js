@@ -770,16 +770,64 @@ function App() {
     }
   }, [scannerResult]);
 
-  // Calcular totais do prato
-  const plateTotals = plateItems.reduce((acc, item) => {
-    const cal = typeof item.calorias === 'string' 
-      ? parseFloat(item.calorias.replace(/[^\d.]/g, '')) || 0 
-      : item.calorias || 0;
-    return {
-      calorias: acc.calorias + cal,
-      itens: acc.itens + 1
+  // Calcular dados CONSOLIDADOS do prato (para vista "mesa")
+  const plateConsolidated = useMemo(() => {
+    if (plateItems.length === 0) return null;
+    
+    // Função para extrair número de string tipo "120 kcal" ou "15g"
+    const parseNum = (val) => {
+      if (typeof val === 'number') return val;
+      if (typeof val === 'string') return parseFloat(val.replace(/[^\d.]/g, '')) || 0;
+      return 0;
     };
-  }, { calorias: 0, itens: 0 });
+    
+    // Somar nutrientes
+    const totals = plateItems.reduce((acc, item) => ({
+      calorias: acc.calorias + parseNum(item.calorias),
+      proteinas: acc.proteinas + parseNum(item.proteinas),
+      carboidratos: acc.carboidratos + parseNum(item.carboidratos),
+      gorduras: acc.gorduras + parseNum(item.gorduras)
+    }), { calorias: 0, proteinas: 0, carboidratos: 0, gorduras: 0 });
+    
+    // Coletar todos os ingredientes únicos
+    const allIngredientes = [...new Set(plateItems.flatMap(item => item.ingredientes || []))];
+    
+    // Coletar benefícios únicos (máx 5)
+    const allBeneficios = [...new Set(plateItems.flatMap(item => item.beneficios || []))].slice(0, 5);
+    
+    // Coletar riscos únicos (máx 3)
+    const allRiscos = [...new Set(plateItems.flatMap(item => item.riscos || []))].slice(0, 3);
+    
+    // Verificar alérgenos presentes em qualquer item
+    const contemGluten = plateItems.some(item => item.alergenos?.gluten);
+    const contemLactose = plateItems.some(item => item.alergenos?.lactose);
+    
+    // Categorias presentes
+    const categorias = [...new Set(plateItems.map(item => item.category).filter(Boolean))];
+    
+    return {
+      itens: plateItems.map(i => i.dish_display),
+      totalItens: plateItems.length,
+      nutrition: {
+        calorias: `${Math.round(totals.calorias)} kcal`,
+        proteinas: `${Math.round(totals.proteinas)}g`,
+        carboidratos: `${Math.round(totals.carboidratos)}g`,
+        gorduras: `${Math.round(totals.gorduras)}g`
+      },
+      ingredientes: allIngredientes,
+      beneficios: allBeneficios,
+      riscos: allRiscos,
+      contemGluten,
+      contemLactose,
+      categorias
+    };
+  }, [plateItems]);
+
+  // Totais simples para exibição rápida
+  const plateTotals = {
+    calorias: plateConsolidated?.nutrition?.calorias ? parseFloat(plateConsolidated.nutrition.calorias) : 0,
+    itens: plateItems.length
+  };
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
