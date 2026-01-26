@@ -352,6 +352,18 @@ UI_TRANSLATIONS = {
         "vegetarian": "素食",
         "animal_protein": "动物蛋白",
         "select_language": "选择语言",
+        # 扫描器教程
+        "how_scanner_works": "扫描器如何工作",
+        "tutorial_step1_title": "自动扫描",
+        "tutorial_step1_desc": "当您指向不同的菜品时，SoulNutri会自动检测并实时显示信息。",
+        "tutorial_step2_title": "点击查看详情",
+        "tutorial_step2_desc": "当扫描器识别出菜品时，点击出现的信息查看所有营养详情。",
+        "tutorial_step3_title": "组合您的餐盘",
+        "tutorial_step3_desc": "在自助餐，分别扫描每个项目。应用会自动计算卡路里总和！",
+        "skip": "跳过",
+        "back": "返回",
+        "next": "下一步",
+        "start_using": "开始使用",
     },
 }
 
