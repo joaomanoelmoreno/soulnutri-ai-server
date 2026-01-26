@@ -197,6 +197,8 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(() => {
     return !localStorage.getItem('soulnutri_welcomed');
   });
+  // Tutorial do Scanner Contínuo
+  const [showScannerTutorial, setShowScannerTutorial] = useState(false);
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
