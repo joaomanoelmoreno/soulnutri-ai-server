@@ -1633,3 +1633,36 @@ iframe[src*="emergent"], div[style*="Made with"] {
 .modal-back-btn:hover {
   color: #fff;
 }
+
+/* Correção dos alérgenos - cores neutras */
+.mesa-allergens {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.mesa-allergens h4 {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  color: #e2e8f0;
+}
+
+.allergen-tag.warning {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-right: 8px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.allergen-tag.neutral {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
