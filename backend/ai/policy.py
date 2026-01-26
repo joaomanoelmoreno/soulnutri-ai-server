@@ -962,8 +962,43 @@ DISH_INFO = {
 
 
 def get_dish_info(slug: str) -> dict:
-    """Retorna informações completas do prato"""
-    return DISH_INFO.get(slug, DISH_INFO['default'])
+    """Retorna informações completas do prato - busca primeiro no dish_info.json"""
+    import os
+    import json
+    
+    # Primeiro tenta ler do dish_info.json na pasta do prato
+    info_path = f"/app/datasets/organized/{slug}/dish_info.json"
+    if os.path.exists(info_path):
+        try:
+            with open(info_path, 'r', encoding='utf-8') as f:
+                info = json.load(f)
+                # Filtrar benefícios genéricos do Cibi Sana
+                beneficios = info.get('beneficios', [])
+                if isinstance(beneficios, list):
+                    beneficios = [b for b in beneficios if 
+                        'sem aditivos' not in b.lower() and 
+                        'ingredientes frescos' not in b.lower() and
+                        'preparo artesanal' not in b.lower() and
+                        'sem conservantes' not in b.lower()]
+                    info['beneficios'] = beneficios
+                return info
+        except:
+            pass
+    
+    # Fallback para dicionário em memória
+    info = DISH_INFO.get(slug, DISH_INFO.get('default', {})).copy()
+    
+    # Filtrar benefícios genéricos
+    beneficios = info.get('beneficios', [])
+    if isinstance(beneficios, list):
+        beneficios = [b for b in beneficios if 
+            'sem aditivos' not in b.lower() and 
+            'ingredientes frescos' not in b.lower() and
+            'preparo artesanal' not in b.lower() and
+            'sem conservantes' not in b.lower()]
+        info['beneficios'] = beneficios
+    
+    return info
 
 
 def get_dish_name(slug: str) -> str:
