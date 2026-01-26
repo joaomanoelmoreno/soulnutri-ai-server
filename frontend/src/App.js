@@ -1300,9 +1300,18 @@ function App() {
       {/* Resumo do Prato (quando tem múltiplos itens) */}
       {plateItems.length > 0 && (
         <div className="plate-summary" data-testid="plate-summary">
+          {/* BOTÃO VOLTAR */}
+          <button 
+            className="back-btn"
+            onClick={() => { setViewMode('buffet'); }}
+            data-testid="plate-back-btn"
+          >
+            ← Voltar
+          </button>
+          
           <div className="plate-summary-header">
             <span>🍽️ {t('your_plate', 'Seu Prato')} ({plateItems.length} {t('items', 'itens')})</span>
-            <span className="plate-total-cal">{plateConsolidated?.nutrition?.calorias}</span>
+            <span className="plate-total-cal">{plateConsolidated?.nutrition?.calorias} <small>(base 100g)</small></span>
           </div>
           
           {/* Lista de itens */}
