@@ -296,6 +296,18 @@ UI_TRANSLATIONS = {
         "vegetarian": "vegetarisch",
         "animal_protein": "tierisches Protein",
         "select_language": "Sprache auswählen",
+        # Scanner Tutorial
+        "how_scanner_works": "Wie der Scanner funktioniert",
+        "tutorial_step1_title": "Automatischer Scanner",
+        "tutorial_step1_desc": "SoulNutri erkennt automatisch, wenn Sie auf ein anderes Gericht zeigen und zeigt die Informationen in Echtzeit an.",
+        "tutorial_step2_title": "Tippen für Details",
+        "tutorial_step2_desc": "Wenn der Scanner ein Gericht erkennt, tippen Sie auf die angezeigte Information, um alle Nährwertdetails zu sehen.",
+        "tutorial_step3_title": "Stellen Sie Ihren Teller zusammen",
+        "tutorial_step3_desc": "Am Buffet scannen Sie jeden Artikel einzeln. Die App addiert die Kalorien automatisch!",
+        "skip": "Überspringen",
+        "back": "Zurück",
+        "next": "Weiter",
+        "start_using": "Starten",
     },
     "zh": {
         "identify_dish": "识别菜品",
