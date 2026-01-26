@@ -1114,9 +1114,22 @@ function App() {
       return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
     }
     
+    // Remover duplicações - priorizar "contém" sobre "pode conter"
+    const seen = new Set();
+    const uniqueAlerts = allergenRisks.filter(risco => {
+      const key = risco.toLowerCase()
+        .replace('pode conter traços de ', '')
+        .replace('contém ', '')
+        .replace('pode conter ', '')
+        .trim();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    
     return { 
       hasAllergens: true, 
-      alerts: allergenRisks.map(risco => ({
+      alerts: uniqueAlerts.map(risco => ({
         type: risco.toLowerCase().includes('pode conter') ? 'possible' : 'definite',
         text: risco
       }))
