@@ -9,20 +9,31 @@ from PIL import Image
 import io
 import time
 
-# Forçar uso de CPU antes de importar torch
+# CRÍTICO: Forçar uso de CPU antes de importar torch
+# Isso DEVE acontecer antes de qualquer import do PyTorch
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
+os.environ["CUDA_HOME"] = ""
+os.environ["USE_CUDA"] = "0"
+os.environ["FORCE_CPU"] = "1"
+os.environ["TORCH_CUDA_ARCH_LIST"] = ""
 
 import torch
 
-# Forçar CPU
-torch.set_default_device('cpu')
+# Forçar CPU - definir ANTES de qualquer operação
+if hasattr(torch, 'set_default_device'):
+    torch.set_default_device('cpu')
+
+# Verificar se realmente está em CPU
+_DEVICE = "cpu"
+if torch.cuda.is_available():
+    # Desabilitar CUDA mesmo se disponível
+    torch.cuda.is_available = lambda: False
 
 import open_clip
 
 # Cache global do modelo (carrega uma vez)
 _MODEL = None
 _PREPROCESS = None
-_DEVICE = "cpu"  # Sempre CPU
 
 # Otimizações para CPU
 torch.set_num_threads(4)  # Limitar threads para evitar overhead
@@ -41,7 +52,8 @@ def _load_model():
         # ViT-B-32 é um bom equilíbrio entre velocidade e qualidade
         model, _, preprocess = open_clip.create_model_and_transforms(
             model_name="ViT-B-32",
-            pretrained="openai"
+            pretrained="openai",
+            device=_DEVICE  # Forçar CPU na criação
         )
         model = model.to(_DEVICE)
         model.eval()
