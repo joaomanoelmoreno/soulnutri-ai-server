@@ -552,3 +552,124 @@ iframe[src*="emergent"], div[style*="Made with"] {
   font-size: 0.75rem;
   margin: 0;
 }
+
+/* ========================================
+   MODO SCANNER CONTÍNUO - Overlay em tempo real
+   ======================================== */
+.scanner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+  padding: 20px 16px;
+  animation: scannerSlideUp 0.3s ease;
+  cursor: pointer;
+}
+
+@keyframes scannerSlideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scanner-result {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.scanner-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.scanner-icon {
+  font-size: 1.5rem;
+}
+
+.scanner-dish {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.scanner-info {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.scanner-cal {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+.scanner-cat {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  text-transform: capitalize;
+}
+
+.scanner-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.scanner-badge.gluten-free {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.scanner-badge.warning {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.scanner-tap {
+  font-size: 0.75rem;
+  color: #666;
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+/* Indicador de scanner ativo */
+.cam-box::after {
+  content: '📡 Scanner ativo';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(34, 197, 94, 0.8);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Esconder hint quando scanner está mostrando resultado */
+.cam-box:has(.scanner-overlay) .cam-hint {
+  display: none;
+}
+
+.cam-box:has(.scanner-overlay) .guide-frame {
+  border-color: #22c55e;
+}
