@@ -44,8 +44,8 @@ logger = logging.getLogger(__name__)
 import re
 
 def format_dish_name(name: str) -> str:
-    """Formata nome do prato: adiciona espaços e capitaliza corretamente
-    Ex: 'aboboraassada' -> 'Abóbora Assada'
+    """Formata nome do prato: substitui underscores e capitaliza
+    Ex: 'abobora_assada' -> 'Abóbora Assada'
     """
     if not name:
         return name
@@ -56,32 +56,11 @@ def format_dish_name(name: str) -> str:
     # Adicionar espaço antes de letras maiúsculas (camelCase)
     name = re.sub(r'([a-z])([A-Z])', r'\1 \2', name)
     
-    # Lista de palavras comuns para separar nomes compostos
-    common_words = [
-        'ao', 'com', 'de', 'da', 'do', 'em', 'na', 'no', 'e', 'a', 'o',
-        'assada', 'assado', 'grelhada', 'grelhado', 'frita', 'frito', 'cozida', 'cozido',
-        'refogada', 'refogado', 'empanada', 'empanado', 'recheada', 'recheado',
-        'integral', 'branco', 'verde', 'tropical', 'natural', 'especial',
-        'curry', 'molho', 'creme', 'pure', 'sopa', 'salada', 'arroz', 'feijao',
-        'frango', 'carne', 'peixe', 'camarao', 'ovo', 'queijo', 'leite'
-    ]
-    
-    # Se não tem espaços, tentar separar por palavras conhecidas
-    if ' ' not in name:
-        name_lower = name.lower()
-        for word in sorted(common_words, key=len, reverse=True):
-            if word in name_lower:
-                # Inserir espaço antes e depois da palavra
-                pattern = f'({word})'
-                name_lower = re.sub(pattern, r' \1 ', name_lower, flags=re.IGNORECASE)
-        name = name_lower.strip()
-        # Remover espaços duplicados
-        name = re.sub(r'\s+', ' ', name)
-    
     # Capitalizar cada palavra
-    name = ' '.join(word.capitalize() for word in name.split())
+    words = name.split()
+    formatted = ' '.join(word.capitalize() for word in words)
     
-    return name
+    return formatted
 
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
