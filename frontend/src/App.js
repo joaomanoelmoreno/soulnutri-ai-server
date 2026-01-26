@@ -1086,6 +1086,9 @@ function App() {
               📱 Para instalar: use o menu do navegador → &quot;Adicionar à tela inicial&quot;
             </div>
           )}
+          <button className="menu-item" onClick={() => { setShowMenu(false); setShowScannerTutorial(true); }} data-testid="menu-tutorial">
+            📡 {t('how_scanner_works', 'Como funciona o Scanner')}
+          </button>
           <button className="menu-item" onClick={() => { setShowMenu(false); checkStatus(); loadDishes(); }}>
             🔄 Atualizar pratos
           </button>
