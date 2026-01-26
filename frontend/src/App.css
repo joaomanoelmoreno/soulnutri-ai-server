@@ -78,6 +78,161 @@
   font-size: 1.3rem;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   WELCOME POPUP - Boas-vindas com seleção de idioma
+   ═══════════════════════════════════════════════════════════════════ */
+
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.welcome-popup {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 24px;
+  padding: 32px 24px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.welcome-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.welcome-header h1 {
+  font-size: 2rem;
+  color: #fff;
+  margin: 0;
+  font-weight: 700;
+}
+
+.welcome-header .tm {
+  font-size: 0.8rem;
+  vertical-align: super;
+  color: #22c55e;
+}
+
+.welcome-tagline {
+  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.welcome-message {
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.welcome-message p {
+  color: #22c55e;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.welcome-languages {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.welcome-lang-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.welcome-lang-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.welcome-lang-btn.active {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+}
+
+.welcome-flag {
+  font-size: 1.5rem;
+}
+
+.welcome-lang-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.welcome-features {
+  margin-bottom: 24px;
+}
+
+.welcome-features .feature {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+  padding: 6px 0;
+}
+
+.welcome-start-btn {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.welcome-start-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.4);
+}
+
+
+
 .lang-native {
   flex: 1;
 }
