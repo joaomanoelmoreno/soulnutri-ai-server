@@ -133,7 +133,8 @@ def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
     
     start = time.time()
     
-    HF_API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/openai/clip-vit-base-patch32"
+    # Nova URL da Hugging Face (a antiga foi descontinuada)
+    HF_API_URL = "https://router.huggingface.co/hf-inference/pipeline/feature-extraction/openai/clip-vit-base-patch32"
     HF_TOKEN = os.environ.get("HF_TOKEN", "")
     
     try:
@@ -172,7 +173,7 @@ def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
                 logger.info(f"[embedder] HF API: {(time.time()-start)*1000:.0f}ms, dim={len(embedding)}")
                 return embedding
             else:
-                logger.error(f"[embedder] HF API error: {response.status_code}")
+                logger.error(f"[embedder] HF API error: {response.status_code} - {response.text[:200]}")
                 return None
                 
     except Exception as e:
