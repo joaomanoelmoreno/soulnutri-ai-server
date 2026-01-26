@@ -734,12 +734,28 @@ export default function Admin() {
               {/* Lista de Problemas Críticos */}
               {auditData.problems.unknown_names.length > 0 && (
                 <div className="audit-problems">
-                  <h3>🔴 Pratos com Nome "Unknown" (Crítico)</h3>
+                  <div className="problems-header">
+                    <h3>🔴 Pratos com Nome "Unknown" (Crítico)</h3>
+                    <button 
+                      className="batch-fix-btn"
+                      onClick={() => batchFixDishes('unknown_names')}
+                      disabled={auditLoading}
+                    >
+                      🤖 Corrigir com IA (10 pratos)
+                    </button>
+                  </div>
                   <div className="problems-list">
                     {auditData.problems.unknown_names.map((p, i) => (
                       <div key={i} className="problem-item critical">
                         <span className="problem-slug">{p.slug}</span>
                         <span className="problem-issue">{p.issue}</span>
+                        <button 
+                          className="ai-fix-btn"
+                          onClick={() => fixDishWithAI(p.slug)}
+                          disabled={fixingSlug === p.slug}
+                        >
+                          {fixingSlug === p.slug ? '⏳' : '🤖'}
+                        </button>
                         <button 
                           className="edit-btn"
                           onClick={() => {
@@ -748,7 +764,7 @@ export default function Admin() {
                             setActiveTab('dishes');
                           }}
                         >
-                          ✏️ Editar
+                          ✏️
                         </button>
                       </div>
                     ))}
@@ -758,12 +774,28 @@ export default function Admin() {
 
               {auditData.problems.category_conflicts.length > 0 && (
                 <div className="audit-problems">
-                  <h3>🔴 Conflitos de Categoria (Crítico)</h3>
+                  <div className="problems-header">
+                    <h3>🔴 Conflitos de Categoria (Crítico)</h3>
+                    <button 
+                      className="batch-fix-btn"
+                      onClick={() => batchFixDishes('category_conflicts')}
+                      disabled={auditLoading}
+                    >
+                      🤖 Corrigir com IA (10 pratos)
+                    </button>
+                  </div>
                   <div className="problems-list">
                     {auditData.problems.category_conflicts.map((p, i) => (
                       <div key={i} className="problem-item critical">
                         <span className="problem-slug">{p.nome}</span>
                         <span className="problem-issue">{p.issue}</span>
+                        <button 
+                          className="ai-fix-btn"
+                          onClick={() => fixDishWithAI(p.slug)}
+                          disabled={fixingSlug === p.slug}
+                        >
+                          {fixingSlug === p.slug ? '⏳' : '🤖'}
+                        </button>
                         <button 
                           className="edit-btn"
                           onClick={() => {
@@ -772,7 +804,7 @@ export default function Admin() {
                             setActiveTab('dishes');
                           }}
                         >
-                          ✏️ Corrigir
+                          ✏️
                         </button>
                       </div>
                     ))}
