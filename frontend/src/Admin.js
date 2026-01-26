@@ -115,6 +115,24 @@ export default function Admin() {
     }
   };
 
+  // Auditoria de dados
+  const runAudit = async () => {
+    setAuditLoading(true);
+    try {
+      const res = await fetch(`${API}/admin/audit`);
+      const data = await res.json();
+      if (data.ok) {
+        setAuditData(data);
+      } else {
+        alert('Erro na auditoria: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    } finally {
+      setAuditLoading(false);
+    }
+  };
+
   const loadStats = async () => {
     try {
       const res = await fetch(`${API}/ai/status`);
