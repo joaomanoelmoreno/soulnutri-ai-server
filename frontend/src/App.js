@@ -595,6 +595,8 @@ function App() {
   
   const lastFrameDataRef = useRef(null);
   const scanningRef = useRef(false);
+  const lastScanResultRef = useRef(null); // Cache do último resultado
+  const scanCooldownRef = useRef(false); // Cooldown entre scans
   
   // Função para calcular diferença entre frames
   const calculateFrameDifference = (currentData, previousData) => {
@@ -614,8 +616,8 @@ function App() {
   };
 
   const performScan = useCallback(async () => {
-    // Não escanear se já está escaneando, carregando, ou sem câmera
-    if (scanningRef.current || loadingRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+    // Não escanear se já está escaneando, carregando, em cooldown, ou sem câmera
+    if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
     
     const v = videoRef.current;
     const c = canvasRef.current;
@@ -637,10 +639,15 @@ function App() {
     // Calcular diferença com frame anterior
     const difference = calculateFrameDifference(currentData, lastFrameDataRef.current);
     
-    // Se mudança significativa (> 15%), fazer reconhecimento
-    if (difference > 0.15) {
+    // Se mudança significativa (> 30%), fazer reconhecimento
+    // Threshold maior = menos scans desnecessários
+    if (difference > 0.30) {
       // Salvar frame atual
       lastFrameDataRef.current = new Uint8ClampedArray(currentData);
+      
+      // Ativar cooldown (evita múltiplos scans seguidos)
+      scanCooldownRef.current = true;
+      setTimeout(() => { scanCooldownRef.current = false; }, 2000);
       
       // Capturar em maior resolução para identificação
       const scanSize = 640;
@@ -675,22 +682,29 @@ function App() {
           
           const data = await res.json();
           
-          if (data.ok && data.identified && data.score >= 0.6) {
-            setScannerResult({
-              dish: data.dish,
-              dish_display: data.dish_display,
-              categoria: data.categoria,
-              calorias: data.calorias_estimadas || data.nutricao?.calorias || '~150 kcal',
-              score: data.score,
-              confidence: data.confidence,
-              beneficios: data.beneficios || [],
-              riscos: data.riscos || [],
-              contem_gluten: data.contem_gluten,
-              timestamp: Date.now()
-            });
-          } else if (difference > 0.4) {
+          // Só mostrar se score >= 0.7 (mais confiável)
+          if (data.ok && data.identified && data.score >= 0.7) {
+            // Verificar se é diferente do último resultado (evita repetições)
+            const newDish = data.dish_display;
+            if (newDish !== lastScanResultRef.current) {
+              lastScanResultRef.current = newDish;
+              setScannerResult({
+                dish: data.dish,
+                dish_display: data.dish_display,
+                categoria: data.category || data.categoria,
+                calorias: data.nutrition?.calorias || '~150 kcal',
+                score: data.score,
+                confidence: data.confidence,
+                beneficios: data.beneficios || [],
+                riscos: data.riscos || [],
+                contem_gluten: data.contem_gluten,
+                timestamp: Date.now()
+              });
+            }
+          } else if (difference > 0.5) {
             // Mudança muito grande mas não identificado - limpar resultado anterior
             setScannerResult(null);
+            lastScanResultRef.current = null;
           }
         } catch (e) {
           console.warn('Scanner error:', e);
@@ -700,7 +714,7 @@ function App() {
         
         // Limpar canvas
         ctx.clearRect(0, 0, w, h);
-      }, 'image/jpeg', 0.6);
+      }, 'image/jpeg', 0.7);
     }
   }, [stream]);
 
