@@ -228,10 +228,21 @@ function App() {
     };
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
     
+    // Gerenciar câmera quando o app perde/ganha foco (previne travamentos)
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopCamera();
+      } else {
+        startCamera();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    
     return () => {
       mountedRef.current = false;
       stopCamera();
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+      document.removeEventListener('visibilitychange', handleVisibility);
       // Cancelar requisições pendentes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
