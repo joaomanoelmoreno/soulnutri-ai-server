@@ -290,6 +290,12 @@ export default function Admin() {
           🍽️ Pratos ({dishes.length})
         </button>
         <button 
+          className={`tab-btn ${activeTab === 'audit' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('audit'); if (!auditData) runAudit(); }}
+        >
+          🔍 Auditoria
+        </button>
+        <button 
           className={`tab-btn ${activeTab === 'novidades' ? 'active' : ''}`}
           onClick={() => setActiveTab('novidades')}
         >
