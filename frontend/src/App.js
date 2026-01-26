@@ -1645,36 +1645,11 @@ function App() {
               📤 Compartilhar meu prato
             </button>
 
-            {/* BOTÕES DE FEEDBACK - MULTI */}
-            {!feedbackSent && (
-              <div className="feedback-section">
-                <p className="feedback-question">O reconhecimento está correto?</p>
-                <div className="feedback-btns">
-                  <button className="fb-btn correct" onClick={() => {
-                    // Salvar feedback positivo para treino
-                    setFeedbackSent(true);
-                  }}>
-                    ✅ Sim, correto
-                  </button>
-                  <button className="fb-btn incorrect" onClick={() => {
-                    // Pré-preencher com o que a IA identificou
-                    const principalNome = principal?.nome || '';
-                    const acompNomes = acompanhamentos.map(a => a.nome).join(', ');
-                    setMultiCorrections({
-                      principal: principalNome,
-                      acompanhamentos: acompNomes
-                    });
-                    setShowMultiCorrection(true);
-                  }}>
-                    ❌ Não, corrigir
-                  </button>
-                </div>
-              </div>
-            )}
-
+            {/* BOTÕES DE FEEDBACK - MULTI - Removido do fluxo de montagem */}
+            {/* A correção fica disponível via botão de editar se necessário */}
             {feedbackSent && (
               <div className="feedback-thanks">
-                ✅ Obrigado! Isso melhora o reconhecimento.
+                ✅ Prato registrado!
               </div>
             )}
           </div>
