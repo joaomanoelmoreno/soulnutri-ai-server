@@ -1181,7 +1181,7 @@ function App() {
           {/* Ingredientes */}
           {r.ingredientes?.length > 0 && (
             <div className="info-box" data-testid="ingredients-box">
-              <h4>🥗 Ingredientes</h4>
+              <h4>🥗 {t('ingredients', 'Ingredientes')}</h4>
               <p>{Array.isArray(r.ingredientes) ? r.ingredientes.join(', ') : r.ingredientes}</p>
             </div>
           )}
@@ -1189,7 +1189,7 @@ function App() {
           {/* Benefícios */}
           {r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
-              <h4>✅ Benefícios para a Saúde</h4>
+              <h4>✅ {t('benefits', 'Benefícios para a Saúde')}</h4>
               <ul>{r.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
             </div>
           )}
