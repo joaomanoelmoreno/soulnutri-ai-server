@@ -1287,23 +1287,7 @@ function App() {
             )}
           </div>
 
-          {/* Indicador de Confiança */}
-          <div className="conf-indicator" style={{ background: confData.bg, borderColor: confData.color }}>
-            <span className="conf-label" style={{ color: confData.color }}>{confData.label}</span>
-            <span className="conf-score" style={{ color: confData.color }}>{(r.score * 100).toFixed(0)}%</span>
-          </div>
-          
-          {/* Descrição */}
-          {r.descricao && <p className="desc" data-testid="dish-description">{r.descricao}</p>}
-
-          {/* Técnica de Preparo */}
-          {r.tecnica && (
-            <div className="tecnica-box" data-testid="technique-box">
-              <span>👨‍🍳 {r.tecnica}</span>
-            </div>
-          )}
-
-          {/* Ingredientes */}
+          {/* Ingredientes - SEMPRE MOSTRAR (importante para decisão) */}
           {r.ingredientes?.length > 0 && (
             <div className="info-box" data-testid="ingredients-box">
               <h4>🥗 {t('ingredients', 'Ingredientes')}</h4>
@@ -1311,174 +1295,193 @@ function App() {
             </div>
           )}
 
-          {/* Benefícios */}
+          {/* Benefícios - SEMPRE MOSTRAR (importante para decisão) */}
           {r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
-              <h4>✅ {t('benefits', 'Benefícios para a Saúde')}</h4>
-              <ul>{r.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
+              <h4>✅ {t('benefits', 'Benefícios')}</h4>
+              <ul>{r.beneficios.slice(0, 3).map((b,i) => <li key={i}>{b}</li>)}</ul>
             </div>
           )}
 
-          {/* ALERTAS PREMIUM EM TEMPO REAL */}
-          {r.premium && (
-            <div className="premium-alerts-section" data-testid="premium-alerts">
-              {/* NOVIDADE/NOTÍCIA DO PRATO - Aparece primeiro se existir */}
-              {r.premium.novidade && (
-                <div className={`premium-novidade ${r.premium.novidade.severidade || 'info'}`} data-testid="dish-novidade">
-                  <div className="novidade-header">
-                    <span className="novidade-emoji">{r.premium.novidade.emoji || '📢'}</span>
-                    <span className="novidade-tipo">{r.premium.novidade.tipo?.toUpperCase()}</span>
+          {/* Combinações sugeridas - IMPORTANTE PARA BUFFET */}
+          {r.premium?.combinacoes_sugeridas?.length > 0 && (
+            <div className="premium-suggestions compact">
+              <h4>💡 Combine com</h4>
+              <div className="combo-tags">
+                {r.premium.combinacoes_sugeridas.slice(0, 2).map((c, i) => (
+                  <span key={i} className="combo-tag">{c.emoji} {c.titulo}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* === SEÇÕES DETALHADAS (só na vista completa/mesa) === */}
+          {viewMode === 'mesa' && (
+            <>
+              {/* Indicador de Confiança */}
+              <div className="conf-indicator" style={{ background: confData.bg, borderColor: confData.color }}>
+                <span className="conf-label" style={{ color: confData.color }}>{confData.label}</span>
+                <span className="conf-score" style={{ color: confData.color }}>{(r.score * 100).toFixed(0)}%</span>
+              </div>
+              
+              {/* Descrição */}
+              {r.descricao && <p className="desc" data-testid="dish-description">{r.descricao}</p>}
+
+              {/* Técnica de Preparo */}
+              {r.tecnica && (
+                <div className="tecnica-box" data-testid="technique-box">
+                  <span>👨‍🍳 {r.tecnica}</span>
+                </div>
+              )}
+
+              {/* Riscos */}
+              {r.riscos?.length > 0 && (
+                <div className="info-box warning" data-testid="risks-box">
+                  <h4>⚠️ Riscos e Alertas</h4>
+                  <ul>{r.riscos.map((risco,i) => <li key={i}>{risco}</li>)}</ul>
+                </div>
+              )}
+
+              {/* ALERTAS PREMIUM EM TEMPO REAL */}
+              {r.premium && (
+                <div className="premium-alerts-section" data-testid="premium-alerts">
+                  {/* NOVIDADE/NOTÍCIA DO PRATO */}
+                  {r.premium.novidade && (
+                    <div className={`premium-novidade ${r.premium.novidade.severidade || 'info'}`} data-testid="dish-novidade">
+                      <div className="novidade-header">
+                        <span className="novidade-emoji">{r.premium.novidade.emoji || '📢'}</span>
+                        <span className="novidade-tipo">{r.premium.novidade.tipo?.toUpperCase()}</span>
+                      </div>
+                      <h4 className="novidade-titulo">{r.premium.novidade.titulo}</h4>
+                      <p className="novidade-mensagem">{r.premium.novidade.mensagem}</p>
+                    </div>
+                  )}
+                  
+                  {/* Alertas de alérgenos críticos */}
+                  {r.premium.alertas_alergenos?.length > 0 && (
+                    <div className="premium-alert-group critical">
+                      {r.premium.alertas_alergenos.map((a, i) => (
+                        <div key={i} className={`premium-alert ${a.severidade}`} data-testid={`allergen-alert-${i}`}>
+                          <span className="alert-emoji">{a.emoji}</span>
+                          <div className="alert-content">
+                            <strong>{a.titulo}</strong>
+                            <p>{a.mensagem}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Substituições saudáveis */}
+                  {r.premium.substituicoes?.length > 0 && (
+                    <div className="premium-substitutions">
+                      <h4>🔄 Substituições Mais Saudáveis</h4>
+                      {r.premium.substituicoes.map((s, i) => (
+                        <div key={i} className="substitution-card" data-testid={`subst-${i}`}>
+                          <span className="subst-original">{s.original}</span>
+                          <span className="subst-arrow">→</span>
+                          <span className="subst-new">{s.substituto}</span>
+                          <span className="subst-benefit">{s.beneficio}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* SEÇÃO CIENTÍFICA */}
+              {(r.beneficio_principal || r.curiosidade_cientifica) && (
+                <div className="scientific-section" data-testid="scientific-section">
+                  {r.beneficio_principal && (
+                    <div className="sci-box benefit" data-testid="main-benefit">
+                      <h4>🔬 Você Sabia?</h4>
+                      <p>{r.beneficio_principal}</p>
+                    </div>
+                  )}
+                  
+                  {r.curiosidade_cientifica && (
+                    <div className="sci-box curiosity" data-testid="curiosity">
+                      <h4>💡 Curiosidade Científica</h4>
+                      <p>{r.curiosidade_cientifica}</p>
+                    </div>
+                  )}
+                  
+                  {r.alerta_saude && (
+                    <div className="sci-box alert" data-testid="health-alert">
+                      <h4>⚠️ Atenção</h4>
+                      <p>{r.alerta_saude}</p>
+                    </div>
+                  )}
+                  
+                  {r.referencia_pesquisa && (
+                    <div className="sci-reference" data-testid="reference">
+                      📚 Fonte: {r.referencia_pesquisa}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* VERDADE OU MITO */}
+              {r.mito_verdade && (
+                <div className="mito-verdade-section" data-testid="mito-verdade">
+                  <div className="mito-verdade-card">
+                    <h4>🤔 Verdade ou Mito?</h4>
+                    <p className="mito-afirmacao">&quot;{r.mito_verdade.afirmacao}&quot;</p>
+                    <div className={`mito-resposta ${r.mito_verdade.resposta === 'VERDADE' ? 'verdade' : r.mito_verdade.resposta === 'MITO' ? 'mito' : 'parcial'}`}>
+                      <span className="mito-emoji">{r.mito_verdade.resposta_emoji}</span>
+                      <span className="mito-label">{r.mito_verdade.resposta}</span>
+                    </div>
+                    <p className="mito-explicacao">{r.mito_verdade.explicacao}</p>
+                    <p className="mito-fonte">📚 {r.mito_verdade.fonte}</p>
                   </div>
-                  <h4 className="novidade-titulo">{r.premium.novidade.titulo}</h4>
-                  <p className="novidade-mensagem">{r.premium.novidade.mensagem}</p>
-                </div>
-              )}
-              
-              {/* Alertas de alérgenos críticos */}
-              {r.premium.alertas_alergenos?.length > 0 && (
-                <div className="premium-alert-group critical">
-                  {r.premium.alertas_alergenos.map((a, i) => (
-                    <div key={i} className={`premium-alert ${a.severidade}`} data-testid={`allergen-alert-${i}`}>
-                      <span className="alert-emoji">{a.emoji}</span>
-                      <div className="alert-content">
-                        <strong>{a.titulo}</strong>
-                        <p>{a.mensagem}</p>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               )}
 
-              {/* Alertas baseados no histórico */}
-              {r.premium.alertas_historico?.length > 0 && (
-                <div className="premium-alert-group history">
-                  {r.premium.alertas_historico.map((a, i) => (
-                    <div key={i} className={`premium-alert ${a.tipo}`} data-testid={`history-alert-${i}`}>
-                      <span className="alert-emoji">{a.emoji}</span>
-                      <div className="alert-content">
-                        <strong>{a.titulo}</strong>
-                        <p>{a.mensagem}</p>
-                      </div>
-                    </div>
-                  ))}
+              {/* Informação Nutricional */}
+              {r.nutrition && (
+                <div className="nutr" data-testid="nutrition-box">
+                  <div className="nutr-title">{t('nutrition_info', 'Informação Nutricional (100g)')}</div>
+                  <div className="nutr-grid">
+                    <div><b>{r.nutrition.calorias}</b><small>{t('calories', 'Calorias')}</small></div>
+                    <div><b>{r.nutrition.proteinas}</b><small>{t('proteins', 'Proteínas')}</small></div>
+                    <div><b>{r.nutrition.carboidratos}</b><small>{t('carbs', 'Carbos')}</small></div>
+                    <div><b>{r.nutrition.gorduras}</b><small>{t('fats', 'Gorduras')}</small></div>
+                  </div>
+                  {r.aviso_cibi_sana && (
+                    <div className="cibi-sana-text" data-testid="cibi-sana-badge">{r.aviso_cibi_sana}</div>
+                  )}
                 </div>
               )}
 
-              {/* Combinações inteligentes */}
-              {r.premium.combinacoes_sugeridas?.length > 0 && (
-                <div className="premium-suggestions">
-                  <h4>💡 Combinações Inteligentes</h4>
-                  {r.premium.combinacoes_sugeridas.map((c, i) => (
-                    <div key={i} className="suggestion-card" data-testid={`combo-${i}`}>
-                      <span className="sugg-emoji">{c.emoji}</span>
-                      <div className="sugg-content">
-                        <strong>{c.titulo}</strong>
-                        <p className="sugg-examples">Ex: {c.exemplos?.join(', ')}</p>
-                        <p className="sugg-benefit">{c.beneficio}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              {/* BOTÃO DE COMPARTILHAR */}
+              {(r.beneficio_principal || r.curiosidade_cientifica) && (
+                <button 
+                  className="share-btn"
+                  onClick={() => {
+                    const text = `🍽️ ${r.dish_display}\n\n🔬 ${r.beneficio_principal || ''}\n\n💡 ${r.curiosidade_cientifica || ''}\n\n📚 ${r.referencia_pesquisa || ''}\n\nDescubra mais no SoulNutri - seu agente de nutrição virtual!`;
+                    if (navigator.share) {
+                      navigator.share({ title: 'SoulNutri', text });
+                    } else {
+                      navigator.clipboard.writeText(text);
+                      alert('Texto copiado! Cole para compartilhar.');
+                    }
+                  }}
+                  data-testid="share-button"
+                >
+                  📤 Compartilhar curiosidade
+                </button>
               )}
-
-              {/* Substituições saudáveis */}
-              {r.premium.substituicoes?.length > 0 && (
-                <div className="premium-substitutions">
-                  <h4>🔄 Substituições Mais Saudáveis</h4>
-                  {r.premium.substituicoes.map((s, i) => (
-                    <div key={i} className="substitution-card" data-testid={`subst-${i}`}>
-                      <span className="subst-original">{s.original}</span>
-                      <span className="subst-arrow">→</span>
-                      <span className="subst-new">{s.substituto}</span>
-                      <span className="subst-benefit">{s.beneficio}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            </>
           )}
 
-          {/* Badge Premium se não tiver dados científicos */}
-          {!r.is_premium && !r.beneficio_principal && (
-            <div className="premium-upgrade-hint" onClick={() => setShowPremium('login')}>
-              <span>⭐</span>
-              <p>Desbloqueie informações científicas e alertas personalizados com o <strong>Premium</strong></p>
-            </div>
-          )}
-
-          {/* SEÇÃO CIENTÍFICA - Informações relevantes (PREMIUM) */}
-          {(r.beneficio_principal || r.curiosidade_cientifica) && (
-            <div className="scientific-section" data-testid="scientific-section">
-              {r.beneficio_principal && (
-                <div className="sci-box benefit" data-testid="main-benefit">
-                  <h4>🔬 Você Sabia?</h4>
-                  <p>{r.beneficio_principal}</p>
-                </div>
-              )}
-              
-              {r.curiosidade_cientifica && (
-                <div className="sci-box curiosity" data-testid="curiosity">
-                  <h4>💡 Curiosidade Científica</h4>
-                  <p>{r.curiosidade_cientifica}</p>
-                </div>
-              )}
-              
-              {r.alerta_saude && (
-                <div className="sci-box alert" data-testid="health-alert">
-                  <h4>⚠️ Atenção</h4>
-                  <p>{r.alerta_saude}</p>
-                </div>
-              )}
-              
-              {r.referencia_pesquisa && (
-                <div className="sci-reference" data-testid="reference">
-                  📚 Fonte: {r.referencia_pesquisa}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* VERDADE OU MITO - Educação Nutricional (PREMIUM) */}
-          {r.mito_verdade && (
-            <div className="mito-verdade-section" data-testid="mito-verdade">
-              <div className="mito-verdade-card">
-                <h4>🤔 Verdade ou Mito?</h4>
-                <p className="mito-afirmacao">&quot;{r.mito_verdade.afirmacao}&quot;</p>
-                <div className={`mito-resposta ${r.mito_verdade.resposta === 'VERDADE' ? 'verdade' : r.mito_verdade.resposta === 'MITO' ? 'mito' : 'parcial'}`}>
-                  <span className="mito-emoji">{r.mito_verdade.resposta_emoji}</span>
-                  <span className="mito-label">{r.mito_verdade.resposta}</span>
-                </div>
-                <p className="mito-explicacao">{r.mito_verdade.explicacao}</p>
-                <p className="mito-fonte">📚 {r.mito_verdade.fonte}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Informação Nutricional */}
-          {r.nutrition && (
-            <div className="nutr" data-testid="nutrition-box">
-              <div className="nutr-title">{t('nutrition_info', 'Informação Nutricional (100g)')}</div>
-              <div className="nutr-grid">
-                <div><b>{r.nutrition.calorias}</b><small>{t('calories', 'Calorias')}</small></div>
-                <div><b>{r.nutrition.proteinas}</b><small>{t('proteins', 'Proteínas')}</small></div>
-                <div><b>{r.nutrition.carboidratos}</b><small>{t('carbs', 'Carbos')}</small></div>
-                <div><b>{r.nutrition.gorduras}</b><small>{t('fats', 'Gorduras')}</small></div>
-              </div>
-              {r.aviso_cibi_sana && (
-                <div className="cibi-sana-text" data-testid="cibi-sana-badge">{r.aviso_cibi_sana}</div>
-              )}
-            </div>
-          )}
-
-          <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
-
-          {/* Alternativas */}
-          {r.alternatives?.length > 0 && r.confidence !== 'alta' && (
-            <div className="alts" data-testid="alternatives-box">
-              <small>Também pode ser:</small>
-              {r.alternatives.map((a,i) => <span key={i}>{a}</span>)}
-            </div>
-          )}
+          {/* Botão para alternar entre modos */}
+          <button 
+            className="toggle-view-btn"
+            onClick={() => setViewMode(viewMode === 'buffet' ? 'mesa' : 'buffet')}
+            data-testid="toggle-view-btn"
+          >
+            {viewMode === 'buffet' ? '📖 Ver mais detalhes' : '📋 Vista resumida'}
+          </button>
 
           {/* BOTÕES DE FEEDBACK */}
           {!feedbackSent && r.source !== 'new_dish' && (
@@ -1501,23 +1504,14 @@ function App() {
             </div>
           )}
 
-          {/* BOTÃO DE COMPARTILHAR */}
-          {(r.beneficio_principal || r.curiosidade_cientifica) && (
-            <button 
-              className="share-btn"
-              onClick={() => {
-                const text = `🍽️ ${r.dish_display}\n\n🔬 ${r.beneficio_principal || ''}\n\n💡 ${r.curiosidade_cientifica || ''}\n\n📚 ${r.referencia_pesquisa || ''}\n\nDescubra mais no SoulNutri - seu agente de nutrição virtual!`;
-                if (navigator.share) {
-                  navigator.share({ title: 'SoulNutri', text });
-                } else {
-                  navigator.clipboard.writeText(text);
-                  alert('Texto copiado! Cole para compartilhar.');
-                }
-              }}
-              data-testid="share-button"
-            >
-              📤 Compartilhar curiosidade
-            </button>
+          <div className="time" data-testid="response-time">⚡ {r.search_time_ms?.toFixed(0)}ms</div>
+
+          {/* Alternativas */}
+          {r.alternatives?.length > 0 && r.confidence !== 'alta' && (
+            <div className="alts" data-testid="alternatives-box">
+              <small>Também pode ser:</small>
+              {r.alternatives.map((a,i) => <span key={i}>{a}</span>)}
+            </div>
           )}
         </div>
       )}
