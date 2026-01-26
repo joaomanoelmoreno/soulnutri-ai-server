@@ -41,6 +41,29 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+import re
+
+def format_dish_name(name: str) -> str:
+    """Formata nome do prato: adiciona espaços e capitaliza corretamente
+    Ex: 'aboboraassada' -> 'Abóbora Assada'
+    """
+    if not name:
+        return name
+    
+    # Substituir underscores por espaços
+    name = name.replace('_', ' ')
+    
+    # Adicionar espaço antes de letras maiúsculas (camelCase)
+    name = re.sub(r'([a-z])([A-Z])', r'\1 \2', name)
+    
+    # Adicionar espaço antes de números seguidos de letras
+    name = re.sub(r'(\d)([a-zA-Z])', r'\1 \2', name)
+    
+    # Capitalizar cada palavra
+    name = ' '.join(word.capitalize() for word in name.split())
+    
+    return name
+
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(mongo_url)
