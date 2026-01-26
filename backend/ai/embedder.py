@@ -83,7 +83,7 @@ def preload_model():
 
 
 def get_image_embedding(image_bytes: bytes) -> np.ndarray:
-    """Gera embedding de uma imagem"""
+    """Gera embedding de uma imagem a partir de bytes"""
     global _MODEL, _PREPROCESS, _USE_HF_API
     
     start = time.time()
@@ -111,6 +111,19 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
         logger.error(f"[embedder] Erro no modelo local: {e}")
         # Fallback para API
         return _get_embedding_via_api(image_bytes)
+
+
+# Aliases para compatibilidade com index.py
+def image_embedding_from_bytes(image_bytes: bytes) -> np.ndarray:
+    """Alias para get_image_embedding"""
+    return get_image_embedding(image_bytes)
+
+
+def image_embedding_from_path(image_path: str) -> np.ndarray:
+    """Gera embedding de uma imagem a partir do caminho do arquivo"""
+    with open(image_path, 'rb') as f:
+        image_bytes = f.read()
+    return get_image_embedding(image_bytes)
 
 
 def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
