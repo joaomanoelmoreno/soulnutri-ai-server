@@ -1126,9 +1126,11 @@ async def register_user(
 async def login_user(pin: str = Form(...), nome: str = Form(...)):
     """
     Login com Nome + PIN.
+    Verifica também se o Premium está liberado pelo admin.
     """
     try:
         from services.profile_service import hash_pin
+        from datetime import datetime
         
         pin_hash = hash_pin(pin)
         # Buscar por nome E pin_hash
@@ -1140,8 +1142,36 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
         if not user:
             return {"ok": False, "error": "Nome ou PIN incorreto"}
         
+        # Verificar se Premium está ativo e não expirou
+        premium_ativo = user.get("premium_ativo", False)
+        premium_expira_em = user.get("premium_expira_em")
+        
+        if premium_expira_em:
+            try:
+                expiracao = datetime.fromisoformat(premium_expira_em)
+                if datetime.now() > expiracao:
+                    premium_ativo = False
+                    # Atualizar no banco
+                    await db.users.update_one(
+                        {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                        {"$set": {"premium_ativo": False, "premium_expirado": True}}
+                    )
+            except:
+                pass
+        
+        # Adicionar status Premium à resposta
+        user["premium_ativo"] = premium_ativo
+        
+        # Se Premium não está ativo, retornar mensagem informativa
+        if not premium_ativo:
+            return {
+                "ok": True,
+                "user": user,
+                "premium_bloqueado": True,
+                "message": f"Olá, {user['nome']}! Seu acesso Premium ainda não foi liberado. Entre em contato para ativação."
+            }
+        
         # Buscar consumo do dia
-        from datetime import datetime
         hoje = datetime.now().strftime("%Y-%m-%d")
         daily_log = await db.daily_logs.find_one(
             {"user_nome": user["nome"], "data": hoje},
