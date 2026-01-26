@@ -1102,7 +1102,7 @@ function App() {
             </div>
           )}
           <button className="menu-item" onClick={() => { setShowMenu(false); setShowScannerTutorial(true); }} data-testid="menu-tutorial">
-            📡 {t('how_scanner_works', 'Como funciona o Scanner')}
+            📸 {t('how_scanner_works', 'Como usar o SoulNutri')}
           </button>
           <button className="menu-item" onClick={() => { setShowMenu(false); checkStatus(); loadDishes(); }}>
             🔄 Atualizar pratos
