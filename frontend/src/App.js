@@ -70,15 +70,15 @@ function ScannerTutorial({ onClose }) {
   
   const steps = [
     {
-      icon: "📡",
-      title: t('tutorial_step1_title', 'Scanner Automático'),
-      desc: t('tutorial_step1_desc', 'Aponte para qualquer prato e descubra instantaneamente ingredientes, benefícios e alertas de alérgenos.'),
+      icon: "📸",
+      title: t('tutorial_step1_title', 'Aponte e Fotografe'),
+      desc: t('tutorial_step1_desc', 'Enquadre o prato na tela e toque para tirar uma foto. Em segundos você terá todas as informações.'),
       visual: "scan-animation"
     },
     {
       icon: "✨",
       title: t('tutorial_step2_title', 'Escolha Consciente'),
-      desc: t('tutorial_step2_desc', 'Veja se contém glúten, lactose ou outros alérgenos. Descubra os benefícios de cada ingrediente para sua saúde.'),
+      desc: t('tutorial_step2_desc', 'Veja ingredientes, benefícios, alertas de alérgenos e muito mais. Tudo para você fazer a melhor escolha.'),
       visual: "tap-animation"
     },
     {
