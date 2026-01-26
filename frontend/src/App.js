@@ -1913,10 +1913,12 @@ function App() {
 
       {/* Welcome Popup - Seleção de idioma para novos usuários */}
       {showWelcome && (
-        <WelcomePopup onClose={() => {
-          localStorage.setItem('soulnutri_welcomed', 'true');
-          setShowWelcome(false);
-        }} />
+        <WelcomePopup onClose={handleWelcomeClose} />
+      )}
+
+      {/* Tutorial do Scanner Contínuo */}
+      {showScannerTutorial && (
+        <ScannerTutorial onClose={() => setShowScannerTutorial(false)} />
       )}
 
       {/* Rodapé */}
