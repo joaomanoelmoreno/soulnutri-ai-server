@@ -136,6 +136,10 @@ def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
         # Usar Gemini para identificar o nome do prato
         from services.generic_ai import identify_unknown_dish
         import asyncio
+        import nest_asyncio
+        
+        # Permitir event loops aninhados
+        nest_asyncio.apply()
         
         # Rodar função async de forma síncrona
         try:
