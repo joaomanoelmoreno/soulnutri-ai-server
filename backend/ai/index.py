@@ -190,6 +190,10 @@ class DishIndex:
         # Gerar embedding da query
         query_embedding = image_embedding_from_bytes(image_bytes)
         
+        # Verificar se embedding foi gerado com sucesso
+        if query_embedding is None:
+            return [{'error': 'Falha ao gerar embedding da imagem. Tente novamente.'}]
+        
         # Calcular similaridade de cosseno
         # Como os embeddings já estão normalizados, o dot product = cosine similarity
         similarities = np.dot(self.embeddings, query_embedding)
