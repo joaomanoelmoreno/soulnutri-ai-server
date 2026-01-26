@@ -1737,6 +1737,14 @@ function App() {
       {showMultiCorrection && (
         <div className="modal-overlay" onClick={() => setShowMultiCorrection(false)}>
           <div className="modal-content multi-correction" onClick={e => e.stopPropagation()}>
+            {/* BOTÃO VOLTAR */}
+            <button 
+              className="modal-back-btn"
+              onClick={() => setShowMultiCorrection(false)}
+            >
+              ← Voltar
+            </button>
+            
             <h3>✏️ Corrigir Identificação</h3>
             
             <div className="correction-form">
@@ -1773,9 +1781,6 @@ function App() {
                 disabled={creatingDish || !multiCorrections.principal.trim()}
               >
                 {creatingDish ? '⏳ Salvando...' : '💾 Salvar Correção'}
-              </button>
-              <button className="cancel-btn" onClick={() => setShowMultiCorrection(false)}>
-                ✕ Cancelar
               </button>
             </div>
           </div>
