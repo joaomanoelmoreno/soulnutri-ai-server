@@ -12,9 +12,13 @@ export default function Admin() {
   const [stats, setStats] = useState(null);
   const [filterCategory, setFilterCategory] = useState('');
   const [viewMode, setViewMode] = useState('grid'); // grid ou list
-  const [activeTab, setActiveTab] = useState('dishes'); // dishes, novidades, premium
+  const [activeTab, setActiveTab] = useState('dishes'); // dishes, novidades, premium, audit
   const [novidades, setNovidades] = useState([]);
   const [editingNovidade, setEditingNovidade] = useState(null);
+  // Auditoria
+  const [auditData, setAuditData] = useState(null);
+  const [auditLoading, setAuditLoading] = useState(false);
+  const [fixingSlug, setFixingSlug] = useState(null);
   const [novidadeForm, setNovidadeForm] = useState({
     dish_slug: '',
     tipo: 'info',
