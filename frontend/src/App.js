@@ -439,12 +439,32 @@ function App() {
   };
 
   // ═══════════════════════════════════════════════════════════════
-  // MODO SCANNER CONTÍNUO - Auto-identificação para buffet
+  // MODO SCANNER CONTÍNUO - Detecta mudança de imagem e identifica
   // ═══════════════════════════════════════════════════════════════
   
+  const lastFrameDataRef = useRef(null);
+  const scanningRef = useRef(false);
+  
+  // Função para calcular diferença entre frames
+  const calculateFrameDifference = (currentData, previousData) => {
+    if (!previousData || currentData.length !== previousData.length) return 1;
+    
+    let diff = 0;
+    const sampleSize = Math.min(1000, currentData.length / 4); // Amostra de pixels
+    const step = Math.floor(currentData.length / 4 / sampleSize);
+    
+    for (let i = 0; i < currentData.length; i += step * 4) {
+      diff += Math.abs(currentData[i] - previousData[i]); // R
+      diff += Math.abs(currentData[i + 1] - previousData[i + 1]); // G
+      diff += Math.abs(currentData[i + 2] - previousData[i + 2]); // B
+    }
+    
+    return diff / (sampleSize * 3 * 255); // Normalizado 0-1
+  };
+
   const performScan = useCallback(async () => {
-    // Não escanear se já está carregando ou não tem câmera
-    if (loadingRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+    // Não escanear se já está escaneando, carregando, ou sem câmera
+    if (scanningRef.current || loadingRef.current || !videoRef.current || !canvasRef.current || !stream) return;
     
     const v = videoRef.current;
     const c = canvasRef.current;
@@ -452,74 +472,93 @@ function App() {
     // Verificar se o vídeo está pronto
     if (v.videoWidth === 0 || v.videoHeight === 0) return;
     
-    // Limitar tamanho para scan rápido
-    const maxSize = 640;
-    let w = v.videoWidth;
-    let h = v.videoHeight;
-    if (w > maxSize || h > maxSize) {
-      const ratio = Math.min(maxSize / w, maxSize / h);
-      w = Math.round(w * ratio);
-      h = Math.round(h * ratio);
-    }
-    
-    c.width = w;
-    c.height = h;
+    // Tamanho pequeno para detecção de mudança (rápido)
+    const detectSize = 160;
+    c.width = detectSize;
+    c.height = detectSize;
     const ctx = c.getContext('2d');
-    ctx.drawImage(v, 0, 0, w, h);
+    ctx.drawImage(v, 0, 0, detectSize, detectSize);
     
-    // Converter para blob e identificar
-    c.toBlob(async (blob) => {
-      if (!blob || !mountedRef.current) return;
+    // Obter dados do frame atual
+    const imageData = ctx.getImageData(0, 0, detectSize, detectSize);
+    const currentData = imageData.data;
+    
+    // Calcular diferença com frame anterior
+    const difference = calculateFrameDifference(currentData, lastFrameDataRef.current);
+    
+    // Se mudança significativa (> 15%), fazer reconhecimento
+    if (difference > 0.15) {
+      // Salvar frame atual
+      lastFrameDataRef.current = new Uint8ClampedArray(currentData);
       
-      try {
-        const fd = new FormData();
-        fd.append("file", blob, "scan.jpg");
-        
-        const res = await fetch(`${API}/ai/identify`, {
-          method: "POST",
-          body: fd
-        });
-        
-        if (!mountedRef.current) return;
-        
-        const data = await res.json();
-        
-        if (data.ok && data.identified && data.score >= 0.6) {
-          // Só atualizar se for diferente do resultado anterior
-          setScannerResult(prev => {
-            if (!prev || prev.dish !== data.dish) {
-              return {
-                dish: data.dish,
-                dish_display: data.dish_display,
-                categoria: data.categoria,
-                calorias: data.calorias_estimadas || data.nutricao?.calorias || '~150 kcal',
-                score: data.score,
-                confidence: data.confidence,
-                beneficios: data.beneficios || [],
-                riscos: data.riscos || [],
-                contem_gluten: data.contem_gluten,
-                timestamp: Date.now()
-              };
-            }
-            return prev;
-          });
-        }
-      } catch (e) {
-        console.warn('Scanner error:', e);
+      // Capturar em maior resolução para identificação
+      const scanSize = 640;
+      let w = v.videoWidth;
+      let h = v.videoHeight;
+      if (w > scanSize || h > scanSize) {
+        const ratio = Math.min(scanSize / w, scanSize / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
       }
       
-      // Limpar canvas
-      ctx.clearRect(0, 0, w, h);
-    }, 'image/jpeg', 0.6);
+      c.width = w;
+      c.height = h;
+      ctx.drawImage(v, 0, 0, w, h);
+      
+      // Converter e identificar
+      c.toBlob(async (blob) => {
+        if (!blob || !mountedRef.current || scanningRef.current) return;
+        
+        scanningRef.current = true;
+        
+        try {
+          const fd = new FormData();
+          fd.append("file", blob, "scan.jpg");
+          
+          const res = await fetch(`${API}/ai/identify`, {
+            method: "POST",
+            body: fd
+          });
+          
+          if (!mountedRef.current) return;
+          
+          const data = await res.json();
+          
+          if (data.ok && data.identified && data.score >= 0.6) {
+            setScannerResult({
+              dish: data.dish,
+              dish_display: data.dish_display,
+              categoria: data.categoria,
+              calorias: data.calorias_estimadas || data.nutricao?.calorias || '~150 kcal',
+              score: data.score,
+              confidence: data.confidence,
+              beneficios: data.beneficios || [],
+              riscos: data.riscos || [],
+              contem_gluten: data.contem_gluten,
+              timestamp: Date.now()
+            });
+          } else if (difference > 0.4) {
+            // Mudança muito grande mas não identificado - limpar resultado anterior
+            setScannerResult(null);
+          }
+        } catch (e) {
+          console.warn('Scanner error:', e);
+        } finally {
+          scanningRef.current = false;
+        }
+        
+        // Limpar canvas
+        ctx.clearRect(0, 0, w, h);
+      }, 'image/jpeg', 0.6);
+    }
   }, [stream]);
 
-  // Iniciar/parar scanner automático
+  // Loop de detecção de mudança (verifica a cada 500ms se imagem mudou)
   useEffect(() => {
     if (scannerMode && stream && !result && !loading) {
-      // Escanear a cada 2 segundos
-      scanIntervalRef.current = setInterval(performScan, 2000);
-      // Primeiro scan imediato
-      setTimeout(performScan, 500);
+      scanIntervalRef.current = setInterval(performScan, 500);
+      // Primeiro scan após 300ms
+      setTimeout(performScan, 300);
     }
     
     return () => {
@@ -530,7 +569,7 @@ function App() {
     };
   }, [scannerMode, stream, result, loading, performScan]);
 
-  // Limpar scanner result quando toca na tela (para captura manual)
+  // Toque no overlay para ver detalhes completos
   const handleScannerTap = useCallback(() => {
     if (scannerResult) {
       // Converter scanner result para result completo
