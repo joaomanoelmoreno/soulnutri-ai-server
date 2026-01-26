@@ -12,6 +12,57 @@ const API = `${BACKEND_URL}/api`;
 // Timeout para requisições (evita travamentos)
 const REQUEST_TIMEOUT = 15000; // 15 segundos
 
+// Componente Welcome Popup - Boas-vindas com seleção de idioma
+function WelcomePopup({ onClose }) {
+  const { languages, changeLanguage, currentLang, t } = useI18n();
+  
+  const handleSelectLanguage = (langCode) => {
+    changeLanguage(langCode);
+    onClose();
+  };
+  
+  return (
+    <div className="welcome-overlay" data-testid="welcome-popup">
+      <div className="welcome-popup">
+        <div className="welcome-header">
+          <img src="/images/soulnutri-logo.png" alt="SoulNutri" className="welcome-logo" />
+          <h1>SoulNutri<span className="tm">®</span></h1>
+        </div>
+        
+        <p className="welcome-tagline">Porque nutre também a sua alma</p>
+        
+        <div className="welcome-message">
+          <p>🌍 Escolha seu idioma / Choose your language:</p>
+        </div>
+        
+        <div className="welcome-languages">
+          {languages.map(lang => (
+            <button
+              key={lang.code}
+              className={`welcome-lang-btn ${lang.code === currentLang ? 'active' : ''}`}
+              onClick={() => handleSelectLanguage(lang.code)}
+              data-testid={`welcome-lang-${lang.code}`}
+            >
+              <span className="welcome-flag">{lang.flag}</span>
+              <span className="welcome-lang-name">{lang.native}</span>
+            </button>
+          ))}
+        </div>
+        
+        <div className="welcome-features">
+          <div className="feature">📸 Aponte • Identifique • Saiba</div>
+          <div className="feature">🥗 499+ pratos cadastrados</div>
+          <div className="feature">⚡ Rápido e preciso</div>
+        </div>
+        
+        <button className="welcome-start-btn" onClick={onClose} data-testid="welcome-start">
+          {t('tap_to_photo', 'Começar')} →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
