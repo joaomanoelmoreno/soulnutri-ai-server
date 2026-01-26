@@ -1067,7 +1067,7 @@ function App() {
           onClick={() => fileInputRef.current?.click()}
           data-testid="gallery-button"
         >
-          🖼️ Galeria
+          🖼️ {t('gallery', 'Galeria')}
         </button>
         <button 
           className="action-btn clear" 
@@ -1075,7 +1075,7 @@ function App() {
           disabled={!r && !multiResult && !error && plateItems.length === 0}
           data-testid="clear-button"
         >
-          🔄 Nova
+          🔄 {t('new_scan', 'Nova')}
         </button>
       </div>
 
@@ -1083,7 +1083,7 @@ function App() {
       {plateItems.length > 0 && (
         <div className="plate-summary" data-testid="plate-summary">
           <div className="plate-summary-header">
-            <span>🍽️ Seu Prato ({plateItems.length} {plateItems.length === 1 ? 'item' : 'itens'})</span>
+            <span>🍽️ {t('your_plate', 'Seu Prato')} ({plateItems.length} {t('items', 'itens')})</span>
             <span className="plate-total-cal">{Math.round(plateTotals.calorias)} kcal</span>
           </div>
           <div className="plate-items-list">
