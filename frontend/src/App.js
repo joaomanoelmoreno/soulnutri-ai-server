@@ -179,6 +179,7 @@ function App() {
   const [plateItems, setPlateItems] = useState([]); // Lista de itens identificados
   const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
   const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
+  const [viewMode, setViewMode] = useState('buffet'); // 'buffet' = vista rápida, 'mesa' = vista completa
   // Modo Scanner Contínuo para Buffet (DESATIVADO - usando modo foto simples)
   const [scannerMode, setScannerMode] = useState(false); // Desativado por padrão
   const [lastScanTime, setLastScanTime] = useState(0);
