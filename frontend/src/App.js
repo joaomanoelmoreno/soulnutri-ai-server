@@ -435,7 +435,113 @@ function App() {
     setMultiResult(null);
     setPreviewImageUrl(null);
     setShowAddMore(false);
+    setScannerResult(null);
   };
+
+  // ═══════════════════════════════════════════════════════════════
+  // MODO SCANNER CONTÍNUO - Auto-identificação para buffet
+  // ═══════════════════════════════════════════════════════════════
+  
+  const performScan = useCallback(async () => {
+    // Não escanear se já está carregando ou não tem câmera
+    if (loadingRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+    
+    const v = videoRef.current;
+    const c = canvasRef.current;
+    
+    // Verificar se o vídeo está pronto
+    if (v.videoWidth === 0 || v.videoHeight === 0) return;
+    
+    // Limitar tamanho para scan rápido
+    const maxSize = 640;
+    let w = v.videoWidth;
+    let h = v.videoHeight;
+    if (w > maxSize || h > maxSize) {
+      const ratio = Math.min(maxSize / w, maxSize / h);
+      w = Math.round(w * ratio);
+      h = Math.round(h * ratio);
+    }
+    
+    c.width = w;
+    c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(v, 0, 0, w, h);
+    
+    // Converter para blob e identificar
+    c.toBlob(async (blob) => {
+      if (!blob || !mountedRef.current) return;
+      
+      try {
+        const fd = new FormData();
+        fd.append("file", blob, "scan.jpg");
+        
+        const res = await fetch(`${API}/ai/identify`, {
+          method: "POST",
+          body: fd
+        });
+        
+        if (!mountedRef.current) return;
+        
+        const data = await res.json();
+        
+        if (data.ok && data.identified && data.score >= 0.6) {
+          // Só atualizar se for diferente do resultado anterior
+          setScannerResult(prev => {
+            if (!prev || prev.dish !== data.dish) {
+              return {
+                dish: data.dish,
+                dish_display: data.dish_display,
+                categoria: data.categoria,
+                calorias: data.calorias_estimadas || data.nutricao?.calorias || '~150 kcal',
+                score: data.score,
+                confidence: data.confidence,
+                beneficios: data.beneficios || [],
+                riscos: data.riscos || [],
+                contem_gluten: data.contem_gluten,
+                timestamp: Date.now()
+              };
+            }
+            return prev;
+          });
+        }
+      } catch (e) {
+        console.warn('Scanner error:', e);
+      }
+      
+      // Limpar canvas
+      ctx.clearRect(0, 0, w, h);
+    }, 'image/jpeg', 0.6);
+  }, [stream]);
+
+  // Iniciar/parar scanner automático
+  useEffect(() => {
+    if (scannerMode && stream && !result && !loading) {
+      // Escanear a cada 2 segundos
+      scanIntervalRef.current = setInterval(performScan, 2000);
+      // Primeiro scan imediato
+      setTimeout(performScan, 500);
+    }
+    
+    return () => {
+      if (scanIntervalRef.current) {
+        clearInterval(scanIntervalRef.current);
+        scanIntervalRef.current = null;
+      }
+    };
+  }, [scannerMode, stream, result, loading, performScan]);
+
+  // Limpar scanner result quando toca na tela (para captura manual)
+  const handleScannerTap = useCallback(() => {
+    if (scannerResult) {
+      // Converter scanner result para result completo
+      setResult({
+        ok: true,
+        identified: true,
+        ...scannerResult
+      });
+      setScannerResult(null);
+    }
+  }, [scannerResult]);
 
   // Calcular totais do prato
   const plateTotals = plateItems.reduce((acc, item) => {
