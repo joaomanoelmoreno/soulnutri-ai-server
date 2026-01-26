@@ -1447,18 +1447,6 @@ function App() {
         </div>
       )}
 
-      {/* Botão de Check-in Rápido (Premium logado) - DESATIVADO POR ENQUANTO
-      {premiumUser && !showPremium && !showCheckin && !loading && !result && (
-        <button 
-          className="checkin-btn"
-          onClick={() => setShowCheckin(true)}
-          data-testid="checkin-btn"
-        >
-          🍽️ Check-in
-        </button>
-      )}
-      */}
-
       {/* Rodapé */}
       <footer className="footer">
         <small>Powered by Emergent</small>
