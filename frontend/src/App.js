@@ -934,6 +934,33 @@ function App() {
             <p>Toque para fotografar</p>
           </div>
         )}
+
+        {/* SCANNER OVERLAY - Mostra info em tempo real */}
+        {scannerResult && !loading && !r && (
+          <div 
+            className="scanner-overlay" 
+            onClick={handleScannerTap}
+            data-testid="scanner-overlay"
+          >
+            <div className="scanner-result">
+              <div className="scanner-header">
+                <span className="scanner-icon">✅</span>
+                <span className="scanner-dish">{scannerResult.dish_display}</span>
+              </div>
+              <div className="scanner-info">
+                <span className="scanner-cal">{scannerResult.calorias}</span>
+                <span className="scanner-cat">{scannerResult.categoria}</span>
+              </div>
+              {scannerResult.contem_gluten === false && (
+                <span className="scanner-badge gluten-free">Sem glúten</span>
+              )}
+              {scannerResult.riscos?.length > 0 && (
+                <span className="scanner-badge warning">⚠️ {scannerResult.riscos[0]}</span>
+              )}
+              <p className="scanner-tap">Toque para mais detalhes</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Botões de ação */}
