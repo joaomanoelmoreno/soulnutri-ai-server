@@ -1366,17 +1366,27 @@ function App() {
           <button 
             className="share-btn"
             onClick={() => {
-              const itens = plateItems.map(i => i.dish_display).join(', ');
-              const text = `🍽️ Meu prato no SoulNutri:\n\n${itens}\n\n📊 ${plateConsolidated?.nutrition?.calorias} | ${plateConsolidated?.nutrition?.proteinas} proteínas\n\nDescubra mais no SoulNutri!`;
+              const itens = plateItems.map(i => `• ${i.dish_display}`).join('\n');
+              const beneficios = plateConsolidated?.beneficios?.slice(0, 2).join('\n• ') || '';
+              const alergenos = [];
+              if (plateConsolidated?.contemGluten) alergenos.push('Glúten');
+              if (plateConsolidated?.contemLactose) alergenos.push('Lactose');
+              
+              const text = `🍽️ Minha refeição consciente:\n\n${itens}\n\n` +
+                (beneficios ? `✅ Benefícios:\n• ${beneficios}\n\n` : '') +
+                (alergenos.length > 0 ? `⚠️ Contém: ${alergenos.join(', ')}\n\n` : '') +
+                `📊 ${plateConsolidated?.nutrition?.calorias} | ${plateConsolidated?.nutrition?.proteinas} proteínas\n\n` +
+                `💡 Escolhi com informação! Conheça o SoulNutri - seu agente de nutrição virtual que te ajuda a fazer escolhas conscientes.\n\nsoulnutri.app.br`;
+              
               if (navigator.share) {
-                navigator.share({ title: 'SoulNutri - Meu Prato', text });
+                navigator.share({ title: 'SoulNutri - Minha Escolha', text });
               } else {
                 navigator.clipboard.writeText(text);
                 alert('Texto copiado!');
               }
             }}
           >
-            📤 Compartilhar meu prato
+            📤 Compartilhar minha escolha
           </button>
 
           {/* BOTÕES DE AÇÃO */}
