@@ -64,6 +64,7 @@ function WelcomePopup({ onClose }) {
 }
 
 function App() {
+  const { t, currentLang } = useI18n();
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
