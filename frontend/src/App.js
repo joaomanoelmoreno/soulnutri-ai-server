@@ -1683,6 +1683,14 @@ function App() {
       {showAddMore && result?.ok && result?.identified && (
         <div className="modal-overlay add-more-overlay" data-testid="add-more-modal">
           <div className="modal-content add-more-modal" onClick={e => e.stopPropagation()}>
+            {/* BOTÃO VOLTAR */}
+            <button 
+              className="modal-back-btn"
+              onClick={() => setShowAddMore(false)}
+            >
+              ← Voltar
+            </button>
+            
             <div className="add-more-success">
               <span className="add-more-emoji">✅</span>
               <h3>{result.dish_display}</h3>
