@@ -896,6 +896,7 @@ function App() {
           <span className="trademark">®</span>
         </div>
         <div className="header-right">
+          <LanguageSelector />
           {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
           <button 
             className="menu-btn" 
