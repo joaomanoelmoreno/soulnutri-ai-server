@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://virtual-nutritionist-1.preview.emergentagent.com
-- Admin: https://virtual-nutritionist-1.preview.emergentagent.com/admin
-- Lista de Pratos: https://virtual-nutritionist-1.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://nutri-vision-32.preview.emergentagent.com
+- Admin: https://nutri-vision-32.preview.emergentagent.com/admin
+- Lista de Pratos: https://nutri-vision-32.preview.emergentagent.com/lista-pratos.txt
 
 ---
 
