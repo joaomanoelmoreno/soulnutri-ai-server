@@ -1,7 +1,7 @@
 {
   "slug": "farofadebacon",
   "nome": "Farofa de Bacon",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "descricao": "Farofa crocante, acompanhamento brasileiro.",
   "ingredientes": [
     "farinha de mandioca",
@@ -39,5 +39,5 @@
   "evitar_com": [
     "Outros carboidratos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🍖"
 }

@@ -4,9 +4,9 @@
   "ingredientes": [
     "Biscoito tipo champagne",
     "Café",
-    "Ovos",
+    "soja",
     "Açúcar",
-    "Queijo mascarpone",
+    "creme vegetal",
     "Cacau em pó"
   ],
   "descricao": "Sobremesa italiana clássica feita com biscoitos champagne embebidos em café, creme de mascarpone e cacau em pó.",
@@ -33,5 +33,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

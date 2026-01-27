@@ -1,7 +1,7 @@
 {
   "slug": "romeuejulieta",
   "nome": "Romeuejulieta",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "O prato 'Romeu e Julieta' é uma combinação clássica da culinária brasileira, consistindo em goiabada e queijo branco. Na imagem, vemos a goiabada em formato de geleia em um pote e um creme de queijo branco.",
   "ingredientes": [
     "Goiabada",
@@ -22,5 +22,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": ""
 }

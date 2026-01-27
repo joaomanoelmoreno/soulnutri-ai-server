@@ -1,7 +1,7 @@
 {
   "slug": "moussedemaracuja",
   "nome": "Moussedemaracuja",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "Mousse cremoso de frutas.",
   "ingredientes": [
     "creme de leite",
@@ -39,5 +39,5 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥚"
 }

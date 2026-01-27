@@ -1,6 +1,6 @@
 {
   "nome": "Hambúrguer Bovino",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
     "Carne bovina (hambúrguer)",
     "Tomate cereja",
@@ -23,11 +23,12 @@
     "carboidratos": "",
     "gorduras": ""
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🍖",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

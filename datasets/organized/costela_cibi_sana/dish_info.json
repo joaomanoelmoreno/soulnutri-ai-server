@@ -1,7 +1,7 @@
 {
   "slug": "costela_cibi_sana",
   "nome": "Costelinha Cibi Sana",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "descricao": "Costela bovina assada lentamente.",
   "ingredientes": [
     "costela bovina",
@@ -40,5 +40,5 @@
   "evitar_com": [
     "Outras gorduras no mesmo dia"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🍖"
 }

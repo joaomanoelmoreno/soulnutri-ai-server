@@ -1,7 +1,7 @@
 {
   "slug": "brownie",
-  "nome": "Brownie de Chocolate com Calda",
-  "categoria": "vegano",
+  "nome": "Brownie de Chocolate",
+  "categoria": "vegetariano",
   "descricao": "Bolo caseiro tradicional.",
   "ingredientes": [
     "farinha de trigo",
@@ -29,17 +29,5 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "category_emoji": "🌱",
-  "tecnica": "Assado em forno",
-  "indice_glicemico": "alto",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Lanche da tarde (ocasional)",
-  "combina_com": [
-    "Café",
-    "Chá"
-  ],
-  "evitar_com": [
-    "Outras sobremesas"
-  ]
+  "contem_soja": false
 }

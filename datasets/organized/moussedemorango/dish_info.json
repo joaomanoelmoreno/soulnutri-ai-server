@@ -1,6 +1,6 @@
 {
   "nome": "Mousse de Morango",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
     "creme de leite",
     "leite condensado",
@@ -24,7 +24,7 @@
     "carboidratos": "25g",
     "gorduras": "10g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "contem_lactose": false,
   "contem_ovo": false,
   "tecnica": "Refrigerado",

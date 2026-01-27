@@ -1,6 +1,6 @@
 {
   "nome": "Julieta",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
     "queijo vegano"
   ],
@@ -21,7 +21,7 @@
     "carboidratos": "",
     "gorduras": ""
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

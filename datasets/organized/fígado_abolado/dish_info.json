@@ -1,8 +1,8 @@
 {
   "nome": "Fígado Acebolado",
   "slug": "fígado_abolado",
-  "categoria": "vegano",
-  "category_emoji": "🌱",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
   "descricao": "Prato com carne e legumes, difícil de identificar com precisão.",
   "ingredientes": [
     "Carne",
