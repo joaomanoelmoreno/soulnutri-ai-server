@@ -1,40 +1,38 @@
 {
   "slug": "cenouraaoiogurte",
   "nome": "Cenoura com Iogurte e  Especiarias",
-  "categoria": "vegetariano",
-  "descricao": "A cenoura é grelhada, mantendo uma textura levemente crocante. É servida sobre uma base de iogurte misturado com ervas frescas picadas, alho e azeite de oliva. O prato é finalizado com um pesto de ervas, sementes de gergelim e raspas de limão, além de rodelas de limão para decorar.",
+  "categoria": "vegano",
+  "descricao": "Cenoura nutritiva e versátil.",
   "ingredientes": [
-    "Cenoura",
-    "Iogurte",
-    "Ervas finas picadas (salsa e cebolinha)",
-    "Gomos de laranja",
-    "Iogurte (base do molho)",
-    "Ervas frescas (salsa/coentro)",
-    "Alho",
-    "Azeite de oliva",
-    "Sementes de gergelim",
-    "Raspas de limão",
-    "Sal e pimenta do reino",
-    "Rodelas de limão (decoração)"
+    "cenoura",
+    "sal"
   ],
   "beneficios": [
-    "A cenoura é rica em betacaroteno, precursor da vitamina A, importante para a visão e a saúde da pele. ",
-    "O iogurte oferece probióticos, que auxiliam na saúde intestinal.",
-    "A combinação de cenoura com laranja potencializa a absorção de vitamina C e a formação de colágeno.",
-    "A cenoura é rica em betacaroteno, precursor da vitamina A, essencial para a saúde da visão e da pele.",
-    "O iogurte fornece probióticos que promovem a saúde intestinal e auxiliam na digestão.",
-    "As especiarias, como o alho, possuem propriedades antioxidantes e anti-inflamatórias."
+    "Rica em betacaroteno",
+    "Vitamina A",
+    "Boa para visão"
   ],
-  "riscos": [
-    "Alergia: pode conter traços de leite.",
-    "Alergia: pode conter traços de gergelim."
-  ],
-  "nutricao": {},
+  "riscos": [],
+  "nutricao": {
+    "calorias": "41 kcal",
+    "proteinas": "0.9g",
+    "carboidratos": "10g",
+    "gorduras": "0.2g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🌱",
+  "tecnica": "Crua ou cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Saladas",
+    "Sopas"
+  ],
+  "evitar_com": []
 }

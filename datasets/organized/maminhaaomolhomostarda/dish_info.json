@@ -10,12 +10,10 @@
   "beneficios": [
     "Corte macio",
     "Rico em proteínas",
-    "Ferro",
-    "Zinco"
+    "Ferro"
   ],
   "riscos": [
-    "Gordura moderada",
-    "Consumir com moderação"
+    "Gordura moderada"
   ],
   "curiosidade": "A maminha é um corte de carne bovina localizado na parte traseira do boi, com sabor marcante e maciez, sendo muito apreciada em churrascos e preparações diversas.",
   "slug": "maminhaaomolhomostarda",
@@ -34,8 +32,7 @@
   "melhor_horario": "Almoço",
   "combina_com": [
     "Farofa",
-    "Vinagrete",
-    "Arroz"
+    "Vinagrete"
   ],
   "evitar_com": [
     "Molhos gordurosos"

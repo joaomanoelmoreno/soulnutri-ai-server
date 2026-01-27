@@ -11,8 +11,7 @@
   "beneficios": [
     "Baixíssimas calorias",
     "Rica em fibras",
-    "Vitaminas e minerais",
-    "Hidratação"
+    "Vitaminas e minerais"
   ],
   "riscos": [
     "Verificar higienização"
@@ -30,14 +29,13 @@
   "contem_ovo": false,
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "1-2 horas",
-  "melhor_horario": "Qualquer refeição",
+  "melhor_horario": "Qualquer",
   "combina_com": [
     "Proteínas",
-    "Azeite de oliva",
-    "Limão"
+    "Azeite"
   ],
   "evitar_com": [
-    "Molhos industrializados calóricos"
+    "Molhos calóricos"
   ],
   "category_emoji": "🌱"
 }

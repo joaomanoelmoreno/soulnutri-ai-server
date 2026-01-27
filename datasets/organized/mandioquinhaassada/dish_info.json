@@ -2,26 +2,35 @@
   "nome": "Mandioquinhaassada",
   "categoria": "vegano",
   "ingredientes": [
-    "Mandioquinha",
-    "Cebolinha",
-    "Azeite de oliva",
-    "Sal"
+    "mandioquinha",
+    "sal"
   ],
-  "descricao": "A mandioquinha (batata baroa) é assada, provavelmente com azeite de oliva e sal. Após o cozimento, é finalizada com cebolinha picada.",
+  "descricao": "Mandioquinha cremosa e nutritiva.",
   "beneficios": [
-    "A mandioquinha é rica em carboidratos complexos, fornecendo energia de forma gradual.",
-    "A cebolinha é fonte de vitaminas (K, C e A) e minerais (cálcio e ferro), além de possuir propriedades antioxidantes."
+    "Fonte de energia",
+    "Rico em potássio",
+    "Fácil digestão"
   ],
-  "riscos": [
-    "Se a mandioquinha não for higienizada corretamente, pode conter resíduos de agrotóxicos."
-  ],
+  "riscos": [],
   "curiosidade": "A mandioquinha é uma raiz originária da América do Sul e seu cultivo é comum no Brasil, principalmente nas regiões Sul e Sudeste.",
   "slug": "mandioquinhaassada",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "90 kcal",
+    "proteinas": "1g",
+    "carboidratos": "21g",
+    "gorduras": "0.2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Cozida ou como purê",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Carnes",
+    "Purê"
+  ],
+  "evitar_com": []
 }

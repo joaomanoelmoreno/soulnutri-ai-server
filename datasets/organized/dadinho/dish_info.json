@@ -1,28 +1,41 @@
 {
   "slug": "dadinho",
   "nome": "Dadinho de Tapioca",
-  "categoria": "vegano",
-  "descricao": "Cubos crocantes de tapioca com queijo coalho, assados até dourar. Pode ser servido com camarão.",
+  "categoria": "vegetariano",
+  "descricao": "Bolinho crocante e saboroso.",
   "ingredientes": [
-    "Tapioca",
-    "Queijo coalho",
-    "Temperos"
+    "base variada",
+    "temperos",
+    "óleo"
   ],
   "beneficios": [
-    "Sem glúten",
-    "Fonte de cálcio"
+    "Fonte de energia"
   ],
   "riscos": [
-    "Contém lactose",
-    "Fritura"
+    "Frito",
+    "Calórico"
   ],
-  "nutricao": {},
-  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "4g",
+    "carboidratos": "20g",
+    "gorduras": "10g"
+  },
+  "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "tecnica": "Frito",
+  "category_emoji": "🥚",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Entrada ou lanche",
+  "combina_com": [
+    "Molhos"
+  ],
+  "evitar_com": [
+    "Outras frituras"
+  ]
 }

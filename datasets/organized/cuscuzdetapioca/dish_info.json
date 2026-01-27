@@ -2,35 +2,39 @@
   "nome": "Cuscuz de Tapioca com Coco",
   "categoria": "vegano",
   "ingredientes": [
-    "Tapioca granulada",
-    "Leite de coco",
-    "Leite condensado",
-    "Coco ralado"
+    "farinha de milho",
+    "água",
+    "sal"
   ],
-  "descricao": "Sobremesa cremosa e refrescante feita com tapioca granulada, leite de coco e coco ralado. Ideal para um lanche ou sobremesa.",
+  "descricao": "Cuscuz nordestino tradicional.",
   "beneficios": [
     "Fonte de energia",
-    "Rico em fibras (se usar coco integral)",
-    "Sem glúten"
+    "Sem glúten",
+    "Leve"
   ],
-  "riscos": [
-    "Alto teor de açúcar (devido ao leite condensado)",
-    "Contém lactose (leite condensado)"
-  ],
+  "riscos": [],
   "curiosidade": "A tapioca é um alimento versátil, extraído da mandioca, e muito consumido na culinária brasileira, principalmente nas regiões Norte e Nordeste. Ela não contém glúten e é uma boa opção para quem tem restrições alimentares.",
   "slug": "cuscuzdetapioca",
   "nutricao": {
-    "calorias": "250 kcal",
+    "calorias": "120 kcal",
     "proteinas": "3g",
-    "carboidratos": "40g",
-    "gorduras": "8g"
+    "carboidratos": "25g",
+    "gorduras": "0.5g"
   },
   "contem_gluten": false,
-  "tecnica": "",
+  "tecnica": "Vapor",
   "category_emoji": "🌱",
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Café ou almoço",
+  "combina_com": [
+    "Ovo",
+    "Manteiga"
+  ],
+  "evitar_com": []
 }

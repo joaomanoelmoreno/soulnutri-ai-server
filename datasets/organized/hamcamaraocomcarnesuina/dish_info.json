@@ -2,27 +2,25 @@
   "nome": "File Mignon a parmegiana",
   "categoria": "vegano",
   "ingredientes": [
-    "sal",
-    "temperos"
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
   ],
-  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "descricao": "Berinjela preparada de forma saudável.",
   "beneficios": [
-    "Proteína completa",
-    "Ferro heme de alta absorção",
-    "Vitamina B12",
-    "Zinco"
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes"
   ],
-  "riscos": [
-    "Consumo excessivo associado a doenças cardiovasculares",
-    "Gordura saturada"
-  ],
+  "riscos": [],
   "curiosidade": "O camarão é uma boa fonte de ácidos graxos ômega-3, que são benéficos para a saúde do coração.",
   "slug": "hamcamaraocomcarnesuina",
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "26g",
-    "carboidratos": "0g",
-    "gorduras": "15g"
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -31,17 +29,13 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "Grelhado ou assado",
-  "indice_glicemico": "zero",
-  "tempo_digestao": "4-5 horas",
-  "melhor_horario": "Almoço",
+  "tecnica": "Grelhada ou assada",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
   "combina_com": [
-    "Saladas",
-    "Legumes",
-    "Arroz"
+    "Queijo",
+    "Tomate"
   ],
-  "evitar_com": [
-    "Outras gorduras",
-    "Frituras"
-  ]
+  "evitar_com": []
 }

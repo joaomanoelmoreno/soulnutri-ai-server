@@ -2,24 +2,27 @@
   "slug": "lentilhacomtofu",
   "nome": "Lentilhacomtofu",
   "categoria": "vegano",
-  "descricao": "Tofu, proteína vegetal versátil.",
+  "descricao": "Lentilha nutritiva, símbolo de prosperidade.",
   "ingredientes": [
-    "tofu (soja)",
-    "temperos"
+    "lentilha",
+    "água",
+    "sal",
+    "alho",
+    "cebola"
   ],
   "beneficios": [
-    "Proteína vegetal completa",
-    "Cálcio",
-    "Isoflavonas"
+    "Alta proteína vegetal",
+    "Rico em ferro",
+    "Fibras"
   ],
   "riscos": [
-    "Alérgeno: soja"
+    "Pode causar gases"
   ],
   "nutricao": {
-    "calorias": "76 kcal",
-    "proteinas": "8g",
-    "carboidratos": "1.9g",
-    "gorduras": "4.8g"
+    "calorias": "116 kcal",
+    "proteinas": "9g",
+    "carboidratos": "20g",
+    "gorduras": "0.4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -27,17 +30,14 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": true,
-  "tecnica": "Grelhado ou refogado",
-  "indice_glicemico": "muito baixo",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
+  "tecnica": "Cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
   "combina_com": [
-    "Legumes",
-    "Molho shoyu",
-    "Gengibre"
+    "Arroz",
+    "Legumes"
   ],
-  "evitar_com": [
-    "Frituras"
-  ],
+  "evitar_com": [],
   "category_emoji": "🌱"
 }

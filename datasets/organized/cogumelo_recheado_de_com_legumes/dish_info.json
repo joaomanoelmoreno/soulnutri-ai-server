@@ -2,23 +2,24 @@
   "slug": "cogumelo_recheado_de_com_legumes",
   "nome": "Portobello Recheado com Legumes e Queijo Vegano",
   "categoria": "vegano",
-  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+  "descricao": "Cogumelo portobello, substituto de carne.",
   "ingredientes": [
-    "ingredientes 100% vegetais"
+    "cogumelo portobello",
+    "azeite",
+    "alho",
+    "ervas"
   ],
   "beneficios": [
-    "Livre de produtos animais",
-    "Rico em fibras",
-    "Baixo colesterol"
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em minerais"
   ],
-  "riscos": [
-    "Verificar fonte de B12 e ferro"
-  ],
+  "riscos": [],
   "nutricao": {
-    "calorias": "~120 kcal",
-    "proteinas": "~5g",
-    "carboidratos": "~20g",
-    "gorduras": "~3g"
+    "calorias": "22 kcal",
+    "proteinas": "2g",
+    "carboidratos": "4g",
+    "gorduras": "0.4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -27,16 +28,13 @@
   "contem_frutos_mar": false,
   "contem_soja": true,
   "category_emoji": "🌱",
-  "tecnica": "Variada",
-  "indice_glicemico": "variável",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Qualquer refeição",
+  "tecnica": "Grelhado ou recheado",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
   "combina_com": [
-    "Outros vegetais",
-    "Grãos",
-    "Leguminosas"
+    "Queijo",
+    "Ervas"
   ],
-  "evitar_com": [
-    "Produtos animais"
-  ]
+  "evitar_com": []
 }

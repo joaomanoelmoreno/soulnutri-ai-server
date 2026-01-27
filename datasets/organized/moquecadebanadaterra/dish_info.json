@@ -2,37 +2,25 @@
   "nome": "Moqueca de Banana da Terra com Cogumelos",
   "categoria": "vegano",
   "ingredientes": [
-    "Banana da terra em rodelas",
-    "Cogumelos",
-    "Leite de coco",
-    "Tomate picado",
-    "Pimentão picado (vermelho e amarelo)",
-    "Cebola picada",
-    "Azeite de dendê",
-    "Coentro fresco picado",
-    "Pimenta (dedo-de-moça)",
-    "Alho picado",
-    "Azeite de oliva",
-    "Cebolinha"
+    "cogumelos",
+    "azeite",
+    "alho",
+    "sal"
   ],
-  "descricao": "Uma versão vegana da moqueca, substituindo o peixe por banana da terra e cogumelos. Cremosa e saborosa, perfeita para uma refeição nutritiva e vegana.",
+  "descricao": "Cogumelos saborosos e nutritivos.",
   "beneficios": [
-    "Rica em fibras",
-    "Fonte de vitaminas e minerais",
-    "Vegano",
-    "Baixo índice glicêmico"
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em vitamina D"
   ],
-  "riscos": [
-    "Azeite de dendê (alto teor de gordura saturada)",
-    "Pessoas com alergia a banana"
-  ],
+  "riscos": [],
   "curiosidade": "A moqueca é um prato de origem africana e indígena, muito popular no Brasil, com variações regionais. A banana da terra é uma fruta que, quando cozida, adquire um sabor adocicado e uma textura macia, tornando-a um substituto interessante em diversos pratos.",
   "slug": "moquecadebanadaterra",
   "nutricao": {
-    "calorias": "220 kcal",
+    "calorias": "22 kcal",
     "proteinas": "3g",
-    "carboidratos": "25g",
-    "gorduras": "12g"
+    "carboidratos": "3g",
+    "gorduras": "0.3g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -40,5 +28,14 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Refogado ou grelhado",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Risotos",
+    "Massas"
+  ],
+  "evitar_com": []
 }

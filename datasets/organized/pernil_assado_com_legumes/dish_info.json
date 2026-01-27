@@ -1,32 +1,41 @@
 {
   "nome": "Pernil Assado Com Legumes",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "Pernil de porco",
-    "Molho vermelho (possivelmente à base de tomate)",
-    "Cenoura",
-    "Ervilhas",
-    "Cebola",
-    "Temperos (não identificados, mas provavelmente incluem sal, pimenta e ervas)",
-    "Azeite de oliva (possível no preparo)"
+    "pernil suíno",
+    "alho",
+    "sal",
+    "ervas"
   ],
-  "descricao": "O pernil parece ter sido assado, possivelmente com uma marinada ou cobertura de molho vermelho, resultando em uma crosta caramelizada. Os legumes, incluindo cenoura e possivelmente outros, estão cozidos e aparentam estar com um pouco de gordura do cozimento do pernil.",
+  "descricao": "Pernil assado suculento.",
   "beneficios": [
-    "Boa fonte de proteína de alta qualidade, essencial para a construção e reparo dos tecidos do corpo.",
-    "A cenoura é rica em betacaroteno, precursor da vitamina A, importante para a saúde da visão e da pele."
+    "Rico em proteínas",
+    "Sabor intenso"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, especialmente se o pernil não for adequadamente preparado.",
-    "Potencialmente alto teor de sódio, dependendo dos temperos utilizados.",
-    "Contém glúten se houver adição de ingredientes com glúten ao molho ou marinada."
+    "Gordura elevada"
   ],
   "curiosidade": "O pernil de porco é uma carne versátil, que pode ser preparada de diversas formas. No Brasil, o pernil assado é um prato tradicional em festas e celebrações.",
   "slug": "pernil_assado_com_legumes",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "260 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "17g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🍖",
+  "tecnica": "Assado lento",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço especial",
+  "combina_com": [
+    "Arroz",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
 }

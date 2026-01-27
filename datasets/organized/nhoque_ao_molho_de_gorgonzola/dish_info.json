@@ -1,32 +1,42 @@
 {
   "nome": "Nhoque ao molho de gorgonzola",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Nhoque (provavelmente feito com batata, farinha de trigo e ovo)",
-    "Queijo gorgonzola",
-    "Creme de leite",
-    "Queijo parmesão ralado (possivelmente)",
-    "Pimenta do reino",
-    "Sal",
-    "Ervas frescas (possivelmente)"
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal"
   ],
-  "descricao": "O prato consiste em nhoque coberto por um molho cremoso à base de queijo gorgonzola. O molho é provavelmente preparado com creme de leite, o queijo gorgonzola e temperos. O nhoque parece ter sido cozido e então misturado ao molho.",
+  "descricao": "Nhoque de batata tradicional italiano.",
   "beneficios": [
-    "O queijo gorgonzola é fonte de cálcio, importante para a saúde óssea.",
-    "O nhoque, dependendo da receita, pode ser fonte de carboidratos, fornecendo energia."
+    "Fonte de energia",
+    "Carboidratos"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, devido ao creme de leite e ao queijo gorgonzola.",
-    "Contém glúten, caso o nhoque seja feito com farinha de trigo.",
-    "Alérgeno: leite e derivados, glúten e ovos (se o nhoque for feito com ovos)."
+    "Contém glúten",
+    "Contém ovo"
   ],
   "curiosidade": "O queijo gorgonzola, de origem italiana, é um queijo de mofo azul, conhecido por seu sabor forte e característico.",
   "slug": "nhoque_ao_molho_de_gorgonzola",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": "Cozido em água",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ]
 }

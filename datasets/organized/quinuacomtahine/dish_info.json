@@ -2,43 +2,38 @@
   "slug": "quinuacomtahine",
   "nome": "Quinuacomtahine",
   "categoria": "vegano",
-  "descricao": "Prato vegano que consiste em quinoa cozida misturada com tahine, lâminas de abobrinha, nozes picadas, folhas de hortelã e grãos de pimenta rosa. A quinoa é o grão base, e provavelmente foi cozida em água. O tahine adiciona cremosidade e sabor, enquanto as nozes e a hortelã fornecem textura e frescor. A pimenta rosa agrega um toque picante e visual.",
+  "descricao": "Quinoa nutritiva, superalimento.",
   "ingredientes": [
-    "Quinoa cozida",
-    "Nozes",
-    "Pepino em espiral",
-    "Ervas frescas picadas (salsa, coentro ou hortelã)",
-    "Molho Tahine (gergelim)",
-    "Azeite de oliva",
-    "Tempero (sal e pimenta do reino)",
-    "Quinoa",
-    "Tahine (pasta de gergelim)",
-    "Lâminas de abobrinha",
-    "Folhas de hortelã",
-    "Grãos de pimenta rosa"
+    "quinoa",
+    "água",
+    "sal"
   ],
   "beneficios": [
-    "Rica em proteínas, fibras e minerais (magnésio, ferro)",
-    "Fonte de gorduras saudáveis (ômega-3) provenientes das nozes",
-    "O tahine fornece cálcio e contribui para a saciedade",
-    "A quinoa é um grão sem glúten e de fácil digestão",
-    "A quinoa é uma excelente fonte de proteína vegetal completa, fornecendo todos os aminoácidos essenciais.",
-    "O tahine é rico em cálcio, importante para a saúde óssea.",
-    "As nozes oferecem gorduras saudáveis e antioxidantes."
+    "Proteína completa",
+    "Rico em fibras",
+    "Sem glúten"
   ],
-  "riscos": [
-    "Alérgeno: gergelim (tahine)",
-    "Calórico: devido às nozes e ao tahine",
-    "Pode conter glúten se a quinoa não for certificada como livre de glúten.",
-    "Alérgicos a nozes devem evitar.",
-    "Pode conter traços de outros alimentos."
-  ],
-  "nutricao": {},
+  "riscos": [],
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "4.4g",
+    "carboidratos": "21g",
+    "gorduras": "1.9g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Legumes",
+    "Saladas"
+  ],
+  "evitar_com": []
 }

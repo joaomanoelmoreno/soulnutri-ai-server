@@ -9,13 +9,12 @@
   ],
   "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Ômega-3 para o coração",
+    "Ômega-3",
     "Proteína de fácil digestão",
     "Vitamina D"
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Verificar procedência"
+    "Alérgeno: peixe"
   ],
   "curiosidade": "O damasco seco é uma excelente fonte de vitamina A, essencial para a visão, crescimento e sistema imunológico.",
   "slug": "filedepeixemolhofrutassecas",
@@ -31,18 +30,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": true,
   "contem_soja": false,
-  "tecnica": "Grelhado, assado ou ao vapor",
+  "tecnica": "Grelhado ou assado",
   "category_emoji": "🍖",
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Limão",
-    "Legumes",
-    "Arroz"
+    "Legumes"
   ],
   "evitar_com": [
-    "Frituras",
-    "Molhos pesados"
+    "Frituras"
   ]
 }

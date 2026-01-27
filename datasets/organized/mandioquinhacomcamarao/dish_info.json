@@ -1,47 +1,37 @@
 {
   "nome": "Mandioquinhacomcamarao",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "camarão",
-    "alho",
-    "azeite",
+    "mandioquinha",
     "sal"
   ],
-  "descricao": "Camarão fresco, rico em proteínas.",
+  "descricao": "Mandioquinha cremosa e nutritiva.",
   "beneficios": [
-    "Proteína magra",
-    "Selênio antioxidante",
-    "Iodo para tireoide",
-    "Ômega-3"
+    "Fonte de energia",
+    "Rico em potássio",
+    "Fácil digestão"
   ],
-  "riscos": [
-    "Alérgeno: crustáceo (risco grave)",
-    "Colesterol elevado"
-  ],
+  "riscos": [],
   "curiosidade": "A mandioquinha, também conhecida como batata-baroa, é um tubérculo rico em carboidratos e nutrientes, popular na culinária brasileira e utilizada em diversas preparações, desde purês até acompanhamentos.",
   "slug": "mandioquinhacomcamarao",
   "nutricao": {
-    "calorias": "99 kcal",
-    "proteinas": "24g",
-    "carboidratos": "0.2g",
-    "gorduras": "0.3g"
+    "calorias": "90 kcal",
+    "proteinas": "1g",
+    "carboidratos": "21g",
+    "gorduras": "0.2g"
   },
-  "tecnica": "Grelhado ou refogado",
+  "tecnica": "Cozida ou como purê",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_frutos_mar": true,
-  "indice_glicemico": "zero",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
   "combina_com": [
-    "Arroz",
-    "Legumes",
-    "Limão"
+    "Carnes",
+    "Purê"
   ],
-  "evitar_com": [
-    "Excesso de manteiga",
-    "Frituras"
-  ],
-  "category_emoji": "🍖"
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

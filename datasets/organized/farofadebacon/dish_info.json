@@ -1,37 +1,43 @@
 {
   "slug": "farofadebacon",
   "nome": "Farofa de Bacon",
-  "categoria": "proteína animal",
-  "descricao": "Farofa preparada, provavelmente, refogando bacon picado em gordura até dourar, adicionando cebola e alho picados. Em seguida, a farinha de mandioca é adicionada e misturada até dourar e adquirir a textura crocante desejada. Temperos podem ser adicionados.",
+  "categoria": "vegano",
+  "descricao": "Farofa crocante, acompanhamento brasileiro.",
   "ingredientes": [
-    "Farinha de mandioca",
-    "Bacon",
-    "Gordura (possivelmente azeite ou óleo)",
-    "Gordura (possivelmente óleo vegetal ou azeite)",
-    "Temperos (cebola, alho, salsinha, pimenta do reino - possibilidade)"
+    "farinha de mandioca",
+    "manteiga",
+    "sal",
+    "cebola"
   ],
   "beneficios": [
-    "A farinha de mandioca é fonte de carboidratos, fornecendo energia.",
-    "O bacon, apesar de ser rico em gordura, adiciona sabor e pode conter proteínas.",
-    "Fonte de energia devido à farinha de mandioca",
-    "O bacon pode adicionar sabor e crocância ao prato"
+    "Fonte de energia",
+    "Carboidratos"
   ],
   "riscos": [
-    "Alto teor de sódio devido ao bacon.",
-    "Alto teor de gordura saturada, dependendo da quantidade de bacon e do tipo de gordura utilizada.",
-    "Potencial presença de glúten, dependendo do tipo de farinha de mandioca utilizada.",
-    "Alto teor de sódio devido ao bacon",
-    "Rica em gorduras saturadas, dependendo da quantidade de bacon e tipo de gordura utilizada",
-    "Pode conter glúten, dependendo da farinha de mandioca utilizada",
-    "Alérgeno: pode conter traços de ingredientes com alérgenos caso a farinha seja contaminada durante o processo"
+    "Calórica se em excesso"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "150 kcal",
+    "proteinas": "1g",
+    "carboidratos": "25g",
+    "gorduras": "5g"
+  },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🍖"
+  "tecnica": "Refogada",
+  "category_emoji": "🌱",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Churrasco"
+  ],
+  "evitar_com": [
+    "Outros carboidratos"
+  ]
 }

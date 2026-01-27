@@ -1,28 +1,40 @@
 {
   "nome": "Gelatina de Uva",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Uva (possivelmente suco de uva)",
-    "Gelatina em pó (sem sabor, geralmente de origem vegetal)",
-    "Água"
+    "gelatina",
+    "água",
+    "açúcar"
   ],
-  "descricao": "Gelatina de uva feita a partir do suco da fruta, misturada com gelatina em pó e água, resfriada até solidificar. A versão vegana utiliza gelatina vegetal, enquanto a tradicional utiliza gelatina de origem animal.",
+  "descricao": "Sobremesa leve e refrescante.",
   "beneficios": [
-    "Fonte de água, auxiliando na hidratação.",
-    "A uva é rica em antioxidantes, como o resveratrol, que combatem os radicais livres.",
-    "Pode ser consumida como sobremesa leve e refrescante."
+    "Colágeno",
+    "Baixas calorias",
+    "Hidratação"
   ],
   "riscos": [
-    "A gelatina industrializada pode conter corantes e aromatizantes artificiais.",
-    "Em excesso, o consumo pode levar ao aumento de glicose no sangue."
+    "Alto teor de açúcar"
   ],
   "curiosidade": "A gelatina de origem vegetal, feita a partir de algas marinhas (agar-agar), é uma alternativa para vegetarianos e veganos, e tem menos calorias que a gelatina tradicional.",
   "slug": "gelatinadeuva",
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "1g",
-    "carboidratos": "18g",
+    "calorias": "70 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
     "gorduras": "0g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": "Refrigerada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Sobremesa",
+  "combina_com": [
+    "Frutas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
 }

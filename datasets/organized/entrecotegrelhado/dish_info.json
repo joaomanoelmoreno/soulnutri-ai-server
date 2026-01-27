@@ -1,28 +1,27 @@
 {
   "nome": "Entrecote",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "Entrecotegrelhado",
-    "Tomate cereja",
-    "Alecrim",
-    "Cebolinha picada"
+    "entrecôte",
+    "sal grosso",
+    "ervas"
   ],
-  "descricao": "Prato composto por cortes de entrecôte grelhados, decorados com tomate cereja fatiado, ramos de alecrim fresco e cebolinha picada. O preparo do entrecôte envolve o processo de grelhar a carne, resultando em um exterior selado e interior suculento.",
+  "descricao": "Entrecôte suculento e saboroso.",
   "beneficios": [
-    "A carne bovina é fonte de proteína de alta qualidade, essencial para a construção e reparo dos tecidos do corpo.",
-    "O alecrim contém antioxidantes, que ajudam a proteger as células contra danos."
+    "Rico em proteínas",
+    "Ferro",
+    "Sabor intenso"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL.",
-    "Consumo excessivo de carne vermelha tem sido associado a um maior risco de certas doenças, como doenças cardíacas."
+    "Gordura moderada"
   ],
   "curiosidade": "O entrecôte, que em francês significa 'entre as costelas', é um corte retirado da parte dianteira do contrafilé, conhecido por sua maciez e sabor acentuado devido à presença de gordura entre as fibras.",
   "slug": "entrecotegrelhado",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "250 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "16g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -30,6 +29,14 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "tecnica": "Grelhado",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Batatas",
+    "Salada"
+  ],
+  "evitar_com": []
 }

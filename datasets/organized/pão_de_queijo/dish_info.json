@@ -5,26 +5,23 @@
   "ingredientes": [
     "polvilho",
     "queijo",
-    "leite",
     "ovos",
-    "óleo vegetal",
-    "sal"
+    "óleo"
   ],
-  "descricao": "Pequenos pães assados, feitos com polvilho, queijo e outros ingredientes. Popular no Brasil.",
+  "descricao": "Pão de queijo mineiro tradicional.",
   "beneficios": [
-    "Fonte de cálcio",
-    "Fornece energia rápida"
+    "Sem glúten",
+    "Fonte de cálcio"
   ],
   "riscos": [
     "Contém lactose",
-    "Alto teor de sódio e gordura",
     "Contém ovo"
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "8g",
-    "carboidratos": "30g",
-    "gorduras": "12g"
+    "calorias": "80 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "4g"
   },
   "contem_gluten": false,
   "contem_lactose": true,
@@ -32,5 +29,14 @@
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Café ou lanche",
+  "combina_com": [
+    "Café",
+    "Suco"
+  ],
+  "evitar_com": []
 }

@@ -2,45 +2,38 @@
   "slug": "cuscuzmarroquino",
   "nome": "Cuscuz Marroquino",
   "categoria": "vegano",
-  "descricao": "O cuscuz marroquino é preparado com sêmola de trigo e hidratado, geralmente com água fervente e azeite de oliva. Na imagem, ele parece ser temperado com especiarias, possivelmente cúrcuma e açafrão, que lhe dão a cor amarelada. É finalizado com amêndoas laminadas, tomate cereja e folhas de hortelã fresca.",
+  "descricao": "Cuscuz nordestino tradicional.",
   "ingredientes": [
-    "Cuscuz marroquino",
-    "Amêndoas laminadas",
-    "Tomate cereja",
-    "Hortelã fresca",
-    "Azeite de oliva",
-    "Tempero (provavelmente cúrcuma e açafrão)",
-    "Tomates cereja grelhados",
-    "Azeitonas pretas",
-    "Tomate cereja (grelhado)",
-    "Amêndoas em lascas",
-    "Azeite",
-    "Tempero (cúrcuma)"
+    "farinha de milho",
+    "água",
+    "sal"
   ],
   "beneficios": [
-    "Cuscuz: rico em carboidratos, fornece energia.",
-    "Amêndoas: fonte de gorduras saudáveis e vitamina E.",
-    "Hortelã: propriedades digestivas e refrescantes.",
-    "Cuscuz marroquino é fonte de carboidratos, fornecendo energia para o organismo.",
-    "Tomates cereja são ricos em antioxidantes, como o licopeno, que combate os radicais livres.",
-    "Amêndoas são ricas em gorduras saudáveis e vitamina E.",
-    "A cúrcuma possui propriedades anti-inflamatórias e antioxidantes.",
-    "Hortelã auxilia na digestão."
+    "Fonte de energia",
+    "Sem glúten",
+    "Leve"
   ],
-  "riscos": [
-    "Contém glúten (do cuscuz).",
-    "Potencial alérgeno: amêndoas.",
-    "Pode conter glúten, dependendo da composição do cuscuz marroquino.",
-    "Risco de alergia: amêndoas.",
-    "Contém glúten (do cuscuz)",
-    "Pode conter traços de outros ingredientes, dependendo do local de preparo"
-  ],
-  "nutricao": {},
+  "riscos": [],
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "0.5g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Vapor",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Café ou almoço",
+  "combina_com": [
+    "Ovo",
+    "Manteiga"
+  ],
+  "evitar_com": []
 }

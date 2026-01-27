@@ -3,37 +3,34 @@
   "slug": "carpacciodeabobrinhacomqueijovegano",
   "categoria": "vegano",
   "ingredientes": [
-    "ingredientes 100% vegetais"
+    "abobrinha",
+    "azeite",
+    "sal"
   ],
   "beneficios": [
-    "Livre de produtos animais",
-    "Rico em fibras",
-    "Baixo colesterol"
+    "Muito baixa caloria",
+    "Rica em água",
+    "Vitaminas B"
   ],
-  "riscos": [
-    "Verificar fonte de B12 e ferro"
-  ],
+  "riscos": [],
   "nutricao": {
-    "calorias": "~120 kcal",
-    "proteinas": "~5g",
-    "carboidratos": "~20g",
-    "gorduras": "~3g"
+    "calorias": "17 kcal",
+    "proteinas": "1.2g",
+    "carboidratos": "3g",
+    "gorduras": "0.3g"
   },
-  "tecnica": "Variada",
-  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+  "tecnica": "Grelhada ou refogada",
+  "descricao": "Abobrinha leve e nutritiva.",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "indice_glicemico": "variável",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Qualquer refeição",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
   "combina_com": [
-    "Outros vegetais",
-    "Grãos",
-    "Leguminosas"
+    "Queijo",
+    "Tomate"
   ],
-  "evitar_com": [
-    "Produtos animais"
-  ],
+  "evitar_com": [],
   "category_emoji": "🌱"
 }

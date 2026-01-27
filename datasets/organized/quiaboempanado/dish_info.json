@@ -2,26 +2,37 @@
   "nome": "Quiaboempanado",
   "categoria": "vegano",
   "ingredientes": [
-    "Quiabo",
-    "Farinha de rosca",
-    "Tempero amarelo (cúrcuma, açafrão)"
+    "quiabo",
+    "sal"
   ],
-  "descricao": "Quiabos empanados e possivelmente fritos ou assados, cobertos por uma camada crocante e amarelada.",
+  "descricao": "Quiabo, legume típico brasileiro.",
   "beneficios": [
-    "O quiabo é rico em fibras, auxiliando na saúde digestiva.",
-    "A cúrcuma presente no tempero possui propriedades anti-inflamatórias."
+    "Baixas calorias",
+    "Rico em fibras",
+    "Vitaminas"
   ],
   "riscos": [
-    "Pode ser rico em gordura dependendo do método de preparo (fritura).",
-    "Contém glúten, caso a farinha de rosca não seja feita de grãos sem glúten."
+    "Textura pode não agradar todos"
   ],
   "curiosidade": "O quiabo é conhecido por sua mucilagem, uma substância viscosa que pode ser reduzida ao cozinhar o quiabo rapidamente ou adicionando um pouco de vinagre durante o preparo.",
   "slug": "quiaboempanado",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "33 kcal",
+    "proteinas": "2g",
+    "carboidratos": "7g",
+    "gorduras": "0.2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Refogado ou empanado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Frango",
+    "Carne"
+  ],
+  "evitar_com": []
 }

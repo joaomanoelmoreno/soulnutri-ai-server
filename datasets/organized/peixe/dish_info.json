@@ -9,13 +9,12 @@
   ],
   "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Ômega-3 para o coração",
+    "Ômega-3",
     "Proteína de fácil digestão",
     "Vitamina D"
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Verificar procedência"
+    "Alérgeno: peixe"
   ],
   "curiosidade": "O maracujá, presente no molho, é rico em antioxidantes e auxilia na redução do estresse e ansiedade.",
   "slug": "peixe",
@@ -25,7 +24,7 @@
     "carboidratos": "0g",
     "gorduras": "3g"
   },
-  "tecnica": "Grelhado, assado ou ao vapor",
+  "tecnica": "Grelhado ou assado",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -35,12 +34,10 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Limão",
-    "Legumes",
-    "Arroz"
+    "Legumes"
   ],
   "evitar_com": [
-    "Frituras",
-    "Molhos pesados"
+    "Frituras"
   ],
   "category_emoji": "🍖"
 }

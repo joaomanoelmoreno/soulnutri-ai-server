@@ -2,36 +2,38 @@
   "slug": "carpacciodelaranja",
   "nome": "Carpaccio de Abobrinha",
   "categoria": "vegano",
-  "descricao": "Finas fatias de abobrinha crua temperadas com azeite, ervas e queijo, resultando em um prato leve e refrescante.",
+  "descricao": "Abobrinha leve e nutritiva.",
   "ingredientes": [
-    "Abobrinha fatiada",
-    "Queijo parmesão ralado",
-    "Azeite de oliva",
-    "Ervas finas (manjericão, orégano)",
-    "Pimenta rosa",
-    "Sal",
-    "Pimenta do reino"
+    "abobrinha",
+    "azeite",
+    "sal"
   ],
   "beneficios": [
-    "Baixo em calorias",
-    "Rico em vitaminas e minerais",
-    "Fonte de fibras"
+    "Muito baixa caloria",
+    "Rica em água",
+    "Vitaminas B"
   ],
-  "riscos": [
-    "Contém lactose (se usar queijo de vaca)",
-    "Alto teor de sódio (dependendo da quantidade de sal e queijo)"
-  ],
+  "riscos": [],
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "5g",
-    "carboidratos": "5g",
-    "gorduras": "5g"
+    "calorias": "17 kcal",
+    "proteinas": "1.2g",
+    "carboidratos": "3g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Grelhada ou refogada",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": []
 }

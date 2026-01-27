@@ -3,22 +3,26 @@
   "slug": "cogumelos_recheados_e_lentilha",
   "categoria": "vegano",
   "ingredientes": [
-    "ingredientes 100% vegetais"
+    "lentilha",
+    "água",
+    "sal",
+    "alho",
+    "cebola"
   ],
-  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+  "descricao": "Lentilha nutritiva, símbolo de prosperidade.",
   "beneficios": [
-    "Livre de produtos animais",
-    "Rico em fibras",
-    "Baixo colesterol"
+    "Alta proteína vegetal",
+    "Rico em ferro",
+    "Fibras"
   ],
   "riscos": [
-    "Verificar fonte de B12 e ferro"
+    "Pode causar gases"
   ],
   "nutricao": {
-    "calorias": "~120 kcal",
-    "proteinas": "~5g",
-    "carboidratos": "~20g",
-    "gorduras": "~3g"
+    "calorias": "116 kcal",
+    "proteinas": "9g",
+    "carboidratos": "20g",
+    "gorduras": "0.4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -27,16 +31,13 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": true,
-  "tecnica": "Variada",
-  "indice_glicemico": "variável",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Qualquer refeição",
+  "tecnica": "Cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
   "combina_com": [
-    "Outros vegetais",
-    "Grãos",
-    "Leguminosas"
+    "Arroz",
+    "Legumes"
   ],
-  "evitar_com": [
-    "Produtos animais"
-  ]
+  "evitar_com": []
 }

@@ -1,33 +1,43 @@
 {
   "nome": "Risoto De Alho Poró",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Arroz arbóreo",
-    "Alho poró",
-    "Caldo de legumes (possivelmente)",
-    "Azeite de oliva",
-    "Cebola (possivelmente)",
-    "Vinho branco seco (possivelmente)",
-    "Manteiga (possivelmente)",
-    "Queijo parmesão ralado (possivelmente)"
+    "arroz arbóreo",
+    "caldo",
+    "vinho branco",
+    "manteiga",
+    "queijo parmesão"
   ],
-  "descricao": "Risoto cremoso à base de arroz arbóreo cozido lentamente com caldo de legumes e alho poró refogado. Possivelmente leva cebola, vinho branco seco, manteiga e queijo parmesão ralado para dar cremosidade e sabor.",
+  "descricao": "Risoto cremoso italiano.",
   "beneficios": [
-    "O alho poró é rico em vitaminas A, C e K, além de minerais como ferro e cálcio, que contribuem para a saúde dos ossos e a função imunológica.",
-    "O arroz arbóreo, usado no risoto, possui amido que libera gradualmente glicose no sangue, proporcionando energia de forma mais estável."
+    "Fonte de energia",
+    "Cremoso e nutritivo"
   ],
   "riscos": [
-    "Contém glúten, se for utilizado caldo de legumes industrializado que contenha trigo.",
-    "Alto teor de sódio, dependendo da quantidade de caldo de legumes utilizado.",
-    "Pode conter lactose, se for utilizado manteiga e queijo parmesão."
+    "Contém lactose",
+    "Alto teor calórico"
   ],
   "curiosidade": "O risoto é um prato tradicional da culinária italiana, conhecido pela sua textura cremosa, que é alcançada pela liberação do amido do arroz durante o cozimento lento e constante.",
   "slug": "risoto_de_alho_poro",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "180 kcal",
+    "proteinas": "5g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": "Cozimento lento com caldo",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Cogumelos",
+    "Vegetais"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ]
 }

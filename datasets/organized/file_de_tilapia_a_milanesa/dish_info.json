@@ -9,13 +9,12 @@
   ],
   "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Ômega-3 para o coração",
+    "Ômega-3",
     "Proteína de fácil digestão",
     "Vitamina D"
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Verificar procedência"
+    "Alérgeno: peixe"
   ],
   "curiosidade": "A tilápia é um peixe de água doce de origem africana, mas amplamente cultivado em várias partes do mundo, inclusive no Brasil. É conhecida por seu sabor suave e textura delicada.",
   "slug": "file_de_tilapia_a_milanesa",
@@ -31,18 +30,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": true,
   "contem_soja": false,
-  "tecnica": "Grelhado, assado ou ao vapor",
+  "tecnica": "Grelhado ou assado",
   "category_emoji": "🍖",
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Limão",
-    "Legumes",
-    "Arroz"
+    "Legumes"
   ],
   "evitar_com": [
-    "Frituras",
-    "Molhos pesados"
+    "Frituras"
   ]
 }

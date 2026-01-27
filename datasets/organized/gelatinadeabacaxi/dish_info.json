@@ -1,29 +1,40 @@
 {
   "nome": "Gelatinadeabacaxi",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Abacaxi (em pedaços e em calda)",
-    "Gelatina em pó (sem sabor)",
-    "Água"
+    "gelatina",
+    "água",
+    "açúcar"
   ],
-  "descricao": "A gelatina de abacaxi é feita com abacaxi em pedaços e em calda, misturados com gelatina sem sabor e água, que é levada à geladeira para firmar. A imagem mostra uma fatia retirada do bolo, indicando sua consistência. Ao lado, há abacaxi cortado em cubos.",
+  "descricao": "Sobremesa leve e refrescante.",
   "beneficios": [
-    "O abacaxi é rico em vitamina C, que fortalece o sistema imunológico e possui ação antioxidante.",
-    "A gelatina pode auxiliar na saúde das articulações devido ao colágeno.",
-    "Pode ser uma sobremesa de baixa caloria, dependendo da quantidade de açúcar adicionada."
+    "Colágeno",
+    "Baixas calorias",
+    "Hidratação"
   ],
   "riscos": [
-    "A gelatina comercial pode conter corantes e aromatizantes artificiais. Opte por opções naturais.",
-    "A quantidade de açúcar adicionada pode elevar o valor calórico.",
-    "Pessoas com alergia ao abacaxi devem evitar."
+    "Alto teor de açúcar"
   ],
   "curiosidade": "A enzima bromelina, presente no abacaxi, ajuda na digestão e possui propriedades anti-inflamatórias.",
   "slug": "gelatinadeabacaxi",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "70 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": "Refrigerada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Sobremesa",
+  "combina_com": [
+    "Frutas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
 }

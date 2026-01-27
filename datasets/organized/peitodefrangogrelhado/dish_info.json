@@ -13,8 +13,7 @@
     "Baixo teor de gordura"
   ],
   "riscos": [
-    "Verificar procedência",
-    "Evitar pele se em dieta"
+    "Verificar procedência"
   ],
   "curiosidade": "O frango é uma das carnes mais versáteis e consumidas no mundo, sendo uma excelente fonte de proteína magra e pode ser preparada de diversas formas.",
   "slug": "peitodefrangogrelhado",
@@ -24,7 +23,7 @@
     "carboidratos": "0g",
     "gorduras": "3.6g"
   },
-  "tecnica": "Grelhado, assado ou cozido",
+  "tecnica": "Grelhado ou assado",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -33,11 +32,9 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Saladas",
-    "Legumes",
-    "Arroz integral"
+    "Legumes"
   ],
   "evitar_com": [
-    "Molhos gordurosos",
     "Frituras"
   ],
   "category_emoji": "🍖"

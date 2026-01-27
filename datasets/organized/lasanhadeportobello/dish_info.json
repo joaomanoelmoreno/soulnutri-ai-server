@@ -1,45 +1,40 @@
 {
   "nome": "Lasanha de Portobello",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
-    "massa de lasanha",
-    "molho de tomate",
-    "queijo",
-    "portobello",
-    "molho branco"
+    "cogumelo portobello",
+    "azeite",
+    "alho",
+    "ervas"
   ],
-  "descricao": "Lasanha tradicional em camadas.",
+  "descricao": "Cogumelo portobello, substituto de carne.",
   "beneficios": [
-    "Refeição completa",
-    "Cálcio do queijo"
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em minerais"
   ],
-  "riscos": [
-    "Contém glúten",
-    "Contém lactose",
-    "Alto teor calórico"
-  ],
+  "riscos": [],
   "curiosidade": "O cogumelo portobello é uma variação mais madura do cogumelo champignon, com sabor mais intenso e textura mais carnosa.",
   "slug": "lasanhadeportobello",
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "10g",
-    "carboidratos": "18g",
-    "gorduras": "8g"
+    "calorias": "22 kcal",
+    "proteinas": "2g",
+    "carboidratos": "4g",
+    "gorduras": "0.4g"
   },
-  "tecnica": "Assado em forno",
-  "contem_gluten": true,
-  "contem_lactose": true,
-  "contem_ovo": true,
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "3-4 horas",
-  "melhor_horario": "Almoço",
+  "tecnica": "Grelhado ou recheado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
   "combina_com": [
-    "Salada verde"
+    "Queijo",
+    "Ervas"
   ],
-  "evitar_com": [
-    "Outras massas no mesmo dia"
-  ],
-  "category_emoji": "🥚",
+  "evitar_com": [],
+  "category_emoji": "🌱",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

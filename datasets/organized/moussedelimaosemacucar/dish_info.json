@@ -1,6 +1,6 @@
 {
   "nome": "Moussedelimãosemaçúcar",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "creme de leite",
     "leite condensado",
@@ -37,5 +37,5 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

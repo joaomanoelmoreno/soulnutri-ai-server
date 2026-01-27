@@ -2,37 +2,40 @@
   "nome": "Berinjela Caramelizada com Tomates e Cebola",
   "categoria": "vegano",
   "ingredientes": [
-    "Berinjela",
-    "Tomates cereja",
-    "Cebola",
-    "Cebolinha picada",
-    "Azeite de oliva",
-    "Açúcar (para caramelizar)",
-    "Especiarias (a definir)"
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
   ],
-  "descricao": "Prato vegano saboroso e nutritivo com berinjela caramelizada, tomates cereja e cebola, finalizado com cebolinha fresca.",
+  "descricao": "Berinjela preparada de forma saudável.",
   "beneficios": [
-    "Fonte de fibras",
-    "Rico em antioxidantes",
-    "Baixo índice glicêmico"
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes"
   ],
-  "riscos": [
-    "Nenhum em moderação"
-  ],
+  "riscos": [],
   "curiosidade": "A berinjela é um alimento versátil que pode ser preparado de diversas maneiras, absorvendo bem os sabores dos temperos.",
   "slug": "beringelaaocurrykincam",
   "nutricao": {
-    "calorias": "150 kcal",
-    "proteinas": "2g",
-    "carboidratos": "15g",
-    "gorduras": "9g"
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
   },
   "contem_gluten": false,
-  "tecnica": "",
+  "tecnica": "Grelhada ou assada",
   "category_emoji": "🌱",
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": []
 }

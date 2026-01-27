@@ -1,33 +1,41 @@
 {
   "nome": "Kibe",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "Carne moída",
-    "Trigo para kibe (sêmola de trigo)",
-    "Hortelã fresca picada",
-    "Cebola",
-    "Pimenta Síria (ou tempero)",
-    "Sal",
-    "Azeite",
-    "Queijo"
+    "carne moída",
+    "trigo para kibe",
+    "cebola",
+    "hortelã"
   ],
-  "descricao": "Kibes preparados, possivelmente fritos ou assados, com recheio de queijo. Observa-se pedaços de pimenta e hortelã fresca picada ao redor.",
+  "descricao": "Kibe árabe tradicional.",
   "beneficios": [
-    "A carne oferece proteína de alta qualidade, essencial para a construção e reparação dos tecidos do corpo.",
-    "O trigo para kibe (sêmola de trigo) fornece carboidratos, que são a principal fonte de energia."
+    "Rico em proteínas",
+    "Ferro"
   ],
   "riscos": [
-    "Alto teor de gordura, dependendo do corte da carne e do método de preparo.",
-    "Pode conter glúten, dependendo da receita e do trigo utilizado.",
-    "Contém lactose para quem tem intolerância e/ou alergia."
+    "Contém glúten"
   ],
   "curiosidade": "O kibe é um prato de origem árabe, popularizado no Brasil, e pode ser preparado de diversas formas, como frito, assado ou cru (kibe cru).",
   "slug": "kibe",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "200 kcal",
+    "proteinas": "12g",
+    "carboidratos": "15g",
+    "gorduras": "10g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🍖",
+  "tecnica": "Assado ou frito",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Coalhada",
+    "Salada"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

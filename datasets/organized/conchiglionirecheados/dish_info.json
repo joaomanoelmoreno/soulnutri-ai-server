@@ -10,12 +10,11 @@
   ],
   "beneficios": [
     "Proteína completa",
-    "Ferro heme de alta absorção",
+    "Ferro heme",
     "Vitamina B12",
     "Zinco"
   ],
   "riscos": [
-    "Consumo excessivo associado a doenças cardiovasculares",
     "Gordura saturada"
   ],
   "nutricao": {
@@ -37,11 +36,9 @@
   "melhor_horario": "Almoço",
   "combina_com": [
     "Saladas",
-    "Legumes",
-    "Arroz"
+    "Legumes"
   ],
   "evitar_com": [
-    "Outras gorduras",
-    "Frituras"
+    "Outras gorduras"
   ]
 }

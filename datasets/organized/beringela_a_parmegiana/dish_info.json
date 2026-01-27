@@ -2,31 +2,37 @@
   "nome": "Beringela A Parmegiana",
   "categoria": "vegano",
   "ingredientes": [
-    "Berinjela",
-    "Molho de tomate",
-    "Queijo (provavelmente mussarela ou parmesão)",
-    "Tomate cereja",
-    "Folhas de manjericão",
-    "Pimenta dedo-de-moça (opcional)"
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
   ],
-  "descricao": "Fatias de berinjela grelhadas ou assadas, cobertas com molho de tomate, queijo derretido e outros ingredientes, como tomate cereja, manjericão e pimenta dedo-de-moça. O preparo envolve o cozimento da berinjela, montagem das camadas e gratinar no forno.",
+  "descricao": "Berinjela preparada de forma saudável.",
   "beneficios": [
-    "A berinjela é rica em antioxidantes, como as antocianinas, que protegem as células.",
-    "O molho de tomate fornece licopeno, benéfico para a saúde cardiovascular.",
-    "O manjericão oferece propriedades anti-inflamatórias."
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes"
   ],
-  "riscos": [
-    "Intolerância a lactose (se houver queijo)",
-    "Alérgicos a noite (berinjela)",
-    "Alto teor de sódio (se o molho for industrializado)"
-  ],
+  "riscos": [],
   "curiosidade": "A berinjela é um fruto originário da Índia e é apreciada em diversas cozinhas ao redor do mundo. A palavra \"parmegiana\" refere-se ao queijo parmesão, tradicionalmente usado no preparo, que não parece ser o caso da imagem.",
   "slug": "beringela_a_parmegiana",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Grelhada ou assada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": []
 }

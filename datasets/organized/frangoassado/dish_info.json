@@ -14,8 +14,7 @@
     "Baixo teor de gordura"
   ],
   "riscos": [
-    "Verificar procedência",
-    "Evitar pele se em dieta"
+    "Verificar procedência"
   ],
   "nutricao": {
     "calorias": "165 kcal",
@@ -25,18 +24,16 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "tecnica": "Grelhado, assado ou cozido",
+  "tecnica": "Grelhado ou assado",
   "contem_ovo": false,
   "indice_glicemico": "zero",
   "tempo_digestao": "3-4 horas",
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Saladas",
-    "Legumes",
-    "Arroz integral"
+    "Legumes"
   ],
   "evitar_com": [
-    "Molhos gordurosos",
     "Frituras"
   ],
   "category_emoji": "🍖"

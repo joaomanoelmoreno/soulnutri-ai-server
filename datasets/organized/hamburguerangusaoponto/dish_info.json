@@ -9,12 +9,11 @@
   "descricao": "Carne bovina, fonte de proteína e ferro.",
   "beneficios": [
     "Proteína completa",
-    "Ferro heme de alta absorção",
+    "Ferro heme",
     "Vitamina B12",
     "Zinco"
   ],
   "riscos": [
-    "Consumo excessivo associado a doenças cardiovasculares",
     "Gordura saturada"
   ],
   "curiosidade": "A raça Angus é conhecida pela qualidade e maciez da carne, devido à infiltração de gordura entre as fibras musculares.",
@@ -38,11 +37,9 @@
   "melhor_horario": "Almoço",
   "combina_com": [
     "Saladas",
-    "Legumes",
-    "Arroz"
+    "Legumes"
   ],
   "evitar_com": [
-    "Outras gorduras",
-    "Frituras"
+    "Outras gorduras"
   ]
 }

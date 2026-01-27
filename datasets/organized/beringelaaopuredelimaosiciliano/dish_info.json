@@ -2,32 +2,24 @@
   "slug": "beringelaaopuredelimaosiciliano",
   "nome": "Berinjela Recheada com Purê de Ervas e Limão Siciliano",
   "categoria": "vegano",
-  "descricao": "Deliciosas berinjelas assadas e recheadas com um purê de ervas frescas e limão siciliano, com um toque picante de picles de pimenta dedo de moça. Um prato vegano saboroso e nutritivo.",
+  "descricao": "Berinjela preparada de forma saudável.",
   "ingredientes": [
-    "Berinjela",
-    "Purê de ervas frescas (salsa, manjericão, etc.)",
-    "Limão siciliano (suco e raspas)",
-    "Picles de pimenta dedo de moça",
-    "Azeite de oliva extra virgem",
-    "Alho",
-    "Sal",
-    "Pimenta do reino"
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
   ],
   "beneficios": [
-    "Rico em fibras",
-    "Fonte de antioxidantes",
-    "Baixo teor de gordura saturada",
-    "Vegano"
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes"
   ],
-  "riscos": [
-    "Pode conter traços de pimenta (alergênicos)",
-    "Alto teor de sódio (dependendo do preparo)"
-  ],
+  "riscos": [],
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "4g"
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -35,5 +27,14 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Grelhada ou assada",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": []
 }

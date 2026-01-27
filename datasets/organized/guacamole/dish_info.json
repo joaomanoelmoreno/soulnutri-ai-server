@@ -2,33 +2,41 @@
   "nome": "Guacamole",
   "categoria": "vegano",
   "ingredientes": [
-    "Abacate amassado",
-    "Tomate picado",
-    "Cebola roxa picada",
-    "Coentro fresco picado",
-    "Suco de limão",
-    "Tortilhas de milho",
-    "Tomate picado com outros vegetais (não identificados)",
-    "Legume em cubos (não identificado)",
-    "Pastel cozido (não identificado)"
+    "abacate",
+    "tomate",
+    "cebola",
+    "limão",
+    "coentro",
+    "sal"
   ],
-  "descricao": "Guacamole caseiro feito com abacate amassado, tomate, cebola, coentro e limão, acompanhado de tortilhas de milho. O prato inclui outros acompanhamentos, como tomate picado com outros vegetais (não identificados), legume em cubos (não identificado) e pastel cozido (não identificado).",
+  "descricao": "Guacamole mexicano cremoso.",
   "beneficios": [
-    "Abacate: Rico em gorduras saudáveis, fibras e nutrientes essenciais.",
-    "Tortilhas de milho: Fonte de carboidratos complexos e fibras.",
-    "Coentro: Possui propriedades antioxidantes e anti-inflamatórias."
+    "Gorduras boas",
+    "Rico em potássio",
+    "Fibras"
   ],
   "riscos": [
-    "Pode conter glúten nos pastéis",
-    "Alérgenos podem estar presentes nos acompanhamentos, dependendo dos ingredientes."
+    "Calórico se em excesso"
   ],
   "curiosidade": "O guacamole é originário do México e seu nome vem de 'ahuacamolli', que significa 'molho de abacate' na língua nauatle.",
   "slug": "guacamole",
   "nutricao": {
-    "calorias": "160 kcal",
+    "calorias": "150 kcal",
     "proteinas": "2g",
-    "carboidratos": "7g",
-    "gorduras": "14g"
+    "carboidratos": "8g",
+    "gorduras": "13g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Nachos",
+    "Tacos"
+  ],
+  "evitar_com": []
 }

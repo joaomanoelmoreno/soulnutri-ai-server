@@ -2,37 +2,24 @@
   "nome": "Tabule de Quinoa",
   "categoria": "vegano",
   "ingredientes": [
-    "Quinoa",
-    "Tomate picado",
-    "Pepino picado",
-    "Cebola roxa picada",
-    "Salsinha picada",
-    "Hortelã picada",
-    "Azeite de oliva",
-    "Suco de limão",
-    "Sal",
-    "Pimenta síria",
-    "Fatias de pepino "
+    "quinoa",
+    "água",
+    "sal"
   ],
-  "descricao": "Salada refrescante e nutritiva à base de quinoa, vegetais frescos e ervas aromáticas. Ideal para uma refeição leve e saudável.",
+  "descricao": "Quinoa nutritiva, superalimento.",
   "beneficios": [
-    "Fonte de proteína vegetal",
+    "Proteína completa",
     "Rico em fibras",
-    "Contém vitaminas e minerais",
-    "Baixo índice glicêmico",
-    "Antioxidante"
+    "Sem glúten"
   ],
-  "riscos": [
-    "Pessoas com alergia a algum dos ingredientes",
-    "Consumo excessivo pode causar desconforto gastrointestinal devido ao alto teor de fibras"
-  ],
+  "riscos": [],
   "curiosidade": "A quinoa é um pseudocereal nativo da região dos Andes, conhecido por sua alta qualidade nutricional. É uma ótima alternativa para quem busca substituir o trigo e o arroz em suas refeições.",
   "slug": "tabuledequinoa",
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "6g",
-    "carboidratos": "22g",
-    "gorduras": "8g"
+    "calorias": "120 kcal",
+    "proteinas": "4.4g",
+    "carboidratos": "21g",
+    "gorduras": "1.9g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -41,5 +28,13 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "tecnica": "Cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Legumes",
+    "Saladas"
+  ],
+  "evitar_com": []
 }

@@ -13,8 +13,7 @@
     "Baixo teor de gordura"
   ],
   "riscos": [
-    "Verificar procedência",
-    "Evitar pele se em dieta"
+    "Verificar procedência"
   ],
   "nutricao": {
     "calorias": "165 kcal",
@@ -22,7 +21,7 @@
     "carboidratos": "0g",
     "gorduras": "3.6g"
   },
-  "tecnica": "Grelhado, assado ou cozido",
+  "tecnica": "Grelhado ou assado",
   "descricao": "Frango preparado de forma saudável.",
   "contem_gluten": false,
   "contem_lactose": false,
@@ -32,11 +31,9 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Saladas",
-    "Legumes",
-    "Arroz integral"
+    "Legumes"
   ],
   "evitar_com": [
-    "Molhos gordurosos",
     "Frituras"
   ],
   "category_emoji": "🍖"

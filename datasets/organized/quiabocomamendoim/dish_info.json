@@ -2,27 +2,37 @@
   "nome": "Quiabocomamendoim",
   "categoria": "vegano",
   "ingredientes": [
-    "Quiabo",
-    "Amendoim",
-    "Cebolinha",
-    "Pimenta vermelha"
+    "quiabo",
+    "sal"
   ],
-  "descricao": "Quiabos cozidos e refogados em molho escuro, possivelmente à base de shoyu ou outro molho à base de soja, com pedaços de amendoim torrado e decorado com cebolinha picada e pimenta vermelha.",
+  "descricao": "Quiabo, legume típico brasileiro.",
   "beneficios": [
-    "O quiabo é rico em fibras, auxiliando na digestão e controle glicêmico.",
-    "O amendoim é fonte de gorduras saudáveis e proteínas."
+    "Baixas calorias",
+    "Rico em fibras",
+    "Vitaminas"
   ],
   "riscos": [
-    "Alérgeno: amendoim.",
-    "Pode conter sódio em excesso, dependendo do molho utilizado."
+    "Textura pode não agradar todos"
   ],
   "curiosidade": "O quiabo é um ingrediente versátil na culinária brasileira, sendo usado em diversas preparações, como o famoso quiabo com carne seca.",
   "slug": "quiabocomamendoim",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "33 kcal",
+    "proteinas": "2g",
+    "carboidratos": "7g",
+    "gorduras": "0.2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Refogado ou empanado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Frango",
+    "Carne"
+  ],
+  "evitar_com": []
 }

@@ -10,12 +10,10 @@
   "beneficios": [
     "Corte macio",
     "Rico em proteínas",
-    "Ferro",
-    "Zinco"
+    "Ferro"
   ],
   "riscos": [
-    "Gordura moderada",
-    "Consumir com moderação"
+    "Gordura moderada"
   ],
   "curiosidade": "A maminha é um corte nobre do boi, conhecido por sua maciez e sabor marcante. A cerveja preta adiciona um toque adocicado e amargo ao prato.",
   "slug": "maminhanacervejapreta",
@@ -34,8 +32,7 @@
   "melhor_horario": "Almoço",
   "combina_com": [
     "Farofa",
-    "Vinagrete",
-    "Arroz"
+    "Vinagrete"
   ],
   "evitar_com": [
     "Molhos gordurosos"

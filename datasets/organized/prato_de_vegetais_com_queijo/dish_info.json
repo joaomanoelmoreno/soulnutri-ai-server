@@ -2,16 +2,44 @@
   "slug": "prato_de_vegetais_com_queijo",
   "nome": "Risoto De Vegetais Com Queijo",
   "categoria": "vegetariano",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "nutricao": {},
+  "descricao": "Risoto cremoso italiano.",
+  "ingredientes": [
+    "arroz arbóreo",
+    "caldo",
+    "vinho branco",
+    "manteiga",
+    "queijo parmesão"
+  ],
+  "beneficios": [
+    "Fonte de energia",
+    "Cremoso e nutritivo"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Alto teor calórico"
+  ],
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "5g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
+  },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "tecnica": "Cozimento lento com caldo",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Cogumelos",
+    "Vegetais"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ]
 }

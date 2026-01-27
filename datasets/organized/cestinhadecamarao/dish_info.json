@@ -11,13 +11,11 @@
   ],
   "beneficios": [
     "Proteína magra",
-    "Selênio antioxidante",
-    "Iodo para tireoide",
+    "Selênio",
     "Ômega-3"
   ],
   "riscos": [
-    "Alérgeno: crustáceo (risco grave)",
-    "Colesterol elevado"
+    "Alérgeno: crustáceo"
   ],
   "nutricao": {
     "calorias": "99 kcal",
@@ -37,12 +35,10 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Arroz",
-    "Legumes",
-    "Limão"
+    "Legumes"
   ],
   "evitar_com": [
-    "Excesso de manteiga",
-    "Frituras"
+    "Excesso de manteiga"
   ],
   "category_emoji": "🍖"
 }

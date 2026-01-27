@@ -1,34 +1,43 @@
 {
   "nome": "Gelatina de Morango",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Gelatina em pó (colágeno hidrolisado, pode conter corantes, aromatizantes e edulcorantes)",
-    "Água",
-    "Morango (opcional)"
+    "gelatina",
+    "água",
+    "açúcar"
   ],
-  "descricao": "Sobremesa refrescante e leve, feita com gelatina sabor morango e água. Pode conter pedaços de morango fresco.",
+  "descricao": "Sobremesa leve e refrescante.",
   "beneficios": [
-    "Fonte de colágeno (se contiver)",
-    "Baixo teor calórico"
+    "Colágeno",
+    "Baixas calorias",
+    "Hidratação"
   ],
   "riscos": [
-    "Contém corantes artificiais",
-    "Alto teor de açúcar (se adoçada artificialmente)",
-    "Pode causar alergias (corantes/aromatizantes)"
+    "Alto teor de açúcar"
   ],
   "curiosidade": "A gelatina em pó é rica em colágeno, uma proteína que o corpo produz naturalmente e que ajuda a manter a pele firme e elástica.",
   "slug": "gelatinademorango",
   "nutricao": {
-    "calorias": "80 kcal",
+    "calorias": "70 kcal",
     "proteinas": "2g",
-    "carboidratos": "15g",
+    "carboidratos": "17g",
     "gorduras": "0g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Refrigerada",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Sobremesa",
+  "combina_com": [
+    "Frutas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
 }

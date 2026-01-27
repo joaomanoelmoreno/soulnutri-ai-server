@@ -3,21 +3,34 @@
   "slug": "quinoa_com_legumes",
   "categoria": "vegano",
   "category_emoji": "🌱",
-  "descricao": "Uma salada colorida e nutritiva, rica em quinoa, com pedaços de vegetais.",
+  "descricao": "Quinoa nutritiva, superalimento.",
   "ingredientes": [
-    "Quinoa",
-    "Cenoura",
-    "Pimentão",
-    "Azeite"
+    "quinoa",
+    "água",
+    "sal"
   ],
-  "beneficios": [],
+  "beneficios": [
+    "Proteína completa",
+    "Rico em fibras",
+    "Sem glúten"
+  ],
   "riscos": [],
-  "tecnica": "",
+  "tecnica": "Cozida",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "120 kcal",
+    "proteinas": "4.4g",
+    "carboidratos": "21g",
+    "gorduras": "1.9g"
   },
-  "contem_gluten": false
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Legumes",
+    "Saladas"
+  ],
+  "evitar_com": []
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Frutos do Mar ao Molho Branco",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Camarão",
     "Mexilhão",
@@ -31,7 +31,7 @@
     "carboidratos": "15g",
     "gorduras": "18g"
   },
-  "category_emoji": "🍖",
+  "category_emoji": "🌱",
   "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": false,

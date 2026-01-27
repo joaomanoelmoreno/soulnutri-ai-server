@@ -2,33 +2,43 @@
   "nome": "Arroz integral com Legumes",
   "categoria": "vegano",
   "ingredientes": [
-    "Arroz integral",
-    "Cenoura em cubos",
-    "Abobrinha em cubos",
-    "Pimentão amarelo em cubos",
-    "Salsa picada",
-    "Cebolinha picada",
-    "Grãos de trigo"
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
   ],
-  "descricao": "Prato vegano colorido e nutritivo. O arroz integral e os grãos de trigo estão cozidos e misturados com cubos de legumes (cenoura, abobrinha e pimentão) e finalizado com ervas frescas picadas (salsa e cebolinha).",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
   "beneficios": [
-    "Alto teor de fibras, auxiliando na digestão e controle glicêmico.",
-    "Rico em vitaminas e antioxidantes provenientes dos vegetais.",
-    "Fonte de energia de liberação lenta."
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
   ],
   "riscos": [
-    "Contém glúten (nos grãos de trigo), devendo ser evitado por celíacos ou pessoas com sensibilidade.",
-    "Pode conter traços de outros ingredientes se preparado em utensílios compartilhados."
+    "Alto índice glicêmico"
   ],
   "curiosidade": "O arroz integral é considerado um alimento completo, pois preserva o farelo e o gérmen, ricos em nutrientes que são retirados no arroz branco.",
   "slug": "arrozintlegumes",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "tecnica": "Cozimento em água",
+  "category_emoji": "🌱",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ]
 }

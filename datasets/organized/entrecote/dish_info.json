@@ -1,28 +1,27 @@
 {
   "nome": "Entrecote",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "Entrecôte (corte de carne bovina)",
-    "Tomate cereja",
-    "Cebolinha",
-    "Azeite"
+    "entrecôte",
+    "sal grosso",
+    "ervas"
   ],
-  "descricao": "O prato é composto por cortes de entrecôte grelhados, que parecem ter sido temperados com azeite, sal e pimenta do reino. É guarnecido com tomate cereja e cebolinha picada, conferindo frescor. O modo de preparo visível é grelhado, o que confere a carne uma crosta saborosa.",
+  "descricao": "Entrecôte suculento e saboroso.",
   "beneficios": [
-    "A carne bovina é rica em proteína, essencial para a construção e reparação dos tecidos do corpo.",
-    "O tomate cereja é fonte de licopeno, um antioxidante que pode auxiliar na prevenção de doenças."
+    "Rico em proteínas",
+    "Ferro",
+    "Sabor intenso"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, que em excesso pode aumentar o colesterol.",
-    "Alérgenos: não identificados."
+    "Gordura moderada"
   ],
   "curiosidade": "O entrecôte é um corte retirado do miolo do contrafilé, conhecido pela maciez e sabor. O nome vem do francês, que significa \"entre as costelas\".",
   "slug": "entrecote",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "250 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "16g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -30,6 +29,14 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "tecnica": "Grelhado",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Batatas",
+    "Salada"
+  ],
+  "evitar_com": []
 }

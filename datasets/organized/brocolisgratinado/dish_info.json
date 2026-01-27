@@ -1,7 +1,7 @@
 {
   "nome": "Brócolis Gratinado",
   "slug": "brocolisgratinado",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "Brócolis nutritivo, um dos vegetais mais saudáveis.",
   "ingredientes": [
     "brócolis",
@@ -25,7 +25,7 @@
   },
   "contem_gluten": false,
   "tecnica": "Vapor ou refogado",
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "contem_lactose": false,
   "contem_ovo": false,
   "indice_glicemico": "muito baixo",

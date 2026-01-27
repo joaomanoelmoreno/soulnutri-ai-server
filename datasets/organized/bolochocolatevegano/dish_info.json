@@ -1,7 +1,7 @@
 {
   "slug": "bolochocolatevegano",
   "nome": "Boloc Vegano de Chocolate",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "descricao": "Bolo caseiro tradicional.",
   "ingredientes": [
     "farinha de trigo",
@@ -41,5 +41,5 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

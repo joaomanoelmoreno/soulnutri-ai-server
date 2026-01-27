@@ -1,45 +1,44 @@
 {
   "slug": "strogonoff_vegano",
   "nome": "Estrogonofe de Cogumelos Vegano com Brócolis",
-  "categoria": "vegano",
-  "descricao": "Brócolis nutritivo, um dos vegetais mais saudáveis.",
+  "categoria": "proteína animal",
+  "descricao": "Strogonoff cremoso e saboroso.",
   "ingredientes": [
-    "brócolis",
-    "sal",
-    "azeite"
+    "carne ou frango",
+    "creme de leite",
+    "mostarda",
+    "ketchup"
   ],
   "beneficios": [
-    "Sulforafano anticancerígeno",
-    "Rico em vitamina C",
-    "Cálcio vegetal",
-    "Fibras"
+    "Rico em proteínas",
+    "Saboroso"
   ],
   "riscos": [
-    "Pode causar gases em excesso"
+    "Contém lactose",
+    "Alto teor calórico"
   ],
   "nutricao": {
-    "calorias": "34 kcal",
-    "proteinas": "2.8g",
-    "carboidratos": "7g",
-    "gorduras": "0.4g"
+    "calorias": "220 kcal",
+    "proteinas": "18g",
+    "carboidratos": "8g",
+    "gorduras": "14g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱",
-  "tecnica": "Vapor ou refogado",
-  "indice_glicemico": "muito baixo",
-  "tempo_digestao": "2 horas",
+  "category_emoji": "🍖",
+  "tecnica": "Refogado com creme",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
-    "Proteínas",
-    "Alho",
-    "Azeite"
+    "Arroz",
+    "Batata palha"
   ],
   "evitar_com": [
-    "Queijos gordurosos em excesso"
+    "Outras gorduras"
   ]
 }

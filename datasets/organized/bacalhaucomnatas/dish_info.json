@@ -2,28 +2,26 @@
   "slug": "bacalhaucomnatas",
   "nome": "Bacalhau com Natas",
   "categoria": "proteína animal",
-  "descricao": "Bacalhau tradicional português.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "bacalhau",
-    "azeite",
-    "batata",
-    "cebola",
-    "alho"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
   "beneficios": [
-    "Proteína magra",
     "Ômega-3",
-    "Vitaminas B12 e D"
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Alto teor de sódio"
+    "Alérgeno: peixe"
   ],
   "nutricao": {
-    "calorias": "150 kcal",
-    "proteinas": "25g",
+    "calorias": "120 kcal",
+    "proteinas": "22g",
     "carboidratos": "0g",
-    "gorduras": "5g"
+    "gorduras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -31,17 +29,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": true,
   "contem_soja": false,
-  "tecnica": "Assado ou refogado",
+  "tecnica": "Grelhado ou assado",
   "indice_glicemico": "zero",
-  "tempo_digestao": "3 horas",
-  "melhor_horario": "Almoço",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
   "combina_com": [
-    "Batatas",
-    "Azeite",
-    "Azeitonas"
+    "Limão",
+    "Legumes"
   ],
   "evitar_com": [
-    "Excesso de sal adicional"
+    "Frituras"
   ],
   "category_emoji": "🍖"
 }

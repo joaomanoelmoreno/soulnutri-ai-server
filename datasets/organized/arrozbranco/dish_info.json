@@ -2,28 +2,43 @@
   "nome": "Arroz branco",
   "categoria": "vegano",
   "ingredientes": [
-    "Arroz branco",
-    "Água",
-    "Sal "
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
   ],
-  "descricao": "Arroz branco cozido. O arroz é cozido em água fervente até ficar macio, possivelmente com adição de sal para tempero. A ausência de outros ingredientes indica que é uma preparação básica.",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
   "beneficios": [
-    "Fonte de carboidratos, fornecendo energia para o corpo.",
-    "Fácil digestibilidade."
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
   ],
   "riscos": [
-    "Alto índice glicêmico, o que pode causar picos de açúcar no sangue.",
-    "Pode ser carente em nutrientes essenciais se consumido isoladamente."
+    "Alto índice glicêmico"
   ],
   "curiosidade": "O arroz branco é o resultado do polimento do arroz integral, que remove a casca, o farelo e o gérmen, resultando em menor teor de fibras e nutrientes, mas em uma textura mais macia e sabor mais suave.",
   "slug": "arrozbranco",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "tecnica": "Cozimento em água",
+  "category_emoji": "🌱",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ]
 }

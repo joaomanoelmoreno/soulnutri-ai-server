@@ -1,44 +1,26 @@
 {
   "slug": "pernildecordeiro",
   "nome": "Pernildecordeiro",
-  "categoria": "vegano",
-  "descricao": "O prato consiste em pernil de cordeiro cozido em um caldo saboroso. A carne foi desfiada e está visivelmente macia. O caldo parece ser caseiro e enriquecido com ervas frescas picadas. Aparentemente, a receita é simples, focada na qualidade da carne e no sabor do caldo.",
+  "categoria": "proteína animal",
+  "descricao": "Pernil assado suculento.",
   "ingredientes": [
-    "Pernil de cordeiro",
-    "Caldo de carne (provavelmente)",
-    "Ervas frescas picadas (salsinha ou cheiro verde)",
-    "Especiarias (possivelmente)",
-    "Cebola (provavelmente)",
-    "carne",
-    "temperos",
-    "óleo",
-    "Batatas",
-    "Arroz",
-    "Ervas frescas (salsa/salsinha)",
-    "Molho escuro (provavelmente à base de vinho e temperos)"
+    "pernil suíno",
+    "alho",
+    "sal",
+    "ervas"
   ],
   "beneficios": [
-    "Rica fonte de proteína de alta qualidade, essencial para a construção e reparo de tecidos",
-    "Fornece ferro, importante para a prevenção da anemia",
-    "Contém zinco, que fortalece o sistema imunológico",
-    "Fonte de proteína de alta qualidade, essencial para a construção e reparação dos tecidos.",
-    "Rico em ferro, importante para a prevenção da anemia.",
-    "As batatas fornecem carboidratos para energia e o arroz pode ser uma fonte de carboidratos complexos."
+    "Rico em proteínas",
+    "Sabor intenso"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL",
-    "Pessoas com gota devem moderar o consumo devido ao teor de purinas",
-    "Possível presença de sódio em excesso, dependendo do caldo utilizado",
-    "Alérgeno: carne",
-    "Alto teor de gordura saturada, que pode aumentar o colesterol.",
-    "Consumo excessivo de carne vermelha tem sido associado a um maior risco de certas doenças.",
-    "O molho pode conter sódio em excesso, dependendo da receita."
+    "Gordura elevada"
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "260 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "17g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -46,5 +28,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🍖",
+  "tecnica": "Assado lento",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço especial",
+  "combina_com": [
+    "Arroz",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
 }

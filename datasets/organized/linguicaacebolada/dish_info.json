@@ -2,30 +2,38 @@
   "nome": "Linguiça Calabresa Acebolada",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Linguiça calabresa fatiada",
-    "Cebola roxa em rodelas",
-    "Cebola branca em rodelas",
-    "Salsa picada",
-    "Azeite"
+    "carne suína",
+    "temperos"
   ],
-  "descricao": "Prato simples e saboroso com linguiça calabresa fatiada e refogada com cebolas. Ideal para acompanhar refeições ou como petisco.",
+  "descricao": "Linguiça suína saborosa.",
   "beneficios": [
-    "Fonte de proteína",
-    "Sabor intenso"
+    "Rica em proteínas"
   ],
   "riscos": [
     "Alto teor de sódio",
-    "Alto teor de gordura"
+    "Gordura elevada"
   ],
   "curiosidade": "A linguiça calabresa é um produto de origem italiana, adaptado no Brasil, e seu sabor característico provém da defumação e do uso de especiarias como pimenta e alho.",
   "slug": "linguicaacebolada",
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "20g",
-    "carboidratos": "10g",
-    "gorduras": "28g"
+    "calorias": "300 kcal",
+    "proteinas": "15g",
+    "carboidratos": "2g",
+    "gorduras": "26g"
   },
   "category_emoji": "🍖",
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "tecnica": "Grelhada ou frita",
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Feijão"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
 }

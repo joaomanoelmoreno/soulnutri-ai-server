@@ -10,13 +10,11 @@
   "descricao": "Camarão fresco, rico em proteínas.",
   "beneficios": [
     "Proteína magra",
-    "Selênio antioxidante",
-    "Iodo para tireoide",
+    "Selênio",
     "Ômega-3"
   ],
   "riscos": [
-    "Alérgeno: crustáceo (risco grave)",
-    "Colesterol elevado"
+    "Alérgeno: crustáceo"
   ],
   "curiosidade": "A lula, assim como o camarão, é uma excelente fonte de proteínas e possui pouca gordura, além de ser rica em minerais como selênio, fósforo e zinco.",
   "slug": "lula_e_camarao",
@@ -36,12 +34,10 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Arroz",
-    "Legumes",
-    "Limão"
+    "Legumes"
   ],
   "evitar_com": [
-    "Excesso de manteiga",
-    "Frituras"
+    "Excesso de manteiga"
   ],
   "category_emoji": "🍖"
 }

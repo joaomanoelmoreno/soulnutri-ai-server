@@ -15,10 +15,9 @@
     "Baixo teor de gordura"
   ],
   "riscos": [
-    "Verificar procedência",
-    "Evitar pele se em dieta"
+    "Verificar procedência"
   ],
-  "tecnica": "Grelhado, assado ou cozido",
+  "tecnica": "Grelhado ou assado",
   "nutricao": {
     "calorias": "165 kcal",
     "proteinas": "31g",
@@ -33,11 +32,9 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Saladas",
-    "Legumes",
-    "Arroz integral"
+    "Legumes"
   ],
   "evitar_com": [
-    "Molhos gordurosos",
     "Frituras"
   ]
 }

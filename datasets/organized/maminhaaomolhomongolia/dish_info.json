@@ -10,12 +10,10 @@
   "beneficios": [
     "Corte macio",
     "Rico em proteínas",
-    "Ferro",
-    "Zinco"
+    "Ferro"
   ],
   "riscos": [
-    "Gordura moderada",
-    "Consumir com moderação"
+    "Gordura moderada"
   ],
   "curiosidade": "O molho mongol é uma adaptação de molhos chineses, popularizada em restaurantes ocidentais. Embora o nome sugira origem na Mongólia, sua receita não é tradicionalmente encontrada na culinária mongol.",
   "slug": "maminhaaomolhomongolia",
@@ -34,8 +32,7 @@
   "melhor_horario": "Almoço",
   "combina_com": [
     "Farofa",
-    "Vinagrete",
-    "Arroz"
+    "Vinagrete"
   ],
   "evitar_com": [
     "Molhos gordurosos"

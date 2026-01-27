@@ -1,18 +1,42 @@
 {
   "nome": "Risoto",
   "slug": "risoto",
-  "categoria": "vegano",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "arroz arbóreo",
+    "caldo",
+    "vinho branco",
+    "manteiga",
+    "queijo parmesão"
+  ],
+  "descricao": "Risoto cremoso italiano.",
+  "beneficios": [
+    "Fonte de energia",
+    "Cremoso e nutritivo"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Alto teor calórico"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "180 kcal",
+    "proteinas": "5g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
-  "category_emoji": "🌱"
+  "contem_lactose": true,
+  "category_emoji": "🥚",
+  "tecnica": "Cozimento lento com caldo",
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Cogumelos",
+    "Vegetais"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ]
 }

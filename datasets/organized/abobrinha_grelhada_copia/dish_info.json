@@ -1,29 +1,41 @@
 {
   "nome": "Farofa com bacon",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "Farinha de mandioca",
-    "Bacon",
-    "Gordura (possivelmente óleo vegetal ou azeite, dependendo do preparo)",
-    "Temperos (cebola, alho, sal e pimenta são ingredientes comuns)"
+    "farinha de mandioca",
+    "manteiga",
+    "sal",
+    "cebola"
   ],
-  "descricao": "Farofa preparada com bacon frito e desfiado, misturado à farinha de mandioca e temperos, geralmente refogada em gordura.",
+  "descricao": "Farofa crocante, acompanhamento brasileiro.",
   "beneficios": [
-    "A farinha de mandioca é fonte de carboidratos, fornecendo energia.",
-    "O bacon, em quantidades moderadas, pode contribuir com sabor e gorduras que auxiliam na absorção de vitaminas lipossolúveis."
+    "Fonte de energia",
+    "Carboidratos"
   ],
   "riscos": [
-    "Alto teor de gordura saturada proveniente do bacon, podendo aumentar o colesterol.",
-    "Rico em sódio, especialmente se utilizar temperos industrializados e bacon com excesso de sal.",
-    "Pode conter glúten, dependendo da farinha de mandioca utilizada (verificar o rótulo)"
+    "Calórica se em excesso"
   ],
   "curiosidade": "A farofa é um acompanhamento tradicional da culinária brasileira, presente em diversas regiões com variações de ingredientes e preparo. Sua origem é atribuída aos indígenas brasileiros, que utilizavam a farinha de mandioca como base para suas refeições.",
   "slug": "abobrinha_grelhada_copia",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "150 kcal",
+    "proteinas": "1g",
+    "carboidratos": "25g",
+    "gorduras": "5g"
   },
-  "category_emoji": "🍖"
+  "category_emoji": "🌱",
+  "tecnica": "Refogada",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Churrasco"
+  ],
+  "evitar_com": [
+    "Outros carboidratos"
+  ]
 }

@@ -2,30 +2,37 @@
   "nome": "Portobellorecheado",
   "categoria": "vegano",
   "ingredientes": [
-    "Cogumelos Portobello",
-    "Abobrinha",
-    "Cenoura",
-    "Queijo parmesão ralado",
-    "Cebolinha",
-    "Caldo de legumes (base do molho)"
+    "cogumelo portobello",
+    "azeite",
+    "alho",
+    "ervas"
   ],
-  "descricao": "O prato consiste em cogumelos portobello recheados com legumes picados (abobrinha e cenoura) e cobertos com queijo parmesão ralado. Os cogumelos parecem ter sido assados ou grelhados. Há um molho, provavelmente à base de caldo de legumes, no fundo da travessa.",
+  "descricao": "Cogumelo portobello, substituto de carne.",
   "beneficios": [
-    "Cogumelos portobello são ricos em antioxidantes e selênio, que combatem os radicais livres.",
-    "A cenoura é fonte de betacaroteno, precursor da vitamina A, importante para a visão e saúde da pele.",
-    "Abobrinha é rica em fibras, auxiliando na saúde digestiva."
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em minerais"
   ],
-  "riscos": [
-    "Alérgeno: Laticínios (queijo parmesão)",
-    "Pode conter sódio em excesso dependendo do tempero utilizado no preparo."
-  ],
+  "riscos": [],
   "curiosidade": "O cogumelo portobello é um cogumelo marrom grande, uma versão mais madura do cogumelo branco comum, com sabor mais intenso e textura carnuda, tornando-o um ótimo substituto de carne em pratos vegetarianos.",
   "slug": "portobellorecheado",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "22 kcal",
+    "proteinas": "2g",
+    "carboidratos": "4g",
+    "gorduras": "0.4g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": "Grelhado ou recheado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Ervas"
+  ],
+  "evitar_com": []
 }

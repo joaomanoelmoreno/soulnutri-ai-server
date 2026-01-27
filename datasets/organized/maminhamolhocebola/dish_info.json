@@ -11,12 +11,10 @@
   "beneficios": [
     "Corte macio",
     "Rico em proteínas",
-    "Ferro",
-    "Zinco"
+    "Ferro"
   ],
   "riscos": [
-    "Gordura moderada",
-    "Consumir com moderação"
+    "Gordura moderada"
   ],
   "nutricao": {
     "calorias": "220 kcal",
@@ -36,8 +34,7 @@
   "melhor_horario": "Almoço",
   "combina_com": [
     "Farofa",
-    "Vinagrete",
-    "Arroz"
+    "Vinagrete"
   ],
   "evitar_com": [
     "Molhos gordurosos"

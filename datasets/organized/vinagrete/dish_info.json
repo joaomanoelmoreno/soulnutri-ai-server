@@ -2,5 +2,37 @@
   "nome": "Vinagrete",
   "slug": "vinagrete",
   "categoria": "vegano",
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "ingredientes": [
+    "tomate",
+    "cebola",
+    "pimentão",
+    "vinagre",
+    "azeite"
+  ],
+  "beneficios": [
+    "Baixas calorias",
+    "Rico em vitaminas",
+    "Refrescante"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "30 kcal",
+    "proteinas": "0.5g",
+    "carboidratos": "5g",
+    "gorduras": "1g"
+  },
+  "tecnica": "Crua",
+  "descricao": "Salsa brasileira refrescante.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Churrasco",
+    "Feijão"
+  ],
+  "evitar_com": []
 }

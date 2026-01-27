@@ -1,17 +1,45 @@
 {
   "slug": "almdegasmolhosugo",
   "nome": "Almôndegas ao Molho Sugo",
-  "categoria": "vegano",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "nutricao": {},
-  "contem_gluten": false,
+  "categoria": "proteína animal",
+  "descricao": "Almôndegas caseiras saborosas.",
+  "ingredientes": [
+    "carne moída",
+    "cebola",
+    "alho",
+    "ovo",
+    "farinha de rosca"
+  ],
+  "beneficios": [
+    "Rica em proteínas",
+    "Fonte de ferro"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo"
+  ],
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "15g",
+    "carboidratos": "10g",
+    "gorduras": "14g"
+  },
+  "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🍖",
+  "tecnica": "Assada ou frita",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Molho de tomate"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

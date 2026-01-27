@@ -2,28 +2,38 @@
   "nome": "Linguiça de lombo",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Linguiça de lombo",
-    "Cebola roxa",
-    "Cebolinha picada",
-    "Azeite (possível)"
+    "carne suína",
+    "temperos"
   ],
-  "descricao": "Prato composto por linguiça de lombo fatiada, misturada com cebola roxa em fatias e cebolinha picada. Possivelmente, a linguiça foi salteada em azeite ou cozida. A combinação é uma salada refrescante e saborosa.",
+  "descricao": "Linguiça suína saborosa.",
   "beneficios": [
-    "A linguiça de lombo é fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
-    "A cebola roxa contém antioxidantes, que combatem os radicais livres."
+    "Rica em proteínas"
   ],
   "riscos": [
-    "A linguiça pode conter alto teor de sódio.",
-    "Contém glúten (geralmente a linguiça)",
-    "Alérgenos: pode conter traços de produtos derivados de leite e soja (verificar rótulo)"
+    "Alto teor de sódio",
+    "Gordura elevada"
   ],
   "curiosidade": "A linguiça de lombo é feita com carne suína, geralmente do lombo, que é uma parte magra do porco. A adição de temperos e especiarias varia de acordo com a receita, conferindo diferentes sabores e aromas ao produto.",
   "slug": "linguica_de_lombo",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "300 kcal",
+    "proteinas": "15g",
+    "carboidratos": "2g",
+    "gorduras": "26g"
   },
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "tecnica": "Grelhada ou frita",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Feijão"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
 }

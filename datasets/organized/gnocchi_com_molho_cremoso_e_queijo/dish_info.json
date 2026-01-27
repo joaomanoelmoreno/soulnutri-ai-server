@@ -2,17 +2,40 @@
   "nome": "Gnocchi Com Molho Cremoso E Queijo",
   "slug": "gnocchi_com_molho_cremoso_e_queijo",
   "categoria": "vegetariano",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "ingredientes": [
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal"
+  ],
+  "descricao": "Gnocchi de batata italiano.",
+  "beneficios": [
+    "Fonte de energia",
+    "Carboidratos"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "tecnica": "Cozido em água",
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Gorgonzola"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "nome": "Bolo Com Calda De Frutas Vermelhas",
   "slug": "bolo_com_calda_de_frutas_vermelhas",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "farinha de trigo",
     "açúcar",
@@ -38,5 +38,5 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

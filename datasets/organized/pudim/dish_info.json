@@ -1,7 +1,7 @@
 {
   "nome": "Pudim",
   "slug": "pudim",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "leite condensado",
     "leite",
@@ -37,5 +37,5 @@
   "evitar_com": [
     "Outras sobremesas no mesmo dia"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

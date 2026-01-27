@@ -4,15 +4,14 @@
   "categoria": "vegetariano",
   "descricao": "Lasanha tradicional em camadas.",
   "ingredientes": [
-    "massa de lasanha",
+    "massa",
     "molho de tomate",
     "queijo",
-    "espinafre",
     "molho branco"
   ],
   "beneficios": [
     "Refeição completa",
-    "Cálcio do queijo"
+    "Cálcio"
   ],
   "riscos": [
     "Contém glúten",
@@ -39,7 +38,7 @@
     "Salada verde"
   ],
   "evitar_com": [
-    "Outras massas no mesmo dia"
+    "Outras massas"
   ],
   "category_emoji": "🥚"
 }

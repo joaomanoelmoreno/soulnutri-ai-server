@@ -1,30 +1,44 @@
 {
   "slug": "nhoque",
   "nome": "nhoque",
-  "categoria": "vegano",
-  "descricao": "Prato composto por diferentes preparações, possivelmente purê de batata, bolinho frito e algo cremoso.",
+  "categoria": "vegetariano",
+  "descricao": "Nhoque de batata tradicional italiano.",
   "ingredientes": [
-    "Purê de batata",
-    "Bolinho frito",
-    "Creme de queijo"
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal"
   ],
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de energia",
+    "Carboidratos"
+  ],
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: Glúten (se o bolinho for empanado)",
-    "Alérgeno: LACTOSE (creme, queijo)"
+    "Contém glúten",
+    "Contém ovo"
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
   },
   "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": "Cozido em água",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ]
 }

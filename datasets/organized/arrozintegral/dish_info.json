@@ -2,24 +2,43 @@
   "nome": "Arroz Integral",
   "categoria": "vegano",
   "ingredientes": [
-    "Arroz integral",
-    "Cebolinha"
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
   ],
-  "descricao": "Arroz integral cozido, possivelmente em água ou caldo vegetal, finalizado com cebolinha picada fresca para agregar sabor e aroma. O arroz integral é cozido até ficar macio, mas ainda com alguma textura.",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
   "beneficios": [
-    "Rico em fibras, auxiliando na saúde digestiva e controle glicêmico.",
-    "Fonte de manganês, um mineral importante para o metabolismo e a saúde óssea."
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
   ],
-  "riscos": [],
+  "riscos": [
+    "Alto índice glicêmico"
+  ],
   "curiosidade": "O arroz integral preserva a camada de farelo, onde estão concentradas a maioria das fibras e nutrientes, ao contrário do arroz branco que tem essa camada removida no processo de polimento.",
   "slug": "arrozintegral",
   "nutricao": {
-    "calorias": "150 kcal",
-    "proteinas": "3g",
-    "carboidratos": "30g",
-    "gorduras": "2g"
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "tecnica": "Cozimento em água",
+  "category_emoji": "🌱",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ]
 }

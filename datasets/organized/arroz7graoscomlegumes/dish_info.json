@@ -2,35 +2,45 @@
   "nome": "Arroz com Damasco e Uva Passa",
   "slug": "arroz7graoscomlegumes",
   "categoria": "vegano",
-  "descricao": "Arroz integral misturado com damascos e uvas passas, oferecendo um sabor adocicado e nutritivo.",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
   "ingredientes": [
-    "arroz integral",
-    "damasco",
-    "uva passa",
-    "cebolinha",
-    "azeite"
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
   ],
   "beneficios": [
-    "fonte de fibras",
-    "energia de longa duração",
-    "rico em vitaminas"
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
   ],
   "riscos": [
-    "Alergia a algum ingrediente",
-    "Moderação no consumo (açúcar natural das frutas)"
+    "Alto índice glicêmico"
   ],
   "nutricao": {
-    "calorias": "150 kcal",
-    "proteinas": "3g",
-    "carboidratos": "30g",
-    "gorduras": "2g"
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
-  "tecnica": "",
+  "tecnica": "Cozimento em água",
   "category_emoji": "🌱",
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ]
 }

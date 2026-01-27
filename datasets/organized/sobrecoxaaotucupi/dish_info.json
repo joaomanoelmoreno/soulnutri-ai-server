@@ -9,8 +9,7 @@
   "descricao": "Sobrecoxa de frango suculenta.",
   "beneficios": [
     "Proteína de qualidade",
-    "Mais suculenta que o peito",
-    "Ferro"
+    "Mais suculenta que o peito"
   ],
   "riscos": [
     "Maior teor de gordura que peito"
@@ -32,7 +31,7 @@
   "melhor_horario": "Almoço ou jantar",
   "combina_com": [
     "Saladas",
-    "Legumes assados"
+    "Legumes"
   ],
   "evitar_com": [
     "Frituras"

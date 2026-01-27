@@ -1,43 +1,38 @@
 {
   "nome": "Lasanha De Berinjela",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
-    "massa de lasanha",
-    "molho de tomate",
-    "queijo",
-    "presunto",
-    "molho branco"
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
   ],
-  "descricao": "Lasanha tradicional em camadas.",
+  "descricao": "Berinjela preparada de forma saudável.",
   "beneficios": [
-    "Refeição completa",
-    "Cálcio do queijo"
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes"
   ],
-  "riscos": [
-    "Contém glúten",
-    "Contém lactose",
-    "Alto teor calórico"
-  ],
+  "riscos": [],
   "curiosidade": "A berinjela é um vegetal versátil, pertencente à família das solanáceas, assim como o tomate e a batata.",
   "slug": "lasanha_de_berinjela",
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "10g",
-    "carboidratos": "18g",
-    "gorduras": "8g"
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
   },
-  "tecnica": "Assado em forno",
-  "contem_gluten": true,
-  "contem_lactose": true,
-  "contem_ovo": true,
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "3-4 horas",
-  "melhor_horario": "Almoço",
+  "tecnica": "Grelhada ou assada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
   "combina_com": [
-    "Salada verde"
+    "Queijo",
+    "Tomate"
   ],
-  "evitar_com": [
-    "Outras massas no mesmo dia"
-  ],
-  "category_emoji": "🥚"
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }
