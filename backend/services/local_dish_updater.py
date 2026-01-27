@@ -571,8 +571,13 @@ def encontrar_tipo_prato(nome: str) -> str:
     return None
 
 
-def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
-    """Atualiza um prato LOCALMENTE baseado em regras, SEM chamar IA."""
+def atualizar_prato_local(slug: str, novo_nome: str = None, forcar: bool = False) -> dict:
+    """
+    Atualiza um prato LOCALMENTE baseado em regras, SEM chamar IA.
+    
+    IMPORTANTE: Só preenche campos VAZIOS, preservando correções manuais!
+    Use forcar=True para sobrescrever tudo.
+    """
     dish_dir = DATASET_DIR / slug
     if not dish_dir.exists():
         return {"ok": False, "error": "Prato não encontrado"}
@@ -590,39 +595,82 @@ def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
     nome = novo_nome if novo_nome else current_info.get('nome', slug)
     tipo = encontrar_tipo_prato(nome)
     
+    # Função helper para preencher apenas se vazio
+    def preencher_se_vazio(campo, valor):
+        if forcar:
+            current_info[campo] = valor
+        elif campo not in current_info or not current_info[campo]:
+            current_info[campo] = valor
+    
+    # Sempre atualizar nome e slug
+    current_info['nome'] = nome
+    current_info['slug'] = slug
+    
     if tipo and tipo in PRATOS_COMPLETOS:
         dados = PRATOS_COMPLETOS[tipo]
         
-        current_info['nome'] = nome
-        current_info['slug'] = slug
-        current_info['categoria'] = dados['categoria']
-        current_info['ingredientes'] = dados['ingredientes']
-        current_info['beneficios'] = dados['beneficios']
-        current_info['riscos'] = dados['riscos']
-        current_info['nutricao'] = dados['nutricao']
-        current_info['tecnica'] = dados.get('tecnica', '')
-        current_info['descricao'] = dados.get('descricao', '')
+        # Preencher apenas campos vazios (preserva correções manuais)
+        preencher_se_vazio('categoria', dados['categoria'])
+        preencher_se_vazio('ingredientes', dados['ingredientes'])
+        preencher_se_vazio('beneficios', dados['beneficios'])
+        preencher_se_vazio('riscos', dados['riscos'])
+        preencher_se_vazio('nutricao', dados['nutricao'])
+        preencher_se_vazio('tecnica', dados.get('tecnica', ''))
+        preencher_se_vazio('descricao', dados.get('descricao', ''))
         
+        # Alérgenos - só preenche se não existir
         for key, value in dados.get('alergenos', {}).items():
-            current_info[key] = value
+            if key not in current_info:
+                current_info[key] = value
         
-        current_info['indice_glicemico'] = dados.get('indice_glicemico', '')
-        current_info['tempo_digestao'] = dados.get('tempo_digestao', '')
-        current_info['melhor_horario'] = dados.get('melhor_horario', '')
-        current_info['combina_com'] = dados.get('combina_com', [])
-        current_info['evitar_com'] = dados.get('evitar_com', [])
+        preencher_se_vazio('indice_glicemico', dados.get('indice_glicemico', ''))
+        preencher_se_vazio('tempo_digestao', dados.get('tempo_digestao', ''))
+        preencher_se_vazio('melhor_horario', dados.get('melhor_horario', ''))
+        preencher_se_vazio('combina_com', dados.get('combina_com', []))
+        preencher_se_vazio('evitar_com', dados.get('evitar_com', []))
         
-        if "proteína" in dados['categoria']:
+        # Emoji baseado na categoria atual (pode ter sido corrigida manualmente)
+        cat = current_info.get('categoria', dados['categoria'])
+        if "proteína" in cat:
             current_info['category_emoji'] = "🍖"
-        elif "vegetariano" in dados['categoria']:
+        elif "vegetariano" in cat:
             current_info['category_emoji'] = "🥚"
         else:
             current_info['category_emoji'] = "🌱"
         
-        status = f"Atualizado com dados de '{tipo}'"
+        status = f"Preenchido campos vazios com dados de '{tipo}'"
     else:
-        current_info['nome'] = nome
-        current_info['slug'] = slug
+        # Sem tipo no banco - preencher apenas categoria se vazia
+        if 'categoria' not in current_info or not current_info['categoria']:
+            cat = detectar_categoria_basica(nome)
+            current_info['categoria'] = cat
+        else:
+            cat = current_info['categoria']
+        
+        # Detectar alérgenos apenas se não existirem
+        alergenos = detectar_alergenos_por_nome(nome)
+        for key, value in alergenos.items():
+            if key not in current_info:
+                current_info[key] = value
+        
+        if "proteína" in cat:
+            current_info['category_emoji'] = "🍖"
+        elif "vegetariano" in cat:
+            current_info['category_emoji'] = "🥚"
+        else:
+            current_info['category_emoji'] = "🌱"
+        
+        status = "Preenchido campos vazios com regras básicas"
+    
+    # CORREÇÃO: Se o nome tem "vegano", ajustar categoria e lactose
+    nome_lower = nome.lower()
+    if "vegano" in nome_lower or "vegana" in nome_lower:
+        current_info['categoria'] = "vegano"
+        current_info['contem_lactose'] = False
+        current_info['category_emoji'] = "🌱"
+    
+    with open(info_path, 'w', encoding='utf-8') as f:
+        json.dump(current_info, f, ensure_ascii=False, indent=2)
         cat = detectar_categoria_basica(nome)
         current_info['categoria'] = cat
         
