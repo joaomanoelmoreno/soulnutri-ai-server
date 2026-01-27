@@ -51,7 +51,7 @@ DERIVADOS_ANIMAIS = {
     "ovo", "ovos", "gema", "clara", "omelete", "omelette", "ovo frito",
     "ovo cozido", "ovo pochê", "ovo poche", "ovo mexido",
     
-    # Laticínios
+    # Laticínios (NOTA: queijo vegano será tratado separadamente)
     "leite", "queijo", "mussarela", "mozzarella", "parmesão", "parmesan", "parmesao",
     "provolone", "gorgonzola", "brie", "camembert", "cheddar", "coalho",
     "ricota", "cottage", "cream cheese", "requeijão", "requeijao",
@@ -61,6 +61,44 @@ DERIVADOS_ANIMAIS = {
     # Outros derivados
     "mel", "própolis", "propolis", "geleia real",
     "maionese", "aioli",  # contém ovo
+}
+
+# 🌱 VERSÕES VEGANAS - Se encontrar, NÃO é derivado animal
+VERSOES_VEGANAS = {
+    # Queijos veganos
+    "queijo vegano", "queijo de castanha", "queijo de caju", "queijo de amêndoa",
+    "queijo de macadâmia", "queijo de coco", "queijo plant-based", "queijo sem lactose vegano",
+    "mussarela vegana", "parmesão vegano", "cheddar vegano", "cream cheese vegano",
+    "requeijão vegano", "ricota vegana",
+    
+    # Maionese vegana
+    "maionese vegana", "maionese de aquafaba", "aioli vegano",
+    
+    # Manteigas veganas  
+    "manteiga vegana", "manteiga de coco", "margarina vegana",
+    
+    # Leites vegetais
+    "leite de coco", "leite de amêndoas", "leite de soja", "leite de aveia",
+    "leite de arroz", "leite vegetal", "leite de castanha", "leite de caju",
+    
+    # Cremes vegetais
+    "creme de coco", "creme vegetal", "chantilly vegano", "nata de coco",
+    "creme de leite de coco", "creme de soja",
+    
+    # Iogurtes vegetais
+    "iogurte vegano", "iogurte de coco", "iogurte de soja", "iogurte vegetal",
+}
+
+# 🎨 IGNORAR NA ANÁLISE - Palavras que aparecem no contexto mas NÃO são ingredientes reais
+IGNORAR_CONTEXTO = {
+    # Decorações e apresentação
+    "decoração", "decorado", "decorar", "decorada", "decorados",
+    "enfeite", "enfeitado", "guarnição", "para decorar",
+    "finalização", "finalizar", "para finalizar",
+    
+    # Contexto não-alimentar
+    "molde", "forma", "recipiente", "prato", "tigela",
+    "sirva", "servir", "acompanhe", "acompanhamento sugerido",
 }
 
 # 🚨 ALÉRGENOS CRÍTICOS
