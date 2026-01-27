@@ -1060,6 +1060,94 @@ export default function Admin() {
                   </div>
                 </div>
               )}
+
+              {/* Sem ingredientes */}
+              {auditData.problems.missing_ingredients && auditData.problems.missing_ingredients.length > 0 && (
+                <div className="audit-problems">
+                  <div className="problems-header">
+                    <h3>🟡 Pratos sem Ingredientes ({auditData.problems.missing_ingredients.length})</h3>
+                  </div>
+                  <div className="problems-list scrollable">
+                    {auditData.problems.missing_ingredients.slice(0, 30).map((p, i) => (
+                      <div key={i} className="problem-item warning">
+                        <span className="problem-slug">{p.nome || p.slug}</span>
+                        <button 
+                          className="edit-btn small"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) setEditingDish(dish);
+                            setActiveTab('dishes');
+                          }}
+                        >
+                          ✏️
+                        </button>
+                      </div>
+                    ))}
+                    {auditData.problems.missing_ingredients.length > 30 && (
+                      <p className="more-items">...e mais {auditData.problems.missing_ingredients.length - 30} pratos</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Alérgenos incorretos */}
+              {auditData.problems.allergen_conflicts && auditData.problems.allergen_conflicts.length > 0 && (
+                <div className="audit-problems">
+                  <div className="problems-header">
+                    <h3>🟠 Alérgenos Incorretos ({auditData.problems.allergen_conflicts.length})</h3>
+                  </div>
+                  <div className="problems-list scrollable">
+                    {auditData.problems.allergen_conflicts.slice(0, 30).map((p, i) => (
+                      <div key={i} className="problem-item warning">
+                        <span className="problem-slug">{p.nome || p.slug}</span>
+                        <span className="problem-issue">{p.issue}</span>
+                        <button 
+                          className="edit-btn small"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) setEditingDish(dish);
+                            setActiveTab('dishes');
+                          }}
+                        >
+                          ✏️
+                        </button>
+                      </div>
+                    ))}
+                    {auditData.problems.allergen_conflicts.length > 30 && (
+                      <p className="more-items">...e mais {auditData.problems.allergen_conflicts.length - 30} pratos</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Sem descrição */}
+              {auditData.problems.missing_description && auditData.problems.missing_description.length > 0 && (
+                <div className="audit-problems">
+                  <div className="problems-header">
+                    <h3>🔵 Pratos sem Descrição ({auditData.problems.missing_description.length})</h3>
+                  </div>
+                  <div className="problems-list scrollable">
+                    {auditData.problems.missing_description.slice(0, 30).map((p, i) => (
+                      <div key={i} className="problem-item info">
+                        <span className="problem-slug">{p.nome || p.slug}</span>
+                        <button 
+                          className="edit-btn small"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) setEditingDish(dish);
+                            setActiveTab('dishes');
+                          }}
+                        >
+                          ✏️
+                        </button>
+                      </div>
+                    ))}
+                    {auditData.problems.missing_description.length > 30 && (
+                      <p className="more-items">...e mais {auditData.problems.missing_description.length - 30} pratos</p>
+                    )}
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>
