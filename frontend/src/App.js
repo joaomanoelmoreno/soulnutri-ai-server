@@ -638,6 +638,44 @@ function App() {
   };
 
   // ═══════════════════════════════════════════════════════════════
+  // GALERIA - Salvar e visualizar fotos capturadas
+  // ═══════════════════════════════════════════════════════════════
+  
+  const saveToGallery = (imageUrl, dishName, result) => {
+    const newPhoto = {
+      id: Date.now(),
+      imageUrl,
+      dishName: dishName || 'Prato não identificado',
+      date: new Date().toLocaleString('pt-BR'),
+      result: result ? {
+        calorias: result.nutrition?.calorias || result.calorias_estimadas,
+        categoria: result.category
+      } : null
+    };
+    
+    setPhotoGallery(prev => {
+      const updated = [newPhoto, ...prev].slice(0, 50); // Máximo 50 fotos
+      localStorage.setItem('soulnutri_gallery', JSON.stringify(updated));
+      return updated;
+    });
+  };
+  
+  const deleteFromGallery = (photoId) => {
+    setPhotoGallery(prev => {
+      const updated = prev.filter(p => p.id !== photoId);
+      localStorage.setItem('soulnutri_gallery', JSON.stringify(updated));
+      return updated;
+    });
+  };
+  
+  const clearGallery = () => {
+    if (window.confirm('Apagar todas as fotos da galeria?')) {
+      setPhotoGallery([]);
+      localStorage.removeItem('soulnutri_gallery');
+    }
+  };
+
+  // ═══════════════════════════════════════════════════════════════
   // MODO SCANNER CONTÍNUO - Detecta mudança de imagem e identifica
   // ═══════════════════════════════════════════════════════════════
   
