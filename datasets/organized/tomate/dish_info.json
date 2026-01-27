@@ -14,10 +14,10 @@
   "curiosidade": "O tomate, embora muitas vezes usado como vegetal, é botanicamente uma fruta.",
   "slug": "tomate",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

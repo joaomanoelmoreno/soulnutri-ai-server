@@ -17,10 +17,10 @@
   "curiosidade": "O ervadoce, também conhecido como funcho, tem um sabor que lembra anis e é amplamente utilizado na culinária mediterrânea. As sementes de ervadoce também são usadas como especiaria e para fazer chá, conhecido por suas propriedades digestivas.",
   "slug": "ervadocecomlaranja",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

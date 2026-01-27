@@ -35,7 +35,12 @@
     "A maminha é rica em gordura saturada, devendo ser consumida com moderação.",
     "Molho madeira pode conter sódio em excesso, dependendo da receita."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

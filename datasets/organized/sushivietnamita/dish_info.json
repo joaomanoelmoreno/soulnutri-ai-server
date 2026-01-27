@@ -24,10 +24,10 @@
   "curiosidade": "O camarão, ingrediente comum no sushi, é uma excelente fonte de proteínas e selênio, um antioxidante importante para a saúde.",
   "slug": "sushivietnamita",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

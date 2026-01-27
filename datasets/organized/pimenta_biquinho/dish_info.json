@@ -16,10 +16,10 @@
   "curiosidade": "A pimenta biquinho, apesar do nome, não possui ardência significativa, sendo apreciada pelo seu sabor adocicado e aroma suave.",
   "slug": "pimenta_biquinho",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

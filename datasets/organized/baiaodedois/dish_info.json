@@ -36,7 +36,12 @@
     "Pode conter glúten, dependendo do preparo e ingredientes utilizados.",
     "Alérgeno: leite (queijo coalho)."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

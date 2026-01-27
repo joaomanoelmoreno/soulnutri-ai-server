@@ -8,10 +8,10 @@
   "curiosidade": "A qualidade da foto e a ausência de um prato dificultam qualquer análise nutricional ou gastronômica.",
   "slug": "naoepossivelidentificar",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

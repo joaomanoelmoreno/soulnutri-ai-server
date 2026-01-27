@@ -14,10 +14,10 @@
   "curiosidade": "O mamão é conhecido por suas propriedades medicinais, sendo utilizado em algumas culturas para tratar problemas digestivos e de pele.",
   "slug": "mamao",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

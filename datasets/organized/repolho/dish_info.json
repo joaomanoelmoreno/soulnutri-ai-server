@@ -21,10 +21,10 @@
   "curiosidade": "O repolho é um vegetal crucífero, assim como brócolis e couve-flor, e todos eles compartilham propriedades que ajudam na desintoxicação do organismo.",
   "slug": "repolho",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

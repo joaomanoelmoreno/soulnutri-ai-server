@@ -22,10 +22,10 @@
   "curiosidade": "O figo é uma fruta versátil, rica em vitaminas e minerais, e sua doçura natural harmoniza bem com queijos de sabor intenso como o gorgonzola.",
   "slug": "tortinhadegongorzolaefigo",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

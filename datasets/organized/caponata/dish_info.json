@@ -27,10 +27,10 @@
   "curiosidade": "A caponata tradicionalmente leva vinagre, que ajuda a realçar os sabores dos vegetais e a equilibrar a doçura das passas. O nome 'caponata' pode vir do italiano 'capone', um tipo de peixe, sugerindo que o prato originalmente continha peixe, mas evoluiu para uma receita vegetariana.",
   "slug": "caponata",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

@@ -21,10 +21,10 @@
   "curiosidade": "O ceviche, tradicionalmente feito com peixe, ganhou versões com frutas, como a manga, que trazem um sabor agridoce e refrescante.",
   "slug": "ceviche_de_manga",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

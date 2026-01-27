@@ -22,10 +22,10 @@
   "curiosidade": "O grão-de-bico é um alimento versátil e consumido em diversas culturas, sendo um dos ingredientes chave na culinária do Oriente Médio e do Mediterrâneo.",
   "slug": "graodebicotomatesecoespinafre",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

@@ -19,10 +19,10 @@
   "curiosidade": "A manga, originária da Ásia, é uma fruta tropical com diversas variedades e sabores, sendo uma ótima fonte de antioxidantes.",
   "slug": "torta_de_manga",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

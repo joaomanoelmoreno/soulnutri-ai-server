@@ -26,7 +26,12 @@
     "Pessoas com sensibilidade ou alergia a cebola devem evitar o prato.",
     "A caramelização pode aumentar a quantidade de açúcar no prato."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

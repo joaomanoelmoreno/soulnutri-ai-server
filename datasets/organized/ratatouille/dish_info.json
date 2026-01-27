@@ -27,10 +27,10 @@
   "curiosidade": "O nome \"Ratatouille\" vem do termo provençal \"ratatolha\", que significa \"misturar\" ou \"mexer\", referindo-se à maneira como os legumes são combinados no prato.",
   "slug": "ratatouille",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

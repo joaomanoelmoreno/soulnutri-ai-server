@@ -28,10 +28,10 @@
   "curiosidade": "O alho negro é obtido através de um processo de fermentação do alho branco, que lhe confere a cor escura e o sabor adocicado. O cumaru é uma semente nativa da Amazônia, muito utilizada na culinária por seu aroma marcante.",
   "slug": "pao_de_alho_negro_e_cumaru",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": true,

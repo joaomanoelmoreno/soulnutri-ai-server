@@ -16,10 +16,10 @@
   "curiosidade": "O queijo é um dos alimentos mais antigos do mundo, com evidências de produção datando de mais de 7.000 anos atrás.",
   "slug": "queijoralado",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

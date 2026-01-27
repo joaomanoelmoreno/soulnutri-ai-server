@@ -13,10 +13,10 @@
   "curiosidade": "A rúcula, também conhecida como agrião-da-terra, pertence à família das Brassicaceae, a mesma do brócolis, couve-flor e repolho.",
   "slug": "rucula",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

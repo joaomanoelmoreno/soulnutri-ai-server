@@ -24,10 +24,10 @@
   "curiosidade": "Grelhar os legumes intensifica seu sabor e carameliza os açúcares naturais, tornando-os mais saborosos.",
   "slug": "espetinhosdelegumesgrelhados",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

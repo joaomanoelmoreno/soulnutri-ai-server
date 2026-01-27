@@ -19,10 +19,10 @@
   "curiosidade": "Existem diversas variações de cocada, incluindo versões com adição de frutas, como abacaxi ou maracujá, e especiarias, como canela.",
   "slug": "cocada",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

@@ -21,10 +21,10 @@
   "curiosidade": "O polpetone, uma variação do famoso bolinho de carne italiano, é uma opção saborosa e versátil que pode ser adaptada a diferentes recheios e acompanhamentos.",
   "slug": "minipolpetonerecheadocomqueijo",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
   },
   "category_emoji": "🍖",
   "contem_gluten": false,

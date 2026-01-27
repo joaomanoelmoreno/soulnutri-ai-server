@@ -19,10 +19,10 @@
   "curiosidade": "O requeijão é um alimento muito popular no Brasil, sendo consumido puro, com pães, torradas, ou em receitas como recheios e patês.",
   "slug": "requeijao",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

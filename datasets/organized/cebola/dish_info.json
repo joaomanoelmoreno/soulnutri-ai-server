@@ -36,7 +36,12 @@
     "Alérgeno: frutos secos",
     "Pode conter traços de outros ingredientes, dependendo do preparo."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

@@ -14,10 +14,10 @@
   "curiosidade": "As uvas verdes são uma excelente opção para hidratação devido ao seu alto teor de água.",
   "slug": "uvas",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

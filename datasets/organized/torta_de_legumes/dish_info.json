@@ -23,10 +23,10 @@
   "curiosidade": "A adição de queijo à torta pode aumentar o teor de cálcio e proteína, mas também elevar o teor de gordura saturada, por isso, é importante controlar a quantidade.",
   "slug": "torta_de_legumes",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

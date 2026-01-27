@@ -17,10 +17,10 @@
   "curiosidade": "As azeitonas pretas são, na verdade, azeitonas verdes que amadureceram na árvore. A cor escura é resultado da maturação completa e do processo de conservação.",
   "slug": "azeitona_preta",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

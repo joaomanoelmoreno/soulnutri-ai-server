@@ -1,6 +1,6 @@
 {
   "slug": "canelone_4_queijo",
-  "nome": "Caneleira Quatro queijos",
+  "nome": "Canelone de  Quatro Queijos",
   "categoria": "vegetariano",
   "descricao": "Caneleira recheada com quatro tipos de queijo, coberta com molho de tomate e finalizada com manjericão fresco. Aparentemente, a massa e os queijos foram assados e o molho de tomate foi adicionado após o cozimento.",
   "ingredientes": [
@@ -43,11 +43,12 @@
     "carboidratos": "20g",
     "gorduras": "8g"
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "tecnica": ""
 }

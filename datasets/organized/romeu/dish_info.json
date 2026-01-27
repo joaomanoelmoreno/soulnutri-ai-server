@@ -16,10 +16,10 @@
   "curiosidade": "O 'Romeu' tradicionalmente é servido com goiabada, criando um contraste de sabores e texturas.",
   "slug": "romeu",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

@@ -21,10 +21,10 @@
   "curiosidade": "O ceviche é tradicionalmente feito com peixe cru marinado em suco cítrico. Esta versão, usando banana da terra, é uma adaptação criativa e vegana, com sabores e texturas contrastantes.",
   "slug": "ceviche_de_banana_da_terra",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

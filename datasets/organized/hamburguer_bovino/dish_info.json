@@ -18,10 +18,10 @@
   "curiosidade": "A carne bovina é uma das fontes mais ricas de ferro heme, que é mais facilmente absorvido pelo corpo em comparação com o ferro não-heme encontrado em fontes vegetais.",
   "slug": "hamburguer_bovino",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
   },
   "category_emoji": "🍖",
   "contem_gluten": false,

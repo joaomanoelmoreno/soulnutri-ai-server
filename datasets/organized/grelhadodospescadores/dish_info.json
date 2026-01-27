@@ -21,7 +21,12 @@
     "Alérgeno: crustáceos e peixes",
     "Alto teor de colesterol, dependendo da quantidade de frutos do mar consumida"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

@@ -20,10 +20,10 @@
   "curiosidade": "O figo é um fruto comumente associado ao Mediterrâneo e é rico em antioxidantes, que combatem os radicais livres.",
   "slug": "tortilha_de_figo_e_gorgonzola",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

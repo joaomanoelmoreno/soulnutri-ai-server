@@ -20,10 +20,10 @@
   "curiosidade": "O pepino é composto por cerca de 96% de água, tornando-o um alimento extremamente hidratante e com baixa caloria.",
   "slug": "pepinocomiogurte",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

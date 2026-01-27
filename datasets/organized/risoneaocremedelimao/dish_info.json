@@ -25,10 +25,10 @@
   "curiosidade": "O risone, também conhecido como orzo, é uma massa italiana que se assemelha a grãos de arroz. É versátil e pode ser usado em sopas, saladas e pratos cremosos como este.",
   "slug": "risoneaocremedelimao",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
   },
   "category_emoji": "🍖",
   "contem_gluten": false,

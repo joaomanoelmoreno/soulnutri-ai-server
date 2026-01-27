@@ -23,10 +23,10 @@
   "curiosidade": "Mechouia significa \"assado\" em árabe, referindo-se ao método tradicional de assar os vegetais em fogo aberto antes de serem processados.",
   "slug": "melhoria_tunisia",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

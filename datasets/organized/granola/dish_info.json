@@ -23,10 +23,10 @@
   "curiosidade": "A granola caseira pode ser personalizada com diversos ingredientes, como diferentes tipos de frutas secas, sementes e especiarias (canela, noz-moscada), tornando-a um alimento versátil e saboroso para o café da manhã ou lanches.",
   "slug": "granola",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

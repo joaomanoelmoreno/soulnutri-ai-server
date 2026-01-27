@@ -16,10 +16,10 @@
   "curiosidade": "O queijo parmesão é um queijo de origem italiana, conhecido por seu sabor intenso e textura granulosa.",
   "slug": "queijo_parmesao_ralado",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

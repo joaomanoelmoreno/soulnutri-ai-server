@@ -15,7 +15,12 @@
     "Alto teor de açúcar na goiabada.",
     "Pessoas com intolerância à lactose devem consumir com moderação."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

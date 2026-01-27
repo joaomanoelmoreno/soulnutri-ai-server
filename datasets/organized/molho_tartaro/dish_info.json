@@ -22,10 +22,10 @@
   "curiosidade": "O molho tártaro é um acompanhamento clássico para peixes e frutos do mar, mas também pode ser servido com outros pratos.",
   "slug": "molho_tartaro",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "category_emoji": "🥚",
   "contem_gluten": false,

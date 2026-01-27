@@ -22,10 +22,10 @@
   "curiosidade": "O gorgonzola é um queijo italiano de mofo azul, conhecido por seu sabor forte e cremoso. É uma excelente fonte de cálcio.",
   "slug": "carpacciodeperaruculaeamendoas",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "contem_gluten": false,
   "tecnica": "",

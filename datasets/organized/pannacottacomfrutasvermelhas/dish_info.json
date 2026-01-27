@@ -4,14 +4,13 @@
   "categoria": "vegetariano",
   "descricao": "Sobremesa cremosa feita à base de leite de coco, amido de milho, açúcar e coco ralado. A calda é preparada com frutas vermelhas cozidas com açúcar e água, resultando em uma geleia saborosa. O manjar é geralmente cozido em fogo baixo até engrossar e depois resfriado para firmar.",
   "ingredientes": [
-    "farinha de trigo",
+    "",
     "açúcar",
     "ovos",
     "manteiga",
     "leite",
-    "Leite de coco",
+    "creme de leite",
     "Amido de milho",
-    "Coco ralado",
     "Frutas vermelhas (morango, amora, framboesa, etc.)",
     "Açúcar (na calda)",
     "Água (na calda)"
@@ -35,7 +34,7 @@
     "gorduras": "10g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

@@ -6,7 +6,12 @@
   "ingredientes": [],
   "beneficios": [],
   "riscos": [],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,

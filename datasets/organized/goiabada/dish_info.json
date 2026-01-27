@@ -17,10 +17,10 @@
   "curiosidade": "A goiabada é um doce tradicional no Brasil, frequentemente consumida com queijo coalho ou queijo minas, formando a famosa combinação 'Romeu e Julieta'.",
   "slug": "goiabada",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,

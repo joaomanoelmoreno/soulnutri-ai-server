@@ -26,10 +26,10 @@
   "curiosidade": "Vermicelli é um tipo de macarrão, geralmente feito de arroz, mas pode haver variações com outros ingredientes. A forma como é preparado, como frito, altera seu valor nutricional.",
   "slug": "vermicelli",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,
