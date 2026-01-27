@@ -1585,6 +1585,11 @@ async def admin_update_dish(slug: str, dish_data: dict):
             "riscos": dish_data.get("riscos", existing_info.get("riscos", [])),
             "nutricao": dish_data.get("nutricao", existing_info.get("nutricao", {})),
             "contem_gluten": dish_data.get("contem_gluten", existing_info.get("contem_gluten", False)),
+            "contem_lactose": dish_data.get("contem_lactose", existing_info.get("contem_lactose", False)),
+            "contem_ovo": dish_data.get("contem_ovo", existing_info.get("contem_ovo", False)),
+            "contem_castanhas": dish_data.get("contem_castanhas", existing_info.get("contem_castanhas", False)),
+            "contem_frutos_mar": dish_data.get("contem_frutos_mar", existing_info.get("contem_frutos_mar", False)),
+            "contem_soja": dish_data.get("contem_soja", existing_info.get("contem_soja", False)),
             "tecnica": dish_data.get("tecnica", existing_info.get("tecnica", ""))
         })
         
