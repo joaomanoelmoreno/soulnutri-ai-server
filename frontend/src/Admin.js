@@ -1133,15 +1133,58 @@ export default function Admin() {
                   </div>
                 </div>
 
-                <div className="form-group checkbox-group">
-                  <label>
-                    <input 
-                      type="checkbox"
-                      checked={editingDish.contem_gluten || false}
-                      onChange={e => setEditingDish({...editingDish, contem_gluten: e.target.checked})}
-                    />
-                    🌾 Contém Glúten
-                  </label>
+                <div className="form-group checkbox-group allergens-group">
+                  <label className="allergens-label">⚠️ Alérgenos:</label>
+                  <div className="allergens-grid">
+                    <label>
+                      <input 
+                        type="checkbox"
+                        checked={editingDish.contem_gluten || false}
+                        onChange={e => setEditingDish({...editingDish, contem_gluten: e.target.checked})}
+                      />
+                      🌾 Glúten
+                    </label>
+                    <label>
+                      <input 
+                        type="checkbox"
+                        checked={editingDish.contem_lactose || false}
+                        onChange={e => setEditingDish({...editingDish, contem_lactose: e.target.checked})}
+                      />
+                      🥛 Lactose
+                    </label>
+                    <label>
+                      <input 
+                        type="checkbox"
+                        checked={editingDish.contem_ovo || false}
+                        onChange={e => setEditingDish({...editingDish, contem_ovo: e.target.checked})}
+                      />
+                      🥚 Ovo
+                    </label>
+                    <label>
+                      <input 
+                        type="checkbox"
+                        checked={editingDish.contem_castanhas || false}
+                        onChange={e => setEditingDish({...editingDish, contem_castanhas: e.target.checked})}
+                      />
+                      🥜 Castanhas
+                    </label>
+                    <label>
+                      <input 
+                        type="checkbox"
+                        checked={editingDish.contem_frutos_mar || false}
+                        onChange={e => setEditingDish({...editingDish, contem_frutos_mar: e.target.checked})}
+                      />
+                      🦐 Frutos do Mar
+                    </label>
+                    <label>
+                      <input 
+                        type="checkbox"
+                        checked={editingDish.contem_soja || false}
+                        onChange={e => setEditingDish({...editingDish, contem_soja: e.target.checked})}
+                      />
+                      🫘 Soja
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
