@@ -6,10 +6,9 @@
     "Farinha de rosca",
     "Farinha de trigo",
     "Ovo",
-    "Tempero verde (salsa e cebolinha)",
-    "Óleo vegetal (para fritar)"
+    "Tempero verde (salsa e cebolinha)"
   ],
-  "descricao": "Filés de tilápia empanados e fritos. Os filés são cobertos com uma mistura de ovo e farinha (provavelmente farinha de trigo e farinha de rosca, ou panko), temperados e fritos em óleo quente até dourar.",
+  "descricao": "Filés de tilápia empanados e assados. Os filés são cobertos com uma mistura de ovo e farinha (provavelmente farinha de trigo e farinha de rosca, ou panko), temperados e assados sem oleo até dourar.",
   "beneficios": [
     "A tilápia é uma boa fonte de proteína magra",
     "O peixe fornece ácidos graxos ômega-3, importantes para a saúde cardiovascular",
@@ -28,9 +27,9 @@
     "carboidratos": "",
     "gorduras": ""
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
