@@ -1,6 +1,6 @@
 {
   "slug": "farofadebacon",
-  "nome": "Farofadebacon",
+  "nome": "Farofa de Bacon",
   "categoria": "proteína animal",
   "descricao": "Farofa preparada, provavelmente, refogando bacon picado em gordura até dourar, adicionando cebola e alho picados. Em seguida, a farinha de mandioca é adicionada e misturada até dourar e adquirir a textura crocante desejada. Temperos podem ser adicionados.",
   "ingredientes": [
@@ -31,5 +31,7 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥩"
 }
