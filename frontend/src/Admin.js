@@ -19,6 +19,10 @@ export default function Admin() {
   const [auditData, setAuditData] = useState(null);
   const [auditLoading, setAuditLoading] = useState(false);
   const [fixingSlug, setFixingSlug] = useState(null);
+  // Consolidação e Atualização em Massa
+  const [consolidating, setConsolidating] = useState(false);
+  const [updatingAll, setUpdatingAll] = useState(false);
+  const [massActionResult, setMassActionResult] = useState(null);
   const [novidadeForm, setNovidadeForm] = useState({
     dish_slug: '',
     tipo: 'info',
