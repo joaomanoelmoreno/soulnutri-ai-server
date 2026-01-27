@@ -940,7 +940,7 @@ export default function Admin() {
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
                             if (dish) setEditingDish(dish);
-                            setActiveTab('dishes');
+                            
                           }}
                         >
                           ✏️
@@ -980,7 +980,7 @@ export default function Admin() {
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
                             if (dish) setEditingDish(dish);
-                            setActiveTab('dishes');
+                            
                           }}
                         >
                           ✏️
@@ -1027,7 +1027,7 @@ export default function Admin() {
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
                             if (dish) setEditingDish(dish);
-                            setActiveTab('dishes');
+                            
                           }}
                         >
                           ✏️
@@ -1096,7 +1096,7 @@ export default function Admin() {
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
                             if (dish) setEditingDish(dish);
-                            setActiveTab('dishes');
+                            
                           }}
                         >
                           ✏️
@@ -1133,7 +1133,7 @@ export default function Admin() {
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
                             if (dish) setEditingDish(dish);
-                            setActiveTab('dishes');
+                            
                           }}
                         >
                           ✏️
@@ -1169,7 +1169,7 @@ export default function Admin() {
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
                             if (dish) setEditingDish(dish);
-                            setActiveTab('dishes');
+                            
                           }}
                         >
                           ✏️
