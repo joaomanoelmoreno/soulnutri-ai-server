@@ -13,16 +13,24 @@ logger = logging.getLogger(__name__)
 DATASET_DIR = Path("/app/datasets/organized")
 
 # Ingredientes que indicam categoria específica
+# NOTA: Leite de coco, leite de amêndoas, etc. NÃO são de origem animal
 INGREDIENTES_ANIMAL = [
     'frango', 'carne', 'boi', 'porco', 'bacon', 'linguiça', 'salsicha',
     'peixe', 'camarão', 'atum', 'salmão', 'bacalhau', 'tilápia',
-    'ovo', 'leite', 'queijo', 'creme de leite', 'manteiga', 'nata',
+    'ovo', 'leite de vaca', 'queijo', 'creme de leite', 'manteiga', 'nata',
     'presunto', 'peito de peru', 'costela', 'maminha', 'picanha',
     'fígado', 'coração', 'moela', 'rabada', 'rabo'
 ]
 
+# Ingredientes que NÃO são de origem animal (veganos)
+INGREDIENTES_VEGANOS = [
+    'leite de coco', 'creme de coco', 'óleo de coco',
+    'leite de amêndoas', 'leite de soja', 'leite de aveia',
+    'leite de arroz', 'leite vegetal', 'tofu', 'tempeh', 'seitan'
+]
+
 INGREDIENTES_LACTOSE = [
-    'leite', 'queijo', 'creme de leite', 'manteiga', 'nata',
+    'leite de vaca', 'queijo', 'creme de leite', 'manteiga', 'nata',
     'iogurte', 'requeijão', 'cream cheese', 'parmesão', 'mussarela',
     'ricota', 'cottage', 'gorgonzola', 'provolone', 'cheddar'
 ]
