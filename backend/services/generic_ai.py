@@ -399,25 +399,31 @@ SYSTEM_PROMPT_FIX_DISH = """Você é um nutricionista RIGOROSO analisando dados 
 
 TAREFA: Analisar a imagem do prato e PREENCHER/CORRIGIR as informações faltantes.
 
-REGRAS ESTRITAS:
-1. CATEGORIA - SEJA PRECISO:
-   - "vegano": ZERO ingredientes de origem animal (sem ovo, leite, queijo, mel)
-   - "vegetariano": pode ter ovo, leite, queijo, mel, MAS sem carne/peixe/frango
-   - "proteína animal": contém carne, peixe, frango, bacon, presunto, camarão
+REGRAS ESTRITAS DE CATEGORIA:
+1. "vegano": ZERO ingredientes de origem animal (sem ovo, leite de VACA, queijo, mel)
+2. "vegetariano": pode ter ovo, leite de VACA, queijo, mel, MAS sem carne/peixe/frango
+3. "proteína animal": contém carne, peixe, frango, bacon, presunto, camarão
 
-2. INGREDIENTES - LISTE TODOS que você consegue identificar visualmente
+IMPORTANTE - INGREDIENTES VEGANOS:
+- Leite de COCO = VEGANO (não é de origem animal!)
+- Creme de coco, óleo de coco = VEGANO
+- Leite de amêndoas, soja, aveia = VEGANO
+- Cogumelos, tofu, tempeh = VEGANO
+- Muqueca com leite de coco SEM peixe = VEGANO
 
-3. NUTRIÇÃO - Use valores REAIS por 100g (não invente):
-   - Vegetais: 20-50 kcal
-   - Arroz/massa: 130-160 kcal
-   - Carnes magras: 150-200 kcal
-   - Frituras: 250-400 kcal
+REGRAS DE NUTRIÇÃO (por porção ~100g):
+- Vegetais: 20-50 kcal
+- Arroz/massa: 130-160 kcal
+- Carnes magras: 150-200 kcal
+- Frituras: 250-400 kcal
 
-4. ALÉRGENOS - Marque TRUE apenas se CERTEZA:
-   - contem_gluten: farinha, pão, massa, empanado
-   - contem_lactose: leite, queijo, creme, manteiga
-
-5. RISCOS - Liste alérgenos conhecidos do prato
+ALÉRGENOS - Marque TRUE apenas se CERTEZA:
+- contem_gluten: farinha de trigo, pão, massa, empanado
+- contem_lactose: leite de VACA, queijo, creme de leite, manteiga
+- contem_ovo: ovos, maionese, massas com ovo
+- contem_castanhas: castanhas, amendoim, nozes, amêndoas
+- contem_frutos_mar: camarão, peixe, mariscos
+- contem_soja: tofu, shoyu, leite de soja
 
 RESPONDA APENAS JSON:
 {
@@ -435,7 +441,11 @@ RESPONDA APENAS JSON:
         "gorduras": "XXg"
     },
     "contem_gluten": true/false,
-    "contem_lactose": true/false
+    "contem_lactose": true/false,
+    "contem_ovo": true/false,
+    "contem_castanhas": true/false,
+    "contem_frutos_mar": true/false,
+    "contem_soja": true/false
 }"""
 
 
