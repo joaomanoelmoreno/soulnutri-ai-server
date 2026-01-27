@@ -1,29 +1,49 @@
 {
+  "slug": "bolochocolatevegano",
   "nome": "Boloc Vegano de Chocolate",
   "categoria": "vegano",
+  "descricao": "O prato é composto por pequenos pedaços de bolo de chocolate, cobertos por uma camada de cobertura de chocolate e decorados com fatias de morango. O bolo e a cobertura, por serem veganos, não contêm ingredientes de origem animal.",
   "ingredientes": [
     "Fatia de bolo de chocolate",
     "Cobertura de chocolate (possivelmente à base de cacau, leite vegetal e açúcar)",
-    "Morango"
+    "Morango",
+    "Farinha de trigo",
+    "Chocolate (possivelmente vegano)",
+    "Açúcar (possivelmente mascavo ou de coco)",
+    "Calda de chocolate",
+    "Açúcar mascavo",
+    "Chocolate em pó",
+    "Pêra",
+    "Calda de caramelo vegana",
+    "Óleo vegetal"
   ],
-  "descricao": "O prato é composto por pequenos pedaços de bolo de chocolate, cobertos por uma camada de cobertura de chocolate e decorados com fatias de morango. O bolo e a cobertura, por serem veganos, não contêm ingredientes de origem animal.",
   "beneficios": [
     "O morango é fonte de vitamina C e antioxidantes.",
-    "O cacau, presente no bolo e na cobertura, pode ter benefícios para a saúde cardiovascular."
+    "O cacau, presente no bolo e na cobertura, pode ter benefícios para a saúde cardiovascular.",
+    "A fruta adiciona vitaminas e antioxidantes.",
+    "Opção de sobremesa sem produtos de origem animal.",
+    "Fonte de energia",
+    "Contém antioxidantes do chocolate",
+    "Opção vegana para sobremesa"
   ],
   "riscos": [
     "Alto teor de açúcar, proveniente do bolo e da cobertura.",
-    "Contém glúten, caso o bolo seja feito com farinha de trigo."
+    "Contém glúten, caso o bolo seja feito com farinha de trigo.",
+    "Contém glúten (se usar farinha de trigo)",
+    "Alto teor de açúcar.",
+    "Contém glúten",
+    "Alto teor de açúcar"
   ],
-  "curiosidade": "O cacau, ingrediente principal do bolo e da cobertura, é rico em flavonoides, que podem melhorar a função cerebral e reduzir o risco de doenças cardíacas.",
-  "slug": "bolochocolatevegano",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "350 kcal",
+    "proteinas": "5g",
+    "carboidratos": "50g",
+    "gorduras": "15g"
   },
-  "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

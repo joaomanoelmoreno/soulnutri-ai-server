@@ -1,26 +1,35 @@
 {
+  "slug": "feijaopretosemcarne",
   "nome": "Feijaopretosemcarne",
   "categoria": "vegano",
+  "descricao": "Prato tradicional brasileiro, o feijão preto é cozido com carne salgada e linguiça. O preparo geralmente envolve o cozimento lento em água, resultando em um caldo espesso e saboroso. A carne e linguiça são cozidas com o feijão, liberando seus sabores no caldo.",
   "ingredientes": [
     "Feijão preto",
     "cebola",
-    "salsa picada"
+    "salsa picada",
+    "Carne seca (possivelmente)",
+    "Linguiça (possivelmente)",
+    "Gordura animal (possivelmente)"
   ],
-  "descricao": "Feijão preto cozido em água, com cebola e salsa picada, resultando em um caldo escuro e feijões macios. O modo de preparo é por cozimento.",
   "beneficios": [
     "Rico em ferro, importante para a prevenção da anemia.",
     "Fonte de fibras, auxiliando na saúde intestinal e no controle do colesterol.",
-    "Boa fonte de proteína vegetal, importante para a saúde e o funcionamento do organismo."
+    "Boa fonte de proteína vegetal, importante para a saúde e o funcionamento do organismo.",
+    "Fonte de proteínas (carne)",
+    "Fonte de fibras (feijão)",
+    "Rico em ferro (feijão e carne)"
   ],
   "riscos": [
-    "Pode causar gases e inchaço em pessoas com sensibilidade a leguminosas."
+    "Pode causar gases e inchaço em pessoas com sensibilidade a leguminosas.",
+    "Alto teor de sódio (principalmente devido à carne seca)",
+    "Alto teor de gordura saturada (dependendo dos tipos de carne e linguiça)",
+    "Contém glúten (possível, dependendo da linguiça)"
   ],
-  "curiosidade": "O feijão preto é um alimento muito popular no Brasil, especialmente no Rio de Janeiro, onde é ingrediente fundamental da feijoada.",
-  "slug": "feijaopretosemcarne",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

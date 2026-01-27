@@ -1,13 +1,33 @@
 {
-  "nome": "Bacalhau com Natas",
   "slug": "bacalhaucomnatas",
+  "nome": "Bacalhau com Natas",
   "categoria": "proteína animal",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "Prato cremoso com bacalhau desfiado misturado com batatas cozidas e champignons, tudo coberto com creme de leite e gratinado com queijo. A cebolinha picada é utilizada para finalizar.",
+  "ingredientes": [
+    "Bacalhau desfiado",
+    "Batatas cozidas",
+    "Creme de leite/natas",
+    "Champignons",
+    "Cebolinha picada",
+    "Queijo ralado (possivelmente parmesão)",
+    "Azeite (provavelmente usado para refogar)"
+  ],
+  "beneficios": [
+    "Bacalhau é uma boa fonte de proteínas de alta qualidade.",
+    "Champignons fornecem vitaminas do complexo B e minerais.",
+    "Cebolinha contribui com antioxidantes."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido ao creme de leite e ao queijo.",
+    "Alto teor de sódio devido ao bacalhau (geralmente dessalgado).",
+    "Pode conter lactose.",
+    "Alérgeno: peixe."
+  ],
   "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🐟"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

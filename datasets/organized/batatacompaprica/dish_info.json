@@ -1,7 +1,11 @@
 {
-  "nome": "Batata com Paprica",
+  "slug": "batatacompaprica",
+  "nome": "Batata Com Paprica",
   "categoria": "vegano",
+  "descricao": "Batatas cortadas em formato de gomos e assadas, temperadas com páprica. O método de preparo é assar no forno, geralmente com azeite ou óleo, até que fiquem macias por dentro e levemente crocantes por fora.",
   "ingredientes": [
+    "Batata",
+    "Páprica (tempero)",
     "Batatas",
     "Páprica",
     "Ervas finas (salsa, manjericão, alecrim)",
@@ -9,24 +13,23 @@
     "Cebolinha picada",
     "Sal"
   ],
-  "descricao": "Batatas cortadas em pedaços, temperadas com páprica, ervas finas, sal e azeite de oliva. As batatas são assadas no forno até dourarem. Finalizado com cebolinha picada.",
   "beneficios": [
+    "A batata é fonte de carboidratos, fornecendo energia.",
+    "A páprica contém antioxidantes.",
     "Batatas são fontes de carboidratos, que fornecem energia.",
     "A páprica é rica em antioxidantes, como a vitamina C, que ajudam a proteger as células do corpo."
   ],
   "riscos": [
+    "Pode conter sódio, dependendo da quantidade de sal utilizada no tempero.",
+    "Potencial de ganho de peso se consumida em excesso, devido ao teor de carboidratos.",
     "Pode conter glúten, dependendo do tempero utilizado.",
     "Excesso de sal pode ser prejudicial à saúde."
   ],
-  "curiosidade": "A páprica é feita a partir de pimentões secos e moídos, e pode ter diferentes níveis de picância, dependendo da variedade do pimentão utilizado.",
-  "slug": "batatacompaprica",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

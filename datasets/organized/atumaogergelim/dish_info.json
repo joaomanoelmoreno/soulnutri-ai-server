@@ -1,13 +1,39 @@
 {
-  "nome": "Atum ao Gergelim",
   "slug": "atumaogergelim",
+  "nome": "Atum ao Gergelim",
   "categoria": "proteína animal",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "O prato consiste em fatias de atum seladas em sementes de gergelim, servidas com molho tarê e decoração de maionese. Ao lado, fatias de tomate fresco. O atum parece ter sido selado rapidamente para manter seu interior rosado e suculento.",
+  "ingredientes": [
+    "Atum",
+    "Sementes de gergelim (preto e branco)",
+    "Molho tarê",
+    "Maionese (para decoração)",
+    "Tomate (fatiado)",
+    "Sementes de gergelim preto e branco",
+    "Maionese",
+    "Molho à base de shoyu"
+  ],
+  "beneficios": [
+    "O atum é rico em ômega-3, importante para a saúde cardiovascular.",
+    "O gergelim fornece cálcio e antioxidantes.",
+    "O tomate é fonte de licopeno, um antioxidante que pode ajudar a proteger contra certos tipos de câncer.",
+    "Fonte de proteína de alta qualidade, importante para a construção e reparo muscular.",
+    "Rico em ômega-3, que contribui para a saúde cardiovascular.",
+    "As sementes de gergelim fornecem cálcio e outros minerais."
+  ],
+  "riscos": [
+    "O atum pode conter mercúrio, por isso, o consumo deve ser moderado, especialmente por mulheres grávidas e crianças.",
+    "Contém glúten (verificar se o molho tarê é feito com shoyu, que contém glúten).",
+    "Alérgeno: peixe, gergelim e, possivelmente, soja (no molho tarê).",
+    "Pode conter mercúrio, especialmente em peixes grandes como o atum. Consumir com moderação.",
+    "Alérgeno: peixe e gergelim.",
+    "Contém sódio (shoyu)."
+  ],
   "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🐟"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

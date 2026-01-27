@@ -1,33 +1,52 @@
 {
-  "nome": "Canelone Quatro Queijos",
+  "slug": "canelone_4_queijo",
+  "nome": "Caneleira Quatro queijos",
   "categoria": "vegetariano",
+  "descricao": "Caneleira recheada com quatro tipos de queijo, coberta com molho de tomate e finalizada com manjericão fresco. Aparentemente, a massa e os queijos foram assados e o molho de tomate foi adicionado após o cozimento.",
   "ingredientes": [
+    "Caneleira (massa à base de farinha de trigo), quatro tipos de queijo (não especificados), molho de tomate, manjericão fresco, azeite de oliva (possivelmente)",
     "Massa de canelone (provavelmente à base de trigo)",
     "Recheio cremoso (provavelmente mistura de 4 queijos)",
     "Molho de tomate",
     "Queijo gratinado",
-    "Salsinha picada"
+    "Salsinha picada",
+    "Massa de canelone (com trigo)",
+    "Recheio de quatro queijos (mussarela, parmesão, ricota, gorgonzola)",
+    "Queijo gratinado (mussarela)",
+    "Salsa picada"
   ],
-  "descricao": "Canelone recheado com uma mistura de queijos, coberto com molho de tomate e gratinado com queijo. A salsinha picada adiciona frescor ao prato. Apresenta-se assado em uma travessa.",
   "beneficios": [
+    "Os queijos fornecem cálcio e proteínas, importantes para a saúde óssea e muscular.",
+    "O molho de tomate é fonte de licopeno, um antioxidante que pode ajudar na prevenção de doenças.",
     "Fonte de cálcio (dos queijos)",
     "Carboidratos da massa fornecem energia",
-    "O molho de tomate oferece licopeno, um antioxidante"
+    "O molho de tomate oferece licopeno, um antioxidante",
+    "Fonte de cálcio",
+    "Fornece proteínas",
+    "Carboidratos para energia"
   ],
   "riscos": [
+    "Contém glúten, devido à massa da caneleira.",
+    "Rico em gorduras saturadas, dependendo dos queijos utilizados.",
+    "Pode conter alto teor de sódio, dependendo do queijo e do molho.",
     "Alto teor de gordura saturada (dos queijos)",
     "Contém glúten (na massa)",
-    "Possível alto teor de sódio (nos queijos e molhos)"
+    "Possível alto teor de sódio (nos queijos e molhos)",
+    "Contém lactose",
+    "Contém glúten",
+    "Alto teor de sódio",
+    "Alto teor de gordura"
   ],
-  "curiosidade": "O canelone é uma variação do macarrão, com origem italiana. A palavra 'canelone' significa 'canudo grande'.",
-  "slug": "canelone_4_queijo",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "200 kcal",
+    "proteinas": "12g",
+    "carboidratos": "20g",
+    "gorduras": "8g"
   },
-  "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

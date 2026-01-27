@@ -1,6 +1,8 @@
 {
+  "slug": "canelonedeespinafre",
   "nome": "Canelone de Espinafre",
   "categoria": "vegetariano",
+  "descricao": "O prato é composto por canelones recheados com espinafre e um recheio cremoso, provavelmente à base de queijo ou ricota. Os canelones são cobertos com molho de tomate e queijo ralado, e gratinados até dourar. O preparo envolve o cozimento da massa, o preparo do recheio e molho, a montagem e o gratinado no forno.",
   "ingredientes": [
     "Massa de canelone (provavelmente com farinha de trigo)",
     "Espinafre",
@@ -8,9 +10,12 @@
     "Molho de tomate",
     "Queijo ralado (possivelmente mussarela ou parmesão)",
     "Azeite de oliva (para untar ou refogar)",
-    "Temperos (alho, cebola, sal, pimenta)"
+    "Temperos (alho, cebola, sal, pimenta)",
+    "Massa de canelone",
+    "Recheio (queijo ou ricota)",
+    "Queijo parmesão",
+    "Queijo mussarela"
   ],
-  "descricao": "O prato é composto por canelones recheados com espinafre e um recheio cremoso, provavelmente à base de queijo ou ricota. Os canelones são cobertos com molho de tomate e queijo ralado, e gratinados até dourar. O preparo envolve o cozimento da massa, o preparo do recheio e molho, a montagem e o gratinado no forno.",
   "beneficios": [
     "O espinafre é rico em vitaminas, minerais e antioxidantes, benéficos para a saúde.",
     "O tomate, no molho, é fonte de licopeno, um antioxidante que pode ajudar a proteger contra doenças."
@@ -18,17 +23,21 @@
   "riscos": [
     "Contém glúten (na massa do canelone)",
     "Alto teor de gordura e calorias (dependendo do tipo de queijo e recheio)",
-    "Pode conter lactose (se o queijo utilizado for derivado do leite)"
+    "Pode conter lactose (se o queijo utilizado for derivado do leite)",
+    "Alérgeno: Glúten (massa), Lácteos (queijo)",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (mussarela, parmesão)"
   ],
-  "curiosidade": "O canelone é uma variação do famoso macarrão italiano, a lasanha. A diferença é que, em vez de camadas, o recheio é enrolado na massa em formato cilíndrico.",
-  "slug": "canelonedeespinafre",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

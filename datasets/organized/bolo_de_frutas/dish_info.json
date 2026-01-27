@@ -1,13 +1,30 @@
 {
-  "nome": "Frutas ao Ganache de Chocolate",
   "slug": "bolo_de_frutas",
+  "nome": "Frutas ao Ganache de Chocolate",
   "categoria": "vegetariano",
-  "descricao": "",
-  "ingredientes": [],
+  "descricao": "Ovo de Páscoa recheado com creme e frutas.",
+  "ingredientes": [
+    "Chocolate",
+    "Frutas",
+    "Creme"
+  ],
   "beneficios": [],
-  "riscos": [],
-  "nutricao": {},
+  "riscos": [
+    "Alérgeno: Leite",
+    "Alérgeno: Ovos",
+    "Alérgeno: LACTOSE (creme)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

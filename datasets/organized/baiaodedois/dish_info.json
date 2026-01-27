@@ -1,6 +1,8 @@
 {
+  "slug": "baiaodedois",
   "nome": "Baiao de Dois",
   "categoria": "proteína animal",
+  "descricao": "O Baião de Dois é um prato típico da culinária nordestina, neste caso, preparado com arroz, feijão de corda, carne seca desfiada, linguiça calabresa, queijo coalho e finalizado com cebolinha e pimenta de biquinho. Os ingredientes são misturados e cozidos, geralmente em uma panela grande, e o queijo coalho é grelhado para dar um toque especial. O prato pode ser acompanhado de outros ingredientes, como manteiga ou outros tipos de queijo, dependendo da receita.",
   "ingredientes": [
     "Arroz branco cozido",
     "Feijão de corda cozido",
@@ -8,29 +10,37 @@
     "Linguiça calabresa em cubos",
     "Queijo coalho em cubos, possivelmente grelhado",
     "Cebolinha picada",
-    "Pimenta de biquinho"
+    "Pimenta de biquinho",
+    "Arroz",
+    "Feijão de corda",
+    "Carne seca (charque)",
+    "Queijo coalho",
+    "Cebolinha",
+    "Pimenta de cheiro",
+    "Alho",
+    "Cebola"
   ],
-  "descricao": "O Baião de Dois é um prato típico da culinária nordestina, neste caso, preparado com arroz, feijão de corda, carne seca desfiada, linguiça calabresa, queijo coalho e finalizado com cebolinha e pimenta de biquinho. Os ingredientes são misturados e cozidos, geralmente em uma panela grande, e o queijo coalho é grelhado para dar um toque especial. O prato pode ser acompanhado de outros ingredientes, como manteiga ou outros tipos de queijo, dependendo da receita.",
   "beneficios": [
     "Fonte de carboidratos (arroz) para energia.",
     "Fonte de proteínas (carne seca, linguiça calabresa e queijo coalho) para construção e reparo dos tecidos.",
-    "Feijão de corda rico em fibras, que auxiliam na saúde intestinal e promovem a saciedade."
+    "Feijão de corda rico em fibras, que auxiliam na saúde intestinal e promovem a saciedade.",
+    "A combinação de arroz e feijão oferece uma boa fonte de carboidratos complexos e proteínas vegetais, fornecendo energia e nutrientes essenciais.",
+    "O feijão de corda é rico em fibras, que auxiliam na saúde digestiva e promovem a saciedade."
   ],
   "riscos": [
     "Alto teor de sódio (principalmente da carne seca e linguiça).",
     "Alto teor de gordura saturada (proveniente da linguiça e, em menor grau, do queijo coalho).",
     "Pode conter glúten, dependendo da linguiça utilizada.",
-    "Alérgeno: leite (queijo coalho)"
+    "Alérgeno: leite (queijo coalho)",
+    "Alto teor de sódio devido à carne seca.",
+    "Pode conter glúten, dependendo do preparo e ingredientes utilizados.",
+    "Alérgeno: leite (queijo coalho)."
   ],
-  "curiosidade": "O nome 'Baião de Dois' provavelmente faz referência à música 'Baião', ritmo musical do Nordeste do Brasil, e 'dois' indica a combinação dos dois ingredientes principais: arroz e feijão.",
-  "slug": "baiaodedois",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥩"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
