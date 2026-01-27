@@ -1,32 +1,43 @@
 {
+  "slug": "torradas",
   "nome": "Torradas Temperadas",
   "categoria": "vegano",
+  "descricao": "Torradas crocantes temperadas com azeite e ervas finas, ideais para aperitivos e acompanhamentos.",
   "ingredientes": [
+    "Pão",
+    "Azeite",
+    "Alho",
+    "Ervas finas",
+    "Sal",
     "Pão (farinha de trigo, água, fermento, sal)",
     "Azeite de oliva",
     "Alho em pó",
     "Orégano",
-    "Manjericão",
-    "Sal"
+    "Manjericão"
   ],
-  "descricao": "Torradas crocantes temperadas com azeite e ervas finas, ideais para aperitivos e acompanhamentos.",
   "beneficios": [
-    "Fonte de energia",
-    "Rico em carboidratos"
+    "Fonte de energia rápida",
+    "Pode ser uma opção de snack para celíacos (se pão sem glúten)",
+    "Rico em carboidratos",
+    "Fonte de energia"
   ],
   "riscos": [
     "Contém glúten",
+    "Alto teor de sódio (dependendo da quantidade de sal)",
+    "Pode conter lactose (dependendo do pão)",
     "Alto teor de sódio (se sal em excesso)"
   ],
-  "curiosidade": "O processo de torrar o pão aumenta sua durabilidade e altera a textura, tornando-o mais crocante e saboroso.",
-  "slug": "torradas",
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "10g",
-    "carboidratos": "50g",
-    "gorduras": "15g"
+    "calorias": "250 kcal",
+    "proteinas": "6g",
+    "carboidratos": "35g",
+    "gorduras": "10g"
   },
-  "category_emoji": "🌱",
   "contem_gluten": true,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

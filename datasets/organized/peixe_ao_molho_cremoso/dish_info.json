@@ -1,14 +1,14 @@
 {
-  "nome": "Peixe Ao Molho Cremoso",
   "slug": "peixe_ao_molho_cremoso",
+  "nome": "Peixe Com Molho Cremoso",
   "categoria": "proteína animal",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
     "peixe",
     "sal",
     "limão",
     "ervas"
   ],
-  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
     "Ômega-3 para o coração",
     "Proteína de fácil digestão",
@@ -26,9 +26,11 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "tecnica": "Grelhado, assado ou ao vapor",
   "contem_ovo": false,
+  "contem_castanhas": false,
   "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado, assado ou ao vapor",
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",

@@ -1,11 +1,12 @@
 {
+  "slug": "lentilhacomtofu",
   "nome": "Lentilhacomtofu",
   "categoria": "vegano",
+  "descricao": "Tofu, proteína vegetal versátil.",
   "ingredientes": [
     "tofu (soja)",
     "temperos"
   ],
-  "descricao": "Tofu, proteína vegetal versátil.",
   "beneficios": [
     "Proteína vegetal completa",
     "Cálcio",
@@ -14,19 +15,19 @@
   "riscos": [
     "Alérgeno: soja"
   ],
-  "curiosidade": "A lentilha é um dos alimentos mais antigos consumidos pela humanidade, com evidências de cultivo há mais de 8 mil anos.",
-  "slug": "lentilhacomtofu",
   "nutricao": {
     "calorias": "76 kcal",
     "proteinas": "8g",
     "carboidratos": "1.9g",
     "gorduras": "4.8g"
   },
-  "tecnica": "Grelhado ou refogado",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
   "contem_soja": true,
+  "tecnica": "Grelhado ou refogado",
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",

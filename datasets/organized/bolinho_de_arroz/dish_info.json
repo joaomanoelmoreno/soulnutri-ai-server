@@ -1,18 +1,48 @@
 {
-  "nome": "Bolinho De Arroz",
   "slug": "bolinho_de_arroz",
-  "categoria": "vegano",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "nome": "bolinho de camarao",
+  "categoria": "proteína animal",
+  "descricao": "Camarão fresco, rico em proteínas.",
+  "ingredientes": [
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
+  ],
+  "beneficios": [
+    "Proteína magra",
+    "Selênio antioxidante",
+    "Iodo para tireoide",
+    "Ômega-3"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceo (risco grave)",
+    "Colesterol elevado"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱"
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou refogado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

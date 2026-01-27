@@ -1,18 +1,17 @@
 {
-  "nome": "Pannacottacomfrutasvermelhas",
   "slug": "pannacottacomfrutasvermelhas",
+  "nome": "Pannacottacomfrutasvermelhas",
   "categoria": "vegano",
-  "ingredientes": [],
   "descricao": "",
+  "ingredientes": [],
   "beneficios": [],
   "riscos": [],
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
   "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
   "category_emoji": "🌱"
 }

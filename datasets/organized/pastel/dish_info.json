@@ -1,24 +1,29 @@
 {
+  "slug": "pastel",
   "nome": "Pastel",
   "categoria": "vegano",
+  "descricao": "Pode ser de carne, queijo, frango com requiejao ou camarao",
   "ingredientes": [
     "massa de pastel",
     "recheio variado",
     "óleo para fritura"
   ],
-  "descricao": "Pastel frito crocante com recheio variado",
   "beneficios": [],
   "riscos": [
     "Alimento frito",
     "Contém glúten"
   ],
-  "contem_gluten": true,
   "nutricao": {
     "calorias": "280 kcal",
     "proteinas": "8g",
     "carboidratos": "25g",
     "gorduras": "16g"
   },
-  "slug": "pastel",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
   "category_emoji": "🌱"
 }

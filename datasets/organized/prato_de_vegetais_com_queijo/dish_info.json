@@ -1,18 +1,17 @@
 {
-  "nome": "Prato De Vegetais Com Queijo",
   "slug": "prato_de_vegetais_com_queijo",
+  "nome": "Risoto De Vegetais Com Queijo",
   "categoria": "vegetariano",
-  "ingredientes": [],
   "descricao": "",
+  "ingredientes": [],
   "beneficios": [],
   "riscos": [],
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
   "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
   "category_emoji": "🥚"
 }

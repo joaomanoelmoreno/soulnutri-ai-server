@@ -1,18 +1,43 @@
 {
-  "nome": "Lentilha Com Legumes",
   "slug": "lentilha_com_legumes",
+  "nome": "Lentilha com Tofu e Legumes",
   "categoria": "vegano",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "Tofu, proteína vegetal versátil.",
+  "ingredientes": [
+    "tofu (soja)",
+    "temperos"
+  ],
+  "beneficios": [
+    "Proteína vegetal completa",
+    "Cálcio",
+    "Isoflavonas"
+  ],
+  "riscos": [
+    "Alérgeno: soja"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "76 kcal",
+    "proteinas": "8g",
+    "carboidratos": "1.9g",
+    "gorduras": "4.8g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true,
+  "tecnica": "Grelhado ou refogado",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Legumes",
+    "Molho shoyu",
+    "Gengibre"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
   "category_emoji": "🌱"
 }

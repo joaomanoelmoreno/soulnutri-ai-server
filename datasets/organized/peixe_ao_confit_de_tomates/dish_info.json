@@ -1,8 +1,7 @@
 {
-  "nome": "Peixe ao Confit de Tomates",
   "slug": "peixe_ao_confit_de_tomates",
+  "nome": "Filé de peixe ao confir de tomates",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
   "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
     "peixe",
@@ -19,7 +18,6 @@
     "Alérgeno: peixe",
     "Verificar procedência"
   ],
-  "tecnica": "Grelhado, assado ou ao vapor",
   "nutricao": {
     "calorias": "120 kcal",
     "proteinas": "22g",
@@ -29,7 +27,10 @@
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
   "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado, assado ou ao vapor",
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
@@ -41,5 +42,6 @@
   "evitar_com": [
     "Frituras",
     "Molhos pesados"
-  ]
+  ],
+  "category_emoji": "🍖"
 }

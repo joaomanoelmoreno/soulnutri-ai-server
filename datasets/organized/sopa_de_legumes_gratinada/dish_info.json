@@ -1,18 +1,17 @@
 {
-  "nome": "Sopa De Legumes Gratinada",
   "slug": "sopa_de_legumes_gratinada",
+  "nome": "Sopa De Legumes Gratinada",
   "categoria": "vegano",
-  "ingredientes": [],
   "descricao": "",
+  "ingredientes": [],
   "beneficios": [],
   "riscos": [],
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
   "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
   "category_emoji": "🌱"
 }

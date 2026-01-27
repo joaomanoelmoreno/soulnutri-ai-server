@@ -1,6 +1,8 @@
 {
+  "slug": "feijaobranco",
   "nome": "Feijão branco sem carne",
   "categoria": "vegano",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "ingredientes": [
     "feijão",
     "água",
@@ -9,7 +11,6 @@
     "cebola",
     "louro"
   ],
-  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "beneficios": [
     "Rico em proteína vegetal",
     "Alto teor de ferro",
@@ -18,8 +19,6 @@
   "riscos": [
     "Pode causar gases intestinais"
   ],
-  "curiosidade": "O feijão branco é uma excelente fonte de ferro, mineral essencial para a produção de glóbulos vermelhos e transporte de oxigênio no corpo.",
-  "slug": "feijaobranco",
   "nutricao": {
     "calorias": "77 kcal",
     "proteinas": "5g",
@@ -33,7 +32,6 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "Cozimento lento",
-  "category_emoji": "🌱",
   "indice_glicemico": "baixo",
   "tempo_digestao": "3-4 horas",
   "melhor_horario": "Almoço",
@@ -44,5 +42,6 @@
   ],
   "evitar_com": [
     "Excesso de embutidos"
-  ]
+  ],
+  "category_emoji": "🌱"
 }

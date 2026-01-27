@@ -1,8 +1,7 @@
 {
-  "nome": "nhoque",
   "slug": "nhoque",
+  "nome": "nhoque",
   "categoria": "vegano",
-  "category_emoji": "🌱",
   "descricao": "Prato composto por diferentes preparações, possivelmente purê de batata, bolinho frito e algo cremoso.",
   "ingredientes": [
     "Purê de batata",
@@ -15,12 +14,17 @@
     "Alérgeno: Glúten (se o bolinho for empanado)",
     "Alérgeno: LACTOSE (creme, queijo)"
   ],
-  "tecnica": "",
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",
     "carboidratos": "~25g",
     "gorduras": "~8g"
   },
-  "contem_gluten": true
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Frutos do Mar ao Molho Branco",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
     "Camarão",
     "Mexilhão",
@@ -12,7 +12,7 @@
     "Ervas frescas",
     "Azeite de oliva"
   ],
-  "descricao": "Prato com diversos frutos do mar preparados ao molho branco cremoso, geralmente servido como entrada ou prato principal.",
+  "descricao": "Prato com diversos frutos do mar, incluindo camarão, mexilhão, vieiras e lula, cozidos em um cremoso molho branco e finalizado com ervas frescas.",
   "beneficios": [
     "Fonte de proteína magra",
     "Rico em ômega-3",
@@ -20,18 +20,18 @@
   ],
   "riscos": [
     "Contém lactose",
-    "Alto teor de sódio (dependendo do preparo)",
-    "Possível alergia a frutos do mar"
+    "Contém glúten",
+    "Alto teor de colesterol"
   ],
   "curiosidade": "O camarão é rico em astaxantina, um antioxidante que dá a cor avermelhada e oferece proteção contra danos celulares.",
   "slug": "frutos_do_mar_ao_molho_branco",
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "25g",
-    "carboidratos": "10g",
-    "gorduras": "12g"
+    "calorias": "350 kcal",
+    "proteinas": "30g",
+    "carboidratos": "15g",
+    "gorduras": "18g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🍖",
   "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": false,

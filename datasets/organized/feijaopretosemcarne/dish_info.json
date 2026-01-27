@@ -31,7 +31,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱",
   "tecnica": "Cozimento lento",
   "indice_glicemico": "baixo",
   "tempo_digestao": "3-4 horas",
@@ -43,5 +42,6 @@
   ],
   "evitar_com": [
     "Excesso de embutidos"
-  ]
+  ],
+  "category_emoji": "🌱"
 }

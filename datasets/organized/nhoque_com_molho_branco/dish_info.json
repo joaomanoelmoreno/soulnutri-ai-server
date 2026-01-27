@@ -1,18 +1,17 @@
 {
-  "nome": "Nhoque Com Molho Branco",
   "slug": "nhoque_com_molho_branco",
-  "categoria": "vegano",
-  "ingredientes": [],
+  "nome": "Nhoque Com Molho Branco E Queijo",
+  "categoria": "vegetariano",
   "descricao": "",
+  "ingredientes": [],
   "beneficios": [],
   "riscos": [],
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱"
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }
