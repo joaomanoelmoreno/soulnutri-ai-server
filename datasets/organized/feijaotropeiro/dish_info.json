@@ -1,6 +1,6 @@
 {
   "slug": "feijaotropeiro",
-  "nome": "Feijaotropeiro",
+  "nome": "Feijao Tropeiro",
   "categoria": "proteína animal",
   "descricao": "O Feijão Tropeiro, na imagem, apresenta uma mistura de feijão cozido com farinha de mandioca, tomate cereja, ovos cozidos, e finalizado com salsinha picada e pimenta. O modo de preparo, a partir dos ingredientes visíveis, consiste na mistura e refoga dos ingredientes.",
   "ingredientes": [
@@ -39,5 +39,7 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥩"
 }

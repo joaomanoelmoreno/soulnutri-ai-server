@@ -1,7 +1,7 @@
 {
   "slug": "feijaopretosemcarne",
-  "nome": "Feijoada",
-  "categoria": "proteína animal",
+  "nome": "Feijao Preto sem Carne",
+  "categoria": "vegano",
   "descricao": "Prato tradicional brasileiro, cozido lentamente com feijão preto e diversas partes do porco.",
   "ingredientes": [
     "Feijão preto",
@@ -34,5 +34,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🍖"
+  "category_emoji": "🥬",
+  "tecnica": ""
 }
