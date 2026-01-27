@@ -773,10 +773,13 @@ async def create_new_dish(
     """
     Cria um novo prato usando IA para gerar todas as informações.
     Salva a foto e adiciona ao banco de dados.
+    REGRA: Se já existe prato similar no banco, adiciona foto ao existente ao invés de criar novo.
     """
     try:
         import uuid
         from datetime import datetime
+        from pathlib import Path
+        from difflib import SequenceMatcher
         from services.generic_ai import identify_unknown_dish
         
         if not dish_name.strip():
@@ -784,10 +787,51 @@ async def create_new_dish(
         
         content = await file.read()
         
-        # Gerar slug
+        # Gerar slug do nome fornecido
         slug = dish_name.lower().strip()
         slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
         slug = slug.replace(' ', '_')
+        
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
+        dataset_dir = Path("/app/datasets/organized")
+        existing_match = None
+        
+        for dish_dir in dataset_dir.iterdir():
+            if not dish_dir.is_dir():
+                continue
+            info_path = dish_dir / "dish_info.json"
+            if info_path.exists():
+                try:
+                    import json
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        info = json.load(f)
+                        existing_name = info.get('nome', '').lower()
+                        # Verificar similaridade > 85%
+                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+                        if similarity > 0.85 or dish_dir.name == slug:
+                            existing_match = dish_dir.name
+                            logger.info(f"[CREATE] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                            break
+                except:
+                    pass
+        
+        # Se encontrou match, adiciona foto ao prato existente ao invés de criar novo
+        if existing_match:
+            target_dir = dataset_dir / existing_match
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            unique_id = str(uuid.uuid4())[:8]
+            filename = f"{existing_match}_{timestamp}_{unique_id}.jpg"
+            file_path = target_dir / filename
+            
+            with open(file_path, "wb") as f:
+                f.write(content)
+            
+            return {
+                "ok": True,
+                "message": f"Foto adicionada ao prato existente: {existing_match}",
+                "slug": existing_match,
+                "action": "added_to_existing"
+            }
         
         # Usar IA para gerar informações do prato
         logger.info(f"Gerando informações para novo prato: {dish_name}")
