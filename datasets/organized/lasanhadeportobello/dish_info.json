@@ -1,11 +1,11 @@
 {
-  "nome": "Lasanhadeportobello",
+  "nome": "Lasanha de Portobello",
   "categoria": "vegetariano",
   "ingredientes": [
     "massa de lasanha",
     "molho de tomate",
     "queijo",
-    "presunto",
+    "portobello",
     "molho branco"
   ],
   "descricao": "Lasanha tradicional em camadas.",
@@ -39,5 +39,8 @@
   "evitar_com": [
     "Outras massas no mesmo dia"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
