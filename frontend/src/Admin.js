@@ -394,20 +394,6 @@ export default function Admin() {
     }
   };
 
-  const deleteDish = async (slug) => {
-    if (!window.confirm(`Excluir "${slug}" e todas as fotos?`)) return;
-    try {
-      const res = await fetch(`${API}/admin/dishes/${slug}`, { method: 'DELETE' });
-      const data = await res.json();
-      if (data.ok) {
-        alert('✅ Prato excluído!');
-        loadDishes();
-      }
-    } catch (e) {
-      alert('Erro ao excluir: ' + e.message);
-    }
-  };
-
   const reindex = async () => {
     if (!window.confirm('Reindexar todo o dataset? Isso pode levar alguns minutos.')) return;
     setLoading(true);
