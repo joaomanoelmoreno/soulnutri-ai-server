@@ -157,6 +157,26 @@ export default function Admin() {
     }
   };
 
+  // EXCLUIR PRATO
+  const deleteDish = async (slug, nome) => {
+    if (!window.confirm(`🗑️ Excluir "${nome || slug}"?\n\nIsso removerá:\n• Todas as fotos\n• Informações do prato\n\n⚠️ Esta ação não pode ser desfeita!`)) {
+      return;
+    }
+    
+    try {
+      const res = await fetch(`${API}/admin/dishes/${slug}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.ok) {
+        loadDishes();
+        runAudit();
+      } else {
+        alert('Erro ao excluir: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    }
+  };
+
   // CONSOLIDAR DUPLICADOS (sem créditos)
   const consolidateDuplicates = async () => {
     if (!window.confirm('🔗 Consolidar pratos duplicados?\n\nIsso vai:\n• Mesclar pratos com nomes similares\n• Unir todas as imagens\n• Preservar a informação mais completa\n\n✅ NÃO CONSOME CRÉDITOS')) {
