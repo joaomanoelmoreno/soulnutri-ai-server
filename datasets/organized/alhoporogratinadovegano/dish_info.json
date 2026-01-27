@@ -1,4 +1,13 @@
 {
-  "nome": "Alho Poró Gratinado Vegano",
-  "slug": "alhoporogratinadovegano"
+  "nome": "Abobrinnha Grelhada",
+  "slug": "alhoporogratinadovegano",
+  "categoria": "vegano",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

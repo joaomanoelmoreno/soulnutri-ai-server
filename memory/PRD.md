@@ -1,163 +1,77 @@
 # SoulNutri - Product Requirements Document
 
-**Última atualização:** 26 Janeiro 2026
-**Versão:** 2.3
+## Visão Geral
+Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real a partir de imagens, fornecendo informações nutricionais detalhadas e personalizadas.
 
----
+## Requisitos Principais
+1. **Performance**: Identificação < 500ms e precisão > 90%
+2. **Coleta de Dados**: Fluxo para fotografar pratos na balança (Cibi Sana)
+3. **Qualidade**: Informações educativas e cientificamente embasadas
+4. **UX/UI**: Interface fluida com mínimo de cliques
+5. **Premium**: Funcionalidades de alto valor via assinatura
+6. **Buffet Flexível**: Reconhecer pratos compostos por múltiplos itens
+7. **i18n**: Suporte a EN, ES, FR, DE, ZH
 
-## 1. Visão do Produto
+## Arquitetura
+- **Frontend**: React (App.js ~2000 linhas - precisa refatoração)
+- **Backend**: FastAPI + IA (OpenCLIP local + Gemini fallback)
+- **Dados**: Filesystem (/app/datasets/organized/[slug]/dish_info.json)
 
-**SoulNutri** é um agente de nutrição virtual que identifica pratos em tempo real a partir de imagens, fornecendo informações nutricionais detalhadas e personalizadas.
+## O que foi implementado (26/01/2025)
 
-**Slogan:** "Porque nutre também a sua alma"
+### ✅ Ferramenta de Auditoria de Dados
+- Endpoint GET `/api/admin/audit` - Analisa todos os 503 pratos
+- Identifica: nomes Unknown, nutrição vazia, conflitos de categoria, alérgenos incorretos
+- Health Score: atualmente 4.2% (483 pratos com problemas)
 
-**Missão:** Atuar como um "radar do prato", focando em segurança alimentar e informação de valor em tempo real.
+### ✅ Correção com IA (Gemini)
+- Endpoint POST `/api/admin/audit/fix-single/{slug}` - Corrige 1 prato
+- Endpoint POST `/api/admin/audit/batch-fix` - Corrige até 10 pratos em lote
+- Prompt rigoroso para preencher: nome, categoria, ingredientes, nutrição, alérgenos
+- Testado e funcionando (ex: "Unknowntomatesfatiados" → "Tomates Fatiados com Cebolinha")
 
----
+### ✅ Interface Admin
+- Nova aba "Auditoria" em /admin
+- Dashboard com Health Score e resumo de problemas
+- Botões para correção individual (🤖) e em lote
+- CSS estilizado para visualização clara
 
-## 2. Status Atual
+## Problemas de Dados Identificados
+| Tipo | Quantidade |
+|------|------------|
+| Sem arquivo dish_info.json | 130 |
+| Nutrição vazia | 353 |
+| Nomes "Unknown" | 15 |
+| Conflitos de categoria | 18 |
+| Alérgenos incorretos | 64 |
 
-### Dataset
-- **499 pratos** cadastrados
-- **1806+ imagens** indexadas
-- Pratos do CibiSana + pratos genéricos
+## Backlog Prioritizado
 
-### URLs
-- **Preview:** https://virtual-nutritionist-1.preview.emergentagent.com ✅
-- **Produção:** https://soulnutri.app.br ⏳ (aguardando redeploy)
+### P0 - Crítico
+- [ ] Corrigir dados em lote (usar botões de auditoria)
+- [ ] Validar fluxo no celular (usuário reportou bug)
+- [ ] Otimizar velocidade da IA (reduzir uso do Gemini)
 
----
+### P1 - Alto
+- [ ] Refatorar App.js em componentes menores
+- [ ] Completar i18n (textos hardcoded)
+- [ ] Padronizar cores área Premium
+- [ ] Implementar funcionalidade Galeria
 
-## 3. ✅ CORREÇÕES APLICADAS
+### P2 - Médio
+- [ ] Resolver travamentos mobile (camera lifecycle)
+- [ ] Adicionar botão "Voltar" em todas as telas
+- [ ] Sistema de pagamentos (Stripe/Apple/Google)
+- [ ] Trial de 7 dias
 
-### Erro de Deploy CUDA - RESOLVIDO
-- `/app/backend/ai/__init__.py` - Forçar modo CPU ANTES de qualquer import
-- **Status:** Aguardando REDEPLOY (usar "Replace Deployment" - SEM custos)
+## Endpoints Principais
+- `POST /api/ai/identify` - Identificar prato por imagem
+- `GET /api/admin/audit` - Auditoria de dados
+- `POST /api/admin/audit/fix-single/{slug}` - Corrigir prato com IA
+- `POST /api/admin/audit/batch-fix` - Correção em lote
+- `POST /api/admin/dish/{slug}` - Salvar edição manual
 
----
-
-## 4. Funcionalidades Implementadas
-
-### Core (FREE)
-- ✅ Identificação de pratos por imagem
-- ✅ Nome, categoria, ingredientes
-- ✅ Informações nutricionais básicas
-- ✅ Alertas de alérgenos
-- ✅ **Modo Scanner Contínuo** (detecta mudança de imagem)
-- ✅ **Internacionalização** (6 idiomas)
-- ✅ **Popup de Boas-vindas** com seleção de idioma
-
-### Premium (R$14,90/mês)
-- ✅ Contador de calorias diário
-- ✅ Alertas personalizados
-- ✅ Perfil nutricional completo
-- ✅ Novidades/Notícias em tempo real
-- ✅ "Verdade ou Mito" educativo
-- ✅ **Sistema de liberação manual** (Admin > Aba Premium)
-
-### Internacionalização (26/01/2026)
-- ✅ 🇧🇷 Português (padrão)
-- ✅ 🇺🇸 English
-- ✅ 🇪🇸 Español
-- ✅ 🇫🇷 Français
-- ✅ 🇩🇪 Deutsch
-- ✅ 🇨🇳 中文 (Mandarim)
-- **Tecnologia:** LibreTranslate (GRATUITO e open-source)
-- **Seletor de idioma** no header
-- **Popup de boas-vindas** para novos usuários
-
-### Painel Admin (/admin)
-- ✅ Gerenciamento de pratos (criar, editar, excluir)
-- ✅ Edição completa: nome, categoria, ingredientes, nutrição, benefícios, riscos
-- ✅ Aba Novidades para informações em tempo real
-- ✅ Aba Premium para liberar/bloquear acesso manualmente
-
----
-
-## 5. Backlog Priorizado
-
-### P0 - BLOQUEADOR
-- [x] ~~Resolver erro CUDA no deploy~~ ✅ RESOLVIDO
-- [ ] **Fazer REDEPLOY** para aplicar correção em produção
-
-### P1 - Importante
-- [ ] Indicadores Premium (🔒 cadeados) para versão Free
-- [ ] Trial 7 dias grátis
-- [ ] Padronizar cores da tela Premium
-- [ ] Testar internacionalização em produção
-
-### P2 - Desejável
-- [x] ~~Internacionalização~~ ✅ IMPLEMENTADO (6 idiomas)
-- [x] ~~Popup de boas-vindas~~ ✅ IMPLEMENTADO
-- [ ] Histórico semanal com gráficos
-- [ ] Fluxo de coleta de dados na balança (OCR)
-
----
-
-## 6. Plano de Lançamento
-
-### Fase 1: CibiSana (Atual)
-- Foco: Validação com clientes reais no buffet
-- Meta: 100 downloads, 10 assinantes Premium
-- Tática: QR codes nas mesas + garçons apresentando
-
-### Fase 2: Lojas (Após validação)
-- Apple App Store ($99/ano)
-- Google Play ($25 único)
-
----
-
-## 7. Fluxo de Uso no Buffet
-
-```
-Cliente no buffet → Prato na mão + Celular na outra
-→ Aponta para item → Scanner detecta mudança
-→ Info aparece automaticamente (ZERO toques!)
-→ Decide (pega ou não) → Próximo item
-→ Pesa prato → Almoça
-```
-
-### Modo Scanner Contínuo
-- Verifica mudança de imagem a cada 500ms
-- Só faz reconhecimento se mudança > 15%
-- Overlay com info aparece sobre a câmera
-- Toque para ver detalhes completos
-
----
-
-## 8. Arquivos Importantes
-
-### Backend
-- `/app/backend/ai/__init__.py` - Inicialização (FORÇAR CPU) ✅
-- `/app/backend/ai/embedder.py` - Modelo OpenCLIP
-- `/app/backend/server.py` - API principal
-- `/app/backend/services/translation_service.py` - Internacionalização
-
-### Frontend
-- `/app/frontend/src/App.js` - Interface principal + WelcomePopup
-- `/app/frontend/src/I18nContext.js` - Contexto de idiomas
-- `/app/frontend/src/Admin.js` - Painel admin
-
----
-
-## 9. Credenciais para Teste
-
-- **Admin:** https://soulnutri.app.br/admin
-- **Premium liberado via:** Admin > Aba ⭐ Premium > Liberar
-
----
-
-## 10. Integrações
-
-| Serviço | Uso | Custo |
-|---------|-----|-------|
-| OpenCLIP | Identificação visual | GRATUITO |
-| Hugging Face | Fallback de identificação | GRATUITO |
-| LibreTranslate | Tradução automática | GRATUITO |
-| Gemini Vision | Fallback para pratos desconhecidos | Emergent LLM Key |
-
----
-
-## 11. Contatos
-
-- **Domínio:** soulnutri.app.br (configurado no Registro.br)
+## Notas Técnicas
+- OpenCLIP precisa score ≥90% para responder sem Gemini
+- Gemini fallback adiciona 3-5s de latência
+- Premium gerenciado via /app/backend/data/premium_users.json

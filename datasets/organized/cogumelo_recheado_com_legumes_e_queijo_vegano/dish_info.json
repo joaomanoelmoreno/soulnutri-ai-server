@@ -1,5 +1,5 @@
 {
-  "nome": "Cogumelo recheado com legumes e queijo vegano",
+  "nome": "Portobello recheado com Legumes",
   "categoria": "vegano",
   "ingredientes": [
     "Cogumelos Portobello",
@@ -28,5 +28,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

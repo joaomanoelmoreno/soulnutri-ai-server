@@ -1,5 +1,5 @@
 {
-  "nome": "Batatacompaprica",
+  "nome": "Batata com Paprica",
   "categoria": "vegano",
   "ingredientes": [
     "Batatas",
@@ -25,5 +25,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

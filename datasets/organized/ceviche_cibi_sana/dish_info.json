@@ -1,5 +1,5 @@
 {
-  "nome": "Ceviche Cibi sana",
+  "nome": "Ceviche de Peixe",
   "categoria": "proteína animal",
   "ingredientes": [
     "Peixe branco (provavelmente robalo ou corvina), limão, cebola roxa, pimenta dedo-de-moça, cebolinha, maracujá"
@@ -21,5 +21,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }

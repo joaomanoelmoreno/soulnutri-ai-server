@@ -1,4 +1,13 @@
 {
   "nome": "Arroz 7 Grãos com Legumes",
-  "slug": "arroz7graoscomlegumes"
+  "slug": "arroz7graoscomlegumes",
+  "categoria": "vegano",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

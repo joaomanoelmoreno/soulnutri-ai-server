@@ -1,29 +1,32 @@
 {
-  "nome": "Unknowncaprese",
+  "nome": "Espetinho Caprese",
   "categoria": "vegetariano",
   "ingredientes": [
     "Tomate cereja",
-    "Queijo mussarela",
+    "Mussarela de búfala",
     "Folhas de manjericão fresco",
     "Azeite de oliva",
     "Palitos de dente"
   ],
-  "descricao": "Mini caprese, consistindo em tomates cereja, pedaços de queijo mussarela e folhas de manjericão fresco, presos em palitos de dente. O prato é finalizado com azeite de oliva. Os ingredientes são cortados e montados em camadas.",
+  "descricao": "Mini espetinhos com tomate cereja, mussarela de búfala e manjericão fresco, temperados com azeite de oliva.",
   "beneficios": [
-    "O tomate cereja é rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
-    "O manjericão fresco possui propriedades anti-inflamatórias e antioxidantes.",
-    "O queijo mussarela é fonte de cálcio, importante para a saúde óssea."
+    "Fonte de antioxidantes",
+    "Rico em cálcio",
+    "Fornece vitaminas e minerais"
   ],
   "riscos": [
-    "Intolerância à lactose (se a mussarela for feita com leite de vaca).",
-    "Alérgeno: leite."
+    "Contém lactose (mussarela)",
+    "Alto teor de gordura (azeite e queijo)"
   ],
   "curiosidade": "O nome 'Caprese' vem da ilha de Capri, Itália, onde a salada caprese tradicional teria se originado.",
   "slug": "caprese",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "280 kcal",
+    "proteinas": "15g",
+    "carboidratos": "5g",
+    "gorduras": "20g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true
 }

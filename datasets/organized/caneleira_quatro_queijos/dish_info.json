@@ -1,5 +1,5 @@
 {
-  "nome": "Caneleira quatro queijos",
+  "nome": "Caneleira Quatro queijos",
   "categoria": "vegetariano",
   "ingredientes": [
     "Caneleira (massa à base de farinha de trigo), quatro tipos de queijo (não especificados), molho de tomate, manjericão fresco, azeite de oliva (possivelmente)"
@@ -21,5 +21,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥚"
 }

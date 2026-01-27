@@ -1,4 +1,13 @@
 {
   "nome": "Bacalhau Gomes de Sá",
-  "slug": "bacalhaugomesdesa"
+  "slug": "bacalhaugomesdesa",
+  "categoria": "proteína animal",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }

@@ -1,5 +1,5 @@
 {
-  "nome": "Unknownqueijoralado",
+  "nome": "queijo ralado",
   "categoria": "vegetariano",
   "ingredientes": [
     "Queijo"
@@ -20,5 +20,9 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "tecnica": ""
 }

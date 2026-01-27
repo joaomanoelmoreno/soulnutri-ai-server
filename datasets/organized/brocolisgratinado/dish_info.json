@@ -1,4 +1,13 @@
 {
   "nome": "Brócolis Gratinado",
-  "slug": "brocolisgratinado"
+  "slug": "brocolisgratinado",
+  "categoria": "vegetariano",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥚"
 }

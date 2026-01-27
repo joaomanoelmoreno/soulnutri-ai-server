@@ -1,6 +1,6 @@
 {
-  "nome": "Conchiglionirecheados",
-  "categoria": "proteína animal",
+  "nome": "Conchiglione ao Creme de Avelas e Salvia",
+  "categoria": "vegetariano",
   "ingredientes": [
     "Conchiglioni (massa de sêmola de trigo)",
     "Recheio (possivelmente carne moída)",
@@ -29,5 +29,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥚"
 }

@@ -1,4 +1,13 @@
 {
   "nome": "Bacalhau com Natas",
-  "slug": "bacalhaucomnatas"
+  "slug": "bacalhaucomnatas",
+  "categoria": "proteína animal",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }

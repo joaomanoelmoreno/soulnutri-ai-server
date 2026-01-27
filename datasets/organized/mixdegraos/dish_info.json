@@ -1,27 +1,32 @@
 {
-  "nome": "Unknownmixdegrãos",
+  "nome": "Mix de Grãos e Sementes",
   "categoria": "vegano",
   "ingredientes": [
     "Sementes de abóbora",
     "Sementes de girassol",
-    "Sementes de gergelim preto"
+    "Sementes de gergelim preto",
+    "Sementes de gergelim branco"
   ],
-  "descricao": "Mistura de sementes, possivelmente torradas para realçar o sabor e a crocância. A ausência de outros ingredientes sugere que o preparo é simples, sem adição de óleos ou temperos.",
+  "descricao": "Mistura nutritiva de sementes, ideal para adicionar crocância e nutrientes a diversas preparações.",
   "beneficios": [
-    "Rico em fibras, auxiliando na digestão e saciedade.",
-    "Fonte de gorduras saudáveis, benéficas para a saúde cardiovascular.",
-    "Oferece vitaminas e minerais importantes, como magnésio e zinco."
+    "Fonte de fibras",
+    "Rico em gorduras saudáveis",
+    "Fonte de minerais (magnésio, zinco)",
+    "Antioxidantes"
   ],
   "riscos": [
-    "Pode causar reações alérgicas em pessoas sensíveis a sementes.",
-    "Consumo em excesso pode levar a desconforto abdominal devido ao alto teor de fibras."
+    "Rico em gorduras (consumir com moderação)",
+    "Possível alergia a gergelim"
   ],
   "curiosidade": "O gergelim é uma das sementes mais antigas cultivadas pelo homem, com registros de uso datando de mais de 3.000 anos.",
   "slug": "mixdegraos",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "550 kcal",
+    "proteinas": "24g",
+    "carboidratos": "20g",
+    "gorduras": "45g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "contem_lactose": false
 }

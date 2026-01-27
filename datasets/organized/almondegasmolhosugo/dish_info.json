@@ -1,4 +1,13 @@
 {
   "nome": "Almôndegas ao Molho Sugo",
-  "slug": "almondegasmolhosugo"
+  "slug": "almondegasmolhosugo",
+  "categoria": "proteína animal",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥩"
 }

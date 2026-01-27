@@ -1,6 +1,6 @@
 {
-  "nome": "Cevichedemanga",
-  "categoria": "vegano",
+  "nome": "Ceviche de Peixe",
+  "categoria": "proteína animal",
   "ingredientes": [
     "Manga madura em cubos",
     "Cebola roxa fatiada",
@@ -26,5 +26,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }

@@ -1,10 +1,10 @@
 {
-  "nome": "Arrozbranco",
+  "nome": "Arroz branco",
   "categoria": "vegano",
   "ingredientes": [
     "Arroz branco",
     "Água",
-    "Sal (possivelmente)"
+    "Sal "
   ],
   "descricao": "Arroz branco cozido. O arroz é cozido em água fervente até ficar macio, possivelmente com adição de sal para tempero. A ausência de outros ingredientes indica que é uma preparação básica.",
   "beneficios": [
@@ -22,5 +22,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

@@ -1,5 +1,5 @@
 {
-  "nome": "Arroz integral com egumes",
+  "nome": "Arroz integral com Legumes",
   "categoria": "vegano",
   "ingredientes": [
     "Arroz integral",
@@ -27,5 +27,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

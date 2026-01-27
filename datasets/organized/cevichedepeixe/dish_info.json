@@ -1,7 +1,7 @@
 {
-  "nome": "Beterraba ao Balsamico",
-  "slug": "beterrabaaobalsamico",
-  "categoria": "vegano",
+  "nome": "Ceviche de Peixe",
+  "slug": "cevichedepeixe",
+  "categoria": "proteína animal",
   "descricao": "",
   "ingredientes": [],
   "beneficios": [],
@@ -9,5 +9,5 @@
   "nutricao": {},
   "contem_gluten": false,
   "tecnica": "",
-  "category_emoji": "🥬"
+  "category_emoji": "🐟"
 }

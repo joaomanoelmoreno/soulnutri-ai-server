@@ -1,4 +1,13 @@
 {
-  "nome": "Ceviche Peruano",
-  "slug": "cevicheperuano"
+  "nome": "Ceviche de Peixe",
+  "slug": "cevicheperuano",
+  "categoria": "proteína animal",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }

@@ -1,30 +1,34 @@
 {
-  "nome": "Unknowncanelonequatroqueijos",
+  "nome": "Canelone Quatro Queijos",
   "categoria": "vegetariano",
   "ingredientes": [
-    "Massa de canelone (provavelmente com trigo)",
-    "Recheio de quatro queijos (ex: mussarela, parmesão, ricota, gorgonzola)",
+    "Massa de canelone (com trigo)",
+    "Recheio de quatro queijos (mussarela, parmesão, ricota, gorgonzola)",
     "Molho de tomate",
-    "Queijo gratinado",
-    "Salsa picada (opcional)"
+    "Queijo gratinado (mussarela)",
+    "Salsa picada"
   ],
-  "descricao": "Canelone recheado com quatro queijos, coberto com molho de tomate e gratinado com queijo. Pode ser finalizado com salsa picada.",
+  "descricao": "Canelones recheados com quatro queijos, cobertos com molho de tomate e gratinados.",
   "beneficios": [
-    "Fonte de cálcio (dos queijos)",
-    "Possível fonte de proteína (dependendo dos queijos e da quantidade)"
+    "Fonte de cálcio",
+    "Fornece proteínas",
+    "Carboidratos para energia"
   ],
   "riscos": [
-    "Alto teor de gordura saturada (proveniente dos queijos)",
-    "Contém glúten (na massa do canelone)",
-    "Alto teor de sódio (principalmente nos queijos)",
-    "Pode conter lactose"
+    "Contém lactose",
+    "Contém glúten",
+    "Alto teor de sódio",
+    "Alto teor de gordura"
   ],
   "curiosidade": "O canelone é uma variação do famoso macarrão, mas recheado e enrolado.",
   "slug": "canelonequatroqueijos",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "200 kcal",
+    "proteinas": "12g",
+    "carboidratos": "20g",
+    "gorduras": "8g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": true,
+  "contem_lactose": true
 }

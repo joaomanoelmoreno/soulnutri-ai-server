@@ -1,15 +1,14 @@
 {
-  "nome": "Abobrinha Caramelizada Vegana",
+  "nome": "Abobrinha Grelhada",
   "categoria": "vegano",
   "ingredientes": [
     "Abobrinha",
     "Tomate cereja",
     "Cebola roxa picada",
     "Manjericão fresco",
-    "Azeite de oliva",
-    "Ervas frescas picadas (cebolinha)"
+    "Tapenade dde azeitonas e queijo vegano"
   ],
-  "descricao": "Abobrinha cortada em fatias, grelhada ou selada, caramelizada com um toque adocicado, possivelmente um pouco de açúcar ou melado. Servida com tomate cereja fresco, cebola roxa picada, folhas de manjericão e cebolinha picada.",
+  "descricao": "Abobrinha cortada em fatias, grelhada , levemente queimada na grelha.  Servida com tapenade de azeitonas ,tomate cereja fresco, folhas de manjericão e  queijo vegano",
   "beneficios": [
     "A abobrinha é rica em fibras, promovendo a saciedade e auxiliando na digestão. As fibras também ajudam a controlar os níveis de glicose e colesterol no sangue.",
     "O tomate cereja é rico em licopeno, um antioxidante que pode ajudar a proteger as células contra danos."
@@ -22,5 +21,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

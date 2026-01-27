@@ -1,4 +1,13 @@
 {
-  "nome": "Arroz de 7 Grãos com Amêndoas",
-  "slug": "arrozde7graoscomamendoas"
+  "nome": "Arroz de 7 Grãos ",
+  "slug": "arrozde7graoscomamendoas",
+  "categoria": "vegano",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

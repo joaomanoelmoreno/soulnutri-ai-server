@@ -5,9 +5,9 @@
     "Abóbora",
     "Curry (possivelmente em pó, composto por especiarias)",
     "Cebolinha (parte verde)",
-    "Azeite (provavelmente usado para cozinhar)"
+    "Azeite extra virgem"
   ],
-  "descricao": "Fatias de abóbora assadas ou grelhadas, com tempero de curry e finalizadas com cebolinha picada. O preparo pode ter envolvido o uso de azeite para cozinhar a abóbora.",
+  "descricao": "Fatias de abóbora assadas , com curry indiano e finalizadas com cebolinha picada. Preparada com azeite extra virgem ",
   "beneficios": [
     "A abóbora é rica em vitamina A e antioxidantes, que contribuem para a saúde da visão e proteção celular.",
     "O curry, dependendo da mistura de especiarias, pode ter propriedades anti-inflamatórias e antioxidantes."
@@ -22,5 +22,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

@@ -1,8 +1,8 @@
 {
-  "nome": "bolo de gengibre",
+  "nome": "Bolo de Gengibre",
   "slug": "bolo_de_gengibre",
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "descricao": "Biscoitos quadrados com cobertura de creme amarelo.",
   "ingredientes": [
     "farinha",

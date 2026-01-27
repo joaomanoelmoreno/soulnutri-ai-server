@@ -1,5 +1,5 @@
 {
-  "nome": "Cebola roxa com ervas frescas e frutos secos",
+  "nome": "Cebola Roxa com Ervas Frescas e Frutos Secos",
   "categoria": "vegano",
   "ingredientes": [
     "Cebola roxa",
@@ -26,5 +26,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

@@ -1,30 +1,33 @@
 {
-  "nome": "Unknowntiramisu",
+  "nome": "Tiramisu",
   "categoria": "vegetariano",
   "ingredientes": [
     "Biscoito tipo champagne",
-    "Café (para molhar o biscoito)",
+    "Café",
     "Ovos",
     "Açúcar",
     "Queijo mascarpone",
-    "Cacau em pó (para polvilhar)"
+    "Cacau em pó"
   ],
-  "descricao": "Tiramisu tradicional, composto por camadas de biscoito tipo champagne embebidos em café, intercaladas com creme de queijo mascarpone e polvilhado com cacau em pó. O creme é feito com ovos, açúcar e queijo mascarpone. O preparo não é visível, mas pela apresentação, parece ter sido montado em camadas e resfriado.",
+  "descricao": "Sobremesa italiana clássica feita com biscoitos champagne embebidos em café, creme de mascarpone e cacau em pó.",
   "beneficios": [
-    "O café presente na receita pode fornecer um estímulo energético.",
-    "O queijo mascarpone, em moderação, pode ser fonte de cálcio."
+    "Fonte de energia",
+    "Proporciona prazer"
   ],
   "riscos": [
-    "Alto teor de açúcares, provenientes do biscoito e da preparação do creme.",
-    "Risco de contaminação por Salmonella, devido aos ovos crus, caso não sejam de boa procedência ou pasteurizados.",
-    "Alérgenos: glúten (nos biscoitos), lactose (no queijo mascarpone)."
+    "Contém lactose",
+    "Alto teor de açúcar",
+    "Alto teor de gordura"
   ],
   "curiosidade": "A origem do Tiramisu é incerta, mas acredita-se que tenha surgido na região de Vêneto, na Itália. A receita original e tradicional utilizava ovos crus, por isso a importância de saber a procedência dos ingredientes.",
   "slug": "tiramisu",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "350 kcal",
+    "proteinas": "6g",
+    "carboidratos": "40g",
+    "gorduras": "20g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": true,
+  "contem_lactose": true
 }

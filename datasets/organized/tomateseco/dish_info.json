@@ -1,29 +1,32 @@
 {
-  "nome": "Unknowntomateseco",
+  "nome": "Tomate Seco Conservado",
   "categoria": "vegano",
   "ingredientes": [
     "Tomate seco",
     "Azeite de oliva",
-    "Ervas frescas (salsa)",
     "Alho",
-    "Vinagre"
+    "Ervas frescas (salsinha, manjericão)",
+    "Pimenta do reino"
   ],
-  "descricao": "Tomates secos hidratados e marinados em azeite de oliva, alho e ervas frescas. O processo de secagem do tomate concentra seus nutrientes e intensifica seu sabor. No preparo, o tomate seco é reidratado e marinado, resultando em um prato com textura macia e sabor marcante.",
+  "descricao": "Tomates secos conservados em azeite de oliva com ervas e especiarias. Ideal como aperitivo ou acompanhamento.",
   "beneficios": [
-    "Rico em antioxidantes, como o licopeno, que combate os radicais livres.",
-    "Fonte de fibras, que auxiliam na digestão e promovem a saciedade.",
-    "Pode conter vitaminas do complexo B, importantes para o metabolismo energético."
+    "Fonte de antioxidantes",
+    "Rico em licopeno",
+    "Gorduras saudáveis"
   ],
   "riscos": [
-    "Pode conter sódio em excesso, dependendo do processo de preparo.",
-    "Alérgeno: pode conter traços de ingredientes usados na marinada, como alho e ervas."
+    "Alto teor de sódio (se conservado em salmoura)",
+    "Alto teor de gordura (devido ao azeite)"
   ],
   "curiosidade": "O tomate seco, originalmente, era produzido para conservar tomates na ausência de refrigeração. A secagem concentra os sabores e nutrientes do tomate, tornando-o um ingrediente versátil na culinária.",
   "slug": "tomateseco",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "250 kcal",
+    "proteinas": "3g",
+    "carboidratos": "15g",
+    "gorduras": "20g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "contem_lactose": false
 }

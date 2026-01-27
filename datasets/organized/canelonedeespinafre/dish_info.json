@@ -1,5 +1,5 @@
 {
-  "nome": "Canelonedeespinafre",
+  "nome": "Canelone de Espinafre",
   "categoria": "vegetariano",
   "ingredientes": [
     "Massa de canelone (provavelmente com farinha de trigo)",
@@ -27,5 +27,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥚"
 }

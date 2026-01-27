@@ -1,5 +1,5 @@
 {
-  "nome": "Atumcomgergelimemolhotare",
+  "nome": "Atum ao Gergelim",
   "categoria": "proteína animal",
   "ingredientes": [
     "Atum",
@@ -26,5 +26,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }

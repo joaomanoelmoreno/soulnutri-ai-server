@@ -1,5 +1,5 @@
 {
-  "nome": "Baião de dois",
+  "nome": "Baião de Dois",
   "categoria": "proteína animal",
   "ingredientes": [
     "Arroz",
@@ -28,5 +28,8 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "tecnica": "",
+  "category_emoji": "🥩"
 }
