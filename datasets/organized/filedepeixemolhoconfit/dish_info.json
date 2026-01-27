@@ -1,6 +1,6 @@
 {
   "slug": "filedepeixemolhoconfit",
-  "nome": "Filé de peixe ao molho confit",
+  "nome": "File de Peixe ao Molho Confit",
   "categoria": "proteína animal",
   "descricao": "O prato consiste em filés de peixe cozidos em um molho feito com azeite de oliva, tomate cereja, cebola e alho, possivelmente em processo de confit (cozimento lento em gordura). As ervas frescas picadas (possivelmente salsa/salsinha) adicionam sabor e aroma. O cozimento parece ter sido feito em uma panela, em fogo baixo, permitindo que os sabores se misturem.",
   "ingredientes": [
@@ -32,5 +32,7 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }
