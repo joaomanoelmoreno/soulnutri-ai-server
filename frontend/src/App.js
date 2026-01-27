@@ -1339,10 +1339,17 @@ function App() {
       <div className="action-btns">
         <button 
           className="action-btn gallery" 
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => setShowGalleryView(true)}
           data-testid="gallery-button"
         >
-          🖼️ {t('gallery', 'Galeria')}
+          🖼️ {t('gallery', 'Galeria')} {photoGallery.length > 0 && `(${photoGallery.length})`}
+        </button>
+        <button 
+          className="action-btn upload" 
+          onClick={() => fileInputRef.current?.click()}
+          data-testid="upload-button"
+        >
+          📤 Upload
         </button>
         <button 
           className="action-btn clear" 
@@ -1353,6 +1360,53 @@ function App() {
           🗑️ Limpar
         </button>
       </div>
+
+      {/* ══════════════════════════════════════════════════════════
+          MODAL GALERIA DE FOTOS
+          ══════════════════════════════════════════════════════════ */}
+      {showGalleryView && (
+        <div className="gallery-modal-overlay" onClick={() => setShowGalleryView(false)}>
+          <div className="gallery-modal" onClick={e => e.stopPropagation()}>
+            <div className="gallery-header">
+              <h2>🖼️ Minhas Fotos</h2>
+              <button className="close-btn" onClick={() => setShowGalleryView(false)}>✕</button>
+            </div>
+            
+            {photoGallery.length === 0 ? (
+              <div className="gallery-empty">
+                <p>📷 Nenhuma foto ainda</p>
+                <p>Suas fotos de pratos aparecerão aqui</p>
+              </div>
+            ) : (
+              <>
+                <div className="gallery-grid">
+                  {photoGallery.map(photo => (
+                    <div key={photo.id} className="gallery-item">
+                      <img src={photo.imageUrl} alt={photo.dishName} />
+                      <div className="gallery-item-info">
+                        <span className="gallery-item-name">{photo.dishName}</span>
+                        <span className="gallery-item-date">{photo.date}</span>
+                        {photo.result?.calorias && (
+                          <span className="gallery-item-cal">{photo.result.calorias}</span>
+                        )}
+                      </div>
+                      <button 
+                        className="gallery-delete-btn"
+                        onClick={() => deleteFromGallery(photo.id)}
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <button className="gallery-clear-btn" onClick={clearGallery}>
+                  Limpar todas as fotos
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ══════════════════════════════════════════════════════════
           RESUMO DO PRATO - VISTA MESA (informações CONSOLIDADAS)
