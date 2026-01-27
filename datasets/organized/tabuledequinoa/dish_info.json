@@ -1,5 +1,5 @@
 {
-  "nome": "Tabuledequinoa",
+  "nome": "Tabule de Quinoa",
   "categoria": "vegano",
   "ingredientes": [
     "Quinoa",
@@ -7,25 +7,36 @@
     "Pepino picado",
     "Cebola roxa picada",
     "Salsinha picada",
+    "Hortelã picada",
     "Azeite de oliva",
     "Suco de limão",
     "Sal",
+    "Pimenta síria",
     "Fatias de pepino (decoração)"
   ],
-  "descricao": "O tabule de quinoa é uma salada refrescante e nutritiva. A quinoa, cozida, é combinada com tomate, pepino, cebola roxa e salsinha picados. A receita é temperada com azeite de oliva, suco de limão e sal. O prato é servido com fatias de pepino ao redor para decoração.",
+  "descricao": "Salada fresca e nutritiva feita com quinoa, vegetais picados e temperada com azeite e limão. Ótima opção para uma refeição leve e saudável.",
   "beneficios": [
-    "A quinoa é uma excelente fonte de proteína vegetal completa, fornecendo todos os aminoácidos essenciais.",
-    "A combinação de ingredientes oferece uma boa dose de fibras, promovendo a saúde digestiva.",
-    "O prato é rico em antioxidantes, provenientes dos tomates e outros vegetais.",
-    "O limão e a salsinha contribuem com vitamina C."
+    "Fonte de proteína vegetal",
+    "Rico em fibras",
+    "Fonte de vitaminas e minerais",
+    "Antioxidante"
   ],
-  "riscos": [],
+  "riscos": [
+    "Nenhum risco conhecido, desde que consumido com moderação"
+  ],
   "curiosidade": "A quinoa é um pseudocereal nativo da região dos Andes, conhecido por sua alta qualidade nutricional. É uma ótima alternativa para quem busca substituir o trigo e o arroz em suas refeições.",
   "slug": "tabuledequinoa",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "150 kcal",
+    "proteinas": "5g",
+    "carboidratos": "20g",
+    "gorduras": "6g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

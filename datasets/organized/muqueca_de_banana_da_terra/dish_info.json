@@ -1,62 +1,41 @@
 {
   "slug": "muqueca_de_banana_da_terra",
-  "nome": "Muqueca de banana da terra vegana",
+  "nome": "Muqueca de Banana da Terra Vegana",
   "categoria": "vegano",
-  "descricao": "A farofa vegana de banana da terra é um acompanhamento versátil e saboroso. A banana da terra é frita ou assada e misturada com farinha de mandioca, que pode ser levemente tostada para realçar o sabor. Adiciona-se cebolinha picada para um toque fresco e uvas passas para um contraste adocicado. O preparo é simples, com a combinação dos ingredientes até obter uma farofa úmida e saborosa.",
+  "descricao": "Uma versão vegana da tradicional muqueca brasileira, utilizando banana da terra como ingrediente principal. Preparada com leite de coco e especiarias, é um prato saboroso e nutritivo.",
   "ingredientes": [
     "Banana da terra",
-    "Pimentão amarelo",
     "Pimentão vermelho",
-    "Pimentão verde",
     "Cebola",
-    "Leite de coco",
-    "Azeite de oliva",
-    "Coentro fresco picado",
-    "Tempeiros (alho, sal, pimenta do reino)",
-    "Molho de tomate",
-    "Salsa picada",
-    "Acompanhamento similar a queijo ralado vegano",
-    "Macarrão tipo cabelo de anjo",
-    "Banana da terra cozida",
     "Tomate",
+    "Leite de coco",
     "Azeite de dendê",
-    "Coentro (possivelmente)",
-    "Pimentão vermelho (possivelmente)",
-    "Alho (possivelmente)",
-    "Farinha de mandioca",
-    "Cebolinha picada",
-    "Uva passa"
+    "Coentro",
+    "Alho",
+    "Sal",
+    "Pimenta do reino"
   ],
   "beneficios": [
-    "A banana da terra é rica em fibras, promovendo a saciedade e a saúde digestiva.",
-    "O pimentão é fonte de vitamina C e antioxidantes, que combatem os radicais livres.",
-    "O leite de coco oferece gorduras saudáveis e um sabor adocicado.",
-    "A ausência de ingredientes de origem animal torna este prato leve e de fácil digestão.",
-    "A banana da terra é rica em fibras, promovendo a saúde digestiva.",
-    "O molho de tomate fornece licopeno, um antioxidante benéfico.",
-    "Opção vegana, livre de colesterol e rica em nutrientes vegetais.",
-    "A banana da terra é rica em fibras, que auxiliam na digestão e promovem a saciedade.",
-    "O azeite de dendê é fonte de gorduras saudáveis e antioxidantes.",
-    "O leite de coco adiciona cremosidade e sabor, além de ser fonte de nutrientes como potássio.",
-    "A farinha de mandioca é fonte de carboidratos, fornecendo energia."
+    "Fonte de fibras",
+    "Rico em vitaminas e minerais",
+    "Vegano",
+    "Sem glúten"
   ],
   "riscos": [
-    "Pode conter traços de glúten, dependendo dos temperos utilizados.",
-    "Alérgenos: nenhum identificado.",
-    "Intolerância: pode causar desconforto em pessoas sensíveis ao coco ou a alguns legumes.",
-    "Pode conter glúten, dependendo da receita do nhoque ou do 'queijo' vegano.",
-    "Alérgenos podem estar presentes nos ingredientes do nhoque ou no 'queijo' vegano.",
-    "Alergia ao coco (embora rara)",
-    "Pode conter alto teor de gordura, especialmente se preparado com muito azeite de dendê e leite de coco.",
-    "Ingredientes como tomate e cebola podem causar desconforto em pessoas com sensibilidade a esses alimentos.",
-    "A farinha de mandioca pode conter glúten, dependendo do processo de produção.",
-    "Consumo excessivo pode levar ao aumento de peso devido ao alto teor de carboidratos."
+    "Alto teor de sódio (se sal em excesso)",
+    "Pode causar desconforto gastrointestinal em pessoas sensíveis devido ao azeite de dendê"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "12g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🥬"
 }

@@ -1,53 +1,41 @@
 {
   "slug": "conchiglionirecheados",
-  "nome": "Conchiglione ao Creme de Avelas e Salvia",
-  "categoria": "vegetariano",
-  "descricao": "O prato consiste em conchigliones cozidos e recheados (o recheio não é totalmente visível, mas pode conter legumes e queijo), cobertos por um creme cremoso. O creme parece ser à base de creme de leite, possivelmente com cebola refogada para dar sabor. A sálvia fresca e as avelãs picadas são adicionadas para aromatizar e dar textura. Queijo ralado finaliza o prato. O modo de preparo envolve cozinhar a massa, preparar o creme, montar o prato e finalizar com os ingredientes.",
+  "nome": "Conchiglione Recheado com Carne ao Creme de Avelãs e Sálvia",
+  "categoria": "proteína animal",
+  "descricao": "Massa conchiglione recheada com carne moída, servida em um molho cremoso de avelãs e sálvia, finalizada com queijo ralado.",
   "ingredientes": [
-    "Conchiglione (massa recheada)",
+    "Massa conchiglione",
+    "Carne moída",
     "Creme de leite",
-    "Sálvia fresca picada",
     "Avelãs picadas",
-    "Queijo parmesão ralado",
+    "Sálvia fresca",
+    "Queijo parmesão",
+    "Cebola",
     "Azeite de oliva",
-    "Tempero (provavelmente sal e pimenta)",
-    "Conchiglioni (massa de sêmola de trigo)",
-    "Recheio (possivelmente carne moída)",
-    "Molho cremoso (possivelmente à base de creme de leite)",
-    "Folhas de sálvia frescas",
-    "Queijo ralado (possivelmente parmesão)",
-    "Nozes picadas",
-    "Azeite",
-    "Tempero",
-    "Conchiglione (massa de trigo)",
-    "Cebola picada (provavelmente usada no creme)"
+    "Sal",
+    "Pimenta"
   ],
   "beneficios": [
-    "Avelãs fornecem gorduras saudáveis e vitamina E",
-    "Sálvia é rica em antioxidantes e pode ter propriedades anti-inflamatórias",
-    "As nozes fornecem gorduras saudáveis e antioxidantes.",
-    "A sálvia possui propriedades anti-inflamatórias.",
-    "Avelãs são ricas em gorduras saudáveis e vitamina E, um antioxidante importante.",
-    "Sálvia possui propriedades antioxidantes e anti-inflamatórias.",
-    "O queijo, dependendo do tipo, pode ser fonte de cálcio e proteínas."
+    "Fonte de proteína",
+    "Rico em carboidratos",
+    "Fonte de cálcio"
   ],
   "riscos": [
+    "Contém lactose",
     "Contém glúten",
-    "Alto teor de gordura (especialmente saturada) devido ao creme de leite",
-    "Alto teor de sódio (potencialmente) dependendo do tempero e tipo de queijo",
-    "Rico em gorduras saturadas (dependendo do molho)",
-    "Possível presença de lactose (no queijo e creme de leite)",
-    "Pode conter sódio em excesso (dependendo dos temperos)",
-    "Contém glúten, devido à massa de trigo.",
-    "Rico em gorduras saturadas, provenientes do creme de leite.",
-    "Pode conter lactose, dependendo do tipo de queijo e creme.",
-    "Potencialmente alto em sódio, dependendo do queijo e temperos usados."
+    "Alto teor de gordura"
   ],
-  "nutricao": {},
-  "contem_gluten": false,
-  "contem_lactose": false,
+  "nutricao": {
+    "calorias": "350 kcal",
+    "proteinas": "18g",
+    "carboidratos": "35g",
+    "gorduras": "15g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
   "contem_ovo": false,
-  "contem_castanhas": false,
+  "contem_castanhas": true,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🍖"
 }

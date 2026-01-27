@@ -1,25 +1,34 @@
 {
   "slug": "alhoporogratinadovegano",
-  "nome": "Abobrinha Grelhada",
-  "categoria": "vegano",
-  "descricao": "Abobrinha cortada em fatias, grelhada , levemente queimada na grelha.  Servida com tapenade de azeitonas ,tomate cereja fresco, folhas de manjericão e  queijo vegano",
+  "nome": "Abobrinha Grelhada com Queijo",
+  "categoria": "vegetariano",
+  "descricao": "Abobrinha grelhada com tomate cereja, cebola roxa e queijo ralado, ideal para uma refeição leve e saborosa.",
   "ingredientes": [
     "Abobrinha",
     "Tomate cereja",
     "Cebola roxa picada",
     "Manjericão fresco",
-    "Tapenade dde azeitonas e queijo vegano"
+    "Queijo ralado"
   ],
   "beneficios": [
-    "A abobrinha é rica em fibras, promovendo a saciedade e auxiliando na digestão. As fibras também ajudam a controlar os níveis de glicose e colesterol no sangue.",
-    "O tomate cereja é rico em licopeno, um antioxidante que pode ajudar a proteger as células contra danos."
+    "Fonte de vitaminas e minerais",
+    "Baixo teor de carboidratos",
+    "Rico em fibras"
   ],
-  "riscos": [],
-  "nutricao": {},
+  "riscos": [
+    "Contém lactose (alérgeno)"
+  ],
+  "nutricao": {
+    "calorias": "80 kcal",
+    "proteinas": "5g",
+    "carboidratos": "8g",
+    "gorduras": "3g"
+  },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

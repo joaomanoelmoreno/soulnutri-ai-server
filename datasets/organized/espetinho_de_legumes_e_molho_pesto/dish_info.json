@@ -1,30 +1,44 @@
 {
-  "nome": "Espetinho de legumes e molho pesto",
-  "categoria": "vegano",
+  "nome": "Espetinho de Legumes Grelhados com Pesto",
+  "categoria": "vegetariano",
   "ingredientes": [
-    "Pimentão (vermelho, amarelo, verde), cebola, abobrinha, tomate cereja, azeite de oliva, alho, manjericão, pinoli, queijo parmesão (opcional)",
-    "sal",
-    "pimenta do reino",
-    "palitos de madeira"
+    "Pimentão (vermelho, amarelo, verde)",
+    "Cebola",
+    "Abobrinha",
+    "Tomate cereja",
+    "Azeite de oliva",
+    "Alho",
+    "Manjericão",
+    "Pinoli",
+    "Queijo parmesão",
+    "Sal",
+    "Pimenta do reino",
+    "Palitos de madeira"
   ],
-  "descricao": "Espetinhos de legumes grelhados, intercalando pedaços de pimentão, cebola, abobrinha e tomate cereja. Acompanha molho pesto cremoso, preparado com manjericão fresco, alho, pinoli e azeite de oliva. Opcionalmente, pode conter queijo parmesão ralado.",
+  "descricao": "Espetinhos de legumes grelhados acompanhados de um molho pesto saboroso. Uma opção leve e nutritiva para uma refeição equilibrada.",
   "beneficios": [
-    "Os legumes fornecem vitaminas, minerais e antioxidantes.",
-    "O manjericão do pesto possui propriedades anti-inflamatórias e antioxidantes.",
-    "A abobrinha é rica em fibras, auxiliando na saúde digestiva.",
-    "Os pimentões são ricos em vitamina C, que fortalece o sistema imunológico."
+    "Fonte de vitaminas e minerais",
+    "Rico em antioxidantes",
+    "Auxilia na digestão",
+    "Opção com baixo teor de gordura (se moderar no azeite)"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo do tipo de palito utilizado (verificar o rótulo).",
-    "Alérgenos: pinoli (nozes)",
-    "Caso o pesto contenha queijo, pode conter lactose."
+    "Contém lactose (se o pesto tiver queijo)",
+    "Alto teor de sódio (se o pesto tiver muito sal)"
   ],
   "curiosidade": "O pesto tradicional italiano leva manjericão fresco, pinoli, alho, queijo parmesão ralado e azeite de oliva, resultando em um molho vibrante e aromático.",
   "slug": "espetinho_de_legumes_e_molho_pesto",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "180 kcal",
+    "proteinas": "5g",
+    "carboidratos": "15g",
+    "gorduras": "10g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
