@@ -1,31 +1,39 @@
 {
   "slug": "brownie",
-  "nome": "Bolo Brownie de Chocolate",
-  "categoria": "vegano",
-  "descricao": "O Bolobrownie é um doce cortado em quadrados, com uma base de brownie escura e densa, coberta com uma cobertura de chocolate. A cobertura apresenta um padrão de linhas finas e irregulares. A massa do brownie parece ter textura porosa.",
+  "nome": "Brownie de Chocolate com Calda",
+  "categoria": "vegetariano",
+  "descricao": "Brownie de chocolate macio com uma deliciosa calda cremosa, perfeito para um lanche ou sobremesa.",
   "ingredientes": [
     "Chocolate",
     "Açúcar",
     "Farinha de trigo",
-    "Manteiga de amendoim",
+    "Manteiga",
+    "Ovos",
     "Óleo vegetal",
     "Fermento",
-    "Cobertura de chocolate"
+    "Creme de leite",
+    "Calda de chocolate"
   ],
   "beneficios": [
-    "A porção de chocolate pode oferecer antioxidantes, como flavonoides, que ajudam a proteger as células contra danos.",
-    "A presença de farinha de trigo fornece carboidratos, que são fonte de energia."
+    "Fonte de energia",
+    "Pode melhorar o humor"
   ],
   "riscos": [
-    "Alto teor de açúcar e gordura.",
-    "Contém glúten (proveniente da farinha de trigo).",
-    "Alérgenos: pode conter traços de leite e ovos (dependendo da receita)."
+    "Alto teor de açúcar",
+    "Contém glúten",
+    "Contém lactose"
   ],
-  "nutricao": {},
-  "contem_gluten": false,
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "nutricao": {
+    "calorias": "350 kcal",
+    "proteinas": "5g",
+    "carboidratos": "45g",
+    "gorduras": "18g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }
