@@ -1,17 +1,40 @@
 {
-  "nome": "Lentilha Refogada Com Legumes",
+  "nome": "Lentilha com Tofu e Legumes",
   "slug": "lentilha_refogada_com_legumes",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "lentilha",
+    "tofu",
+    "cebola",
+    "alho",
+    "cenoura",
+    "pimentão",
+    "salsinha",
+    "cebolinha",
+    "temperos"
+  ],
+  "descricao": "Lentilha refogada com tofu e legumes, uma opção nutritiva e rica em proteínas vegetais. Ideal para uma refeição completa e balanceada.",
+  "beneficios": [
+    "rica em fibras",
+    "fonte de proteína vegetal",
+    "baixo índice glicêmico",
+    "saudável para o coração"
+  ],
+  "riscos": [
+    "Contém soja (tofu)",
+    "Pode causar gases em pessoas sensíveis"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "180 kcal",
+    "proteinas": "12g",
+    "carboidratos": "25g",
+    "gorduras": "4g"
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🥬",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true
 }
