@@ -1,10 +1,28 @@
 {
-  "nome": "Panceta Pururuca",
+  "nome": "Parcela Pururuca",
   "slug": "panceta",
   "categoria": "proteína animal",
-  "ingredientes": ["Panceta suína", "Sal grosso", "Alho", "Ervas"],
+  "ingredientes": [
+    "Panceta suína",
+    "Sal grosso",
+    "Alho",
+    "Ervas"
+  ],
   "descricao": "Panceta suína assada até ficar crocante por fora e macia por dentro. Um clássico da culinária brasileira.",
-  "beneficios": ["Rica em proteínas", "Fonte de energia"],
-  "riscos": ["Alto teor de gordura saturada", "Alto teor de sódio"],
-  "curiosidade": "O nome 'pururuca' vem do tupi e significa 'o que estoura'."
+  "beneficios": [
+    "Rica em proteínas",
+    "Fonte de energia"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada",
+    "Alto teor de sódio"
+  ],
+  "curiosidade": "O nome 'pururuca' vem do tupi e significa 'o que estoura'.",
+  "category_emoji": "🍖",
+  "nutricao": {
+    "calorias": "450 kcal",
+    "proteinas": "30g",
+    "carboidratos": "2g",
+    "gorduras": "35g"
+  }
 }

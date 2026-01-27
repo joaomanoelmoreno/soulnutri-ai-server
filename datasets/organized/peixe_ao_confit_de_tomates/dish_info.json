@@ -1,0 +1,26 @@
+{
+  "nome": "Peixe ao Confit de Tomates",
+  "slug": "peixe_ao_confit_de_tomates",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato de peixe com tomate cereja, possivelmente grelhado ou cozido, e temperado com ervas finas.",
+  "ingredientes": [
+    "Peixe",
+    "Tomate cereja",
+    "Azeite",
+    "Ervas finas"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Peixe",
+    "Alérgeno: PEIXE (peixe)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

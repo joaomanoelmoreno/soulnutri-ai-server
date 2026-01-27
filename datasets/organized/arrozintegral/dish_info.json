@@ -14,10 +14,10 @@
   "curiosidade": "O arroz integral preserva a camada de farelo, onde estão concentradas a maioria das fibras e nutrientes, ao contrário do arroz branco que tem essa camada removida no processo de polimento.",
   "slug": "arrozintegral",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "150 kcal",
+    "proteinas": "3g",
+    "carboidratos": "30g",
+    "gorduras": "2g"
   },
   "contem_gluten": false,
   "tecnica": "",

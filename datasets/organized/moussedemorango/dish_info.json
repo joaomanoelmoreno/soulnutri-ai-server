@@ -1,5 +1,5 @@
 {
-  "nome": "Moussedemorango",
+  "nome": "Mousse de Morango",
   "categoria": "vegetariano",
   "ingredientes": [
     "Morangos frescos",
@@ -22,9 +22,12 @@
   "curiosidade": "O morango é uma fruta com baixo teor calórico e alta concentração de nutrientes, sendo uma ótima opção para incluir em dietas equilibradas.",
   "slug": "moussedemorango",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "250 kcal",
+    "proteinas": "5g",
+    "carboidratos": "35g",
+    "gorduras": "10g"
+  },
+  "category_emoji": "🥚",
+  "contem_lactose": true,
+  "contem_ovo": true
 }

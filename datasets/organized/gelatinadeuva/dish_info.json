@@ -1,5 +1,5 @@
 {
-  "nome": "Gelatinadeuva",
+  "nome": "Gelatina de Uva",
   "categoria": "vegano",
   "ingredientes": [
     "Uva (possivelmente suco de uva)",
@@ -19,9 +19,10 @@
   "curiosidade": "A gelatina de origem vegetal, feita a partir de algas marinhas (agar-agar), é uma alternativa para vegetarianos e veganos, e tem menos calorias que a gelatina tradicional.",
   "slug": "gelatinadeuva",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "80 kcal",
+    "proteinas": "1g",
+    "carboidratos": "18g",
+    "gorduras": "0g"
+  },
+  "category_emoji": "🥬"
 }
