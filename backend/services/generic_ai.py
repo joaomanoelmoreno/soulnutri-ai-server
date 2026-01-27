@@ -19,14 +19,21 @@ load_dotenv()
 SYSTEM_PROMPT_IDENTIFY = """Identifique o prato na imagem.
 
 REGRAS DE CATEGORIA:
-- "vegano": ZERO produtos animais
-- "vegetariano": tem ovo/leite/queijo, SEM carne
+- "vegano": ZERO produtos de origem animal
+- "vegetariano": tem ovo/leite/queijo de VACA, SEM carne
 - "proteína animal": tem carne/peixe/frango
 
-ATENÇÃO:
-- Peixe/camarão = proteína animal
-- Ovo/queijo = vegetariano (não vegano)
-- Bacon/presunto = proteína animal
+INGREDIENTES VEGANOS (NÃO são de origem animal):
+- Leite de coco, creme de coco, óleo de coco
+- Leite de amêndoas, leite de soja, leite de aveia
+- Cogumelos, tofu, tempeh, seitan
+
+ATENÇÃO CRÍTICA:
+- Peixe/camarão/mariscos = proteína animal
+- Ovo/queijo de VACA/leite de VACA = vegetariano (não vegano)
+- Bacon/presunto/carne = proteína animal
+- Leite de COCO = VEGANO (não é de origem animal!)
+- Muqueca com leite de coco e SEM peixe = vegano
 
 JSON obrigatório:
 {
