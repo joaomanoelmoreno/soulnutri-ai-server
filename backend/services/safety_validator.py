@@ -14,22 +14,27 @@ logger = logging.getLogger(__name__)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # 🍖 PROTEÍNA ANIMAL - Se encontrar QUALQUER um, NÃO é vegano nem vegetariano
+# NOTA: Evitar termos genéricos que podem ter versão vegana (hambúrguer, filé)
 PROTEINA_ANIMAL = {
-    # Carnes
-    "carne", "bife", "filé", "file", "picanha", "alcatra", "patinho", "acém", "acem",
-    "costela", "cupim", "maminha", "contrafilé", "contrafile", "lagarto", "músculo", "musculo",
-    "carne moída", "carne moida", "hambúrguer", "hamburger", "almôndega", "almondega",
+    # Carnes - termos específicos
+    "carne", "carne bovina", "carne moída", "carne moida", "carne de porco",
+    "bife", "bife de carne", "picanha", "alcatra", "patinho", "acém", "acem",
+    "costela", "costela de porco", "cupim", "maminha", "contrafilé", "contrafile", 
+    "lagarto", "músculo", "musculo", "filé mignon", "file mignon",
     "boi", "vaca", "vitela", "cordeiro", "carneiro", "cabrito", "porco", "suíno", "suino",
     "lombo", "pernil", "bisteca", "costelinha",
+    "almôndega de carne", "almondega de carne", "hambúrguer de carne", "hamburger de carne",
     
     # Aves
-    "frango", "galinha", "peru", "pato", "chester", "coxa", "sobrecoxa", "peito de frango",
-    "asa", "coxinha da asa", "filé de frango", "file de frango", "nuggets", "empanado",
+    "frango", "galinha", "peru", "pato", "chester", "coxa de frango", "sobrecoxa",
+    "peito de frango", "filé de frango", "file de frango", "asa de frango",
+    "coxinha da asa", "nuggets de frango", "empanado de frango",
     
     # Peixes
-    "peixe", "tilápia", "tilapia", "salmão", "salmao", "atum", "bacalhau", "sardinha",
+    "peixe", "filé de peixe", "file de peixe",
+    "tilápia", "tilapia", "salmão", "salmao", "atum", "bacalhau", "sardinha",
     "pescada", "robalo", "dourado", "pintado", "surubim", "tucunaré", "tucunare",
-    "merluza", "linguado", "truta", "anchova", "anchova", "cavala",
+    "merluza", "linguado", "truta", "anchova", "cavala",
     
     # Frutos do mar
     "camarão", "camarao", "lagosta", "caranguejo", "siri", "lula", "polvo",
@@ -40,9 +45,9 @@ PROTEINA_ANIMAL = {
     "copa", "pancetta", "paio", "calabresa", "pepperoni", "chorizo",
     "blanquet", "peito de peru",
     
-    # Outros
-    "gelatina", "tutano", "mocotó", "mocoto", "rabada", "dobradinha", "bucho",
-    "fígado", "figado", "rim", "coração", "coracao", "moela",
+    # Vísceras e outros
+    "gelatina bovina", "tutano", "mocotó", "mocoto", "rabada", "dobradinha", "bucho",
+    "fígado", "figado", "fígado bovino", "fígado de frango",
 }
 
 # 🥬 VEGETARIANO (não vegano) - Se encontrar, é vegetariano mas NÃO vegano
