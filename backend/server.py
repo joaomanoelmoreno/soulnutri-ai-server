@@ -1718,6 +1718,99 @@ async def admin_update_dish(slug: str, dish_data: dict):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.post("/admin/dishes/{slug}/regenerate")
+async def admin_regenerate_dish_info(slug: str, data: dict = None):
+    """
+    Regenera TODAS as informações de um prato baseado no nome.
+    Útil quando o usuário corrige o nome e quer atualizar toda a ficha.
+    
+    Body opcional:
+    {
+        "new_name": "Novo Nome do Prato"  // se não fornecido, usa o nome atual
+    }
+    """
+    try:
+        from services.generic_ai import regenerate_dish_info_from_name
+        
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            return {"ok": False, "error": "Prato não encontrado"}
+        
+        info_file = dataset_dir / "dish_info.json"
+        
+        # Carregar info atual
+        current_info = {}
+        if info_file.exists():
+            try:
+                with open(info_file, "r", encoding="utf-8") as f:
+                    current_info = json.load(f)
+            except:
+                pass
+        
+        # Determinar o nome a usar
+        new_name = None
+        if data and data.get("new_name"):
+            new_name = data["new_name"]
+        else:
+            new_name = current_info.get("nome", slug)
+        
+        logger.info(f"[ADMIN] Regenerando ficha do prato '{slug}' com nome: {new_name}")
+        
+        # Chamar IA para regenerar
+        result = await regenerate_dish_info_from_name(new_name, current_info)
+        
+        if result.get("ok"):
+            # Mesclar com dados existentes (manter slug)
+            new_info = {**current_info}
+            
+            # Atualizar todos os campos regenerados
+            for key in ["nome", "categoria", "descricao", "ingredientes", 
+                       "beneficios", "riscos", "nutricao", "contem_gluten",
+                       "contem_lactose", "contem_ovo", "contem_castanhas",
+                       "contem_frutos_mar", "contem_soja", "tecnica"]:
+                if key in result:
+                    new_info[key] = result[key]
+            
+            new_info["slug"] = slug
+            new_info["regenerated_at"] = datetime.utcnow().isoformat()
+            
+            # Definir emoji baseado na categoria
+            cat = new_info.get("categoria", "").lower()
+            nome_lower = new_info.get("nome", "").lower()
+            
+            if "proteína" in cat:
+                if any(p in nome_lower for p in ["peixe", "camarão", "bacalhau", "salmão", "atum"]):
+                    new_info["category_emoji"] = "🐟"
+                elif any(p in nome_lower for p in ["frango", "galinha", "sobrecoxa"]):
+                    new_info["category_emoji"] = "🍗"
+                else:
+                    new_info["category_emoji"] = "🥩"
+            elif "vegetariano" in cat:
+                new_info["category_emoji"] = "🥚"
+            elif "vegano" in cat:
+                new_info["category_emoji"] = "🥬"
+            else:
+                new_info["category_emoji"] = "🍽️"
+            
+            # Salvar
+            with open(info_file, "w", encoding="utf-8") as f:
+                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            
+            logger.info(f"[ADMIN] Ficha regenerada com sucesso: {slug}")
+            return {
+                "ok": True, 
+                "message": f"Ficha de '{new_name}' regenerada com sucesso",
+                "new_info": new_info
+            }
+        else:
+            return {"ok": False, "error": result.get("error", "Erro desconhecido")}
+        
+    except Exception as e:
+        logger.error(f"Erro ao regenerar ficha: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.delete("/admin/dishes/{slug}")
 async def admin_delete_dish(slug: str):
     """Exclui um prato e todas suas fotos."""
