@@ -5,6 +5,13 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 
 ## O que foi implementado
 
+### 27/01/2025 - Correções de Lógica de Classificação (NOVA)
+- **Queijo vegano diferenciado** - Sistema agora reconhece "queijo vegano", "queijo de castanha", etc. como vegano
+- **Decoração ignorada** - Ingredientes em contexto de "decoração" não afetam a classificação
+- **Endpoint de regeneração** - POST `/api/admin/dishes/{slug}/regenerate` regenera toda a ficha baseado no nome
+- **Versões veganas** - Adicionada lista completa de ingredientes veganos (leite de coco, creme de coco, etc.)
+- **Detecção inteligente** - Word boundaries evitam falsos positivos (ex: "decoração" não detecta "coração")
+
 ### 27/01/2025 - Consolidação de Duplicados
 - **60 grupos consolidados** automaticamente
 - **468 → 258 pratos únicos** (todas imagens mantidas)
@@ -37,15 +44,24 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 - Mantém todas as imagens na pasta principal
 - Informações mescladas (pega o mais completo)
 
+### Classificação de Ingredientes (NOVA)
+- **Vegano**: Zero produtos animais
+- **Vegetariano**: Pode ter ovo/leite/queijo de vaca, sem carne
+- **Proteína animal**: Tem carne/peixe/frango
+- **Versões veganas reconhecidas**: queijo vegano, leite de coco, creme vegetal, etc.
+- **Decoração ignorada**: Ingredientes usados apenas para decorar não contam
+
 ## Backlog
 
 ### P0 - Crítico
 - [x] Consolidar duplicados
-- [ ] Corrigir pratos restantes com IA
+- [x] Corrigir lógica queijo vegano vs comum
+- [ ] Reconstruir índice de embeddings (em progresso)
 
 ### P1 - Alto
 - [ ] Remover ~90 pratos "Unknown"
 - [ ] Otimizar velocidade IA
+- [ ] Corrigir bug de salvamento inconsistente no admin
 
 ### P2 - Médio
 - [ ] Refatorar App.js
