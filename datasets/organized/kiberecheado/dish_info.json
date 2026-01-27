@@ -1,6 +1,6 @@
 {
   "nome": "Kiberecheado",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Trigo para kibe",
     "Carne moída",
@@ -29,5 +29,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

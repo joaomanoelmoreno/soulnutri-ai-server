@@ -1,7 +1,7 @@
 {
   "slug": "almondegas_com_especiarias_indiana",
   "nome": "Almôndegas ao Coco com Especiarias ",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "descricao": "As almôndegas, provavelmente de carne bovina, são cozidas em um caldo cremoso com especiarias indianas, que conferem sabor e aroma característicos. O prato é finalizado com raspas de limão e cebolinha picada.",
   "ingredientes": [
     "Carne moída (ingrediente principal)",
@@ -24,5 +24,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

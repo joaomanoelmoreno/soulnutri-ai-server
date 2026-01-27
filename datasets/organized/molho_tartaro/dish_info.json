@@ -1,6 +1,6 @@
 {
   "nome": "Molho Tártaro",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Maionese",
     "Cenoura ralada",
@@ -26,5 +26,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

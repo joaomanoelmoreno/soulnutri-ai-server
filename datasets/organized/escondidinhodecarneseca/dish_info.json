@@ -2,30 +2,44 @@
   "nome": "Escondidinhodecarneseca",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Carne seca desfiada",
-    "Purê de batata (batata, leite, manteiga)",
-    "Cebola roxa picada",
-    "Queijo muçarela ralado",
-    "Azeite",
-    "Sal"
+    "carne bovina",
+    "sal",
+    "temperos"
   ],
-  "descricao": "Escondidinho de carne seca, com carne seca desfiada refogada, coberta por purê de batata e finalizado com queijo muçarela gratinado. A carne seca provavelmente foi refogada com cebola e azeite antes de ser adicionada ao prato.",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
   "beneficios": [
-    "A carne seca é rica em proteínas e ferro, importantes para a saúde muscular e o transporte de oxigênio no corpo.",
-    "O purê de batata fornece carboidratos, que são fonte de energia."
+    "Proteína completa",
+    "Ferro heme de alta absorção",
+    "Vitamina B12",
+    "Zinco"
   ],
   "riscos": [
-    "Alto teor de sódio devido à carne seca.",
-    "Risco de excesso de gordura saturada, dependendo da quantidade de queijo e manteiga.",
-    "Possível presença de lactose.",
-    "Contém glúten se o purê de batata for preparado com algum ingrediente que o contenha."
+    "Consumo excessivo associado a doenças cardiovasculares",
+    "Gordura saturada"
   ],
   "curiosidade": "O escondidinho é um prato tipicamente brasileiro, com variações regionais. O nome 'escondidinho' vem da camada de purê que 'esconde' o recheio.",
   "slug": "escondidinhodecarneseca",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Outras gorduras",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

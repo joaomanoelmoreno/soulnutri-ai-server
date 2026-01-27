@@ -2,33 +2,46 @@
   "slug": "bacalhaugomesdesa",
   "nome": "Bacalhau Gomes de Sá",
   "categoria": "proteína animal",
-  "descricao": "O Bacalhau Gomes de Sá é um prato tradicional português, comumente preparado com bacalhau dessalgado e desfiado, misturado com batatas cozidas, ovos cozidos, azeitonas pretas, tomates e brócolis. A receita é geralmente temperada com azeite de oliva, alho e pimenta do reino. Na imagem, observa-se o prato pronto, em uma travessa.",
+  "descricao": "Bacalhau tradicional português.",
   "ingredientes": [
-    "Bacalhau desfiado",
-    "Batata cozida",
-    "Ovos cozidos",
-    "Azeitonas pretas",
-    "Tomates cereja",
-    "Brócolis",
-    "Cebolinha picada",
-    "Azeite de oliva",
-    "Alho",
-    "Pimenta do reino"
+    "bacalhau",
+    "azeite",
+    "batata",
+    "cebola",
+    "alho"
   ],
   "beneficios": [
-    "Fonte de proteínas de alta qualidade provenientes do bacalhau e dos ovos.",
-    "Rico em ômega-3, importante para a saúde cardiovascular.",
-    "Oferece vitaminas e minerais, como potássio (da batata) e ferro (do bacalhau)."
+    "Proteína magra",
+    "Ômega-3",
+    "Vitaminas B12 e D"
   ],
   "riscos": [
-    "Contém sódio, principalmente devido ao bacalhau, que é dessalgado, mas ainda pode ter um teor considerável.",
-    "Alérgeno: peixe (bacalhau)."
+    "Alérgeno: peixe",
+    "Alto teor de sódio"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "150 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "5g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Assado ou refogado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Batatas",
+    "Azeite",
+    "Azeitonas"
+  ],
+  "evitar_com": [
+    "Excesso de sal adicional"
+  ],
+  "category_emoji": "🍖"
 }

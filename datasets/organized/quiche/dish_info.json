@@ -1,10 +1,25 @@
 {
   "nome": "Quiche",
   "slug": "quiche",
-  "categoria": "vegetariano",
-  "ingredientes": ["Massa folhada", "Ovos", "Creme de leite", "Queijo", "Recheio variado"],
+  "categoria": "vegano",
+  "ingredientes": [
+    "Massa folhada",
+    "Ovos",
+    "Creme de leite",
+    "Queijo",
+    "Recheio variado"
+  ],
   "descricao": "Torta salgada francesa com massa crocante e recheio cremoso. Pode ter diversos recheios como alho-poró, brócolis, queijos, cogumelos ou tomate seco.",
-  "beneficios": ["Fonte de proteínas", "Versátil em recheios", "Opção vegetariana"],
-  "riscos": ["Contém glúten", "Contém lactose", "Alto teor de gordura"],
-  "curiosidade": "A quiche Lorraine original francesa não leva queijo, apenas bacon e creme."
+  "beneficios": [
+    "Fonte de proteínas",
+    "Versátil em recheios",
+    "Opção vegetariana"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém lactose",
+    "Alto teor de gordura"
+  ],
+  "curiosidade": "A quiche Lorraine original francesa não leva queijo, apenas bacon e creme.",
+  "category_emoji": "🌱"
 }

@@ -1,4 +1,6 @@
 {
   "nome": "Vinagrete",
-  "slug": "vinagrete"
+  "slug": "vinagrete",
+  "categoria": "vegano",
+  "category_emoji": "🌱"
 }

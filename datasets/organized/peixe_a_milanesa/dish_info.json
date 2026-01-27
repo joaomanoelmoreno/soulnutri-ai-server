@@ -2,30 +2,45 @@
   "nome": "Peixe A Milanesa",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Filé de peixe",
-    "Farinha de rosca",
-    "Farinha de trigo",
-    "Ovos",
-    "Temperos (sal, pimenta, etc.)",
-    "Cheiro-verde picado",
-    "Óleo vegetal (para fritar)"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "O peixe à milanesa é preparado por imersão em uma mistura de farinha de trigo, ovos batidos e farinha de rosca temperada, seguido por fritura em óleo quente até dourar. O prato é finalizado com cheiro-verde picado. Acompanhamentos não visíveis na imagem.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Fonte de proteína de alta qualidade (peixe)",
-    "Crosta crocante que pode tornar a refeição mais agradável"
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Alto teor de gordura devido à fritura",
-    "Pode conter glúten (farina de trigo e farinha de rosca)",
-    "Alérgenos: ovos, peixe"
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "A técnica de empanar alimentos e fritá-los, como no peixe à milanesa, surgiu na Itália, mas se popularizou em diversos países, adaptando-se a ingredientes locais.",
   "slug": "peixe_a_milanesa",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

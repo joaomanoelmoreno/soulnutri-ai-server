@@ -1,7 +1,7 @@
 {
   "slug": "mechouiatunisia",
   "nome": "Mechouia-Tunisia",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "descricao": "Prato tunisiano que consiste em uma salada de vegetais cozidos e triturados.  Na imagem, os vegetais parecem ter sido grelhados ou assados para intensificar o sabor. A base é uma mistura de tomate, pimentão, cebola e alho, que são moídos e temperados. O prato é finalizado com ovos cozidos cortados, azeitonas, alcaparras e milho verde. Possivelmente temperado com azeite de oliva e especiarias. ",
   "ingredientes": [
     "Tomate",
@@ -38,5 +38,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

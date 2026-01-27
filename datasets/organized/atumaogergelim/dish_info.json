@@ -2,35 +2,46 @@
   "slug": "atumaogergelim",
   "nome": "Atum Selado com Gergelim e Molho Tarê",
   "categoria": "proteína animal",
-  "descricao": "Atum selado coberto com gergelim, servido com molho tarê e um toque de maionese. Uma explosão de sabores orientais.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "Atum fresco",
-    "Sementes de gergelim (preto e branco)",
-    "Molho tarê (à base de shoyu)",
-    "Maionese (opcional)",
-    "Molho de soja (shoyu)"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
   "beneficios": [
-    "Fonte de proteína de alta qualidade",
-    "Rico em ômega 3",
-    "Gorduras saudáveis",
-    "Fonte de selênio"
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Contém soja (shoyu)",
-    "Alto teor de sódio (molho tarê/shoyu)"
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "25g",
-    "carboidratos": "10g",
-    "gorduras": "12g"
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": true,
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
   "contem_soja": true,
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ]
 }

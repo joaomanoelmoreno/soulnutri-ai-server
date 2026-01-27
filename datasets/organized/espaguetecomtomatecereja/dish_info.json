@@ -1,40 +1,26 @@
 {
   "slug": "espaguetecomtomatecereja",
   "nome": "Espaguete",
-  "categoria": "vegano",
-  "descricao": "Prato de massa italiana, onde o spaghetti é cozido e misturado com tomates cereja cortados ao meio, folhas de manjericão fresco e possivelmente azeite de oliva e temperos.",
+  "categoria": "vegetariano",
+  "descricao": "Massa italiana tradicional.",
   "ingredientes": [
-    "Spaghetti (provavelmente feito com farinha de trigo)",
-    "Tomates cereja frescos",
-    "Folhas de manjericão fresco",
-    "Possivelmente azeite de oliva",
-    "Temperos (sal, pimenta do reino, possivelmente alho)",
-    "Espaguete de trigo",
-    "Tomate cereja",
-    "Manjericão fresco",
-    "Azeite de oliva",
-    "Molho de tomate"
+    "massa de trigo",
+    "molho de tomate",
+    "azeite"
   ],
   "beneficios": [
-    "O tomate cereja é rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
-    "O manjericão é fonte de antioxidantes e pode ter propriedades anti-inflamatórias.",
-    "A massa pode fornecer energia através dos carboidratos.",
-    "Fonte de carboidratos",
-    "Rico em licopeno (antioxidante)",
-    "Fonte de fibras"
+    "Fonte de energia",
+    "Carboidratos complexos"
   ],
   "riscos": [
-    "Contém glúten, dependendo do tipo de massa utilizada.",
-    "Pode ter alto teor de carboidratos, dependendo da porção.",
-    "O consumo excessivo pode levar ao ganho de peso.",
-    "Contém glúten (alérgicos)",
-    "Alto teor de sódio (se o molho for industrializado)"
+    "Contém glúten",
+    "Alto índice glicêmico"
   ],
   "nutricao": {
-    "calorias": "150 kcal",
+    "calorias": "131 kcal",
     "proteinas": "5g",
-    "carboidratos": "30g",
-    "gorduras": "2g"
+    "carboidratos": "25g",
+    "gorduras": "1g"
   },
   "contem_gluten": true,
   "contem_lactose": false,
@@ -42,6 +28,17 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "tecnica": "Cozimento em água",
+  "category_emoji": "🥚",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Legumes",
+    "Proteínas"
+  ],
+  "evitar_com": [
+    "Molhos muito gordurosos"
+  ]
 }

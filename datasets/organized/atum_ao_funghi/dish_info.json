@@ -2,30 +2,45 @@
   "nome": "Atum Ao Funghi",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Atum",
-    "Funghi (cogumelos)",
-    "Alho",
-    "Folhas de louro",
-    "Azeite de oliva",
-    "Salsa picada"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "O prato consiste em pedaços de atum cozidos, provavelmente assados no forno, misturados com cogumelos funghi, alho picado, folhas de louro, e temperados com azeite de oliva e salsa picada. A coloração sugere que os ingredientes foram refogados ou assados até dourar. Os cogumelos e o alho contribuem com sabor intenso e aromático.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "O atum é rico em ômega-3, que é benéfico para a saúde cardiovascular.",
-    "Cogumelos funghi são fontes de vitaminas do complexo B e selênio, com propriedades antioxidantes.",
-    "A salsa fresca adiciona vitamina C e compostos antioxidantes ao prato."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Pessoas com alergia a peixes devem evitar este prato.",
-    "Consumir em excesso pode levar à ingestão excessiva de sódio, dependendo da quantidade de sal utilizada no preparo.",
-    "O atum pode conter mercúrio, portanto, moderação é recomendada, especialmente para mulheres grávidas e crianças."
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "O atum é um peixe de carne escura, rico em proteínas e gorduras saudáveis. A escolha do método de cozimento, como no forno, ajuda a preservar seus nutrientes e sabor.",
   "slug": "atum_ao_funghi",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

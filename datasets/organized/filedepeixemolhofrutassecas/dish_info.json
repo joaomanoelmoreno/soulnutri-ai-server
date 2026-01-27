@@ -2,40 +2,47 @@
   "nome": "File de Peixe ao Molho de Frutas",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Filé de peixe (não especificado)",
-    "Damasco seco",
-    "Uva passa preta",
-    "Cebolinha",
-    "Caldo (provavelmente de legumes ou peixe)",
-    "Azeite (possivelmente)",
-    "Temperos (não especificados)"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "O prato consiste em filés de peixe cozidos em um molho amarelo vibrante. O molho é enriquecido com damascos secos fatiados e uvas passas pretas, adicionando doçura e textura. Cebolinha picada é utilizada como guarnição, adicionando frescor ao prato. O método de preparo parece envolver o cozimento do peixe no molho, possivelmente refogado ou cozido lentamente.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Peixe: Rico em proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular e cerebral.",
-    "Damasco: Fonte de fibras, vitaminas e minerais, como potássio, que auxilia na saúde muscular e na pressão arterial.",
-    "Uva passa: Fornece energia rápida e antioxidantes.",
-    "Cebolinha: Contribui com vitaminas, minerais e compostos sulfurados que podem ter efeitos benéficos na saúde."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Alérgenos: peixe (se você tem alergia)",
-    "Sódio: se o caldo utilizado for muito salgado",
-    "Pode conter sulfitos, conservantes comuns em frutas secas. Pessoas com sensibilidade a sulfitos devem estar atentas."
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "O damasco seco é uma excelente fonte de vitamina A, essencial para a visão, crescimento e sistema imunológico.",
   "slug": "filedepeixemolhofrutassecas",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
+  "contem_frutos_mar": true,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🐟"
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ]
 }

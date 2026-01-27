@@ -1,7 +1,7 @@
 {
   "nome": "Torta De Chocolate Com Frutas",
   "slug": "torta_de_chocolate_com_frutas",
-  "categoria": "",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -13,5 +13,6 @@
     "gorduras": ""
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🌱"
 }

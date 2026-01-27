@@ -1,6 +1,6 @@
 {
   "nome": "Strogonoff",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Carne bovina em tiras",
     "Creme de leite",
@@ -26,5 +26,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

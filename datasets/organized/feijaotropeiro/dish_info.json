@@ -1,45 +1,47 @@
 {
   "slug": "feijaotropeiro",
   "nome": "Feijao Tropeiro",
-  "categoria": "proteína animal",
-  "descricao": "O Feijão Tropeiro, na imagem, apresenta uma mistura de feijão cozido com farinha de mandioca, tomate cereja, ovos cozidos, e finalizado com salsinha picada e pimenta. O modo de preparo, a partir dos ingredientes visíveis, consiste na mistura e refoga dos ingredientes.",
+  "categoria": "vegano",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "ingredientes": [
-    "Feijão cozido (provavelmente feijão carioca)",
-    "Bacon frito/salsicha calabresa",
-    "Ovos cozidos",
-    "Farinha de mandioca",
-    "Cebola picada",
-    "Alho picado",
-    "Tomate cereja",
-    "Salsa fresca",
-    "Azeite (provavelmente utilizado para refogar a cebola e o alho)",
-    "Feijão cozido",
-    "Salsa picada",
-    "Pimenta dedo-de-moça (pequena)"
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
   ],
   "beneficios": [
-    "Fonte de carboidratos complexos provenientes do feijão e da farinha de mandioca, que fornecem energia de liberação lenta.",
-    "Rico em proteínas, especialmente devido aos ovos e à adição de bacon/salsicha calabresa.",
-    "Fornece vitaminas e minerais através dos ovos e do tomate cereja.",
-    "A farinha de mandioca fornece energia e fibras.",
-    "Ovos cozidos são fonte de proteína e nutrientes."
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
   ],
   "riscos": [
-    "Alto teor de sódio devido à presença do bacon/salsicha calabresa e aos temperos adicionais.",
-    "Potencialmente alto em gorduras saturadas, dependendo da quantidade de bacon/salsicha calabresa e do método de preparo.",
-    "Contém glúten, dependendo da adição de outros ingredientes (como linguiça ou farinha de trigo)",
-    "Alérgeno: ovo",
-    "Pode conter glúten, dependendo da farinha utilizada.",
-    "Consumir com moderação devido ao teor calórico da farinha.",
-    "Alérgeno: ovo."
+    "Pode causar gases intestinais"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🥩"
+  "tecnica": "Cozimento lento",
+  "category_emoji": "🌱",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz (proteína completa)",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ]
 }

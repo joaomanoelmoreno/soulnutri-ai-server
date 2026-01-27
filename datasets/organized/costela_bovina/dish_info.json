@@ -2,56 +2,43 @@
   "slug": "costela_bovina",
   "nome": "Costela com Mandioca",
   "categoria": "proteína animal",
-  "descricao": "Prato de costela bovina cozida em um molho rico, provavelmente à base de tomate e caldo de carne, com pedaços de mandioca cozidos, finalizado com cebolinha picada. A costela parece ter sido cozida lentamente, resultando em carne macia e saborosa. A mandioca provavelmente foi cozida separadamente ou juntamente com a costela, absorvendo os sabores do molho.",
+  "descricao": "Costela bovina assada lentamente.",
   "ingredientes": [
-    "Costela bovina",
-    "Mandioca",
-    "Cebolinha",
-    "Caldo de carne (possivelmente)",
-    "Tomate (possivelmente)",
-    "Caldo de carne",
-    "Louro",
-    "Pimenta vermelha",
-    "Azeite",
-    "Mandioca (aipim/macaxeira)",
-    "Tomate",
-    "Pimentão vermelho",
-    "Cheiro verde (salsa e cebolinha)",
-    "Caldo de cozimento (provavelmente com temperos)",
-    "Mandioca cozida",
-    "Tomate cereja",
-    "Azeite (possivelmente)"
+    "costela bovina",
+    "sal grosso"
   ],
   "beneficios": [
-    "A costela é fonte de proteínas e ferro.",
-    "A mandioca é fonte de carboidratos, fornecendo energia e fibras.",
-    "A costela bovina é rica em proteínas, importantes para a construção e reparo dos tecidos do corpo.",
-    "A mandioca é fonte de carboidratos, que fornecem energia, e fibras, que auxiliam na digestão.",
-    "A costela é fonte de proteína, importante para a construção e reparação muscular.",
-    "A mandioca é fonte de carboidratos, que fornece energia para o corpo.",
-    "O prato oferece uma variedade de nutrientes, incluindo vitaminas e minerais provenientes dos vegetais.",
-    "A costela é rica em proteína, essencial para a construção e reparo dos tecidos do corpo.",
-    "A mandioca é fonte de carboidratos complexos, fornecendo energia de forma gradual e prolongada.",
-    "O tomate cereja oferece vitaminas e antioxidantes, importantes para a saúde celular."
+    "Sabor intenso",
+    "Colágeno",
+    "Proteína"
   ],
   "riscos": [
-    "Alto teor de gordura saturada (costela).",
-    "Possível presença de sódio em excesso (dependendo do caldo utilizado).",
-    "Contém glúten (se o caldo de carne for industrializado).",
-    "Alto teor de gordura, especialmente a saturada, proveniente da costela, o que pode aumentar o colesterol.",
-    "Consumo excessivo pode levar ao ganho de peso.",
-    "Possível presença de sódio em excesso, dependendo do tempero utilizado.",
-    "Alto teor de gordura saturada, dependendo da quantidade de gordura na costela.",
-    "Pode conter sódio em excesso, dependendo da quantidade de temperos utilizados.",
-    "Alto teor de gordura saturada da costela, se consumida em excesso pode aumentar o colesterol.",
-    "Pode conter sódio em excesso se foram usados temperos industrializados.",
-    "Alérgeno: pode conter traços de ingredientes processados (ex: caldo de carne)."
+    "Alto teor de gordura",
+    "Consumir ocasionalmente"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "290 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0g",
+    "gorduras": "21g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado lento",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "5-6 horas",
+  "melhor_horario": "Almoço (ocasionalmente)",
+  "combina_com": [
+    "Mandioca",
+    "Farofa",
+    "Vinagrete"
+  ],
+  "evitar_com": [
+    "Outras gorduras no mesmo dia"
+  ],
+  "category_emoji": "🍖"
 }

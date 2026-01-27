@@ -2,34 +2,24 @@
   "slug": "batatacompaprica",
   "nome": "Batata Com Paprica",
   "categoria": "vegano",
-  "descricao": "Batatas cortadas em formato de gomos e assadas, temperadas com páprica. O método de preparo é assar no forno, geralmente com azeite ou óleo, até que fiquem macias por dentro e levemente crocantes por fora.",
+  "descricao": "Batata preparada de forma saudável.",
   "ingredientes": [
-    "Batata",
-    "Páprica (tempero)",
-    "Batatas",
-    "Páprica",
-    "Ervas finas (salsa, manjericão, alecrim)",
-    "Azeite de oliva",
-    "Cebolinha picada",
-    "Sal"
+    "batata",
+    "sal"
   ],
   "beneficios": [
-    "A batata é fonte de carboidratos, fornecendo energia.",
-    "A páprica contém antioxidantes.",
-    "Batatas são fontes de carboidratos, que fornecem energia.",
-    "A páprica é rica em antioxidantes, como a vitamina C, que ajudam a proteger as células do corpo."
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
   ],
   "riscos": [
-    "Pode conter sódio, dependendo da quantidade de sal utilizada no tempero.",
-    "Potencial de ganho de peso se consumida em excesso, devido ao teor de carboidratos.",
-    "Pode conter glúten, dependendo do tempero utilizado.",
-    "Excesso de sal pode ser prejudicial à saúde."
+    "Alto índice glicêmico se consumida sozinha"
   ],
   "nutricao": {
-    "calorias": "150 kcal",
+    "calorias": "77 kcal",
     "proteinas": "2g",
-    "carboidratos": "25g",
-    "gorduras": "5g"
+    "carboidratos": "17g",
+    "gorduras": "0.1g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -37,5 +27,17 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥬"
+  "category_emoji": "🌱",
+  "tecnica": "Cozimento ou assado",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Excesso de manteiga"
+  ]
 }

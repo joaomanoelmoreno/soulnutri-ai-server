@@ -2,30 +2,45 @@
   "nome": "Peixecomtomatecereja",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Filés de peixe",
-    "Tomate cereja",
-    "Molho cremoso (possivelmente à base de manteiga e creme de leite)",
-    "Cebolinha",
-    "Alho",
-    "Azeite de oliva",
-    "Azeitonas pretas"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "Prato composto por filés de peixe cozidos em um molho cremoso à base de tomate, alho e temperos, finalizado com tomate cereja, cebolinha e azeitonas pretas.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Peixe: Fonte de ômega-3, importante para a saúde cardiovascular e cerebral.",
-    "Tomate cereja: Rico em antioxidantes, como o licopeno, que combate os radicais livres.",
-    "Azeite de oliva: Gordura saudável que auxilia na absorção de vitaminas lipossolúveis."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
     "Alérgeno: peixe",
-    "Possível presença de lactose no molho cremoso (caso seja usado creme de leite)."
+    "Verificar procedência"
   ],
   "curiosidade": "O tomate cereja, além de saboroso, é uma variação do tomate com maior concentração de nutrientes por porção, comparado aos tomates comuns.",
   "slug": "peixecomtomatecereja",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

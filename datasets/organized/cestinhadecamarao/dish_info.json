@@ -2,33 +2,47 @@
   "slug": "cestinhadecamarao",
   "nome": "Cestinha de Camarão",
   "categoria": "proteína animal",
-  "descricao": "Pequenas cestas de massa folhada recheadas com camarão cremoso. Ideal para aperitivos ou como parte de uma refeição.",
+  "descricao": "Camarão fresco, rico em proteínas.",
   "ingredientes": [
-    "Camarão",
-    "Massa folhada",
-    "Recheio cremoso (à base de queijo)",
-    "Tempero verde (salsa ou cebolinha)"
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
   ],
   "beneficios": [
-    "Fonte de proteína",
-    "Fornece cálcio (se o recheio for à base de queijo)",
-    "Fonte de ômega 3 (dependendo da preparação)"
+    "Proteína magra",
+    "Selênio antioxidante",
+    "Iodo para tireoide",
+    "Ômega-3"
   ],
   "riscos": [
-    "Contém lactose (se o recheio for à base de queijo)",
-    "Contém glúten (na massa folhada)",
-    "Alto teor de sódio (dependendo do preparo)"
+    "Alérgeno: crustáceo (risco grave)",
+    "Colesterol elevado"
   ],
   "nutricao": {
-    "calorias": "300 kcal",
-    "proteinas": "15g",
-    "carboidratos": "25g",
-    "gorduras": "18g"
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
   },
-  "contem_gluten": true,
-  "contem_lactose": true,
+  "contem_gluten": false,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou refogado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

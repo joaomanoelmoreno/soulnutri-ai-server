@@ -1,6 +1,6 @@
 {
   "nome": "Pancettacrocante",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Pancetta (barriga de porco curada)",
     "Tomates cereja",
@@ -24,5 +24,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Nhoque ao molho de gorgonzola",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Nhoque (provavelmente feito com batata, farinha de trigo e ovo)",
     "Queijo gorgonzola",
@@ -27,5 +27,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

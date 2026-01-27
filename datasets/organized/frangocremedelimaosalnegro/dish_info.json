@@ -2,29 +2,43 @@
   "nome": "Frangocremedelimaosalnegro",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Frango",
-    "Creme de leite",
-    "Limão siciliano",
-    "Ervas frescas picadas (salsa/salsinha)",
-    "Tempero negro (possivelmente pimenta do reino preta ou alho negro)"
+    "frango",
+    "sal",
+    "temperos"
   ],
-  "descricao": "O prato consiste em pedaços de frango cozidos em um molho cremoso à base de creme de leite e limão siciliano, possivelmente refogado. A presença de ervas frescas picadas (salsa/salsinha) indica um toque final para aromatizar. O tempero negro, possivelmente pimenta preta ou alho negro, adiciona complexidade ao sabor.",
+  "descricao": "Frango preparado de forma saudável.",
   "beneficios": [
-    "O frango é uma excelente fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
-    "O limão siciliano é rico em vitamina C, um antioxidante que fortalece o sistema imunológico.",
-    "O creme de leite fornece gorduras que auxiliam na absorção de vitaminas lipossolúveis."
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura"
   ],
   "riscos": [
-    "O prato pode ser rico em gorduras saturadas, provenientes do creme de leite, se consumido em excesso.",
-    "Pessoas com intolerância à lactose devem consumir com cautela, dependendo da quantidade de creme de leite utilizada.",
-    "Pode conter sódio em excesso, dependendo da quantidade de temperos utilizados."
+    "Verificar procedência",
+    "Evitar pele se em dieta"
   ],
   "curiosidade": "O limão siciliano, além de saboroso, é conhecido por suas propriedades antioxidantes e sua casca pode ser utilizada para aromatizar diversos pratos e bebidas.",
   "slug": "frangocremedelimaosalnegro",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "165 kcal",
+    "proteinas": "31g",
+    "carboidratos": "0g",
+    "gorduras": "3.6g"
+  },
+  "tecnica": "Grelhado, assado ou cozido",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz integral"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

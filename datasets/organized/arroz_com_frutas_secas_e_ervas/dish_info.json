@@ -1,7 +1,7 @@
 {
   "nome": "Arroz Com Frutas Secas E Ervas",
   "slug": "arroz_com_frutas_secas_e_ervas",
-  "categoria": "",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -13,5 +13,6 @@
     "gorduras": ""
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🌱"
 }

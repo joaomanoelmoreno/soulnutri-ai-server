@@ -2,35 +2,46 @@
   "nome": "Lula E Camarao",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Lula (anéis e tentáculos)",
-    "Camarão",
-    "Arroz branco",
-    "Molho amarelo cremoso (possivelmente à base de queijo ou creme de leite)",
-    "Peixe à milanesa (possivelmente merluza ou pescada)",
-    "Queijo gratinado",
-    "Tomate cereja",
-    "Folha de manjericão",
-    "Ervas frescas (cebolinha picada)",
-    "Pimentão vermelho"
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
   ],
-  "descricao": "Prato composto por frutos do mar (lula e camarão) grelhados/refogados, acompanhados por arroz branco, um molho cremoso amarelo, peixe à milanesa gratinado com queijo, pimentão e tomate. Os frutos do mar parecem ter sido temperados com ervas frescas. O peixe pode ter sido preparado com farinha de rosca para empanar, seguido por fritura ou assado.",
+  "descricao": "Camarão fresco, rico em proteínas.",
   "beneficios": [
-    "Fonte de proteína de alta qualidade (lula, camarão e peixe).",
-    "Camarão é rico em selênio, um antioxidante importante.",
-    "Arroz branco fornece carboidratos para energia."
+    "Proteína magra",
+    "Selênio antioxidante",
+    "Iodo para tireoide",
+    "Ômega-3"
   ],
   "riscos": [
-    "Contém glúten (possível na farinha de rosca ou empanamento).",
-    "Alérgeno: crustáceos (camarão, lula).",
-    "Alto teor de sódio (potencial no tempero dos frutos do mar e molhos).",
-    "Alto teor de gordura (dependendo do modo de preparo e ingredientes dos molhos e do peixe à milanesa)."
+    "Alérgeno: crustáceo (risco grave)",
+    "Colesterol elevado"
   ],
   "curiosidade": "A lula, assim como o camarão, é uma excelente fonte de proteínas e possui pouca gordura, além de ser rica em minerais como selênio, fósforo e zinco.",
   "slug": "lula_e_camarao",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
+  },
+  "tecnica": "Grelhado ou refogado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

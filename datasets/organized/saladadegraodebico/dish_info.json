@@ -2,24 +2,43 @@
   "nome": "Saladadegraodebico",
   "categoria": "vegano",
   "ingredientes": [
-    "Grão de bico cozido",
-    "Tomate picado",
-    "Cebola roxa picada",
-    "Cheiro-verde picado"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Salada refrescante e nutritiva, composta por grão de bico cozido e misturado com tomate picado, cebola roxa e cheiro-verde. Possivelmente temperada com azeite e limão (não visíveis na imagem).",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rica em proteínas vegetais, importante para veganos e vegetarianos.",
-    "Fonte de fibras, auxiliando na saúde intestinal e controle glicêmico.",
-    "Fornece vitaminas e minerais, como ferro e magnésio, importantes para a saúde."
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "O grão de bico é um alimento versátil, usado em diversas culinárias ao redor do mundo, como no hummus e falafel, e é um ingrediente chave na dieta mediterrânea.",
   "slug": "saladadegraodebico",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

@@ -2,55 +2,46 @@
   "slug": "hamburguedecarne",
   "nome": "Hamburguedecarne",
   "categoria": "proteína animal",
-  "descricao": "O prato é composto por um hambúrguer de carne bovina grelhado, acompanhado por arroz integral, feijão preto, linguiça calabresa, queijo coalho grelhado, cebola caramelizada e um bolinho frito de carne. A salada é composta por folhas de alface e rodelas de tomate, com uma decoração de salsa picada no hambúrguer.",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
   "ingredientes": [
-    "Carne moída",
-    "Tomate cereja (vermelho)",
-    "Tomate cereja (amarelo/laranja)",
-    "Cebolinha picada",
-    "Hambúrguer de carne bovina, aparentemente grelhado",
-    "Arroz integral cozido",
-    "Feijão preto cozido",
-    "Linguiça calabresa frita ou cozida",
-    "Queijo coalho grelhado",
-    "Cebola caramelizada",
-    "Bolinho frito, possivelmente de carne",
-    "Folhas de alface",
-    "Rodelas de tomate",
-    "Salsa picada (na decoração do hambúrguer)",
-    "Carne bovina Angus",
-    "Tomate",
-    "Ervas frescas (manjericão ou similar)",
-    "Azeite"
+    "carne bovina",
+    "sal",
+    "temperos"
   ],
   "beneficios": [
-    "A carne é rica em proteínas de alto valor biológico, essenciais para a construção e reparo dos tecidos.",
-    "O tomate cereja é fonte de licopeno, um antioxidante que pode auxiliar na proteção contra danos celulares.",
-    "A cebolinha contribui com vitaminas e minerais, além de um sabor característico.",
-    "O preparo grelhado/selado evita o uso excessivo de óleos, reduzindo a ingestão de gorduras.",
-    "O arroz integral é uma boa fonte de fibras, auxiliando na saúde intestinal.",
-    "O feijão preto é rico em ferro e proteínas vegetais, importantes para a saúde.",
-    "A linguiça calabresa fornece proteínas e sabor ao prato.",
-    "O tomate é fonte de licopeno, um antioxidante que protege as células.",
-    "A carne Angus é rica em proteínas, importantes para a construção e reparação muscular.",
-    "O tomate é fonte de licopeno, um antioxidante que pode auxiliar na prevenção de doenças."
+    "Proteína completa",
+    "Ferro heme de alta absorção",
+    "Vitamina B12",
+    "Zinco"
   ],
   "riscos": [
-    "A carne pode ser rica em gorduras saturadas, dependendo do corte utilizado.",
-    "Consumir carne em excesso pode aumentar o risco de doenças cardiovasculares.",
-    "Alergia ao tomate e/ou cebolinha",
-    "O prato pode ser rico em sódio, especialmente pela linguiça e adição de sal.",
-    "Contém gordura saturada, proveniente da carne e da fritura do bolinho.",
-    "Pode conter glúten, dependendo do preparo do hambúrguer e do bolinho.",
-    "Alérgeno: leite (queijo coalho)",
-    "A carne vermelha em excesso pode aumentar o risco de doenças cardiovasculares.",
-    "Pode conter glúten dependendo dos temperos utilizados."
+    "Consumo excessivo associado a doenças cardiovasculares",
+    "Gordura saturada"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Outras gorduras",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

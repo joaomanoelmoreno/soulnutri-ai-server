@@ -1,7 +1,7 @@
 {
   "nome": "Vol Au Vent",
   "slug": "enroladinho_de_frango",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -19,5 +19,5 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "",
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

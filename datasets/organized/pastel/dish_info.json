@@ -1,15 +1,24 @@
 {
   "nome": "Pastel",
-  "categoria": "salgado",
-  "ingredientes": ["massa de pastel", "recheio variado", "óleo para fritura"],
+  "categoria": "vegano",
+  "ingredientes": [
+    "massa de pastel",
+    "recheio variado",
+    "óleo para fritura"
+  ],
   "descricao": "Pastel frito crocante com recheio variado",
   "beneficios": [],
-  "riscos": ["Alimento frito", "Contém glúten"],
+  "riscos": [
+    "Alimento frito",
+    "Contém glúten"
+  ],
   "contem_gluten": true,
   "nutricao": {
     "calorias": "280 kcal",
     "proteinas": "8g",
     "carboidratos": "25g",
     "gorduras": "16g"
-  }
+  },
+  "slug": "pastel",
+  "category_emoji": "🌱"
 }

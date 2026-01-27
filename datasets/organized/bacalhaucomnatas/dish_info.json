@@ -2,32 +2,46 @@
   "slug": "bacalhaucomnatas",
   "nome": "Bacalhau com Natas",
   "categoria": "proteína animal",
-  "descricao": "Prato cremoso com bacalhau desfiado misturado com batatas cozidas e champignons, tudo coberto com creme de leite e gratinado com queijo. A cebolinha picada é utilizada para finalizar.",
+  "descricao": "Bacalhau tradicional português.",
   "ingredientes": [
-    "Bacalhau desfiado",
-    "Batatas cozidas",
-    "Creme de leite/natas",
-    "Champignons",
-    "Cebolinha picada",
-    "Queijo ralado (possivelmente parmesão)",
-    "Azeite (provavelmente usado para refogar)"
+    "bacalhau",
+    "azeite",
+    "batata",
+    "cebola",
+    "alho"
   ],
   "beneficios": [
-    "Bacalhau é uma boa fonte de proteínas de alta qualidade.",
-    "Champignons fornecem vitaminas do complexo B e minerais.",
-    "Cebolinha contribui com antioxidantes."
+    "Proteína magra",
+    "Ômega-3",
+    "Vitaminas B12 e D"
   ],
   "riscos": [
-    "Alto teor de gordura devido ao creme de leite e ao queijo.",
-    "Alto teor de sódio devido ao bacalhau (geralmente dessalgado).",
-    "Pode conter lactose.",
-    "Alérgeno: peixe."
+    "Alérgeno: peixe",
+    "Alto teor de sódio"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "150 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "5g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Assado ou refogado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Batatas",
+    "Azeite",
+    "Azeitonas"
+  ],
+  "evitar_com": [
+    "Excesso de sal adicional"
+  ],
+  "category_emoji": "🍖"
 }

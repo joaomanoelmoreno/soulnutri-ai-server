@@ -2,39 +2,44 @@
   "slug": "lasanhadeespinafre",
   "nome": "Lasanhadeespinafre",
   "categoria": "vegetariano",
-  "descricao": "Lasanha feita com camadas de massa, recheio de espinafre refogado e cogumelos Portobello, coberta com molho branco e gratinada com queijo. O preparo envolve o cozimento da massa, refogar o espinafre e os cogumelos, montar as camadas e assar no forno até gratinar o queijo.",
+  "descricao": "Lasanha tradicional em camadas.",
   "ingredientes": [
-    "Massa de lasanha (provavelmente contendo glúten)",
-    "Espinafre",
-    "Queijo muçarela",
-    "Queijo parmesão",
-    "Creme de leite",
-    "Cebolinha (para finalizar)",
-    "Massa de lasanha",
-    "Cogumelo Portobelo",
-    "Molho branco (possivelmente à base de leite e amido)",
-    "Queijo gratinado (possivelmente mussarela ou queijo parmesão)",
-    "Temperos (ervas, alho, cebola)"
+    "massa de lasanha",
+    "molho de tomate",
+    "queijo",
+    "presunto",
+    "molho branco"
   ],
   "beneficios": [
-    "Espinafre é fonte de vitaminas (A, C, K) e minerais (ferro, cálcio).",
-    "Queijos fornecem cálcio e proteínas.",
-    "Espinafre rico em ferro, vitaminas e antioxidantes.",
-    "Cogumelos Portobello contêm nutrientes e podem auxiliar na saúde do sistema imunológico.",
-    "O espinafre auxilia na saúde ocular e óssea."
+    "Refeição completa",
+    "Cálcio do queijo"
   ],
   "riscos": [
-    "Contém glúten (na massa da lasanha)",
-    "Rico em gorduras saturadas (dos queijos e creme de leite)",
-    "Pode conter sódio em excesso, dependendo da quantidade de queijo e temperos usados",
-    "Pode conter lactose (no molho branco e queijo)",
-    "Alto teor de sódio (dependendo dos temperos e queijos utilizados)"
+    "Contém glúten",
+    "Contém lactose",
+    "Alto teor calórico"
   ],
-  "nutricao": {},
-  "contem_gluten": false,
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "10g",
+    "carboidratos": "18g",
+    "gorduras": "8g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado em forno",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Salada verde"
+  ],
+  "evitar_com": [
+    "Outras massas no mesmo dia"
+  ],
+  "category_emoji": "🥚"
 }

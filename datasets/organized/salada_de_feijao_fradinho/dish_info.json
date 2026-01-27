@@ -2,40 +2,47 @@
   "nome": "Salada de Feijão Fradinho",
   "categoria": "vegano",
   "ingredientes": [
-    "Feijão fradinho cozido",
-    "Tomate picado",
-    "Cebola roxa picada",
-    "Cheiro verde picado",
-    "Azeite de oliva",
-    "Vinagre",
-    "Sal",
-    "Rodelas de cebola roxa"
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
   ],
-  "descricao": "Salada refrescante e nutritiva feita com feijão fradinho, tomate, cebola roxa e temperos frescos. Ideal para acompanhar refeições leves ou como prato principal.",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "beneficios": [
-    "Rico em fibras",
-    "Fonte de proteína vegetal",
-    "Baixo índice glicêmico",
-    "Fonte de vitaminas e minerais"
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
   ],
   "riscos": [
-    "Pode causar gases em pessoas sensíveis",
-    "Atenção ao teor de sódio"
+    "Pode causar gases intestinais"
   ],
   "curiosidade": "O feijão fradinho é uma leguminosa muito utilizada na culinária brasileira, especialmente em pratos típicos do Nordeste. É uma excelente fonte de nutrientes e versátil no preparo de diversas receitas.",
   "slug": "salada_de_feijao_fradinho",
   "nutricao": {
-    "calorias": "190 kcal",
-    "proteinas": "13g",
-    "carboidratos": "27g",
-    "gorduras": "5g"
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
   },
-  "category_emoji": "🥬",
+  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "tecnica": "Cozimento lento",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz (proteína completa)",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ]
 }

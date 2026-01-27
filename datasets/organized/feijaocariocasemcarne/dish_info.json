@@ -2,27 +2,29 @@
   "nome": "Feijao Carioca sem Carne",
   "categoria": "vegano",
   "ingredientes": [
-    "Feijão carioca",
-    "Água",
-    "Folhas de louro"
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
   ],
-  "descricao": "Feijão carioca cozido em água, com folhas de louro para aromatizar. O modo de preparo é simples, com cozimento lento para que os grãos fiquem macios e o caldo encorpado. É um prato tradicional da culinária brasileira, servido tipicamente com arroz.",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "beneficios": [
-    "Rico em proteínas vegetais, importante para a saúde muscular.",
-    "Fonte de fibras, auxiliando na saúde digestiva e controle glicêmico.",
-    "Contém ferro, mineral essencial para o transporte de oxigênio no corpo."
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
   ],
   "riscos": [
-    "Pode causar gases e inchaço devido à presença de oligossacarídeos, que são fermentados no intestino.",
-    "O feijão pode conter fitatos, que podem reduzir a absorção de minerais. A imersão em água por algumas horas antes do cozimento pode ajudar a reduzir esse efeito."
+    "Pode causar gases intestinais"
   ],
   "curiosidade": "O feijão carioca, também conhecido como feijão-rajado, é um dos tipos de feijão mais consumidos no Brasil, devido ao seu sabor suave e textura macia após o cozimento.",
   "slug": "feijaocariocasemcarne",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -30,6 +32,17 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "tecnica": "Cozimento lento",
+  "category_emoji": "🌱",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz (proteína completa)",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ]
 }

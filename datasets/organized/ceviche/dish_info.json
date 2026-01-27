@@ -2,53 +2,46 @@
   "slug": "ceviche",
   "nome": "Ceviche de Peixe",
   "categoria": "proteína animal",
-  "descricao": "Ceviche, prato tradicional da culinária latino-americana, neste caso provavelmente feito com peixe branco marinado em suco de limão, com cebola roxa em rodelas finas, pimenta dedo-de-moça fatiada, cebolinha picada e sementes de maracujá, adicionando um toque cítrico e frutado. O peixe é curado no suco de limão, processo que cozinha o peixe por meio da acidez.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "Manga madura em cubos",
-    "Cebola roxa fatiada",
-    "Pimenta dedo-de-moça picada",
-    "Coentro picado",
-    "Hortelã fresca",
-    "Suco de limão (possivelmente)",
-    "Azeite (possivelmente)",
-    "Filé de tilápia",
-    "Suco de limão",
-    "Cebola roxa",
-    "Rodelas de limão",
-    "Pimenta dedo de moça",
-    "Maracujá",
-    "Peixe branco (provavelmente robalo ou corvina), limão, cebola roxa, pimenta dedo-de-moça, cebolinha, maracujá",
-    "Peixe branco cru",
-    "Pimenta dedo-de-moça",
-    "Cebolinha"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
   "beneficios": [
-    "Rico em vitamina C da manga e limão, importante para a imunidade.",
-    "Fonte de antioxidantes e compostos anti-inflamatórios da cebola roxa e pimenta.",
-    "A tilápia é uma boa fonte de proteína magra, importante para a saúde muscular.",
-    "O limão é rico em vitamina C, que fortalece o sistema imunológico.",
-    "As cebolas roxas contêm antioxidantes que ajudam a combater os radicais livres.",
-    "O peixe é fonte de proteínas de alta qualidade e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
-    "O limão é rico em vitamina C, com propriedades antioxidantes.",
-    "A cebola roxa possui compostos sulfurados que podem ter efeitos benéficos para a saúde.",
-    "Rico em proteínas, importantes para a construção e reparação dos tecidos.",
-    "O limão fornece vitamina C, um antioxidante que fortalece o sistema imunológico.",
-    "O peixe branco é uma boa fonte de ômega-3, que beneficia a saúde cardiovascular."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Pimenta pode causar irritação em pessoas sensíveis.",
-    "Pode conter alto teor de açúcar, dependendo da maturação da manga.",
-    "Alérgeno: peixe.",
-    "Pode conter traços de outros ingredientes.",
-    "A presença de pimenta pode ser um risco para pessoas com sensibilidade ou problemas gastrointestinais.",
-    "A conservação inadequada do peixe cru pode causar intoxicação alimentar.",
-    "Pessoas com sensibilidade ao ácido cítrico podem sentir desconforto."
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

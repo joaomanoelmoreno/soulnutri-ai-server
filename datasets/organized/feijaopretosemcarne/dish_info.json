@@ -2,31 +2,28 @@
   "slug": "feijaopretosemcarne",
   "nome": "Feijao Preto sem Carne",
   "categoria": "vegano",
-  "descricao": "Prato tradicional brasileiro, cozido lentamente com feijão preto e diversas partes do porco.",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "ingredientes": [
-    "Feijão preto",
-    "carne de porco salgada",
-    "linguiça",
-    "bacon",
-    "cebola",
+    "feijão",
+    "água",
+    "sal",
     "alho",
-    "louro",
-    "pimenta do reino"
+    "cebola",
+    "louro"
   ],
   "beneficios": [
-    "Fonte de proteína",
-    "Rico em ferro",
-    "Fonte de fibras"
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
   ],
   "riscos": [
-    "Alto teor de sódio",
-    "Alto teor de gordura saturada"
+    "Pode causar gases intestinais"
   ],
   "nutricao": {
-    "calorias": "450 kcal",
-    "proteinas": "30g",
-    "carboidratos": "40g",
-    "gorduras": "20g"
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -34,6 +31,17 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥬",
-  "tecnica": ""
+  "category_emoji": "🌱",
+  "tecnica": "Cozimento lento",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz (proteína completa)",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ]
 }

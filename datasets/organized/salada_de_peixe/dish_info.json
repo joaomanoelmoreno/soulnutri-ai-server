@@ -1,31 +1,44 @@
 {
   "nome": "Salada De Peixe",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "Peixe desfiado",
-    "Tomate picado",
-    "Cebola roxa picada",
-    "Coentro picado",
-    "Suco de limão",
-    "Rodelas de limão (para decorar)"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Salada de peixe com pedaços de peixe desfiado, misturado com tomate picado, cebola roxa e coentro fresco. A receita é temperada com suco de limão, resultando em um sabor cítrico e refrescante. A salada é decorada com rodelas de limão.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Fonte de proteína de alta qualidade",
-    "Rica em ômega-3 (dependendo do peixe)",
-    "Fonte de vitaminas e minerais"
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Pode conter espinhas de peixe",
-    "Risco de contaminação por toxinas de peixes (dependendo da procedência)",
-    "Alérgeno: peixe"
+    "Verificar higienização"
   ],
   "curiosidade": "O peixe é uma excelente fonte de selênio, um antioxidante que protege as células do corpo contra danos.",
   "slug": "salada_de_peixe",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

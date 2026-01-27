@@ -1,33 +1,44 @@
 {
   "nome": "Salada michouia Tunísia",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
-    "Tomate",
-    "Pimentão",
-    "Cebola",
-    "Alho",
-    "Ovo cozido",
-    "Azeitonas verdes",
-    "Ervilhas",
-    "Milho",
-    "Azeite de oliva",
-    "Pimenta"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "A Salada Michouia é um prato tradicional da culinária tunisiana. É feita a partir de vegetais grelhados ou assados, como tomate, pimentão e cebola, que são amassados e temperados com alho, azeite e especiarias, como pimenta. É finalizada com ingredientes frescos, como azeitonas e ovos cozidos. Neste prato, os vegetais parecem ter sido triturados ou amassados, formando uma base espessa, e cobertos com azeitonas, milho, ervilhas e ovos cozidos cortados.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rico em antioxidantes: devido ao tomate e pimentão, fontes de vitamina C e licopeno.",
-    "Boa fonte de fibras: auxiliam na saúde digestiva."
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo do tempero utilizado",
-    "Alto teor de sódio, devido aos temperos e azeitonas"
+    "Verificar higienização"
   ],
   "curiosidade": "O nome 'Michouia' vem do verbo 'choui', que significa grelhar em árabe. A técnica de grelhar os vegetais antes de prepará-los confere um sabor defumado característico ao prato.",
   "slug": "salada_michouia_tunisia",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

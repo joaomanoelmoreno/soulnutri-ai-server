@@ -1,6 +1,6 @@
 {
   "nome": "Minipolpetonerecheadocomqueijo",
-  "categoria": "proteína animal",
+  "categoria": "vegetariano",
   "ingredientes": [
     "Carne moída",
     "Queijo (tipo não especificado)",
@@ -25,5 +25,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🥚"
 }

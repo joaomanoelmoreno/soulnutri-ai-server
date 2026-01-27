@@ -1,7 +1,7 @@
 {
   "slug": "pernildecordeiro",
   "nome": "Pernildecordeiro",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "descricao": "O prato consiste em pernil de cordeiro cozido em um caldo saboroso. A carne foi desfiada e está visivelmente macia. O caldo parece ser caseiro e enriquecido com ervas frescas picadas. Aparentemente, a receita é simples, focada na qualidade da carne e no sabor do caldo.",
   "ingredientes": [
     "Pernil de cordeiro",
@@ -45,5 +45,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

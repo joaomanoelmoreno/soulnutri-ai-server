@@ -1,31 +1,44 @@
 {
   "nome": "Salada De Atum Com Legumes",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "Atum",
-    "Ervilhas",
-    "Cenoura",
-    "Salsa picada",
-    "Maionese",
-    "Rodelas de cenoura (para decoração)"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Salada composta por pedaços de atum misturados com ervilhas, cenoura picada, salsa fresca e maionese. A apresentação inclui rodelas de cenoura crua ao redor do prato. O atum provavelmente foi cozido ou enlatado.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Fonte de proteína e ômega-3 (atum)",
-    "Vitaminas e fibras dos legumes (cenoura e ervilha)"
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Alergênicos: peixe",
-    "Alto teor de sódio (dependendo do tipo de atum e da maionese)",
-    "Alto teor de gordura saturada (dependendo da maionese)",
-    "Potencial de contaminação por mercúrio (no atum, dependendo da espécie e da fonte)"
+    "Verificar higienização"
   ],
   "curiosidade": "O atum é rico em vitamina D, essencial para a saúde dos ossos e a função imunológica.",
   "slug": "salada_de_atum_com_legumes",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

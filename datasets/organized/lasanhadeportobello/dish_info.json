@@ -2,30 +2,42 @@
   "nome": "Lasanhadeportobello",
   "categoria": "vegetariano",
   "ingredientes": [
-    "Massa de lasanha (provavelmente com farinha de trigo)",
-    "Cogumelos portobello salteados (visíveis na lasanha)",
-    "Molho branco (possivelmente à base de leite, manteiga e farinha)",
-    "Queijo gratinado (provavelmente queijo mussarela ou similar)",
-    "Cebolinha picada (para finalizar)",
-    "Azeite (provavelmente usado no preparo dos cogumelos e molho)",
-    "Temperos (sal, pimenta e possivelmente outros temperos na preparação)"
+    "massa de lasanha",
+    "molho de tomate",
+    "queijo",
+    "presunto",
+    "molho branco"
   ],
-  "descricao": "A lasanha de portobello é um prato vegetariano, onde as camadas de massa são intercaladas com um recheio cremoso de cogumelos salteados, molho branco e queijo gratinado. A cebolinha picada é utilizada como finalização, adicionando frescor e sabor. O prato é gratinado no forno para obter a camada de queijo dourada.",
+  "descricao": "Lasanha tradicional em camadas.",
   "beneficios": [
-    "Os cogumelos portobello são fontes de vitaminas do complexo B, importantes para o metabolismo energético e saúde do sistema nervoso.",
-    "O queijo fornece cálcio, essencial para a saúde dos ossos e dentes."
+    "Refeição completa",
+    "Cálcio do queijo"
   ],
   "riscos": [
-    "Contém glúten, devido à presença da massa de lasanha.",
-    "Pode ser rico em gorduras saturadas, dependendo da quantidade de queijo e manteiga utilizada no molho branco.",
-    "Possível presença de lactose, dependendo dos ingredientes do molho branco e queijo."
+    "Contém glúten",
+    "Contém lactose",
+    "Alto teor calórico"
   ],
   "curiosidade": "O cogumelo portobello é uma variação mais madura do cogumelo champignon, com sabor mais intenso e textura mais carnosa.",
   "slug": "lasanhadeportobello",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "180 kcal",
+    "proteinas": "10g",
+    "carboidratos": "18g",
+    "gorduras": "8g"
+  },
+  "tecnica": "Assado em forno",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Salada verde"
+  ],
+  "evitar_com": [
+    "Outras massas no mesmo dia"
+  ],
+  "category_emoji": "🥚"
 }

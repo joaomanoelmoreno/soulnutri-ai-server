@@ -1,6 +1,6 @@
 {
   "nome": "Tortilha De Figo E Gorgonzola",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Massa da tortinha (provavelmente farinha de trigo, manteiga)",
     "Gorgonzola",
@@ -24,5 +24,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

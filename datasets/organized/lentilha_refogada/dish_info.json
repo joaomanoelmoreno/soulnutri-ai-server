@@ -3,34 +3,41 @@
   "slug": "lentilha_refogada",
   "categoria": "vegano",
   "ingredientes": [
-    "lentilha",
-    "tofu defumado",
-    "cebola",
-    "alho",
-    "cebolinha",
-    "especiarias"
+    "tofu (soja)",
+    "temperos"
   ],
-  "descricao": "Lentilha refogada com cubos de tofu defumado e finalizada com cebolinha fresca. Prato rico em fibras e proteína vegetal.",
+  "descricao": "Tofu, proteína vegetal versátil.",
   "beneficios": [
-    "Rico em fibras",
-    "Fonte de proteína vegetal",
-    "Baixo índice glicêmico"
+    "Proteína vegetal completa",
+    "Cálcio",
+    "Isoflavonas"
   ],
   "riscos": [
-    "Pode causar gases em pessoas sensíveis",
-    "Contém soja (tofu)"
+    "Alérgeno: soja"
   ],
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "15g",
-    "carboidratos": "25g",
-    "gorduras": "5g"
+    "calorias": "76 kcal",
+    "proteinas": "8g",
+    "carboidratos": "1.9g",
+    "gorduras": "4.8g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🥬",
+  "category_emoji": "🌱",
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": true
+  "contem_soja": true,
+  "tecnica": "Grelhado ou refogado",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Legumes",
+    "Molho shoyu",
+    "Gengibre"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

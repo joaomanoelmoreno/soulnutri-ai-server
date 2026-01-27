@@ -21,11 +21,12 @@
     "Possível presença de glúten (verificar rótulo se for celíaco)"
   ],
   "curiosidade": "A granola caseira pode ser personalizada com diversos ingredientes, como diferentes tipos de frutas secas, sementes e especiarias (canela, noz-moscada), tornando-a um alimento versátil e saboroso para o café da manhã ou lanches.",
-  "slug": "granola_cibi_sana",
+  "slug": "granola",
   "nutricao": {
     "calorias": "",
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

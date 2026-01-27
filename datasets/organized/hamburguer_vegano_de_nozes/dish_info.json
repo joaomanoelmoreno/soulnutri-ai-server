@@ -2,28 +2,39 @@
   "nome": "Hambúrguer vegano de nozes",
   "categoria": "vegano",
   "ingredientes": [
-    "Hambúrguer de nozes (provavelmente com nozes, grãos, legumes, e temperos)",
-    "Tomates cereja frescos",
-    "Pimenta dedo-de-moça",
-    "Salsa picada",
-    "Molho cremoso alaranjado (possivelmente à base de vegetais, como abóbora ou cenoura)"
+    "ingredientes 100% vegetais"
   ],
-  "descricao": "Hambúrgueres veganos de nozes, grelhados ou assados, servidos com tomates cereja frescos cortados ao meio, pimenta dedo-de-moça e salsa picada, acompanhados de um molho cremoso alaranjado. O hambúrguer parece ter uma textura rústica e é possivelmente feito com nozes moídas, leguminosas e/ou grãos, com temperos.",
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "beneficios": [
-    "Fonte de proteínas vegetais, especialmente se contiver leguminosas.",
-    "Rico em fibras, dependendo dos ingredientes.",
-    "Pode ser uma boa fonte de gorduras saudáveis se contiver nozes e sementes."
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo dos ingredientes (se tiver farinha ou derivados).",
-    "Alérgenos: nozes e/ou outros ingredientes do hambúrguer, dependendo da receita."
+    "Verificar fonte de B12 e ferro"
   ],
   "curiosidade": "Nozes são ricas em antioxidantes e podem ajudar a reduzir o colesterol LDL (o \"colesterol ruim\") e a inflamação.",
   "slug": "hamburguer_vegano_de_nozes",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
+  },
+  "tecnica": "Variada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ],
+  "category_emoji": "🌱"
 }

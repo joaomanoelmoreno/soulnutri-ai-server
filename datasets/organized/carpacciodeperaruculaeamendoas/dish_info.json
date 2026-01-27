@@ -1,6 +1,6 @@
 {
   "nome": "Carpaccio de Pera",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Pera fatiada",
     "Rúcula",
@@ -29,5 +29,5 @@
   },
   "contem_gluten": false,
   "tecnica": "",
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

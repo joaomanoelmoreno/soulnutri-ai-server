@@ -1,8 +1,8 @@
 {
   "nome": "nhoque",
   "slug": "nhoque",
-  "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
   "descricao": "Prato composto por diferentes preparações, possivelmente purê de batata, bolinho frito e algo cremoso.",
   "ingredientes": [
     "Purê de batata",

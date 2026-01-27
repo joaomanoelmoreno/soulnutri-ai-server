@@ -1,7 +1,7 @@
 {
   "slug": "figadoacebolado",
   "nome": "Sobrecosa ao Tandoori",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "descricao": "",
   "ingredientes": [
     "Fígado bovino",
@@ -41,5 +41,5 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "",
-  "category_emoji": "🥩"
+  "category_emoji": "🌱"
 }

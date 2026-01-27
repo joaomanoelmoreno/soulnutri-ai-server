@@ -2,38 +2,47 @@
   "nome": "Parmegiana de Carne Suína",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Bife de carne suína",
-    "Molho de tomate",
-    "Queijo",
-    "Tomate cereja",
-    "Salsinha",
-    "Cebolinha",
-    "Farinha de trigo",
-    "Ovo"
+    "carne bovina",
+    "sal",
+    "temperos"
   ],
-  "descricao": "Bifes de carne suína à parmegiana, com molho de tomate, queijo e tomate cereja. Finalizado com cheiro verde.",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
   "beneficios": [
-    "Fonte de proteína",
-    "Saboroso e nutritivo"
+    "Proteína completa",
+    "Ferro heme de alta absorção",
+    "Vitamina B12",
+    "Zinco"
   ],
   "riscos": [
-    "Contém glúten (farinha de trigo)",
-    "Contém lactose (queijo)",
-    "Alto teor de sódio (molho)"
+    "Consumo excessivo associado a doenças cardiovasculares",
+    "Gordura saturada"
   ],
   "curiosidade": "O camarão é uma boa fonte de ácidos graxos ômega-3, que são benéficos para a saúde do coração.",
   "slug": "hamcamaraocomcarnesuina",
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "25g",
-    "carboidratos": "20g",
-    "gorduras": "20g"
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
   },
   "category_emoji": "🍖",
-  "contem_gluten": true,
-  "contem_lactose": true,
-  "contem_ovo": true,
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Outras gorduras",
+    "Frituras"
+  ]
 }

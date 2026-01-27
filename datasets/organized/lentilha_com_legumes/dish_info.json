@@ -1,7 +1,7 @@
 {
   "nome": "Lentilha Com Legumes",
   "slug": "lentilha_com_legumes",
-  "categoria": "",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -13,5 +13,6 @@
     "gorduras": ""
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🌱"
 }

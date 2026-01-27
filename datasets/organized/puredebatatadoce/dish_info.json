@@ -1,37 +1,43 @@
 {
   "slug": "puredebatatadoce",
   "nome": "Purê de Batata Doce",
-  "categoria": "acompanhamento",
-  "descricao": "Purê de batata doce com textura cremosa, decorado com cebolinha picada. O preparo provavelmente envolve cozimento da batata doce e amassamento, com adição de azeite e temperos para realçar o sabor.",
+  "categoria": "vegano",
+  "descricao": "Batata preparada de forma saudável.",
   "ingredientes": [
-    "batata doce",
-    "manteiga",
-    "sal",
-    "noz-moscada",
-    "Cebolinha",
-    "Azeite de oliva"
+    "batata",
+    "sal"
   ],
   "beneficios": [
-    "Rico em fibras",
-    "Baixo índice glicêmico",
-    "Fonte de vitamina A",
-    "A batata doce é rica em vitamina A e antioxidantes, que contribuem para a saúde da pele e a proteção contra radicais livres.",
-    "A cebolinha adiciona vitaminas e minerais, além de propriedades anti-inflamatórias."
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
   ],
   "riscos": [
-    "Não contém glúten.",
-    "Não contém alérgenos."
+    "Alto índice glicêmico se consumida sozinha"
   ],
   "nutricao": {
-    "calorias": "120 kcal",
+    "calorias": "77 kcal",
     "proteinas": "2g",
-    "carboidratos": "25g",
-    "gorduras": "3g"
+    "carboidratos": "17g",
+    "gorduras": "0.1g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Cozimento ou assado",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Excesso de manteiga"
+  ],
+  "category_emoji": "🌱"
 }

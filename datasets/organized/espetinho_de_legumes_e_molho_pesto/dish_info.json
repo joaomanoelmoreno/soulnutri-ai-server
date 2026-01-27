@@ -1,6 +1,6 @@
 {
   "nome": "Espetinho de Legumes Grelhados com Pesto",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Pimentão (vermelho, amarelo, verde)",
     "Cebola",
@@ -34,7 +34,7 @@
     "carboidratos": "15g",
     "gorduras": "10g"
   },
-  "category_emoji": "🥚",
+  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,

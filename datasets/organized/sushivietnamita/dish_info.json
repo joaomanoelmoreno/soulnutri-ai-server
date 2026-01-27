@@ -1,6 +1,6 @@
 {
   "nome": "Sushivietnamita",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Arroz para sushi",
     "Alga nori",
@@ -28,5 +28,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

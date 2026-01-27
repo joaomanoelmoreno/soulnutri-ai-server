@@ -1,6 +1,6 @@
 {
   "nome": "Gelatina de Cereja",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Gelatina em pó sem sabor",
     "Água",
@@ -25,5 +25,5 @@
     "carboidratos": "15g",
     "gorduras": "0g"
   },
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Tortinhadegongorzolaefigo",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Massa folhada",
     "Figo fresco, fatiado e assado",
@@ -26,5 +26,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

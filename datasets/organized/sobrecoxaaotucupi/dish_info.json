@@ -2,29 +2,40 @@
   "nome": "Sobrecoxaaotucupi",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Sobrecoxa de frango",
-    "Tucupi",
-    "Tomate cereja",
-    "Salsinha picada",
-    "Cebolinha picada",
-    "Batatas"
+    "sobrecoxa de frango",
+    "sal",
+    "temperos"
   ],
-  "descricao": "A sobrecoxa de frango é cozida no tucupi, um caldo extraído da mandioca brava, conferindo um sabor exótico e característico da culinária amazônica. O prato é finalizado com tomate cereja, salsinha e cebolinha picadas para adicionar frescor e cor. As batatas cozidas complementam o prato, oferecendo carboidratos.",
+  "descricao": "Sobrecoxa de frango suculenta.",
   "beneficios": [
-    "O tucupi é rico em carboidratos e nutrientes.",
-    "A sobrecoxa de frango é fonte de proteína, essencial para a construção e reparo dos tecidos do corpo.",
-    "Os tomates cereja são ricos em licopeno, um antioxidante que protege as células contra danos."
+    "Proteína de qualidade",
+    "Mais suculenta que o peito",
+    "Ferro"
   ],
   "riscos": [
-    "O tucupi pode conter ácido cianídrico, que é tóxico, mas o processo de preparo costuma eliminar essa substância.",
-    "Alérgenos: não se aplica"
+    "Maior teor de gordura que peito"
   ],
   "curiosidade": "O tucupi é um ingrediente essencial na culinária do Norte do Brasil, utilizado em diversos pratos típicos como o pato no tucupi.",
   "slug": "sobrecoxaaotucupi",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "190 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "9g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes assados"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

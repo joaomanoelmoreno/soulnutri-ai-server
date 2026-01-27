@@ -2,32 +2,23 @@
   "slug": "cogumelo_recheado_de_com_legumes",
   "nome": "Portobello Recheado com Legumes e Queijo Vegano",
   "categoria": "vegano",
-  "descricao": "Cogumelos portobello recheados com uma mistura saborosa de legumes refogados, finalizados com queijo vegano gratinado. Uma opção deliciosa e nutritiva.",
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "ingredientes": [
-    "Cogumelos Portobello",
-    "Cenoura",
-    "Pimentão",
-    "Cebola",
-    "Alho",
-    "Cheiro-verde (cebolinha)",
-    "Salsa picada",
-    "Queijo vegano ralado",
-    "Azeite de oliva",
-    "Caldo de legumes",
-    "Tempero (sal, pimenta do reino)"
+    "ingredientes 100% vegetais"
   ],
   "beneficios": [
-    "Rico em fibras e vitaminas",
-    "Baixo em calorias",
-    "Fonte de antioxidantes",
-    "Opção vegana e nutritiva"
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar fonte de B12 e ferro"
+  ],
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "8g",
-    "carboidratos": "15g",
-    "gorduras": "10g"
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -35,5 +26,17 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": true,
-  "category_emoji": "🥬"
+  "category_emoji": "🌱",
+  "tecnica": "Variada",
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ]
 }

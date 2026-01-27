@@ -1,7 +1,7 @@
 {
   "slug": "carpacciodelaranja",
   "nome": "Carpaccio de Abobrinha",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "descricao": "Finas fatias de abobrinha crua temperadas com azeite, ervas e queijo, resultando em um prato leve e refrescante.",
   "ingredientes": [
     "Abobrinha fatiada",
@@ -33,5 +33,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

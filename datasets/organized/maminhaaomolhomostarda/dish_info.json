@@ -2,27 +2,43 @@
   "nome": "Maminhaaomolhomostarda",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Maminha bovina",
-    "Molho de mostarda",
-    "Cebolinha picada",
-    "Possível purê de acompanhamento (não totalmente visível)"
+    "maminha bovina",
+    "sal grosso",
+    "alho"
   ],
-  "descricao": "O prato consiste em fatias de maminha, provavelmente grelhadas ou seladas, cobertas por um molho cremoso à base de mostarda. O prato é finalizado com cebolinha picada, adicionando frescor e sabor. Há um acompanhamento cremoso e amarelado, provavelmente um purê.",
+  "descricao": "Maminha bovina macia e saborosa.",
   "beneficios": [
-    "A maminha é fonte de proteína, importante para a construção e reparo dos tecidos do corpo.",
-    "O molho de mostarda pode conter antioxidantes e auxiliar na digestão."
+    "Corte macio",
+    "Rico em proteínas",
+    "Ferro",
+    "Zinco"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, dependendo do corte da carne e ingredientes do molho.",
-    "Possível presença de sódio em excesso, dependendo da quantidade de molho e temperos.",
-    "Alérgeno: pode conter mostarda."
+    "Gordura moderada",
+    "Consumir com moderação"
   ],
   "curiosidade": "A maminha é um corte de carne bovina localizado na parte traseira do boi, com sabor marcante e maciez, sendo muito apreciada em churrascos e preparações diversas.",
   "slug": "maminhaaomolhomostarda",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "220 kcal",
+    "proteinas": "28g",
+    "carboidratos": "0g",
+    "gorduras": "12g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

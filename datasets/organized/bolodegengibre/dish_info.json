@@ -2,31 +2,44 @@
   "slug": "bolodegengibre",
   "nome": "Bolo de Gengibre",
   "categoria": "vegetariano",
-  "descricao": "Biscoitos quadrados com cobertura de creme amarelo.",
+  "descricao": "Bolo caseiro tradicional.",
   "ingredientes": [
-    "farinha",
+    "farinha de trigo",
     "açúcar",
-    "ovo",
+    "ovos",
     "manteiga",
-    "creme"
+    "leite"
   ],
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de energia"
+  ],
   "riscos": [
-    "Alérgeno: Ovo, Glúten",
-    "Alérgeno: GLÚTEN (biscoito, farinha)",
-    "Alérgeno: LACTOSE (creme, manteiga)",
-    "Alérgeno: OVO (ovo)"
+    "Contém glúten",
+    "Alto teor de açúcar",
+    "Calórico"
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "260 kcal",
+    "proteinas": "4g",
+    "carboidratos": "40g",
+    "gorduras": "10g"
   },
   "contem_gluten": true,
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado em forno",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Lanche da tarde (ocasional)",
+  "combina_com": [
+    "Café",
+    "Chá"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ],
+  "category_emoji": "🥚"
 }

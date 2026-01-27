@@ -2,26 +2,39 @@
   "nome": "Hamburguervegano",
   "categoria": "vegano",
   "ingredientes": [
-    "Base do hambúrguer (possivelmente à base de grãos, leguminosas e/ou vegetais)",
-    "Tomate cereja",
-    "Cebolinha fresca",
-    "Azeite de oliva (possivelmente para finalizar)"
+    "ingredientes 100% vegetais"
   ],
-  "descricao": "Hambúrgueres veganos grelhados, com tomate cereja fatiado e cebolinha fresca picada para finalizar. O hambúrguer parece ter uma textura rica em ingredientes, possivelmente contendo grãos, leguminosas e/ou vegetais.",
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "beneficios": [
-    "Rico em fibras, dependendo dos ingredientes do hambúrguer, o que contribui para a saúde digestiva e saciedade.",
-    "Fonte de vitaminas e minerais, principalmente se contiver vegetais na composição."
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo dos ingredientes do hambúrguer.",
-    "Teor de sódio pode ser elevado dependendo da receita."
+    "Verificar fonte de B12 e ferro"
   ],
   "curiosidade": "Hambúrgueres veganos são uma alternativa sustentável e ética, reduzindo o impacto ambiental e a crueldade animal associados à produção de carne.",
   "slug": "hamburguervegano",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
+  },
+  "tecnica": "Variada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ],
+  "category_emoji": "🌱"
 }

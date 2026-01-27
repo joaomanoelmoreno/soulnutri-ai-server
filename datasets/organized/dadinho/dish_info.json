@@ -1,7 +1,7 @@
 {
   "slug": "dadinho",
   "nome": "Dadinho de Tapioca",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "descricao": "Cubos crocantes de tapioca com queijo coalho, assados até dourar. Pode ser servido com camarão.",
   "ingredientes": [
     "Tapioca",
@@ -24,5 +24,5 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "",
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

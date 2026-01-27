@@ -2,30 +2,43 @@
   "nome": "Saladadelentilha",
   "categoria": "vegano",
   "ingredientes": [
-    "Lentilha cozida",
-    "Tomate picado",
-    "Cebola roxa picada",
-    "Cebolinha picada",
-    "Azeite de oliva",
-    "Sal (possivelmente)"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Salada refrescante com lentilha cozida misturada com tomate, cebola roxa e cebolinha picados. Possivelmente temperada com azeite e sal.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rica em proteínas vegetais e fibras, promovendo saciedade.",
-    "Fonte de ferro e outros nutrientes essenciais, como folato e manganês.",
-    "Ajuda a controlar os níveis de açúcar no sangue devido ao baixo índice glicêmico da lentilha."
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Apesar de ser naturalmente sem glúten, verificar a procedência da lentilha para evitar contaminação cruzada.",
-    "A cebola roxa pode causar desconforto gástrico em algumas pessoas.",
-    "Excesso de sal pode ser prejudicial à saúde."
+    "Verificar higienização"
   ],
   "curiosidade": "A lentilha é um alimento muito antigo, consumido há mais de 10 mil anos. É um grão versátil e fácil de preparar, sendo uma ótima opção para vegetarianos e veganos.",
   "slug": "saladadelentilha",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

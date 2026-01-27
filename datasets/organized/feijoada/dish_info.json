@@ -1,6 +1,6 @@
 {
   "nome": "Feijoada",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Feijão preto",
     "Carne seca",
@@ -32,5 +32,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

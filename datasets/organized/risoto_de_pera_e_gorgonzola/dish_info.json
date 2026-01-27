@@ -1,6 +1,6 @@
 {
   "nome": "Risoto De Pêra E Gorgonzola",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Arroz arbóreo",
     "Pêra",
@@ -27,5 +27,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

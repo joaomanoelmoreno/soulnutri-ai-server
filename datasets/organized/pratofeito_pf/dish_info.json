@@ -1,6 +1,6 @@
 {
   "nome": "Pratofeito(Pf)",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Carne grelhada",
     "Arroz branco cozido",
@@ -28,5 +28,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

@@ -2,42 +2,46 @@
   "slug": "filedepeixeaomisso",
   "nome": "File de Peixe ao Misso ",
   "categoria": "proteína animal",
-  "descricao": "O prato consiste em filés de peixe empanados e assados, possivelmente com uma crosta crocante. Há pedaços de fungos e ervas picadas salpicados. O missô pode ser usado para marinar o peixe ou para dar sabor ao empanado.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "Filé de peixe (tipo de peixe não identificado)",
-    "Fungo (provavelmente shitake)",
-    "Farinha de rosca",
-    "Ervas (salsa)",
-    "Missô (pasta de soja fermentada)",
-    "Azeite",
-    "Filé de peixe (tipo de peixe não especificado)",
-    "Cogumelos (fatiados e salteados)",
-    "Farinha de rosca (para empanar, possivelmente contendo glúten)",
-    "Cebolinha picada (para finalizar)",
-    "Tempero (possivelmente páprica ou similar)"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
   "beneficios": [
-    "Peixe é uma excelente fonte de proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular e cerebral.",
-    "O missô é rico em probióticos, que auxiliam na saúde intestinal.",
-    "O fungo shitake é uma boa fonte de vitaminas do complexo B e antioxidantes.",
-    "Peixe é fonte de proteínas de alta qualidade e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
-    "Cogumelos são ricos em vitaminas do complexo B, selênio e antioxidantes, que fortalecem o sistema imunológico."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Contém glúten (na farinha de rosca).",
-    "Possível presença de sódio em excesso (dependendo da quantidade de missô).",
-    "Alérgenos: peixe, soja e possivelmente glúten.",
-    "Contém glúten (se a farinha de rosca for feita com trigo).",
-    "Pode conter alto teor de sódio, dependendo dos temperos e do molho missô.",
-    "A forma de preparo, se frita, pode aumentar o valor calórico e a quantidade de gordura."
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
-  "nutricao": {},
-  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": true,
+  "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
+  "contem_frutos_mar": true,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🐟"
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ]
 }

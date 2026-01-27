@@ -3,24 +3,43 @@
   "slug": "peixe_ao_confit_de_tomates",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Prato de peixe com tomate cereja, possivelmente grelhado ou cozido, e temperado com ervas finas.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "Peixe",
-    "Tomate cereja",
-    "Azeite",
-    "Ervas finas"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "beneficios": [],
+  "beneficios": [
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
   "riscos": [
-    "Alérgeno: Peixe",
-    "Alérgeno: PEIXE (peixe)"
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
-  "tecnica": "",
+  "tecnica": "Grelhado, assado ou ao vapor",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
   },
-  "contem_gluten": false
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Romeu E Julieta",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Goiabada",
     "Queijo branco"
@@ -21,5 +21,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

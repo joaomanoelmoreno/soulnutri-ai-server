@@ -1,6 +1,6 @@
 {
   "nome": "Manjardecococomcaldadeameixa",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Leite de coco",
     "Açúcar",
@@ -24,5 +24,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

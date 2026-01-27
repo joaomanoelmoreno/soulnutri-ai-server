@@ -2,29 +2,43 @@
   "nome": "Maminhanacervejapreta",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Maminha",
-    "Cerveja preta",
-    "Ervas frescas (salsa)",
-    "Caldo de carne (possivelmente)",
-    "Alho (possivelmente)",
-    "Cebola (possivelmente)"
+    "maminha bovina",
+    "sal grosso",
+    "alho"
   ],
-  "descricao": "O prato é composto por fatias de maminha cozidas em um molho escuro, provavelmente à base de cerveja preta. O preparo parece ter envolvido o cozimento da carne no molho, possivelmente em fogo baixo, permitindo que a carne absorva os sabores da cerveja e dos temperos. Finalizado com ervas frescas picadas.",
+  "descricao": "Maminha bovina macia e saborosa.",
   "beneficios": [
-    "A maminha é fonte de proteína de alta qualidade, essencial para a construção e reparação muscular.",
-    "A cerveja preta pode conter antioxidantes que combatem radicais livres."
+    "Corte macio",
+    "Rico em proteínas",
+    "Ferro",
+    "Zinco"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, dependendo do corte da carne e do modo de preparo.",
-    "Pode conter glúten, dependendo da cerveja utilizada.",
-    "Pessoas com restrições ao consumo de álcool devem evitar."
+    "Gordura moderada",
+    "Consumir com moderação"
   ],
   "curiosidade": "A maminha é um corte nobre do boi, conhecido por sua maciez e sabor marcante. A cerveja preta adiciona um toque adocicado e amargo ao prato.",
   "slug": "maminhanacervejapreta",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "220 kcal",
+    "proteinas": "28g",
+    "carboidratos": "0g",
+    "gorduras": "12g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

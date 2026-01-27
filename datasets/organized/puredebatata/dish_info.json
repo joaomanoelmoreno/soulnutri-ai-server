@@ -1,27 +1,41 @@
 {
   "nome": "Purêdebatata",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
-    "Batata",
-    "Leite",
-    "Manteiga",
-    "Sal"
+    "batata",
+    "sal"
   ],
-  "descricao": "Purê de batata cremoso, possivelmente preparado fervendo as batatas até amaciarem, amassando-as e misturando com leite e manteiga para obter a consistência desejada. Temperado com sal.",
+  "descricao": "Batata preparada de forma saudável.",
   "beneficios": [
-    "Fonte de carboidratos, fornecendo energia",
-    "Rico em potássio, importante para a saúde cardiovascular"
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
   ],
   "riscos": [
-    "Alto índice glicêmico",
-    "Contém lactose (se preparado com leite)"
+    "Alto índice glicêmico se consumida sozinha"
   ],
   "curiosidade": "Batatas são nativas da América do Sul e existem milhares de variedades diferentes.",
   "slug": "puredebatata",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "77 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0.1g"
+  },
+  "tecnica": "Cozimento ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Excesso de manteiga"
+  ],
+  "category_emoji": "🌱"
 }

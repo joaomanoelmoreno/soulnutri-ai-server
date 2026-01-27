@@ -3,26 +3,41 @@
   "slug": "frango_ao_creme_de_limao",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Frango cozido em creme, geralmente com ervas frescas.",
+  "descricao": "Frango preparado de forma saudável.",
   "ingredientes": [
-    "Peito de frango",
-    "Creme de leite",
-    "Salsa",
-    "Alho",
-    "Cebola"
+    "frango",
+    "sal",
+    "temperos"
   ],
-  "beneficios": [],
+  "beneficios": [
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura"
+  ],
   "riscos": [
-    "Alérgeno: Leite",
-    "Alto teor de gordura",
-    "Alérgeno: LACTOSE (creme, leite)"
+    "Verificar procedência",
+    "Evitar pele se em dieta"
   ],
-  "tecnica": "",
+  "tecnica": "Grelhado, assado ou cozido",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "165 kcal",
+    "proteinas": "31g",
+    "carboidratos": "0g",
+    "gorduras": "3.6g"
   },
-  "contem_gluten": false
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz integral"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos",
+    "Frituras"
+  ]
 }

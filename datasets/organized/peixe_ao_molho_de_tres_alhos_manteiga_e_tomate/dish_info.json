@@ -2,39 +2,47 @@
   "nome": "Peixe ao Molho de Alho e Tomate Cereja",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Filé de peixe (ex: tilápia, pescada)",
-    "Tomate cereja",
-    "Alho (picado e inteiro)",
-    "Manteiga",
-    "Azeite de oliva",
-    "Ervas frescas (salsa, cebolinha, manjericão)",
-    "Azeitonas pretas (opcional)",
-    "Sal",
-    "Pimenta do reino"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "Filés de peixe refogados em um molho saboroso de alho e tomate cereja, com ervas frescas. Um prato leve e rico em sabor.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Fonte de proteína magra",
-    "Rico em vitaminas e antioxidantes",
-    "Baixo teor de carboidratos"
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Alto teor de sódio (dependendo da quantidade de sal)",
-    "Contém lactose (se usar manteiga comum)"
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "O alho, um dos ingredientes principais, era usado pelos egípcios antigos para aumentar a força e a resistência dos trabalhadores, além de ser considerado um remédio para diversas doenças.",
   "slug": "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate",
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "25g",
-    "carboidratos": "8g",
-    "gorduras": "10g"
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
   },
   "category_emoji": "🍖",
   "contem_gluten": false,
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ]
 }

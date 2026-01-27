@@ -2,32 +2,27 @@
   "slug": "brownie",
   "nome": "Brownie de Chocolate com Calda",
   "categoria": "vegetariano",
-  "descricao": "Brownie de chocolate macio com uma deliciosa calda cremosa, perfeito para um lanche ou sobremesa.",
+  "descricao": "Bolo caseiro tradicional.",
   "ingredientes": [
-    "Chocolate",
-    "Açúcar",
-    "Farinha de trigo",
-    "Manteiga",
-    "Ovos",
-    "Óleo vegetal",
-    "Fermento",
-    "Creme de leite",
-    "Calda de chocolate"
+    "farinha de trigo",
+    "açúcar",
+    "ovos",
+    "manteiga",
+    "leite"
   ],
   "beneficios": [
-    "Fonte de energia",
-    "Pode melhorar o humor"
+    "Fonte de energia"
   ],
   "riscos": [
-    "Alto teor de açúcar",
     "Contém glúten",
-    "Contém lactose"
+    "Alto teor de açúcar",
+    "Calórico"
   ],
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "5g",
-    "carboidratos": "45g",
-    "gorduras": "18g"
+    "calorias": "260 kcal",
+    "proteinas": "4g",
+    "carboidratos": "40g",
+    "gorduras": "10g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -35,5 +30,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "tecnica": "Assado em forno",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Lanche da tarde (ocasional)",
+  "combina_com": [
+    "Café",
+    "Chá"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
 }

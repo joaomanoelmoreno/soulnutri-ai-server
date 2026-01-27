@@ -1,10 +1,10 @@
 {
-  "nome": "Doce de Banana Vegano (Sem açúcar)",
+  "nome": "carpacciodeabobrinhacomqueijovegano",
+  "slug": "carpacciodeabobrinhacomqueijovegano",
   "categoria": "vegano",
   "ingredientes": [
     "ingredientes 100% vegetais"
   ],
-  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "beneficios": [
     "Livre de produtos animais",
     "Rico em fibras",
@@ -13,22 +13,17 @@
   "riscos": [
     "Verificar fonte de B12 e ferro"
   ],
-  "curiosidade": "A banana é uma fruta versátil que pode ser utilizada em diversas receitas, desde doces até pratos salgados.",
-  "slug": "docedebananavegano_semacucar",
   "nutricao": {
     "calorias": "~120 kcal",
     "proteinas": "~5g",
     "carboidratos": "~20g",
     "gorduras": "~3g"
   },
+  "tecnica": "Variada",
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "Variada",
-  "category_emoji": "🌱",
   "indice_glicemico": "variável",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Qualquer refeição",
@@ -39,5 +34,6 @@
   ],
   "evitar_com": [
     "Produtos animais"
-  ]
+  ],
+  "category_emoji": "🌱"
 }

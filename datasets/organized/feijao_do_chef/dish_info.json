@@ -1,30 +1,45 @@
 {
   "nome": "Feijão do chef",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "Feijão preto",
-    "Carnes (presumivelmente bacon, linguiça calabresa, carne seca)",
-    "Água",
-    "Temperos (cebola, alho, louro, pimenta do reino, etc.)",
-    "Gordura (possivelmente azeite ou óleo vegetal)"
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
   ],
-  "descricao": "Feijão preto cozido com carnes e temperos, servido em panela de barro. O preparo envolve a imersão do feijão em água, seguido do cozimento lento com as carnes e temperos, resultando em um caldo espesso e saboroso.",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "beneficios": [
-    "Fonte de proteínas, provenientes das carnes e do feijão.",
-    "Rico em fibras, auxilia na saúde digestiva.",
-    "Fornece ferro, importante para a prevenção da anemia."
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
   ],
   "riscos": [
-    "Alto teor de sódio, devido aos ingredientes como bacon e linguiça.",
-    "Pode conter glúten, dependendo do tempero utilizado nas carnes.",
-    "Alto teor de gordura saturada, proveniente das carnes."
+    "Pode causar gases intestinais"
   ],
   "curiosidade": "O feijão preto é um alimento símbolo da culinária brasileira, presente em diversas receitas regionais e apreciado por sua versatilidade e sabor único.",
   "slug": "feijao_do_chef",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
+  "tecnica": "Cozimento lento",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz (proteína completa)",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ],
+  "category_emoji": "🌱"
 }

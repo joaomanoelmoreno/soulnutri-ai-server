@@ -1,7 +1,7 @@
 {
   "slug": "baiaodedois",
   "nome": "Baiao de Dois",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "descricao": "O Baião de Dois é um prato típico da culinária nordestina, neste caso, preparado com arroz, feijão de corda, carne seca desfiada, linguiça calabresa, queijo coalho e finalizado com cebolinha e pimenta de biquinho. Os ingredientes são misturados e cozidos, geralmente em uma panela grande, e o queijo coalho é grelhado para dar um toque especial. O prato pode ser acompanhado de outros ingredientes, como manteiga ou outros tipos de queijo, dependendo da receita.",
   "ingredientes": [
     "Arroz branco cozido",
@@ -42,5 +42,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

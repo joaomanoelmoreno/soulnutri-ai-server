@@ -2,39 +2,26 @@
   "slug": "strogonoff_vegano",
   "nome": "Estrogonofe de Cogumelos Vegano com Brócolis",
   "categoria": "vegano",
-  "descricao": "Um estrogonofe cremoso e saboroso feito com cogumelos frescos, brócolis e um delicioso creme vegetal. Uma opção vegana reconfortante e nutritiva.",
+  "descricao": "Brócolis nutritivo, um dos vegetais mais saudáveis.",
   "ingredientes": [
-    "Cogumelos (champignon, paris ou outros)",
-    "Brócolis",
-    "Creme de castanha de caju (ou outro creme vegetal)",
-    "Cebola",
-    "Alho",
-    "Tomate",
-    "Mostarda",
-    "Salsa",
-    "Cebolinha",
-    "Azeite de oliva",
-    "Ketchup vegano",
-    "Sal",
-    "Pimenta do reino",
-    "Páprica defumada (opcional)",
-    "Molho de tomate vegano"
+    "brócolis",
+    "sal",
+    "azeite"
   ],
   "beneficios": [
-    "Fonte de fibras",
-    "Rico em vitaminas e minerais",
-    "Opção vegana e sem lactose",
-    "Baixo teor de colesterol"
+    "Sulforafano anticancerígeno",
+    "Rico em vitamina C",
+    "Cálcio vegetal",
+    "Fibras"
   ],
   "riscos": [
-    "Pode conter ingredientes alergênicos (verificar rótulos dos produtos)",
-    "Alto teor de sódio (dependendo do ketchup e molho de tomate)"
+    "Pode causar gases em excesso"
   ],
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "5g",
-    "carboidratos": "15g",
-    "gorduras": "10g"
+    "calorias": "34 kcal",
+    "proteinas": "2.8g",
+    "carboidratos": "7g",
+    "gorduras": "0.4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -42,5 +29,17 @@
   "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥬"
+  "category_emoji": "🌱",
+  "tecnica": "Vapor ou refogado",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Proteínas",
+    "Alho",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Queijos gordurosos em excesso"
+  ]
 }

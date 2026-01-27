@@ -1,6 +1,6 @@
 {
   "nome": "Manjar De Coco Com Calda De Frutas Vermelhas",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Leite de coco",
     "Açúcar",
@@ -26,5 +26,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

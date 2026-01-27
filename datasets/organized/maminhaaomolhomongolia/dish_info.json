@@ -2,26 +2,43 @@
   "nome": "Maminhaaomolhomongolia",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Maminha bovina",
-    "Brócolis",
-    "Cebolinha",
-    "Molho (provavelmente à base de shoyu, açúcar, amido e outros temperos)"
+    "maminha bovina",
+    "sal grosso",
+    "alho"
   ],
-  "descricao": "O prato consiste em fatias de maminha grelhadas, imersas em um molho escuro característico do estilo mongol, provavelmente feito com shoyu, açúcar e amido. Acompanha buquês de brócolis cozidos e cebolinha picada para finalizar.",
+  "descricao": "Maminha bovina macia e saborosa.",
   "beneficios": [
-    "A maminha é fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
-    "O brócolis é rico em vitaminas, minerais e antioxidantes, que contribuem para a saúde geral."
+    "Corte macio",
+    "Rico em proteínas",
+    "Ferro",
+    "Zinco"
   ],
   "riscos": [
-    "O molho provavelmente contém sódio, proveniente do shoyu, o que pode ser um risco para pessoas com hipertensão.",
-    "A depender da quantidade de açúcar no molho, o prato pode ter um teor calórico elevado."
+    "Gordura moderada",
+    "Consumir com moderação"
   ],
   "curiosidade": "O molho mongol é uma adaptação de molhos chineses, popularizada em restaurantes ocidentais. Embora o nome sugira origem na Mongólia, sua receita não é tradicionalmente encontrada na culinária mongol.",
   "slug": "maminhaaomolhomongolia",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "220 kcal",
+    "proteinas": "28g",
+    "carboidratos": "0g",
+    "gorduras": "12g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

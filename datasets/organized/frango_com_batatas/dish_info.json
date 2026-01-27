@@ -1,17 +1,40 @@
 {
   "nome": "Frango Com Batatas",
   "slug": "frango_com_batatas",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "batata",
+    "sal"
+  ],
+  "descricao": "Batata preparada de forma saudável.",
+  "beneficios": [
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
+  ],
+  "riscos": [
+    "Alto índice glicêmico se consumida sozinha"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "77 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0.1g"
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "tecnica": "Cozimento ou assado",
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Excesso de manteiga"
+  ],
+  "category_emoji": "🌱"
 }

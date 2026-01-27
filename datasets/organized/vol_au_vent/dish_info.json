@@ -1,4 +1,6 @@
 {
   "nome": "Vol au Vent",
-  "slug": "vol_au_vent"
+  "slug": "vol_au_vent",
+  "categoria": "vegano",
+  "category_emoji": "🌱"
 }

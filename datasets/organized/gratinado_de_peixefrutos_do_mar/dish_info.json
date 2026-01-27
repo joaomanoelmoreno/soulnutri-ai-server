@@ -2,31 +2,45 @@
   "nome": "Gratinado De Peixefrutos Do Mar",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Camarão grelhado",
-    "Lula grelhada",
-    "Arroz branco com brócolis",
-    "Peixe branco empanado e gratinado com queijo",
-    "Ceviche de peixe branco com maracujá e cebola roxa",
-    "Guacamole (abacate, tomate, cebola)",
-    "Limão"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "Prato composto por frutos do mar grelhados (camarão e lula), arroz branco com brócolis, gratinado de peixe com queijo e cebola roxa, guacamole e ceviche de peixe com maracujá.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Fonte de proteínas de alta qualidade dos frutos do mar.",
-    "Rico em antioxidantes (cebola roxa, limão).",
-    "Camarão e peixe são fontes de ômega-3, importante para saúde cardiovascular."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Alto teor de sódio, devido aos temperos e molhos.",
-    "Alérgeno: crustáceos (camarão).",
-    "Contém lactose (queijo do gratinado)."
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "O ceviche, presente no prato, é uma receita tradicional da culinária peruana, onde o peixe é marinado em suco cítrico, geralmente limão, o que 'cozinha' o peixe sem necessidade de calor.",
   "slug": "gratinado_de_peixefrutos_do_mar",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

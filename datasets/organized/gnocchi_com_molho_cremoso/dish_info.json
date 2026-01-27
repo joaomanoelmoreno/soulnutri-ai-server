@@ -1,7 +1,7 @@
 {
   "nome": "Gnocchi Com Molho Cremoso",
   "slug": "gnocchi_com_molho_cremoso",
-  "categoria": "",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -13,5 +13,6 @@
     "gorduras": ""
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🌱"
 }

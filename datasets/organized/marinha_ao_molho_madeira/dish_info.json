@@ -1,7 +1,7 @@
 {
   "slug": "marinha_ao_molho_madeira",
   "nome": "Marinha ao molho madeira",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "descricao": "Maminha cozida em molho madeira. O corte da carne parece ter sido feito após o cozimento para facilitar o consumo. O molho, à base de vinho tinto e/ou caldo de carne, envolve a carne, com adição de champignon fatiado e cebolinha picada para finalização e aroma.",
   "ingredientes": [
     "Carne bovina (marinha)",
@@ -41,5 +41,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

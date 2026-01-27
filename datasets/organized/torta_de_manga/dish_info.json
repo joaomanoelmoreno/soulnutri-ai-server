@@ -1,6 +1,6 @@
 {
   "nome": "Torta de manga",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Manga em pedaços",
     "Massa de torta (provavelmente com farinha de trigo, manteiga e ovos)",
@@ -23,5 +23,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

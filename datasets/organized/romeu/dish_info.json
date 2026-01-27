@@ -1,6 +1,6 @@
 {
   "nome": "Romeu",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Queijo branco cremoso"
   ],
@@ -20,5 +20,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

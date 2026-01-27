@@ -1,6 +1,6 @@
 {
   "nome": "Risoto De Alho Poró",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Arroz arbóreo",
     "Alho poró",
@@ -28,5 +28,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

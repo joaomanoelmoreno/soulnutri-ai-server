@@ -1,6 +1,6 @@
 {
   "nome": "Hambúrguer Angus ao Ponto",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Carne bovina Angus",
     "Tomate",
@@ -24,7 +24,7 @@
     "carboidratos": "2g",
     "gorduras": "16g"
   },
-  "category_emoji": "🍖",
+  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": false
 }

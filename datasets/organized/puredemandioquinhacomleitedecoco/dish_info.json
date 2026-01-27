@@ -2,31 +2,41 @@
   "slug": "puredemandioquinhacomleitedecoco",
   "nome": "Purê De Madioquinha Vegano Com Leite De Coco",
   "categoria": "vegano",
-  "descricao": "Purê cremoso de mandioquinha cozida e amassada, misturada com leite de coco. O preparo envolve cozinhar a mandioquinha até ficar macia, amassar ou bater no liquidificador com o leite de coco até obter a consistência desejada.",
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "ingredientes": [
-    "Mandioquinha",
-    "Leite de coco",
-    "Cebolinha picada",
-    "Sal (possivelmente)"
+    "ingredientes 100% vegetais"
   ],
   "beneficios": [
-    "A mandioquinha é rica em fibras, auxiliando na saúde intestinal.",
-    "O leite de coco adiciona gorduras saudáveis e pode contribuir para a saciedade.",
-    "A mandioquinha é fonte de carboidratos, fornecendo energia.",
-    "O leite de coco adiciona gorduras saudáveis e um sabor adocicado.",
-    "Potencialmente rico em fibras, dependendo da forma de preparo."
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
   ],
   "riscos": [
-    "Pode ser calórico dependendo da quantidade de leite de coco adicionada.",
-    "Verificar a procedência dos ingredientes para evitar contaminação.",
-    "Alto teor de carboidratos, consumir com moderação.",
-    "Pode conter sódio, dependendo da quantidade de sal adicionada."
+    "Verificar fonte de B12 e ferro"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Variada",
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ],
+  "category_emoji": "🌱"
 }

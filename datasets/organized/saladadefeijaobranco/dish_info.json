@@ -2,28 +2,44 @@
   "nome": "Saladadefeijaobranco",
   "categoria": "vegano",
   "ingredientes": [
-    "Feijão branco cozido",
-    "Tomate picado",
-    "Cebola roxa picada",
-    "Salsinha picada",
-    "Azeite de oliva",
-    "Sal"
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
   ],
-  "descricao": "Salada refrescante e nutritiva feita com feijão branco cozido, tomate picado, cebola roxa, salsinha e temperada com azeite e sal. O feijão branco é cozido e misturado aos demais ingredientes, resultando em uma salada leve e saborosa.",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "beneficios": [
-    "Rica em proteínas vegetais e fibras, promovendo a saciedade",
-    "Fonte de ferro e outros minerais essenciais",
-    "Contribui para a saúde cardiovascular"
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
   ],
   "riscos": [
-    "Pode conter traços de glúten, dependendo do local de preparo ou ingredientes adicionais"
+    "Pode causar gases intestinais"
   ],
   "curiosidade": "O feijão branco é uma excelente fonte de triptofano, um aminoácido precursor da serotonina, que ajuda a regular o humor e o sono.",
   "slug": "saladadefeijaobranco",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
+  "tecnica": "Cozimento lento",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz (proteína completa)",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ],
+  "category_emoji": "🌱"
 }

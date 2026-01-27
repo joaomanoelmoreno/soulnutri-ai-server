@@ -1,6 +1,6 @@
 {
   "nome": "Kibe",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Carne moída",
     "Trigo para kibe (sêmola de trigo)",
@@ -28,5 +28,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

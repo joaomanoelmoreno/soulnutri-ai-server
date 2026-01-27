@@ -1,6 +1,6 @@
 {
   "nome": "Portobellorecheado",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Cogumelos Portobello",
     "Abobrinha",
@@ -26,5 +26,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

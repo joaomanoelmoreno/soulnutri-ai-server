@@ -2,29 +2,43 @@
   "nome": "salada verde",
   "categoria": "vegano",
   "ingredientes": [
-    "Folhas verdes (alface e rúcula)",
-    "Tomate picado",
-    "Cebola roxa grelhada",
-    "Berinjela recheada e grelhada",
-    "Azeite de oliva",
-    "Tempero (sal e pimenta)"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Prato vegano composto por uma base de folhas verdes, rúcula e alface, tomate picado, cebola roxa grelhada e berinjela recheada e grelhada. A berinjela parece estar recheada com um composto verde, possivelmente ervas e vegetais.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rico em vitaminas e minerais provenientes das folhas e legumes",
-    "Alto teor de fibras, auxiliando na digestão e saciedade",
-    "Azeite de oliva, fonte de gorduras saudáveis"
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Alergia a tomate",
-    "Alergia a cebola"
+    "Verificar higienização"
   ],
   "curiosidade": "A rúcula, presente na salada, é rica em antioxidantes e possui um sabor levemente picante, que combina bem com pratos frescos.",
   "slug": "salada_verde",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

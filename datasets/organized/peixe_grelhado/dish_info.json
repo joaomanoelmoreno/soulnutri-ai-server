@@ -2,33 +2,45 @@
   "nome": "Peixe Grelhado",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Filé de peixe (grelhado)",
-    "Camarões (grelhados)",
-    "Lula (grelhada)",
-    "Brócolis",
-    "Tomate cereja",
-    "Arroz branco",
-    "Ervas (salsa/cebolinha?)",
-    "Azeite de oliva (possivelmente)",
-    "Temperos (sal, pimenta)"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "Prato composto por filé de peixe grelhado, camarões e lula também grelhados, acompanhados de arroz branco, brócolis cozido e tomate cereja. O peixe e os frutos do mar parecem ter sido temperados com ervas e possivelmente azeite de oliva antes de grelhar.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "Fonte de proteínas de alta qualidade",
-    "Rico em ômega-3 (peixe)",
-    "Boa fonte de vitaminas e minerais (principalmente nos vegetais)"
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Alérgeno: crustáceos (camarão)",
-    "Pode conter espinhas (peixe)",
-    "Sódio em excesso (dependendo da quantidade de sal)"
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "O ômega-3 presente no peixe é essencial para a saúde do cérebro e coração, além de ter propriedades anti-inflamatórias.",
   "slug": "peixe_grelhado",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

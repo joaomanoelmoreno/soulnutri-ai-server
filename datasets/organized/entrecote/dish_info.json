@@ -1,6 +1,6 @@
 {
   "nome": "Entrecote",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Entrecôte (corte de carne bovina)",
     "Tomate cereja",
@@ -31,5 +31,5 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "",
-  "category_emoji": "🥩"
+  "category_emoji": "🌱"
 }

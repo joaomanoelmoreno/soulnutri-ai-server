@@ -1,6 +1,6 @@
 {
   "nome": "Requeijão",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Leite",
     "Coalho",
@@ -23,5 +23,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

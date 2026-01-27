@@ -2,39 +2,45 @@
   "slug": "maminhamolhocebola",
   "nome": "Maminhamolhocebola",
   "categoria": "proteína animal",
-  "descricao": "A maminha, corte nobre da carne bovina, parece ter sido grelhada ou selada, mantendo uma crosta dourada e suculenta. Ela está coberta por um molho cremoso, possivelmente à base de creme de leite, onde se destacam a cebola refogada em formato de pétalas e a salsinha fresca picada, usada como finalização.",
+  "descricao": "Maminha bovina macia e saborosa.",
   "ingredientes": [
-    "Maminha bovina",
-    "Cebola",
-    "Salsinha fresca picada",
-    "Molho cremoso (possivelmente à base de creme de leite)",
-    "Azeite (provavelmente utilizado no preparo)",
-    "Maminha (corte de carne bovina)",
-    "Caldo de carne (possivelmente)",
-    "Creme de leite",
-    "Salsinha picada (para finalizar)",
-    "Azeite (provavelmente)",
-    "Pimenta do reino (opcional)"
+    "maminha bovina",
+    "sal grosso",
+    "alho"
   ],
   "beneficios": [
-    "A maminha é fonte de proteína, importante para a construção e reparação muscular.",
-    "A cebola contém compostos sulfurados com propriedades antioxidantes e anti-inflamatórias.",
-    "A maminha é fonte de proteína, importante para a construção e reparo dos tecidos.",
-    "A cebola possui propriedades antioxidantes e anti-inflamatórias."
+    "Corte macio",
+    "Rico em proteínas",
+    "Ferro",
+    "Zinco"
   ],
   "riscos": [
-    "Alto teor de gordura saturada, dependendo da quantidade de creme de leite utilizado no molho.",
-    "Pessoas com intolerância à lactose devem ter cuidado com o creme de leite.",
-    "Pode conter glúten, dependendo do tempero ou espessante utilizado no molho.",
-    "Alto teor de gordura, dependendo da quantidade de creme de leite utilizada.",
-    "Contém lactose (se usar creme de leite)",
-    "Pode conter sódio em excesso, dependendo do caldo de carne utilizado."
+    "Gordura moderada",
+    "Consumir com moderação"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "28g",
+    "carboidratos": "0g",
+    "gorduras": "12g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado ou grelhado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

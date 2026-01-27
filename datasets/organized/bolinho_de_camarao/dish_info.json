@@ -3,24 +3,44 @@
   "slug": "bolinho_de_camarao",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Prato com peixe frito, bolinhos fritos e cuscuz.",
+  "descricao": "Camarão fresco, rico em proteínas.",
   "ingredientes": [
-    "Peixe frito",
-    "bolinhos fritos",
-    "cuscuz"
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
   ],
-  "beneficios": [],
+  "beneficios": [
+    "Proteína magra",
+    "Selênio antioxidante",
+    "Iodo para tireoide",
+    "Ômega-3"
+  ],
   "riscos": [
-    "Alérgeno: Peixe",
-    "Alto teor de gordura (fritura)",
-    "Alérgeno: PEIXE (peixe)"
+    "Alérgeno: crustáceo (risco grave)",
+    "Colesterol elevado"
   ],
-  "tecnica": "",
+  "tecnica": "Grelhado ou refogado",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
   },
-  "contem_gluten": false
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga",
+    "Frituras"
+  ]
 }

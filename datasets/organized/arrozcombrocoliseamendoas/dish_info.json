@@ -1,4 +1,6 @@
 {
   "nome": "Arroz com Brócolis e Amêndoas",
-  "slug": "arrozcombrocoliseamendoas"
+  "slug": "arrozcombrocoliseamendoas",
+  "categoria": "vegano",
+  "category_emoji": "🌱"
 }

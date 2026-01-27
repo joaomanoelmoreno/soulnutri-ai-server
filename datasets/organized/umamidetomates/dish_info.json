@@ -1,4 +1,6 @@
 {
   "nome": "Umami de Tomates",
-  "slug": "umamidetomates"
+  "slug": "umamidetomates",
+  "categoria": "vegano",
+  "category_emoji": "🌱"
 }

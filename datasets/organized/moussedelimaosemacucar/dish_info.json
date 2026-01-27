@@ -2,29 +2,40 @@
   "nome": "Moussedelimãosemaçúcar",
   "categoria": "vegetariano",
   "ingredientes": [
-    "limão (suco e raspas)",
-    "gelatina",
-    "adoçante artificial (aspartame)",
-    "creme de leite (pela consistência)",
-    "água"
+    "creme de leite",
+    "leite condensado",
+    "fruta"
   ],
-  "descricao": "Mousse com textura cremosa e leve, sabor cítrico. Aparentemente, a receita utiliza suco e raspas de limão, gelatina para firmar, creme de leite para dar cremosidade, adoçante artificial (aspartame) e água. O modo de preparo envolve a mistura dos ingredientes, o resfriamento e o tempo na geladeira para a gelatina firmar.",
+  "descricao": "Mousse cremoso de frutas.",
   "beneficios": [
-    "Baixo teor de açúcar, ideal para diabéticos ou quem busca reduzir o consumo.",
-    "Fonte de vitamina C, devido ao limão.",
-    "Pode ser uma sobremesa leve e refrescante."
+    "Fonte de cálcio",
+    "Energia rápida"
   ],
   "riscos": [
-    "Contém adoçante artificial (aspartame), que algumas pessoas podem ser sensíveis.",
-    "Pode conter lactose, dependendo do tipo de creme de leite usado.",
-    "A gelatina pode ser de origem animal, e o prato não seria adequado para vegetarianos estritos."
+    "Alto teor de açúcar",
+    "Contém lactose",
+    "Calórico"
   ],
   "curiosidade": "O limão, além de rico em vitamina C, é um alimento versátil, usado tanto em pratos doces quanto salgados, e possui propriedades antioxidantes.",
   "slug": "moussedelimaosemacucar",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "200 kcal",
+    "proteinas": "4g",
+    "carboidratos": "25g",
+    "gorduras": "10g"
+  },
+  "tecnica": "Refrigerado",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Sobremesa ocasional",
+  "combina_com": [
+    "Frutas frescas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ],
+  "category_emoji": "🥚"
 }

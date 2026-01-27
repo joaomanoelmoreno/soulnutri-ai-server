@@ -2,25 +2,43 @@
   "nome": "Puredemacaverde",
   "categoria": "vegano",
   "ingredientes": [
-    "Maçã verde",
-    "Água (possivelmente utilizada no preparo)"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Purê cremoso de maçã verde, possivelmente cozida e amassada até obter a consistência desejada. Decorado com fatias de maçã verde.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rico em fibras, que auxiliam na digestão e promovem a saciedade.",
-    "Fonte de vitamina C, com ação antioxidante e que fortalece o sistema imunológico.",
-    "Baixo teor calórico, ideal para dietas de controle de peso."
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Potencial alérgeno: maçã (embora raro)",
-    "Consumo excessivo pode causar desconforto gastrointestinal devido ao alto teor de fibras."
+    "Verificar higienização"
   ],
   "curiosidade": "A maçã verde é rica em ácido málico, que contribui para o sabor azedo característico e também auxilia na limpeza dos dentes.",
   "slug": "puredemacaverde",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

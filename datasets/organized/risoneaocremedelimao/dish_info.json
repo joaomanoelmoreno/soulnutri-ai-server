@@ -1,6 +1,6 @@
 {
   "nome": "Risoneaocremedelimao",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Risone",
     "Queijo (possivelmente Mussarela ou similar)",
@@ -29,5 +29,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

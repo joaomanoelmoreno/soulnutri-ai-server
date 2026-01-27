@@ -2,34 +2,23 @@
   "slug": "muqueca_de_banana_da_terra",
   "nome": "Muqueca de Banana da Terra Vegana",
   "categoria": "vegano",
-  "descricao": "Uma versão vegana da tradicional muqueca brasileira, utilizando banana da terra como ingrediente principal. Preparada com leite de coco e especiarias, é um prato saboroso e nutritivo.",
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
   "ingredientes": [
-    "Banana da terra",
-    "Pimentão vermelho",
-    "Cebola",
-    "Tomate",
-    "Leite de coco",
-    "Azeite de dendê",
-    "Coentro",
-    "Alho",
-    "Sal",
-    "Pimenta do reino"
+    "ingredientes 100% vegetais"
   ],
   "beneficios": [
-    "Fonte de fibras",
-    "Rico em vitaminas e minerais",
-    "Vegano",
-    "Sem glúten"
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
   ],
   "riscos": [
-    "Alto teor de sódio (se sal em excesso)",
-    "Pode causar desconforto gastrointestinal em pessoas sensíveis devido ao azeite de dendê"
+    "Verificar fonte de B12 e ferro"
   ],
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "3g",
-    "carboidratos": "25g",
-    "gorduras": "12g"
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -37,5 +26,17 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥬"
+  "category_emoji": "🌱",
+  "tecnica": "Variada",
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ]
 }

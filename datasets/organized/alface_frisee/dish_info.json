@@ -2,21 +2,43 @@
   "nome": "Alface Frisée",
   "categoria": "vegano",
   "ingredientes": [
-    "Alface Frisée"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Alface Frisée fresca, provavelmente lavada e servida crua. Não há indícios de temperos ou outros ingredientes visíveis na imagem.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rica em fibras, auxiliando na digestão.",
-    "Fonte de vitamina K, importante para a coagulação sanguínea.",
-    "Baixa em calorias, ideal para dietas de emagrecimento."
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "A Alface Frisée, com suas folhas encaracoladas e sabor levemente amargo, é parente da chicória e é frequentemente usada em saladas, agregando textura e um toque de amargor.",
   "slug": "alface_frisee",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

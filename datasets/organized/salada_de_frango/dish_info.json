@@ -1,42 +1,46 @@
 {
   "nome": "Salada Cremosa de Frango",
   "slug": "salada_de_frango",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "frango desfiado",
-    "cenoura ralada",
-    "ervilha",
-    "milho",
-    "repolho",
-    "uva passa",
-    "cebola roxa",
-    "maionese",
-    "batata palha",
-    "tomate cereja",
-    "cheiro verde",
-    "beterraba"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Salada rica em proteínas e vegetais, ideal para uma refeição leve e nutritiva. Contém frango desfiado, vegetais e um molho cremoso.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "fonte de proteína",
-    "rico em vitaminas e minerais",
-    "baixo teor de carboidratos"
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
   "riscos": [
-    "Contém ovo (maionese)",
-    "Alto teor de sódio"
+    "Verificar higienização"
   ],
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "18g",
-    "carboidratos": "12g",
-    "gorduras": "12g"
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🍖",
-  "contem_ovo": true,
+  "category_emoji": "🌱",
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Crua",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ]
 }

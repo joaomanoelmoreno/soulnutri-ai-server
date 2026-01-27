@@ -1,6 +1,6 @@
 {
   "nome": "Nãoépossívelidentificar",
-  "categoria": "não identificado",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "A imagem não fornece informações suficientes para identificar os ingredientes ou o modo de preparo de qualquer prato. A foto mostra o interior de um restaurante, com pessoas e mobiliário, mas nenhum alimento visível.",
   "beneficios": [],
@@ -12,5 +12,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

@@ -2,27 +2,46 @@
   "nome": "Mandioquinhacomcamarao",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Mandioquinha cozida e amassada (ou creme de mandioquinha)",
-    "Camarão",
-    "Cheiro verde picado (salsa e/ou cebolinha)",
-    "Possível presença de creme de leite ou outro ingrediente cremoso"
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
   ],
-  "descricao": "Prato cremoso, provavelmente um purê ou creme de mandioquinha, com camarões cozidos misturados e cheiro verde picado para finalizar. O preparo da mandioquinha pode ser feito cozinhando e amassando, ou utilizando um creme já pronto.",
+  "descricao": "Camarão fresco, rico em proteínas.",
   "beneficios": [
-    "Camarão é fonte de proteínas de alta qualidade e selênio, um antioxidante importante.",
-    "Mandioquinha é fonte de carboidratos complexos e fibras, que promovem saciedade e auxiliam na saúde intestinal."
+    "Proteína magra",
+    "Selênio antioxidante",
+    "Iodo para tireoide",
+    "Ômega-3"
   ],
   "riscos": [
-    "Alérgeno: crustáceos (camarão)",
-    "Pode conter lactose, dependendo do preparo (presença de creme de leite).",
-    "O prato pode ter alta densidade energética, dependendo da quantidade de creme e óleo utilizados."
+    "Alérgeno: crustáceo (risco grave)",
+    "Colesterol elevado"
   ],
   "curiosidade": "A mandioquinha, também conhecida como batata-baroa, é um tubérculo rico em carboidratos e nutrientes, popular na culinária brasileira e utilizada em diversas preparações, desde purês até acompanhamentos.",
   "slug": "mandioquinhacomcamarao",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
+  },
+  "tecnica": "Grelhado ou refogado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

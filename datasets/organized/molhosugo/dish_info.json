@@ -1,6 +1,6 @@
 {
   "nome": "Molhosugo",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Tomate (ingrediente principal, provavelmente processado em molho)",
     "Possível adição de cebola e alho (ingredientes base em molhos)",
@@ -24,5 +24,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

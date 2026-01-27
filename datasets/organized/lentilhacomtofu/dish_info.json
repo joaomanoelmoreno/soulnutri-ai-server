@@ -2,31 +2,41 @@
   "nome": "Lentilhacomtofu",
   "categoria": "vegano",
   "ingredientes": [
-    "Lentilha",
-    "Tofu em cubos",
-    "Cebolinha picada",
-    "Caldo de legumes (possivelmente)",
-    "Azeite (possivelmente)",
-    "Temperos (sal, pimenta e outros)"
+    "tofu (soja)",
+    "temperos"
   ],
-  "descricao": "Prato de lentilha cozida com cubos de tofu e cebolinha picada. O tofu parece ter sido cozido ou refogado junto com a lentilha, provavelmente em um caldo temperado. O prato tem um aspecto úmido, sugerindo que foi feito com bastante líquido.",
+  "descricao": "Tofu, proteína vegetal versátil.",
   "beneficios": [
-    "Lentilha é rica em fibras, auxiliando na saúde digestiva e controle glicêmico.",
-    "Tofu é uma excelente fonte de proteína vegetal, importante para a saúde muscular.",
-    "Cebolinha adiciona vitaminas e minerais, além de sabor.",
-    "Combinação de ingredientes de baixo índice glicêmico, o que ajuda na saciedade e controle do apetite."
+    "Proteína vegetal completa",
+    "Cálcio",
+    "Isoflavonas"
   ],
   "riscos": [
-    "Pode conter sódio em excesso dependendo do tempero utilizado.",
-    "Alérgenos podem estar presentes, dependendo dos temperos e condimentos utilizados.",
-    "A lentilha pode causar gases em pessoas sensíveis"
+    "Alérgeno: soja"
   ],
   "curiosidade": "A lentilha é um dos alimentos mais antigos consumidos pela humanidade, com evidências de cultivo há mais de 8 mil anos.",
   "slug": "lentilhacomtofu",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "76 kcal",
+    "proteinas": "8g",
+    "carboidratos": "1.9g",
+    "gorduras": "4.8g"
+  },
+  "tecnica": "Grelhado ou refogado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_soja": true,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Legumes",
+    "Molho shoyu",
+    "Gengibre"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱"
 }

@@ -1,49 +1,45 @@
 {
   "slug": "bolochocolatevegano",
   "nome": "Boloc Vegano de Chocolate",
-  "categoria": "vegano",
-  "descricao": "O prato é composto por pequenos pedaços de bolo de chocolate, cobertos por uma camada de cobertura de chocolate e decorados com fatias de morango. O bolo e a cobertura, por serem veganos, não contêm ingredientes de origem animal.",
+  "categoria": "vegetariano",
+  "descricao": "Bolo caseiro tradicional.",
   "ingredientes": [
-    "Fatia de bolo de chocolate",
-    "Cobertura de chocolate (possivelmente à base de cacau, leite vegetal e açúcar)",
-    "Morango",
-    "Farinha de trigo",
-    "Chocolate (possivelmente vegano)",
-    "Açúcar (possivelmente mascavo ou de coco)",
-    "Calda de chocolate",
-    "Açúcar mascavo",
-    "Chocolate em pó",
-    "Pêra",
-    "Calda de caramelo vegana",
-    "Óleo vegetal"
+    "farinha de trigo",
+    "açúcar",
+    "ovos",
+    "manteiga",
+    "leite"
   ],
   "beneficios": [
-    "O morango é fonte de vitamina C e antioxidantes.",
-    "O cacau, presente no bolo e na cobertura, pode ter benefícios para a saúde cardiovascular.",
-    "A fruta adiciona vitaminas e antioxidantes.",
-    "Opção de sobremesa sem produtos de origem animal.",
-    "Fonte de energia",
-    "Contém antioxidantes do chocolate",
-    "Opção vegana para sobremesa"
+    "Fonte de energia"
   ],
   "riscos": [
-    "Alto teor de açúcar, proveniente do bolo e da cobertura.",
-    "Contém glúten, caso o bolo seja feito com farinha de trigo.",
-    "Contém glúten (se usar farinha de trigo)",
-    "Alto teor de açúcar.",
     "Contém glúten",
-    "Alto teor de açúcar"
+    "Alto teor de açúcar",
+    "Calórico"
   ],
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "5g",
-    "carboidratos": "50g",
-    "gorduras": "15g"
+    "calorias": "260 kcal",
+    "proteinas": "4g",
+    "carboidratos": "40g",
+    "gorduras": "10g"
   },
   "contem_gluten": true,
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado em forno",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Lanche da tarde (ocasional)",
+  "combina_com": [
+    "Café",
+    "Chá"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ],
+  "category_emoji": "🥚"
 }

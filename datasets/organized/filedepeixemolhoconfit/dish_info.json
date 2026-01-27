@@ -2,37 +2,46 @@
   "slug": "filedepeixemolhoconfit",
   "nome": "File de Peixe ao Molho Confit",
   "categoria": "proteína animal",
-  "descricao": "O prato consiste em filés de peixe cozidos em um molho feito com azeite de oliva, tomate cereja, cebola e alho, possivelmente em processo de confit (cozimento lento em gordura). As ervas frescas picadas (possivelmente salsa/salsinha) adicionam sabor e aroma. O cozimento parece ter sido feito em uma panela, em fogo baixo, permitindo que os sabores se misturem.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "Filé de peixe",
-    "Tomate cereja",
-    "Azeite de oliva",
-    "Alho",
-    "Salsa picada",
-    "Filé de peixe (não especificado)",
-    "Cebola",
-    "Ervas frescas (salsa/salsinha)"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
   "beneficios": [
-    "Rico em ômega-3, importante para a saúde cardiovascular (peixe)",
-    "Fonte de vitaminas e antioxidantes (tomate)",
-    "O alho possui propriedades anti-inflamatórias e antimicrobianas.",
-    "Peixe é fonte de ômega-3, importante para a saúde cardiovascular.",
-    "Tomate cereja é rico em licopeno, um antioxidante."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
     "Alérgeno: peixe",
-    "Pode conter espinhas, dependendo do corte do peixe",
-    "Pode conter espinhas, dependendo do tipo de peixe.",
-    "Alérgeno: peixe."
+    "Verificar procedência"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
+  "contem_frutos_mar": true,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🐟"
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ]
 }

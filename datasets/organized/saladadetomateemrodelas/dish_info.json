@@ -2,21 +2,43 @@
   "nome": "Saladadetomateemrodelas",
   "categoria": "vegano",
   "ingredientes": [
-    "Tomate",
-    "Cebolinha picada"
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
   ],
-  "descricao": "Salada simples composta por rodelas de tomate fresco, possivelmente tomate italiano, decorada com cebolinha picada. O preparo é cru, sem adição de temperos visíveis.",
+  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
-    "Rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
-    "Fonte de vitaminas A e C, que auxiliam na saúde da pele e na imunidade."
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais",
+    "Hidratação"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "O tomate é na verdade uma fruta, embora seja frequentemente usado como um vegetal em culinária.",
   "slug": "saladadetomateemrodelas",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱"
 }

@@ -1,4 +1,6 @@
 {
   "nome": "Nhoque ao Sugo",
-  "slug": "nhoqueaosugo"
+  "slug": "nhoqueaosugo",
+  "categoria": "vegano",
+  "category_emoji": "🌱"
 }

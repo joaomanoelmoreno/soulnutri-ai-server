@@ -1,6 +1,6 @@
 {
   "nome": "Espetinho Caprese",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Tomate cereja",
     "Mussarela de búfala",
@@ -26,7 +26,7 @@
     "carboidratos": "5g",
     "gorduras": "20g"
   },
-  "category_emoji": "🥚",
+  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": true
 }

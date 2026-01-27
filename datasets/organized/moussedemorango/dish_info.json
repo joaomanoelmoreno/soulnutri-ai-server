@@ -2,32 +2,40 @@
   "nome": "Mousse de Morango",
   "categoria": "vegetariano",
   "ingredientes": [
-    "Morangos frescos",
-    "Creme de leite",
-    "Leite condensado",
-    "Claras de ovo (possivelmente)",
-    "Geleia de morango (possivelmente)",
-    "Açúcar (possivelmente)"
+    "creme de leite",
+    "leite condensado",
+    "fruta"
   ],
-  "descricao": "Sobremesa cremosa, possivelmente preparada com morangos frescos, creme de leite, leite condensado, e claras de ovos, resultando em uma textura leve e areada. Apresenta pedaços de morango e possivelmente é decorado com mais morangos frescos.",
+  "descricao": "Mousse cremoso de frutas.",
   "beneficios": [
-    "Morango: Rico em vitamina C, antioxidantes e fibras, que auxiliam na saúde da pele, sistema imunológico e digestão.",
-    "Creme de leite: Fonte de gorduras que auxiliam na absorção de vitaminas lipossolúveis (A, D, E e K)."
+    "Fonte de cálcio",
+    "Energia rápida"
   ],
   "riscos": [
-    "Alto teor de açúcar devido ao leite condensado e possivelmente açúcar adicional.",
-    "Alto teor de gordura saturada proveniente do creme de leite, que, em excesso, pode aumentar o colesterol.",
-    "Alérgeno: leite"
+    "Alto teor de açúcar",
+    "Contém lactose",
+    "Calórico"
   ],
   "curiosidade": "O morango é uma fruta com baixo teor calórico e alta concentração de nutrientes, sendo uma ótima opção para incluir em dietas equilibradas.",
   "slug": "moussedemorango",
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "5g",
-    "carboidratos": "35g",
+    "calorias": "200 kcal",
+    "proteinas": "4g",
+    "carboidratos": "25g",
     "gorduras": "10g"
   },
   "category_emoji": "🥚",
   "contem_lactose": true,
-  "contem_ovo": true
+  "contem_ovo": false,
+  "tecnica": "Refrigerado",
+  "contem_gluten": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Sobremesa ocasional",
+  "combina_com": [
+    "Frutas frescas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
 }

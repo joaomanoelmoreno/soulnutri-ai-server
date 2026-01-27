@@ -1,30 +1,42 @@
 {
   "nome": "Carne Seca Com Abóbora",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
-    "Carne seca desfiada",
-    "Abóbora em cubos",
-    "Tomate cereja",
-    "Cebolinha picada",
-    "Ervas frescas (salsa/salsinha)"
+    "abóbora",
+    "sal"
   ],
-  "descricao": "Prato que apresenta carne seca desfiada, aparentemente refogada, misturada com pedaços de abóbora cozidos e finalizado com tomate cereja e cebolinha fresca picada. A carne seca pode ter sido refogada com temperos e a abóbora parece estar cozida até ficar macia.",
+  "descricao": "Abóbora nutritiva, versátil na cozinha.",
   "beneficios": [
-    "A carne seca é rica em proteínas, importantes para a construção e reparação dos tecidos do corpo.",
-    "A abóbora é fonte de fibras, que auxiliam na digestão e promovem a saciedade.",
-    "Tomate cereja e cebolinha, ricos em vitaminas e antioxidantes."
+    "Rica em betacaroteno",
+    "Vitamina A",
+    "Baixas calorias",
+    "Fibras"
   ],
   "riscos": [
-    "Alto teor de sódio na carne seca (é preciso ter moderação).",
-    "O prato pode conter alto teor de gordura, dependendo do método de preparo.",
-    "Possível presença de glúten, dependendo dos temperos utilizados."
+    "Índice glicêmico moderado"
   ],
   "curiosidade": "A carne seca, também conhecida como charque, é um método de conservação da carne muito utilizado no Brasil, especialmente nas regiões do nordeste.",
   "slug": "carne_seca_com_abobora",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "26 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6.5g",
+    "gorduras": "0.1g"
+  },
+  "tecnica": "Cozida ou assada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Curry",
+    "Gengibre",
+    "Coco"
+  ],
+  "evitar_com": [
+    "Açúcar em excesso"
+  ],
+  "category_emoji": "🌱"
 }

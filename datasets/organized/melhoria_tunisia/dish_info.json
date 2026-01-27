@@ -1,6 +1,6 @@
 {
   "nome": "Melhoria Tunísia",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Ovos cozidos",
     "Azeitonas verdes",
@@ -27,5 +27,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

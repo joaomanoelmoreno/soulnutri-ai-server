@@ -2,33 +2,40 @@
   "nome": "Sobrecoxa",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Sobrecoxa de frango",
-    "Batata",
-    "Cenoura",
-    "Tomate",
-    "Cebola",
-    "Salsa",
-    "Cebolinha",
-    "Caldo (provavelmente de frango ou legumes)",
-    "Azeite (possivelmente)",
-    "Sal e temperos a gosto (não visíveis)"
+    "sobrecoxa de frango",
+    "sal",
+    "temperos"
   ],
-  "descricao": "Prato de sobrecoxa cozida, com aparência de ter sido selada antes do cozimento para dar cor e sabor. Acompanha batatas, cenoura, tomate, cebola e um caldo que enriquece o sabor. Finalizado com salsa e cebolinha picadas.",
+  "descricao": "Sobrecoxa de frango suculenta.",
   "beneficios": [
-    "Fonte de proteína de alta qualidade (frango).",
-    "Rico em vitaminas e minerais provenientes dos vegetais (A, C, potássio)."
+    "Proteína de qualidade",
+    "Mais suculenta que o peito",
+    "Ferro"
   ],
   "riscos": [
-    "Alto teor de gordura, dependendo da quantidade de pele da sobrecoxa.",
-    "Potencialmente alto em sódio, dependendo da quantidade de sal adicionada e do caldo utilizado.",
-    "Pode conter traços de glúten, dependendo dos temperos utilizados."
+    "Maior teor de gordura que peito"
   ],
   "curiosidade": "A sobrecoxa é uma parte do frango com maior concentração de gordura, o que contribui para sua suculência e sabor. Ela pode ser cozida de diversas formas, sendo o cozimento lento em caldos uma das mais saborosas.",
   "slug": "sobrecoxa",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "190 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "9g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes assados"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

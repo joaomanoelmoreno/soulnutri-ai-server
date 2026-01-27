@@ -2,40 +2,46 @@
   "slug": "conchiglionirecheados",
   "nome": "Conchiglione Recheado com Carne ao Creme de Avelãs e Sálvia",
   "categoria": "proteína animal",
-  "descricao": "Massa conchiglione recheada com carne moída, servida em um molho cremoso de avelãs e sálvia, finalizada com queijo ralado.",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
   "ingredientes": [
-    "Massa conchiglione",
-    "Carne moída",
-    "Creme de leite",
-    "Avelãs picadas",
-    "Sálvia fresca",
-    "Queijo parmesão",
-    "Cebola",
-    "Azeite de oliva",
-    "Sal",
-    "Pimenta"
+    "carne bovina",
+    "sal",
+    "temperos"
   ],
   "beneficios": [
-    "Fonte de proteína",
-    "Rico em carboidratos",
-    "Fonte de cálcio"
+    "Proteína completa",
+    "Ferro heme de alta absorção",
+    "Vitamina B12",
+    "Zinco"
   ],
   "riscos": [
-    "Contém lactose",
-    "Contém glúten",
-    "Alto teor de gordura"
+    "Consumo excessivo associado a doenças cardiovasculares",
+    "Gordura saturada"
   ],
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "18g",
-    "carboidratos": "35g",
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
     "gorduras": "15g"
   },
-  "contem_gluten": true,
-  "contem_lactose": true,
+  "contem_gluten": false,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Outras gorduras",
+    "Frituras"
+  ]
 }

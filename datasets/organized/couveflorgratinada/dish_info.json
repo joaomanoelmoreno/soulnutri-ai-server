@@ -1,7 +1,7 @@
 {
   "slug": "couveflorgratinada",
   "nome": "Couve Flor Gratinada",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "descricao": "O prato é couve-flor cozida, coberta com molho branco e gratinada com queijo. A couve-flor aparece em pedaços visíveis, o molho branco envolve os pedaços e o queijo derretido está na superfície, com algumas áreas mais douradas devido ao gratinado.",
   "ingredientes": [
     "Couve-flor cozida",
@@ -47,5 +47,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

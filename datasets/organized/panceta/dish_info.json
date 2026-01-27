@@ -1,7 +1,7 @@
 {
   "nome": "Parcela Pururuca",
   "slug": "panceta",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Panceta suína",
     "Sal grosso",
@@ -18,7 +18,7 @@
     "Alto teor de sódio"
   ],
   "curiosidade": "O nome 'pururuca' vem do tupi e significa 'o que estoura'.",
-  "category_emoji": "🍖",
+  "category_emoji": "🌱",
   "nutricao": {
     "calorias": "450 kcal",
     "proteinas": "30g",

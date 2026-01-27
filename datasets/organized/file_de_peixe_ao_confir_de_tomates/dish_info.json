@@ -2,42 +2,46 @@
   "slug": "file_de_peixe_ao_confir_de_tomates",
   "nome": "Filé de peixe ao confir de tomates",
   "categoria": "proteína animal",
-  "descricao": "Prato que consiste em filés de peixe cozidos lentamente em azeite de oliva com tomates cereja, alho, cebola e ervas frescas. O método 'confit' é tradicionalmente utilizado para conservar alimentos, cozinhando-os em gordura a baixa temperatura, neste caso, o azeite.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
-    "Filés de peixe branco",
-    "Tomates cereja",
-    "Azeite de oliva",
-    "Alho",
-    "Cebola",
-    "Ervas frescas picadas (salsa e alecrim)",
-    "filé de peixe",
-    "tomate cereja",
-    "azeite",
-    "ervas finas",
-    "sal"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
   "beneficios": [
-    "Peixe: Rico em ômega-3, essencial para a saúde cardiovascular e cerebral.",
-    "Tomates: Boa fonte de licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
-    "Azeite de oliva: Contém gorduras saudáveis e antioxidantes.",
-    "Rico em ômega-3",
-    "Proteína magra",
-    "Antioxidantes do tomate"
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
     "Alérgeno: peixe",
-    "Contém peixe"
+    "Verificar procedência"
   ],
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "28g",
-    "carboidratos": "8g",
-    "gorduras": "10g"
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }

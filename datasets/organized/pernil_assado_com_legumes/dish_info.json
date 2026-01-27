@@ -1,6 +1,6 @@
 {
   "nome": "Pernil Assado Com Legumes",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Pernil de porco",
     "Molho vermelho (possivelmente à base de tomate)",
@@ -27,5 +27,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

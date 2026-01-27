@@ -1,6 +1,6 @@
 {
   "nome": "Cocada",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Coco ralado",
     "Açúcar",
@@ -23,5 +23,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

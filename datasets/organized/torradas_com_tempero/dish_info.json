@@ -1,7 +1,7 @@
 {
   "nome": "Torradas Temperadas",
   "slug": "torradas_com_tempero",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
     "Pão",
     "Azeite",
@@ -28,7 +28,7 @@
   },
   "contem_gluten": true,
   "contem_lactose": false,
-  "category_emoji": "🥚",
+  "category_emoji": "🌱",
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

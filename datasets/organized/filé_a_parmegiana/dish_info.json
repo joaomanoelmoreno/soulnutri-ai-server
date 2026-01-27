@@ -2,45 +2,45 @@
   "slug": "filé_a_parmegiana",
   "nome": "Filé De Frango Parmegiana",
   "categoria": "proteína animal",
-  "descricao": "O prato consiste em filés de frango empanados (não visíveis na imagem) e cozidos, cobertos com molho de tomate, queijo mussarela derretido, decorados com tomates cereja cortados ao meio e folhas frescas de manjericão. O preparo finaliza com o gratinado no forno para derreter o queijo e integrar os sabores.",
+  "descricao": "Frango preparado de forma saudável.",
   "ingredientes": [
-    "Filé de frango empanado",
-    "Molho de tomate",
-    "Queijo muçarela",
-    "Tomate cereja",
-    "Folhas de manjericão",
-    "Cebolinha (para decorar)",
-    "Filé de carne bovina empanado",
-    "Queijo mussarela",
-    "Arroz branco",
-    "Pão",
-    "Filé de frango",
-    "Folhas de manjericão fresco"
+    "frango",
+    "sal",
+    "temperos"
   ],
   "beneficios": [
-    "Fonte de proteína (frango).",
-    "A adição de tomate cereja e manjericão oferece antioxidantes e vitaminas.",
-    "A carne bovina é rica em proteínas, importantes para a construção e reparação dos tecidos.",
-    "O queijo mussarela é fonte de cálcio, essencial para a saúde óssea.",
-    "O frango é uma boa fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
-    "O tomate é rico em licopeno, um antioxidante que pode ajudar a proteger contra certos tipos de câncer.",
-    "O manjericão fresco contém antioxidantes e propriedades anti-inflamatórias."
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo do tipo de empanado usado.",
-    "Alto teor de gordura saturada, devido ao queijo e fritura/empanado.",
-    "Rico em sódio, devido ao queijo e molho de tomate industrializado.",
-    "Alto teor de gordura devido à fritura e queijo. ",
-    "Contém glúten (no empanado e pão)",
-    "Alérgeno: leite",
-    "Pode conter alto teor de sódio devido ao molho de tomate industrializado e/ou adição de sal no preparo.",
-    "Alto teor de gordura saturada, dependendo da quantidade de queijo e óleo utilizados."
+    "Verificar procedência",
+    "Evitar pele se em dieta"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "165 kcal",
+    "proteinas": "31g",
+    "carboidratos": "0g",
+    "gorduras": "3.6g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhado, assado ou cozido",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes",
+    "Arroz integral"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos",
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

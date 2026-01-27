@@ -1,6 +1,6 @@
 {
   "nome": "Frutos Do Mar",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Camarão",
     "Lula",
@@ -30,5 +30,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

@@ -1,4 +1,42 @@
 {
   "nome": "Brócolis com Parmesão",
-  "slug": "brocoliscomparmesao"
+  "slug": "brocoliscomparmesao",
+  "categoria": "vegano",
+  "ingredientes": [
+    "brócolis",
+    "sal",
+    "azeite"
+  ],
+  "beneficios": [
+    "Sulforafano anticancerígeno",
+    "Rico em vitamina C",
+    "Cálcio vegetal",
+    "Fibras"
+  ],
+  "riscos": [
+    "Pode causar gases em excesso"
+  ],
+  "nutricao": {
+    "calorias": "34 kcal",
+    "proteinas": "2.8g",
+    "carboidratos": "7g",
+    "gorduras": "0.4g"
+  },
+  "tecnica": "Vapor ou refogado",
+  "descricao": "Brócolis nutritivo, um dos vegetais mais saudáveis.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Proteínas",
+    "Alho",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Queijos gordurosos em excesso"
+  ],
+  "category_emoji": "🌱"
 }

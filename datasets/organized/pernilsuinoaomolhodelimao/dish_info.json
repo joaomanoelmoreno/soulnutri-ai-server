@@ -1,6 +1,6 @@
 {
   "nome": "Pernilsuínoaomolhodelimão",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "ingredientes": [
     "Pernil suíno",
     "Molho de limão (provavelmente com caldo de carne/legumes, limão, alho, cebola e outros temperos)",
@@ -23,5 +23,6 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "category_emoji": "🌱"
 }

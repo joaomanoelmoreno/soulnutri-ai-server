@@ -2,36 +2,45 @@
   "nome": "Peixe Ao Molho Branco",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Peixe cozido ao molho branco (possivelmente à base de creme de leite ou leite)",
-    "Abobrinha grelhada",
-    "Tomate",
-    "Folhas verdes (rúcula)",
-    "Noodles de trigo ou arroz",
-    "Rolinhos primavera com legumes",
-    "Arroz negro",
-    "Bolinho empanado com recheio (possivelmente frutos do mar)",
-    "Molho de tomate",
-    "Grãos cozidos (possivelmente quinoa ou lentilha)",
-    "Micro vegetais"
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
   ],
-  "descricao": "Prato com peixe cozido em molho branco, acompanhado por arroz negro, legumes grelhados e crus, noodles, rolinhos primavera e bolinhos. O prato oferece variedade de texturas e sabores.",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
   "beneficios": [
-    "O peixe é fonte de proteínas e ácidos graxos ômega-3, benéficos para a saúde cardiovascular.",
-    "A variedade de vegetais fornece fibras, vitaminas e minerais importantes para a saúde.",
-    "A presença de grãos integrais, como o arroz negro, contribui para a saciedade e fornece energia de liberação lenta."
+    "Ômega-3 para o coração",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
   "riscos": [
-    "Potencial presença de glúten nos noodles e no empanado.",
-    "Pode conter lactose no molho branco.",
-    "Alérgenos presentes nos frutos do mar (caso haja no bolinho)",
-    "Alto teor de sódio se os ingredientes forem processados."
+    "Alérgeno: peixe",
+    "Verificar procedência"
   ],
   "curiosidade": "O consumo de peixe regularmente está associado à melhora da saúde cerebral e à redução do risco de doenças crônicas.",
   "slug": "peixe_ao_molho_branco",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado, assado ou ao vapor",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Frituras",
+    "Molhos pesados"
+  ],
+  "category_emoji": "🍖"
 }
