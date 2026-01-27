@@ -1834,6 +1834,53 @@ async def admin_delete_dish(slug: str):
         return {"ok": False, "error": str(e)}
 
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATUALIZAÇÃO LOCAL (SEM IA, SEM CRÉDITOS)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/admin/dishes/{slug}/update-local")
+async def admin_update_dish_local(slug: str, data: dict = None):
+    """
+    Atualiza prato LOCALMENTE baseado em regras.
+    NÃO USA IA, NÃO CONSOME CRÉDITOS!
+    
+    Body opcional:
+    {
+        "new_name": "Novo Nome do Prato"
+    }
+    """
+    try:
+        from services.local_dish_updater import atualizar_prato_local
+        
+        novo_nome = data.get("new_name") if data else None
+        result = atualizar_prato_local(slug, novo_nome)
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar prato localmente: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/update-all-local")
+async def admin_update_all_local():
+    """
+    Atualiza TODOS os pratos baseado no nome.
+    NÃO USA IA, NÃO CONSOME CRÉDITOS!
+    Processa instantaneamente.
+    """
+    try:
+        from services.local_dish_updater import atualizar_todos_por_nome
+        
+        result = atualizar_todos_por_nome()
+        logger.info(f"[ADMIN] Atualização local em massa: {result['atualizados']}/{result['total']}")
+        
+        return {"ok": True, **result}
+        
+    except Exception as e:
+        logger.error(f"Erro na atualização em massa: {e}")
+        return {"ok": False, "error": str(e)}
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # AUDITORIA - Análise de qualidade dos dados dos pratos
