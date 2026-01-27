@@ -1,6 +1,6 @@
 {
   "slug": "filedepeixeaomisso",
-  "nome": "Filedepeixeaomisso",
+  "nome": "File de Peixe ao Misso ",
   "categoria": "proteína animal",
   "descricao": "O prato consiste em filés de peixe empanados e assados, possivelmente com uma crosta crocante. Há pedaços de fungos e ervas picadas salpicados. O missô pode ser usado para marinar o peixe ou para dar sabor ao empanado.",
   "ingredientes": [
@@ -14,8 +14,7 @@
     "Cogumelos (fatiados e salteados)",
     "Farinha de rosca (para empanar, possivelmente contendo glúten)",
     "Cebolinha picada (para finalizar)",
-    "Tempero (possivelmente páprica ou similar)",
-    "Óleo vegetal (para fritar/assar)"
+    "Tempero (possivelmente páprica ou similar)"
   ],
   "beneficios": [
     "Peixe é uma excelente fonte de proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular e cerebral.",
@@ -33,10 +32,12 @@
     "A forma de preparo, se frita, pode aumentar o valor calórico e a quantidade de gordura."
   ],
   "nutricao": {},
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🐟"
 }
