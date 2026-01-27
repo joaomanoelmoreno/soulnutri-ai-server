@@ -1,25 +1,32 @@
 {
   "nome": "Abóbora ao Curry",
   "categoria": "vegano",
-  "descricao": "Abóbora nutritiva, versátil na cozinha.",
+  "descricao": "Abóbora cozida em molho cremoso de curry com leite de coco e especiarias.",
   "ingredientes": [
     "abóbora",
+    "leite de coco",
+    "curry em pó",
+    "cebola",
+    "alho",
+    "gengibre",
+    "azeite",
     "sal"
   ],
   "beneficios": [
     "Rica em betacaroteno",
-    "Vitamina A",
+    "Cúrcuma anti-inflamatória",
+    "Fibras",
     "Baixas calorias",
-    "Fibras"
+    "Digestivo"
   ],
   "riscos": [
-    "Índice glicêmico moderado"
+    "Pode ser picante para alguns"
   ],
   "nutricao": {
-    "calorias": "26 kcal",
-    "proteinas": "1g",
-    "carboidratos": "6.5g",
-    "gorduras": "0.1g"
+    "calorias": "90 kcal",
+    "proteinas": "2g",
+    "carboidratos": "12g",
+    "gorduras": "4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -27,19 +34,19 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "Cozida ou assada",
+  "tecnica": "Refogado com especiarias",
   "slug": "aboboraaocurry",
   "regenerated_at": "2026-01-27T18:08:34.301928",
   "category_emoji": "🌱",
   "indice_glicemico": "moderado",
-  "tempo_digestao": "2 horas",
+  "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço",
   "combina_com": [
-    "Curry",
-    "Gengibre",
-    "Coco"
+    "Arroz",
+    "Pão naan",
+    "Vegetais grelhados"
   ],
   "evitar_com": [
-    "Açúcar em excesso"
+    "Excesso de pimenta se tiver gastrite"
   ]
 }
