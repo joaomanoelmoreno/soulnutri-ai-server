@@ -20,6 +20,7 @@ os.environ["USE_CUDA"] = "0"
 os.environ["FORCE_CPU"] = "1"
 
 from datetime import datetime
+import json
 from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
