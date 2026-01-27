@@ -1,9 +1,9 @@
 {
-  "nome": "Empadas",
+  "nome": "Pastel",
   "slug": "empadas",
-  "categoria": "",
+  "categoria": "outros",
   "ingredientes": [],
-  "descricao": "",
+  "descricao": "Pode ser de carne, queijo, frango com requiejao ou camarao",
   "beneficios": [],
   "riscos": [],
   "nutricao": {
@@ -12,6 +12,12 @@
     "carboidratos": "",
     "gorduras": ""
   },
-  "contem_gluten": false,
-  "contem_lactose": false
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🍽️"
 }
