@@ -1,44 +1,41 @@
 {
   "slug": "lasanha_vegana_beringela_e_proteina_de_soja",
-  "nome": "Lasanha vegana (beringela e proteína de soja)",
+  "nome": "Lasanha Vegana de Berinjela com Proteína de Soja",
   "categoria": "vegano",
-  "descricao": "Lasanha vegana com camadas de berinjela grelhada (ou assada), molho à base de proteína de soja refogada com tomate, cebola, alho e temperos, e finalizada com queijo vegano ralado e cebolinha picada. O preparo envolve o refogado dos ingredientes do molho, o cozimento da berinjela e a montagem das camadas na travessa, levando ao forno para gratinar.",
+  "descricao": "Lasanha vegana feita com camadas de berinjela, proteína de soja texturizada ao molho de tomate e queijo vegano ralado. Uma opção saborosa e nutritiva para uma refeição completa.",
   "ingredientes": [
-    "Berinjela (fatiada)",
-    "Proteína de soja (texturizada)",
-    "Molho de tomate",
-    "Cebolinha (picada)",
-    "Queijo vegano ralado",
-    "Berinjela",
-    "Proteína de soja",
-    "Tomate",
-    "Cebola",
-    "Alho",
-    "Salsinha",
-    "Cebolinha",
-    "Azeite de oliva",
-    "Tempero a gosto (sal, pimenta, etc.)"
+    "Berinjela fatiada",
+    "Proteína de soja texturizada",
+    "Molho de tomate caseiro",
+    "Cebola picada",
+    "Alho picado",
+    "Azeite de oliva extra virgem",
+    "Queijo vegano ralado (à base de castanhas ou tofu)",
+    "Salsinha picada",
+    "Cebolinha picada",
+    "Temperos (sal, pimenta do reino, orégano)"
   ],
   "beneficios": [
-    "Rica em fibras (berinjela)",
-    "Fonte de proteína vegetal (proteína de soja)",
-    "Opção com baixo teor de gordura saturada (se preparado com azeite de oliva)",
-    "Baixo teor de gorduras saturadas (versão vegana)",
-    "Opção mais leve e com menos colesterol comparada à lasanha tradicional"
+    "Fonte de fibras",
+    "Rica em proteínas vegetais",
+    "Baixo teor de gordura saturada",
+    "Fonte de vitaminas e minerais"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo do preparo da proteína de soja e molho de tomate.",
-    "Alergênicos: verificar composição do queijo vegano (amêndoas, castanhas, etc).",
-    "Pode conter glúten dependendo da marca da proteína de soja e do queijo vegano utilizado",
-    "Possível presença de sódio em excesso, dependendo da quantidade de temperos industrializados utilizados",
-    "Alergênicos podem estar presentes nos ingredientes utilizados (soja, traços de outros alimentos)",
-    "Pode ser calórico dependendo do tipo e quantidade de queijo vegano e azeite utilizados"
+    "Contém soja (alergênico)",
+    "Alto teor de sódio (dependendo do tempero e do queijo vegano)"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "15g",
+    "carboidratos": "25g",
+    "gorduras": "10g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_castanhas": false,
+  "contem_castanhas": true,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": true,
+  "category_emoji": "🥬"
 }

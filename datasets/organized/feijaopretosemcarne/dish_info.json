@@ -1,35 +1,38 @@
 {
   "slug": "feijaopretosemcarne",
-  "nome": "Feijaopretosemcarne",
-  "categoria": "vegano",
-  "descricao": "Prato tradicional brasileiro, o feijão preto é cozido com carne salgada e linguiça. O preparo geralmente envolve o cozimento lento em água, resultando em um caldo espesso e saboroso. A carne e linguiça são cozidas com o feijão, liberando seus sabores no caldo.",
+  "nome": "Feijoada",
+  "categoria": "proteína animal",
+  "descricao": "Prato tradicional brasileiro, cozido lentamente com feijão preto e diversas partes do porco.",
   "ingredientes": [
     "Feijão preto",
+    "carne de porco salgada",
+    "linguiça",
+    "bacon",
     "cebola",
-    "salsa picada",
-    "Carne seca (possivelmente)",
-    "Linguiça (possivelmente)",
-    "Gordura animal (possivelmente)"
+    "alho",
+    "louro",
+    "pimenta do reino"
   ],
   "beneficios": [
-    "Rico em ferro, importante para a prevenção da anemia.",
-    "Fonte de fibras, auxiliando na saúde intestinal e no controle do colesterol.",
-    "Boa fonte de proteína vegetal, importante para a saúde e o funcionamento do organismo.",
-    "Fonte de proteínas (carne)",
-    "Fonte de fibras (feijão)",
-    "Rico em ferro (feijão e carne)"
+    "Fonte de proteína",
+    "Rico em ferro",
+    "Fonte de fibras"
   ],
   "riscos": [
-    "Pode causar gases e inchaço em pessoas com sensibilidade a leguminosas.",
-    "Alto teor de sódio (principalmente devido à carne seca)",
-    "Alto teor de gordura saturada (dependendo dos tipos de carne e linguiça)",
-    "Contém glúten (possível, dependendo da linguiça)"
+    "Alto teor de sódio",
+    "Alto teor de gordura saturada"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "450 kcal",
+    "proteinas": "30g",
+    "carboidratos": "40g",
+    "gorduras": "20g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🍖"
 }
