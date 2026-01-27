@@ -1,0 +1,28 @@
+{
+  "nome": "Frango ao Creme de Limao",
+  "slug": "frango_ao_creme_de_limao",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Frango cozido em creme, geralmente com ervas frescas.",
+  "ingredientes": [
+    "Peito de frango",
+    "Creme de leite",
+    "Salsa",
+    "Alho",
+    "Cebola"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Leite",
+    "Alto teor de gordura",
+    "Alérgeno: LACTOSE (creme, leite)"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}
