@@ -1,27 +1,34 @@
 {
+  "slug": "saladeovos",
   "nome": "Saladeovos",
   "categoria": "vegetariano",
+  "descricao": "Salada de ovos preparada com ovos cozidos picados e misturados com maionese, cebolinha picada e páprica para decorar. Os ovos são cozidos, geralmente em água fervente, até que a gema esteja firme. A maionese pode ser caseira ou comprada, adicionando sabor e cremosidade à salada.",
   "ingredientes": [
     "Ovos cozidos",
     "Cebolinha picada",
-    "Páprica em pó"
+    "Páprica em pó",
+    "Maionese",
+    "Páprica doce (para decorar)"
   ],
-  "descricao": "Salada de ovos feita com ovos cozidos picados e misturados, aparentemente com um pouco de gema desfeita para dar cremosidade, decorada com cebolinha picada e páprica em pó. Ovos cozidos podem ser preparados de diversas formas, como cozidos em água fervente ou no vapor.",
   "beneficios": [
     "Fonte de proteína de alta qualidade",
     "Contém colina, importante para a saúde cerebral",
-    "Os ovos são ricos em vitaminas e minerais essenciais."
+    "Os ovos são ricos em vitaminas e minerais essenciais.",
+    "Contém colina, importante para a saúde do cérebro",
+    "Ovos são ricos em vitaminas e minerais"
   ],
   "riscos": [
     "Alto teor de colesterol (na gema)",
-    "Alérgeno: ovo"
+    "Alérgeno: ovo",
+    "Alto teor de gordura e calorias (dependendo da quantidade de maionese)",
+    "Alérgeno: ovos",
+    "Potencial risco de contaminação por Salmonella se os ovos não forem bem cozidos"
   ],
-  "curiosidade": "O ovo cozido é uma excelente fonte de proteína, com todos os aminoácidos essenciais, e sua digestão é facilitada pelo cozimento.",
-  "slug": "saladeovos",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
