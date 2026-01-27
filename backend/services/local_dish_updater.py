@@ -646,22 +646,83 @@ def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
 
 
 def detectar_categoria_basica(nome: str) -> str:
-    """Detecta categoria básica pelo nome"""
+    """Detecta categoria básica pelo nome, considerando versões veganas"""
     nome_lower = nome.lower()
     
+    # PRIMEIRO: Verificar se é explicitamente VEGANO
+    # Se tiver "vegano/vegana" no nome, é vegano independente de ter "queijo", "leite" etc
+    if "vegano" in nome_lower or "vegana" in nome_lower or "vegan" in nome_lower:
+        return "vegano"
+    
+    # Versões veganas de ingredientes (não são de origem animal)
+    versoes_veganas = [
+        "queijo vegano", "queijo de castanha", "queijo de caju", "queijo de coco",
+        "leite de coco", "leite de amêndoa", "leite de soja", "leite de aveia",
+        "leite vegetal", "creme de coco", "cream cheese vegano", "requeijão vegano",
+        "maionese vegana", "manteiga vegana", "iogurte vegano", "nata de coco"
+    ]
+    
+    # Se tiver versão vegana no nome, é vegano
+    for versao in versoes_veganas:
+        if versao in nome_lower:
+            return "vegano"
+    
+    # Proteínas animais
     proteinas = ["frango", "peixe", "carne", "boi", "camarão", "salmão", "atum",
-                 "bacalhau", "costela", "maminha", "filé", "bacon", "linguiça", "pernil"]
-    vegetarianos = ["queijo", "ovo", "leite", "iogurte", "manteiga", "gratinado"]
+                 "bacalhau", "costela", "maminha", "filé", "bacon", "linguiça", "pernil",
+                 "porco", "suíno", "cordeiro", "pato", "peru"]
     
     for p in proteinas:
         if p in nome_lower:
             return "proteína animal"
     
-    for v in vegetarianos:
-        if v in nome_lower and "vegan" not in nome_lower:
-            return "vegetariano"
+    # Derivados animais (só se NÃO for versão vegana)
+    derivados = ["queijo", "ovo", "leite", "iogurte", "manteiga", "gratinado", 
+                 "cream cheese", "requeijão", "mussarela", "parmesão"]
+    
+    for d in derivados:
+        if d in nome_lower:
+            # Verificar se não é versão vegana
+            eh_vegano = False
+            for versao in versoes_veganas:
+                if versao in nome_lower:
+                    eh_vegano = True
+                    break
+            if not eh_vegano:
+                return "vegetariano"
     
     return "vegano"
+
+
+def detectar_alergenos_por_nome(nome: str) -> dict:
+    """Detecta alérgenos pelo nome, considerando versões veganas"""
+    nome_lower = nome.lower()
+    
+    # Versões veganas (não têm lactose)
+    versoes_veganas_lactose = [
+        "queijo vegano", "leite de coco", "leite de amêndoa", "leite de soja",
+        "leite vegetal", "creme de coco", "cream cheese vegano", "requeijão vegano",
+        "manteiga vegana", "iogurte vegano", "nata de coco", "vegano", "vegana"
+    ]
+    
+    # Verificar se é versão vegana
+    eh_versao_vegana = any(v in nome_lower for v in versoes_veganas_lactose)
+    
+    # Palavras que indicam lactose (só se não for versão vegana)
+    tem_lactose = False
+    if not eh_versao_vegana:
+        palavras_lactose = ["queijo", "leite", "creme de leite", "manteiga", 
+                           "iogurte", "nata", "requeijão", "gratinado"]
+        tem_lactose = any(p in nome_lower for p in palavras_lactose)
+    
+    return {
+        "contem_gluten": any(p in nome_lower for p in ["trigo", "farinha", "pão", "massa", "macarrão", "lasanha", "empanado"]),
+        "contem_lactose": tem_lactose,
+        "contem_ovo": any(p in nome_lower for p in ["ovo", "gema", "clara", "maionese"]) and "vegano" not in nome_lower,
+        "contem_castanhas": any(p in nome_lower for p in ["castanha", "amêndoa", "nozes", "amendoim"]),
+        "contem_frutos_mar": any(p in nome_lower for p in ["camarão", "lagosta", "siri", "lula", "polvo"]),
+        "contem_soja": any(p in nome_lower for p in ["soja", "tofu", "shoyu"]),
+    }
 
 
 def atualizar_todos_por_nome() -> dict:
