@@ -224,6 +224,11 @@ def validar_categoria(
     """
     Valida e corrige a categoria do prato baseado nos ingredientes detectados.
     
+    MELHORIAS:
+    - Diferencia queijo vegano de queijo comum
+    - Ignora ingredientes em contexto de decoração
+    - Trata versões plant-based corretamente
+    
     Returns:
         Tuple[categoria_corrigida, proteinas_encontradas, derivados_encontrados]
     """
@@ -232,10 +237,26 @@ def validar_categoria(
     texto_norm = normalizar_texto(texto_completo)
     
     # Detectar proteínas animais
-    proteinas = detectar_ingredientes_texto(texto_completo, PROTEINA_ANIMAL)
+    proteinas_raw = detectar_ingredientes_texto(texto_completo, PROTEINA_ANIMAL)
+    
+    # FILTRO: Remover proteínas que estão em contexto de decoração
+    proteinas = [p for p in proteinas_raw if not esta_em_contexto_ignorado(texto_completo, p)]
     
     # Detectar derivados animais (ovo, leite, etc)
-    derivados = detectar_ingredientes_texto(texto_completo, DERIVADOS_ANIMAIS)
+    derivados_raw = detectar_ingredientes_texto(texto_completo, DERIVADOS_ANIMAIS)
+    
+    # FILTRO: Remover derivados que são versões veganas ou estão em decoração
+    derivados = []
+    for d in derivados_raw:
+        # Pular se é versão vegana
+        if verificar_versao_vegana(texto_completo, d):
+            logger.info(f"[SMART] Ingrediente '{d}' identificado como VERSÃO VEGANA em '{nome_prato}'")
+            continue
+        # Pular se está em contexto de decoração
+        if esta_em_contexto_ignorado(texto_completo, d):
+            logger.info(f"[SMART] Ingrediente '{d}' em CONTEXTO DE DECORAÇÃO, ignorando em '{nome_prato}'")
+            continue
+        derivados.append(d)
     
     categoria_original = normalizar_texto(categoria_ia)
     categoria_corrigida = categoria_ia
