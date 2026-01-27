@@ -578,11 +578,14 @@ function App() {
         riscos: result.riscos || [],
         alergenos: {
           gluten: result.contem_gluten,
-          lactose: result.contem_lactose
+          lactose: result.contem_lactose,
+          ovo: result.contem_ovo,
+          castanhas: result.contem_castanhas,
+          frutosMar: result.contem_frutos_mar
         },
         score: result.score
       };
-      console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display);
+      console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
         const updated = [...prev, newItem];
         console.log('[DEBUG] plateItems agora tem', updated.length, 'itens');
