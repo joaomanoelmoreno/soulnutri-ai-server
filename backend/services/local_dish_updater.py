@@ -759,7 +759,7 @@ def detectar_alergenos_por_nome(nome: str) -> dict:
         tem_lactose = any(p in nome_lower for p in palavras_lactose)
     
     return {
-        "contem_gluten": any(p in nome_lower for p in ["trigo", "farinha", "pão", "massa", "macarrão", "lasanha", "empanado"]),
+        "contem_gluten": any(p in nome_lower for p in ["trigo", "farinha", "pão", "massa", "macarrão", "lasanha", "empanado"]) and "arroz" not in nome_lower and "vietnamita" not in nome_lower,
         "contem_lactose": tem_lactose,
         "contem_ovo": any(p in nome_lower for p in ["ovo", "gema", "clara", "maionese"]) and "vegano" not in nome_lower,
         "contem_castanhas": any(p in nome_lower for p in ["castanha", "amêndoa", "nozes", "amendoim"]),
