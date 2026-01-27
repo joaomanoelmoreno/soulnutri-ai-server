@@ -626,6 +626,11 @@ def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
         cat = detectar_categoria_basica(nome)
         current_info['categoria'] = cat
         
+        # Detectar alérgenos pelo nome (considera versões veganas)
+        alergenos = detectar_alergenos_por_nome(nome)
+        for key, value in alergenos.items():
+            current_info[key] = value
+        
         if "proteína" in cat:
             current_info['category_emoji'] = "🍖"
         elif "vegetariano" in cat:
@@ -634,6 +639,13 @@ def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
             current_info['category_emoji'] = "🌱"
         
         status = "Atualizado com regras básicas"
+    
+    # CORREÇÃO FINAL: Se o nome tem "vegano", forçar categoria e alérgenos
+    nome_lower = nome.lower()
+    if "vegano" in nome_lower or "vegana" in nome_lower:
+        current_info['categoria'] = "vegano"
+        current_info['contem_lactose'] = False
+        current_info['category_emoji'] = "🌱"
     
     with open(info_path, 'w', encoding='utf-8') as f:
         json.dump(current_info, f, ensure_ascii=False, indent=2)

@@ -6,9 +6,9 @@
   "ingredientes": [
     "farinha de trigo",
     "açúcar",
-    "ovos",
-    "manteiga",
-    "leite"
+    "cacau",
+    "linhaca",
+    "leite vegetal"
   ],
   "beneficios": [
     "Fonte de energia"
@@ -41,5 +41,5 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }
