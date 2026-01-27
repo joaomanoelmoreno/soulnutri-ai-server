@@ -985,6 +985,13 @@ export default function Admin() {
                         >
                           ✏️
                         </button>
+                        <button 
+                          className="delete-btn small"
+                          onClick={() => deleteDish(p.slug, p.nome)}
+                          title="Excluir prato"
+                        >
+                          🗑️
+                        </button>
                       </div>
                     ))}
                   </div>
