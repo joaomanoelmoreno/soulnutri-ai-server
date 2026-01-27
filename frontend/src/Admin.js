@@ -157,6 +157,81 @@ export default function Admin() {
     }
   };
 
+  // CONSOLIDAR DUPLICADOS (sem créditos)
+  const consolidateDuplicates = async () => {
+    if (!window.confirm('🔗 Consolidar pratos duplicados?\n\nIsso vai:\n• Mesclar pratos com nomes similares\n• Unir todas as imagens\n• Preservar a informação mais completa\n\n✅ NÃO CONSOME CRÉDITOS')) {
+      return;
+    }
+    
+    setConsolidating(true);
+    setMassActionResult(null);
+    try {
+      const res = await fetch(`${API}/admin/consolidate-all`, { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        setMassActionResult({
+          type: 'consolidate',
+          success: true,
+          message: `✅ ${data.consolidated || 0} grupos consolidados!`
+        });
+        loadDishes();
+        runAudit();
+      } else {
+        setMassActionResult({
+          type: 'consolidate',
+          success: false,
+          message: '❌ Erro: ' + data.error
+        });
+      }
+    } catch (e) {
+      setMassActionResult({
+        type: 'consolidate',
+        success: false,
+        message: '❌ Erro: ' + e.message
+      });
+    } finally {
+      setConsolidating(false);
+    }
+  };
+
+  // ATUALIZAR TODOS OS PRATOS LOCALMENTE (sem créditos)
+  const updateAllLocal = async () => {
+    if (!window.confirm('🔄 Atualizar TODOS os pratos?\n\nIsso vai preencher:\n• Categoria\n• Ingredientes\n• Benefícios e Riscos\n• Informação Nutricional\n• Alérgenos\n• Campos Premium\n\n✅ NÃO CONSOME CRÉDITOS\n⚡ Processo instantâneo')) {
+      return;
+    }
+    
+    setUpdatingAll(true);
+    setMassActionResult(null);
+    try {
+      const res = await fetch(`${API}/admin/update-all-local`, { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        setMassActionResult({
+          type: 'update',
+          success: true,
+          message: `✅ ${data.atualizados}/${data.total} pratos atualizados!`,
+          details: data.por_tipo
+        });
+        loadDishes();
+        runAudit();
+      } else {
+        setMassActionResult({
+          type: 'update',
+          success: false,
+          message: '❌ Erro: ' + data.error
+        });
+      }
+    } catch (e) {
+      setMassActionResult({
+        type: 'update',
+        success: false,
+        message: '❌ Erro: ' + e.message
+      });
+    } finally {
+      setUpdatingAll(false);
+    }
+  };
+
   // Corrigir pratos em lote
   const batchFixDishes = async (problemType) => {
     if (!auditData) return;
