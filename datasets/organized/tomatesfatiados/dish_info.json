@@ -1,9 +1,9 @@
 {
-  "nome": "Tomates Fatiados com Cebolinha",
+  "nome": "Tomates Fatiados",
   "categoria": "vegano",
   "ingredientes": [
     "Tomates",
-    "Cebolinha picada"
+    "Cebolinha"
   ],
   "descricao": "Prato simples e refrescante com fatias de tomate e cebolinha picada.",
   "beneficios": [
@@ -21,5 +21,10 @@
   },
   "category_emoji": "🥬",
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
 }
