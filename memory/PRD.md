@@ -17,61 +17,55 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 - **Backend**: FastAPI + IA (OpenCLIP local + Gemini fallback)
 - **Dados**: Filesystem (/app/datasets/organized/[slug]/dish_info.json)
 
-## O que foi implementado (26/01/2025)
+## O que foi implementado
 
-### ✅ Ferramenta de Auditoria de Dados
-- Endpoint GET `/api/admin/audit` - Analisa todos os 503 pratos
-- Identifica: nomes Unknown, nutrição vazia, conflitos de categoria, alérgenos incorretos
-- Health Score: atualmente 4.2% (483 pratos com problemas)
+### 26/01/2025 - Ferramenta de Auditoria
+- Endpoint GET `/api/admin/audit` - Analisa todos os pratos
+- Correção com IA via POST `/api/admin/audit/fix-single/{slug}`
+- Interface Admin com aba "Auditoria"
 
-### ✅ Correção com IA (Gemini)
-- Endpoint POST `/api/admin/audit/fix-single/{slug}` - Corrige 1 prato
-- Endpoint POST `/api/admin/audit/batch-fix` - Corrige até 10 pratos em lote
-- Prompt rigoroso para preencher: nome, categoria, ingredientes, nutrição, alérgenos
-- Testado e funcionando (ex: "Unknowntomatesfatiados" → "Tomates Fatiados com Cebolinha")
+### 27/01/2025 - Correções e Melhorias
+- **Bug "body stream already read"** - Corrigido no frontend
+- **Leite de coco = VEGANO** - Prompt da IA atualizado
+- **Novos alérgenos no Admin**: Lactose, Ovo, Castanhas, Frutos do Mar, Soja
+- **Lista para impressão**: `/lista-pratos.html` com 308 pratos únicos
+- **Auditoria inteligente**: Não considera "leite de coco" como conflito vegano
 
-### ✅ Interface Admin
-- Nova aba "Auditoria" em /admin
-- Dashboard com Health Score e resumo de problemas
-- Botões para correção individual (🤖) e em lote
-- CSS estilizado para visualização clara
+## Problemas de Dados (27/01)
+- 308 pratos únicos catalogados
+- ~90 pratos com "Unknown" no nome
+- Muitos duplicados com nomes ligeiramente diferentes
+- Usuário revisou manualmente até letra C
 
-## Problemas de Dados Identificados
-| Tipo | Quantidade |
-|------|------------|
-| Sem arquivo dish_info.json | 130 |
-| Nutrição vazia | 353 |
-| Nomes "Unknown" | 15 |
-| Conflitos de categoria | 18 |
-| Alérgenos incorretos | 64 |
+## Decisões Pendentes
+
+### Pratos Múltiplos (Buffet vs À la carte)
+**Problema:** Em buffets, clientes montam combinações infinitas. Salvar essas fotos complica o reconhecimento.
+
+**Solução proposta:**
+1. Detectar múltiplos itens → reconhecer individualmente
+2. NÃO salvar combinação como novo "prato"
+3. Apenas pratos individuais padronizados vão para o dataset
 
 ## Backlog Prioritizado
 
 ### P0 - Crítico
-- [ ] Corrigir dados em lote (usar botões de auditoria)
-- [ ] Validar fluxo no celular (usuário reportou bug)
-- [ ] Otimizar velocidade da IA (reduzir uso do Gemini)
+- [ ] Usuário testar Admin e fazer deploy
+- [ ] Corrigir pratos restantes com IA em lote
 
 ### P1 - Alto
-- [ ] Refatorar App.js em componentes menores
-- [ ] Completar i18n (textos hardcoded)
-- [ ] Padronizar cores área Premium
-- [ ] Implementar funcionalidade Galeria
+- [ ] Consolidar nomes duplicados
+- [ ] Implementar lógica de pratos múltiplos
+- [ ] Otimizar velocidade da IA
 
 ### P2 - Médio
-- [ ] Resolver travamentos mobile (camera lifecycle)
-- [ ] Adicionar botão "Voltar" em todas as telas
-- [ ] Sistema de pagamentos (Stripe/Apple/Google)
-- [ ] Trial de 7 dias
+- [ ] Refatorar App.js em componentes
+- [ ] Completar i18n
+- [ ] Sistema de pagamentos
 
 ## Endpoints Principais
-- `POST /api/ai/identify` - Identificar prato por imagem
+- `POST /api/ai/identify` - Identificar prato
 - `GET /api/admin/audit` - Auditoria de dados
-- `POST /api/admin/audit/fix-single/{slug}` - Corrigir prato com IA
-- `POST /api/admin/audit/batch-fix` - Correção em lote
-- `POST /api/admin/dish/{slug}` - Salvar edição manual
-
-## Notas Técnicas
-- OpenCLIP precisa score ≥90% para responder sem Gemini
-- Gemini fallback adiciona 3-5s de latência
-- Premium gerenciado via /app/backend/data/premium_users.json
+- `POST /api/admin/audit/fix-single/{slug}` - Corrigir com IA
+- `PUT /api/admin/dishes/{slug}` - Salvar edição manual
+- `GET /lista-pratos.html` - Lista para impressão
