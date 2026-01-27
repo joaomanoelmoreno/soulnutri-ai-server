@@ -1345,13 +1345,6 @@ function App() {
           🖼️ {t('gallery', 'Galeria')} {photoGallery.length > 0 && `(${photoGallery.length})`}
         </button>
         <button 
-          className="action-btn upload" 
-          onClick={() => fileInputRef.current?.click()}
-          data-testid="upload-button"
-        >
-          📤 Upload
-        </button>
-        <button 
           className="action-btn clear" 
           onClick={() => { clearResult(); clearPlate(); setViewMode('buffet'); }}
           disabled={!r && !multiResult && !error && plateItems.length === 0}
