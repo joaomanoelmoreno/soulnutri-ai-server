@@ -12,23 +12,23 @@
     "Pimenta do reino",
     "Rodelas de cebola roxa (para decoração)"
   ],
-  "descricao": "Salada refrescante e nutritiva à base de feijão fradinho, tomate, cebola e cheiro verde. Ideal para acompanhar diversos pratos ou ser consumida como uma refeição leve.",
+  "descricao": "Salada refrescante e nutritiva feita com feijão fradinho, tomate, cebola roxa e temperos frescos. Ideal para acompanhar refeições leves ou como prato principal.",
   "beneficios": [
-    "Fonte de proteína vegetal",
     "Rico em fibras",
+    "Fonte de proteína vegetal",
     "Baixo índice glicêmico",
     "Fonte de vitaminas e minerais"
   ],
   "riscos": [
-    "Contém feijão (alergênico para algumas pessoas)",
-    "Pode causar gases em pessoas sensíveis"
+    "Pode causar gases em pessoas sensíveis",
+    "Atenção ao teor de sódio"
   ],
   "curiosidade": "O feijão fradinho é uma leguminosa muito utilizada na culinária brasileira, especialmente em pratos típicos do Nordeste. É uma excelente fonte de nutrientes e versátil no preparo de diversas receitas.",
   "slug": "salada_de_feijao_fradinho",
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "12g",
-    "carboidratos": "25g",
+    "calorias": "190 kcal",
+    "proteinas": "13g",
+    "carboidratos": "27g",
     "gorduras": "5g"
   },
   "category_emoji": "🥬",

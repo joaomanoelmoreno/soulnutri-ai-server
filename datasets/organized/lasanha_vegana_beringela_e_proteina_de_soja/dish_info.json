@@ -2,7 +2,7 @@
   "slug": "lasanha_vegana_beringela_e_proteina_de_soja",
   "nome": "Lasanha Vegana de Berinjela com Proteína de Soja",
   "categoria": "vegano",
-  "descricao": "Lasanha vegana feita com camadas de berinjela, proteína de soja texturizada ao molho de tomate e queijo vegano ralado. Uma opção saborosa e nutritiva para uma refeição completa.",
+  "descricao": "Lasanha vegana com camadas de berinjela e proteína de soja, coberta com queijo vegetal e ervas frescas.",
   "ingredientes": [
     "Berinjela fatiada",
     "Proteína de soja texturizada",
@@ -13,23 +13,25 @@
     "Queijo vegano ralado (à base de castanhas ou tofu)",
     "Salsinha picada",
     "Cebolinha picada",
-    "Temperos (sal, pimenta do reino, orégano)"
+    "Temperos (sal, pimenta do reino, orégano)",
+    "Azeite",
+    "Manjericão"
   ],
   "beneficios": [
-    "Fonte de fibras",
-    "Rica em proteínas vegetais",
+    "Fonte de proteína vegetal",
+    "Rico em fibras",
     "Baixo teor de gordura saturada",
-    "Fonte de vitaminas e minerais"
+    "Opção sem lactose"
   ],
   "riscos": [
-    "Contém soja (alergênico)",
-    "Alto teor de sódio (dependendo do tempero e do queijo vegano)"
+    "Contém soja (alérgeno)",
+    "Pode conter castanhas (alérgeno, dependendo do queijo vegetal)"
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "15g",
-    "carboidratos": "25g",
-    "gorduras": "10g"
+    "calorias": "280 kcal",
+    "proteinas": "18g",
+    "carboidratos": "28g",
+    "gorduras": "12g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

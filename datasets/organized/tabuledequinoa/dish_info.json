@@ -14,23 +14,25 @@
     "Pimenta síria",
     "Fatias de pepino (decoração)"
   ],
-  "descricao": "Salada fresca e nutritiva feita com quinoa, vegetais picados e temperada com azeite e limão. Ótima opção para uma refeição leve e saudável.",
+  "descricao": "Salada refrescante e nutritiva à base de quinoa, vegetais frescos e ervas aromáticas. Ideal para uma refeição leve e saudável.",
   "beneficios": [
     "Fonte de proteína vegetal",
     "Rico em fibras",
-    "Fonte de vitaminas e minerais",
+    "Contém vitaminas e minerais",
+    "Baixo índice glicêmico",
     "Antioxidante"
   ],
   "riscos": [
-    "Nenhum risco conhecido, desde que consumido com moderação"
+    "Pessoas com alergia a algum dos ingredientes",
+    "Consumo excessivo pode causar desconforto gastrointestinal devido ao alto teor de fibras"
   ],
   "curiosidade": "A quinoa é um pseudocereal nativo da região dos Andes, conhecido por sua alta qualidade nutricional. É uma ótima alternativa para quem busca substituir o trigo e o arroz em suas refeições.",
   "slug": "tabuledequinoa",
   "nutricao": {
-    "calorias": "150 kcal",
-    "proteinas": "5g",
-    "carboidratos": "20g",
-    "gorduras": "6g"
+    "calorias": "180 kcal",
+    "proteinas": "6g",
+    "carboidratos": "22g",
+    "gorduras": "8g"
   },
   "category_emoji": "🥬",
   "contem_gluten": false,

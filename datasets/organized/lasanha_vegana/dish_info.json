@@ -1,31 +1,38 @@
 {
-  "nome": "Lasanha vegana",
+  "nome": "Lasanha Vegana de Grão de Bico",
   "categoria": "vegano",
   "ingredientes": [
-    "Massa de lasanha (provavelmente à base de trigo)",
+    "Massa de lasanha (à base de trigo)",
     "Molho de tomate",
-    "Recheio à base de proteína vegetal (possivelmente soja, grão de bico ou lentilha)",
+    "Grão de bico",
     "Queijo vegano ralado",
     "Ervas frescas (salsa e cebolinha)",
-    "Azeite de oliva (possivelmente usado no preparo)",
-    "Temperos (não especificados, mas comuns em lasanhas)"
+    "Azeite de oliva",
+    "Temperos (alho, cebola, orégano)"
   ],
-  "descricao": "Lasanha vegana preparada com massa, recheio de proteína vegetal e coberta com queijo vegano ralado e ervas frescas. O preparo provavelmente envolve montagem em camadas e cozimento no forno.",
+  "descricao": "Lasanha vegana com massa de trigo, recheio de grão de bico e molho de tomate caseiro, coberta com queijo vegano.",
   "beneficios": [
-    "Opção sem produtos de origem animal, ideal para veganos e vegetarianos.",
-    "Boa fonte de fibras, dependendo da quantidade de vegetais e da qualidade da massa.",
-    "Pode ser rica em proteínas, dependendo do tipo de proteína vegetal usada no recheio."
+    "Fonte de fibras",
+    "Rica em proteínas vegetais",
+    "Opção sem ingredientes de origem animal"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo da massa utilizada.",
-    "O valor nutricional varia dependendo dos ingredientes, podendo ser alta em sódio e gorduras saturadas."
+    "Contém glúten",
+    "Alto teor de sódio (dependendo do molho de tomate e queijo vegano)"
   ],
   "curiosidade": "A lasanha é um prato italiano que ganhou diversas adaptações ao redor do mundo, incluindo versões veganas. A proteína vegetal é uma alternativa nutritiva e saborosa para substituir a carne.",
   "slug": "lasanha_vegana",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "250 kcal",
+    "proteinas": "12g",
+    "carboidratos": "30g",
+    "gorduras": "10g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true
 }
