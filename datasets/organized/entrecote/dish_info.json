@@ -1,12 +1,13 @@
 {
+  "slug": "entrecote",
   "nome": "Entrecote",
   "categoria": "proteína animal",
+  "descricao": "Entrecôte suculento e saboroso.",
   "ingredientes": [
     "entrecôte",
     "sal grosso",
     "ervas"
   ],
-  "descricao": "Entrecôte suculento e saboroso.",
   "beneficios": [
     "Rico em proteínas",
     "Ferro",
@@ -15,8 +16,6 @@
   "riscos": [
     "Gordura moderada"
   ],
-  "curiosidade": "O entrecôte é um corte retirado do miolo do contrafilé, conhecido pela maciez e sabor. O nome vem do francês, que significa \"entre as costelas\".",
-  "slug": "entrecote",
   "nutricao": {
     "calorias": "250 kcal",
     "proteinas": "25g",
@@ -28,15 +27,5 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "Grelhado",
-  "category_emoji": "🍖",
-  "indice_glicemico": "zero",
-  "tempo_digestao": "4 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Batatas",
-    "Salada"
-  ],
-  "evitar_com": []
+  "contem_soja": false
 }

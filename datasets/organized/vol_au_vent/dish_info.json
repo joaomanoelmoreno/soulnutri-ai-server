@@ -1,6 +1,16 @@
 {
-  "nome": "Vol au Vent",
   "slug": "vol_au_vent",
+  "nome": "Vol au Vent",
   "categoria": "vegano",
-  "category_emoji": "🌱"
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

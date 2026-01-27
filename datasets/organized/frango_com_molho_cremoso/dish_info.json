@@ -1,40 +1,38 @@
 {
-  "nome": "Frango Com Molho Cremoso",
   "slug": "frango_com_molho_cremoso",
-  "categoria": "proteína animal",
+  "nome": "Gnocchi Com Molho Cremoso",
+  "categoria": "vegetariano",
+  "descricao": "Frango preparado de forma saudável.",
   "ingredientes": [
-    "frango",
+    "batata",
+    "farinha de trigo",
+    "ovo",
     "sal",
+    "frango",
     "temperos"
   ],
-  "descricao": "Frango preparado de forma saudável.",
   "beneficios": [
+    "Fonte de energia",
+    "Carboidratos",
     "Proteína magra de alta qualidade",
     "Rico em vitaminas B",
     "Baixo teor de gordura"
   ],
   "riscos": [
+    "Contém glúten",
+    "Contém ovo",
     "Verificar procedência"
   ],
   "nutricao": {
-    "calorias": "165 kcal",
-    "proteinas": "31g",
-    "carboidratos": "0g",
-    "gorduras": "3.6g"
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
-  "tecnica": "Grelhado ou assado",
-  "contem_ovo": false,
-  "indice_glicemico": "zero",
-  "tempo_digestao": "3-4 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Saladas",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ],
-  "category_emoji": "🍖"
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

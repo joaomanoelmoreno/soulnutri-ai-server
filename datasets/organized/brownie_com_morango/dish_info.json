@@ -1,7 +1,8 @@
 {
-  "nome": "Brownie Com Morango",
   "slug": "brownie_com_morango",
+  "nome": "Brownie Com Morango",
   "categoria": "vegano",
+  "descricao": "Bolo caseiro tradicional.",
   "ingredientes": [
     "farinha de trigo",
     "açúcar",
@@ -9,7 +10,6 @@
     "manteiga",
     "leite"
   ],
-  "descricao": "Bolo caseiro tradicional.",
   "beneficios": [
     "Fonte de energia"
   ],
@@ -26,17 +26,8 @@
   },
   "contem_gluten": true,
   "contem_lactose": true,
-  "tecnica": "Assado em forno",
   "contem_ovo": true,
-  "indice_glicemico": "alto",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Lanche da tarde (ocasional)",
-  "combina_com": [
-    "Café",
-    "Chá"
-  ],
-  "evitar_com": [
-    "Outras sobremesas"
-  ],
-  "category_emoji": "🌱"
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

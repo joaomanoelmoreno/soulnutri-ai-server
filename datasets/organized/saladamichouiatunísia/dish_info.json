@@ -1,14 +1,14 @@
 {
-  "nome": "Saladamichouiatunísia",
   "slug": "saladamichouiatunísia",
+  "nome": "Saladamichouiatunísia",
   "categoria": "vegano",
+  "descricao": "Salada fresca e nutritiva.",
   "ingredientes": [
     "alface",
     "tomate",
     "pepino",
     "cenoura"
   ],
-  "descricao": "Salada fresca e nutritiva.",
   "beneficios": [
     "Baixíssimas calorias",
     "Rica em fibras",
@@ -25,17 +25,8 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "tecnica": "Crua",
   "contem_ovo": false,
-  "indice_glicemico": "muito baixo",
-  "tempo_digestao": "1-2 horas",
-  "melhor_horario": "Qualquer",
-  "combina_com": [
-    "Proteínas",
-    "Azeite"
-  ],
-  "evitar_com": [
-    "Molhos calóricos"
-  ],
-  "category_emoji": "🌱"
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

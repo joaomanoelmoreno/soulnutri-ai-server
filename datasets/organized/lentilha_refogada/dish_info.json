@@ -1,5 +1,5 @@
 {
-  "nome": "Lentilha com Tofu Defumado",
+  "nome": "Lentilha com Tofu",
   "slug": "lentilha_refogada",
   "categoria": "vegano",
   "ingredientes": [
@@ -26,7 +26,7 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

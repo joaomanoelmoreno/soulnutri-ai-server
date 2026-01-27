@@ -1,14 +1,14 @@
 {
-  "nome": "Gnocchi Ao Molho Branco",
   "slug": "gnocchi_ao_molho_branco",
+  "nome": "Gnocchi Ao Molho Branco Com Queijo",
   "categoria": "vegetariano",
+  "descricao": "Gnocchi de batata italiano.",
   "ingredientes": [
     "batata",
     "farinha de trigo",
     "ovo",
     "sal"
   ],
-  "descricao": "Gnocchi de batata italiano.",
   "beneficios": [
     "Fonte de energia",
     "Carboidratos"
@@ -25,17 +25,8 @@
   },
   "contem_gluten": true,
   "contem_lactose": false,
-  "category_emoji": "🥚",
-  "tecnica": "Cozido em água",
   "contem_ovo": true,
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Molho de tomate",
-    "Gorgonzola"
-  ],
-  "evitar_com": [
-    "Molhos gordurosos"
-  ]
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

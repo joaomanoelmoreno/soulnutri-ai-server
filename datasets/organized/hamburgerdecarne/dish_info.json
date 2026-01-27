@@ -1,13 +1,13 @@
 {
-  "nome": "Hamburgerdecarne",
   "slug": "hamburgerdecarne",
+  "nome": "Hamburgerdecarne",
   "categoria": "proteína animal",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
   "ingredientes": [
     "carne bovina",
     "sal",
     "temperos"
   ],
-  "descricao": "Carne bovina, fonte de proteína e ferro.",
   "beneficios": [
     "Proteína completa",
     "Ferro heme",
@@ -25,17 +25,8 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "tecnica": "Grelhado ou assado",
   "contem_ovo": false,
-  "indice_glicemico": "zero",
-  "tempo_digestao": "4-5 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Saladas",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Outras gorduras"
-  ],
-  "category_emoji": "🍖"
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

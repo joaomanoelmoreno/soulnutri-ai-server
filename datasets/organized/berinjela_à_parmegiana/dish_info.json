@@ -1,14 +1,14 @@
 {
-  "nome": "Berinjela À Parmegiana",
   "slug": "berinjela_à_parmegiana",
+  "nome": "Berinjela À Parmegiana",
   "categoria": "vegano",
+  "descricao": "Berinjela preparada de forma saudável.",
   "ingredientes": [
     "berinjela",
     "azeite",
     "alho",
     "sal"
   ],
-  "descricao": "Berinjela preparada de forma saudável.",
   "beneficios": [
     "Baixas calorias",
     "Rica em fibras",
@@ -23,15 +23,8 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱",
-  "tecnica": "Grelhada ou assada",
   "contem_ovo": false,
-  "indice_glicemico": "baixo",
-  "tempo_digestao": "2 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Queijo",
-    "Tomate"
-  ],
-  "evitar_com": []
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

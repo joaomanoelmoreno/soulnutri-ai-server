@@ -1,7 +1,8 @@
 {
-  "nome": "Lentilha",
   "slug": "lentilha",
+  "nome": "Lentilha com Tofu",
   "categoria": "vegano",
+  "descricao": "Lentilha nutritiva, símbolo de prosperidade.",
   "ingredientes": [
     "lentilha",
     "água",
@@ -9,7 +10,6 @@
     "alho",
     "cebola"
   ],
-  "descricao": "Lentilha nutritiva, símbolo de prosperidade.",
   "beneficios": [
     "Alta proteína vegetal",
     "Rico em ferro",
@@ -26,15 +26,10 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱",
-  "tecnica": "Cozida",
   "contem_ovo": false,
-  "indice_glicemico": "baixo",
-  "tempo_digestao": "3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Arroz",
-    "Legumes"
-  ],
-  "evitar_com": []
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }

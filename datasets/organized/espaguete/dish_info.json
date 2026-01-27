@@ -1,12 +1,13 @@
 {
+  "slug": "espaguete",
   "nome": "Espaguete",
   "categoria": "vegano",
+  "descricao": "Massa italiana tradicional.",
   "ingredientes": [
     "massa de trigo",
     "molho de tomate",
     "azeite"
   ],
-  "descricao": "Massa italiana tradicional.",
   "beneficios": [
     "Fonte de energia",
     "Carboidratos complexos"
@@ -15,28 +16,16 @@
     "Contém glúten",
     "Alto índice glicêmico"
   ],
-  "curiosidade": "O espaguete é um tipo de massa seca italiana, e o termo 'spaghetti' é o plural de 'spaghetto', que significa 'fio' ou 'barbante' em italiano.",
-  "slug": "espaguete",
   "nutricao": {
     "calorias": "131 kcal",
     "proteinas": "5g",
     "carboidratos": "25g",
     "gorduras": "1g"
   },
-  "tecnica": "Cozimento em água",
   "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Molho de tomate",
-    "Legumes",
-    "Proteínas"
-  ],
-  "evitar_com": [
-    "Molhos muito gordurosos"
-  ],
-  "category_emoji": "🌱"
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

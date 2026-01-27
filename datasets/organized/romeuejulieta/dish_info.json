@@ -1,18 +1,25 @@
 {
-  "nome": "Romeuejulieta",
   "slug": "romeuejulieta",
+  "nome": "Romeuejulieta",
   "categoria": "vegano",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "descricao": "O prato 'Romeu e Julieta' é uma combinação clássica da culinária brasileira, consistindo em goiabada e queijo branco. Na imagem, vemos a goiabada em formato de geleia em um pote e um creme de queijo branco.",
+  "ingredientes": [
+    "Goiabada",
+    "Queijo branco"
+  ],
+  "beneficios": [
+    "A goiabada é rica em fibras, que auxiliam na digestão.",
+    "O queijo branco é fonte de cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Alto teor de açúcar na goiabada.",
+    "Pessoas com intolerância à lactose devem consumir com moderação."
+  ],
+  "nutricao": {},
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱"
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

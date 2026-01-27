@@ -1,5 +1,5 @@
 {
-  "nome": "Lentilha Refogada Com Tofu",
+  "nome": "Lentilha Com Tofu",
   "slug": "lentilha_refogada_com_tofu",
   "categoria": "vegano",
   "ingredientes": [
@@ -37,5 +37,7 @@
     "Legumes"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false
 }

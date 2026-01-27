@@ -1,18 +1,16 @@
 {
-  "nome": "Suflê De Legumes Com Queijo",
   "slug": "suflê_de_legumes_com_queijo",
+  "nome": "Suflê De Legumes Com Queijo",
   "categoria": "vegetariano",
-  "ingredientes": [],
   "descricao": "",
+  "ingredientes": [],
   "beneficios": [],
   "riscos": [],
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🥚"
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

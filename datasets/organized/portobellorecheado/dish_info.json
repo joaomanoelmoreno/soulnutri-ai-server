@@ -1,38 +1,30 @@
 {
+  "slug": "portobellorecheado",
   "nome": "Portobellorecheado",
   "categoria": "vegano",
+  "descricao": "Cogumelo portobello, substituto de carne.",
   "ingredientes": [
     "cogumelo portobello",
     "azeite",
     "alho",
     "ervas"
   ],
-  "descricao": "Cogumelo portobello, substituto de carne.",
   "beneficios": [
     "Baixas calorias",
     "Proteína vegetal",
     "Rico em minerais"
   ],
   "riscos": [],
-  "curiosidade": "O cogumelo portobello é um cogumelo marrom grande, uma versão mais madura do cogumelo branco comum, com sabor mais intenso e textura carnuda, tornando-o um ótimo substituto de carne em pratos vegetarianos.",
-  "slug": "portobellorecheado",
   "nutricao": {
     "calorias": "22 kcal",
     "proteinas": "2g",
     "carboidratos": "4g",
     "gorduras": "0.4g"
   },
-  "category_emoji": "🌱",
-  "tecnica": "Grelhado ou recheado",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "indice_glicemico": "muito baixo",
-  "tempo_digestao": "2 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Queijo",
-    "Ervas"
-  ],
-  "evitar_com": []
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

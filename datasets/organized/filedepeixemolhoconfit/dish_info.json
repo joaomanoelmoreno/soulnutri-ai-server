@@ -1,6 +1,6 @@
 {
   "slug": "filedepeixemolhoconfit",
-  "nome": "File de Peixe ao Molho Confit",
+  "nome": "File de Peixe ao Molho de Frutas",
   "categoria": "proteína animal",
   "descricao": "Peixe fresco, fonte de ômega-3.",
   "ingredientes": [
@@ -28,17 +28,5 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false,
-  "tecnica": "Grelhado ou assado",
-  "category_emoji": "🍖",
-  "indice_glicemico": "zero",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Limão",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ]
+  "contem_soja": false
 }

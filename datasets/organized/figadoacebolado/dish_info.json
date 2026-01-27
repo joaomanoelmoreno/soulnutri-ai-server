@@ -1,9 +1,12 @@
 {
   "slug": "figadoacebolado",
-  "nome": "Sobrecosa ao Tandoori",
-  "categoria": "vegano",
-  "descricao": "",
+  "nome": "Sobrecoxa Ao Tandori",
+  "categoria": "proteína animal",
+  "descricao": "Sobrecoxa de frango suculenta.",
   "ingredientes": [
+    "sobrecoxa de frango",
+    "sal",
+    "temperos",
     "Fígado bovino",
     "Cebola",
     "Pimenta",
@@ -17,6 +20,8 @@
     "Alho (possível)"
   ],
   "beneficios": [
+    "Proteína de qualidade",
+    "Mais suculenta que o peito",
     "O fígado é rico em ferro, importante para prevenir e tratar anemias.",
     "Fonte de vitaminas do complexo B, essenciais para o metabolismo energético e saúde do sistema nervoso.",
     "O fígado é rico em ferro, essencial para a prevenção da anemia.",
@@ -25,6 +30,7 @@
     "A cebola contém antioxidantes que combatem os radicais livres."
   ],
   "riscos": [
+    "Maior teor de gordura que peito",
     "Alto teor de colesterol, deve ser consumido com moderação.",
     "Pessoas com gota devem evitar devido ao alto teor de purinas.",
     "O fígado pode ser rico em colesterol.",
@@ -33,13 +39,16 @@
     "Pessoas com problemas de gota devem moderar o consumo de fígado.",
     "Pode conter glúten, dependendo do tempero utilizado."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "190 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "9g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🌱"
+  "contem_soja": false
 }
