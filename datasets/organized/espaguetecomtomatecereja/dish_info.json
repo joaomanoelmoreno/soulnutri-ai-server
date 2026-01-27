@@ -1,6 +1,6 @@
 {
   "slug": "espaguetecomtomatecereja",
-  "nome": "Spaghetticomtomatecerejaemanjericão",
+  "nome": "Espaguete",
   "categoria": "vegano",
   "descricao": "Prato de massa italiana, onde o spaghetti é cozido e misturado com tomates cereja cortados ao meio, folhas de manjericão fresco e possivelmente azeite de oliva e temperos.",
   "ingredientes": [
@@ -41,5 +41,7 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }
