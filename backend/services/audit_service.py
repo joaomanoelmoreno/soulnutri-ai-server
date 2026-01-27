@@ -140,9 +140,24 @@ def audit_all_dishes() -> Dict[str, Any]:
         ingredientes_lower = [i.lower() for i in ingredientes]
         ingredientes_text = ' '.join(ingredientes_lower)
         
+        # Função para verificar se ingrediente é de origem animal (excluindo versões vegetais)
+        def tem_ingrediente_animal(ing, texto):
+            # Não considerar "leite de coco", "leite de soja", etc. como leite animal
+            if ing == 'leite de vaca':
+                # Verifica se tem "leite" mas não é vegetal
+                if 'leite' in texto:
+                    vegetais = ['leite de coco', 'leite de soja', 'leite de amêndoas', 
+                               'leite de aveia', 'leite de arroz', 'leite vegetal']
+                    for v in vegetais:
+                        if v in texto:
+                            return False
+                    return True
+                return False
+            return ing in texto
+        
         if categoria == 'vegano':
             for ing in INGREDIENTES_ANIMAL:
-                if ing in ingredientes_text:
+                if tem_ingrediente_animal(ing, ingredientes_text):
                     problems['category_conflicts'].append({
                         'slug': slug,
                         'nome': nome,
