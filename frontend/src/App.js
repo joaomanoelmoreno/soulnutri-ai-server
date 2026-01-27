@@ -180,6 +180,12 @@ function App() {
   const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
   const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
   const [viewMode, setViewMode] = useState('buffet'); // 'buffet' = vista rápida, 'mesa' = vista completa
+  // Galeria de fotos capturadas
+  const [photoGallery, setPhotoGallery] = useState(() => {
+    const saved = localStorage.getItem('soulnutri_gallery');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [showGalleryView, setShowGalleryView] = useState(false); // Modal galeria
   // Modo Scanner Contínuo para Buffet (DESATIVADO - usando modo foto simples)
   const [scannerMode, setScannerMode] = useState(false); // Desativado por padrão
   const [lastScanTime, setLastScanTime] = useState(0);
