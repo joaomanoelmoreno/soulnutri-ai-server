@@ -1815,3 +1815,42 @@ iframe[src*="emergent"], div[style*="Made with"] {
 .action-btn.upload {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
 }
+
+/* Detalhes por item na vista mesa */
+.mesa-items-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.mesa-item-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  border-left: 3px solid #22c55e;
+}
+
+.mesa-item-detail .item-name {
+  flex: 2;
+  font-weight: 500;
+  color: #fff;
+}
+
+.mesa-item-detail .item-cal {
+  flex: 1;
+  text-align: center;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.mesa-item-detail .item-cat {
+  flex: 1;
+  text-align: right;
+  color: #888;
+  font-size: 12px;
+  text-transform: capitalize;
+}
