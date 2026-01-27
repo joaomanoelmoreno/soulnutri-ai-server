@@ -1,0 +1,17 @@
+{
+  "nome": "Lentilha Com Legumes",
+  "slug": "lentilha_com_legumes",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

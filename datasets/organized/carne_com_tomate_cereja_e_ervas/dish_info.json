@@ -1,0 +1,17 @@
+{
+  "nome": "Carne Com Tomate Cereja E Ervas",
+  "slug": "carne_com_tomate_cereja_e_ervas",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

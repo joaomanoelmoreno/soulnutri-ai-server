@@ -1,0 +1,17 @@
+{
+  "nome": "Carne Com Tomates E Ervas",
+  "slug": "carne_com_tomates_e_ervas",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

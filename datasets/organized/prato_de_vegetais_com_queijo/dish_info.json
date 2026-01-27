@@ -1,0 +1,17 @@
+{
+  "nome": "Prato De Vegetais Com Queijo",
+  "slug": "prato_de_vegetais_com_queijo",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

@@ -1,0 +1,17 @@
+{
+  "nome": "Mini Polpetone",
+  "slug": "mini_polpetone",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

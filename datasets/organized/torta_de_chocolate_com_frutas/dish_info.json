@@ -1,0 +1,17 @@
+{
+  "nome": "Torta De Chocolate Com Frutas",
+  "slug": "torta_de_chocolate_com_frutas",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

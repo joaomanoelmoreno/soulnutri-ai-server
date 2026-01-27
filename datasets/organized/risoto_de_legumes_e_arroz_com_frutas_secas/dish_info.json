@@ -1,0 +1,17 @@
+{
+  "nome": "Risoto De Legumes E Arroz Com Frutas Secas",
+  "slug": "risoto_de_legumes_e_arroz_com_frutas_secas",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

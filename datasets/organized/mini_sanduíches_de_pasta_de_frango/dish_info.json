@@ -1,0 +1,17 @@
+{
+  "nome": "Mini Sanduíches De Pasta De Frango",
+  "slug": "mini_sanduíches_de_pasta_de_frango",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

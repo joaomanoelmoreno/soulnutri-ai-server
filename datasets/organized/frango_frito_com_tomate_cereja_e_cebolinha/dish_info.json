@@ -1,0 +1,17 @@
+{
+  "nome": "Frango Frito Com Tomate Cereja E Cebolinha",
+  "slug": "frango_frito_com_tomate_cereja_e_cebolinha",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

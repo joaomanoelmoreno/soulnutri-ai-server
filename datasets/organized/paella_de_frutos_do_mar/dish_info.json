@@ -1,0 +1,17 @@
+{
+  "nome": "Paella De Frutos Do Mar",
+  "slug": "paella_de_frutos_do_mar",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

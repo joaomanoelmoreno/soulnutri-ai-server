@@ -1,0 +1,17 @@
+{
+  "nome": "Prato Com Legumes E Queijo",
+  "slug": "prato_com_legumes_e_queijo",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

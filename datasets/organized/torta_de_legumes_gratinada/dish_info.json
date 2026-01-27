@@ -1,0 +1,17 @@
+{
+  "nome": "Torta De Legumes Gratinada",
+  "slug": "torta_de_legumes_gratinada",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

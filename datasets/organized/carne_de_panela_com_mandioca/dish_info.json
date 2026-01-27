@@ -1,0 +1,17 @@
+{
+  "nome": "Carne De Panela Com Mandioca",
+  "slug": "carne_de_panela_com_mandioca",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

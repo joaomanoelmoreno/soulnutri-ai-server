@@ -1,0 +1,17 @@
+{
+  "nome": "Prato Com Queijo E Cebolinha",
+  "slug": "prato_com_queijo_e_cebolinha",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

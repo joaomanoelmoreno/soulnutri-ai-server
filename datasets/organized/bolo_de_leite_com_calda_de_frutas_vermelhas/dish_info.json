@@ -1,0 +1,17 @@
+{
+  "nome": "Bolo De Leite Com Calda De Frutas Vermelhas",
+  "slug": "bolo_de_leite_com_calda_de_frutas_vermelhas",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}

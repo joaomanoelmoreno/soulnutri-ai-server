@@ -1,0 +1,17 @@
+{
+  "nome": "Prato Com Queijo Ralado",
+  "slug": "prato_com_queijo_ralado",
+  "categoria": "",
+  "ingredientes": [],
+  "descricao": "",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "",
+    "proteinas": "",
+    "carboidratos": "",
+    "gorduras": ""
+  },
+  "contem_gluten": false,
+  "contem_lactose": false
+}
