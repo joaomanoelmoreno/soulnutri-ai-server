@@ -1289,7 +1289,19 @@ export default function Admin() {
           <div className="edit-modal-full" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>✏️ Editar: {editingDish.nome}</h2>
-              <button className="close-btn" onClick={() => setEditingDish(null)}>✕</button>
+              <div className="modal-header-actions">
+                <button 
+                  className="delete-dish-btn"
+                  onClick={() => {
+                    deleteDish(editingDish.slug, editingDish.nome);
+                    setEditingDish(null);
+                  }}
+                  title="Excluir este prato"
+                >
+                  🗑️ Excluir Prato
+                </button>
+                <button className="close-btn" onClick={() => setEditingDish(null)}>✕</button>
+              </div>
             </div>
             
             <div className="modal-body">
