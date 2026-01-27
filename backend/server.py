@@ -1762,6 +1762,69 @@ async def admin_batch_fix_dishes(request: dict):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.get("/admin/duplicates")
+async def get_duplicate_groups():
+    """Retorna grupos de pratos duplicados para consolidação"""
+    try:
+        from services.audit_service import find_duplicate_groups
+        
+        grupos = find_duplicate_groups()
+        return {"ok": True, "groups": grupos, "total_groups": len(grupos)}
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar duplicados: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/consolidate")
+async def consolidate_dishes(request: dict):
+    """Consolida um grupo de pratos duplicados"""
+    try:
+        from services.audit_service import consolidate_duplicate_dishes
+        
+        group = request.get("group", [])
+        if len(group) < 2:
+            return {"ok": False, "error": "Grupo precisa ter pelo menos 2 slugs"}
+        
+        result = await consolidate_duplicate_dishes(group)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao consolidar: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/consolidate-all")
+async def consolidate_all_duplicates():
+    """Consolida todos os grupos de duplicados automaticamente"""
+    try:
+        from services.audit_service import find_duplicate_groups, consolidate_duplicate_dishes
+        
+        grupos = find_duplicate_groups()
+        results = {"consolidated": [], "failed": []}
+        
+        for group in grupos[:20]:  # Limitar a 20 grupos por vez
+            try:
+                result = await consolidate_duplicate_dishes(group)
+                if result.get("ok"):
+                    results["consolidated"].append(result["main_slug"])
+                else:
+                    results["failed"].append({"group": group, "error": result.get("error")})
+            except Exception as e:
+                results["failed"].append({"group": group, "error": str(e)})
+        
+        return {
+            "ok": True,
+            "consolidated_count": len(results["consolidated"]),
+            "failed_count": len(results["failed"]),
+            "results": results
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro na consolidação em massa: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # INTERNACIONALIZAÇÃO - Suporte a múltiplos idiomas (GRATUITO com LibreTranslate)
 # ═══════════════════════════════════════════════════════════════════════════════
