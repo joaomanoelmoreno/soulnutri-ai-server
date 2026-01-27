@@ -1,31 +1,41 @@
 {
-  "nome": "Frutos Do Mar Ao Molho Branco",
+  "nome": "Frutos do Mar ao Molho Branco",
   "categoria": "proteína animal",
   "ingredientes": [
     "Camarão",
     "Mexilhão",
     "Vieiras",
+    "Lula",
     "Tomate cereja",
     "Cebolinha",
-    "Molho branco (possivelmente à base de leite, farinha e manteiga)",
-    "Ervas frescas"
+    "Molho branco (leite, farinha, manteiga)",
+    "Ervas frescas",
+    "Azeite de oliva"
   ],
-  "descricao": "Prato com frutos do mar cozidos em molho branco, acompanhado de tomate cereja e cebolinha picada para finalizar. O camarão parece estar grelhado. O molho branco provavelmente foi feito com leite, farinha e manteiga.",
+  "descricao": "Prato com diversos frutos do mar preparados ao molho branco cremoso, geralmente servido como entrada ou prato principal.",
   "beneficios": [
-    "Os frutos do mar são fontes de proteínas de alta qualidade e ricos em ômega-3, importante para a saúde cardiovascular.",
-    "O molho branco, dependendo dos ingredientes, pode fornecer cálcio e gorduras que auxiliam na absorção de vitaminas lipossolúveis."
+    "Fonte de proteína magra",
+    "Rico em ômega-3",
+    "Fonte de vitaminas e minerais"
   ],
   "riscos": [
-    "Alérgeno: crustáceos (camarão)",
-    "Potencialmente contém glúten (se o molho branco for feito com farinha de trigo)",
-    "Intolerantes à lactose devem verificar os ingredientes do molho branco"
+    "Contém lactose",
+    "Alto teor de sódio (dependendo do preparo)",
+    "Possível alergia a frutos do mar"
   ],
   "curiosidade": "O camarão é rico em astaxantina, um antioxidante que dá a cor avermelhada e oferece proteção contra danos celulares.",
   "slug": "frutos_do_mar_ao_molho_branco",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "250 kcal",
+    "proteinas": "25g",
+    "carboidratos": "10g",
+    "gorduras": "12g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false
 }

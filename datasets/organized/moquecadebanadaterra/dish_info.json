@@ -1,33 +1,44 @@
 {
-  "nome": "Moquecadebanadaterra",
+  "nome": "Moqueca de Banana da Terra com Cogumelos",
   "categoria": "vegano",
   "ingredientes": [
     "Banana da terra em rodelas",
+    "Cogumelos",
     "Leite de coco",
     "Tomate picado",
-    "Pimentão picado (provavelmente vermelho e amarelo)",
+    "Pimentão picado (vermelho e amarelo)",
     "Cebola picada",
     "Azeite de dendê",
     "Coentro fresco picado",
-    "Pimenta (possivelmente dedo-de-moça)",
-    "Alho picado"
+    "Pimenta (dedo-de-moça)",
+    "Alho picado",
+    "Azeite de oliva",
+    "Cebolinha"
   ],
-  "descricao": "Moqueca feita com banana da terra como ingrediente principal, cozida em um molho cremoso à base de leite de coco, azeite de dendê, tomates, pimentões, cebola, alho, pimenta e coentro. A banana da terra é cozida no molho, absorvendo os sabores e resultando em um prato com textura macia e sabor adocicado.",
+  "descricao": "Uma versão vegana da moqueca, substituindo o peixe por banana da terra e cogumelos. Cremosa e saborosa, perfeita para uma refeição nutritiva e vegana.",
   "beneficios": [
-    "Banana da terra: rica em fibras, potássio e vitaminas B6 e C.",
-    "Leite de coco: fonte de gorduras saudáveis e antioxidantes.",
-    "Tomate e Pimentão: ricos em vitaminas, antioxidantes e carotenoides."
+    "Rica em fibras",
+    "Fonte de vitaminas e minerais",
+    "Vegano",
+    "Baixo índice glicêmico"
   ],
   "riscos": [
-    "Alergênicos podem estar presentes dependendo dos ingredientes adicionais.",
-    "Alto teor calórico devido ao azeite de dendê e leite de coco, se consumido em excesso."
+    "Azeite de dendê (alto teor de gordura saturada)",
+    "Pessoas com alergia a banana"
   ],
   "curiosidade": "A moqueca é um prato de origem africana e indígena, muito popular no Brasil, com variações regionais. A banana da terra é uma fruta que, quando cozida, adquire um sabor adocicado e uma textura macia, tornando-a um substituto interessante em diversos pratos.",
   "slug": "moquecadebanadaterra",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "220 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "12g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

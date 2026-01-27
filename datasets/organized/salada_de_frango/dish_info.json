@@ -1,17 +1,42 @@
 {
-  "nome": "Salada De Frango",
+  "nome": "Salada Cremosa de Frango",
   "slug": "salada_de_frango",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "frango desfiado",
+    "cenoura ralada",
+    "ervilha",
+    "milho",
+    "repolho",
+    "uva passa",
+    "cebola roxa",
+    "maionese",
+    "batata palha",
+    "tomate cereja",
+    "cheiro verde",
+    "beterraba"
+  ],
+  "descricao": "Salada rica em proteínas e vegetais, ideal para uma refeição leve e nutritiva. Contém frango desfiado, vegetais e um molho cremoso.",
+  "beneficios": [
+    "fonte de proteína",
+    "rico em vitaminas e minerais",
+    "baixo teor de carboidratos"
+  ],
+  "riscos": [
+    "Contém ovo (maionese)",
+    "Alto teor de sódio"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "220 kcal",
+    "proteinas": "18g",
+    "carboidratos": "12g",
+    "gorduras": "12g"
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🍖",
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,17 +1,36 @@
 {
-  "nome": "Torradas Com Tempero",
+  "nome": "Torradas Temperadas",
   "slug": "torradas_com_tempero",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Pão",
+    "Azeite",
+    "Alho",
+    "Ervas finas",
+    "Sal"
+  ],
+  "descricao": "Torradas crocantes com temperos, ideais para petiscar ou acompanhar refeições.",
+  "beneficios": [
+    "Fonte de energia rápida",
+    "Pode ser uma opção de snack para celíacos (se pão sem glúten)",
+    "Rico em carboidratos"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alto teor de sódio (dependendo da quantidade de sal)",
+    "Pode conter lactose (dependendo do pão)"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "250 kcal",
+    "proteinas": "6g",
+    "carboidratos": "35g",
+    "gorduras": "10g"
   },
-  "contem_gluten": false,
-  "contem_lactose": false
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "category_emoji": "🥚",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

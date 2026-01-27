@@ -1,13 +1,36 @@
 {
-  "nome": "Arroz 7 Grãos com Legumes",
+  "nome": "Arroz com Damasco e Uva Passa",
   "slug": "arroz7graoscomlegumes",
   "categoria": "vegano",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "nutricao": {},
+  "descricao": "Arroz integral misturado com damascos e uvas passas, oferecendo um sabor adocicado e nutritivo.",
+  "ingredientes": [
+    "arroz integral",
+    "damasco",
+    "uva passa",
+    "cebolinha",
+    "azeite"
+  ],
+  "beneficios": [
+    "fonte de fibras",
+    "energia de longa duração",
+    "rico em vitaminas"
+  ],
+  "riscos": [
+    "Alergia a algum ingrediente",
+    "Moderação no consumo (açúcar natural das frutas)"
+  ],
+  "nutricao": {
+    "calorias": "150 kcal",
+    "proteinas": "3g",
+    "carboidratos": "30g",
+    "gorduras": "2g"
+  },
   "contem_gluten": false,
   "tecnica": "",
-  "category_emoji": "🥬"
+  "category_emoji": "🥬",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

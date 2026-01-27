@@ -1,32 +1,38 @@
 {
-  "nome": "Beringela ao Curry e kincam",
+  "nome": "Berinjela Caramelizada com Tomates e Cebola",
   "categoria": "vegano",
   "ingredientes": [
-    "Beringela",
+    "Berinjela",
     "Tomates cereja",
     "Cebola",
     "Cebolinha picada",
-    "Temperos (provavelmente curry)",
-    "Azeite de oliva"
+    "Azeite de oliva",
+    "Açúcar (para caramelizar)",
+    "Especiarias (a definir)"
   ],
-  "descricao": "Prato vegano que consiste em berinjelas, tomates cereja e cebolas salteadas em azeite de oliva e temperadas, possivelmente com curry. A cebolinha picada é utilizada para finalizar e trazer frescor ao prato. O modo de preparo visível é o refogado, onde os ingredientes são cozidos em uma panela com azeite.",
+  "descricao": "Prato vegano saboroso e nutritivo com berinjela caramelizada, tomates cereja e cebola, finalizado com cebolinha fresca.",
   "beneficios": [
-    "A berinjela é rica em antioxidantes, como as antocianinas, que combatem os radicais livres.",
-    "Tomates cereja são fontes de licopeno, um antioxidante associado à saúde cardiovascular."
+    "Fonte de fibras",
+    "Rico em antioxidantes",
+    "Baixo índice glicêmico"
   ],
   "riscos": [
-    "Pode conter sódio em excesso, dependendo da quantidade de temperos utilizados.",
-    "Alérgenos podem estar presentes nos temperos."
+    "Nenhum em moderação"
   ],
   "curiosidade": "A berinjela é um alimento versátil que pode ser preparado de diversas maneiras, absorvendo bem os sabores dos temperos.",
   "slug": "beringelaaocurrykincam",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "150 kcal",
+    "proteinas": "2g",
+    "carboidratos": "15g",
+    "gorduras": "9g"
   },
   "contem_gluten": false,
   "tecnica": "",
-  "category_emoji": "🥬"
+  "category_emoji": "🥬",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

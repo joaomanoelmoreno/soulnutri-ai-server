@@ -1,5 +1,5 @@
 {
-  "nome": "Rolinho Vietnamita De Legumes",
+  "nome": "Rolinho Vietnamita de Legumes Frescos",
   "categoria": "vegano",
   "ingredientes": [
     "Papel de arroz",
@@ -7,25 +7,33 @@
     "Cenoura ralada",
     "Pepino em julienne",
     "Folhas de hortelã",
-    "Rodelas de abobrinha"
+    "Abobrinha",
+    "Alface"
   ],
-  "descricao": "Rolinhos vietnamitas frescos feitos com papel de arroz, recheados com macarrão de arroz, cenoura e pepino em julienne, folhas de hortelã e acompanhados por rodelas de abobrinha. O preparo é simples, com os ingredientes crus e frescos, enrolados no papel de arroz umedecido.",
+  "descricao": "Rolinhos frescos e leves, repletos de vegetais crocantes e macarrão de arroz, envolvidos em papel de arroz. Uma opção saudável e saborosa.",
   "beneficios": [
-    "Baixo teor de calorias, ideal para dietas de emagrecimento",
-    "Rico em fibras provenientes dos legumes, auxiliando na saúde digestiva",
-    "Fonte de vitaminas e minerais dos vegetais, importantes para a saúde"
+    "Fonte de vitaminas e minerais",
+    "Baixo teor de gordura",
+    "Rico em fibras",
+    "Refrescante"
   ],
   "riscos": [
-    "Pode conter glúten, dependendo do tipo de macarrão de arroz utilizado",
-    "O papel de arroz pode conter ingredientes alergênicos",
-    "Risco de contaminação cruzada se preparado em ambiente com outros alimentos"
+    "Pode conter traços de soja (molho)",
+    "Risco de alergia ao papel de arroz (raro)"
   ],
   "curiosidade": "Os rolinhos vietnamitas são tradicionalmente servidos com molhos à base de amendoim ou peixe, mas esta versão é naturalmente vegana e leve.",
   "slug": "rolinho_vietnamita_de_legumes",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "80 kcal",
+    "proteinas": "2g",
+    "carboidratos": "15g",
+    "gorduras": "0.5g"
+  },
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

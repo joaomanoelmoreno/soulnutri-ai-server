@@ -1,26 +1,39 @@
 {
   "slug": "beringelaaopuredelimaosiciliano",
-  "nome": "Beringela Ao Purê De Limão Siciliano",
+  "nome": "Berinjela Recheada com Purê de Ervas e Limão Siciliano",
   "categoria": "vegano",
-  "descricao": "Fatias de beringela grelhadas cobertas por um purê cremoso de limão siciliano, pedaços de picles de dedo de moça e finalizadas com ervas picadas e rodelas de limão siciliano. O prato parece ser finalizado com azeite.",
+  "descricao": "Deliciosas berinjelas assadas e recheadas com um purê de ervas frescas e limão siciliano, com um toque picante de picles de pimenta dedo de moça. Um prato vegano saboroso e nutritivo.",
   "ingredientes": [
-    "Beringela",
-    "Purê de Limão Siciliano",
-    "Picles de Dedo de Moça (pimenta dedo de moça)",
-    "Ervas picadas (salsa ou cheiro verde)",
-    "Azeite de oliva",
-    "Limão siciliano (rodelas)"
+    "Berinjela",
+    "Purê de ervas frescas (salsa, manjericão, etc.)",
+    "Limão siciliano (suco e raspas)",
+    "Picles de pimenta dedo de moça",
+    "Azeite de oliva extra virgem",
+    "Alho",
+    "Sal",
+    "Pimenta do reino"
   ],
   "beneficios": [
-    "A beringela é rica em antioxidantes e fibras, que auxiliam na saúde cardiovascular e na digestão. O limão siciliano é fonte de vitamina C, que fortalece o sistema imunológico.",
-    "A pimenta dedo de moça pode auxiliar no metabolismo."
+    "Rico em fibras",
+    "Fonte de antioxidantes",
+    "Baixo teor de gordura saturada",
+    "Vegano"
   ],
-  "riscos": [],
-  "nutricao": {},
+  "riscos": [
+    "Pode conter traços de pimenta (alergênicos)",
+    "Alto teor de sódio (dependendo do preparo)"
+  ],
+  "nutricao": {
+    "calorias": "80 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "4g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🥬"
 }

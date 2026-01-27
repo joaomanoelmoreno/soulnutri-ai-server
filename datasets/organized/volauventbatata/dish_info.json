@@ -1,17 +1,34 @@
 {
-  "nome": "Volauventbatata",
+  "nome": "Vol-au-vent com Recheio Cremoso",
   "slug": "volauventbatata",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "massa folhada",
+    "requeijão",
+    "tomate",
+    "cheiro-verde",
+    "tempero"
+  ],
+  "descricao": "Delicados vol-au-vent recheados com uma mistura cremosa e saborosa, perfeitos para aperitivos e eventos.",
+  "beneficios": [
+    "Fonte de energia",
+    "Fornece cálcio"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alto teor de gordura"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "350 kcal",
+    "proteinas": "8g",
+    "carboidratos": "25g",
+    "gorduras": "25g"
   },
-  "contem_gluten": false,
-  "contem_lactose": false
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "category_emoji": "🥚",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

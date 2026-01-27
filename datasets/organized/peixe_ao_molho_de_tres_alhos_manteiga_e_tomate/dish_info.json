@@ -1,31 +1,40 @@
 {
-  "nome": "Peixe Ao Molho De Três Alhos Manteiga E Tomate",
+  "nome": "Peixe ao Molho de Alho e Tomate Cereja",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Filé de peixe",
+    "Filé de peixe (ex: tilápia, pescada)",
     "Tomate cereja",
     "Alho (picado e inteiro)",
     "Manteiga",
     "Azeite de oliva",
-    "Ervas frescas (salsa/cebolinha)",
-    "Azeitonas pretas"
+    "Ervas frescas (salsa, cebolinha, manjericão)",
+    "Azeitonas pretas (opcional)",
+    "Sal",
+    "Pimenta do reino"
   ],
-  "descricao": "O prato consiste em filés de peixe grelhados ou salteados, cobertos por um molho cremoso à base de manteiga, alho (picado e inteiro) e tomate cereja. O peixe é finalizado com ervas frescas e azeitonas pretas.",
+  "descricao": "Filés de peixe refogados em um molho saboroso de alho e tomate cereja, com ervas frescas. Um prato leve e rico em sabor.",
   "beneficios": [
-    "O peixe é uma excelente fonte de proteínas e ácidos graxos ômega-3, importantes para a saúde cardiovascular.",
-    "O alho possui propriedades antioxidantes e pode fortalecer o sistema imunológico.",
-    "O tomate cereja é rico em licopeno, um antioxidante que protege contra danos celulares."
+    "Fonte de proteína magra",
+    "Rico em vitaminas e antioxidantes",
+    "Baixo teor de carboidratos"
   ],
   "riscos": [
-    "Intolerância a lactose (manteiga)",
-    "Alérgenos: peixe"
+    "Alto teor de sódio (dependendo da quantidade de sal)",
+    "Contém lactose (se usar manteiga comum)"
   ],
   "curiosidade": "O alho, um dos ingredientes principais, era usado pelos egípcios antigos para aumentar a força e a resistência dos trabalhadores, além de ser considerado um remédio para diversas doenças.",
   "slug": "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "220 kcal",
+    "proteinas": "25g",
+    "carboidratos": "8g",
+    "gorduras": "10g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false
 }

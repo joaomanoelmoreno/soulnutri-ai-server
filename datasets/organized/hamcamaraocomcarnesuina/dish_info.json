@@ -1,29 +1,39 @@
 {
-  "nome": "Hamcamaraocomcarnesuina",
+  "nome": "Parmegiana de Carne Suína",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Camarão",
-    "Carne suína",
+    "Bife de carne suína",
+    "Molho de tomate",
+    "Queijo",
+    "Tomate cereja",
     "Salsinha",
     "Cebolinha",
-    "Pimenta dedo-de-moça",
-    "Limão"
+    "Farinha de trigo",
+    "Ovo"
   ],
-  "descricao": "Bolinhos fritos ou grelhados de camarão e carne suína, temperados com ervas frescas e pimenta, e decorados com limão.",
+  "descricao": "Bifes de carne suína à parmegiana, com molho de tomate, queijo e tomate cereja. Finalizado com cheiro verde.",
   "beneficios": [
-    "Camarão é rico em proteínas e selênio, um antioxidante importante.",
-    "A carne suína fornece proteínas e vitaminas do complexo B."
+    "Fonte de proteína",
+    "Saboroso e nutritivo"
   ],
   "riscos": [
-    "Alérgeno: crustáceos.",
-    "Risco de contaminação por manipulação inadequada da carne crua."
+    "Contém glúten (farinha de trigo)",
+    "Contém lactose (queijo)",
+    "Alto teor de sódio (molho)"
   ],
   "curiosidade": "O camarão é uma boa fonte de ácidos graxos ômega-3, que são benéficos para a saúde do coração.",
   "slug": "hamcamaraocomcarnesuina",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "350 kcal",
+    "proteinas": "25g",
+    "carboidratos": "20g",
+    "gorduras": "20g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

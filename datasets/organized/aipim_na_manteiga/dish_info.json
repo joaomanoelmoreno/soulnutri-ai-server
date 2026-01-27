@@ -1,7 +1,7 @@
 {
-  "nome": "Aipim Na Manteiga",
+  "nome": "Nhoque",
   "slug": "aipim_na_manteiga",
-  "categoria": "",
+  "categoria": "vegetariano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -13,5 +13,11 @@
     "gorduras": ""
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥚"
 }

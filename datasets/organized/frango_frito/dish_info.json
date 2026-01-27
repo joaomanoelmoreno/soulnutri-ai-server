@@ -1,34 +1,36 @@
 {
-  "nome": "Frango Frito",
+  "nome": "Frango Frito Crocante",
   "categoria": "proteína animal",
   "ingredientes": [
-    "Camarões",
-    "Peixe branco em rolinhos",
-    "Mini torta (com creme)",
-    "Frango frito",
-    "Farofa",
-    "Azeite",
-    "Ervas frescas",
-    "Molho branco"
+    "Frango",
+    "Farinha de trigo",
+    "Tempero",
+    "Tomate cereja",
+    "Cebolinha",
+    "Óleo vegetal"
   ],
-  "descricao": "O prato apresenta uma variedade de frutos do mar e acompanhamentos. Os camarões parecem ser grelhados ou salteados, servidos sobre uma base. O peixe branco está em rolinhos, provavelmente marinado. Há pedaços de frango frito e uma mini torta. O prato é finalizado com farofa, molho e ervas frescas.",
+  "descricao": "Deliciosos pedaços de frango frito com uma crosta crocante, acompanhados de tomate cereja e cebolinha fresca. Uma explosão de sabor e textura em cada mordida.",
   "beneficios": [
-    "Fonte de proteína de alta qualidade proveniente dos camarões e peixe.",
-    "Rico em vitaminas e minerais, dependendo dos ingredientes adicionais.",
-    "O peixe branco é uma boa fonte de ômega-3, importante para a saúde cardiovascular."
+    "Fonte de proteína",
+    "Saboroso e satisfatório"
   ],
   "riscos": [
-    "Alto teor de sódio, especialmente se os ingredientes forem processados ou temperados com sal em excesso.",
-    "Potencial alérgeno: crustáceos (camarão).",
-    "Pode conter glúten, dependendo da receita da torta, farofa e da cobertura do frango frito.",
-    "Alto teor de gordura saturada, dependendo do modo de preparo do frango frito."
+    "Alto teor de gordura",
+    "Contém glúten"
   ],
   "curiosidade": "O camarão, além de saboroso, é uma excelente fonte de selênio, um antioxidante que protege as células do corpo contra danos.",
   "slug": "frango_frito",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "350 kcal",
+    "proteinas": "25g",
+    "carboidratos": "20g",
+    "gorduras": "20g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
