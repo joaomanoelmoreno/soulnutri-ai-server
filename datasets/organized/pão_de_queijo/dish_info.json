@@ -1,17 +1,36 @@
 {
-  "nome": "Pão De Queijo",
+  "nome": "Pão de Queijo",
   "slug": "pão_de_queijo",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "polvilho",
+    "queijo",
+    "leite",
+    "ovos",
+    "óleo vegetal",
+    "sal"
+  ],
+  "descricao": "Pequenos pães assados, feitos com polvilho, queijo e outros ingredientes. Popular no Brasil.",
+  "beneficios": [
+    "Fonte de cálcio",
+    "Fornece energia rápida"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Alto teor de sódio e gordura",
+    "Contém ovo"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "250 kcal",
+    "proteinas": "8g",
+    "carboidratos": "30g",
+    "gorduras": "12g"
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": true,
+  "category_emoji": "🥚",
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

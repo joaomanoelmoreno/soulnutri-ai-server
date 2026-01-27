@@ -12,7 +12,7 @@
     "Suco de limão",
     "Sal",
     "Pimenta síria",
-    "Fatias de pepino (decoração)"
+    "Fatias de pepino "
   ],
   "descricao": "Salada refrescante e nutritiva à base de quinoa, vegetais frescos e ervas aromáticas. Ideal para uma refeição leve e saudável.",
   "beneficios": [
@@ -40,5 +40,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

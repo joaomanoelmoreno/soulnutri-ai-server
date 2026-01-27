@@ -1,17 +1,42 @@
 {
-  "nome": "Cogumelos Recheados E Lentilha",
+  "nome": "Cogumelos Recheados Veganos com Lentilha",
   "slug": "cogumelos_recheados_e_lentilha",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "cogumelos portobello",
+    "lentilha",
+    "cebola",
+    "alho",
+    "pimentão",
+    "abobrinha",
+    "queijo vegano ralado",
+    "azeite",
+    "ervas finas",
+    "caldo de legumes",
+    "cebolinha"
+  ],
+  "descricao": "Cogumelos grandes recheados com vegetais e cobertos com queijo vegano ralado, acompanhados de lentilha cozida e temperada. Prato vegano nutritivo e saboroso.",
+  "beneficios": [
+    "fonte de proteína vegetal",
+    "rico em fibras",
+    "baixo teor de gordura saturada",
+    "fornece vitaminas e minerais"
+  ],
+  "riscos": [
+    "Pode conter soja (dependendo do queijo vegano)",
+    "Alto teor de sódio (dependendo do caldo de legumes)"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "250 kcal",
+    "proteinas": "15g",
+    "carboidratos": "30g",
+    "gorduras": "8g"
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🥬",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true
 }

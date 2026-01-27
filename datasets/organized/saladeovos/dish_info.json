@@ -1,34 +1,38 @@
 {
   "slug": "saladeovos",
-  "nome": "Saladeovos",
+  "nome": "Salada de Ovos",
   "categoria": "vegetariano",
-  "descricao": "Salada de ovos preparada com ovos cozidos picados e misturados com maionese, cebolinha picada e páprica para decorar. Os ovos são cozidos, geralmente em água fervente, até que a gema esteja firme. A maionese pode ser caseira ou comprada, adicionando sabor e cremosidade à salada.",
+  "descricao": "Salada clássica de ovos cozidos picados, temperada com maionese e especiarias. Uma opção simples e saborosa para diversas ocasiões.",
   "ingredientes": [
     "Ovos cozidos",
-    "Cebolinha picada",
-    "Páprica em pó",
     "Maionese",
-    "Páprica doce (para decorar)"
+    "Cebolinha picada",
+    "Páprica doce",
+    "Mostarda (opcional)",
+    "Sal",
+    "Pimenta do reino"
   ],
   "beneficios": [
-    "Fonte de proteína de alta qualidade",
-    "Contém colina, importante para a saúde cerebral",
-    "Os ovos são ricos em vitaminas e minerais essenciais.",
-    "Contém colina, importante para a saúde do cérebro",
-    "Ovos são ricos em vitaminas e minerais"
+    "Fonte de proteína",
+    "Rica em vitaminas do complexo B",
+    "Contém colina, importante para a saúde cerebral"
   ],
   "riscos": [
-    "Alto teor de colesterol (na gema)",
-    "Alérgeno: ovo",
-    "Alto teor de gordura e calorias (dependendo da quantidade de maionese)",
-    "Alérgeno: ovos",
-    "Potencial risco de contaminação por Salmonella se os ovos não forem bem cozidos"
+    "Contém ovo (alérgeno)",
+    "Alto teor de colesterol (dependendo da quantidade de ovos)",
+    "Pode ser rica em gordura (dependendo da maionese)"
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "10g",
+    "carboidratos": "3g",
+    "gorduras": "14g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": true,
+  "category_emoji": "🥚"
 }

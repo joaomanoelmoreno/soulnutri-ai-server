@@ -1,17 +1,36 @@
 {
-  "nome": "Lentilha Refogada",
+  "nome": "Lentilha com Tofu Defumado",
   "slug": "lentilha_refogada",
-  "categoria": "",
-  "ingredientes": [],
-  "descricao": "",
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegano",
+  "ingredientes": [
+    "lentilha",
+    "tofu defumado",
+    "cebola",
+    "alho",
+    "cebolinha",
+    "especiarias"
+  ],
+  "descricao": "Lentilha refogada com cubos de tofu defumado e finalizada com cebolinha fresca. Prato rico em fibras e proteína vegetal.",
+  "beneficios": [
+    "Rico em fibras",
+    "Fonte de proteína vegetal",
+    "Baixo índice glicêmico"
+  ],
+  "riscos": [
+    "Pode causar gases em pessoas sensíveis",
+    "Contém soja (tofu)"
+  ],
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "180 kcal",
+    "proteinas": "15g",
+    "carboidratos": "25g",
+    "gorduras": "5g"
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "category_emoji": "🥬",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true
 }
