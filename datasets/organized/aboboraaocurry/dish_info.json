@@ -1,0 +1,47 @@
+{
+  "nome": "Abóbora ao Curry Vegano",
+  "categoria": "vegano",
+  "descricao": "Cubos de abóbora cozidos em um delicioso molho de curry vegano, preparado com leite de coco, especiarias aromáticas e vegetais frescos. Uma opção nutritiva e saborosa para uma refeição vegana completa.",
+  "ingredientes": [
+    "Abóbora",
+    "Leite de coco",
+    "Cebola",
+    "Alho",
+    "Gengibre",
+    "Curry em pó",
+    "Azeite de oliva",
+    "Tomate",
+    "Coentro fresco",
+    "Pimenta dedo-de-moça (opcional)",
+    "Sal",
+    "Pimenta do reino",
+    "Açúcar de coco ou outro adoçante vegano (opcional)"
+  ],
+  "beneficios": [
+    "Fonte de vitaminas e minerais",
+    "Rico em antioxidantes",
+    "Promove a saciedade devido ao teor de fibras",
+    "Auxilia na digestão",
+    "Opção vegana nutritiva e saborosa"
+  ],
+  "riscos": [
+    "Alergia a algum dos ingredientes",
+    "Consumo excessivo pode causar desconforto gastrointestinal devido ao teor de fibras"
+  ],
+  "nutricao": {
+    "calorias": "90 kcal",
+    "proteinas": "2g",
+    "carboidratos": "12g",
+    "gorduras": "4g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Refogar os temperos, adicionar a abóbora e o leite de coco, cozinhar até a abóbora ficar macia.",
+  "slug": "aboboraaocurry",
+  "regenerated_at": "2026-01-27T18:08:34.301928",
+  "category_emoji": "🥬"
+}
