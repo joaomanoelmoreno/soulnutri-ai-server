@@ -1,7 +1,7 @@
 {
-  "nome": "Ensopado De Lentilha",
+  "nome": "Lentilha com bacon de soja",
   "slug": "ensopado_de_lentilha",
-  "categoria": "",
+  "categoria": "vegano",
   "ingredientes": [],
   "descricao": "",
   "beneficios": [],
@@ -13,5 +13,11 @@
     "gorduras": ""
   },
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }
