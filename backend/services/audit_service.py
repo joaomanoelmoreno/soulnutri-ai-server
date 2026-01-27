@@ -289,3 +289,196 @@ def apply_ai_suggestions(slug: str, suggestions: Dict) -> Dict[str, Any]:
         return {'ok': True, 'message': f'Informações de {slug} atualizadas'}
     except Exception as e:
         return {'ok': False, 'error': str(e)}
+
+
+async def consolidate_duplicate_dishes(group: list) -> dict:
+    """
+    Consolida um grupo de pratos duplicados:
+    1. Usa IA para mesclar as informações
+    2. Move todas as imagens para a pasta principal
+    3. Remove pastas vazias
+    """
+    import shutil
+    from services.generic_ai import fix_dish_data_with_ai
+    
+    if len(group) < 2:
+        return {"ok": False, "error": "Grupo precisa ter pelo menos 2 pratos"}
+    
+    # Escolher o slug principal (o primeiro ou o mais curto/limpo)
+    main_slug = min(group, key=lambda x: len(x))
+    main_dir = DATASET_DIR / main_slug
+    
+    # Coletar todas as informações existentes
+    all_info = []
+    all_images = []
+    
+    for slug in group:
+        dish_dir = DATASET_DIR / slug
+        if not dish_dir.exists():
+            continue
+        
+        # Coletar info
+        info_path = dish_dir / "dish_info.json"
+        if info_path.exists():
+            try:
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    info = json.load(f)
+                    info['_slug'] = slug
+                    all_info.append(info)
+            except:
+                pass
+        
+        # Coletar imagens
+        for img in dish_dir.glob("*.jpg"):
+            all_images.append((slug, img))
+        for img in dish_dir.glob("*.jpeg"):
+            all_images.append((slug, img))
+    
+    if not all_info:
+        return {"ok": False, "error": "Nenhuma informação encontrada nos pratos"}
+    
+    # Mesclar informações - pegar o mais completo de cada campo
+    merged_info = {
+        "slug": main_slug,
+        "nome": "",
+        "categoria": "",
+        "descricao": "",
+        "ingredientes": [],
+        "beneficios": [],
+        "riscos": [],
+        "nutricao": {},
+        "contem_gluten": False,
+        "contem_lactose": False,
+        "contem_ovo": False,
+        "contem_castanhas": False,
+        "contem_frutos_mar": False,
+        "contem_soja": False
+    }
+    
+    for info in all_info:
+        # Nome - pegar o mais limpo (sem "unknown", sem underscore)
+        nome = info.get('nome', '')
+        if nome and not 'unknown' in nome.lower():
+            if not merged_info['nome'] or '_' in merged_info['nome']:
+                merged_info['nome'] = nome
+        
+        # Categoria - pegar qualquer uma definida
+        if info.get('categoria') and not merged_info['categoria']:
+            merged_info['categoria'] = info['categoria']
+        
+        # Descrição - pegar a mais longa
+        if len(info.get('descricao', '')) > len(merged_info.get('descricao', '')):
+            merged_info['descricao'] = info['descricao']
+        
+        # Ingredientes - unir todos únicos
+        for ing in info.get('ingredientes', []):
+            if ing and ing.lower() not in [i.lower() for i in merged_info['ingredientes']]:
+                merged_info['ingredientes'].append(ing)
+        
+        # Benefícios - unir todos únicos
+        for ben in info.get('beneficios', []):
+            if ben and ben not in merged_info['beneficios']:
+                merged_info['beneficios'].append(ben)
+        
+        # Riscos - unir todos únicos
+        for risk in info.get('riscos', []):
+            if risk and risk not in merged_info['riscos']:
+                merged_info['riscos'].append(risk)
+        
+        # Nutrição - pegar valores preenchidos
+        nut = info.get('nutricao', {})
+        for key in ['calorias', 'proteinas', 'carboidratos', 'gorduras']:
+            if nut.get(key) and not merged_info['nutricao'].get(key):
+                merged_info['nutricao'][key] = nut[key]
+        
+        # Alérgenos - OR lógico
+        for allergen in ['contem_gluten', 'contem_lactose', 'contem_ovo', 'contem_castanhas', 'contem_frutos_mar', 'contem_soja']:
+            if info.get(allergen):
+                merged_info[allergen] = True
+    
+    # Garantir que a pasta principal existe
+    main_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Mover todas as imagens para a pasta principal
+    moved_images = 0
+    for slug, img_path in all_images:
+        if slug != main_slug:
+            new_path = main_dir / img_path.name
+            # Se já existe, adicionar sufixo
+            if new_path.exists():
+                new_path = main_dir / f"{img_path.stem}_{slug}{img_path.suffix}"
+            try:
+                shutil.copy2(img_path, new_path)
+                moved_images += 1
+            except:
+                pass
+    
+    # Salvar info consolidada
+    info_path = main_dir / "dish_info.json"
+    with open(info_path, 'w', encoding='utf-8') as f:
+        json.dump(merged_info, f, ensure_ascii=False, indent=2)
+    
+    # Remover pastas duplicadas (manter apenas a principal)
+    removed_dirs = []
+    for slug in group:
+        if slug != main_slug:
+            dish_dir = DATASET_DIR / slug
+            if dish_dir.exists():
+                try:
+                    shutil.rmtree(dish_dir)
+                    removed_dirs.append(slug)
+                except:
+                    pass
+    
+    return {
+        "ok": True,
+        "main_slug": main_slug,
+        "merged_info": merged_info,
+        "images_moved": moved_images,
+        "dirs_removed": removed_dirs,
+        "original_group": group
+    }
+
+
+def find_duplicate_groups() -> list:
+    """Encontra grupos de pratos duplicados baseado em similaridade de nome"""
+    from difflib import SequenceMatcher
+    
+    pratos = []
+    for dish_dir in DATASET_DIR.iterdir():
+        if not dish_dir.is_dir():
+            continue
+        info_path = dish_dir / "dish_info.json"
+        if info_path.exists():
+            try:
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    info = json.load(f)
+                    nome = info.get('nome', dish_dir.name).lower().strip()
+                    if 'unknown' in nome:
+                        continue
+                    pratos.append({'nome': nome, 'slug': dish_dir.name})
+            except:
+                pass
+    
+    grupos = []
+    usados = set()
+    
+    for i, p1 in enumerate(pratos):
+        if p1['slug'] in usados:
+            continue
+        
+        similares = [p1['slug']]
+        for j, p2 in enumerate(pratos):
+            if i >= j or p2['slug'] in usados:
+                continue
+            
+            ratio = SequenceMatcher(None, p1['nome'], p2['nome']).ratio()
+            if ratio > 0.80:
+                similares.append(p2['slug'])
+                usados.add(p2['slug'])
+        
+        if len(similares) > 1:
+            usados.add(p1['slug'])
+            grupos.append(similares)
+    
+    return grupos
