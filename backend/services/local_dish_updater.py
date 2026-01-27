@@ -524,6 +524,7 @@ PALAVRAS_CHAVE = {
     "batata frita": ["batata frita", "frita", "french fries"],
     "salada": ["salada", "salad", "verde"],
     "brócolis": ["brócolis", "brocolis", "broccoli"],
+    "abóbora ao curry": ["abóbora ao curry", "abobora ao curry", "abobora curry"],
     "abóbora": ["abóbora", "abobora", "pumpkin", "squash"],
     "curry": ["curry", "ao curry"],
     "frango": ["frango", "chicken", "galinha"],
