@@ -153,6 +153,68 @@ def detectar_ingredientes_texto(texto: str, banco: set) -> List[str]:
     return encontrados
 
 
+def verificar_versao_vegana(texto: str, derivado: str) -> bool:
+    """
+    Verifica se um derivado animal encontrado é na verdade uma versão vegana.
+    Ex: "queijo vegano" não deve ser considerado derivado animal.
+    """
+    texto_norm = normalizar_texto(texto)
+    derivado_norm = normalizar_texto(derivado)
+    
+    # Verificar se é uma versão vegana explícita
+    for versao_vegana in VERSOES_VEGANAS:
+        versao_norm = normalizar_texto(versao_vegana)
+        if versao_norm in texto_norm:
+            # Se a versão vegana contém o derivado, é vegano
+            if derivado_norm in versao_norm:
+                return True
+    
+    # Verificar padrões comuns de "X vegano/vegana"
+    padroes_veganos = [
+        rf'{re.escape(derivado_norm)}\s+vegano',
+        rf'{re.escape(derivado_norm)}\s+vegana',
+        rf'{re.escape(derivado_norm)}\s+de\s+coco',
+        rf'{re.escape(derivado_norm)}\s+de\s+soja',
+        rf'{re.escape(derivado_norm)}\s+de\s+castanha',
+        rf'{re.escape(derivado_norm)}\s+de\s+amêndoa',
+        rf'{re.escape(derivado_norm)}\s+de\s+amendoa',
+        rf'{re.escape(derivado_norm)}\s+plant-based',
+        rf'{re.escape(derivado_norm)}\s+sem\s+lactose',
+    ]
+    
+    for padrao in padroes_veganos:
+        if re.search(padrao, texto_norm):
+            return True
+    
+    return False
+
+
+def esta_em_contexto_ignorado(texto: str, ingrediente: str) -> bool:
+    """
+    Verifica se o ingrediente está em um contexto que deve ser ignorado.
+    Ex: "decoração com queijo" não deve classificar o prato como tendo queijo.
+    """
+    texto_norm = normalizar_texto(texto)
+    ing_norm = normalizar_texto(ingrediente)
+    
+    # Verificar se o ingrediente aparece em contexto de decoração/ignorar
+    for contexto in IGNORAR_CONTEXTO:
+        contexto_norm = normalizar_texto(contexto)
+        # Padrão: "decoração de X" ou "X para decorar"
+        padroes_ignorar = [
+            rf'{contexto_norm}\s+de\s+{re.escape(ing_norm)}',
+            rf'{contexto_norm}\s+com\s+{re.escape(ing_norm)}',
+            rf'{re.escape(ing_norm)}\s+para\s+{contexto_norm}',
+            rf'{re.escape(ing_norm)}\s+de\s+{contexto_norm}',
+            rf'para\s+{contexto_norm}.*{re.escape(ing_norm)}',
+        ]
+        for padrao in padroes_ignorar:
+            if re.search(padrao, texto_norm):
+                return True
+    
+    return False
+
+
 def validar_categoria(
     categoria_ia: str,
     nome_prato: str,
