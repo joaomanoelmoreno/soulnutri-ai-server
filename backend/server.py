@@ -815,7 +815,7 @@ async def create_new_dish(
                 except:
                     pass
         
-        # Se encontrou match, adiciona foto ao prato existente ao invés de criar novo
+        # Se encontrou match, adiciona foto ao prato existente E atualiza informações com IA
         if existing_match:
             target_dir = dataset_dir / existing_match
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -826,11 +826,60 @@ async def create_new_dish(
             with open(file_path, "wb") as f:
                 f.write(content)
             
+            # CHAMAR IA para atualizar informações do prato
+            try:
+                from services.generic_ai import fix_dish_data_with_ai
+                
+                # Carregar info atual
+                info_path = target_dir / "dish_info.json"
+                current_info = {}
+                if info_path.exists():
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        current_info = json.load(f)
+                
+                # Atualizar nome se o usuário digitou diferente (correção)
+                if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
+                    current_info['nome'] = dish_name.strip()
+                    logger.info(f"[CREATE] Nome atualizado: {current_info.get('nome')} -> {dish_name.strip()}")
+                
+                # Chamar IA para completar informações faltantes
+                ai_result = await fix_dish_data_with_ai(content, current_info)
+                
+                if ai_result.get('ok'):
+                    # Mesclar informações (IA complementa o que está faltando)
+                    updated_info = {**current_info}
+                    for key, value in ai_result.items():
+                        if key == 'ok':
+                            continue
+                        # Só atualiza se estava vazio ou é nutrição vazia
+                        if key == 'nutricao':
+                            nut = updated_info.get('nutricao', {})
+                            ai_nut = value or {}
+                            for nk, nv in ai_nut.items():
+                                if not nut.get(nk) and nv:
+                                    nut[nk] = nv
+                            updated_info['nutricao'] = nut
+                        elif not updated_info.get(key) and value:
+                            updated_info[key] = value
+                    
+                    # Garantir nome corrigido pelo usuário
+                    if dish_name.strip():
+                        updated_info['nome'] = dish_name.strip()
+                    
+                    updated_info['slug'] = existing_match
+                    
+                    with open(info_path, 'w', encoding='utf-8') as f:
+                        json.dump(updated_info, f, ensure_ascii=False, indent=2, default=str)
+                    
+                    logger.info(f"[CREATE] Informações atualizadas com IA para: {existing_match}")
+            except Exception as e:
+                logger.error(f"[CREATE] Erro ao atualizar com IA: {e}")
+            
             return {
                 "ok": True,
-                "message": f"Foto adicionada ao prato existente: {existing_match}",
+                "message": f"✅ Prato '{dish_name}' salvo! Foto e informações atualizadas.",
                 "slug": existing_match,
-                "action": "added_to_existing"
+                "action": "updated_existing"
             }
         
         # Usar IA para gerar informações do prato
