@@ -24,8 +24,8 @@
     "carboidratos": "25g",
     "gorduras": "25g"
   },
-  "contem_gluten": true,
-  "contem_lactose": true,
+  "contem_gluten": false,
+  "contem_lactose": false,
   "category_emoji": "🌱",
   "contem_ovo": false,
   "contem_castanhas": false,

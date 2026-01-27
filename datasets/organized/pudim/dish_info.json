@@ -26,8 +26,8 @@
   "tecnica": "Banho-maria",
   "descricao": "Pudim de leite tradicional brasileiro.",
   "contem_gluten": false,
-  "contem_lactose": true,
-  "contem_ovo": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
   "indice_glicemico": "alto",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Sobremesa ocasional",
@@ -37,5 +37,8 @@
   "evitar_com": [
     "Outras sobremesas no mesmo dia"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

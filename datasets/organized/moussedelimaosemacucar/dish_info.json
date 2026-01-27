@@ -26,7 +26,7 @@
   },
   "tecnica": "Refrigerado",
   "contem_gluten": false,
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "indice_glicemico": "alto",
   "tempo_digestao": "2 horas",
@@ -37,5 +37,8 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

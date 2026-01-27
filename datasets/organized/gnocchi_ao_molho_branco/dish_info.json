@@ -28,5 +28,17 @@
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Cozido em água",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Gorgonzola"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🥚"
 }

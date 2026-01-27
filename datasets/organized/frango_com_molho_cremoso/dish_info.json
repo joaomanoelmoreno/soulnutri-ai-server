@@ -2,26 +2,20 @@
   "slug": "frango_com_molho_cremoso",
   "nome": "Gnocchi Com Molho Cremoso",
   "categoria": "vegetariano",
-  "descricao": "Frango preparado de forma saudável.",
+  "descricao": "Gnocchi de batata italiano.",
   "ingredientes": [
     "batata",
     "farinha de trigo",
     "ovo",
-    "sal",
-    "frango",
-    "temperos"
+    "sal"
   ],
   "beneficios": [
     "Fonte de energia",
-    "Carboidratos",
-    "Proteína magra de alta qualidade",
-    "Rico em vitaminas B",
-    "Baixo teor de gordura"
+    "Carboidratos"
   ],
   "riscos": [
     "Contém glúten",
-    "Contém ovo",
-    "Verificar procedência"
+    "Contém ovo"
   ],
   "nutricao": {
     "calorias": "130 kcal",
@@ -34,5 +28,17 @@
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Cozido em água",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Gorgonzola"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🥚"
 }

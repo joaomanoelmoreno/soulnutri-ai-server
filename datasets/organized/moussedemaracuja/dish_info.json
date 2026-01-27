@@ -24,7 +24,7 @@
     "gorduras": "10g"
   },
   "contem_gluten": false,
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

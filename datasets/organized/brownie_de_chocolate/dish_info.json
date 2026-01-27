@@ -24,10 +24,10 @@
     "carboidratos": "40g",
     "gorduras": "10g"
   },
-  "contem_gluten": true,
-  "contem_lactose": true,
+  "contem_gluten": false,
+  "contem_lactose": false,
   "tecnica": "Assado em forno",
-  "contem_ovo": true,
+  "contem_ovo": false,
   "indice_glicemico": "alto",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Lanche da tarde (ocasional)",
@@ -38,5 +38,8 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

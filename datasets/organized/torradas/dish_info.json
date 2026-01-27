@@ -33,7 +33,7 @@
     "carboidratos": "35g",
     "gorduras": "10g"
   },
-  "contem_gluten": true,
+  "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,

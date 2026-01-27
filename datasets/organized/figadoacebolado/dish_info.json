@@ -6,38 +6,14 @@
   "ingredientes": [
     "sobrecoxa de frango",
     "sal",
-    "temperos",
-    "Fígado bovino",
-    "Cebola",
-    "Pimenta",
-    "Cheiro-verde",
-    "Óleo vegetal",
-    "Cebola branca",
-    "Tomate cereja",
-    "Cebolinha fresca",
-    "Cebolinha (parte verde)",
-    "Azeite de oliva (possível)",
-    "Alho (possível)"
+    "temperos"
   ],
   "beneficios": [
     "Proteína de qualidade",
-    "Mais suculenta que o peito",
-    "O fígado é rico em ferro, importante para prevenir e tratar anemias.",
-    "Fonte de vitaminas do complexo B, essenciais para o metabolismo energético e saúde do sistema nervoso.",
-    "O fígado é rico em ferro, essencial para a prevenção da anemia.",
-    "A cebola possui propriedades antioxidantes e anti-inflamatórias.",
-    "O fígado é rico em ferro, importante para prevenir e tratar a anemia.",
-    "A cebola contém antioxidantes que combatem os radicais livres."
+    "Mais suculenta que o peito"
   ],
   "riscos": [
-    "Maior teor de gordura que peito",
-    "Alto teor de colesterol, deve ser consumido com moderação.",
-    "Pessoas com gota devem evitar devido ao alto teor de purinas.",
-    "O fígado pode ser rico em colesterol.",
-    "A cebola pode causar desconforto gástrico em algumas pessoas.",
-    "O fígado é rico em colesterol, devendo ser consumido com moderação.",
-    "Pessoas com problemas de gota devem moderar o consumo de fígado.",
-    "Pode conter glúten, dependendo do tempero utilizado."
+    "Maior teor de gordura que peito"
   ],
   "nutricao": {
     "calorias": "190 kcal",
@@ -50,5 +26,17 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assado ou grelhado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

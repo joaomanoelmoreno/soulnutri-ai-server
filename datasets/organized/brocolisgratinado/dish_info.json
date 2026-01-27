@@ -26,7 +26,7 @@
   "contem_gluten": false,
   "tecnica": "Vapor ou refogado",
   "category_emoji": "🥚",
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "2 horas",
@@ -38,5 +38,8 @@
   ],
   "evitar_com": [
     "Queijos gordurosos em excesso"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

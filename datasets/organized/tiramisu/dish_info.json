@@ -28,6 +28,10 @@
     "gorduras": "20g"
   },
   "category_emoji": "🌱",
-  "contem_gluten": true,
-  "contem_lactose": true
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

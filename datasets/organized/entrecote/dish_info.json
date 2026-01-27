@@ -27,5 +27,15 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Batatas",
+    "Salada"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🍖"
 }

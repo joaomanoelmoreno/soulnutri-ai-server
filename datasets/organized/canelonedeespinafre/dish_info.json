@@ -1,7 +1,7 @@
 {
   "slug": "canelonedeespinafre",
   "nome": "Canelone de Espinafre",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "O prato é composto por canelones recheados com espinafre e um recheio cremoso, provavelmente à base de queijo ou ricota. Os canelones são cobertos com molho de tomate e queijo ralado, e gratinados até dourar. O preparo envolve o cozimento da massa, o preparo do recheio e molho, a montagem e o gratinado no forno.",
   "ingredientes": [
     "Massa de canelone (provavelmente com farinha de trigo)",
@@ -34,11 +34,12 @@
     "carboidratos": "~25g",
     "gorduras": "~8g"
   },
-  "contem_gluten": true,
+  "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": ""
 }
