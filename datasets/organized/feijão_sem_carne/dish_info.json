@@ -1,0 +1,26 @@
+{
+  "nome": "Feijão sem Carne",
+  "slug": "feijão_sem_carne",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato brasileiro com feijão preto e carnes salgadas, cozido lentamente.",
+  "ingredientes": [
+    "Feijão preto",
+    "Carnes diversas (bovina, suína)",
+    "Linguiça",
+    "Temperos (alho, cebola, louro)"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter glúten, dependendo dos ingredientes.",
+    "Alto teor de sódio."
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true
+}
