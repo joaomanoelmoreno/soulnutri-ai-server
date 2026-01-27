@@ -1,6 +1,6 @@
 """
 SoulNutri - Atualizador LOCAL de fichas (SEM IA, SEM CRÉDITOS)
-Atualiza categoria, alérgenos e nutrição baseado em REGRAS LOCAIS
+Preenche TODOS os campos baseado em REGRAS LOCAIS
 """
 
 import json
@@ -9,99 +9,556 @@ from pathlib import Path
 
 DATASET_DIR = Path("/app/datasets/organized")
 
-# Banco de dados local de nutrição por tipo de prato
-NUTRICAO_POR_TIPO = {
-    "arroz": {"calorias": "130 kcal", "proteinas": "2.7g", "carboidratos": "28g", "gorduras": "0.3g"},
-    "feijao": {"calorias": "77 kcal", "proteinas": "5g", "carboidratos": "14g", "gorduras": "0.5g"},
-    "batata": {"calorias": "90 kcal", "proteinas": "2g", "carboidratos": "20g", "gorduras": "0.1g"},
-    "frango": {"calorias": "165 kcal", "proteinas": "31g", "carboidratos": "0g", "gorduras": "3.6g"},
-    "peixe": {"calorias": "120 kcal", "proteinas": "22g", "carboidratos": "0g", "gorduras": "3g"},
-    "carne": {"calorias": "250 kcal", "proteinas": "26g", "carboidratos": "0g", "gorduras": "15g"},
-    "salada": {"calorias": "25 kcal", "proteinas": "1.5g", "carboidratos": "4g", "gorduras": "0.2g"},
-    "legume": {"calorias": "50 kcal", "proteinas": "2g", "carboidratos": "10g", "gorduras": "0.5g"},
-    "massa": {"calorias": "131 kcal", "proteinas": "5g", "carboidratos": "25g", "gorduras": "1g"},
-    "sobremesa": {"calorias": "180 kcal", "proteinas": "3g", "carboidratos": "30g", "gorduras": "5g"},
+# ═══════════════════════════════════════════════════════════════════════════════
+# BANCO DE DADOS LOCAL COMPLETO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PRATOS_COMPLETOS = {
+    # ═══════════════════════════════════════════════════════════════════════════
+    # ARROZES
+    # ═══════════════════════════════════════════════════════════════════════════
+    "arroz branco": {
+        "categoria": "vegano",
+        "ingredientes": ["arroz branco", "água", "sal", "alho", "óleo"],
+        "beneficios": ["Fonte de energia rápida", "Fácil digestão", "Naturalmente sem glúten"],
+        "riscos": ["Alto índice glicêmico"],
+        "nutricao": {"calorias": "130 kcal", "proteinas": "2.7g", "carboidratos": "28g", "gorduras": "0.3g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento em água",
+        "descricao": "Arroz branco cozido, acompanhamento clássico brasileiro.",
+        # Premium
+        "indice_glicemico": "alto",
+        "tempo_digestao": "1-2 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Feijão", "Proteínas", "Saladas"],
+        "evitar_com": ["Outros carboidratos refinados"],
+    },
+    "arroz integral": {
+        "categoria": "vegano",
+        "ingredientes": ["arroz integral", "água", "sal"],
+        "beneficios": ["Rico em fibras", "Índice glicêmico moderado", "Vitaminas do complexo B", "Maior saciedade"],
+        "riscos": ["Pode conter traços de glúten"],
+        "nutricao": {"calorias": "111 kcal", "proteinas": "2.6g", "carboidratos": "23g", "gorduras": "0.9g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento em água",
+        "descricao": "Arroz integral nutritivo, rico em fibras e vitaminas.",
+        "indice_glicemico": "moderado",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Legumes", "Proteínas magras", "Saladas"],
+        "evitar_com": ["Frituras"],
+    },
+    "arroz 7 grãos": {
+        "categoria": "vegano",
+        "ingredientes": ["arroz", "quinoa", "linhaça", "aveia", "centeio", "cevada", "trigo"],
+        "beneficios": ["Alto teor de fibras", "Proteína vegetal completa", "Energia prolongada"],
+        "riscos": ["Contém glúten"],
+        "nutricao": {"calorias": "140 kcal", "proteinas": "4g", "carboidratos": "26g", "gorduras": "2g"},
+        "alergenos": {"contem_gluten": True, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento em água",
+        "descricao": "Mistura nutritiva de grãos integrais e sementes.",
+        "indice_glicemico": "baixo",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Legumes", "Proteínas"],
+        "evitar_com": ["Excesso de gorduras"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # FEIJÕES
+    # ═══════════════════════════════════════════════════════════════════════════
+    "feijão": {
+        "categoria": "vegano",
+        "ingredientes": ["feijão", "água", "sal", "alho", "cebola", "louro"],
+        "beneficios": ["Rico em proteína vegetal", "Alto teor de ferro", "Fibras para saciedade"],
+        "riscos": ["Pode causar gases intestinais"],
+        "nutricao": {"calorias": "77 kcal", "proteinas": "5g", "carboidratos": "14g", "gorduras": "0.5g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento lento",
+        "descricao": "Feijão cozido, base da alimentação brasileira.",
+        "indice_glicemico": "baixo",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Arroz (proteína completa)", "Couve", "Farofa"],
+        "evitar_com": ["Excesso de embutidos"],
+    },
+    "feijão preto": {
+        "categoria": "vegano",
+        "ingredientes": ["feijão preto", "água", "sal", "alho", "cebola", "louro"],
+        "beneficios": ["Antioxidantes da casca escura", "Rico em ferro", "Proteína vegetal"],
+        "riscos": ["Pode causar gases"],
+        "nutricao": {"calorias": "77 kcal", "proteinas": "5g", "carboidratos": "14g", "gorduras": "0.5g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento lento",
+        "descricao": "Feijão preto tradicional, rico em antioxidantes.",
+        "indice_glicemico": "baixo",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Arroz", "Couve", "Laranja (vitamina C ajuda absorção de ferro)"],
+        "evitar_com": ["Refrigerantes"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # BATATAS
+    # ═══════════════════════════════════════════════════════════════════════════
+    "batata": {
+        "categoria": "vegano",
+        "ingredientes": ["batata", "sal"],
+        "beneficios": ["Fonte de potássio", "Energia sustentada", "Vitamina C"],
+        "riscos": ["Alto índice glicêmico se consumida sozinha"],
+        "nutricao": {"calorias": "77 kcal", "proteinas": "2g", "carboidratos": "17g", "gorduras": "0.1g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento ou assado",
+        "descricao": "Batata preparada de forma saudável.",
+        "indice_glicemico": "alto",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Proteínas", "Vegetais verdes"],
+        "evitar_com": ["Frituras", "Excesso de manteiga"],
+    },
+    "batata doce": {
+        "categoria": "vegano",
+        "ingredientes": ["batata doce"],
+        "beneficios": ["Índice glicêmico moderado", "Rica em betacaroteno", "Fibras", "Vitamina A"],
+        "riscos": ["Consumo excessivo pode elevar glicemia"],
+        "nutricao": {"calorias": "86 kcal", "proteinas": "1.6g", "carboidratos": "20g", "gorduras": "0.1g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Assado ou cozido",
+        "descricao": "Batata doce nutritiva, ótima para pré-treino.",
+        "indice_glicemico": "moderado",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Pré-treino ou almoço",
+        "combina_com": ["Proteínas magras", "Canela"],
+        "evitar_com": ["Açúcar adicional"],
+    },
+    "batata frita": {
+        "categoria": "vegano",
+        "ingredientes": ["batata", "óleo", "sal"],
+        "beneficios": ["Fonte de energia"],
+        "riscos": ["Alto teor de gordura", "Calorias elevadas", "Formação de acrilamida na fritura"],
+        "nutricao": {"calorias": "312 kcal", "proteinas": "3.4g", "carboidratos": "41g", "gorduras": "15g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Fritura",
+        "descricao": "Batata frita crocante. Consumir com moderação.",
+        "indice_glicemico": "alto",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Ocasionalmente no almoço",
+        "combina_com": ["Proteínas grelhadas"],
+        "evitar_com": ["Outras frituras", "Refrigerantes"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # LEGUMES E VERDURAS
+    # ═══════════════════════════════════════════════════════════════════════════
+    "salada": {
+        "categoria": "vegano",
+        "ingredientes": ["alface", "tomate", "pepino", "cenoura"],
+        "beneficios": ["Baixíssimas calorias", "Rica em fibras", "Vitaminas e minerais", "Hidratação"],
+        "riscos": ["Verificar higienização"],
+        "nutricao": {"calorias": "20 kcal", "proteinas": "1g", "carboidratos": "4g", "gorduras": "0.2g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Crua",
+        "descricao": "Salada fresca e nutritiva.",
+        "indice_glicemico": "muito baixo",
+        "tempo_digestao": "1-2 horas",
+        "melhor_horario": "Qualquer refeição",
+        "combina_com": ["Proteínas", "Azeite de oliva", "Limão"],
+        "evitar_com": ["Molhos industrializados calóricos"],
+    },
+    "brócolis": {
+        "categoria": "vegano",
+        "ingredientes": ["brócolis", "sal", "azeite"],
+        "beneficios": ["Sulforafano anticancerígeno", "Rico em vitamina C", "Cálcio vegetal", "Fibras"],
+        "riscos": ["Pode causar gases em excesso"],
+        "nutricao": {"calorias": "34 kcal", "proteinas": "2.8g", "carboidratos": "7g", "gorduras": "0.4g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Vapor ou refogado",
+        "descricao": "Brócolis nutritivo, um dos vegetais mais saudáveis.",
+        "indice_glicemico": "muito baixo",
+        "tempo_digestao": "2 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Proteínas", "Alho", "Azeite"],
+        "evitar_com": ["Queijos gordurosos em excesso"],
+    },
+    "abóbora": {
+        "categoria": "vegano",
+        "ingredientes": ["abóbora", "sal"],
+        "beneficios": ["Rica em betacaroteno", "Vitamina A", "Baixas calorias", "Fibras"],
+        "riscos": ["Índice glicêmico moderado"],
+        "nutricao": {"calorias": "26 kcal", "proteinas": "1g", "carboidratos": "6.5g", "gorduras": "0.1g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozida ou assada",
+        "descricao": "Abóbora nutritiva, versátil na cozinha.",
+        "indice_glicemico": "moderado",
+        "tempo_digestao": "2 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Curry", "Gengibre", "Coco"],
+        "evitar_com": ["Açúcar em excesso"],
+    },
+    "curry": {
+        "categoria": "vegano",
+        "ingredientes": ["legumes", "leite de coco", "curry em pó", "gengibre", "alho", "cebola"],
+        "beneficios": ["Cúrcuma anti-inflamatória", "Antioxidantes", "Digestivo"],
+        "riscos": ["Pode ser picante para alguns"],
+        "nutricao": {"calorias": "90 kcal", "proteinas": "2g", "carboidratos": "12g", "gorduras": "4g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Refogado com especiarias",
+        "descricao": "Prato aromático com especiarias indianas e leite de coco.",
+        "indice_glicemico": "baixo",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Arroz", "Naan", "Vegetais"],
+        "evitar_com": ["Excesso de pimenta se tiver gastrite"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # PROTEÍNAS - FRANGO
+    # ═══════════════════════════════════════════════════════════════════════════
+    "frango": {
+        "categoria": "proteína animal",
+        "ingredientes": ["frango", "sal", "temperos"],
+        "beneficios": ["Proteína magra de alta qualidade", "Rico em vitaminas B", "Baixo teor de gordura"],
+        "riscos": ["Verificar procedência", "Evitar pele se em dieta"],
+        "nutricao": {"calorias": "165 kcal", "proteinas": "31g", "carboidratos": "0g", "gorduras": "3.6g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Grelhado, assado ou cozido",
+        "descricao": "Frango preparado de forma saudável.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Saladas", "Legumes", "Arroz integral"],
+        "evitar_com": ["Molhos gordurosos", "Frituras"],
+    },
+    "sobrecoxa": {
+        "categoria": "proteína animal",
+        "ingredientes": ["sobrecoxa de frango", "sal", "temperos"],
+        "beneficios": ["Proteína de qualidade", "Mais suculenta que o peito", "Ferro"],
+        "riscos": ["Maior teor de gordura que peito"],
+        "nutricao": {"calorias": "190 kcal", "proteinas": "26g", "carboidratos": "0g", "gorduras": "9g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Assado ou grelhado",
+        "descricao": "Sobrecoxa de frango suculenta.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Saladas", "Legumes assados"],
+        "evitar_com": ["Frituras"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # PROTEÍNAS - PEIXES
+    # ═══════════════════════════════════════════════════════════════════════════
+    "peixe": {
+        "categoria": "proteína animal",
+        "ingredientes": ["peixe", "sal", "limão", "ervas"],
+        "beneficios": ["Ômega-3 para o coração", "Proteína de fácil digestão", "Vitamina D"],
+        "riscos": ["Alérgeno: peixe", "Verificar procedência"],
+        "nutricao": {"calorias": "120 kcal", "proteinas": "22g", "carboidratos": "0g", "gorduras": "3g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False, "contem_frutos_mar": True},
+        "tecnica": "Grelhado, assado ou ao vapor",
+        "descricao": "Peixe fresco, fonte de ômega-3.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Limão", "Legumes", "Arroz"],
+        "evitar_com": ["Frituras", "Molhos pesados"],
+    },
+    "salmão": {
+        "categoria": "proteína animal",
+        "ingredientes": ["salmão", "sal", "limão", "ervas"],
+        "beneficios": ["Alto teor de ômega-3", "Proteína nobre", "Vitamina D", "Antioxidante astaxantina"],
+        "riscos": ["Alérgeno: peixe", "Pode conter mercúrio"],
+        "nutricao": {"calorias": "208 kcal", "proteinas": "20g", "carboidratos": "0g", "gorduras": "13g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False, "contem_frutos_mar": True},
+        "tecnica": "Grelhado ou assado",
+        "descricao": "Salmão rico em ômega-3, excelente para saúde cardiovascular.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Legumes verdes", "Limão", "Aspargos"],
+        "evitar_com": ["Frituras", "Molhos cremosos em excesso"],
+    },
+    "bacalhau": {
+        "categoria": "proteína animal",
+        "ingredientes": ["bacalhau", "azeite", "batata", "cebola", "alho"],
+        "beneficios": ["Proteína magra", "Ômega-3", "Vitaminas B12 e D"],
+        "riscos": ["Alérgeno: peixe", "Alto teor de sódio"],
+        "nutricao": {"calorias": "150 kcal", "proteinas": "25g", "carboidratos": "0g", "gorduras": "5g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False, "contem_frutos_mar": True},
+        "tecnica": "Assado ou refogado",
+        "descricao": "Bacalhau tradicional português.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "3 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Batatas", "Azeite", "Azeitonas"],
+        "evitar_com": ["Excesso de sal adicional"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # PROTEÍNAS - CARNES
+    # ═══════════════════════════════════════════════════════════════════════════
+    "carne": {
+        "categoria": "proteína animal",
+        "ingredientes": ["carne bovina", "sal", "temperos"],
+        "beneficios": ["Proteína completa", "Ferro heme de alta absorção", "Vitamina B12", "Zinco"],
+        "riscos": ["Consumo excessivo associado a doenças cardiovasculares", "Gordura saturada"],
+        "nutricao": {"calorias": "250 kcal", "proteinas": "26g", "carboidratos": "0g", "gorduras": "15g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Grelhado ou assado",
+        "descricao": "Carne bovina, fonte de proteína e ferro.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "4-5 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Saladas", "Legumes", "Arroz"],
+        "evitar_com": ["Outras gorduras", "Frituras"],
+    },
+    "maminha": {
+        "categoria": "proteína animal",
+        "ingredientes": ["maminha bovina", "sal grosso", "alho"],
+        "beneficios": ["Corte macio", "Rico em proteínas", "Ferro", "Zinco"],
+        "riscos": ["Gordura moderada", "Consumir com moderação"],
+        "nutricao": {"calorias": "220 kcal", "proteinas": "28g", "carboidratos": "0g", "gorduras": "12g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Assado ou grelhado",
+        "descricao": "Maminha bovina macia e saborosa.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "4-5 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Farofa", "Vinagrete", "Arroz"],
+        "evitar_com": ["Molhos gordurosos"],
+    },
+    "costela": {
+        "categoria": "proteína animal",
+        "ingredientes": ["costela bovina", "sal grosso"],
+        "beneficios": ["Sabor intenso", "Colágeno", "Proteína"],
+        "riscos": ["Alto teor de gordura", "Consumir ocasionalmente"],
+        "nutricao": {"calorias": "290 kcal", "proteinas": "24g", "carboidratos": "0g", "gorduras": "21g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Assado lento",
+        "descricao": "Costela bovina assada lentamente.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "5-6 horas",
+        "melhor_horario": "Almoço (ocasionalmente)",
+        "combina_com": ["Mandioca", "Farofa", "Vinagrete"],
+        "evitar_com": ["Outras gorduras no mesmo dia"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # FRUTOS DO MAR
+    # ═══════════════════════════════════════════════════════════════════════════
+    "camarão": {
+        "categoria": "proteína animal",
+        "ingredientes": ["camarão", "alho", "azeite", "sal"],
+        "beneficios": ["Proteína magra", "Selênio antioxidante", "Iodo para tireoide", "Ômega-3"],
+        "riscos": ["Alérgeno: crustáceo (risco grave)", "Colesterol elevado"],
+        "nutricao": {"calorias": "99 kcal", "proteinas": "24g", "carboidratos": "0.2g", "gorduras": "0.3g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False, "contem_frutos_mar": True},
+        "tecnica": "Grelhado ou refogado",
+        "descricao": "Camarão fresco, rico em proteínas.",
+        "indice_glicemico": "zero",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Arroz", "Legumes", "Limão"],
+        "evitar_com": ["Excesso de manteiga", "Frituras"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # MASSAS
+    # ═══════════════════════════════════════════════════════════════════════════
+    "massa": {
+        "categoria": "vegetariano",
+        "ingredientes": ["massa de trigo", "molho de tomate", "azeite"],
+        "beneficios": ["Fonte de energia", "Carboidratos complexos"],
+        "riscos": ["Contém glúten", "Alto índice glicêmico"],
+        "nutricao": {"calorias": "131 kcal", "proteinas": "5g", "carboidratos": "25g", "gorduras": "1g"},
+        "alergenos": {"contem_gluten": True, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Cozimento em água",
+        "descricao": "Massa italiana tradicional.",
+        "indice_glicemico": "moderado",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Molho de tomate", "Legumes", "Proteínas"],
+        "evitar_com": ["Molhos muito gordurosos"],
+    },
+    "lasanha": {
+        "categoria": "vegetariano",
+        "ingredientes": ["massa de lasanha", "molho de tomate", "queijo", "presunto", "molho branco"],
+        "beneficios": ["Refeição completa", "Cálcio do queijo"],
+        "riscos": ["Contém glúten", "Contém lactose", "Alto teor calórico"],
+        "nutricao": {"calorias": "180 kcal", "proteinas": "10g", "carboidratos": "18g", "gorduras": "8g"},
+        "alergenos": {"contem_gluten": True, "contem_lactose": True, "contem_ovo": True},
+        "tecnica": "Assado em forno",
+        "descricao": "Lasanha tradicional em camadas.",
+        "indice_glicemico": "moderado",
+        "tempo_digestao": "3-4 horas",
+        "melhor_horario": "Almoço",
+        "combina_com": ["Salada verde"],
+        "evitar_com": ["Outras massas no mesmo dia"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # SOBREMESAS
+    # ═══════════════════════════════════════════════════════════════════════════
+    "mousse": {
+        "categoria": "vegetariano",
+        "ingredientes": ["creme de leite", "leite condensado", "fruta"],
+        "beneficios": ["Fonte de cálcio", "Energia rápida"],
+        "riscos": ["Alto teor de açúcar", "Contém lactose", "Calórico"],
+        "nutricao": {"calorias": "200 kcal", "proteinas": "4g", "carboidratos": "25g", "gorduras": "10g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": True, "contem_ovo": False},
+        "tecnica": "Refrigerado",
+        "descricao": "Mousse cremoso de frutas.",
+        "indice_glicemico": "alto",
+        "tempo_digestao": "2 horas",
+        "melhor_horario": "Sobremesa ocasional",
+        "combina_com": ["Frutas frescas"],
+        "evitar_com": ["Outras sobremesas"],
+    },
+    "pudim": {
+        "categoria": "vegetariano",
+        "ingredientes": ["leite condensado", "leite", "ovos", "açúcar"],
+        "beneficios": ["Fonte de proteína (ovos)", "Cálcio"],
+        "riscos": ["Alto teor de açúcar", "Contém lactose", "Contém ovo"],
+        "nutricao": {"calorias": "240 kcal", "proteinas": "6g", "carboidratos": "35g", "gorduras": "9g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": True, "contem_ovo": True},
+        "tecnica": "Banho-maria",
+        "descricao": "Pudim de leite tradicional brasileiro.",
+        "indice_glicemico": "alto",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Sobremesa ocasional",
+        "combina_com": ["Café"],
+        "evitar_com": ["Outras sobremesas no mesmo dia"],
+    },
+    "bolo": {
+        "categoria": "vegetariano",
+        "ingredientes": ["farinha de trigo", "açúcar", "ovos", "manteiga", "leite"],
+        "beneficios": ["Fonte de energia"],
+        "riscos": ["Contém glúten", "Alto teor de açúcar", "Calórico"],
+        "nutricao": {"calorias": "260 kcal", "proteinas": "4g", "carboidratos": "40g", "gorduras": "10g"},
+        "alergenos": {"contem_gluten": True, "contem_lactose": True, "contem_ovo": True},
+        "tecnica": "Assado em forno",
+        "descricao": "Bolo caseiro tradicional.",
+        "indice_glicemico": "alto",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Lanche da tarde (ocasional)",
+        "combina_com": ["Café", "Chá"],
+        "evitar_com": ["Outras sobremesas"],
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    # VEGANOS ESPECÍFICOS
+    # ═══════════════════════════════════════════════════════════════════════════
+    "vegano": {
+        "categoria": "vegano",
+        "ingredientes": ["ingredientes 100% vegetais"],
+        "beneficios": ["Livre de produtos animais", "Rico em fibras", "Baixo colesterol"],
+        "riscos": ["Verificar fonte de B12 e ferro"],
+        "nutricao": {"calorias": "~120 kcal", "proteinas": "~5g", "carboidratos": "~20g", "gorduras": "~3g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Variada",
+        "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+        "indice_glicemico": "variável",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Qualquer refeição",
+        "combina_com": ["Outros vegetais", "Grãos", "Leguminosas"],
+        "evitar_com": ["Produtos animais"],
+    },
+    "tofu": {
+        "categoria": "vegano",
+        "ingredientes": ["tofu (soja)", "temperos"],
+        "beneficios": ["Proteína vegetal completa", "Cálcio", "Isoflavonas"],
+        "riscos": ["Alérgeno: soja"],
+        "nutricao": {"calorias": "76 kcal", "proteinas": "8g", "carboidratos": "1.9g", "gorduras": "4.8g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False, "contem_soja": True},
+        "tecnica": "Grelhado ou refogado",
+        "descricao": "Tofu, proteína vegetal versátil.",
+        "indice_glicemico": "muito baixo",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Legumes", "Molho shoyu", "Gengibre"],
+        "evitar_com": ["Frituras"],
+    },
+    "hambúrguer vegano": {
+        "categoria": "vegano",
+        "ingredientes": ["proteína vegetal", "legumes", "temperos"],
+        "beneficios": ["Proteína sem colesterol", "Fibras", "Baixa gordura saturada"],
+        "riscos": ["Verificar sódio", "Pode conter glúten"],
+        "nutricao": {"calorias": "180 kcal", "proteinas": "15g", "carboidratos": "12g", "gorduras": "8g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Grelhado",
+        "descricao": "Hambúrguer 100% vegetal.",
+        "indice_glicemico": "baixo",
+        "tempo_digestao": "2-3 horas",
+        "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Salada", "Pão integral"],
+        "evitar_com": ["Molhos industrializados"],
+    },
 }
 
-# Palavras que indicam categoria
-PALAVRAS_PROTEINA = ["frango", "peixe", "carne", "boi", "porco", "camarão", "atum", "bacalhau", 
-                     "salmão", "tilápia", "costela", "maminha", "filé", "sobrecoxa", "bacon",
-                     "linguiça", "presunto", "almôndega", "kibe", "hambúrguer de carne"]
-PALAVRAS_VEGETARIANO = ["queijo", "ovo", "leite", "iogurte", "manteiga", "creme de leite", 
-                        "parmesão", "mussarela", "ricota"]
-PALAVRAS_VEGANO = ["vegano", "vegana", "plant-based", "sem lactose vegano"]
+# Palavras-chave para matching
+PALAVRAS_CHAVE = {
+    "arroz": ["arroz", "rice"],
+    "arroz branco": ["arroz branco", "white rice"],
+    "arroz integral": ["arroz integral", "integral", "brown rice"],
+    "arroz 7 grãos": ["7 grãos", "7 graos", "sete grãos", "multigrãos"],
+    "feijão": ["feijão", "feijao", "bean"],
+    "feijão preto": ["feijão preto", "feijao preto", "black bean"],
+    "batata": ["batata", "potato"],
+    "batata doce": ["batata doce", "sweet potato"],
+    "batata frita": ["batata frita", "frita", "french fries"],
+    "salada": ["salada", "salad", "verde"],
+    "brócolis": ["brócolis", "brocolis", "broccoli"],
+    "abóbora": ["abóbora", "abobora", "pumpkin", "squash"],
+    "curry": ["curry", "ao curry"],
+    "frango": ["frango", "chicken", "galinha"],
+    "sobrecoxa": ["sobrecoxa", "coxa"],
+    "peixe": ["peixe", "fish", "filé de peixe", "file de peixe"],
+    "salmão": ["salmão", "salmao", "salmon"],
+    "bacalhau": ["bacalhau", "cod"],
+    "carne": ["carne", "bovina", "bife", "beef"],
+    "maminha": ["maminha"],
+    "costela": ["costela", "costelinha"],
+    "camarão": ["camarão", "camarao", "shrimp"],
+    "massa": ["massa", "espaguete", "macarrão", "pasta"],
+    "lasanha": ["lasanha", "lasagna"],
+    "mousse": ["mousse"],
+    "pudim": ["pudim", "pudding"],
+    "bolo": ["bolo", "cake", "brownie"],
+    "vegano": ["vegano", "vegana", "vegan"],
+    "tofu": ["tofu"],
+    "hambúrguer vegano": ["hambúrguer vegano", "hamburger vegano", "burger vegano"],
+}
 
-# Palavras para alérgenos
-PALAVRAS_GLUTEN = ["trigo", "farinha", "pão", "massa", "macarrão", "lasanha", "nhoque", "empanado"]
-PALAVRAS_LACTOSE = ["queijo", "leite", "creme", "manteiga", "iogurte", "nata", "requeijão"]
-PALAVRAS_OVO = ["ovo", "gema", "clara", "maionese"]
-PALAVRAS_CASTANHAS = ["castanha", "amêndoa", "nozes", "amendoim", "pistache"]
-PALAVRAS_FRUTOS_MAR = ["camarão", "lagosta", "caranguejo", "siri", "lula", "polvo", "marisco"]
-PALAVRAS_SOJA = ["soja", "tofu", "shoyu", "missô"]
 
-
-def detectar_categoria_por_nome(nome: str) -> str:
-    """Detecta categoria baseado no nome do prato"""
+def encontrar_tipo_prato(nome: str) -> str:
+    """Encontra o tipo de prato mais próximo baseado no nome"""
     nome_lower = nome.lower()
     
-    # Primeiro verifica se é explicitamente vegano
-    for palavra in PALAVRAS_VEGANO:
-        if palavra in nome_lower:
-            return "vegano"
+    # Primeiro tenta match exato
+    for tipo, palavras in PALAVRAS_CHAVE.items():
+        for palavra in palavras:
+            if palavra in nome_lower:
+                return tipo
     
-    # Verifica proteína animal
-    for palavra in PALAVRAS_PROTEINA:
-        if palavra in nome_lower:
-            return "proteína animal"
+    # Fallback para categoria genérica
+    if any(p in nome_lower for p in ["frango", "galinha", "chicken"]):
+        return "frango"
+    if any(p in nome_lower for p in ["peixe", "fish", "tilápia", "atum"]):
+        return "peixe"
+    if any(p in nome_lower for p in ["carne", "boi", "bovina", "beef"]):
+        return "carne"
+    if any(p in nome_lower for p in ["vegano", "vegana", "vegan"]):
+        return "vegano"
+    if any(p in nome_lower for p in ["salada", "alface", "rúcula"]):
+        return "salada"
     
-    # Verifica vegetariano (tem derivado animal mas não carne)
-    for palavra in PALAVRAS_VEGETARIANO:
-        # Ignora se for versão vegana
-        if palavra in nome_lower and "vegan" not in nome_lower:
-            return "vegetariano"
-    
-    # Se não encontrou nada, assume vegano (legumes, grãos, etc)
-    return "vegano"
-
-
-def detectar_alergenos_por_nome(nome: str) -> dict:
-    """Detecta alérgenos baseado no nome do prato"""
-    nome_lower = nome.lower()
-    
-    alergenos = {
-        "contem_gluten": any(p in nome_lower for p in PALAVRAS_GLUTEN),
-        "contem_lactose": any(p in nome_lower for p in PALAVRAS_LACTOSE) and "vegan" not in nome_lower,
-        "contem_ovo": any(p in nome_lower for p in PALAVRAS_OVO),
-        "contem_castanhas": any(p in nome_lower for p in PALAVRAS_CASTANHAS),
-        "contem_frutos_mar": any(p in nome_lower for p in PALAVRAS_FRUTOS_MAR),
-        "contem_soja": any(p in nome_lower for p in PALAVRAS_SOJA),
-    }
-    
-    return alergenos
-
-
-def detectar_nutricao_por_nome(nome: str) -> dict:
-    """Detecta nutrição aproximada baseado no nome"""
-    nome_lower = nome.lower()
-    
-    for tipo, nutricao in NUTRICAO_POR_TIPO.items():
-        if tipo in nome_lower:
-            return nutricao.copy()
-    
-    # Default para prato genérico
-    return {"calorias": "~100 kcal", "proteinas": "~5g", "carboidratos": "~15g", "gorduras": "~3g"}
+    return None
 
 
 def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
     """
     Atualiza um prato LOCALMENTE baseado em regras, SEM chamar IA.
-    
-    Args:
-        slug: ID do prato
-        novo_nome: Novo nome (se for renomear)
-    
-    Returns:
-        Resultado da atualização
+    Preenche TODOS os campos: categoria, ingredientes, benefícios, riscos, etc.
     """
     dish_dir = DATASET_DIR / slug
     if not dish_dir.exists():
@@ -121,31 +578,58 @@ def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
     # Determinar nome a usar
     nome = novo_nome if novo_nome else current_info.get('nome', slug)
     
-    # Detectar categoria
-    nova_categoria = detectar_categoria_por_nome(nome)
+    # Encontrar tipo de prato
+    tipo = encontrar_tipo_prato(nome)
     
-    # Detectar alérgenos
-    alergenos = detectar_alergenos_por_nome(nome)
-    
-    # Detectar nutrição se estiver vazia
-    nutricao = current_info.get('nutricao', {})
-    if not nutricao or not nutricao.get('calorias'):
-        nutricao = detectar_nutricao_por_nome(nome)
-    
-    # Atualizar info
-    current_info['nome'] = nome
-    current_info['categoria'] = nova_categoria
-    current_info['slug'] = slug
-    current_info.update(alergenos)
-    current_info['nutricao'] = nutricao
-    
-    # Emoji
-    if "proteína" in nova_categoria:
-        current_info['category_emoji'] = "🍖"
-    elif "vegetariano" in nova_categoria:
-        current_info['category_emoji'] = "🥚"
+    if tipo and tipo in PRATOS_COMPLETOS:
+        dados = PRATOS_COMPLETOS[tipo]
+        
+        # Atualizar todos os campos
+        current_info['nome'] = nome
+        current_info['slug'] = slug
+        current_info['categoria'] = dados['categoria']
+        current_info['ingredientes'] = dados['ingredientes']
+        current_info['beneficios'] = dados['beneficios']
+        current_info['riscos'] = dados['riscos']
+        current_info['nutricao'] = dados['nutricao']
+        current_info['tecnica'] = dados.get('tecnica', '')
+        current_info['descricao'] = dados.get('descricao', '')
+        
+        # Alérgenos
+        for key, value in dados.get('alergenos', {}).items():
+            current_info[key] = value
+        
+        # Campos Premium
+        current_info['indice_glicemico'] = dados.get('indice_glicemico', '')
+        current_info['tempo_digestao'] = dados.get('tempo_digestao', '')
+        current_info['melhor_horario'] = dados.get('melhor_horario', '')
+        current_info['combina_com'] = dados.get('combina_com', [])
+        current_info['evitar_com'] = dados.get('evitar_com', [])
+        
+        # Emoji
+        if "proteína" in dados['categoria']:
+            current_info['category_emoji'] = "🍖"
+        elif "vegetariano" in dados['categoria']:
+            current_info['category_emoji'] = "🥚"
+        else:
+            current_info['category_emoji'] = "🌱"
+        
+        status = f"Atualizado com dados de '{tipo}'"
     else:
-        current_info['category_emoji'] = "🌱"
+        # Não encontrou tipo específico - usar regras básicas
+        current_info['nome'] = nome
+        current_info['slug'] = slug
+        current_info['categoria'] = detectar_categoria_basica(nome)
+        
+        # Emoji
+        if "proteína" in current_info['categoria']:
+            current_info['category_emoji'] = "🍖"
+        elif "vegetariano" in current_info['categoria']:
+            current_info['category_emoji'] = "🥚"
+        else:
+            current_info['category_emoji'] = "🌱"
+        
+        status = "Atualizado com regras básicas (tipo não encontrado no banco)"
     
     # Salvar
     with open(info_path, 'w', encoding='utf-8') as f:
@@ -155,16 +639,35 @@ def atualizar_prato_local(slug: str, novo_nome: str = None) -> dict:
         "ok": True,
         "slug": slug,
         "nome": nome,
-        "categoria": nova_categoria,
-        "alergenos": alergenos,
-        "nutricao": nutricao,
-        "message": "Atualizado LOCALMENTE (sem IA, sem créditos)"
+        "tipo_detectado": tipo,
+        "categoria": current_info.get('categoria'),
+        "status": status,
+        "message": "✅ Atualizado LOCALMENTE (sem IA, sem créditos)"
     }
+
+
+def detectar_categoria_basica(nome: str) -> str:
+    """Detecta categoria básica pelo nome"""
+    nome_lower = nome.lower()
+    
+    proteinas = ["frango", "peixe", "carne", "boi", "camarão", "salmão", "atum", 
+                 "bacalhau", "costela", "maminha", "filé", "bacon", "linguiça"]
+    vegetarianos = ["queijo", "ovo", "leite", "iogurte", "manteiga", "gratinado"]
+    
+    for p in proteinas:
+        if p in nome_lower:
+            return "proteína animal"
+    
+    for v in vegetarianos:
+        if v in nome_lower and "vegan" not in nome_lower:
+            return "vegetariano"
+    
+    return "vegano"
 
 
 def atualizar_todos_por_nome() -> dict:
     """Atualiza TODOS os pratos baseado no nome, SEM IA"""
-    resultados = {"atualizados": 0, "erros": [], "total": 0}
+    resultados = {"atualizados": 0, "erros": [], "total": 0, "por_tipo": {}}
     
     for dish_dir in DATASET_DIR.iterdir():
         if not dish_dir.is_dir():
@@ -176,6 +679,8 @@ def atualizar_todos_por_nome() -> dict:
         result = atualizar_prato_local(slug)
         if result.get("ok"):
             resultados["atualizados"] += 1
+            tipo = result.get("tipo_detectado", "desconhecido")
+            resultados["por_tipo"][tipo] = resultados["por_tipo"].get(tipo, 0) + 1
         else:
             resultados["erros"].append({"slug": slug, "error": result.get("error")})
     
