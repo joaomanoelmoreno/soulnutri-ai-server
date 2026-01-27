@@ -767,6 +767,88 @@ export default function Admin() {
             </button>
           </div>
 
+          {/* AÇÕES EM MASSA - SEM CRÉDITOS */}
+          <div className="mass-actions-panel" style={{
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '20px',
+            border: '1px solid #0f3460'
+          }}>
+            <h3 style={{ color: '#fff', marginBottom: '15px' }}>⚡ Ações em Massa (SEM CRÉDITOS)</h3>
+            
+            <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+              <button
+                onClick={consolidateDuplicates}
+                disabled={consolidating}
+                style={{
+                  background: consolidating ? '#555' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  cursor: consolidating ? 'not-allowed' : 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '14px'
+                }}
+              >
+                {consolidating ? '⏳ Consolidando...' : '🔗 Consolidar Duplicados'}
+              </button>
+              
+              <button
+                onClick={updateAllLocal}
+                disabled={updatingAll}
+                style={{
+                  background: updatingAll ? '#555' : 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  cursor: updatingAll ? 'not-allowed' : 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '14px'
+                }}
+              >
+                {updatingAll ? '⏳ Atualizando...' : '🔄 Atualizar Todos os Pratos'}
+              </button>
+            </div>
+            
+            <p style={{ color: '#888', fontSize: '12px', marginTop: '10px' }}>
+              ✅ Essas ações são processadas localmente e NÃO consomem créditos de IA.
+            </p>
+            
+            {/* Resultado da ação em massa */}
+            {massActionResult && (
+              <div style={{
+                marginTop: '15px',
+                padding: '12px',
+                borderRadius: '8px',
+                background: massActionResult.success ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
+                border: `1px solid ${massActionResult.success ? '#22c55e' : '#ef4444'}`
+              }}>
+                <p style={{ color: '#fff', fontWeight: 'bold', margin: 0 }}>
+                  {massActionResult.message}
+                </p>
+                {massActionResult.details && (
+                  <div style={{ marginTop: '10px', fontSize: '12px', color: '#aaa' }}>
+                    <strong>Por tipo:</strong>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '5px' }}>
+                      {Object.entries(massActionResult.details).map(([tipo, count]) => (
+                        <span key={tipo} style={{
+                          background: 'rgba(255,255,255,0.1)',
+                          padding: '2px 8px',
+                          borderRadius: '4px'
+                        }}>
+                          {tipo || 'outros'}: {count}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {auditLoading && (
             <div className="audit-loading">
               <p>⏳ Analisando {dishes.length} pratos... Isso pode levar alguns segundos.</p>
