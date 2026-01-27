@@ -270,15 +270,27 @@ export default function Admin() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dish)
       });
-      const data = await res.json();
+      
+      // Verificar se a resposta é válida antes de parsear
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (parseError) {
+        console.error('Erro ao parsear resposta:', text);
+        alert('Erro ao processar resposta do servidor');
+        return;
+      }
+      
       if (data.ok) {
         alert('✅ Prato salvo!');
         setEditingDish(null);
         loadDishes();
       } else {
-        alert('Erro: ' + data.error);
+        alert('Erro: ' + (data.error || 'Erro desconhecido'));
       }
     } catch (e) {
+      console.error('Erro ao salvar:', e);
       alert('Erro ao salvar: ' + e.message);
     }
   };
