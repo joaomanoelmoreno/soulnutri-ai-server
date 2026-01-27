@@ -869,6 +869,9 @@ function App() {
     // Verificar alérgenos presentes em qualquer item
     const contemGluten = plateItems.some(item => item.alergenos?.gluten);
     const contemLactose = plateItems.some(item => item.alergenos?.lactose);
+    const contemOvo = plateItems.some(item => item.alergenos?.ovo);
+    const contemCastanhas = plateItems.some(item => item.alergenos?.castanhas);
+    const contemFrutosMar = plateItems.some(item => item.alergenos?.frutosMar);
     
     // Categorias presentes
     const categorias = [...new Set(plateItems.map(item => item.category).filter(Boolean))];
@@ -887,6 +890,9 @@ function App() {
       riscos: allRiscos,
       contemGluten,
       contemLactose,
+      contemOvo,
+      contemCastanhas,
+      contemFrutosMar,
       categorias
     };
   }, [plateItems]);
