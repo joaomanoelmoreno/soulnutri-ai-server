@@ -142,18 +142,26 @@ def normalizar_texto(texto: str) -> str:
 
 
 def detectar_ingredientes_texto(texto: str, banco: set) -> List[str]:
-    """Detecta ingredientes de um banco em um texto"""
+    """
+    Detecta ingredientes de um banco em um texto.
+    Usa word boundaries para evitar falsos positivos (ex: "decoração" não deve detectar "coração").
+    """
     texto_norm = normalizar_texto(texto)
     encontrados = []
     
     for ingrediente in banco:
         ing_norm = normalizar_texto(ingrediente)
-        # Busca por palavra completa ou parte significativa
-        if ing_norm in texto_norm:
-            encontrados.append(ingrediente)
-        # Busca por padrão de palavra
-        elif re.search(r'\b' + re.escape(ing_norm) + r'\b', texto_norm):
-            encontrados.append(ingrediente)
+        
+        # Para ingredientes com múltiplas palavras, busca exata
+        if ' ' in ing_norm:
+            if ing_norm in texto_norm:
+                encontrados.append(ingrediente)
+        else:
+            # Para palavras únicas, usa word boundary para evitar falsos positivos
+            # Exemplo: não detectar "coração" em "decoração"
+            pattern = r'(?<![a-záàãâéêíóôõúç])' + re.escape(ing_norm) + r'(?![a-záàãâéêíóôõúç])'
+            if re.search(pattern, texto_norm):
+                encontrados.append(ingrediente)
     
     return encontrados
 
