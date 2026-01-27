@@ -1215,9 +1215,11 @@ export default function Admin() {
                     value={(editingDish.ingredientes || []).join('\n')}
                     onChange={e => setEditingDish({
                       ...editingDish, 
-                      ingredientes: e.target.value.split('\n').filter(i => i.trim())
+                      ingredientes: e.target.value.split('\n')
                     })}
-                    rows={4}
+                    rows={6}
+                    style={{ minHeight: '120px', width: '100%' }}
+                    placeholder="Digite um ingrediente por linha..."
                   />
                 </div>
 
