@@ -1,5 +1,5 @@
 {
-  "nome": "Rolinhovietnamita",
+  "nome": "Robinho Vietnamita",
   "categoria": "vegano",
   "ingredientes": [
     "Massa de arroz (papel de arroz)",
@@ -22,9 +22,11 @@
   "curiosidade": "Os rolinhos vietnamitas são tradicionalmente servidos com molhos à base de amendoim ou peixe, mas podem ser facilmente adaptados para opções veganas com molhos à base de soja ou tahini.",
   "slug": "rolinhovietnamita",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "80 kcal",
+    "proteinas": "2g",
+    "carboidratos": "15g",
+    "gorduras": "1g"
+  },
+  "category_emoji": "🥬",
+  "contem_soja": true
 }

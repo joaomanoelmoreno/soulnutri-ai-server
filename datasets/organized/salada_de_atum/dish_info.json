@@ -22,9 +22,12 @@
   "curiosidade": "O atum é rico em ômega-3, um ácido graxo essencial para a saúde do coração e do cérebro.",
   "slug": "salada_de_atum",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "250 kcal",
+    "proteinas": "15g",
+    "carboidratos": "20g",
+    "gorduras": "12g"
+  },
+  "category_emoji": "🍖",
+  "contem_ovo": true,
+  "contem_frutos_mar": true
 }

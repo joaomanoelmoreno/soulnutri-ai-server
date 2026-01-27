@@ -25,11 +25,17 @@
     "Pode conter glúten, dependendo do tempero utilizado.",
     "Excesso de sal pode ser prejudicial à saúde."
   ],
-  "nutricao": {},
+  "nutricao": {
+    "calorias": "150 kcal",
+    "proteinas": "2g",
+    "carboidratos": "25g",
+    "gorduras": "5g"
+  },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🥬"
 }

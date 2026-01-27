@@ -1,5 +1,5 @@
 {
-  "nome": "Gelatinadecereja",
+  "nome": "Gelatina de Cereja",
   "categoria": "vegetariano",
   "ingredientes": [
     "Gelatina em pó sem sabor",
@@ -20,9 +20,10 @@
   "curiosidade": "A gelatina é derivada do colágeno animal, proteína presente em tecidos como pele e ossos.",
   "slug": "gelatinadecereja",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "80 kcal",
+    "proteinas": "5g",
+    "carboidratos": "15g",
+    "gorduras": "0g"
+  },
+  "category_emoji": "🥚"
 }

@@ -1,0 +1,29 @@
+{
+  "nome": "Fígado Acebolado",
+  "slug": "fígado_abolado",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Prato com carne e legumes, difícil de identificar com precisão.",
+  "ingredientes": [
+    "Carne",
+    "Legumes",
+    "Tomate"
+  ],
+  "beneficios": [
+    "Fonte de ferro",
+    "Rico em proteínas",
+    "Fonte de vitaminas do complexo B"
+  ],
+  "riscos": [
+    "Alto teor de colesterol (se consumido em excesso)",
+    "Alto teor de purinas"
+  ],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false
+}

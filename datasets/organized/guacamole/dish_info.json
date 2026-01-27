@@ -1,5 +1,5 @@
 {
-  "nome": "guacamole",
+  "nome": "Guacamole",
   "categoria": "vegano",
   "ingredientes": [
     "Abacate amassado",
@@ -25,9 +25,10 @@
   "curiosidade": "O guacamole é originário do México e seu nome vem de 'ahuacamolli', que significa 'molho de abacate' na língua nauatle.",
   "slug": "guacamole",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "160 kcal",
+    "proteinas": "2g",
+    "carboidratos": "7g",
+    "gorduras": "14g"
+  },
+  "category_emoji": "🥬"
 }
