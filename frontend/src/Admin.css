@@ -1130,3 +1130,19 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Botão de lixeira */
+.delete-btn.small {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.delete-btn.small:hover {
+  background: #ef4444;
+  color: white;
+}
+
