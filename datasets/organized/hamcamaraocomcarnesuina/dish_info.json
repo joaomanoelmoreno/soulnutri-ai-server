@@ -1,8 +1,7 @@
 {
-  "nome": "Parmegiana de Carne Suína",
+  "nome": "File Mignon a parmegiana",
   "categoria": "proteína animal",
   "ingredientes": [
-    "carne bovina",
     "sal",
     "temperos"
   ],
@@ -25,7 +24,7 @@
     "carboidratos": "0g",
     "gorduras": "15g"
   },
-  "category_emoji": "🍖",
+  "category_emoji": "🥩",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

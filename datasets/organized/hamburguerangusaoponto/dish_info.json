@@ -1,14 +1,10 @@
 {
-  "nome": "Hambúrguer Angus ao Ponto",
-  "categoria": "vegano",
+  "nome": "Hambúrguer de carne",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "Carne bovina Angus",
-    "Tomate",
-    "Salsa",
-    "Cebolinha",
-    "Azeite"
+    "Carne bovina especificada Cibi Sana com baixo teor de gordura"
   ],
-  "descricao": "Hambúrguer de carne Angus servido ao ponto, acompanhado de tomate e ervas finas.",
+  "descricao": "Hambúrguer de carne servido ao ponto, acompanhado de tomate e ervas finas.",
   "beneficios": [
     "Fonte de proteína",
     "Rico em ferro"
@@ -24,7 +20,12 @@
     "carboidratos": "2g",
     "gorduras": "16g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥩",
   "contem_gluten": false,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
 }
