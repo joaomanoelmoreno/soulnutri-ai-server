@@ -653,6 +653,15 @@ def atualizar_prato_local(slug: str, novo_nome: str = None, forcar: bool = False
             if key not in current_info:
                 current_info[key] = value
         
+        # NUTRICAO GENÉRICA por categoria (se não tiver)
+        if 'nutricao' not in current_info or not current_info.get('nutricao', {}).get('calorias'):
+            if "proteína" in cat:
+                current_info['nutricao'] = {"calorias": "~180 kcal", "proteinas": "~20g", "carboidratos": "~5g", "gorduras": "~8g"}
+            elif "vegetariano" in cat:
+                current_info['nutricao'] = {"calorias": "~150 kcal", "proteinas": "~8g", "carboidratos": "~15g", "gorduras": "~6g"}
+            else:  # vegano
+                current_info['nutricao'] = {"calorias": "~100 kcal", "proteinas": "~4g", "carboidratos": "~18g", "gorduras": "~2g"}
+        
         if "proteína" in cat:
             current_info['category_emoji'] = "🍖"
         elif "vegetariano" in cat:
