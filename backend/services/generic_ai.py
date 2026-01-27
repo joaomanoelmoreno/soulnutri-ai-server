@@ -584,3 +584,111 @@ async def batch_fix_dishes(slugs: list, max_concurrent: int = 3) -> dict:
                 results["skipped"].append({"slug": r["slug"], "reason": r.get("reason")})
     
     return results
+
+
+async def regenerate_dish_info_from_name(dish_name: str, old_info: dict = None) -> dict:
+    """
+    Regenera TODAS as informações de um prato baseado apenas no NOME.
+    Útil quando o usuário corrige o nome de um prato (ex: de "Peixe" para "Batata").
+    
+    IMPORTANTE: Esta função gera informações CONSISTENTES com o novo nome,
+    atualizando ingredientes, nutrição, categoria, etc.
+    """
+    try:
+        api_key = os.environ.get("EMERGENT_LLM_KEY")
+        if not api_key:
+            return {"ok": False, "error": "EMERGENT_LLM_KEY não configurada"}
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"regen-{dish_name}",
+            system_message="""Você é um nutricionista especializado em gastronomia brasileira.
+Seu trabalho é CRIAR uma ficha técnica COMPLETA e PRECISA para um prato baseado apenas no nome.
+
+REGRAS CRÍTICAS:
+1. CATEGORIA CORRETA:
+   - "vegano": ZERO produtos animais (nem ovo, nem leite, nem mel)
+   - "vegetariano": pode ter ovo/leite/queijo de VACA, mas SEM carne/peixe/frango
+   - "proteína animal": tem carne/peixe/frango/crustáceos
+   
+2. INGREDIENTES VEGANOS (NÃO são de origem animal):
+   - Leite de coco, creme de coco = VEGANO
+   - Queijo vegano, queijo de castanha = VEGANO
+   - Cogumelos, tofu = VEGANO
+   
+3. INGREDIENTES DE ORIGEM ANIMAL:
+   - Queijo (sem especificar "vegano") = LACTOSE
+   - Leite (sem especificar "vegetal") = LACTOSE
+   - Maionese tradicional = contém OVO
+   
+4. DECORAÇÃO não conta como ingrediente principal
+
+5. Use valores nutricionais REALISTAS (por 100g):
+   - Calorias: em kcal
+   - Proteínas: em g
+   - Carboidratos: em g
+   - Gorduras: em g
+
+Responda APENAS com JSON válido no formato:
+{
+    "nome": "Nome do Prato",
+    "categoria": "vegano|vegetariano|proteína animal",
+    "descricao": "Descrição detalhada do prato",
+    "ingredientes": ["ingrediente1", "ingrediente2", ...],
+    "beneficios": ["benefício1", "benefício2", ...],
+    "riscos": ["risco1", "risco2", ...],
+    "nutricao": {
+        "calorias": "XXX kcal",
+        "proteinas": "XXg",
+        "carboidratos": "XXg",
+        "gorduras": "XXg"
+    },
+    "contem_gluten": true/false,
+    "contem_lactose": true/false,
+    "contem_ovo": true/false,
+    "contem_castanhas": true/false,
+    "contem_frutos_mar": true/false,
+    "contem_soja": true/false,
+    "tecnica": "Técnica de preparo"
+}"""
+        ).with_model("gemini", "gemini-2.0-flash")
+        
+        context = f"""Gere a ficha técnica COMPLETA para este prato:
+
+NOME DO PRATO: {dish_name}
+
+INFORMAÇÕES ANTIGAS (podem estar ERRADAS - use apenas como referência):
+{json.dumps(old_info, ensure_ascii=False, indent=2) if old_info else "Nenhuma"}
+
+IMPORTANTE: Baseie-se NO NOME do prato para determinar ingredientes e categoria.
+Se o nome indica "Batata", os ingredientes devem ser de batata, não de peixe.
+Se o nome indica "Vegano", a categoria DEVE ser vegano.
+
+Responda APENAS com JSON válido."""
+        
+        response = await chat.send_message(UserMessage(text=context))
+        
+        # Parse JSON
+        response_clean = response.strip()
+        if response_clean.startswith("```"):
+            response_clean = response_clean.split("```")[1]
+            if response_clean.startswith("json"):
+                response_clean = response_clean[4:]
+        response_clean = response_clean.strip()
+        if response_clean.endswith("```"):
+            response_clean = response_clean[:-3]
+        
+        try:
+            result = json.loads(response_clean)
+            result["ok"] = True
+            result["regenerated_from_name"] = True
+            return result
+        except json.JSONDecodeError:
+            return {
+                "ok": False,
+                "error": "Erro ao processar resposta da IA",
+                "raw_response": response
+            }
+            
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
