@@ -1108,6 +1108,13 @@ export default function Admin() {
                         >
                           ✏️
                         </button>
+                        <button 
+                          className="delete-btn small"
+                          onClick={() => deleteDish(p.slug, p.nome)}
+                          title="Excluir prato"
+                        >
+                          🗑️
+                        </button>
                       </div>
                     ))}
                     {auditData.problems.missing_ingredients.length > 30 && (
@@ -1137,6 +1144,13 @@ export default function Admin() {
                           }}
                         >
                           ✏️
+                        </button>
+                        <button 
+                          className="delete-btn small"
+                          onClick={() => deleteDish(p.slug, p.nome)}
+                          title="Excluir prato"
+                        >
+                          🗑️
                         </button>
                       </div>
                     ))}
