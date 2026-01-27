@@ -1,11 +1,11 @@
 {
-  "nome": "Docedebananavegano(Semaçúcar)",
+  "nome": "Doce de Banana Vegano (Sem açúcar)",
   "categoria": "vegano",
   "ingredientes": [
     "Banana",
     "Canela em pó"
   ],
-  "descricao": "Doce de banana com textura cremosa, provavelmente feito a partir do cozimento ou amassamento da banana, sem adição de açúcar. É finalizado com canela em pó.",
+  "descricao": "Doce de banana com textura cremosa, feito a partir do cozimento ou amassamento da banana, sem adição de açúcar. É finalizado com canela em pó.",
   "beneficios": [
     "Fonte de potássio, importante para a saúde cardiovascular",
     "Fornece energia devido aos carboidratos naturais da banana",
@@ -19,5 +19,13 @@
     "proteinas": "",
     "carboidratos": "",
     "gorduras": ""
-  }
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
 }
