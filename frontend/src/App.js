@@ -572,7 +572,12 @@ function App() {
         },
         score: result.score
       };
-      setPlateItems(prev => [...prev, newItem]);
+      console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display);
+      setPlateItems(prev => {
+        const updated = [...prev, newItem];
+        console.log('[DEBUG] plateItems agora tem', updated.length, 'itens');
+        return updated;
+      });
     }
     setShowAddMore(false);
     setResult(null);
@@ -581,6 +586,9 @@ function App() {
 
   // Fluxo Único: Finalizar prato e mostrar resumo consolidado
   const finishPlate = () => {
+    console.log('[DEBUG] finishPlate chamado, result:', result?.dish_display);
+    console.log('[DEBUG] plateItems antes:', plateItems.length, 'itens');
+    
     if (result?.ok && result?.identified) {
       // Adicionar último item se houver
       const newItem = {
@@ -601,7 +609,12 @@ function App() {
         },
         score: result.score
       };
-      setPlateItems(prev => [...prev, newItem]);
+      console.log('[DEBUG] Adicionando último item:', newItem.dish_display);
+      setPlateItems(prev => {
+        const updated = [...prev, newItem];
+        console.log('[DEBUG] plateItems final:', updated.length, 'itens');
+        return updated;
+      });
     }
     setShowAddMore(false);
     setResult(null);
