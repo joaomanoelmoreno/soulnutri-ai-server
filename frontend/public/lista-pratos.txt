@@ -2,7 +2,7 @@
 ================================================================================
                         LISTA DE PRATOS - CIBI SANA
 ================================================================================
-                    Total: 308 pratos  |  Janeiro 2026
+                    Total: 258 pratos  |  Janeiro 2026
 ================================================================================
 
 LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
@@ -13,18 +13,14 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
 ========================================
   [V] Abobora Ao Curry
   [V] Abobrinha Grelhada
-  [V] Abobrinnha Grelhada
   [V] Alface Frisée
   [P] Almôndegas Ao Coco Com Especiarias 
-  [ ] Almôndegas Ao Molho Sugo
+  [P] Almôndegas Ao Molho Sugo
   [V] Arroz 7 Graos
   [V] Arroz 7 Graos Com Frutas Secas
-  [V] Arroz 7 Grãos Com Frutas Secas
   [V] Arroz 7 Grãos Com Legumes
   [V] Arroz Branco
   [ ] Arroz Com Brócolis E Amêndoas
-  [V] Arroz De 7 Graos
-  [V] Arroz De 7 Grãos 
   [V] Arroz Integral
   [V] Arroz Integral Com Legumes
   [P] Atum Ao Funghi
@@ -35,25 +31,20 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   B
 ========================================
   [P] Bacalhau A Bras
-  [P] Bacalhau Com Natas 
+  [P] Bacalhau Com Natas
   [P] Bacalhau Gomes De Sá
   [P] Baiao De Dois
-  [P] Baião De Dois
   [E] Banana Ao Creme
   [V] Batata Com Paprica
   [V] Batata Doce Assada
-  [V] Batataa Assada
   [E] Beringela A Parmegiana
   [V] Beringela Ao Curry E Kincam
   [V] Beringela Ao Purê De Limão Siciliano
-  [ ] Berinjela Ao Purê De Limão Siciliano
   [V] Beterraba  Ao Balsamico
-  [V] Beterraba Ao Balsamico
   [P] Bolinho De Bacalhau
   [P] Bolinho De Camarao
   [V] Bolo Brownie De Chocolate
   [E] Bolo De Gengibre
-  [V] Bolo Vegano De Chocolate
   [V] Boloc Vegano De Chocolate
   [ ] Brócolis Com Parmesão
   [E] Brócolis Gratinado
@@ -63,28 +54,21 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
 ========================================
   [E] Caneleira Quatro Queijos
   [E] Canelone De Espinafre
-  [E] Canelone Quatro Queijos
-  [E] Caneloni De Espinafre
   [V] Caponata
   [P] Carne Seca Com Abóbora
   [V] Carpaccio De Abobrinha
-  [V] Carpaccio De Laranja
   [E] Carpaccio De Pera
   [V] Cebola Caramelizada
-  [V] Cebola Caramelizada Vegana
   [V] Cebola Roxa Com Ervas Frescas E Frutos Secos
   [V] Cenoura
   [E] Cenoura Com Iogurte E  Especiarias
-  [E] Cenoura Com Iogurte E Especiarias
   [P] Cestinha De Camarão
-  [ ] Cestinhas De Camarão
   [V] Ceviche De Banana Da Terra
   [V] Ceviche De Manga
   [P] Ceviche De Peixe
   [E] Cocada
   [E] Conchiglione Ao Creme De Avelas E Salvia
   [P] Costela Com Mandioca
-  [P] Costelinha  Cibi Sana
   [P] Costelinha Cibi Sana
   [E] Couve Flor Gratinada
   [P] Coxinha Saudável De Frango
@@ -106,12 +90,10 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [P] Escondidinhodecarneseca
   [V] Espaguete
   [P] Espaguete Ao Missô
-  [V] Espaguete Com Tomate Cereja E Manjericão
   [P] Espaguete Parisiense
   [E] Espetinho Caprese
   [V] Espetinho De Legumes E Molho Pesto
   [V] Espetinhosdelegumesgrelhados
-  [P] Estrogonofe De Frango
   [V] Estrogonofe Vegano
   [P] Estrogonofedefilémignon
 
@@ -119,31 +101,22 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   F
 ========================================
   [P] Farofa Com Bacon
-  [P] Farofa De Bacon
-  [V] Farofa De Banana Da Terra Vegana
   [V] Farofa De Banana Vegana
   [P] Farofadebacon
   [V] Farofadebananadaterra
   [V] Feijaocariocasemcarne
-  [P] Feijaopretocomcarne
   [V] Feijaopretosemcarne
   [P] Feijaotropeiro
   [P] Feijoada
   [P] Feijão Do Chef
-  [E] Feijão Tropeiro
   [V] Feijãobranco
   [P] Figadoacebolado
-  [P] Filedefrangoaparmegiana
   [P] Filedepeixeaomisso
   [P] Filedepeixeaomolhodelimao
-  [P] Filedepeixeaomolhomisso
-  [P] Filedepeixemolhoconfit
   [P] Filedepeixemolhofrutassecas
-  [P] Filé A Parmegiana
   [P] Filé A Parmegiana  Acompanhamentos
   [P] Filé De Frango Parmegiana
   [P] Filé De Peixe Ao Confir De Tomates
-  [P] Filé De Peixe Ao Confit De Tomates
   [P] Filé De Peixe Ao Molho Confit
   [P] Filé De Peixe Em Manteiga De Tomates
   [P] Filé De Tilápia A Milanesa
@@ -156,8 +129,6 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [E] Frutas Ao Ganache De Chocolate
   [P] Frutos Do Mar
   [P] Frutos Do Mar Ao Molho Branco
-  [P] Fígado Acebolad9
-  [P] Fígado Acebolado
   [P] Fígadoaceboladocompimentabiquinho
 
 ========================================
@@ -179,8 +150,6 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
 ========================================
   H
 ========================================
-  [P] Hamburger De Carne
-  [P] Hamburgerdecarne
   [P] Hamburguedecarne
   [V] Hamburguervegano
   [P] Hambúrguer Angus Ao Ponto
@@ -203,10 +172,8 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   L
 ========================================
   [E] Lasanha De Berinjela
-  [E] Lasanha De Espinafre
   [V] Lasanha Vegana
   [V] Lasanha Vegana (Beringela E Proteína De Soja)
-  [V] Lasanha Vegana De Berinjela E Proteína De Soja
   [E] Lasanhadeespinafre
   [E] Lasanhadeportobello
   [V] Lentilhacomtofu
@@ -217,9 +184,6 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
 ========================================
   M
 ========================================
-  [P] Maminha Ao Molho De Cebola
-  [P] Maminha Ao Molho Madeira
-  [P] Maminha Ao Molho Mostarda
   [P] Maminhaaomolhomongolia
   [P] Maminhaaomolhomostarda
   [P] Maminhamolhocebola
@@ -232,7 +196,6 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [E] Manjardecococomcaldadeameixa
   [P] Marinha Ao Molho Madeira
   [P] Massaladecamarões
-  [E] Mechouia Tunísia
   [E] Mechouia-Tunisia
   [V] Melancia Em Cubos
   [E] Melhoria Tunísia
@@ -244,11 +207,9 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [V] Molhoparaorolinho
   [E] Molhosugo
   [V] Moquecadebanadaterra
-  [E] Mousse De Maracujá
   [E] Moussedelimãosemaçúcar
   [E] Moussedemaracuja
   [E] Moussedemorango
-  [V] Muqueca De Banana Da Terra
   [V] Muqueca De Banana Da Terra Vegana
 
 ========================================
@@ -258,7 +219,6 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [E] Nhoque
   [E] Nhoque Ao Molho De Gorgonzola
   [ ] Nhoque Ao Sugo
-  [V] Nhoque De Banana Da Terra Vegana
   [ ] Nãoépossívelidentificar
 
 ========================================
@@ -283,9 +243,7 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [P] Peixecomtomatecereja
   [E] Pepinocomiogurte
   [P] Pernil Assado Com Legumes
-  [P] Pernil De Cordeiro
   [P] Pernildecordeiro
-  [P] Pernildecordeiroassado
   [P] Pernilsuínoaomolhodelimão
   [V] Pimenta Biquinho
   [V] Portobello Recheado Com Legumes
@@ -294,13 +252,11 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [V] Proteína De Soja Ao Sugo
   [ ] Pudim
   [E] Pudimdeleitecondensado
-  [V] Puredebatatadoce
   [V] Puredemacaverde
   [V] Puredemandioquinha
   [ ] Purê De Batata Doce
   [V] Purê De Madioquinha Vegano Com Leite De Coco
   [E] Purêdebatata
-  [V] Purêdemandioquinhacomleitedecoco
   [V] Pão De Alho Negro E Cumaru
 
 ========================================
@@ -312,13 +268,11 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [V] Quiaboempanado
   [E] Quiche
   [V] Quinoa Com Legumes
-  [V] Quinoa Com Tahine
   [V] Quinuacomtahine
 
 ========================================
   R
 ========================================
-  [V] Radicais Ao Molho De Mel E Lamina De Amendoas
   [V] Radicchio Ao Molho De Mel E Lamina De Amendoas
   [V] Ratatouille
   [V] Repolho
@@ -352,7 +306,6 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [P] Saladadefrangocomlegumes
   [V] Saladadegraodebico
   [V] Saladadelentilha
-  [E] Saladadeovos
   [E] Saladadeovoscombatata
   [V] Saladadequinoacomlegumes
   [V] Saladaderabanetecomlaranja
@@ -361,14 +314,11 @@ LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
   [E] Saladeovos
   [ ] Salpicão De Frango
   [P] Sobrecoxa
-  [P] Sobrecoxa Ao Tandoori
   [P] Sobrecoxa Ao Tandori
   [P] Sobrecoxaaotucupi
   [V] Spaghetticomtomatecerejaemanjericão
   [V] Steakdecouveflor
   [P] Strogonoff
-  [V] Strogonoff Vegano
-  [P] Strogonoffdefilemignon
   [P] Sushivietnamita
 
 ========================================
