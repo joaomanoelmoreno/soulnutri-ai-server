@@ -1428,11 +1428,30 @@ function App() {
           {/* ALÉRGENOS CONSOLIDADOS */}
           <div className="mesa-allergens">
             <h4>⚠️ Alérgenos no seu prato</h4>
-            {plateConsolidated?.contemGluten && <span className="allergen-tag warning">Contém Glúten</span>}
-            {plateConsolidated?.contemLactose && <span className="allergen-tag warning">Contém Lactose</span>}
-            {!plateConsolidated?.contemGluten && !plateConsolidated?.contemLactose && (
-              <span className="allergen-tag neutral">Nenhum alérgeno comum detectado</span>
+            {plateConsolidated?.contemGluten && <span className="allergen-tag warning">🌾 Glúten</span>}
+            {plateConsolidated?.contemLactose && <span className="allergen-tag warning">🥛 Lactose</span>}
+            {plateConsolidated?.contemOvo && <span className="allergen-tag warning">🥚 Ovo</span>}
+            {plateConsolidated?.contemCastanhas && <span className="allergen-tag warning">🥜 Castanhas</span>}
+            {plateConsolidated?.contemFrutosMar && <span className="allergen-tag warning">🦐 Frutos do Mar</span>}
+            {!plateConsolidated?.contemGluten && !plateConsolidated?.contemLactose && 
+             !plateConsolidated?.contemOvo && !plateConsolidated?.contemCastanhas && 
+             !plateConsolidated?.contemFrutosMar && (
+              <span className="allergen-tag neutral">✅ Nenhum alérgeno comum detectado</span>
             )}
+          </div>
+
+          {/* DETALHES POR ITEM */}
+          <div className="mesa-section">
+            <h4>📋 Detalhes por item</h4>
+            <div className="mesa-items-details">
+              {plateItems.map((item, i) => (
+                <div key={item.id} className="mesa-item-detail">
+                  <span className="item-name">{item.dish_display}</span>
+                  <span className="item-cal">{item.calorias}</span>
+                  <span className="item-cat">{item.category || 'N/A'}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* FICHA NUTRICIONAL CONSOLIDADA */}
