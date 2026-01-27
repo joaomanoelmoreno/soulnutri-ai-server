@@ -1,28 +1,43 @@
 {
+  "slug": "figadoacebolado",
   "nome": "Figadoacebolado",
   "categoria": "proteína animal",
+  "descricao": "O prato consiste em fígado bovino refogado com cebola em rodelas, finalizado com tomate cereja cortado ao meio e cebolinha picada para decorar. O fígado parece ter sido cortado em fatias finas e temperado antes do cozimento. O método de preparo principal parece ser o refogado, utilizando óleo vegetal para cozinhar os ingredientes.",
   "ingredientes": [
     "Fígado bovino",
     "Cebola",
     "Pimenta",
     "Cheiro-verde",
-    "Óleo vegetal"
+    "Óleo vegetal",
+    "Cebola branca",
+    "Tomate cereja",
+    "Cebolinha fresca",
+    "Cebolinha (parte verde)",
+    "Azeite de oliva (possível)",
+    "Alho (possível)"
   ],
-  "descricao": "O fígado bovino é refogado em óleo vegetal com cebola em rodelas, pimenta e cheiro-verde. Apresenta uma coloração marrom escura e a cebola está caramelizada, indicando que foi cozida por tempo suficiente para dourar.",
   "beneficios": [
     "O fígado é rico em ferro, importante para prevenir e tratar anemias.",
-    "Fonte de vitaminas do complexo B, essenciais para o metabolismo energético e saúde do sistema nervoso."
+    "Fonte de vitaminas do complexo B, essenciais para o metabolismo energético e saúde do sistema nervoso.",
+    "O fígado é rico em ferro, essencial para a prevenção da anemia.",
+    "A cebola possui propriedades antioxidantes e anti-inflamatórias.",
+    "O fígado é rico em ferro, importante para prevenir e tratar a anemia.",
+    "A cebola contém antioxidantes que combatem os radicais livres."
   ],
   "riscos": [
     "Alto teor de colesterol, deve ser consumido com moderação.",
-    "Pessoas com gota devem evitar devido ao alto teor de purinas."
+    "Pessoas com gota devem evitar devido ao alto teor de purinas.",
+    "O fígado pode ser rico em colesterol.",
+    "A cebola pode causar desconforto gástrico em algumas pessoas.",
+    "O fígado é rico em colesterol, devendo ser consumido com moderação.",
+    "Pessoas com problemas de gota devem moderar o consumo de fígado.",
+    "Pode conter glúten, dependendo do tempero utilizado."
   ],
-  "curiosidade": "O fígado é um dos órgãos mais nutritivos, sendo rico em vitaminas A, D, B12 e minerais como ferro e zinco.",
-  "slug": "figadoacebolado",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

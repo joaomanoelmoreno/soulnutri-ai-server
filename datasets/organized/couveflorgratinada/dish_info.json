@@ -1,31 +1,51 @@
 {
+  "slug": "couveflorgratinada",
   "nome": "Couve Flor Gratinada",
   "categoria": "vegetariano",
+  "descricao": "O prato é couve-flor cozida, coberta com molho branco e gratinada com queijo. A couve-flor aparece em pedaços visíveis, o molho branco envolve os pedaços e o queijo derretido está na superfície, com algumas áreas mais douradas devido ao gratinado.",
   "ingredientes": [
     "Couve-flor cozida",
     "Molho branco (leite, farinha de trigo, manteiga)",
     "Queijo ralado (possivelmente queijo mussarela ou parmesão)",
-    "Temperos (sal, pimenta do reino)"
+    "Temperos (sal, pimenta do reino)",
+    "Couve-flor",
+    "Queijo (tipo não especificado, possivelmente queijo prato ou mussarela)",
+    "Molho branco (possivelmente feito com leite, farinha de trigo e manteiga)",
+    "Temperos (sal, pimenta e ervas, não visíveis)",
+    "Queijo (possivelmente mussarela ou outro queijo que gratina)",
+    "Molho branco (possivelmente feito com leite, farinha, manteiga)",
+    "Tempero (possivelmente sal e pimenta)",
+    "Brocolis",
+    "Molho branco (possivelmente leite, farinha de trigo e manteiga)"
   ],
-  "descricao": "A couve-flor, possivelmente cozida, é misturada com molho branco cremoso e coberta com queijo ralado, levando ao forno para gratinar.",
   "beneficios": [
     "A couve-flor é rica em fibras, promovendo a saúde digestiva.",
-    "O queijo oferece cálcio, importante para a saúde óssea."
+    "O queijo oferece cálcio, importante para a saúde óssea.",
+    "A couve-flor é rica em fibras, que auxiliam na digestão e promovem a saciedade.",
+    "O prato oferece cálcio, proveniente do queijo, essencial para a saúde óssea.",
+    "Couve-flor é rica em fibras, que auxiliam na saúde digestiva.",
+    "O queijo fornece cálcio, importante para a saúde óssea.",
+    "Couve-flor e brócolis são fontes ricas em fibras, importantes para a saúde intestinal.",
+    "A couve-flor é uma boa fonte de vitamina C e antioxidantes, que combatem os radicais livres."
   ],
   "riscos": [
     "Contém glúten (na farinha do molho branco).",
     "Rico em gorduras saturadas (manteiga e queijo), dependendo da quantidade.",
-    "Pode ter alto teor de sódio, dependendo dos temperos e do queijo utilizado."
+    "Pode ter alto teor de sódio, dependendo dos temperos e do queijo utilizado.",
+    "Contém lactose, devido ao leite e derivados.",
+    "Pode conter glúten, dependendo da receita do molho branco (farinha de trigo) e de outros ingredientes.",
+    "Alto teor de gordura saturada, dependendo da quantidade de queijo e manteiga utilizada.",
+    "Alto teor de gordura e calorias, dependendo da quantidade de queijo e molho branco.",
+    "Potencial intolerância à lactose, caso o prato utilize laticínios.",
+    "Molho branco pode conter glúten (se usar farinha de trigo).",
+    "O prato pode ter alto teor de gordura, dependendo da quantidade de manteiga e queijo utilizada no preparo.",
+    "Possível presença de lactose (se o molho for feito com leite)."
   ],
-  "curiosidade": "A couve-flor pertence à família das Brassicaceae, a mesma do brócolis e da couve, e é uma excelente fonte de vitamina C e antioxidantes.",
-  "slug": "couveflorgratinada",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

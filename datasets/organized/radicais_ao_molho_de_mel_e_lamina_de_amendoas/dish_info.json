@@ -1,28 +1,35 @@
 {
-  "nome": "Radicais ao molho de mel e lamina de amendoas",
+  "slug": "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
+  "nome": "Radicchio ao molho de mel e lamina de amendoas",
   "categoria": "vegano",
+  "descricao": "O prato é composto por folhas de radicchio, possivelmente grelhadas ou levemente cozidas, cobertas por um molho à base de mel e finalizadas com lâminas de amêndoas. O radicchio pode ser servido cru ou levemente cozido, a fim de diminuir o amargor natural da folha.",
   "ingredientes": [
     "Radicchio",
-    "Molho de mel",
     "Lâminas de amêndoas",
+    "Mel (ingrediente do molho)",
+    "Pimenta (possível ingrediente do molho)",
+    "Molho de mel",
     "Tomate seco",
     "Pimentão"
   ],
-  "descricao": "Prato composto por folhas de radicchio, cobertas com molho de mel, tomate seco, pimentão e lâminas de amêndoas. O radicchio é uma folha com sabor amargo, que confere um toque especial ao prato.",
   "beneficios": [
+    "O radicchio é rico em antioxidantes, que combatem os radicais livres e protegem as células.",
+    "As amêndoas são fontes de gorduras saudáveis, fibras e proteínas, contribuindo para a saciedade e saúde cardiovascular.",
+    "O mel, em quantidades moderadas, pode ter propriedades anti-inflamatórias e antioxidantes.",
     "Radicchio é rica em antioxidantes, que combatem os radicais livres.",
     "As amêndoas são fonte de gorduras saudáveis e vitamina E."
   ],
   "riscos": [
+    "Alérgicos a frutos secos devem evitar o consumo devido às amêndoas.",
+    "O mel, dependendo da origem, pode conter traços de pólen, representando risco para alérgicos.",
     "Pode conter traços de outros ingredientes.",
     "Alérgeno: amêndoas"
   ],
-  "curiosidade": "O radicchio é frequentemente usado em saladas, mas também pode ser grelhado ou assado para realçar seu sabor.",
-  "slug": "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

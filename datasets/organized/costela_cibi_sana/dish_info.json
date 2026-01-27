@@ -1,34 +1,49 @@
 {
-  "nome": "Costelinha  Cibi Sana",
+  "slug": "costela_cibi_sana",
+  "nome": "Costelinha Cibi Sana",
   "categoria": "proteína animal",
+  "descricao": "Costela bovina cozida em molho escuro, possivelmente caramelizado, com adição de tomates cereja e cebolinha picada para finalização. O modo de preparo parece ser lento, para garantir a maciez da carne.",
   "ingredientes": [
     "Costela bovina",
     "Tomate cereja",
+    "Salsinha",
+    "Cebola",
+    "Alho",
     "Cebolinha",
     "Molho escuro (possivelmente à base de shoyu, vinagre balsâmico ou similares)",
-    "Açúcar (possivelmente)"
+    "Açúcar (possivelmente)",
+    "Costela suína",
+    "Pimentão vermelho",
+    "Ervas frescas picadas (salsa/salsinha)",
+    "Molho escuro (possivelmente à base de tomate, vinho tinto ou molho shoyu)"
   ],
-  "descricao": "Costela bovina cozida em molho escuro, possivelmente caramelizado, com adição de tomates cereja e cebolinha picada para finalização. O modo de preparo parece ser lento, para garantir a maciez da carne.",
   "beneficios": [
     "A costela é fonte de proteína, essencial para a construção e reparo dos tecidos do corpo.",
     "Tomates cereja são ricos em licopeno, um antioxidante que pode ajudar a proteger as células contra danos.",
     "A cebolinha adiciona vitaminas e minerais.",
-    "O molho, dependendo dos ingredientes, pode fornecer antioxidantes e sabor."
+    "O molho, dependendo dos ingredientes, pode fornecer antioxidantes e sabor.",
+    "Fonte de proteína de alta qualidade",
+    "Fornece ferro, importante para a saúde sanguínea"
   ],
   "riscos": [
+    "Alérgeno: Pode conter traços de soja e glúten.",
+    "Risco: Alto teor de gordura saturada, aumentar o colesterol.",
     "Alto teor de gordura saturada da carne.",
     "Pode conter sódio em excesso, dependendo do molho utilizado.",
-    "Alérgenos: pode conter glúten e soja (se o molho for à base de shoyu)."
+    "Alérgenos: pode conter glúten e soja (se o molho for à base de shoyu).",
+    "Alto teor de gordura saturada, dependendo do corte da carne e modo de preparo",
+    "Contém sódio, dependendo do molho utilizado (molho shoyu)"
   ],
-  "curiosidade": "A costela bovina é uma das carnes mais saborosas devido à quantidade de gordura entre as fibras, que derrete durante o cozimento, proporcionando maciez e suculência.",
-  "slug": "costela_cibi_sana",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥩"
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

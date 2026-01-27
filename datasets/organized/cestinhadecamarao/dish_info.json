@@ -1,13 +1,14 @@
 {
+  "slug": "cestinhadecamarao",
   "nome": "Cestinha de Camarão",
   "categoria": "proteína animal",
+  "descricao": "Pequenas cestas de massa folhada recheadas com camarão cremoso. Ideal para aperitivos ou como parte de uma refeição.",
   "ingredientes": [
     "Camarão",
     "Massa folhada",
     "Recheio cremoso (à base de queijo)",
     "Tempero verde (salsa ou cebolinha)"
   ],
-  "descricao": "Pequenas cestas de massa folhada recheadas com camarão cremoso. Ideal para aperitivos ou como parte de uma refeição.",
   "beneficios": [
     "Fonte de proteína",
     "Fornece cálcio (se o recheio for à base de queijo)",
@@ -18,15 +19,16 @@
     "Contém glúten (na massa folhada)",
     "Alto teor de sódio (dependendo do preparo)"
   ],
-  "curiosidade": "O camarão é uma boa fonte de ômega-3, um tipo de gordura que é benéfica para a saúde cardiovascular.",
-  "slug": "cestinhadecamarao",
   "nutricao": {
     "calorias": "300 kcal",
     "proteinas": "15g",
     "carboidratos": "25g",
     "gorduras": "18g"
   },
-  "category_emoji": "🍖",
   "contem_gluten": true,
-  "contem_lactose": true
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

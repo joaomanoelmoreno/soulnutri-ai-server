@@ -1,29 +1,36 @@
 {
-  "nome": "Filedepeixemolhoconfit",
+  "slug": "filedepeixemolhoconfit",
+  "nome": "Filé de peixe ao molho confit",
   "categoria": "proteína animal",
-  "ingredientes": [
-    "Filé de peixe (não especificado)",
-    "Tomate cereja",
-    "Cebola",
-    "Alho",
-    "Ervas frescas (salsa/salsinha)",
-    "Azeite de oliva"
-  ],
   "descricao": "O prato consiste em filés de peixe cozidos em um molho feito com azeite de oliva, tomate cereja, cebola e alho, possivelmente em processo de confit (cozimento lento em gordura). As ervas frescas picadas (possivelmente salsa/salsinha) adicionam sabor e aroma. O cozimento parece ter sido feito em uma panela, em fogo baixo, permitindo que os sabores se misturem.",
+  "ingredientes": [
+    "Filé de peixe",
+    "Tomate cereja",
+    "Azeite de oliva",
+    "Alho",
+    "Salsa picada",
+    "Filé de peixe (não especificado)",
+    "Cebola",
+    "Ervas frescas (salsa/salsinha)"
+  ],
   "beneficios": [
+    "Rico em ômega-3, importante para a saúde cardiovascular (peixe)",
+    "Fonte de vitaminas e antioxidantes (tomate)",
+    "O alho possui propriedades anti-inflamatórias e antimicrobianas.",
     "Peixe é fonte de ômega-3, importante para a saúde cardiovascular.",
     "Tomate cereja é rico em licopeno, um antioxidante."
   ],
   "riscos": [
+    "Alérgeno: peixe",
+    "Pode conter espinhas, dependendo do corte do peixe",
     "Pode conter espinhas, dependendo do tipo de peixe.",
     "Alérgeno: peixe."
   ],
-  "curiosidade": "O método de confitar alimentos, como o peixe, preserva o sabor e a textura, além de ajudar a manter a umidade.",
-  "slug": "filedepeixemolhoconfit",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

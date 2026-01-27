@@ -1,13 +1,25 @@
 {
-  "nome": "Abobrinnha Grelhada",
   "slug": "alhoporogratinadovegano",
+  "nome": "Abobrinha Grelhada",
   "categoria": "vegano",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
+  "descricao": "Abobrinha cortada em fatias, grelhada , levemente queimada na grelha.  Servida com tapenade de azeitonas ,tomate cereja fresco, folhas de manjericão e  queijo vegano",
+  "ingredientes": [
+    "Abobrinha",
+    "Tomate cereja",
+    "Cebola roxa picada",
+    "Manjericão fresco",
+    "Tapenade dde azeitonas e queijo vegano"
+  ],
+  "beneficios": [
+    "A abobrinha é rica em fibras, promovendo a saciedade e auxiliando na digestão. As fibras também ajudam a controlar os níveis de glicose e colesterol no sangue.",
+    "O tomate cereja é rico em licopeno, um antioxidante que pode ajudar a proteger as células contra danos."
+  ],
   "riscos": [],
   "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

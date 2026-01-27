@@ -1,4 +1,32 @@
 {
+  "slug": "bolodegengibre",
   "nome": "Bolo de Gengibre",
-  "slug": "bolodegengibre"
+  "categoria": "vegetariano",
+  "descricao": "Biscoitos quadrados com cobertura de creme amarelo.",
+  "ingredientes": [
+    "farinha",
+    "açúcar",
+    "ovo",
+    "manteiga",
+    "creme"
+  ],
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo, Glúten",
+    "Alérgeno: GLÚTEN (biscoito, farinha)",
+    "Alérgeno: LACTOSE (creme, manteiga)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

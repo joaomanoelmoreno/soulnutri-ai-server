@@ -1,29 +1,45 @@
 {
+  "slug": "marinha_ao_molho_madeira",
   "nome": "Marinha ao molho madeira",
   "categoria": "proteína animal",
+  "descricao": "Maminha cozida em molho madeira. O corte da carne parece ter sido feito após o cozimento para facilitar o consumo. O molho, à base de vinho tinto e/ou caldo de carne, envolve a carne, com adição de champignon fatiado e cebolinha picada para finalização e aroma.",
   "ingredientes": [
     "Carne bovina (marinha)",
     "Molho madeira (ingredientes não totalmente visíveis)",
     "Champignon",
     "Tomate cereja",
-    "Salsinha picada"
+    "Salsinha picada",
+    "Maminha (corte de carne bovina)",
+    "Molho de mostarda (provavelmente mostarda Dijon, creme de leite ou similar, e temperos)",
+    "Salsa picada",
+    "Grãos de mostarda (para decoração e textura)",
+    "Maminha bovina",
+    "Molho madeira (ingredientes não totalmente visíveis, mas possivelmente vinho tinto, caldo de carne, cebola, alho)",
+    "Cebolinha picada"
   ],
-  "descricao": "O prato consiste em fatias de marinha bovina, cozida em molho madeira, acompanhada por champignon fatiado, tomate cereja e salsinha picada. O molho madeira geralmente é preparado com vinho tinto, caldo de carne, cogumelos, e outros temperos.",
   "beneficios": [
     "A carne bovina é fonte de proteína de alto valor biológico e de ferro heme, importante para prevenir anemias.",
-    "Os cogumelos champignon são ricos em antioxidantes e podem fortalecer o sistema imunológico."
+    "Os cogumelos champignon são ricos em antioxidantes e podem fortalecer o sistema imunológico.",
+    "A maminha é fonte de proteína de alta qualidade, essencial para a construção e reparo de tecidos.",
+    "A mostarda contém compostos com propriedades antioxidantes e anti-inflamatórias.",
+    "A maminha é fonte de proteína, importante para a construção e reparo dos tecidos do corpo.",
+    "O champignon, rico em nutrientes e antioxidantes, contribui para a saúde geral."
   ],
   "riscos": [
     "Contém proteína animal",
     "Pode conter glúten dependendo da receita do molho madeira",
-    "Pessoas com restrição de sódio devem moderar o consumo devido ao molho."
+    "Pessoas com restrição de sódio devem moderar o consumo devido ao molho.",
+    "Alto teor de gordura saturada, dependendo da quantidade de creme de leite utilizada no molho.",
+    "Pode conter glúten, dependendo dos ingredientes do molho.",
+    "Alérgenos: Laticínios (se o molho contiver creme de leite).",
+    "A maminha é rica em gordura saturada, devendo ser consumida com moderação.",
+    "Molho madeira pode conter sódio em excesso, dependendo da receita."
   ],
-  "curiosidade": "O corte 'marinha' é um dos mais macios e saborosos da carne bovina, ideal para preparos que exigem cozimento lento para realçar seu sabor.",
-  "slug": "marinha_ao_molho_madeira",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

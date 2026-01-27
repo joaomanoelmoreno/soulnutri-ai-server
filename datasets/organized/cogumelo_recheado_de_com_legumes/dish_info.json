@@ -1,7 +1,17 @@
 {
+  "slug": "cogumelo_recheado_de_com_legumes",
   "nome": "Portobello recheado com Legumes",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
+  "descricao": "Prato composto por cogumelos portobello recheados com legumes. Os cogumelos são provavelmente refogados com azeite, cebola e alho, e recheados com uma mistura de cenoura picada, salsa e temperos. Finalizados com queijo ralado e cozidos até dourar. O prato está em um molho escuro que pode ser caldo de legumes, realçando o sabor dos cogumelos e legumes.",
   "ingredientes": [
+    "Cogumelos Portobello",
+    "Cenoura",
+    "Pimentão",
+    "Cebola",
+    "Cheiro-verde (cebolinha)",
+    "Queijo vegano ralado",
+    "Azeite de oliva",
+    "Tempero (sal, pimenta do reino)",
     "Cogumelos Portobello (visível)",
     "Cenoura (visível, picada)",
     "Salsa picada (visível)",
@@ -11,24 +21,24 @@
     "Alho (provável no refogado)",
     "Caldo de legumes (provável no cozimento)"
   ],
-  "descricao": "Prato composto por cogumelos portobello recheados com legumes. Os cogumelos são provavelmente refogados com azeite, cebola e alho, e recheados com uma mistura de cenoura picada, salsa e temperos. Finalizados com queijo ralado e cozidos até dourar. O prato está em um molho escuro que pode ser caldo de legumes, realçando o sabor dos cogumelos e legumes.",
   "beneficios": [
+    "Rico em antioxidantes provenientes dos cogumelos e legumes",
+    "Fonte de fibras, importante para a saúde intestinal",
+    "Baixo teor de gorduras saturadas, dependendo do tipo de queijo vegano utilizado",
     "Fonte de vitaminas do complexo B, importantes para o metabolismo energético, presentes nos cogumelos.",
     "Rico em fibras, especialmente da cenoura, auxiliando na digestão e saciedade."
   ],
   "riscos": [
+    "Pode conter sódio em excesso dependendo do tempero e tipo de queijo vegano",
+    "Alérgenos: pode conter traços de soja ou outros ingredientes utilizados no queijo vegano",
     "Possível presença de glúten, dependendo do tempero utilizado.",
     "Alérgeno: leite, devido ao queijo ralado."
   ],
-  "curiosidade": "O cogumelo portobello é um cogumelo comestível comumente usado como substituto da carne devido à sua textura firme e sabor rico.",
-  "slug": "cogumelo_recheado_de_com_legumes",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

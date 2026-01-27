@@ -1,31 +1,46 @@
 {
-  "nome": "Carpaccio de Laranja",
+  "slug": "carpacciodelaranja",
+  "nome": "Carpaccio de Abobrinha",
   "categoria": "vegano",
+  "descricao": "O Carpaccio de Laranja é uma preparação que exalta a doçura e acidez da laranja em fatias finas. As rodelas de laranja são dispostas em um prato e recebem uma cobertura de salsa picada e pimenta dedo-de-moça. Para finalizar, raspas de chocolate amargo adicionam um toque de amargor e complexidade.",
   "ingredientes": [
+    "Abobrinha fatiada",
+    "Queijo parmesão ralado",
+    "Azeite de oliva",
+    "Ervas frescas picadas (salsa e/ou manjericão)",
+    "Pimenta rosa",
+    "Temperos (sal e pimenta do reino)",
     "Laranja",
     "Salsa picada",
     "Pimenta dedo-de-moça",
-    "Raspas de chocolate amargo"
+    "Raspas de chocolate amargo",
+    "Queijo vegano ralado",
+    "Ervas finas desidratadas (ex: manjericão, orégano)",
+    "Pimenta rosa em grãos"
   ],
-  "descricao": "O Carpaccio de Laranja é uma preparação que exalta a doçura e acidez da laranja em fatias finas. As rodelas de laranja são dispostas em um prato e recebem uma cobertura de salsa picada e pimenta dedo-de-moça. Para finalizar, raspas de chocolate amargo adicionam um toque de amargor e complexidade.",
   "beneficios": [
+    "A abobrinha é rica em água e fibras, auxiliando na hidratação e digestão.",
+    "O azeite de oliva é fonte de gorduras saudáveis, benéficas para o coração.",
+    "A pimenta rosa possui propriedades antioxidantes.",
     "A laranja é rica em vitamina C, fortalecendo o sistema imunológico e atuando como antioxidante.",
     "A pimenta dedo-de-moça pode acelerar o metabolismo e possui propriedades anti-inflamatórias.",
-    "As raspas de chocolate amargo (com alto teor de cacau) fornecem antioxidantes e podem melhorar o humor."
+    "As raspas de chocolate amargo (com alto teor de cacau) fornecem antioxidantes e podem melhorar o humor.",
+    "A abobrinha é rica em fibras, que auxiliam na digestão e promovem a saciedade.",
+    "O azeite de oliva é fonte de gorduras saudáveis, benéficas para a saúde cardiovascular.",
+    "A pimenta rosa, apesar de não ser picante, possui antioxidantes."
   ],
   "riscos": [
+    "Alérgeno: leite (parmesão)",
+    "Pode conter traços de glúten, dependendo dos temperos utilizados.",
+    "Consumir com moderação devido ao teor de gordura, mesmo que seja de boa qualidade (azeite).",
     "Sensibilidade ao chocolate.",
     "Alergia a ingredientes picantes (pimenta dedo-de-moça)."
   ],
-  "curiosidade": "O carpaccio, originalmente, é uma receita italiana que consiste em fatias finas de carne crua. Adaptar essa técnica com frutas como a laranja é uma forma criativa de explorar novos sabores e texturas.",
-  "slug": "carpacciodelaranja",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

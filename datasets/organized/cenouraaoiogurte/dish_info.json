@@ -1,28 +1,39 @@
 {
+  "slug": "cenouraaoiogurte",
   "nome": "Cenoura com Iogurte e  Especiarias",
   "categoria": "vegetariano",
+  "descricao": "A cenoura é grelhada, mantendo uma textura levemente crocante. É servida sobre uma base de iogurte misturado com ervas frescas picadas, alho e azeite de oliva. O prato é finalizado com um pesto de ervas, sementes de gergelim e raspas de limão, além de rodelas de limão para decorar.",
   "ingredientes": [
     "Cenoura",
     "Iogurte",
     "Ervas finas picadas (salsa e cebolinha)",
-    "Gomos de laranja"
+    "Gomos de laranja",
+    "Iogurte (base do molho)",
+    "Ervas frescas (salsa/coentro)",
+    "Alho",
+    "Azeite de oliva",
+    "Sementes de gergelim",
+    "Raspas de limão",
+    "Sal e pimenta do reino",
+    "Rodelas de limão (decoração)"
   ],
-  "descricao": "O prato consiste em duas cenouras grandes, provavelmente assadas ou grelhadas, cortadas longitudinalmente e cobertas com ervas picadas. Elas são servidas sobre uma base de iogurte, possivelmente misturado com um molho verde, e decoradas com gomos de laranja.",
   "beneficios": [
     "A cenoura é rica em betacaroteno, precursor da vitamina A, importante para a visão e a saúde da pele. ",
     "O iogurte oferece probióticos, que auxiliam na saúde intestinal.",
-    "A combinação de cenoura com laranja potencializa a absorção de vitamina C e a formação de colágeno."
+    "A combinação de cenoura com laranja potencializa a absorção de vitamina C e a formação de colágeno.",
+    "A cenoura é rica em betacaroteno, precursor da vitamina A, essencial para a saúde da visão e da pele.",
+    "O iogurte fornece probióticos que promovem a saúde intestinal e auxiliam na digestão.",
+    "As especiarias, como o alho, possuem propriedades antioxidantes e anti-inflamatórias."
   ],
-  "riscos": [],
-  "curiosidade": "A cenoura, originalmente roxa, foi sendo gradualmente cultivada na cor laranja no século XVII, nos Países Baixos, em homenagem à família real holandesa, a Casa de Orange.",
-  "slug": "cenouraaoiogurte",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "riscos": [
+    "Alergia: pode conter traços de leite.",
+    "Alergia: pode conter traços de gergelim."
+  ],
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

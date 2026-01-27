@@ -1,29 +1,34 @@
 {
+  "slug": "moussedemaracuja",
   "nome": "Moussedemaracuja",
   "categoria": "vegetariano",
+  "descricao": "O mousse de maracujá é um doce cremoso e refrescante, preparado a partir da polpa do maracujá, misturada com creme de leite e leite condensado. A gelatina sem sabor é adicionada para dar consistência ao mousse. A receita tradicional não leva clara de ovo, sendo um doce vegetariano.",
   "ingredientes": [
     "Maracujá (polpa e sementes)",
     "Leite condensado",
     "Creme de leite",
     "Gelatina em pó sem sabor (opcional)"
   ],
-  "descricao": "Mousse de Maracujá cremoso, preparado com polpa e sementes da fruta, misturado com leite condensado e creme de leite. Muitas receitas utilizam gelatina sem sabor para dar mais consistência. Apresenta-se em um formato de pudim, possivelmente refrigerado para firmar.",
   "beneficios": [
     "Fonte de vitamina C, que fortalece o sistema imunológico",
     "O maracujá possui propriedades calmantes, auxiliando no relaxamento",
-    "Pode ser fonte de antioxidantes"
+    "Pode ser fonte de antioxidantes",
+    "O maracujá é rico em antioxidantes, que combatem os radicais livres.",
+    "O maracujá possui propriedades calmantes, auxiliando no relaxamento e no combate à ansiedade.",
+    "O mousse, quando feito com ingredientes de qualidade e em porções adequadas, pode ser uma sobremesa saborosa e fonte de energia."
   ],
   "riscos": [
     "Alto teor de açúcar devido ao leite condensado",
     "Rico em gorduras saturadas provenientes do creme de leite",
-    "Contém lactose"
+    "Contém lactose",
+    "Alto teor de açúcar devido ao leite condensado.",
+    "O consumo em excesso pode levar ao ganho de peso."
   ],
-  "curiosidade": "O maracujá é uma fruta nativa da América do Sul e seu nome vem do tupi-guarani, que significa 'fruta que serve em cuias'. A flor do maracujá, conhecida como flor da paixão, é utilizada em alguns países para fins medicinais.",
-  "slug": "moussedemaracuja",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

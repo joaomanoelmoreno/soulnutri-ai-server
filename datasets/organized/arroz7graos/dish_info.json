@@ -1,6 +1,8 @@
 {
+  "slug": "arroz7graos",
   "nome": "Arroz 7 Graos",
   "categoria": "vegano",
+  "descricao": "Prato de arroz 7 grãos cozido em água com sal. Apresenta grãos variados e é finalizado com salsa picada fresca. O preparo consiste em cozinhar os grãos até que estejam macios, mas ainda com textura.",
   "ingredientes": [
     "Arroz integral",
     "Arroz selvagem",
@@ -11,9 +13,12 @@
     "Semente de girassol",
     "Salsa picada",
     "Água",
-    "Sal"
+    "Sal",
+    "brócolis",
+    "cenoura",
+    "milho",
+    "cebola"
   ],
-  "descricao": "Prato de arroz 7 grãos cozido em água com sal. Apresenta grãos variados e é finalizado com salsa picada fresca. O preparo consiste em cozinhar os grãos até que estejam macios, mas ainda com textura.",
   "beneficios": [
     "Alto teor de fibras, auxiliando na digestão e controle do colesterol.",
     "Fonte de vitaminas do complexo B, importantes para o metabolismo energético e saúde do sistema nervoso.",
@@ -24,12 +29,16 @@
     "A presença de sementes pode causar alergias em pessoas sensíveis.",
     "Excesso no consumo pode levar ao aumento calórico."
   ],
-  "curiosidade": "O arroz selvagem, presente em algumas misturas de 7 grãos, não é um arroz propriamente dito, mas sim a semente de uma gramínea aquática.",
-  "slug": "arroz7graos",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

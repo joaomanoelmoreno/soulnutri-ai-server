@@ -1,14 +1,20 @@
 {
-  "nome": "Puredebatatadoce",
-  "categoria": "vegano",
+  "slug": "puredebatatadoce",
+  "nome": "Purê de Batata Doce",
+  "categoria": "acompanhamento",
+  "descricao": "Purê de batata doce com textura cremosa, decorado com cebolinha picada. O preparo provavelmente envolve cozimento da batata doce e amassamento, com adição de azeite e temperos para realçar o sabor.",
   "ingredientes": [
-    "Batata doce",
+    "batata doce",
+    "manteiga",
+    "sal",
+    "noz-moscada",
     "Cebolinha",
-    "Sal",
     "Azeite de oliva"
   ],
-  "descricao": "Purê de batata doce com textura cremosa, decorado com cebolinha picada. O preparo provavelmente envolve cozimento da batata doce e amassamento, com adição de azeite e temperos para realçar o sabor.",
   "beneficios": [
+    "Rico em fibras",
+    "Baixo índice glicêmico",
+    "Fonte de vitamina A",
     "A batata doce é rica em vitamina A e antioxidantes, que contribuem para a saúde da pele e a proteção contra radicais livres.",
     "A cebolinha adiciona vitaminas e minerais, além de propriedades anti-inflamatórias."
   ],
@@ -16,12 +22,16 @@
     "Não contém glúten.",
     "Não contém alérgenos."
   ],
-  "curiosidade": "A batata doce, de origem sul-americana, é um alimento versátil, podendo ser consumida de diversas formas, desde purês a assados.",
-  "slug": "puredebatatadoce",
   "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+    "calorias": "120 kcal",
+    "proteinas": "2g",
+    "carboidratos": "25g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

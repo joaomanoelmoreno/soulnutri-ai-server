@@ -1,33 +1,45 @@
 {
-  "nome": "Strogonoffdefilemignon",
+  "slug": "strogonoffdefilemignon",
+  "nome": "Estrogonofedefilémignon",
   "categoria": "proteína animal",
+  "descricao": "O strogonoff é um prato clássico da culinária russa, adaptado no Brasil. Nesta versão, a carne de filé mignon é cortada em tiras e refogada em um molho cremoso, possivelmente à base de creme de leite, molho de tomate e temperos. A imagem sugere que o prato foi finalizado com salsinha/cebolinha picada e pimentas biquinho para decorar e adicionar um toque de sabor.",
   "ingredientes": [
-    "Filé Mignon",
+    "Filé Mignon (carne bovina)",
     "Creme de leite",
     "Molho de tomate",
     "Cebola",
+    "Cogumelos",
+    "Mostarda",
+    "Ketchup",
+    "Salsa picada",
+    "Azeite",
+    "Sal e pimenta do reino a gosto",
+    "Filé Mignon",
     "Champignon (possível)",
     "Alho",
     "Pimenta do reino",
     "Salsinha/cebolinha",
     "Pimenta biquinho"
   ],
-  "descricao": "O strogonoff é um prato clássico da culinária russa, adaptado no Brasil. Nesta versão, a carne de filé mignon é cortada em tiras e refogada em um molho cremoso, possivelmente à base de creme de leite, molho de tomate e temperos. A imagem sugere que o prato foi finalizado com salsinha/cebolinha picada e pimentas biquinho para decorar e adicionar um toque de sabor.",
   "beneficios": [
+    "O filé mignon é uma boa fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
+    "A carne bovina é rica em ferro, importante para prevenir a anemia.",
     "Filé mignon é fonte de proteína, importante para a construção e reparação muscular",
     "O creme de leite adiciona cremosidade e pode fornecer cálcio"
   ],
   "riscos": [
+    "Alto teor de gordura, principalmente devido ao creme de leite e à carne.",
+    "Pode conter glúten, dependendo dos ingredientes utilizados no preparo do molho e/ou acompanhamentos.",
+    "Pessoas com restrição de sódio devem consumir com moderação, devido aos temperos e molhos.",
     "Alto teor de gordura saturada, devido ao creme de leite",
     "Pode conter alto teor de sódio, dependendo dos temperos utilizados",
     "Alérgenos: Laticínios"
   ],
-  "curiosidade": "O strogonoff tradicionalmente não leva tomate, mas a versão brasileira popularizou o uso de molho de tomate no preparo.",
-  "slug": "strogonoffdefilemignon",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

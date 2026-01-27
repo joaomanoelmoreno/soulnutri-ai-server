@@ -1,13 +1,30 @@
 {
-  "nome": "Beterraba ao Balsamico",
   "slug": "beterrabaaobalsamico",
+  "nome": "Beterraba  ao Balsamico",
   "categoria": "vegano",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "Uma salada vibrante com cubos de beterraba cozida, gomos de laranja, possivelmente temperada com azeite de oliva e sal, e finalizada com ervas frescas picadas. A beterraba parece ter sido cozida, provavelmente fervida ou assada, e cortada em cubos.",
+  "ingredientes": [
+    "Beterraba cozida e cortada em cubos",
+    "Gomos de laranja",
+    "Ervas frescas picadas (possivelmente salsinha ou hortelã)",
+    "Azeite de oliva (possível)",
+    "Sal (possível)"
+  ],
+  "beneficios": [
+    "Rica em antioxidantes, como a betalaína da beterraba, que combate os radicais livres.",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "A laranja fornece vitamina C, fortalecendo o sistema imunológico.",
+    "As ervas frescas podem adicionar vitaminas e minerais, além de propriedades anti-inflamatórias."
+  ],
+  "riscos": [
+    "Não há riscos aparentes, salvo alergia aos ingredientes.",
+    "Se a salada for temperada com muito sal, pode ser prejudicial para pessoas com problemas de pressão alta."
+  ],
   "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

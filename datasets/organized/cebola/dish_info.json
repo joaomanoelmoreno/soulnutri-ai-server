@@ -1,31 +1,46 @@
 {
-  "nome": "Cebola Roxa com Ervas frescas e Frutos Secos",
+  "slug": "cebola",
+  "nome": "Cebola Roxa com Ervas Frescas e Frutos Secos",
   "categoria": "vegano",
+  "descricao": "As cebolas roxas são cortadas ao meio e assadas até ficarem macias e levemente caramelizadas.  A cavidade de cada cebola é preenchida com uma mistura de ervas frescas picadas e frutos secos. Rega-se com azeite de oliva e, opcionalmente, finaliza-se com pimenta vermelha picada.  O sal é adicionado para realçar o sabor.",
   "ingredientes": [
+    "Cebolas roxas",
+    "Ervas frescas picadas (salsa, cebolinha, etc)",
+    "Frutos secos picados (nozes, amêndoas, etc)",
+    "Azeite de oliva",
+    "Pimenta vermelha (opcional)",
+    "Sal",
     "Cebola roxa",
     "Pimentão vermelho",
     "Pimenta dedo-de-moça",
     "Salsinha",
-    "Azeite de oliva",
     "Azeitonas verdes",
-    "Alho"
+    "Alho",
+    "Ervas frescas (manjericão, hortelã - possível)",
+    "Frutos secos (nozes ou pinoli - possível)",
+    "Pimenta dedo-de-moça (fatiada)"
   ],
-  "descricao": "Cebolas roxas cortadas ao meio e assadas até ficarem macias e levemente caramelizadas. O recheio é composto por uma mistura picante de pimentões, pimenta dedo-de-moça, azeitonas, salsinha, alho picado e azeite.  O prato é servido em uma travessa com gelo.",
   "beneficios": [
+    "Cebolas roxas são ricas em antioxidantes, que combatem os radicais livres.",
+    "Frutos secos fornecem gorduras saudáveis e fibras.",
     "Cebolas são ricas em antioxidantes e compostos sulfurados benéficos para a saúde cardiovascular.",
     "Pimentões e pimentas são fontes de vitamina C, que fortalece o sistema imunológico.",
-    "Azeite de oliva fornece gorduras saudáveis e propriedades anti-inflamatórias."
+    "Azeite de oliva fornece gorduras saudáveis e propriedades anti-inflamatórias.",
+    "A cebola roxa é rica em antioxidantes, como a quercetina, que combatem os radicais livres.",
+    "As ervas frescas adicionam vitaminas e minerais, além de propriedades anti-inflamatórias.",
+    "Os frutos secos contribuem com gorduras saudáveis e fibras."
   ],
-  "riscos": [],
-  "curiosidade": "A cebola roxa, além de saborosa, possui antocianinas, que são pigmentos com propriedades antioxidantes e anti-inflamatórias.",
-  "slug": "cebola",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "riscos": [
+    "Pode conter glúten, dependendo de como os frutos secos foram processados.",
+    "Alérgenos: frutos secos",
+    "Alérgeno: frutos secos",
+    "Pode conter traços de outros ingredientes, dependendo do preparo."
+  ],
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

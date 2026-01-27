@@ -1,32 +1,35 @@
 {
+  "slug": "batatadoce",
   "nome": "Batata Doce Assada",
   "categoria": "vegano",
+  "descricao": "Batata doce cortada em pedaços e assada, com aparência de levemente dourada, possivelmente no forno ou air fryer, finalizada com cebolinha picada. O preparo provavelmente envolveu o uso de azeite de oliva e sal para temperar.",
   "ingredientes": [
     "Batata doce",
     "Cebolinha",
     "Azeite de oliva",
+    "Sal",
     "Sal e pimenta do reino (possivelmente)"
   ],
-  "descricao": "Fatias de batata doce assadas, possivelmente no forno ou grelhadas, com adição de cebolinha picada para finalizar. O azeite de oliva pode ter sido utilizado para untar ou regar as batatas antes de assar.",
   "beneficios": [
+    "Fonte de carboidratos complexos, fornecendo energia de forma gradual",
+    "Rica em vitamina A, importante para a saúde da visão e da pele",
+    "Boa fonte de fibras, auxiliando na saúde digestiva e na saciedade",
     "Rica em vitamina A, importante para a visão e saúde da pele.",
     "Fonte de fibras, auxiliando na digestão e controle do açúcar no sangue.",
     "Possui baixo índice glicêmico, o que pode ajudar a controlar os níveis de glicose no sangue.",
     "A batata doce é rica em antioxidantes, que ajudam a combater os radicais livres no corpo."
   ],
   "riscos": [
+    "A batata doce, embora nutritiva, pode elevar os níveis de glicose no sangue, especialmente se consumida em excesso.",
+    "Pessoas com sensibilidade ou alergia à cebolinha devem evitar o consumo.",
     "Pode conter excesso de sódio, dependendo da quantidade de sal adicionada.",
     "Em pessoas sensíveis, pode causar desconforto abdominal devido ao alto teor de fibras."
   ],
-  "curiosidade": "A batata doce roxa, como a utilizada na imagem, é rica em antocianinas, poderosos antioxidantes que dão a ela sua cor característica e oferecem diversos benefícios para a saúde.",
-  "slug": "batatadoce",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

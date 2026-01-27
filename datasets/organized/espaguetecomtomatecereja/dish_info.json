@@ -1,32 +1,45 @@
 {
-  "nome": "Espaguete com Tomate Cereja e Manjericão",
+  "slug": "espaguetecomtomatecereja",
+  "nome": "Spaghetticomtomatecerejaemanjericão",
   "categoria": "vegano",
+  "descricao": "Prato de massa italiana, onde o spaghetti é cozido e misturado com tomates cereja cortados ao meio, folhas de manjericão fresco e possivelmente azeite de oliva e temperos.",
   "ingredientes": [
+    "Spaghetti (provavelmente feito com farinha de trigo)",
+    "Tomates cereja frescos",
+    "Folhas de manjericão fresco",
+    "Possivelmente azeite de oliva",
+    "Temperos (sal, pimenta do reino, possivelmente alho)",
     "Espaguete de trigo",
     "Tomate cereja",
     "Manjericão fresco",
     "Azeite de oliva",
     "Molho de tomate"
   ],
-  "descricao": "Prato simples e saboroso de espaguete com tomates cereja frescos, manjericão e azeite.",
   "beneficios": [
+    "O tomate cereja é rico em licopeno, um antioxidante que pode reduzir o risco de certos tipos de câncer.",
+    "O manjericão é fonte de antioxidantes e pode ter propriedades anti-inflamatórias.",
+    "A massa pode fornecer energia através dos carboidratos.",
     "Fonte de carboidratos",
     "Rico em licopeno (antioxidante)",
     "Fonte de fibras"
   ],
   "riscos": [
+    "Contém glúten, dependendo do tipo de massa utilizada.",
+    "Pode ter alto teor de carboidratos, dependendo da porção.",
+    "O consumo excessivo pode levar ao ganho de peso.",
     "Contém glúten (alérgicos)",
     "Alto teor de sódio (se o molho for industrializado)"
   ],
-  "curiosidade": "O manjericão, além de seu sabor marcante, é uma erva aromática com propriedades anti-inflamatórias e antioxidantes, amplamente utilizada na culinária italiana para realçar o sabor de diversos pratos.",
-  "slug": "espaguetecomtomatecereja",
   "nutricao": {
     "calorias": "150 kcal",
     "proteinas": "5g",
     "carboidratos": "30g",
     "gorduras": "2g"
   },
-  "category_emoji": "🥬",
   "contem_gluten": true,
-  "contem_lactose": false
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,13 +1,31 @@
 {
-  "nome": "Bolo Brownie de Chocolate",
   "slug": "brownie",
-  "categoria": "vegetariano",
-  "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "nome": "Bolo Brownie de Chocolate",
+  "categoria": "vegano",
+  "descricao": "O Bolobrownie é um doce cortado em quadrados, com uma base de brownie escura e densa, coberta com uma cobertura de chocolate. A cobertura apresenta um padrão de linhas finas e irregulares. A massa do brownie parece ter textura porosa.",
+  "ingredientes": [
+    "Chocolate",
+    "Açúcar",
+    "Farinha de trigo",
+    "Manteiga de amendoim",
+    "Óleo vegetal",
+    "Fermento",
+    "Cobertura de chocolate"
+  ],
+  "beneficios": [
+    "A porção de chocolate pode oferecer antioxidantes, como flavonoides, que ajudam a proteger as células contra danos.",
+    "A presença de farinha de trigo fornece carboidratos, que são fonte de energia."
+  ],
+  "riscos": [
+    "Alto teor de açúcar e gordura.",
+    "Contém glúten (proveniente da farinha de trigo).",
+    "Alérgenos: pode conter traços de leite e ovos (dependendo da receita)."
+  ],
   "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥚"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

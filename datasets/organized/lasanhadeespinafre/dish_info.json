@@ -1,30 +1,40 @@
 {
+  "slug": "lasanhadeespinafre",
   "nome": "Lasanhadeespinafre",
   "categoria": "vegetariano",
+  "descricao": "Lasanha feita com camadas de massa, recheio de espinafre refogado e cogumelos Portobello, coberta com molho branco e gratinada com queijo. O preparo envolve o cozimento da massa, refogar o espinafre e os cogumelos, montar as camadas e assar no forno até gratinar o queijo.",
   "ingredientes": [
     "Massa de lasanha (provavelmente contendo glúten)",
     "Espinafre",
     "Queijo muçarela",
     "Queijo parmesão",
     "Creme de leite",
-    "Cebolinha (para finalizar)"
+    "Cebolinha (para finalizar)",
+    "Massa de lasanha",
+    "Cogumelo Portobelo",
+    "Molho branco (possivelmente à base de leite e amido)",
+    "Queijo gratinado (possivelmente mussarela ou queijo parmesão)",
+    "Temperos (ervas, alho, cebola)"
   ],
-  "descricao": "Lasanha feita em camadas, com recheio cremoso de espinafre e queijo, coberta com queijo muçarela gratinado. A cebolinha é usada para decorar e adicionar frescor.",
   "beneficios": [
     "Espinafre é fonte de vitaminas (A, C, K) e minerais (ferro, cálcio).",
-    "Queijos fornecem cálcio e proteínas."
+    "Queijos fornecem cálcio e proteínas.",
+    "Espinafre rico em ferro, vitaminas e antioxidantes.",
+    "Cogumelos Portobello contêm nutrientes e podem auxiliar na saúde do sistema imunológico.",
+    "O espinafre auxilia na saúde ocular e óssea."
   ],
   "riscos": [
     "Contém glúten (na massa da lasanha)",
     "Rico em gorduras saturadas (dos queijos e creme de leite)",
-    "Pode conter sódio em excesso, dependendo da quantidade de queijo e temperos usados"
+    "Pode conter sódio em excesso, dependendo da quantidade de queijo e temperos usados",
+    "Pode conter lactose (no molho branco e queijo)",
+    "Alto teor de sódio (dependendo dos temperos e queijos utilizados)"
   ],
-  "curiosidade": "O espinafre é uma excelente fonte de luteína e zeaxantina, antioxidantes importantes para a saúde dos olhos.",
-  "slug": "lasanhadeespinafre",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  }
+  "nutricao": {},
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

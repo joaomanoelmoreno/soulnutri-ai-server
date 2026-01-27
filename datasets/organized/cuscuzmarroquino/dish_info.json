@@ -1,33 +1,45 @@
 {
+  "slug": "cuscuzmarroquino",
   "nome": "Cuscuz Marroquino",
   "categoria": "vegano",
+  "descricao": "O cuscuz marroquino é preparado com sêmola de trigo e hidratado, geralmente com água fervente e azeite de oliva. Na imagem, ele parece ser temperado com especiarias, possivelmente cúrcuma e açafrão, que lhe dão a cor amarelada. É finalizado com amêndoas laminadas, tomate cereja e folhas de hortelã fresca.",
   "ingredientes": [
     "Cuscuz marroquino",
+    "Amêndoas laminadas",
+    "Tomate cereja",
+    "Hortelã fresca",
+    "Azeite de oliva",
+    "Tempero (provavelmente cúrcuma e açafrão)",
+    "Tomates cereja grelhados",
+    "Azeitonas pretas",
     "Tomate cereja (grelhado)",
     "Amêndoas em lascas",
-    "Hortelã fresca",
     "Azeite",
     "Tempero (cúrcuma)"
   ],
-  "descricao": "Cuscuz marroquino cozido, misturado com tomate cereja grelhado, amêndoas em lascas, hortelã fresca e temperado com azeite e cúrcuma (provavelmente). O cuscuz aparenta estar levemente úmido e soltinho.",
   "beneficios": [
-    "A cúrcuma possui propriedades anti-inflamatórias e antioxidantes.",
+    "Cuscuz: rico em carboidratos, fornece energia.",
+    "Amêndoas: fonte de gorduras saudáveis e vitamina E.",
+    "Hortelã: propriedades digestivas e refrescantes.",
+    "Cuscuz marroquino é fonte de carboidratos, fornecendo energia para o organismo.",
+    "Tomates cereja são ricos em antioxidantes, como o licopeno, que combate os radicais livres.",
     "Amêndoas são ricas em gorduras saudáveis e vitamina E.",
+    "A cúrcuma possui propriedades anti-inflamatórias e antioxidantes.",
     "Hortelã auxilia na digestão."
   ],
   "riscos": [
+    "Contém glúten (do cuscuz).",
+    "Potencial alérgeno: amêndoas.",
+    "Pode conter glúten, dependendo da composição do cuscuz marroquino.",
+    "Risco de alergia: amêndoas.",
     "Contém glúten (do cuscuz)",
     "Pode conter traços de outros ingredientes, dependendo do local de preparo"
   ],
-  "curiosidade": "O cuscuz marroquino é feito a partir de sêmola de trigo, um grão rico em carboidratos e fibras.",
-  "slug": "cuscuzmarroquino",
-  "nutricao": {
-    "calorias": "",
-    "proteinas": "",
-    "carboidratos": "",
-    "gorduras": ""
-  },
+  "nutricao": {},
   "contem_gluten": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
