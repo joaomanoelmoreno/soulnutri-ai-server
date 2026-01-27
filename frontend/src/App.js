@@ -538,6 +538,10 @@ function App() {
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
         setResult(resultWithTime);
+        // Salvar foto na galeria se identificou com sucesso
+        if (resultWithTime.ok && resultWithTime.identified && previewImageUrl) {
+          saveToGallery(previewImageUrl, resultWithTime.dish_display, resultWithTime);
+        }
         // NÃO mostrar modal automaticamente - deixar usuário ver as informações primeiro
       }
     } catch (e) { 
