@@ -16,10 +16,14 @@ import logging
 import time
 from typing import Optional, Dict, List
 import httpx
+from dotenv import load_dotenv
+
+# Carregar variáveis de ambiente
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-# Configuração
+# Configuração - carrega do .env
 GOOGLE_VISION_API_KEY = os.environ.get('GOOGLE_VISION_API_KEY', '')
 GOOGLE_VISION_ENDPOINT = "https://vision.googleapis.com/v1/images:annotate"
 
