@@ -3,7 +3,7 @@ SoulNutri Premium - Serviço de Perfil do Usuário
 Gerencia perfil, metas calóricas e histórico
 """
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Optional, List
 from pydantic import BaseModel
 import hashlib
@@ -24,6 +24,11 @@ class UserProfile(BaseModel):
     alergias: List[str] = []
     restricoes: List[str] = []  # 'vegano', 'vegetariano', 'sem_gluten', 'sem_lactose'
     meta_calorica_manual: Optional[int] = None  # Se o usuário definir manualmente
+    # Campos Premium
+    plano: str = "free"  # 'free', 'premium', 'premium_trial'
+    premium_ate: Optional[datetime] = None  # Data de expiração do Premium
+    premium_liberado_por: Optional[str] = None  # Quem liberou (admin)
+    premium_liberado_em: Optional[datetime] = None  # Quando foi liberado
     created_at: datetime = None
     updated_at: datetime = None
 
@@ -35,6 +40,78 @@ class DailyLog(BaseModel):
     proteinas_total: float = 0
     carboidratos_total: float = 0
     gorduras_total: float = 0
+
+
+# =====================
+# FUNÇÕES PREMIUM
+# =====================
+
+def verificar_premium_ativo(user: dict) -> dict:
+    """
+    Verifica se o usuário tem Premium ativo e válido.
+    Retorna status e informações.
+    """
+    if not user:
+        return {"ativo": False, "motivo": "Usuário não encontrado"}
+    
+    plano = user.get("plano", "free")
+    premium_ate = user.get("premium_ate")
+    
+    # Se não tem plano premium
+    if plano == "free":
+        return {"ativo": False, "motivo": "Plano gratuito"}
+    
+    # Se é premium sem data de expiração (vitalício)
+    if plano == "premium" and not premium_ate:
+        return {
+            "ativo": True, 
+            "plano": "premium",
+            "expira": None,
+            "motivo": "Premium vitalício"
+        }
+    
+    # Verificar se não expirou
+    if premium_ate:
+        # Converter string para datetime se necessário
+        if isinstance(premium_ate, str):
+            premium_ate = datetime.fromisoformat(premium_ate.replace('Z', '+00:00'))
+        
+        agora = datetime.now(timezone.utc)
+        
+        if premium_ate > agora:
+            dias_restantes = (premium_ate - agora).days
+            return {
+                "ativo": True,
+                "plano": plano,
+                "expira": premium_ate.isoformat(),
+                "dias_restantes": dias_restantes,
+                "motivo": f"Premium válido por mais {dias_restantes} dias"
+            }
+        else:
+            return {
+                "ativo": False,
+                "plano": plano,
+                "expirou_em": premium_ate.isoformat(),
+                "motivo": "Premium expirado"
+            }
+    
+    return {"ativo": False, "motivo": "Status indefinido"}
+
+
+def liberar_premium(dias: int = 7, liberado_por: str = "admin") -> dict:
+    """
+    Gera dados para liberar Premium por X dias.
+    Retorna dict com campos para atualizar no usuário.
+    """
+    agora = datetime.now(timezone.utc)
+    expira = agora + timedelta(days=dias)
+    
+    return {
+        "plano": "premium_trial" if dias <= 30 else "premium",
+        "premium_ate": expira,
+        "premium_liberado_por": liberado_por,
+        "premium_liberado_em": agora
+    }
 
 # =====================
 # CÁLCULOS NUTRICIONAIS
