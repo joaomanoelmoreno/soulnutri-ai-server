@@ -1750,6 +1750,25 @@ function App() {
             )}
           </div>
 
+          {/* DICAS PERSONALIZADAS - Baseadas no perfil do usuário Premium */}
+          {premiumUser?.perfil && (() => {
+            const tips = generatePersonalizedTip(r, premiumUser.perfil);
+            if (tips && tips.length > 0) {
+              return (
+                <div className="personalized-tips" data-testid="personalized-tips">
+                  <h4>💡 Para você</h4>
+                  {tips.map((tip, i) => (
+                    <div key={i} className={`tip-item ${tip.tipo}`}>
+                      <span className="tip-icon">{tip.icone}</span>
+                      <span className="tip-text">{tip.texto}</span>
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            return null;
+          })()}
+
           {/* Ingredientes */}
           {r.ingredientes?.length > 0 && (
             <div className="info-box" data-testid="ingredients-box">
