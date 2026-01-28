@@ -976,7 +976,7 @@ function App() {
     }
   };
 
-  // Enviar feedback - INCORRETO (com correção)
+  // Enviar feedback - INCORRETO (com correção) - VERSÃO LOCAL (SEM CRÉDITOS)
   const sendFeedbackIncorrect = async (correctSlug) => {
     if (!lastImageBlob) return;
     
@@ -1002,6 +1002,8 @@ function App() {
       if (data.ok) {
         setFeedbackSent(true);
         setShowFeedback(false);
+        // Mostrar confirmação
+        alert(`✅ Correção salva!\n\nA foto foi adicionada ao prato correto.\n💰 Créditos usados: 0`);
       }
     } catch (e) {
       console.error('Erro ao enviar feedback:', e);
