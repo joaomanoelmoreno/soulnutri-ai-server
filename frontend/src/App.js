@@ -234,6 +234,13 @@ function App() {
     const handleBeforeInstall = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      // Mostrar popup após 3 segundos se não estiver instalado
+      const alreadyDismissed = localStorage.getItem('soulnutri_install_dismissed');
+      if (!alreadyDismissed) {
+        setTimeout(() => {
+          setShowInstallPopup(true);
+        }, 3000);
+      }
     };
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
     
