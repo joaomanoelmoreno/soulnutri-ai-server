@@ -443,9 +443,12 @@ async def identify_image(
             if is_premium:
                 logger.info(f"[PREMIUM] Usuário {nome} identificado")
         
-        # Buscar dados científicos do MongoDB (APENAS PARA PREMIUM)
+        # Buscar dados científicos - primeiro MongoDB, depois local
         scientific_data = {}
+        mito_verdade = None
         dish_slug = decision.get('dish')
+        categoria = decision.get('category', '')
+        
         if dish_slug and decision.get('source') != 'generic_ai':
             # Normalizar slug para busca
             slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
@@ -459,7 +462,24 @@ async def identify_image(
             )
             if mongo_dish and is_premium:
                 scientific_data = mongo_dish
-                logger.info(f"[PREMIUM] Dados científicos liberados para {dish_slug}")
+                logger.info(f"[PREMIUM] Dados científicos do MongoDB para {dish_slug}")
+            
+            # Se não encontrou no MongoDB, buscar dados Premium LOCAIS (SEM CRÉDITOS)
+            if not scientific_data and is_premium:
+                try:
+                    from services.local_dish_updater import obter_conteudo_premium, encontrar_tipo_prato
+                    tipo_prato = encontrar_tipo_prato(dish_slug.replace('_', ' '))
+                    premium_local = obter_conteudo_premium(categoria, tipo_prato)
+                    scientific_data = {
+                        'beneficio_principal': premium_local.get('beneficio_principal'),
+                        'curiosidade_cientifica': premium_local.get('curiosidade_cientifica'),
+                        'referencia_pesquisa': premium_local.get('referencia_pesquisa'),
+                        'alerta_saude': premium_local.get('alerta_saude')
+                    }
+                    mito_verdade = premium_local.get('mito_verdade')
+                    logger.info(f"[PREMIUM] Dados científicos LOCAIS para {dish_slug} (categoria: {categoria})")
+                except Exception as e:
+                    logger.warning(f"[PREMIUM] Erro ao buscar dados locais: {e}")
         
         # ═══════════════════════════════════════════════════════════════════════
         # ALERTAS PREMIUM EM TEMPO REAL

@@ -2,7 +2,12 @@
   "nome": "Gratinado De Legumes",
   "slug": "gratinado_de_legumes",
   "categoria": "vegetariano",
-  "ingredientes": [],
+  "ingredientes": [
+    "couve-flor",
+    "Sal, ",
+    "pimenta-do-reino,",
+    "Queijo Radalo"
+  ],
   "descricao": "",
   "beneficios": [],
   "riscos": [],
@@ -18,5 +23,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }
