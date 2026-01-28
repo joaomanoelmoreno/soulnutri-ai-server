@@ -362,62 +362,37 @@ async def identify_image(
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
         # ═══════════════════════════════════════════════════════════════════════
-        # OTIMIZAÇÃO: Threshold 90% para pratos cadastrados (velocidade!)
-        # Para pratos do Cibi Sana, 90% já é confiança suficiente
+        # OTIMIZAÇÃO: Threshold 70% para pratos cadastrados (ECONOMIZAR CRÉDITOS!)
+        # Para pratos do Cibi Sana, 70% já é confiança suficiente
+        # SEM CHAMAR GEMINI - PRIORIDADE É NÃO GASTAR CRÉDITOS
         # ═══════════════════════════════════════════════════════════════════════
-        THRESHOLD_LOCAL = 0.90  # 90% para resposta rápida em pratos conhecidos
+        THRESHOLD_LOCAL = 0.70  # 70% para resposta rápida em pratos conhecidos
         
-        # Se confiança >= 90% no Nível 1, usar resultado direto (RÁPIDO!)
+        # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO E SEM CRÉDITOS!)
         if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: Gemini Vision (Fallback para pratos não cadastrados)
-        # NOTA: YOLOv8 desabilitado temporariamente - será reativado com fotos reais do CibiSana
+        # NÍVEL 2: Gemini Vision (DESABILITADO PARA ECONOMIZAR CRÉDITOS)
+        # Só usar se o usuário explicitamente solicitar ou for prato desconhecido
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < THRESHOLD_LOCAL:
-            try:
-                from services.generic_ai import identify_unknown_dish
-                
-                logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
-                generic_result = await identify_unknown_dish(content)
-                
-                if generic_result.get('ok') and generic_result.get('nome'):
-                    decision = {
-                        'identified': True,
-                        'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
-                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
-                        'confidence': generic_result.get('confianca', 'média'),
-                        'score': generic_result.get('score', 0.7),
-                        'message': f"Identificado: {generic_result.get('nome')}",
-                        'category': generic_result.get('categoria', 'outros'),
-                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                        'descricao': generic_result.get('descricao', ''),
-                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                        'tecnica': generic_result.get('tecnica_preparo', ''),
-                        'beneficios': generic_result.get('beneficios', []),
-                        'riscos': generic_result.get('riscos', []),
-                        'alternatives': generic_result.get('alternativas', []),
-                        'nutrition': {
-                            'calorias': '~200 kcal',
-                            'proteinas': '~10g',
-                            'carboidratos': '~25g',
-                            'gorduras': '~8g'
-                        },
-                        'aviso_cibi_sana': None,
-                        'source': 'generic_ai',
-                        'cascade_level': 2,
-                        # Dados científicos da IA genérica
-                        'beneficio_principal': generic_result.get('beneficio_principal'),
-                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                        'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
-                        'alerta_saude': generic_result.get('alerta_saude')
-                    }
-                    logger.info(f"[CASCATA] Resultado do Gemini Vision")
-            except Exception as e:
-                logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
+            # NÃO chamar Gemini automaticamente - economizar créditos
+            # Usar o melhor resultado local disponível
+            if nivel1_score >= 0.50:
+                decision['source'] = 'local_index'
+                decision['cascade_level'] = 1
+                decision['confidence'] = 'média'
+                logger.info(f"[CASCATA] Usando resultado local (score médio: {nivel1_score:.0%}) - SEM CRÉDITOS")
+            else:
+                # Apenas para score muito baixo, marcar como não identificado
+                decision['source'] = 'local_index'
+                decision['cascade_level'] = 1
+                decision['confidence'] = 'baixa'
+                decision['message'] = 'Prato não identificado com certeza. Use o botão de correção para informar o nome correto.'
+                logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção manual")
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
