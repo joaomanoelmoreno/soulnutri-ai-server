@@ -437,16 +437,22 @@ async def identify_image(
         premium_data = {}
         
         if pin and nome:
-            from services.profile_service import hash_pin
+            from services.profile_service import hash_pin, verificar_premium_ativo
             pin_hash = hash_pin(pin)
             user_profile = await db.users.find_one(
                 {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
                 {"_id": 0}
             )
-            is_premium = user_profile is not None
             
-            if is_premium:
-                logger.info(f"[PREMIUM] Usuário {nome} identificado")
+            if user_profile:
+                # Verificar se Premium está ativo e não expirou
+                status_premium = verificar_premium_ativo(user_profile)
+                is_premium = status_premium.get("ativo", False)
+                
+                if is_premium:
+                    logger.info(f"[PREMIUM] Usuário {nome} - {status_premium.get('motivo')}")
+                else:
+                    logger.info(f"[PREMIUM] Usuário {nome} - Acesso negado: {status_premium.get('motivo')}")
         
         # Buscar dados científicos - primeiro MongoDB, depois local
         scientific_data = {}
