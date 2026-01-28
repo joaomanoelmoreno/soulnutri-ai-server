@@ -1005,7 +1005,7 @@ async def create_dish_local(
         from pathlib import Path
         from difflib import SequenceMatcher
         from services.local_dish_updater import atualizar_prato_local, encontrar_tipo_prato, PRATOS_COMPLETOS
-        from services.local_dish_updater import detectar_categoria_por_nome, detectar_alergenos_por_nome
+        from services.local_dish_updater import detectar_categoria_basica, detectar_alergenos_por_nome
         
         if not dish_name.strip():
             return {"ok": False, "error": "Nome do prato é obrigatório"}
