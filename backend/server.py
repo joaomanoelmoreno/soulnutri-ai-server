@@ -1088,7 +1088,7 @@ async def create_dish_local(
         
         # Gerar dados usando regras LOCAIS
         tipo = encontrar_tipo_prato(dish_name)
-        categoria = detectar_categoria_por_nome(dish_name)
+        categoria = detectar_categoria_basica(dish_name)
         alergenos = detectar_alergenos_por_nome(dish_name)
         
         # Pegar template se existir
