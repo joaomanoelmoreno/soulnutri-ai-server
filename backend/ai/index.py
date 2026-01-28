@@ -231,6 +231,45 @@ class DishIndex:
         
         return results
     
+    def search_by_dish(self, dish_name: str) -> List[Dict]:
+        """
+        Busca informações de um prato específico pelo nome.
+        Útil para quando já sabemos o nome do prato (ex: via Google Vision).
+        
+        Args:
+            dish_name: Nome/slug do prato
+            
+        Returns:
+            Lista com o resultado do prato
+        """
+        if not self.dish_to_idx:
+            return []
+        
+        # Normalizar nome para busca
+        dish_normalized = dish_name.lower().strip()
+        
+        # Buscar correspondência exata ou parcial
+        matched_dish = None
+        for dish in self.dish_to_idx.keys():
+            if dish.lower() == dish_normalized:
+                matched_dish = dish
+                break
+            elif dish_normalized in dish.lower() or dish.lower() in dish_normalized:
+                matched_dish = dish
+                break
+        
+        if not matched_dish:
+            return []
+        
+        # Retornar resultado formatado
+        return [{
+            'dish': matched_dish,
+            'score': 0.90,  # Alta confiança pois é match direto
+            'confidence': 'alta',
+            'image_count': self.metadata.get(matched_dish, {}).get('image_count', 0),
+            'source': 'direct_match'
+        }]
+    
     def _get_confidence_level(self, score: float) -> str:
         """Converte score em nível de confiança"""
         if score >= 0.85:
