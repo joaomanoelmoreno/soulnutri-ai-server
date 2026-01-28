@@ -5,7 +5,17 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 
 ## O que foi implementado
 
-### 27/01/2025 - Correções de Lógica de Classificação (NOVA)
+### 28/01/2025 - Sistema SEM Créditos e Correções P0
+- **Checkpoint v1 criado** - Versão funcional salva em `/app/checkpoints/v1_funcional_20260128_113435/`
+- **Restauração rápida** - Script `bash /app/checkpoints/RESTAURAR_V1.sh` restaura tudo
+- **Índice restaurado** - 492 pratos, 1806 embeddings funcionando
+- **Endpoint LOCAL para correção** - `POST /api/ai/create-dish-local` cria/corrige pratos SEM IA
+- **Pernil de cordeiro corrigido** - Ingredientes agora corretos (era "suíno", agora "cordeiro")
+- **Novos templates** - Cordeiro, Gnocchi, Berinjela adicionados ao banco local
+- **Conteúdo Premium LOCAL** - Dados científicos sem chamar IA (benefício principal, curiosidades, mitos)
+- **Feedback de correção melhorado** - Confirmação clara ao usuário com "Créditos usados: 0"
+
+### 27/01/2025 - Correções de Lógica de Classificação
 - **Queijo vegano diferenciado** - Sistema agora reconhece "queijo vegano", "queijo de castanha", etc. como vegano
 - **Decoração ignorada** - Ingredientes em contexto de "decoração" não afetam a classificação
 - **Endpoint de regeneração** - POST `/api/admin/dishes/{slug}/regenerate` regenera toda a ficha baseado no nome
@@ -29,10 +39,17 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 - Correção com IA via POST `/api/admin/audit/fix-single/{slug}`
 
 ## Arquivos Importantes
-- `/lista-pratos.txt` - Lista de 258 pratos para impressão
+- `/app/checkpoints/RESTAURAR_V1.sh` - Script para restaurar versão funcional
 - `/admin` - Painel de administração
+- `/app/backend/services/local_dish_updater.py` - Sistema de atualização SEM IA
 
 ## Decisões de Design
+
+### Operações SEM Créditos (PRIORIDADE)
+- Correção de nome usa `/api/ai/create-dish-local` (local, sem IA)
+- Atualização em massa usa `local_dish_updater.py`
+- Dados Premium (científicos) vêm do banco local `CONTEUDO_PREMIUM`
+- Reconhecimento visual usa índice CLIP local (não consome créditos Emergent)
 
 ### Pratos Múltiplos (Buffet)
 - NÃO criar novos pratos para combinações
@@ -44,7 +61,7 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 - Mantém todas as imagens na pasta principal
 - Informações mescladas (pega o mais completo)
 
-### Classificação de Ingredientes (NOVA)
+### Classificação de Ingredientes
 - **Vegano**: Zero produtos animais
 - **Vegetariano**: Pode ter ovo/leite/queijo de vaca, sem carne
 - **Proteína animal**: Tem carne/peixe/frango
@@ -53,16 +70,20 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 
 ## Backlog
 
-### P0 - Crítico
-- [x] Consolidar duplicados
-- [x] Corrigir lógica queijo vegano vs comum
-- [ ] Reconstruir índice de embeddings (em progresso)
+### P0 - Crítico ✅ CONCLUÍDO
+- [x] Restaurar índice de embeddings (492 pratos funcionando)
+- [x] Criar checkpoint de segurança
+- [x] Corrigir pernil de cordeiro
+- [x] Endpoint de correção SEM créditos
+- [x] Conteúdo Premium LOCAL
 
 ### P1 - Alto
+- [ ] Melhorar tela resumo no buffet com informações de decisão rápida
+- [ ] Adicionar mais tipos de pratos ao banco local
 - [ ] Remover ~90 pratos "Unknown"
-- [ ] Otimizar velocidade IA
 - [ ] Corrigir bug de salvamento inconsistente no admin
 
 ### P2 - Médio
-- [ ] Refatorar App.js
+- [ ] Refatorar App.js (componente monolítico)
 - [ ] i18n completo
+- [ ] Sistema de pagamento Stripe para Premium
