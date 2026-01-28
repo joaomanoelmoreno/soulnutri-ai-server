@@ -1133,6 +1133,72 @@ function App() {
     }
   };
 
+  // MELHORAR IDENTIFICAÇÃO COM IA (sob demanda - consome créditos)
+  const melhorarComIA = async () => {
+    if (!lastImageBlob) {
+      alert('Nenhuma imagem para analisar');
+      return;
+    }
+    
+    // Confirmar com usuário
+    const confirmar = window.confirm(
+      '🤖 Usar IA para melhorar identificação?\n\n' +
+      '⚠️ Isso consome créditos do sistema.\n\n' +
+      'Continuar?'
+    );
+    
+    if (!confirmar) return;
+    
+    setLoadingIA(true);
+    
+    const fd = new FormData();
+    fd.append("file", lastImageBlob, "photo.jpg");
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      
+      const res = await fetch(`${API}/ai/identify-with-ai`, {
+        method: "POST",
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      const data = await res.json();
+      
+      if (data.ok && data.identified) {
+        // Atualizar resultado com dados da IA
+        setResult(prev => ({
+          ...prev,
+          ...data,
+          dish_display: data.dish_display,
+          category: data.category,
+          category_emoji: data.category_emoji,
+          confidence: data.confidence || 'alta',
+          ingredientes: data.ingredientes,
+          beneficios: data.beneficios,
+          descricao: data.descricao,
+          source: 'gemini_ai',
+          ia_disponivel: false // Já usou IA
+        }));
+        
+        alert(`✅ IA identificou: ${data.dish_display}\n\n💰 Créditos consumidos`);
+      } else {
+        alert(`❌ IA não conseguiu identificar\n\n${data.error || 'Tente corrigir manualmente'}`);
+      }
+    } catch (e) {
+      console.error('Erro ao chamar IA:', e);
+      if (e.name === 'AbortError') {
+        alert('Tempo limite excedido. Tente novamente.');
+      } else {
+        alert('Erro ao chamar IA: ' + (e.message || 'Erro de conexão'));
+      }
+    } finally {
+      setLoadingIA(false);
+    }
+  };
+
   // Descartar foto
   const discardPhoto = () => {
     setShowFeedback(false);
