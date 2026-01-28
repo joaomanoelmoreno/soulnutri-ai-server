@@ -362,85 +362,41 @@ async def identify_image(
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
         # ═══════════════════════════════════════════════════════════════════════
-        # LÓGICA ECONÔMICA: ÍNDICE LOCAL PRIMEIRO, Gemini só quando necessário
-        # Prioriza economia de créditos!
+        # OTIMIZAÇÃO: Threshold 70% para pratos cadastrados (ECONOMIZAR CRÉDITOS!)
+        # Para pratos do Cibi Sana, 70% já é confiança suficiente
+        # SEM CHAMAR GEMINI - PRIORIDADE É NÃO GASTAR CRÉDITOS
         # ═══════════════════════════════════════════════════════════════════════
+        THRESHOLD_LOCAL = 0.70  # 70% para resposta rápida em pratos conhecidos
+        THRESHOLD_MEDIO = 0.50  # 50% ainda usa local com confiança média
         
+        # Flag para indicar se IA poderia melhorar o resultado
         ia_disponivel = False
-        usar_gemini = False
         
-        # NÍVEL 1: Verificar score do índice local
-        if nivel1_score >= 0.70:
-            # Score alto - usar índice local (SEM CRÉDITOS!)
+        # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO E SEM CRÉDITOS!)
+        if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
-            decision['confidence'] = 'alta'
-            logger.info(f"[ECONOMIA] ✅ Índice local: {decision.get('dish_display')} ({nivel1_score:.0%}) - SEM CRÉDITOS")
+            logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
-        elif nivel1_score >= 0.50:
-            # Score médio - usar índice local mas marcar que IA pode melhorar
+        # ─────────────────────────────────────────────────────────────────────
+        # NÍVEL 2: Gemini Vision - STAND-BY (só chama se usuário solicitar)
+        # ─────────────────────────────────────────────────────────────────────
+        elif nivel1_score >= THRESHOLD_MEDIO:
+            # Score médio - usa local mas indica que IA poderia ajudar
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
             decision['confidence'] = 'média'
-            ia_disponivel = True
-            logger.info(f"[ECONOMIA] ⚠️ Índice local médio: {decision.get('dish_display')} ({nivel1_score:.0%}) - IA disponível")
+            ia_disponivel = True  # Marca que IA poderia melhorar
+            logger.info(f"[CASCATA] Resultado local médio ({nivel1_score:.0%}) - IA disponível se necessário")
         
         else:
-            # Score baixo - SOMENTE AGORA usar Gemini
-            usar_gemini = True
-            logger.info(f"[ECONOMIA] Score baixo ({nivel1_score:.0%}) - consultando Gemini...")
-        
-        # NÍVEL 2: Gemini Vision (SOMENTE quando score local < 50%)
-        if usar_gemini:
-            try:
-                from services.generic_ai import identify_unknown_dish
-                
-                generic_result = await identify_unknown_dish(content)
-                
-                if generic_result.get('ok') and generic_result.get('nome'):
-                    gemini_nome = generic_result.get('nome', '')
-                    logger.info(f"[GEMINI] ✅ Identificado: {gemini_nome}")
-                    
-                    decision = {
-                        'identified': True,
-                        'dish': gemini_nome.lower().replace(' ', '_'),
-                        'dish_display': gemini_nome,
-                        'confidence': 'alta',
-                        'score': 0.95,
-                        'message': f"Identificado: {gemini_nome}",
-                        'category': generic_result.get('categoria', 'outros'),
-                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                        'descricao': generic_result.get('descricao', ''),
-                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                        'tecnica': generic_result.get('tecnica_preparo', ''),
-                        'beneficios': generic_result.get('beneficios', []),
-                        'riscos': generic_result.get('riscos', []),
-                        'alternatives': [],
-                        'nutrition': {
-                            'calorias': generic_result.get('calorias', '~150 kcal'),
-                            'proteinas': generic_result.get('proteinas', '~8g'),
-                            'carboidratos': generic_result.get('carboidratos', '~20g'),
-                            'gorduras': generic_result.get('gorduras', '~5g')
-                        },
-                        'aviso_cibi_sana': None,
-                        'source': 'gemini_ai',
-                        'cascade_level': 2,
-                        'ia_disponivel': False,
-                        'beneficio_principal': generic_result.get('beneficio_principal'),
-                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                    }
-                else:
-                    # Gemini falhou - usar resultado local mesmo com score baixo
-                    decision['source'] = 'local_index'
-                    decision['confidence'] = 'baixa'
-                    ia_disponivel = True
-                    logger.warning(f"[GEMINI] Falhou, usando local")
-                    
-            except Exception as e:
-                logger.error(f"[GEMINI] Erro: {e}")
-                decision['source'] = 'local_index'
-                decision['confidence'] = 'baixa'
-                ia_disponivel = True
+            # Score baixo - usa local mas sugere correção manual
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'baixa'
+            decision['message'] = 'Prato não identificado com certeza. Use o botão de correção.'
+            ia_disponivel = True  # Marca que IA poderia ajudar
+            logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção")
         
         # Adicionar flag de IA disponível na decisão
         decision['ia_disponivel'] = ia_disponivel
@@ -448,7 +404,7 @@ async def identify_image(
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
         
-        logger.info(f"Identificação: {decision.get('dish_display', decision.get('dish'))} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
+        logger.info(f"Identificação: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
         
         # ═══════════════════════════════════════════════════════════════════════
         # VERIFICAR SE É USUÁRIO PREMIUM
@@ -458,22 +414,16 @@ async def identify_image(
         premium_data = {}
         
         if pin and nome:
-            from services.profile_service import hash_pin, verificar_premium_ativo
+            from services.profile_service import hash_pin
             pin_hash = hash_pin(pin)
             user_profile = await db.users.find_one(
                 {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
                 {"_id": 0}
             )
+            is_premium = user_profile is not None
             
-            if user_profile:
-                # Verificar se Premium está ativo e não expirou
-                status_premium = verificar_premium_ativo(user_profile)
-                is_premium = status_premium.get("ativo", False)
-                
-                if is_premium:
-                    logger.info(f"[PREMIUM] Usuário {nome} - {status_premium.get('motivo')}")
-                else:
-                    logger.info(f"[PREMIUM] Usuário {nome} - Acesso negado: {status_premium.get('motivo')}")
+            if is_premium:
+                logger.info(f"[PREMIUM] Usuário {nome} identificado")
         
         # Buscar dados científicos - primeiro MongoDB, depois local
         scientific_data = {}
@@ -1489,11 +1439,10 @@ async def register_user(
     """
     Registra um novo usuário Premium com PIN local.
     Calcula automaticamente a meta calórica sugerida.
-    AUTOMÁTICO: 7 dias de Premium Trial grátis!
     """
     try:
         from services.profile_service import hash_pin, calcular_tmb, calcular_meta_calorica
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timezone
         
         # Validações
         if len(pin) < 4 or len(pin) > 6:
@@ -1506,11 +1455,7 @@ async def register_user(
         tmb = calcular_tmb(peso, altura, idade, sexo)
         meta_info = calcular_meta_calorica(tmb, nivel_atividade, objetivo)
         
-        # Calcular Premium Trial automático (7 dias)
-        agora = datetime.now(timezone.utc)
-        premium_expira = agora + timedelta(days=7)
-        
-        # Criar perfil com Premium Trial automático
+        # Criar perfil
         perfil = {
             "pin_hash": hash_pin(pin),
             "nome": nome,
@@ -1523,36 +1468,22 @@ async def register_user(
             "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
             "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
             "meta_calorica": meta_info,
-            # Premium Trial automático - 7 dias grátis!
-            "plano": "premium_trial",
-            "premium_ativo": True,
-            "premium_ate": premium_expira,
-            "premium_expira_em": premium_expira.isoformat(),
-            "premium_liberado_em": agora.isoformat(),
-            "premium_dias": 7,
-            "premium_auto": True,  # Marca que foi automático
-            "created_at": agora,
-            "updated_at": agora
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc)
         }
         
         # Salvar no MongoDB
         result = await db.users.insert_one(perfil)
         user_id = str(result.inserted_id)
         
-        logger.info(f"[PREMIUM] Novo usuário registrado: {nome} (7 dias trial automático)")
+        logger.info(f"[PREMIUM] Novo usuário registrado: {nome}")
         
         return {
             "ok": True,
             "user_id": user_id,
             "nome": nome,
             "meta_calorica": meta_info,
-            "premium": {
-                "ativo": True,
-                "plano": "premium_trial",
-                "dias": 7,
-                "expira_em": premium_expira.isoformat()
-            },
-            "message": f"🎉 Bem-vindo ao SoulNutri Premium, {nome}! Você tem 7 dias grátis para experimentar."
+            "message": f"Bem-vindo ao SoulNutri Premium, {nome}!"
         }
         
     except Exception as e:
@@ -2433,6 +2364,9 @@ async def translate_text_endpoint(
 
 
 
+# Incluir router
+app.include_router(api_router)
+
 # Evento de shutdown
 @app.on_event("shutdown")
 async def shutdown_db_client():
@@ -2627,20 +2561,16 @@ async def admin_list_premium_users():
 @api_router.post("/admin/premium/liberar")
 async def admin_liberar_premium(
     nome: str = Form(...),
-    pin: str = Form(""),  # PIN opcional - cria se não existir
-    dias: int = Form(7)  # Padrão 7 dias para teste
+    dias: int = Form(30)
 ):
     """
     Libera acesso Premium para um usuário por X dias.
-    Se o usuário não existir e PIN for fornecido, cria o usuário.
     
     Args:
         nome: Nome do usuário (case insensitive)
-        pin: PIN do usuário (obrigatório para criar novo)
-        dias: Número de dias de acesso (padrão: 7 para teste)
+        dias: Número de dias de acesso (padrão: 30)
     """
-    from datetime import datetime, timedelta, timezone
-    from services.profile_service import hash_pin
+    from datetime import datetime, timedelta
     
     try:
         # Buscar usuário pelo nome
@@ -2649,52 +2579,20 @@ async def admin_liberar_premium(
             {"_id": 0}
         )
         
-        # Calcular data de expiração
-        agora = datetime.now(timezone.utc)
-        data_expiracao = agora + timedelta(days=dias)
-        plano = "premium_trial" if dias <= 30 else "premium"
-        
         if not user:
-            # Usuário não existe - criar se PIN fornecido
-            if not pin:
-                return {"ok": False, "error": f"Usuário '{nome}' não existe. Forneça um PIN para criar."}
-            
-            # Criar novo usuário Premium
-            novo_usuario = {
-                "nome": nome,
-                "pin_hash": hash_pin(pin),
-                "plano": plano,
-                "premium_ativo": True,
-                "premium_liberado_em": agora.isoformat(),
-                "premium_expira_em": data_expiracao.isoformat(),
-                "premium_ate": data_expiracao,
-                "premium_dias": dias,
-                "created_at": agora.isoformat()
-            }
-            
-            await db.users.insert_one(novo_usuario)
-            logger.info(f"[ADMIN] Novo usuário Premium criado: {nome} por {dias} dias")
-            
-            return {
-                "ok": True,
-                "message": f"✅ Novo usuário Premium criado: {nome}",
-                "nome": nome,
-                "dias": dias,
-                "plano": plano,
-                "expira_em": data_expiracao.isoformat(),
-                "acao": "criado"
-            }
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
         
-        # Usuário existe - atualizar status Premium
+        # Calcular data de expiração
+        data_expiracao = datetime.now() + timedelta(days=dias)
+        
+        # Atualizar status Premium
         await db.users.update_one(
             {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
             {
                 "$set": {
-                    "plano": plano,
                     "premium_ativo": True,
-                    "premium_liberado_em": agora.isoformat(),
+                    "premium_liberado_em": datetime.now().isoformat(),
                     "premium_expira_em": data_expiracao.isoformat(),
-                    "premium_ate": data_expiracao,
                     "premium_dias": dias
                 }
             }
@@ -2704,12 +2602,10 @@ async def admin_liberar_premium(
         
         return {
             "ok": True,
-            "message": f"✅ Premium liberado para {nome}",
+            "message": f"Premium liberado para {nome}",
             "nome": nome,
             "dias": dias,
-            "plano": plano,
-            "expira_em": data_expiracao.isoformat(),
-            "acao": "atualizado"
+            "expira_em": data_expiracao.isoformat()
         }
         
     except Exception as e:
@@ -2939,6 +2835,3 @@ async def premium_checkin(
     except Exception as e:
         logger.error(f"Erro no check-in: {e}")
         return {"ok": False, "error": str(e)}
-
-# Incluir router - DEVE SER NO FINAL para incluir todos os endpoints
-app.include_router(api_router)

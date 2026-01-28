@@ -1,5 +1,5 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta velocidade (< 500ms) e precisão (> 90%). O projeto inclui uma versão Premium e um fluxo para capturar fotos de pratos na balança do restaurante para treinar continuamente a IA. O foco principal atual é melhorar a precisão do reconhecimento de pratos e a confiabilidade geral do aplicativo, que sofre com regressões constantes e o esgotamento dos créditos de IA do usuário.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta velocidade (< 500ms) e precisão (> 90%). O projeto inclui uma versão Premium e um fluxo para capturar fotos de pratos na balança do restaurante para treinar continuamente a IA. O foco principal atual é melhorar a precisão do reconhecimento de pratos e a confiabilidade geral do aplicativo, que sofre com regressões constantes, alto custo de IA e baixa performance.
 
 **PRODUCT REQUIREMENTS:**
 1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
@@ -15,150 +15,200 @@ O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutriç�
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-Um aplicativo full-stack (React + FastAPI) cujo sistema de reconhecimento de imagem está quebrado devido a um índice vetorial corrompido, resultando em precisão muito baixa. Para contornar a frustração do usuário com o alto consumo de créditos de IA, o agente anterior desenvolveu um sistema robusto de gerenciamento de dados **local e sem custos**. O painel de administração () agora possui uma aba Auditoria com botões para Consolidar Duplicados e Atualizar Todos os Pratos, que usam uma lógica baseada em regras em  para preencher informações (categoria, nutrição, alérgenos) sem chamar APIs externas. Também foi adicionado um botão de exclusão (lixeira) nos itens da auditoria e no modal de edição do prato.
+Um aplicativo full-stack (React + FastAPI) que opera em um modo híbrido para reconhecimento de imagem. Após liberar espaço em disco e corrigir uma variável de ambiente, o sistema agora prioriza um modelo **CLIP local (gratuito e rápido, ~200ms)** para identificação. O **Gemini (pago)** é usado como fallback apenas quando o score de confiança do modelo local é baixo (< 50%). O índice de reconhecimento local está funcional, mas desatualizado, causando algumas imprecisões. Foi implementado um sistema de cadastro de usuários que concede **7 dias de Premium automaticamente**. Para o PWA (Progressive Web App), foi adicionado um **popup Instalar na tela inicial** e uma página com **QR codes** para acesso ao app ().
 
 **Last working item**:
--   **Last item agent was working**: O agente estava lidando com múltiplas solicitações simultâneas do usuário:
-    1.  Investigando por que a reconstrução do índice de embeddings (um processo em segundo plano e sem custos) falhou pela terceira vez.
-    2.  Tentando resolver um problema de cache que impede um segundo funcionário de ver a versão mais recente da interface do admin.
-    3.  Esclarecendo o consumo de créditos (operações locais são gratuitas, mas ações com o ícone 🤖 ou a identificação por câmera não são).
-    4.  Gerando um documento técnico () para um processo de patente.
--   **Status**: BLOCKED
+-   **Last item agent was working**: Restaurar o sistema de score de confiança em três níveis, uma funcionalidade de transparência que havia sido perdida. O objetivo é exibir diferentes mensagens ao usuário com base na precisão do reconhecimento.
+-   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: backend testing agent (após a correção da reconstrução do índice), screenshot tool (para o problema de cache da UI).
+-   **Which testing method agent to use?**: backend testing agent (para validar a lógica de score nos retornos da API) e screenshot tool (para verificar a exibição das mensagens de confiança no frontend).
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) A reconstrução do índice de embeddings em segundo plano falha repetidamente.
--   Issue 2: (P0) A precisão do reconhecimento da IA continua extremamente baixa (~30%) porque a reconstrução do índice (Issue 1) nunca conclui.
--   Issue 3: (P1) Um segundo usuário em outro computador não consegue ver a interface atualizada do painel de administração, mesmo após limpar o cache, sugerindo um problema de cache no servidor ou CDN.
--   Issue 4: (P2) O aplicativo trava em dispositivos móveis (problema antigo, não abordado).
+-   Issue 1: (P0) Restaurar o sistema de confiança em três níveis.
+-   Issue 2: (P1) A precisão do reconhecimento local é baixa para alguns pratos.
+-   Issue 3: (P2) O aplicativo trava em dispositivos móveis.
+-   Issue 4: (P2) Segundo usuário admin não consegue ver a UI atualizada.
 
 **Issues Detail**:
--   **Issue 1: A reconstrução do índice de embeddings em segundo plano falha repetidamente.**
-    -   **Attempted fixes**: O agente iniciou o processo de  em background usando  várias vezes. Todas as tentativas falharam antes da conclusão. A suspeita é que o processo é interrompido quando o usuário executa ações de exclusão ou consolidação de pratos, o que corrompe o estado do sistema de arquivos que o script está lendo.
+-   **Issue 1: Restaurar o sistema de confiança em três níveis.**
+    -   **Attempted fixes**: Nenhum, a implementação foi iniciada no final da sessão anterior.
     -   **Next debug checklist**:
-        1.  **Diagnosticar a causa raiz da falha:** Em vez de apenas reiniciar, investigar por que o processo  está morrendo. Verificar limites de recursos do sistema ou se há exceções não tratadas no script .
-        2.  **Tornar o script mais robusto:** Modificar  para lidar com  e outras exceções que podem ocorrer se um prato for excluído durante a execução.
-        3.  **Comunicar ao usuário:** Instruir claramente o usuário a **não excluir ou consolidar pratos** enquanto a reconstrução estiver em andamento.
-        4.  **Reiniciar com monitoramento:** Executar o script novamente, garantindo que os logs em  sejam detalhados o suficiente para capturar o ponto exato da falha.
-    -   **Why fix this issue and what will be achieved with the fix?**: É um bloqueador crítico. Sem um índice reconstruído, a principal funcionalidade de reconhecimento visual do aplicativo (Issue 2) não pode ser corrigida.
-    -   **Status**: IN PROGRESS
+        1.  Modificar o endpoint  em  para retornar um campo  ('alta', 'media', 'baixa') baseado no score.
+        2.  Lógica:  = alta,  = media,  = baixa.
+        3.  Atualizar o frontend em  para exibir a mensagem correspondente a cada nível de confiança, conforme solicitado pelo usuário.
+    -   **Why fix this issue and what will be achieved with the fix?**: Aumenta a transparência e a confiança do usuário no aplicativo, informando honestamente quando o sistema não tem certeza do resultado.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y (funcionalidade que se perdeu)
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on other issue**: None
+
+-   **Issue 2: A precisão do reconhecimento local é baixa para alguns pratos.**
+    -   **Attempted fixes**: A solução temporária foi usar Gemini como fallback. A solução definitiva, a reconstrução do índice, foi iniciada, mas o usuário pediu para pausar.
+    -   **Next debug checklist**:
+        1.  Aguardar a confirmação do usuário para retomar a reconstrução do índice de embeddings.
+        2.  Executar a reconstrução em background usando o endpoint .
+        3.  Monitorar os logs em  para garantir a conclusão.
+    -   **Why fix this issue and what will be achieved with the fix?**: Aumentará drasticamente a precisão do reconhecimento local, reduzindo a dependência do Gemini (e os custos associados) e melhorando a velocidade geral.
+    -   **Status**: BLOCKED (Aguardando autorização do usuário)
     -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: backend
     -   **Blocked on other issue**: None
 
--   **Issue 3: Um segundo usuário não consegue ver a interface atualizada do admin.**
-    -   **Attempted fixes**: Sugestões de limpeza de cache, hard refresh (Ctrl+Shift+R) e modo anônimo não funcionaram.
-    -   **Next debug checklist**:
-        1.  Verificar a configuração do servidor web (Nginx, etc.) para quaisquer diretivas de cache agressivas que possam estar servindo arquivos estáticos antigos.
-        2.  Forçar um  completo do frontend (yarn run v1.22.22
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.) e um reinício do serviço frontend: ERROR (not running)
-frontend: started para garantir que os assets mais recentes sejam servidos.
-        3.  Pedir ao usuário para verificar o console do navegador (F12) em busca de erros de rede ou JavaScript que possam impedir a renderização correta.
-    -   **Why fix this issue and what will be achieved with the fix?**: Permite que a equipe do usuário colabore no gerenciamento de dados do aplicativo.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on other issue**: None
-
 **In progress Task List**:
--   Nenhum. O foco está na resolução dos problemas críticos.
+-   **Task 1: Restaurar o sistema de confiança em três níveis.**
+    -   **Where to resume**: Implementar a lógica no backend () e depois no frontend (), conforme o checklist da Issue 1.
+    -   **What will be achieved with this?**: O app voltará a exibir os níveis de confiança Alta, Média e Baixa para o usuário.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on something**: None
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   (P1) Corrigir o bug de salvamento inconsistente no painel de administração (mencionado no handoff inicial).
-    -   (P1) Adicionar os novos tipos de pratos (berinjela, gnocchi, etc.) à base de dados local em  para melhorar ainda mais o preenchimento automático sem custos.
+    -   (P0) Reconstruir o índice de embeddings CLIP para melhorar a precisão do reconhecimento local. **(Pausado pelo usuário)**
+    -   (P1) Adicionar uma interface no painel  para gerenciar usuários Premium (liberar, bloquear, ver status).
 -   **Future Tasks:**
     -   Refatorar o componente monolítico .
-    -   Implementar o sistema de pagamento (Stripe) para a versão Premium.
+    -   Implementar o sistema de pagamento Stripe para a versão Premium paga.
     -   Completar a tradução de todos os textos (i18n).
+    -   Pesquisar e integrar fontes de dados de baixo custo, como a tabela TACO Brasil.
 
 **Completed work in this session**
--   **Sistema de Atualização Local (Sem Créditos)**: Criado e aprimorado o serviço  que atualiza os dados dos pratos (categoria, nutrição, alérgenos, etc.) com base em regras locais, sem consumir créditos de IA. A lógica foi refinada para preservar as edições manuais do usuário, preenchendo apenas os campos vazios.
--   **Melhoras na Lógica de Negócio**: Corrigida a lógica de classificação para diferenciar corretamente queijo vegano (sem lactose) de queijo comum e para tratar macarrão de arroz como sem glúten.
--   **Melhoras no Painel de Administração**:
-    -   Adicionados botões Consolidar Duplicados e Atualizar Todos os Pratos na aba Auditoria para executar as operações locais sem custo.
-    -   Adicionado um botão de lixeira (🗑️) para excluir pratos diretamente das listas da auditoria e do modal de edição.
-    -   A UI da auditoria foi expandida para exibir todas as categorias de problemas (pratos sem nutrição, sem ingredientes, etc.).
-    -   Corrigido o fluxo de navegação para permanecer na aba Auditoria após a edição de um prato.
--   **Criação de Documento de Patente**: Gerado um documento técnico detalhado () a pedido do usuário.
+-   **Otimização de Performance e Custo:**
+    -   Liberado ~1GB de espaço em disco, o que permitiu que o modelo **CLIP local** fosse carregado na memória.
+    -   Configurada a variável de ambiente  para forçar o uso do modelo local.
+    -   Reduzida a latência de reconhecimento de ~3s para **~211ms** na maioria dos casos.
+    -   Invertida a lógica de IA: agora o sistema usa o **CLIP local primeiro (gratuito)** e só recorre ao Gemini se a confiança for baixa, **reduzindo drasticamente o consumo de créditos**.
+-   **Correções Críticas de Bugs:**
+    -   Restaurado o índice de embeddings corrompido a partir de um backup, tornando a funcionalidade de reconhecimento operacional novamente.
+    -   Corrigido um bug crítico onde os endpoints da API não eram registrados por  ser chamado muito cedo em .
+-   **Funcionalidades Adicionadas:**
+    -   Implementado **cadastro com 7 dias de trial Premium automático**.
+    -   Criado um sistema de autorização Premium com data de expiração.
+    -   Gerada uma **página de QR codes** () para facilitar o acesso ao app em ambientes físicos.
+    -   Adicionado um **popup de instalação do PWA** (Adicionar à Tela Inicial).
+    -   Criado um endpoint local para criar/corrigir pratos sem usar créditos de IA.
+-   **Gerenciamento do Ambiente:**
+    -   Criado um checkpoint seguro (🔄 Restaurando SoulNutri para versão v1 funcional...
+✅ Índice de embeddings restaurado (492 pratos)
+✅ Backend restaurado
+✅ Frontend restaurado
+backend: stopped
+frontend: ERROR (not running)
+backend: started
+frontend: started
+✅ Serviços reiniciados
+
+🎉 Restauração completa! Sistema voltou para estado funcional.
+   - 492 pratos indexados
+   - 85.9% saúde dos dados
+   - Reconhecimento visual funcionando) de uma versão estável.
 
 **Earlier issues found/mentioned but not fixed**
 -   **Issue 1: O aplicativo trava em dispositivos móveis.**
-    -   **Debug checklist**: Investigar o ciclo de vida do componente da câmera em .
-    -   **Why to solve this issue and what will be achieved with this?**: Essencial para a usabilidade principal do aplicativo.
+    -   **Debug checklist**: Investigar o ciclo de vida do componente da câmera em  e o uso de memória em dispositivos móveis.
+    -   **Why to solve this issue and what will be achieved with this?**: Essencial para a usabilidade principal do aplicativo no campo.
     -   **Should Test frontend/backend/both after fix**: frontend
     -   **Is recurring issue?**: Y
+-   **Issue 2: Segundo usuário em outro computador não consegue ver a interface atualizada do admin.**
+    -   **Debug checklist**: Investigar configurações de cache do servidor ou CDN que podem estar servindo assets antigos.
+    -   **Why to solve this issue and what will be achieved with this?**: Permite que a equipe do usuário colabore na gestão de dados.
+    -   **Should Test frontend/backend/both after fix**: frontend
+    -   **Is recurring issue?**: N
 
 **Known issue recurrence from previous fork**
--   **AI Accuracy / Index Corruption**: O problema central do projeto. A corrupção do índice de embeddings após a manipulação de dados é um problema recorrente. A tentativa de solução (reconstrução do índice) tornou-se ela mesma uma falha recorrente.
+-   **AI Accuracy / Index Corruption**: O problema central do projeto. A sessão atual mitigou a criticidade ao implementar um sistema híbrido (CLIP local + Gemini) e restaurar o modelo local. No entanto, a precisão do índice local só será resolvida com a reconstrução completa, que está pendente.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Falha de Processo em Background**: A tarefa de longa duração para reconstruir o índice () está sendo encerrada prematuramente. A causa precisa ser diagnosticada (limites de recursos, exceções não tratadas, ou conflito com outras operações).
--   **Lógica Local vs. IA**: Foi implementada uma forte separação entre operações que usam IA (e consomem créditos) e operações locais baseadas em regras (gratuitas). O usuário deseja priorizar as operações gratuitas.
--   **Problema de Cache de Frontend**: A dificuldade de um segundo usuário em ver a interface mais recente aponta para um problema de cache (navegador, servidor ou CDN) que precisa ser resolvido.
+-   **Hybrid AI Model**: O sistema agora opera com um modelo de dois níveis. Primeiro tenta o reconhecimento com um modelo **CLIP local**, que é rápido (~200ms) e gratuito. Se a confiança for baixa, ele recorre ao **Gemini Vision API** como um fallback, garantindo um bom equilíbrio entre custo, velocidade e precisão.
+-   **PWA (Progressive Web App)**: O app é um PWA. A instalação é feita através da funcionalidade Adicionar à Tela Inicial do navegador. Um popup agora incentiva essa ação.
+-   **Environment Variable Control**: A performance e o custo do sistema são criticamente dependentes da variável  no arquivo , que força o uso do modelo local em vez da API da Hugging Face.
 
 **key DB schema**
--   O armazenamento principal continua sendo o sistema de arquivos. O arquivo  agora contém um banco de dados interno em formato de dicionários Python para os tipos de alimentos e suas propriedades.
+-   **users (collection)**:
+    -   :  ('free', 'premium_trial', 'premium_paid')
+    -   :  (Data de expiração do acesso Premium)
+
+**changes in tech stack**
+-   A biblioteca  foi instalada no backend para gerar os QR codes.
 
 **All files of reference**
--    (Script da reconstrução do índice que falha)
--    (Serviço de atualização local, sem custos)
--    (Componente do painel de administração)
--    (Documento para patente)
--    (Arquivo de log para a reconstrução do índice)
+-   : Contém a lógica principal da API, incluindo o fluxo de reconhecimento de imagem, endpoints de usuário Premium e criação de pratos.
+-   : Controla qual modelo de embedding é usado (local vs. API).
+-   : O componente principal do frontend, que contém a UI da câmera, a exibição de resultados e agora o popup de instalação do PWA.
+-   : Arquivo de configuração crítico que define se o modelo local deve ser usado.
+-   : Página para visualização e download dos QR codes gerados.
 
 **Areas that need refactoring**:
--   As grandes estruturas de dados (dicionários) em  poderiam ser migradas para arquivos JSON externos para facilitar a manutenção.
--   O componente  continua crescendo em complexidade e seria um bom candidato para ser dividido em componentes menores.
+-    permanece um arquivo muito grande e complexo, sendo o principal candidato à refatoração em componentes menores (ex: , , ).
+-    também cresceu bastante e poderia ser dividido em routers separados por funcionalidade (ex: , , ).
 
 **key api endpoints**
--    (Executa a consolidação, sem custo)
--    (Executa a atualização de dados local, sem custo)
--    (Exclui um prato)
+-   : Endpoint principal de reconhecimento de imagem.
+-   : Endpoint que força o uso do Gemini (chamado sob demanda pelo usuário).
+-   : Inicia a reconstrução do índice de embeddings em background.
+-   : Registra um novo usuário e concede 7 dias de trial Premium.
+-   : Endpoint para o admin conceder acesso Premium a um usuário.
+-   : Página estática para baixar os QR codes do app.
 
 **Critical Info for New Agent**
--   **NÃO USE CRÉDITOS DE IA:** O usuário está sem créditos e muito sensível a qualquer custo adicional. Priorize o uso das funcionalidades locais já criadas. Ações que usam IA (identificação por câmera, botões com 🤖) devem ser evitadas.
--   **PRIORIDADE MÁXIMA É CORRIGIR A RECONSTRUÇÃO DO ÍNDICE:** Não basta reiniciar o processo. É preciso diagnosticar *por que* ele falha repetidamente. A principal suspeita é que operações de exclusão/consolidação pelo usuário estão interferindo no script. Comunique claramente ao usuário para não realizar essas ações durante a reconstrução.
--   **RESOLVA O PROBLEMA DE CACHE DO SEGUNDO USUÁRIO:** Um membro da equipe do usuário está bloqueado e não consegue trabalhar. Investigue o cache do servidor/CDN.
--   **A CONFIANÇA DO USUÁRIO ESTÁ BAIXA:** O agente anterior se desculpou por falhas e mal-entendidos. Seja extremamente cuidadoso, transparente e foque em entregar soluções estáveis para os problemas recorrentes.
+-   **CUSTO É CRÍTICO**: O usuário é extremamente sensível ao consumo de créditos. A arquitetura atual de CLIP local primeiro, Gemini como fallback foi projetada para isso. Não altere essa lógica sem discutir com o usuário.
+-   **PERFORMANCE DEPENDE DO MODELO LOCAL**: A velocidade de ~200ms é alcançada porque o modelo CLIP está carregado. Isso só foi possível após liberar espaço em disco e setar  no . Verifique se o modelo está carregado nos logs do backend no início do trabalho.
+-   **RECONSTRUÇÃO DO ÍNDICE ESTÁ PAUSADA**: A principal tarefa para melhorar a precisão (reconstrução do índice) está em espera por ordem do usuário. Não inicie sem permissão.
+-   **PWA, NÃO APP NATIVO**: O aplicativo é um Progressive Web App. A instalação se refere a Adicionar à Tela Inicial. Não há loja de aplicativos.
 
 **documents and test reports created in this job**
+-   🔄 Restaurando SoulNutri para versão v1 funcional...
+✅ Índice de embeddings restaurado (492 pratos)
+✅ Backend restaurado
+✅ Frontend restaurado
+backend: stopped
+frontend: stopped
+backend: started
+frontend: started
+✅ Serviços reiniciados
+
+🎉 Restauração completa! Sistema voltou para estado funcional.
+   - 492 pratos indexados
+   - 85.9% saúde dos dados
+   - Reconhecimento visual funcionando
+-   
+-   
 -   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário**: Pergunta sobre o status da regeneração, relata que um funcionário em outro PC vê uma UI antiga (19% de saúde em vez de 85%), pede um documento técnico para patente e questiona por que seus créditos zeraram.
-2.  **Usuário**: Reclama que a regeneração falhou pela 3ª vez e que a limpeza de cache não resolveu o problema do outro funcionário. Insiste que o agente continue trabalhando no modo sem créditos.
-3.  **Usuário**: Informa que a lixeira deve estar visível dentro do modal de edição do prato, não apenas na lista. Pergunta sobre o progresso da regeneração.
-4.  **Usuário**: Aponta que o sistema ainda classifica queijo vegano como tendo lactose, apesar da correção anterior.
-5.  **Usuário**: Informa que o botão Atualizar Todos está sobrescrevendo suas correções manuais.
-6.  **Usuário**: Reclama que após editar um prato na auditoria, a tela volta para a aba Pratos em vez de permanecer na Auditoria.
-7.  **Usuário**: Pergunta se o agente vai preencher as informações nutricionais dos pratos que estão vazias.
-8.  **Usuário**: Informa que macarrão de arroz (rolinho vietnamita) não tem glúten. Pergunta sobre o andamento da regeneração.
-9.  **Usuário**: Aguarda a conclusão da reconstrução do índice e a correção do problema de cache para o outro funcionário.
-10. **Usuário**: Aprovou a adição dos novos tipos de pratos ao banco local e pediu que a auditoria mostrasse todos os pratos com problemas.
+1.  **Usuário**: Pede para habilitar a IA na tela com um botão, pois o reconhecimento local está muito ruim.
+2.  **Usuário**: Confirma que fará um novo deploy para que os funcionários usem o novo recurso de IA sob demanda.
+3.  **Usuário**: Relata que o reconhecimento continua ruim mesmo com a IA, com três erros em três pratos.
+4.  **Usuário**: Pergunta se o índice local pode ser atualizado enquanto o Gemini é usado.
+5.  **Usuário**: Fornece logs de erro do deploy.
+6.  **Usuário**: Informa que o sistema de três níveis de confiança se perdeu e precisa ser restaurado. Também menciona IAs de baixo custo usadas no passado, como a tabela TACO Brasil.
+7.  **Usuário**: Pergunta sobre a escalabilidade do CLIP e se vai perder imagens ao liberar espaço em disco. Libera o agente para iniciar a reconstrução do índice.
+8.  **Usuário**: Pede um QR code para o app.
+9.  **Usuário**: Sugere que um popup de instalação seria uma boa ideia.
+10. **Usuário**: Expressa grande preocupação com os custos de IA e a escalabilidade do app para centenas/milhares de usuários.
 
 **Project Health Check:**
--   **Broken**: A funcionalidade principal de reconhecimento de pratos da IA está inoperante devido ao índice corrompido. O processo para consertar isso também está quebrado.
+-   **Broken**: Nada está completamente quebrado.
 -   **Mocked**: N/A
+-   **Degraded**: A funcionalidade de reconhecimento local está degradada devido ao índice de embeddings desatualizado, o que causa imprecisões e maior dependência (e custo) do fallback com Gemini.
 
 **3rd Party Integrations**
--   **Gemini Vision**: Usado para certas funcionalidades de IA. **O USO DEVE SER EVITADO** devido à falta de créditos do usuário.
--   **Hugging Face CLIP**: Usado localmente pelo script  para gerar embeddings de imagem. **Não consome créditos Emergent.**
+-   **Gemini Vision (via LiteLLM)**: Usado como um fallback controlado para reconhecimento de imagem quando o modelo local tem baixa confiança. Requer chave de usuário ou Emergent LLM Key.
+-   **Hugging Face CLIP**: Usado para gerar embeddings de imagem. Atualmente configurado para rodar um modelo **localmente no servidor**, sem custos de API.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: []
--   **Known regressions**: A reconstrução do índice falha de forma recorrente. A identificação visual está completamente quebrada.
+-   **Known regressions**: O sistema de score de confiança em três níveis foi perdido e precisa ser reimplementado.
 
 **Credentials to test flow:**
 -   O painel de administração em  não requer autenticação.
+-   O login Premium pode ser testado com qualquer nome/PIN após o registro, pois o trial de 7 dias é automático.
 
 **What agent forgot to execute**
--   O agente falhou em diagnosticar a causa raiz da falha na reconstrução do índice, limitando-se a reiniciar o processo. Uma análise mais profunda dos logs ou do próprio script era necessária.
--   O agente não resolveu completamente o problema de cache do segundo usuário, parando na sugestão de limpar o cache, que não funcionou.</analysis>
+-   O agente estava prestes a implementar a restauração do sistema de score de confiança quando a sessão terminou. Nenhuma tarefa solicitada foi esquecida.</analysis>

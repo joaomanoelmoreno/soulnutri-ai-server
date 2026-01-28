@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://soulnutri-1.preview.emergentagent.com
+**URL**: https://soulnutri-2.preview.emergentagent.com
 
 ---
 

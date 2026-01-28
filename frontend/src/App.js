@@ -202,7 +202,6 @@ function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [showInstallPopup, setShowInstallPopup] = useState(false); // Popup de instalação PWA
   // Welcome popup com seleção de idioma
   const [showWelcome, setShowWelcome] = useState(() => {
     return !localStorage.getItem('soulnutri_welcomed');
@@ -234,13 +233,6 @@ function App() {
     const handleBeforeInstall = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      // Mostrar popup após 3 segundos se não estiver instalado
-      const alreadyDismissed = localStorage.getItem('soulnutri_install_dismissed');
-      if (!alreadyDismissed) {
-        setTimeout(() => {
-          setShowInstallPopup(true);
-        }, 3000);
-      }
     };
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
     
@@ -1305,18 +1297,10 @@ function App() {
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
         setIsInstalled(true);
-        localStorage.setItem('soulnutri_install_dismissed', 'installed');
       }
       setDeferredPrompt(null);
     }
     setShowMenu(false);
-    setShowInstallPopup(false);
-  };
-
-  // Fechar popup de instalação (lembrar mais tarde)
-  const dismissInstallPopup = () => {
-    setShowInstallPopup(false);
-    localStorage.setItem('soulnutri_install_dismissed', Date.now().toString());
   };
 
   return (
@@ -2211,30 +2195,6 @@ function App() {
       {/* Tutorial do Scanner Contínuo */}
       {showScannerTutorial && (
         <ScannerTutorial onClose={() => setShowScannerTutorial(false)} />
-      )}
-
-      {/* POPUP DE INSTALAÇÃO PWA */}
-      {showInstallPopup && deferredPrompt && (
-        <div className="install-popup-overlay">
-          <div className="install-popup">
-            <div className="install-popup-icon">📲</div>
-            <h3>Instalar SoulNutri</h3>
-            <p>Adicione o app à sua tela inicial para acesso rápido!</p>
-            <div className="install-popup-benefits">
-              <span>✓ Acesso com 1 toque</span>
-              <span>✓ Funciona offline</span>
-              <span>✓ Sem ocupar espaço</span>
-            </div>
-            <div className="install-popup-actions">
-              <button className="install-popup-btn primary" onClick={handleInstallApp}>
-                Instalar agora
-              </button>
-              <button className="install-popup-btn secondary" onClick={dismissInstallPopup}>
-                Agora não
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
       {/* Rodapé */}
