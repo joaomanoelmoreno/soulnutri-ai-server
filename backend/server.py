@@ -1712,6 +1712,80 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
         return {"ok": False, "error": str(e)}
 
 
+class PerfilUsuario(BaseModel):
+    peso: Optional[float] = None
+    altura: Optional[float] = None
+    idade: Optional[int] = None
+    sexo: Optional[str] = None
+    nivel_atividade: Optional[str] = None
+    restricoes: List[str] = []
+
+
+class ProfileRequest(BaseModel):
+    nome: str
+    pin: str
+    perfil: PerfilUsuario
+
+
+@api_router.post("/premium/profile")
+async def save_premium_profile(request: ProfileRequest):
+    """
+    Salva o perfil do usuário Premium para personalização das dicas.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timezone
+        
+        pin_hash = hash_pin(request.pin)
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{request.nome}$", "$options": "i"}}
+        )
+        
+        if not user:
+            return {"ok": False, "error": "Usuário não encontrado"}
+        
+        # Converter para dict e adicionar timestamp
+        perfil_dict = request.perfil.dict()
+        perfil_dict['atualizado_em'] = datetime.now(timezone.utc)
+        
+        # Calcular TMB (Taxa Metabólica Basal) se tiver dados suficientes
+        if perfil_dict.get('peso') and perfil_dict.get('altura') and perfil_dict.get('idade') and perfil_dict.get('sexo'):
+            peso = perfil_dict['peso']
+            altura = perfil_dict['altura']
+            idade = perfil_dict['idade']
+            sexo = perfil_dict['sexo']
+            
+            if sexo == 'masculino':
+                tmb = 88.36 + (13.4 * peso) + (4.8 * altura) - (5.7 * idade)
+            else:
+                tmb = 447.6 + (9.2 * peso) + (3.1 * altura) - (4.3 * idade)
+            
+            # Ajustar por nível de atividade
+            fatores = {'sedentario': 1.2, 'leve': 1.375, 'moderado': 1.55, 'intenso': 1.725}
+            fator = fatores.get(perfil_dict.get('nivel_atividade', 'sedentario'), 1.2)
+            
+            perfil_dict['tmb'] = round(tmb, 0)
+            perfil_dict['calorias_diarias'] = round(tmb * fator, 0)
+        
+        # Atualizar perfil no banco
+        await db.users.update_one(
+            {"_id": user["_id"]},
+            {"$set": {"perfil": perfil_dict}}
+        )
+        
+        logger.info(f"[PREMIUM] Perfil atualizado: {request.nome}")
+        
+        return {
+            "ok": True,
+            "message": "Perfil salvo com sucesso",
+            "perfil": perfil_dict
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao salvar perfil: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.post("/premium/log-meal")
 async def log_meal(
     pin: str = Form(...),
