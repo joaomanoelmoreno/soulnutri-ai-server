@@ -1,0 +1,47 @@
+{
+  "nome": "Arroz Branco Teste",
+  "slug": "arroz_branco_teste",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
+  "ingredientes": [
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
+  ],
+  "beneficios": [
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
+  ],
+  "riscos": [
+    "Alto índice glicêmico"
+  ],
+  "tecnica": "Cozimento em água",
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ],
+  "origem": "user_created_local"
+}
