@@ -362,41 +362,74 @@ async def identify_image(
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
         # ═══════════════════════════════════════════════════════════════════════
-        # OTIMIZAÇÃO: Threshold 70% para pratos cadastrados (ECONOMIZAR CRÉDITOS!)
-        # Para pratos do Cibi Sana, 70% já é confiança suficiente
-        # SEM CHAMAR GEMINI - PRIORIDADE É NÃO GASTAR CRÉDITOS
+        # CASCATA DE IDENTIFICAÇÃO - IA REATIVADA
         # ═══════════════════════════════════════════════════════════════════════
-        THRESHOLD_LOCAL = 0.70  # 70% para resposta rápida em pratos conhecidos
-        THRESHOLD_MEDIO = 0.50  # 50% ainda usa local com confiança média
+        THRESHOLD_LOCAL = 0.70  # 70% para usar resultado local direto
         
         # Flag para indicar se IA poderia melhorar o resultado
         ia_disponivel = False
         
-        # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO E SEM CRÉDITOS!)
+        # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO!)
         if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: Gemini Vision - STAND-BY (só chama se usuário solicitar)
+        # NÍVEL 2: Gemini Vision - REATIVADO para scores < 70%
         # ─────────────────────────────────────────────────────────────────────
-        elif nivel1_score >= THRESHOLD_MEDIO:
-            # Score médio - usa local mas indica que IA poderia ajudar
-            decision['source'] = 'local_index'
-            decision['cascade_level'] = 1
-            decision['confidence'] = 'média'
-            ia_disponivel = True  # Marca que IA poderia melhorar
-            logger.info(f"[CASCATA] Resultado local médio ({nivel1_score:.0%}) - IA disponível se necessário")
-        
-        else:
-            # Score baixo - usa local mas sugere correção manual
-            decision['source'] = 'local_index'
-            decision['cascade_level'] = 1
-            decision['confidence'] = 'baixa'
-            decision['message'] = 'Prato não identificado com certeza. Use o botão de correção.'
-            ia_disponivel = True  # Marca que IA poderia ajudar
-            logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção")
+        elif nivel1_score < THRESHOLD_LOCAL:
+            try:
+                from services.generic_ai import identify_unknown_dish
+                
+                logger.info(f"[NÍVEL 2] Consultando Gemini Vision (score local: {nivel1_score:.0%})...")
+                generic_result = await identify_unknown_dish(content)
+                
+                if generic_result.get('ok') and generic_result.get('nome'):
+                    decision = {
+                        'identified': True,
+                        'dish': 'gemini_' + generic_result.get('nome', '').lower().replace(' ', '_'),
+                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
+                        'confidence': generic_result.get('confianca', 'média'),
+                        'score': generic_result.get('score', 0.7),
+                        'message': f"Identificado: {generic_result.get('nome')}",
+                        'category': generic_result.get('categoria', 'outros'),
+                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
+                        'descricao': generic_result.get('descricao', ''),
+                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
+                        'tecnica': generic_result.get('tecnica_preparo', ''),
+                        'beneficios': generic_result.get('beneficios', []),
+                        'riscos': generic_result.get('riscos', []),
+                        'alternatives': generic_result.get('alternativas', []),
+                        'nutrition': {
+                            'calorias': generic_result.get('calorias', '~200 kcal'),
+                            'proteinas': '~10g',
+                            'carboidratos': '~25g',
+                            'gorduras': '~8g'
+                        },
+                        'aviso_cibi_sana': None,
+                        'source': 'generic_ai',
+                        'cascade_level': 2,
+                        'ia_disponivel': False,
+                        # Dados científicos da IA genérica
+                        'beneficio_principal': generic_result.get('beneficio_principal'),
+                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
+                        'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
+                        'alerta_saude': generic_result.get('alerta_saude')
+                    }
+                    logger.info(f"[CASCATA] ✅ Gemini identificou: {generic_result.get('nome')}")
+                else:
+                    # Gemini falhou - usa resultado local
+                    decision['source'] = 'local_index'
+                    decision['cascade_level'] = 1
+                    decision['confidence'] = 'baixa'
+                    ia_disponivel = True
+                    logger.info(f"[CASCATA] Gemini falhou, usando local ({nivel1_score:.0%})")
+            except Exception as e:
+                logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
+                decision['source'] = 'local_index'
+                decision['confidence'] = 'baixa'
+                ia_disponivel = True
         
         # Adicionar flag de IA disponível na decisão
         decision['ia_disponivel'] = ia_disponivel
