@@ -180,6 +180,8 @@ function App() {
   const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
   const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
   const [viewMode, setViewMode] = useState('buffet'); // 'buffet' = vista rápida, 'mesa' = vista completa
+  // IA sob demanda
+  const [loadingIA, setLoadingIA] = useState(false); // Carregando IA
   // Galeria de fotos capturadas
   const [photoGallery, setPhotoGallery] = useState(() => {
     const saved = localStorage.getItem('soulnutri_gallery');
