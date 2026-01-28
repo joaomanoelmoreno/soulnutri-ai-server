@@ -1128,8 +1128,12 @@ def analyze_result(results: List[Dict]) -> Dict:
     category_emoji = get_category_emoji(category)
     dish_info = get_dish_info(dish)
     
-    nutrition_type = get_nutrition_type(dish)
-    nutrition = DISH_NUTRITION.get(nutrition_type, DISH_NUTRITION['default'])
+    # Nutrição: priorizar dados do dish_info.json, fallback para tipo genérico
+    if dish_info.get('nutricao') and dish_info['nutricao'].get('calorias'):
+        nutrition = dish_info['nutricao']
+    else:
+        nutrition_type = get_nutrition_type(dish)
+        nutrition = DISH_NUTRITION.get(nutrition_type, DISH_NUTRITION['default'])
     
     # Lógica de riscos - não duplicar aviso de glúten
     riscos = dish_info.get('riscos', [])
