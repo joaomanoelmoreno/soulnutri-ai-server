@@ -2213,6 +2213,30 @@ function App() {
         <ScannerTutorial onClose={() => setShowScannerTutorial(false)} />
       )}
 
+      {/* POPUP DE INSTALAÇÃO PWA */}
+      {showInstallPopup && deferredPrompt && (
+        <div className="install-popup-overlay">
+          <div className="install-popup">
+            <div className="install-popup-icon">📲</div>
+            <h3>Instalar SoulNutri</h3>
+            <p>Adicione o app à sua tela inicial para acesso rápido!</p>
+            <div className="install-popup-benefits">
+              <span>✓ Acesso com 1 toque</span>
+              <span>✓ Funciona offline</span>
+              <span>✓ Sem ocupar espaço</span>
+            </div>
+            <div className="install-popup-actions">
+              <button className="install-popup-btn primary" onClick={handleInstallApp}>
+                Instalar agora
+              </button>
+              <button className="install-popup-btn secondary" onClick={dismissInstallPopup}>
+                Agora não
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Rodapé */}
       <footer className="footer">
         <small>Powered by Emergent</small>
