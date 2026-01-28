@@ -604,6 +604,80 @@ async def identify_image(
             search_time_ms=round(elapsed_ms, 2)
         )
 
+
+@api_router.post("/ai/identify-with-ai")
+async def identify_with_ai(
+    file: UploadFile = File(...),
+    pin: str = Form(""),
+    nome: str = Form("")
+):
+    """
+    Identificação usando Gemini Vision - CONSOME CRÉDITOS!
+    Usar apenas quando o usuário explicitamente solicitar.
+    """
+    try:
+        content = await file.read()
+        
+        # Restaurar temporariamente o generic_ai original
+        import importlib
+        import sys
+        
+        # Carregar o backup com IA
+        backup_path = "/app/backend/services/generic_ai.py.BACKUP_COM_IA"
+        
+        import os
+        if not os.path.exists(backup_path):
+            return {
+                "ok": False,
+                "error": "Serviço de IA não disponível no momento",
+                "message": "Use o reconhecimento local ou corrija manualmente"
+            }
+        
+        # Ler e executar o código do backup
+        with open(backup_path, 'r') as f:
+            backup_code = f.read()
+        
+        # Criar módulo temporário
+        import types
+        temp_module = types.ModuleType("generic_ai_temp")
+        exec(compile(backup_code, backup_path, 'exec'), temp_module.__dict__)
+        
+        # Chamar a função de identificação
+        result = await temp_module.identify_unknown_dish(content)
+        
+        if result.get('ok'):
+            logger.info(f"[IA SOLICITADA] Gemini identificou: {result.get('nome')} (créditos usados)")
+            return {
+                "ok": True,
+                "identified": True,
+                "dish_display": result.get('nome'),
+                "category": result.get('categoria'),
+                "category_emoji": result.get('category_emoji', '🍽️'),
+                "confidence": result.get('confianca', 'média'),
+                "score": result.get('score', 0.7),
+                "ingredientes": result.get('ingredientes_provaveis', []),
+                "beneficios": result.get('beneficios', []),
+                "descricao": result.get('descricao', ''),
+                "source": "gemini_ai",
+                "creditos_usados": True,
+                "message": "Identificado com IA (créditos consumidos)"
+            }
+        else:
+            return {
+                "ok": False,
+                "error": result.get('error', 'Erro na identificação'),
+                "creditos_usados": False
+            }
+            
+    except Exception as e:
+        logger.error(f"[IA SOLICITADA] Erro: {e}")
+        return {
+            "ok": False,
+            "error": str(e),
+            "creditos_usados": False
+        }
+
+
 @api_router.get("/ai/dishes")
 async def list_dishes():
     """Lista todos os pratos no índice"""
