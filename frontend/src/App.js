@@ -1676,6 +1676,27 @@ function App() {
           {/* Nome do Prato */}
           <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
           
+          {/* NÍVEL DE CONFIANÇA - Sistema de 3 níveis */}
+          {r.confidence_level && (
+            <div 
+              className={`confidence-level-badge ${r.confidence}`}
+              style={{ 
+                background: confData.bg, 
+                color: confData.color,
+                border: `1px solid ${confData.color}`,
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontSize: '14px',
+                fontWeight: '600',
+                margin: '8px 0',
+                textAlign: 'center'
+              }}
+              data-testid="confidence-level-badge"
+            >
+              {r.confidence_level}
+            </div>
+          )}
+          
           {/* CATEGORIA */}
           <div 
             className="category-badge" 
