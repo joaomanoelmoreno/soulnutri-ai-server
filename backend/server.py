@@ -989,6 +989,165 @@ async def create_new_dish(
         )
 
 
+@api_router.post("/ai/create-dish-local")
+async def create_dish_local(
+    file: UploadFile = File(...),
+    dish_name: str = Form("")
+):
+    """
+    Cria/corrige um prato usando APENAS dados LOCAIS, SEM chamar IA, SEM gastar créditos.
+    Usa o local_dish_updater para preencher os dados baseado no nome.
+    """
+    try:
+        import uuid
+        import json
+        from datetime import datetime
+        from pathlib import Path
+        from difflib import SequenceMatcher
+        from services.local_dish_updater import atualizar_prato_local, encontrar_tipo_prato, PRATOS_COMPLETOS
+        from services.local_dish_updater import detectar_categoria_por_nome, detectar_alergenos_por_nome
+        
+        if not dish_name.strip():
+            return {"ok": False, "error": "Nome do prato é obrigatório"}
+        
+        content = await file.read()
+        
+        # Gerar slug do nome fornecido
+        slug = dish_name.lower().strip()
+        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
+        slug = slug.replace(' ', '_')
+        
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
+        dataset_dir = Path("/app/datasets/organized")
+        existing_match = None
+        
+        for dish_dir in dataset_dir.iterdir():
+            if not dish_dir.is_dir():
+                continue
+            info_path = dish_dir / "dish_info.json"
+            if info_path.exists():
+                try:
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        info = json.load(f)
+                        existing_name = info.get('nome', '').lower()
+                        # Verificar similaridade > 85%
+                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+                        if similarity > 0.85 or dish_dir.name == slug:
+                            existing_match = dish_dir.name
+                            logger.info(f"[CREATE-LOCAL] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                            break
+                except:
+                    pass
+        
+        # Se encontrou match, adiciona foto ao prato existente E atualiza com dados locais
+        if existing_match:
+            target_dir = dataset_dir / existing_match
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            unique_id = str(uuid.uuid4())[:8]
+            filename = f"{existing_match}_correct_{timestamp}_{unique_id}.jpg"
+            file_path = target_dir / filename
+            
+            with open(file_path, "wb") as f:
+                f.write(content)
+            
+            # Usar dados LOCAIS para atualizar informações
+            info_path = target_dir / "dish_info.json"
+            current_info = {}
+            if info_path.exists():
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    current_info = json.load(f)
+            
+            # Atualizar nome se diferente
+            if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
+                current_info['nome'] = dish_name.strip()
+                logger.info(f"[CREATE-LOCAL] Nome corrigido para: {dish_name.strip()}")
+            
+            # Usar local_dish_updater para preencher dados faltantes
+            result = atualizar_prato_local(existing_match, novo_nome=dish_name.strip())
+            
+            return {
+                "ok": True,
+                "message": f"✅ Correção salva! '{dish_name}' atualizado SEM usar créditos.",
+                "slug": existing_match,
+                "action": "updated_existing_local",
+                "credits_used": 0
+            }
+        
+        # CRIAR NOVO PRATO com dados LOCAIS
+        target_dir = dataset_dir / slug
+        target_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Salvar imagem
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{slug}_{timestamp}_{unique_id}.jpg"
+        file_path = target_dir / filename
+        
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        # Gerar dados usando regras LOCAIS
+        tipo = encontrar_tipo_prato(dish_name)
+        categoria = detectar_categoria_por_nome(dish_name)
+        alergenos = detectar_alergenos_por_nome(dish_name)
+        
+        # Pegar template se existir
+        dados_template = PRATOS_COMPLETOS.get(tipo, {})
+        
+        # Emoji baseado na categoria
+        emoji_map = {"vegano": "🌱", "vegetariano": "🥚", "proteína animal": "🍖"}
+        
+        dish_info = {
+            "nome": dish_name.strip(),
+            "slug": slug,
+            "categoria": categoria,
+            "category_emoji": emoji_map.get(categoria, "🍽️"),
+            "descricao": dados_template.get('descricao', f"{dish_name} - prato do Cibi Sana"),
+            "ingredientes": dados_template.get('ingredientes', []),
+            "beneficios": dados_template.get('beneficios', []),
+            "riscos": dados_template.get('riscos', []),
+            "tecnica": dados_template.get('tecnica', ''),
+            "nutricao": dados_template.get('nutricao', {"calorias": "~150 kcal", "proteinas": "~8g", "carboidratos": "~20g", "gorduras": "~5g"}),
+            "contem_gluten": alergenos.get('contem_gluten', False),
+            "contem_lactose": alergenos.get('contem_lactose', False),
+            "contem_ovo": alergenos.get('contem_ovo', False),
+            "contem_castanhas": alergenos.get('contem_castanhas', False),
+            "contem_frutos_mar": alergenos.get('contem_frutos_mar', False),
+            "contem_soja": alergenos.get('contem_soja', False),
+            "indice_glicemico": dados_template.get('indice_glicemico', 'moderado'),
+            "tempo_digestao": dados_template.get('tempo_digestao', '2-3 horas'),
+            "melhor_horario": dados_template.get('melhor_horario', 'Almoço'),
+            "combina_com": dados_template.get('combina_com', []),
+            "evitar_com": dados_template.get('evitar_com', []),
+            "origem": "user_created_local"
+        }
+        
+        # Salvar dish_info.json
+        dish_info_path = target_dir / "dish_info.json"
+        with open(dish_info_path, "w", encoding="utf-8") as f:
+            json.dump(dish_info, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"[CREATE-LOCAL] Novo prato criado SEM IA: {dish_name} -> {slug}")
+        
+        return {
+            "ok": True,
+            "message": f"✅ Prato '{dish_name}' criado com sucesso SEM usar créditos!",
+            "dish_slug": slug,
+            "dish_name": dish_name,
+            "dish_info": dish_info,
+            "file_saved": filename,
+            "credits_used": 0,
+            "note": "Dados gerados localmente. Execute Atualizar na auditoria para completar."
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar prato local: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
 @api_router.get("/ai/ingredient-research/{ingredient}")
 async def get_ingredient_research(ingredient: str):
     """
