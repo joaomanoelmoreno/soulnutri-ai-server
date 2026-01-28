@@ -240,6 +240,97 @@ async def reindex(max_per_dish: int = 10):
         )
 
 
+@api_router.post("/ai/reindex-background")
+async def reindex_background(max_per_dish: int = 10):
+    """
+    Inicia reconstrução do índice em BACKGROUND.
+    Não bloqueia o servidor - retorna imediatamente.
+    
+    Monitore o progresso em: /tmp/rebuild_index.log
+    Status final em: /tmp/rebuild_index_status.json
+    """
+    import subprocess
+    
+    try:
+        # Verificar se já está rodando
+        log_file = "/tmp/rebuild_index.log"
+        status_file = "/tmp/rebuild_index_status.json"
+        
+        # Limpar arquivos anteriores
+        if os.path.exists(log_file):
+            os.remove(log_file)
+        if os.path.exists(status_file):
+            os.remove(status_file)
+        
+        # Iniciar processo em background
+        script_path = "/app/backend/rebuild_index.py"
+        cmd = f"cd /app/backend && /root/.venv/bin/python {script_path} {max_per_dish} &"
+        
+        subprocess.Popen(cmd, shell=True)
+        
+        logger.info(f"[REINDEX-BG] Iniciado em background com max_per_dish={max_per_dish}")
+        
+        return {
+            "ok": True,
+            "message": "Reconstrução iniciada em background",
+            "log_file": log_file,
+            "status_file": status_file,
+            "max_per_dish": max_per_dish,
+            "nota": "Monitore o progresso em /tmp/rebuild_index.log"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao iniciar reindexação em background: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.get("/ai/reindex-status")
+async def reindex_status():
+    """Verifica o status da reconstrução do índice em background"""
+    import json
+    
+    log_file = "/tmp/rebuild_index.log"
+    status_file = "/tmp/rebuild_index_status.json"
+    
+    result = {
+        "in_progress": False,
+        "completed": False,
+        "log_file": log_file,
+        "status_file": status_file
+    }
+    
+    # Verificar se existe arquivo de status (conclusão)
+    if os.path.exists(status_file):
+        try:
+            with open(status_file, 'r') as f:
+                status = json.load(f)
+            result["completed"] = True
+            result["status"] = status
+        except:
+            pass
+    
+    # Verificar log para progresso
+    if os.path.exists(log_file):
+        try:
+            with open(log_file, 'r') as f:
+                log_content = f.read()
+            
+            # Verificar se está em progresso
+            if "INICIANDO RECONSTRUÇÃO" in log_content and "CONCLUÍDA" not in log_content:
+                result["in_progress"] = True
+            
+            # Extrair últimas linhas
+            lines = log_content.strip().split('\n')
+            result["last_lines"] = lines[-10:] if len(lines) > 10 else lines
+        except:
+            pass
+    
+    return result
+
+
 @api_router.post("/ai/add-to-index")
 async def add_to_index(
     file: UploadFile = File(...),
