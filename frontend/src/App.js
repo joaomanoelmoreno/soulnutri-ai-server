@@ -1706,8 +1706,8 @@ function App() {
             {r.category_emoji} {r.category?.toUpperCase()}
           </div>
 
-          {/* BOTÃO IA - Aparece quando confiança é baixa/média e IA está disponível */}
-          {(r.confidence === 'baixa' || r.confidence === 'média' || r.ia_disponivel) && r.source !== 'gemini_ai' && (
+          {/* BOTÃO IA - Aparece APENAS quando confiança é BAIXA */}
+          {r.confidence === 'baixa' && r.source !== 'gemini_ai' && (
             <div className="ia-disponivel-box" data-testid="ia-disponivel-box">
               <p className="ia-hint">🤔 Não tenho certeza sobre este prato</p>
               <button 
