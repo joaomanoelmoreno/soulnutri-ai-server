@@ -1061,7 +1061,7 @@ function App() {
     }
   };
 
-  // CRIAR PRATO NOVO com IA
+  // CRIAR PRATO NOVO - VERSÃO LOCAL (SEM CRÉDITOS)
   const createNewDish = async () => {
     if (!lastImageBlob || !newDishName.trim()) return;
     
@@ -1073,8 +1073,10 @@ function App() {
     
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s para criação
-      const res = await fetch(`${API}/ai/create-dish`, { 
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      
+      // USAR ENDPOINT LOCAL (SEM CRÉDITOS)
+      const res = await fetch(`${API}/ai/create-dish-local`, { 
         method: "POST", 
         body: fd,
         signal: controller.signal
@@ -1087,10 +1089,16 @@ function App() {
       if (data.ok) {
         setFeedbackSent(true);
         setShowFeedback(false);
+        const nomeSalvo = newDishName;
         setNewDishName("");
+        
         // Atualizar lista de pratos
         loadDishes();
-        // Mostrar resultado do novo prato
+        
+        // Mostrar confirmação clara ao usuário
+        alert(`✅ ${data.message}\n\n📝 Prato: ${nomeSalvo}\n💰 Créditos usados: 0`);
+        
+        // Mostrar resultado do novo prato se tiver dados
         if (data.dish_info) {
           setResult({
             ok: true,
