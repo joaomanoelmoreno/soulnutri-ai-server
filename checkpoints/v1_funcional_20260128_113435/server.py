@@ -367,6 +367,10 @@ async def identify_image(
         # SEM CHAMAR GEMINI - PRIORIDADE É NÃO GASTAR CRÉDITOS
         # ═══════════════════════════════════════════════════════════════════════
         THRESHOLD_LOCAL = 0.70  # 70% para resposta rápida em pratos conhecidos
+        THRESHOLD_MEDIO = 0.50  # 50% ainda usa local com confiança média
+        
+        # Flag para indicar se IA poderia melhorar o resultado
+        ia_disponivel = False
         
         # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO E SEM CRÉDITOS!)
         if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
@@ -375,24 +379,27 @@ async def identify_image(
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: Gemini Vision (DESABILITADO PARA ECONOMIZAR CRÉDITOS)
-        # Só usar se o usuário explicitamente solicitar ou for prato desconhecido
+        # NÍVEL 2: Gemini Vision - STAND-BY (só chama se usuário solicitar)
         # ─────────────────────────────────────────────────────────────────────
-        elif nivel1_score < THRESHOLD_LOCAL:
-            # NÃO chamar Gemini automaticamente - economizar créditos
-            # Usar o melhor resultado local disponível
-            if nivel1_score >= 0.50:
-                decision['source'] = 'local_index'
-                decision['cascade_level'] = 1
-                decision['confidence'] = 'média'
-                logger.info(f"[CASCATA] Usando resultado local (score médio: {nivel1_score:.0%}) - SEM CRÉDITOS")
-            else:
-                # Apenas para score muito baixo, marcar como não identificado
-                decision['source'] = 'local_index'
-                decision['cascade_level'] = 1
-                decision['confidence'] = 'baixa'
-                decision['message'] = 'Prato não identificado com certeza. Use o botão de correção para informar o nome correto.'
-                logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção manual")
+        elif nivel1_score >= THRESHOLD_MEDIO:
+            # Score médio - usa local mas indica que IA poderia ajudar
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'média'
+            ia_disponivel = True  # Marca que IA poderia melhorar
+            logger.info(f"[CASCATA] Resultado local médio ({nivel1_score:.0%}) - IA disponível se necessário")
+        
+        else:
+            # Score baixo - usa local mas sugere correção manual
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'baixa'
+            decision['message'] = 'Prato não identificado com certeza. Use o botão de correção.'
+            ia_disponivel = True  # Marca que IA poderia ajudar
+            logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção")
+        
+        # Adicionar flag de IA disponível na decisão
+        decision['ia_disponivel'] = ia_disponivel
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
@@ -571,7 +578,9 @@ async def identify_image(
             "mito_verdade": mito_verdade if is_premium else None,
             # Dados Premium extras
             "premium": premium_data if is_premium else None,
-            "is_premium": is_premium
+            "is_premium": is_premium,
+            # Flag para indicar se IA poderia melhorar o resultado (sem gastar créditos automaticamente)
+            "ia_disponivel": decision.get('ia_disponivel', False)
         }
         
         # ═══════════════════════════════════════════════════════════════════════
@@ -594,6 +603,80 @@ async def identify_image(
             message=f"Erro ao processar imagem: {str(e)}",
             search_time_ms=round(elapsed_ms, 2)
         )
+
+
+@api_router.post("/ai/identify-with-ai")
+async def identify_with_ai(
+    file: UploadFile = File(...),
+    pin: str = Form(""),
+    nome: str = Form("")
+):
+    """
+    Identificação usando Gemini Vision - CONSOME CRÉDITOS!
+    Usar apenas quando o usuário explicitamente solicitar.
+    """
+    try:
+        content = await file.read()
+        
+        # Restaurar temporariamente o generic_ai original
+        import importlib
+        import sys
+        
+        # Carregar o backup com IA
+        backup_path = "/app/backend/services/generic_ai.py.BACKUP_COM_IA"
+        
+        import os
+        if not os.path.exists(backup_path):
+            return {
+                "ok": False,
+                "error": "Serviço de IA não disponível no momento",
+                "message": "Use o reconhecimento local ou corrija manualmente"
+            }
+        
+        # Ler e executar o código do backup
+        with open(backup_path, 'r') as f:
+            backup_code = f.read()
+        
+        # Criar módulo temporário
+        import types
+        temp_module = types.ModuleType("generic_ai_temp")
+        exec(compile(backup_code, backup_path, 'exec'), temp_module.__dict__)
+        
+        # Chamar a função de identificação
+        result = await temp_module.identify_unknown_dish(content)
+        
+        if result.get('ok'):
+            logger.info(f"[IA SOLICITADA] Gemini identificou: {result.get('nome')} (créditos usados)")
+            return {
+                "ok": True,
+                "identified": True,
+                "dish_display": result.get('nome'),
+                "category": result.get('categoria'),
+                "category_emoji": result.get('category_emoji', '🍽️'),
+                "confidence": result.get('confianca', 'média'),
+                "score": result.get('score', 0.7),
+                "ingredientes": result.get('ingredientes_provaveis', []),
+                "beneficios": result.get('beneficios', []),
+                "descricao": result.get('descricao', ''),
+                "source": "gemini_ai",
+                "creditos_usados": True,
+                "message": "Identificado com IA (créditos consumidos)"
+            }
+        else:
+            return {
+                "ok": False,
+                "error": result.get('error', 'Erro na identificação'),
+                "creditos_usados": False
+            }
+            
+    except Exception as e:
+        logger.error(f"[IA SOLICITADA] Erro: {e}")
+        return {
+            "ok": False,
+            "error": str(e),
+            "creditos_usados": False
+        }
+
 
 @api_router.get("/ai/dishes")
 async def list_dishes():
