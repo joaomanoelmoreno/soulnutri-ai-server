@@ -578,7 +578,9 @@ async def identify_image(
             "mito_verdade": mito_verdade if is_premium else None,
             # Dados Premium extras
             "premium": premium_data if is_premium else None,
-            "is_premium": is_premium
+            "is_premium": is_premium,
+            # Flag para indicar se IA poderia melhorar o resultado (sem gastar créditos automaticamente)
+            "ia_disponivel": decision.get('ia_disponivel', False)
         }
         
         # ═══════════════════════════════════════════════════════════════════════
