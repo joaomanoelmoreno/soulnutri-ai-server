@@ -2,7 +2,10 @@
   "nome": "Torradas De Alho",
   "slug": "torradas_de_alho",
   "categoria": "vegano",
-  "ingredientes": [],
+  "ingredientes": [
+    "Torradas",
+    "Azeite"
+  ],
   "descricao": "",
   "beneficios": [],
   "riscos": [],
@@ -14,9 +17,10 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }
