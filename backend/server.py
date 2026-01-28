@@ -2899,3 +2899,6 @@ async def premium_checkin(
     except Exception as e:
         logger.error(f"Erro no check-in: {e}")
         return {"ok": False, "error": str(e)}
+
+# Incluir router - DEVE SER NO FINAL para incluir todos os endpoints
+app.include_router(api_router)
