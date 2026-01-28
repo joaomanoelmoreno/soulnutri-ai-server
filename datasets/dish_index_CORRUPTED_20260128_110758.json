@@ -1,0 +1,6073 @@
+{
+  "dishes": [
+    "aboboraaocurry",
+    "aboboraaocurry",
+    "aboboraaocurry",
+    "aboboraaocurry",
+    "aboboraaocurry",
+    "abobrinha_grelhada_com_queijo_e_tomate",
+    "abobrinha_grelhada_copia",
+    "abobrinha_grelhada_copia",
+    "aipim_na_manteiga",
+    "alface_frisee",
+    "alface_frisee",
+    "alface_frisee",
+    "alhoporogratinadovegano",
+    "alhoporogratinadovegano",
+    "alhoporogratinadovegano",
+    "alhoporogratinadovegano",
+    "alhoporogratinadovegano",
+    "almdegasmolhosugo",
+    "almdegasmolhosugo",
+    "almdegasmolhosugo",
+    "almdegasmolhosugo",
+    "almdegasmolhosugo",
+    "almondegas_com_especiarias_indiana",
+    "almondegas_com_especiarias_indiana",
+    "arroz7graos",
+    "arroz7graos",
+    "arroz7graos",
+    "arroz7graos",
+    "arroz7graos",
+    "arroz7graoscomfrutassecas",
+    "arroz7graoscomfrutassecas",
+    "arroz7graoscomfrutassecas",
+    "arroz7graoscomfrutassecas",
+    "arroz7graoscomfrutassecas",
+    "arroz7graoscomlegumes",
+    "arroz7graoscomlegumes",
+    "arroz7graoscomlegumes",
+    "arroz7graoscomlegumes",
+    "arroz7graoscomlegumes",
+    "arroz_com_frutas_e_ervas",
+    "arroz_com_frutas_e_ervas",
+    "arroz_com_frutas_e_ervas",
+    "arroz_com_frutas_secas_e_ervas",
+    "arroz_com_frutas_secas_e_ervas",
+    "arroz_com_frutas_secas_e_ervas",
+    "arroz_com_frutas_secas_e_ervas",
+    "arroz_com_frutas_secas_e_ervas",
+    "arrozbranco",
+    "arrozbranco",
+    "arrozbranco",
+    "arrozbranco",
+    "arrozbranco",
+    "arrozcombrocoliseamendoas",
+    "arrozcombrocoliseamendoas",
+    "arrozcombrocoliseamendoas",
+    "arrozintegral",
+    "arrozintegral",
+    "arrozintegral",
+    "arrozintegral",
+    "arrozintegral",
+    "arrozintlegumes",
+    "arrozintlegumes",
+    "arrozintlegumes",
+    "arrozintlegumes",
+    "arrozintlegumes",
+    "atum_ao_funghi",
+    "atumaogergelim",
+    "atumaogergelim",
+    "atumaogergelim",
+    "atumaogergelim",
+    "atumaogergelim",
+    "azeitona_preta",
+    "bacalhau_a_bras",
+    "bacalhau_a_bras",
+    "bacalhaucomnatas",
+    "bacalhaucomnatas",
+    "bacalhaucomnatas",
+    "bacalhaucomnatas",
+    "bacalhaucomnatas",
+    "bacalhaugomesdesa",
+    "bacalhaugomesdesa",
+    "bacalhaugomesdesa",
+    "bacalhaugomesdesa",
+    "bacalhaugomesdesa",
+    "baiaodedois",
+    "baiaodedois",
+    "baiaodedois",
+    "baiaodedois",
+    "baiaodedois",
+    "batata_frita",
+    "batata_frita",
+    "batata_frita",
+    "batata_frita",
+    "batata_frita",
+    "batatacompaprica",
+    "batatacompaprica",
+    "batatacompaprica",
+    "batatacompaprica",
+    "batatacompaprica",
+    "batatadoce",
+    "batatadoce",
+    "batatadoce",
+    "batatadoce",
+    "batatadoce",
+    "batatas_ao_molho",
+    "beringela_a_parmegiana",
+    "beringelaaocurrykincam",
+    "beringelaaocurrykincam",
+    "beringelaaocurrykincam",
+    "beringelaaocurrykincam",
+    "beringelaaocurrykincam",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "beringelaaopuredelimaosiciliano",
+    "berinjela_à_parmegiana",
+    "berinjela_à_parmegiana",
+    "berinjela_à_parmegiana",
+    "berinjela_à_parmegiana",
+    "beterrabaaobalsamico",
+    "beterrabaaobalsamico",
+    "beterrabaaobalsamico",
+    "beterrabaaobalsamico",
+    "beterrabaaobalsamico",
+    "bolinho_de_arroz",
+    "bolinho_de_camarao",
+    "bolinho_de_mandioca",
+    "bolinho_de_queijo",
+    "bolinho_de_queijo",
+    "bolinho_de_queijo",
+    "bolinho_de_queijo",
+    "bolinho_de_queijo",
+    "bolinhodebacalhau",
+    "bolinhodebacalhau",
+    "bolinhodebacalhau",
+    "bolinhodebacalhau",
+    "bolinhodebacalhau",
+    "bolo_com_calda_de_frutas_vermelhas",
+    "bolo_de_frutas",
+    "bolo_de_frutas",
+    "bolo_de_frutas",
+    "bolo_de_leite_com_calda_de_frutas_vermelhas",
+    "bolochocolatevegano",
+    "bolochocolatevegano",
+    "bolochocolatevegano",
+    "bolochocolatevegano",
+    "bolochocolatevegano",
+    "bolodegengibre",
+    "bolodegengibre",
+    "bolodegengibre",
+    "bolodegengibre",
+    "bolodegengibre",
+    "brocoliscomparmesao",
+    "brocoliscomparmesao",
+    "brocoliscomparmesao",
+    "brocoliscomparmesao",
+    "brocoliscomparmesao",
+    "brocolisgratinado",
+    "brocolisgratinado",
+    "brocolisgratinado",
+    "brocolisgratinado",
+    "brocolisgratinado",
+    "brownie",
+    "brownie",
+    "brownie",
+    "brownie",
+    "brownie",
+    "brownie_com_morango",
+    "brownie_com_morango",
+    "brownie_com_morango",
+    "brownie_de_chocolate",
+    "brownie_de_chocolate",
+    "brownie_de_chocolate",
+    "brownie_vegano_com_morangos",
+    "bun_cha",
+    "canelone_4_queijo",
+    "canelone_4_queijo",
+    "canelone_4_queijo",
+    "canelone_4_queijo",
+    "canelonedeespinafre",
+    "canelonedeespinafre",
+    "canelonedeespinafre",
+    "canelonedeespinafre",
+    "canelonedeespinafre",
+    "caponata",
+    "caponata",
+    "caponata",
+    "caponata",
+    "caponata",
+    "caprese",
+    "caprese",
+    "caprese",
+    "caprese",
+    "carne_com_legumes",
+    "carne_com_legumes_e_pimenta",
+    "carne_com_tomate_cereja_e_ervas",
+    "carne_com_tomates_e_ervas",
+    "carne_de_panela_com_mandioca",
+    "carne_seca_com_abobora",
+    "carpacciodeabobrinhacomqueijovegano",
+    "carpacciodelaranja",
+    "carpacciodelaranja",
+    "carpacciodelaranja",
+    "carpacciodelaranja",
+    "carpacciodelaranja",
+    "carpacciodeperaruculaeamendoas",
+    "carpacciodeperaruculaeamendoas",
+    "carpacciodeperaruculaeamendoas",
+    "carpacciodeperaruculaeamendoas",
+    "carpacciodeperaruculaeamendoas",
+    "cebola",
+    "cebola",
+    "cebola",
+    "cebola",
+    "cebola",
+    "cebolascaramelizadas",
+    "cebolascaramelizadas",
+    "cebolascaramelizadas",
+    "cebolascaramelizadas",
+    "cebolascaramelizadas",
+    "cenouraaoiogurte",
+    "cenouraaoiogurte",
+    "cenouraaoiogurte",
+    "cenouraaoiogurte",
+    "cenouraaoiogurte",
+    "cenourapalito",
+    "cenourapalito",
+    "cenourapalito",
+    "cenourapalito",
+    "cenourapalito",
+    "cestinhadecamarao",
+    "cestinhadecamarao",
+    "cestinhadecamarao",
+    "cestinhadecamarao",
+    "cestinhadecamarao",
+    "ceviche",
+    "ceviche",
+    "ceviche",
+    "ceviche",
+    "ceviche",
+    "ceviche_de_banana_da_terra",
+    "ceviche_de_manga",
+    "cocada",
+    "cocada",
+    "cocada",
+    "cocada",
+    "cocada",
+    "cogumelo_recheado_de_com_legumes",
+    "cogumelo_recheado_de_com_legumes",
+    "cogumelos_recheados",
+    "cogumelos_recheados",
+    "cogumelos_recheados",
+    "cogumelos_recheados",
+    "cogumelos_recheados",
+    "cogumelos_recheados_e_lentilha",
+    "conchiglionirecheados",
+    "conchiglionirecheados",
+    "conchiglionirecheados",
+    "conchiglionirecheados",
+    "conchiglionirecheados",
+    "costela_bovina",
+    "costela_bovina",
+    "costela_bovina",
+    "costela_bovina",
+    "costela_bovina",
+    "costela_cibi_sana",
+    "costela_cibi_sana",
+    "costela_cibi_sana",
+    "costela_cibi_sana",
+    "costela_cibi_sana",
+    "costelinhacibisana",
+    "costelinhacibisana",
+    "costelinhacibisana",
+    "couveflorgratinada",
+    "couveflorgratinada",
+    "couveflorgratinada",
+    "couveflorgratinada",
+    "couveflorgratinada",
+    "coxinha_saudavel_de_frango",
+    "coxinha_saudavel_de_frango",
+    "coxinha_saudavel_de_frango",
+    "coxinha_saudavel_de_frango",
+    "creme_de_banana",
+    "creme_de_banana",
+    "creme_de_banana",
+    "creme_de_banana",
+    "creme_de_banana",
+    "cuscuz_marroquino_com_grãos_e_sementes",
+    "cuscuzdetapioca",
+    "cuscuzdetapioca",
+    "cuscuzdetapioca",
+    "cuscuzdetapioca",
+    "cuscuzdetapioca",
+    "cuscuzmarroquino",
+    "cuscuzmarroquino",
+    "cuscuzmarroquino",
+    "cuscuzmarroquino",
+    "cuscuzmarroquino",
+    "dadinho",
+    "dadinho",
+    "dadinho",
+    "dadinho",
+    "dadinho",
+    "docedebananavegano_semacucar",
+    "docedebananavegano_semacucar",
+    "empadas",
+    "empadas",
+    "enroladinho_de_frango",
+    "ensopado_de_lentilha",
+    "entrecote",
+    "entrecote",
+    "entrecote",
+    "entrecotegrelhado",
+    "entrecotegrelhado",
+    "entrecotegrelhado",
+    "entrecotegrelhado",
+    "entrecotegrelhado",
+    "ervadocecomlaranja",
+    "ervadocecomlaranja",
+    "ervadocecomlaranja",
+    "ervadocecomlaranja",
+    "ervadocecomlaranja",
+    "escondidinho",
+    "escondidinho_de_frango",
+    "escondidinho_vegetariano",
+    "escondidinhodecarneseca",
+    "escondidinhodecarneseca",
+    "escondidinhodecarneseca",
+    "escondidinhodecarneseca",
+    "escondidinhodecarneseca",
+    "espaguete",
+    "espaguete",
+    "espaguete",
+    "espaguete",
+    "espaguete",
+    "espaguete_parisiense",
+    "espaguete_parisiense",
+    "espaguetecomtomatecereja",
+    "espaguetecomtomatecereja",
+    "espagueti_ao_misso",
+    "espetinho_de_legumes_e_molho_pesto",
+    "espetinhosdelegumesgrelhados",
+    "espetinhosdelegumesgrelhados",
+    "espetinhosdelegumesgrelhados",
+    "farofa_de_banana_vegana",
+    "farofadebacon",
+    "farofadebacon",
+    "farofadebacon",
+    "farofadebacon",
+    "farofadebacon",
+    "farofadebananadaterra",
+    "farofadebananadaterra",
+    "farofadebananadaterra",
+    "farofadebananadaterra",
+    "farofadebananadaterra",
+    "feijao_do_chef",
+    "feijaobranco",
+    "feijaocariocasemcarne",
+    "feijaocariocasemcarne",
+    "feijaocariocasemcarne",
+    "feijaocariocasemcarne",
+    "feijaocariocasemcarne",
+    "feijaopretosemcarne",
+    "feijaopretosemcarne",
+    "feijaopretosemcarne",
+    "feijaopretosemcarne",
+    "feijaopretosemcarne",
+    "feijaotropeiro",
+    "feijaotropeiro",
+    "feijaotropeiro",
+    "feijaotropeiro",
+    "feijaotropeiro",
+    "feijoada",
+    "feijão_sem_carne",
+    "feijão_sem_carne",
+    "feijão_sem_carne",
+    "figadoacebolado",
+    "figadoacebolado",
+    "figadoacebolado",
+    "figadoacebolado",
+    "figadoacebolado",
+    "figadoaceboladocompimentabiquinho",
+    "file_a_parmegiana_acompanhamentos",
+    "file_de_peixe_ao_confir_de_tomates",
+    "file_de_peixe_ao_confir_de_tomates",
+    "file_de_peixe_ao_confir_de_tomates",
+    "file_de_peixe_ao_confir_de_tomates",
+    "file_de_peixe_ao_confir_de_tomates",
+    "file_de_peixe_em_manteiga_de_tomates",
+    "file_de_peixe_em_manteiga_de_tomates",
+    "file_de_peixe_em_manteiga_de_tomates",
+    "file_de_peixe_em_manteiga_de_tomates",
+    "file_de_peixe_em_manteiga_de_tomates",
+    "file_de_tilapia_a_milanesa",
+    "filedepeixeaomisso",
+    "filedepeixeaomisso",
+    "filedepeixeaomisso",
+    "filedepeixeaomisso",
+    "filedepeixeaomisso",
+    "filedepeixeaomolhodelimao",
+    "filedepeixeaomolhodelimao",
+    "filedepeixeaomolhodelimao",
+    "filedepeixeaomolhodelimao",
+    "filedepeixeaomolhodelimao",
+    "filedepeixemolhoconfit",
+    "filedepeixemolhoconfit",
+    "filedepeixemolhoconfit",
+    "filedepeixemolhoconfit",
+    "filedepeixemolhoconfit",
+    "filedepeixemolhofrutassecas",
+    "filedepeixemolhofrutassecas",
+    "filedepeixemolhofrutassecas",
+    "filedepeixemolhofrutassecas",
+    "filedepeixemolhofrutassecas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filemignonemmanteigadeervas",
+    "filé_a_parmegiana",
+    "filé_a_parmegiana",
+    "filé_a_parmegiana",
+    "filé_a_parmegiana",
+    "filé_a_parmegiana",
+    "frango_ao_creme_de_limao",
+    "frango_ao_molho",
+    "frango_ao_molho",
+    "frango_ao_molho_cremoso",
+    "frango_ao_molho_cremoso",
+    "frango_ao_molho_cremoso",
+    "frango_ao_molho_cremoso",
+    "frango_ao_molho_cremoso",
+    "frango_assado",
+    "frango_com_batatas",
+    "frango_com_legumes",
+    "frango_com_molho_cremoso",
+    "frango_frito",
+    "frango_frito",
+    "frango_frito",
+    "frango_frito",
+    "frango_frito_com_tomate_cereja_e_cebolinha",
+    "frango_no_tacho",
+    "frango_à_parmegiana",
+    "frango_à_parmegiana",
+    "frango_à_parmegiana",
+    "frangoaparmegiana",
+    "frangoassado",
+    "frangocremedelimaosalnegro",
+    "frangocremedelimaosalnegro",
+    "frangocremedelimaosalnegro",
+    "frangocremedelimaosalnegro",
+    "frangocremedelimaosalnegro",
+    "frutasaoganachedechocolate",
+    "frutasaoganachedechocolate",
+    "frutos_do_mar",
+    "frutos_do_mar_ao_molho_branco",
+    "fígado_abolado",
+    "fígado_abolado",
+    "fígado_abolado",
+    "fígado_abolado",
+    "ganache_de_chocolate_com_frutas",
+    "ganache_de_chocolate_com_frutas",
+    "ganache_de_chocolate_com_frutas",
+    "ganache_de_chocolate_com_frutas",
+    "gelatinadeabacaxi",
+    "gelatinadecereja",
+    "gelatinadecereja",
+    "gelatinadecereja",
+    "gelatinadecereja",
+    "gelatinadecereja",
+    "gelatinademorango",
+    "gelatinadeuva",
+    "gelatinadeuva",
+    "gelatinadeuva",
+    "gnocchi",
+    "gnocchi_ao_molho_branco",
+    "gnocchi_ao_molho_branco",
+    "gnocchi_ao_molho_branco_com_queijo",
+    "gnocchi_com_molho_cremoso",
+    "gnocchi_com_molho_cremoso",
+    "gnocchi_com_molho_cremoso",
+    "gnocchi_com_molho_cremoso_e_queijo",
+    "gnocchi_com_molho_cremoso_e_queijo",
+    "goiabada",
+    "goiabada",
+    "goiabada",
+    "goiabada",
+    "goiabada",
+    "granola",
+    "granola",
+    "granola",
+    "granola",
+    "granola",
+    "graodebicotomatesecoespinafre",
+    "graodebicotomatesecoespinafre",
+    "graodebicotomatesecoespinafre",
+    "graodebicotomatesecoespinafre",
+    "graodebicotomatesecoespinafre",
+    "gratinado_de_legumes",
+    "gratinado_de_legumes",
+    "gratinado_de_legumes",
+    "gratinado_de_legumes",
+    "gratinado_de_legumes",
+    "gratinado_de_peixefrutos_do_mar",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "grelhadodospescadores",
+    "guacamole",
+    "guacamole",
+    "guacamole",
+    "guacamole",
+    "guacamole",
+    "guacamole_com_manga",
+    "guacamole_com_manga",
+    "hamburgerdecarne",
+    "hamburguedecarne",
+    "hamburguedecarne",
+    "hamburguedecarne",
+    "hamburguedecarne",
+    "hamburguedecarne",
+    "hamburguer_bovino",
+    "hamburguer_bovino",
+    "hamburguer_bovino",
+    "hamburguer_vegano_de_nozes",
+    "hamburguer_vegano_de_nozes",
+    "hamburguerangusaoponto",
+    "hamburguervegano",
+    "hamburguervegano",
+    "hamburguervegano",
+    "hamburguervegano",
+    "hamburguervegano",
+    "hamcamaraocomcarnesuina",
+    "hamcamaraocomcarnesuina",
+    "hamcamaraocomcarnesuina",
+    "hamcamaraocomcarnesuina",
+    "hamcamaraocomcarnesuina",
+    "jiloempanado",
+    "jiloempanado",
+    "jiloempanado",
+    "jiloempanado",
+    "jiloempanado",
+    "kibbeh_com_arroz_e_homus",
+    "kibbeh_com_arroz_e_homus",
+    "kibe",
+    "kibe",
+    "kibe",
+    "kibe",
+    "kibe",
+    "kiberecheado",
+    "lasanha_de_berinjela",
+    "lasanha_de_berinjela",
+    "lasanha_vegana",
+    "lasanha_vegana_beringela_e_proteina_de_soja",
+    "lasanha_vegana_beringela_e_proteina_de_soja",
+    "lasanha_vegana_beringela_e_proteina_de_soja",
+    "lasanhadeespinafre",
+    "lasanhadeespinafre",
+    "lasanhadeespinafre",
+    "lasanhadeespinafre",
+    "lasanhadeespinafre",
+    "lasanhadeportobello",
+    "lasanhadeportobello",
+    "lasanhadeportobello",
+    "lasanhadeportobello",
+    "lasanhadeportobello",
+    "lentilha",
+    "lentilha_com_legumes",
+    "lentilha_com_tofu",
+    "lentilha_com_tofu",
+    "lentilha_com_vegetais",
+    "lentilha_com_vegetais",
+    "lentilha_com_vegetais",
+    "lentilha_com_vegetais",
+    "lentilha_refogada",
+    "lentilha_refogada",
+    "lentilha_refogada",
+    "lentilha_refogada_com_legumes",
+    "lentilha_refogada_com_tofu",
+    "lentilhacomtofu",
+    "lentilhacomtofu",
+    "lentilhacomtofu",
+    "lentilhacomtofu",
+    "lentilhacomtofu",
+    "linguica_de_lombo",
+    "linguica_de_lombo",
+    "linguicaacebolada",
+    "lula_e_camarao",
+    "língua_ao_molho",
+    "mamao",
+    "mamaoemcubos",
+    "maminhaaomolhomongolia",
+    "maminhaaomolhomongolia",
+    "maminhaaomolhomongolia",
+    "maminhaaomolhomongolia",
+    "maminhaaomolhomostarda",
+    "maminhaaomolhomostarda",
+    "maminhaaomolhomostarda",
+    "maminhaaomolhomostarda",
+    "maminhaaomolhomostarda",
+    "maminhamolhocebola",
+    "maminhamolhocebola",
+    "maminhamolhocebola",
+    "maminhamolhocebola",
+    "maminhamolhocebola",
+    "maminhanacervejapreta",
+    "maminhanacervejapreta",
+    "maminhanacervejapreta",
+    "maminhanacervejapreta",
+    "maminhanacervejapreta",
+    "mandioquinha",
+    "mandioquinhaassada",
+    "mandioquinhaassada",
+    "mandioquinhaassada",
+    "mandioquinhaassada",
+    "mandioquinhaassada",
+    "mandioquinhacomcamarao",
+    "mandioquinhacomcamarao",
+    "mandioquinhacomcamarao",
+    "mandioquinhacomcamarao",
+    "mandioquinhacomcamarao",
+    "manjar_de_coco",
+    "manjar_de_coco_com_calda_de_frutas_vermelhas",
+    "manjar_de_coco_com_calda_de_frutas_vermelhas",
+    "manjardecococomcaldadeameixa",
+    "marinha_ao_molho_madeira",
+    "marinha_ao_molho_madeira",
+    "marinha_ao_molho_madeira",
+    "marinha_ao_molho_madeira",
+    "marinha_ao_molho_madeira",
+    "massaladecamaroes",
+    "mechouiatunisia",
+    "mechouiatunisia",
+    "mechouiatunisia",
+    "mechouiatunisia",
+    "mechouiatunisia",
+    "melancia",
+    "melhoria_tunisia",
+    "michouiatunisia",
+    "mini_polpetone",
+    "mini_sanduíches_de_pasta_de_frango",
+    "minipolpetonerecheadocomqueijo",
+    "minipolpetonerecheadocomqueijo",
+    "minipolpetonerecheadocomqueijo",
+    "minipolpetonerecheadocomqueijo",
+    "minipolpetonerecheadocomqueijo",
+    "mixdegraos",
+    "molho_tartaro",
+    "molho_tartaro",
+    "molhocaeiro",
+    "molhocaeiro",
+    "molhocaeiro",
+    "molhocaeiro",
+    "molhocaeiro",
+    "molhodecebola",
+    "molhoparaorolinho",
+    "molhoparaorolinho",
+    "molhoparaorolinho",
+    "molhoparaorolinho",
+    "molhoparaorolinho",
+    "molhosugo",
+    "moquecadebanadaterra",
+    "moquecadebanadaterra",
+    "moquecadebanadaterra",
+    "moquecadebanadaterra",
+    "moquecadebanadaterra",
+    "moussedelimaosemacucar",
+    "moussedemaracuja",
+    "moussedemaracuja",
+    "moussedemaracuja",
+    "moussedemaracuja",
+    "moussedemaracuja",
+    "moussedemorango",
+    "moussedemorango",
+    "moussedemorango",
+    "moussedemorango",
+    "moussedemorango",
+    "muqueca_de_banana_da_terra",
+    "muqueca_de_banana_da_terra",
+    "muqueca_de_banana_da_terra",
+    "muqueca_de_banana_da_terra",
+    "muqueca_de_banana_da_terra",
+    "nachos",
+    "nachos",
+    "nachos",
+    "nachos",
+    "nachos",
+    "naoepossivelidentificar",
+    "nhoque",
+    "nhoque",
+    "nhoque",
+    "nhoque_ao_molho_branco_com_queijo",
+    "nhoque_ao_molho_branco_com_queijo",
+    "nhoque_ao_molho_de_gorgonzola",
+    "nhoque_ao_molho_de_gorgonzola",
+    "nhoque_com_molho_branco",
+    "nhoque_com_molho_branco_e_queijo",
+    "nhoque_com_molho_cremoso",
+    "nhoque_com_molho_cremoso",
+    "nhoque_com_molho_cremoso",
+    "nhoque_com_molho_e_queijo",
+    "nhoque_com_queijo",
+    "nhoqueaosugo",
+    "nhoqueaosugo",
+    "nhoqueaosugo",
+    "nhoqueaosugo",
+    "nhoqueaosugo",
+    "ovos_ao_forno",
+    "ovospochecomcarnemoida",
+    "ovospochecomcarnemoida",
+    "paella_de_frutos_do_mar",
+    "panacota_com_calda_de_frutas_vermelhas",
+    "panacota_com_calda_de_frutas_vermelhas",
+    "panacota_com_calda_de_frutas_vermelhas",
+    "panacota_com_calda_de_frutas_vermelhas",
+    "panceta",
+    "panceta",
+    "panceta",
+    "panceta",
+    "panceta",
+    "pancetapururca",
+    "pancettacrocante",
+    "panna_cotta_com_calda_de_frutas_vermelhas",
+    "panna_cotta_com_calda_de_frutas_vermelhas",
+    "panna_cotta_com_calda_de_frutas_vermelhas",
+    "pannacottacomfrutasvermelhas",
+    "pao_de_alho_negro_e_cumaru",
+    "pao_de_alho_negro_e_cumaru",
+    "pastel",
+    "pastel",
+    "pastel",
+    "pastel",
+    "pastel",
+    "peitodefrangogrelhado",
+    "peixe",
+    "peixe",
+    "peixe_a_milanesa",
+    "peixe_a_milanesa",
+    "peixe_ao_confit_de_tomates",
+    "peixe_ao_molho_branco",
+    "peixe_ao_molho_cremoso",
+    "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate",
+    "peixe_com_molho",
+    "peixe_com_molho_cremoso",
+    "peixe_empanado",
+    "peixe_empanado",
+    "peixe_grelhado",
+    "peixe_grelhado",
+    "peixecomtomatecereja",
+    "peixecomtomatecereja",
+    "pepinocomiogurte",
+    "pepinocomiogurte",
+    "pepinocomiogurte",
+    "pepinocomiogurte",
+    "pepinocomiogurte",
+    "pernil_assado_com_legumes",
+    "pernildecordeiro",
+    "pernildecordeiro",
+    "pernildecordeiro",
+    "pernildecordeiro",
+    "pernildecordeiro",
+    "pernilsuinoaomolhodelimao",
+    "pimenta_biquinho",
+    "portobello_recheado",
+    "portobellorecheado",
+    "portobellorecheado",
+    "portobellorecheado",
+    "portobellorecheado",
+    "portobellorecheado",
+    "prato_com_legumes_e_queijo",
+    "prato_com_queijo_e_cebolinha",
+    "prato_com_queijo_ralado",
+    "prato_com_queijo_ralado",
+    "prato_de_legumes_com_queijo",
+    "prato_de_vegetais_com_queijo",
+    "prato_de_vegetais_com_queijo",
+    "prato_de_vegetais_com_queijo",
+    "prato_feito",
+    "prato_feito",
+    "prato_feito_brasileiro",
+    "prato_feito_com_linguica",
+    "prato_gratinado",
+    "prato_gratinado_com_queijo",
+    "prato_gratinado_com_queijo",
+    "pratofeito_pf",
+    "proteina_de_soja_ao_sugo",
+    "pudim",
+    "pudim",
+    "pudim",
+    "pudim",
+    "pudim",
+    "pudimdeleitecondensado",
+    "pudimdeleitecondensado",
+    "pudimdeleitecondensado",
+    "pudimdeleitecondensado",
+    "pudimdeleitecondensado",
+    "puredebatata",
+    "puredebatatadoce",
+    "puredebatatadoce",
+    "puredebatatadoce",
+    "puredebatatadoce",
+    "puredebatatadoce",
+    "puredemacaverde",
+    "puredemacaverde",
+    "puredemacaverde",
+    "puredemacaverde",
+    "puredemacaverde",
+    "puredemandioquinha",
+    "puredemandioquinha",
+    "puredemandioquinha",
+    "puredemandioquinha",
+    "puredemandioquinha",
+    "puredemandioquinhacomleitedecoco",
+    "puredemandioquinhacomleitedecoco",
+    "pão_de_queijo",
+    "pão_de_queijo",
+    "pão_de_queijo",
+    "pão_de_queijo",
+    "queijo_parmesao_ralado",
+    "queijoralado",
+    "quiabocomamendoim",
+    "quiabocomamendoim",
+    "quiabocomamendoim",
+    "quiabocomamendoim",
+    "quiabocomamendoim",
+    "quiaboempanado",
+    "quiaboempanado",
+    "quiaboempanado",
+    "quiaboempanado",
+    "quiaboempanado",
+    "quiche",
+    "quiche",
+    "quiche",
+    "quiche",
+    "quiche",
+    "quinoa_com_legumes",
+    "quinoa_com_legumes",
+    "quinoa_com_legumes",
+    "quinuacomtahine",
+    "quinuacomtahine",
+    "quinuacomtahine",
+    "quinuacomtahine",
+    "quinuacomtahine",
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas",
+    "ratatouille",
+    "ratatouille",
+    "ratatouille",
+    "ratatouille",
+    "ratatouille",
+    "ravioli",
+    "ravioli",
+    "repolho",
+    "repolho",
+    "repolho",
+    "repolho",
+    "repolho",
+    "requeijao",
+    "requeijao",
+    "requeijao",
+    "risoneaocremedelimao",
+    "risoneaocremedelimao",
+    "risoneaocremedelimao",
+    "risoneaocremedelimao",
+    "risoneaocremedelimao",
+    "risoneaopesto",
+    "risoneaopesto",
+    "risoneaopesto",
+    "risoneaopesto",
+    "risoneaopesto",
+    "risoto",
+    "risoto_de_alho_poro",
+    "risoto_de_legumes_e_arroz_com_frutas_secas",
+    "risoto_de_pera_e_gorgonzola",
+    "risoto_de_pera_e_gorgonzola",
+    "risoto_de_vegetais_com_queijo",
+    "rolinho_vietnamita_de_camarao",
+    "rolinho_vietnamita_de_camarao",
+    "rolinho_vietnamita_de_legumes",
+    "rolinhovietnamita",
+    "rolinhovietnamita",
+    "rolinhovietnamita",
+    "rolinhovietnamita",
+    "rolinhovietnamita",
+    "romeu",
+    "romeu",
+    "romeu",
+    "romeu",
+    "romeu",
+    "romeu_e_julieta",
+    "romeu_e_julieta",
+    "romeuejulieta",
+    "romeuejulieta",
+    "romeuejulieta",
+    "rucula",
+    "rucula",
+    "rucula",
+    "rucula",
+    "rucula",
+    "salada_de_atum",
+    "salada_de_atum",
+    "salada_de_atum_com_legumes",
+    "salada_de_feijao_fradinho",
+    "salada_de_frango",
+    "salada_de_orzo_com_nozes_e_folhas_verdes",
+    "salada_de_peixe",
+    "salada_de_quinoa",
+    "salada_de_quinoa",
+    "salada_de_quinoa",
+    "salada_michouia_tunisia",
+    "salada_oriental_de_biffun",
+    "salada_verde",
+    "saladadebeterrabacomlaranjaehortela",
+    "saladadebifumcompepino",
+    "saladadebifumcompepino",
+    "saladadefeijaobranco",
+    "saladadefeijaobranco",
+    "saladadefeijaobranco",
+    "saladadefeijaobranco",
+    "saladadefeijaobranco",
+    "saladadefeijaobrancocomtomateecebola",
+    "saladadefrangocomlegumes",
+    "saladadegraodebico",
+    "saladadegraodebico",
+    "saladadegraodebico",
+    "saladadegraodebico",
+    "saladadegraodebico",
+    "saladadelentilha",
+    "saladadelentilha",
+    "saladadelentilha",
+    "saladadelentilha",
+    "saladadelentilha",
+    "saladadeovoscombatata",
+    "saladadeovoscombatata",
+    "saladadeovoscombatata",
+    "saladadeovoscombatata",
+    "saladadeovoscombatata",
+    "saladadequinoacomlegumes",
+    "saladaderabanetecomlaranja",
+    "saladadetomateemrodelas",
+    "saladamediterranea",
+    "saladamediterranea",
+    "saladamediterranea",
+    "saladamediterranea",
+    "saladamediterranea",
+    "saladamichouiatunísia",
+    "saladatailandesa",
+    "saladatailandesa",
+    "saladatailandesa",
+    "saladatailandesa",
+    "saladatailandesa",
+    "saladeovos",
+    "saladeovos",
+    "saladeovos",
+    "saladeovos",
+    "saladeovos",
+    "saldacaprese",
+    "salpicaodefrango",
+    "salpicaodefrango",
+    "salpicaodefrango",
+    "salpicaodefrango",
+    "salpicaodefrango",
+    "shepherd's_pie",
+    "shepherd's_pie",
+    "sobrecoxa",
+    "sobrecoxa",
+    "sobrecoxa",
+    "sobrecoxa",
+    "sobrecoxa",
+    "sobrecoxaaotandoori",
+    "sobrecoxaaotandoori",
+    "sobrecoxaaotandoori",
+    "sobrecoxaaotandoori",
+    "sobrecoxaaotandoori",
+    "sobrecoxaaotucupi",
+    "sopa_de_legumes_gratinada",
+    "steakdecouveflor",
+    "steakdecouveflor",
+    "steakdecouveflor",
+    "steakdecouveflor",
+    "steakdecouveflor",
+    "strogonoff",
+    "strogonoff",
+    "strogonoff",
+    "strogonoff_vegano",
+    "strogonoff_vegano",
+    "strogonoff_vegano",
+    "strogonoff_vegano",
+    "strogonoff_vegano",
+    "strogonoffdefilemignon",
+    "strogonoffdefilemignon",
+    "suflê_de_legumes_com_queijo",
+    "suflê_de_legumes_com_queijo",
+    "suflê_de_legumes_com_queijo",
+    "sushi",
+    "sushivietnamita",
+    "sushivietnamita",
+    "sushivietnamita",
+    "sushivietnamita",
+    "sushivietnamita",
+    "tabule_de_trigo",
+    "tabule_de_trigo",
+    "tabule_de_trigo",
+    "tabule_de_trigo",
+    "tabule_de_trigo",
+    "tabuledequinoa",
+    "tabuledequinoa",
+    "tabuledequinoa",
+    "tabuledequinoa",
+    "tabuledequinoa",
+    "tiramisu",
+    "tiramisu",
+    "tiramisu",
+    "tiramisuvegano",
+    "tofu_frito",
+    "tomate",
+    "tomateseco",
+    "tomatesfatiados",
+    "torradas",
+    "torradas",
+    "torradas",
+    "torradas",
+    "torradas",
+    "torradas_com_ervas",
+    "torradas_com_tempero",
+    "torradas_de_alho",
+    "torradas_temperadas",
+    "torradas_temperadas",
+    "torradas_temperadas",
+    "torradas_temperadas",
+    "torradas_temperadas",
+    "torresmo",
+    "torta_de_chocolate_com_frutas",
+    "torta_de_legumes",
+    "torta_de_legumes_gratinada",
+    "torta_de_manga",
+    "tortilha_de_figo_e_gorgonzola",
+    "tortilha_espanhola_de_batata",
+    "tortilha_espanhola_de_batata",
+    "tortilla_chips",
+    "tortilla_chips",
+    "tortilla_chips",
+    "tortilla_chips",
+    "tortilla_chips",
+    "tortinhadegongorzolaefigo",
+    "tortinhadegongorzolaefigo",
+    "tortinhadegongorzolaefigo",
+    "tortinhadegongorzolaefigo",
+    "tortinhadegongorzolaefigo",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "umamidetomates",
+    "uvas",
+    "vermicelli",
+    "vermicelli",
+    "vermicelli",
+    "vermicelli",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vinagrete",
+    "vol_au_vent",
+    "vol_au_vent",
+    "vol_au_vent",
+    "vol_au_vent",
+    "vol_au_vent",
+    "volauventbatata"
+  ],
+  "dish_to_idx": {
+    "aboboraaocurry": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "abobrinha_grelhada_com_queijo_e_tomate": [
+      5
+    ],
+    "abobrinha_grelhada_copia": [
+      6,
+      7
+    ],
+    "aipim_na_manteiga": [
+      8
+    ],
+    "alface_frisee": [
+      9,
+      10,
+      11
+    ],
+    "alhoporogratinadovegano": [
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "almdegasmolhosugo": [
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "almondegas_com_especiarias_indiana": [
+      22,
+      23
+    ],
+    "arroz7graos": [
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "arroz7graoscomfrutassecas": [
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "arroz7graoscomlegumes": [
+      34,
+      35,
+      36,
+      37,
+      38
+    ],
+    "arroz_com_frutas_e_ervas": [
+      39,
+      40,
+      41
+    ],
+    "arroz_com_frutas_secas_e_ervas": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "arrozbranco": [
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "arrozcombrocoliseamendoas": [
+      52,
+      53,
+      54
+    ],
+    "arrozintegral": [
+      55,
+      56,
+      57,
+      58,
+      59
+    ],
+    "arrozintlegumes": [
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "atum_ao_funghi": [
+      65
+    ],
+    "atumaogergelim": [
+      66,
+      67,
+      68,
+      69,
+      70
+    ],
+    "azeitona_preta": [
+      71
+    ],
+    "bacalhau_a_bras": [
+      72,
+      73
+    ],
+    "bacalhaucomnatas": [
+      74,
+      75,
+      76,
+      77,
+      78
+    ],
+    "bacalhaugomesdesa": [
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
+    "baiaodedois": [
+      84,
+      85,
+      86,
+      87,
+      88
+    ],
+    "batata_frita": [
+      89,
+      90,
+      91,
+      92,
+      93
+    ],
+    "batatacompaprica": [
+      94,
+      95,
+      96,
+      97,
+      98
+    ],
+    "batatadoce": [
+      99,
+      100,
+      101,
+      102,
+      103
+    ],
+    "batatas_ao_molho": [
+      104
+    ],
+    "beringela_a_parmegiana": [
+      105
+    ],
+    "beringelaaocurrykincam": [
+      106,
+      107,
+      108,
+      109,
+      110
+    ],
+    "beringelaaopuredelimaosiciliano": [
+      111,
+      112,
+      113,
+      114,
+      115
+    ],
+    "berinjela_à_parmegiana": [
+      116,
+      117,
+      118,
+      119
+    ],
+    "beterrabaaobalsamico": [
+      120,
+      121,
+      122,
+      123,
+      124
+    ],
+    "bolinho_de_arroz": [
+      125
+    ],
+    "bolinho_de_camarao": [
+      126
+    ],
+    "bolinho_de_mandioca": [
+      127
+    ],
+    "bolinho_de_queijo": [
+      128,
+      129,
+      130,
+      131,
+      132
+    ],
+    "bolinhodebacalhau": [
+      133,
+      134,
+      135,
+      136,
+      137
+    ],
+    "bolo_com_calda_de_frutas_vermelhas": [
+      138
+    ],
+    "bolo_de_frutas": [
+      139,
+      140,
+      141
+    ],
+    "bolo_de_leite_com_calda_de_frutas_vermelhas": [
+      142
+    ],
+    "bolochocolatevegano": [
+      143,
+      144,
+      145,
+      146,
+      147
+    ],
+    "bolodegengibre": [
+      148,
+      149,
+      150,
+      151,
+      152
+    ],
+    "brocoliscomparmesao": [
+      153,
+      154,
+      155,
+      156,
+      157
+    ],
+    "brocolisgratinado": [
+      158,
+      159,
+      160,
+      161,
+      162
+    ],
+    "brownie": [
+      163,
+      164,
+      165,
+      166,
+      167
+    ],
+    "brownie_com_morango": [
+      168,
+      169,
+      170
+    ],
+    "brownie_de_chocolate": [
+      171,
+      172,
+      173
+    ],
+    "brownie_vegano_com_morangos": [
+      174
+    ],
+    "bun_cha": [
+      175
+    ],
+    "canelone_4_queijo": [
+      176,
+      177,
+      178,
+      179
+    ],
+    "canelonedeespinafre": [
+      180,
+      181,
+      182,
+      183,
+      184
+    ],
+    "caponata": [
+      185,
+      186,
+      187,
+      188,
+      189
+    ],
+    "caprese": [
+      190,
+      191,
+      192,
+      193
+    ],
+    "carne_com_legumes": [
+      194
+    ],
+    "carne_com_legumes_e_pimenta": [
+      195
+    ],
+    "carne_com_tomate_cereja_e_ervas": [
+      196
+    ],
+    "carne_com_tomates_e_ervas": [
+      197
+    ],
+    "carne_de_panela_com_mandioca": [
+      198
+    ],
+    "carne_seca_com_abobora": [
+      199
+    ],
+    "carpacciodeabobrinhacomqueijovegano": [
+      200
+    ],
+    "carpacciodelaranja": [
+      201,
+      202,
+      203,
+      204,
+      205
+    ],
+    "carpacciodeperaruculaeamendoas": [
+      206,
+      207,
+      208,
+      209,
+      210
+    ],
+    "cebola": [
+      211,
+      212,
+      213,
+      214,
+      215
+    ],
+    "cebolascaramelizadas": [
+      216,
+      217,
+      218,
+      219,
+      220
+    ],
+    "cenouraaoiogurte": [
+      221,
+      222,
+      223,
+      224,
+      225
+    ],
+    "cenourapalito": [
+      226,
+      227,
+      228,
+      229,
+      230
+    ],
+    "cestinhadecamarao": [
+      231,
+      232,
+      233,
+      234,
+      235
+    ],
+    "ceviche": [
+      236,
+      237,
+      238,
+      239,
+      240
+    ],
+    "ceviche_de_banana_da_terra": [
+      241
+    ],
+    "ceviche_de_manga": [
+      242
+    ],
+    "cocada": [
+      243,
+      244,
+      245,
+      246,
+      247
+    ],
+    "cogumelo_recheado_de_com_legumes": [
+      248,
+      249
+    ],
+    "cogumelos_recheados": [
+      250,
+      251,
+      252,
+      253,
+      254
+    ],
+    "cogumelos_recheados_e_lentilha": [
+      255
+    ],
+    "conchiglionirecheados": [
+      256,
+      257,
+      258,
+      259,
+      260
+    ],
+    "costela_bovina": [
+      261,
+      262,
+      263,
+      264,
+      265
+    ],
+    "costela_cibi_sana": [
+      266,
+      267,
+      268,
+      269,
+      270
+    ],
+    "costelinhacibisana": [
+      271,
+      272,
+      273
+    ],
+    "couveflorgratinada": [
+      274,
+      275,
+      276,
+      277,
+      278
+    ],
+    "coxinha_saudavel_de_frango": [
+      279,
+      280,
+      281,
+      282
+    ],
+    "creme_de_banana": [
+      283,
+      284,
+      285,
+      286,
+      287
+    ],
+    "cuscuz_marroquino_com_grãos_e_sementes": [
+      288
+    ],
+    "cuscuzdetapioca": [
+      289,
+      290,
+      291,
+      292,
+      293
+    ],
+    "cuscuzmarroquino": [
+      294,
+      295,
+      296,
+      297,
+      298
+    ],
+    "dadinho": [
+      299,
+      300,
+      301,
+      302,
+      303
+    ],
+    "docedebananavegano_semacucar": [
+      304,
+      305
+    ],
+    "empadas": [
+      306,
+      307
+    ],
+    "enroladinho_de_frango": [
+      308
+    ],
+    "ensopado_de_lentilha": [
+      309
+    ],
+    "entrecote": [
+      310,
+      311,
+      312
+    ],
+    "entrecotegrelhado": [
+      313,
+      314,
+      315,
+      316,
+      317
+    ],
+    "ervadocecomlaranja": [
+      318,
+      319,
+      320,
+      321,
+      322
+    ],
+    "escondidinho": [
+      323
+    ],
+    "escondidinho_de_frango": [
+      324
+    ],
+    "escondidinho_vegetariano": [
+      325
+    ],
+    "escondidinhodecarneseca": [
+      326,
+      327,
+      328,
+      329,
+      330
+    ],
+    "espaguete": [
+      331,
+      332,
+      333,
+      334,
+      335
+    ],
+    "espaguete_parisiense": [
+      336,
+      337
+    ],
+    "espaguetecomtomatecereja": [
+      338,
+      339
+    ],
+    "espagueti_ao_misso": [
+      340
+    ],
+    "espetinho_de_legumes_e_molho_pesto": [
+      341
+    ],
+    "espetinhosdelegumesgrelhados": [
+      342,
+      343,
+      344
+    ],
+    "farofa_de_banana_vegana": [
+      345
+    ],
+    "farofadebacon": [
+      346,
+      347,
+      348,
+      349,
+      350
+    ],
+    "farofadebananadaterra": [
+      351,
+      352,
+      353,
+      354,
+      355
+    ],
+    "feijao_do_chef": [
+      356
+    ],
+    "feijaobranco": [
+      357
+    ],
+    "feijaocariocasemcarne": [
+      358,
+      359,
+      360,
+      361,
+      362
+    ],
+    "feijaopretosemcarne": [
+      363,
+      364,
+      365,
+      366,
+      367
+    ],
+    "feijaotropeiro": [
+      368,
+      369,
+      370,
+      371,
+      372
+    ],
+    "feijoada": [
+      373
+    ],
+    "feijão_sem_carne": [
+      374,
+      375,
+      376
+    ],
+    "figadoacebolado": [
+      377,
+      378,
+      379,
+      380,
+      381
+    ],
+    "figadoaceboladocompimentabiquinho": [
+      382
+    ],
+    "file_a_parmegiana_acompanhamentos": [
+      383
+    ],
+    "file_de_peixe_ao_confir_de_tomates": [
+      384,
+      385,
+      386,
+      387,
+      388
+    ],
+    "file_de_peixe_em_manteiga_de_tomates": [
+      389,
+      390,
+      391,
+      392,
+      393
+    ],
+    "file_de_tilapia_a_milanesa": [
+      394
+    ],
+    "filedepeixeaomisso": [
+      395,
+      396,
+      397,
+      398,
+      399
+    ],
+    "filedepeixeaomolhodelimao": [
+      400,
+      401,
+      402,
+      403,
+      404
+    ],
+    "filedepeixemolhoconfit": [
+      405,
+      406,
+      407,
+      408,
+      409
+    ],
+    "filedepeixemolhofrutassecas": [
+      410,
+      411,
+      412,
+      413,
+      414
+    ],
+    "filemignonemmanteigadeervas": [
+      415,
+      416,
+      417,
+      418,
+      419
+    ],
+    "filé_a_parmegiana": [
+      420,
+      421,
+      422,
+      423,
+      424
+    ],
+    "frango_ao_creme_de_limao": [
+      425
+    ],
+    "frango_ao_molho": [
+      426,
+      427
+    ],
+    "frango_ao_molho_cremoso": [
+      428,
+      429,
+      430,
+      431,
+      432
+    ],
+    "frango_assado": [
+      433
+    ],
+    "frango_com_batatas": [
+      434
+    ],
+    "frango_com_legumes": [
+      435
+    ],
+    "frango_com_molho_cremoso": [
+      436
+    ],
+    "frango_frito": [
+      437,
+      438,
+      439,
+      440
+    ],
+    "frango_frito_com_tomate_cereja_e_cebolinha": [
+      441
+    ],
+    "frango_no_tacho": [
+      442
+    ],
+    "frango_à_parmegiana": [
+      443,
+      444,
+      445
+    ],
+    "frangoaparmegiana": [
+      446
+    ],
+    "frangoassado": [
+      447
+    ],
+    "frangocremedelimaosalnegro": [
+      448,
+      449,
+      450,
+      451,
+      452
+    ],
+    "frutasaoganachedechocolate": [
+      453,
+      454
+    ],
+    "frutos_do_mar": [
+      455
+    ],
+    "frutos_do_mar_ao_molho_branco": [
+      456
+    ],
+    "fígado_abolado": [
+      457,
+      458,
+      459,
+      460
+    ],
+    "ganache_de_chocolate_com_frutas": [
+      461,
+      462,
+      463,
+      464
+    ],
+    "gelatinadeabacaxi": [
+      465
+    ],
+    "gelatinadecereja": [
+      466,
+      467,
+      468,
+      469,
+      470
+    ],
+    "gelatinademorango": [
+      471
+    ],
+    "gelatinadeuva": [
+      472,
+      473,
+      474
+    ],
+    "gnocchi": [
+      475
+    ],
+    "gnocchi_ao_molho_branco": [
+      476,
+      477
+    ],
+    "gnocchi_ao_molho_branco_com_queijo": [
+      478
+    ],
+    "gnocchi_com_molho_cremoso": [
+      479,
+      480,
+      481
+    ],
+    "gnocchi_com_molho_cremoso_e_queijo": [
+      482,
+      483
+    ],
+    "goiabada": [
+      484,
+      485,
+      486,
+      487,
+      488
+    ],
+    "granola": [
+      489,
+      490,
+      491,
+      492,
+      493
+    ],
+    "graodebicotomatesecoespinafre": [
+      494,
+      495,
+      496,
+      497,
+      498
+    ],
+    "gratinado_de_legumes": [
+      499,
+      500,
+      501,
+      502,
+      503
+    ],
+    "gratinado_de_peixefrutos_do_mar": [
+      504
+    ],
+    "grelhadodospescadores": [
+      505,
+      506,
+      507,
+      508,
+      509
+    ],
+    "guacamole": [
+      510,
+      511,
+      512,
+      513,
+      514
+    ],
+    "guacamole_com_manga": [
+      515,
+      516
+    ],
+    "hamburgerdecarne": [
+      517
+    ],
+    "hamburguedecarne": [
+      518,
+      519,
+      520,
+      521,
+      522
+    ],
+    "hamburguer_bovino": [
+      523,
+      524,
+      525
+    ],
+    "hamburguer_vegano_de_nozes": [
+      526,
+      527
+    ],
+    "hamburguerangusaoponto": [
+      528
+    ],
+    "hamburguervegano": [
+      529,
+      530,
+      531,
+      532,
+      533
+    ],
+    "hamcamaraocomcarnesuina": [
+      534,
+      535,
+      536,
+      537,
+      538
+    ],
+    "jiloempanado": [
+      539,
+      540,
+      541,
+      542,
+      543
+    ],
+    "kibbeh_com_arroz_e_homus": [
+      544,
+      545
+    ],
+    "kibe": [
+      546,
+      547,
+      548,
+      549,
+      550
+    ],
+    "kiberecheado": [
+      551
+    ],
+    "lasanha_de_berinjela": [
+      552,
+      553
+    ],
+    "lasanha_vegana": [
+      554
+    ],
+    "lasanha_vegana_beringela_e_proteina_de_soja": [
+      555,
+      556,
+      557
+    ],
+    "lasanhadeespinafre": [
+      558,
+      559,
+      560,
+      561,
+      562
+    ],
+    "lasanhadeportobello": [
+      563,
+      564,
+      565,
+      566,
+      567
+    ],
+    "lentilha": [
+      568
+    ],
+    "lentilha_com_legumes": [
+      569
+    ],
+    "lentilha_com_tofu": [
+      570,
+      571
+    ],
+    "lentilha_com_vegetais": [
+      572,
+      573,
+      574,
+      575
+    ],
+    "lentilha_refogada": [
+      576,
+      577,
+      578
+    ],
+    "lentilha_refogada_com_legumes": [
+      579
+    ],
+    "lentilha_refogada_com_tofu": [
+      580
+    ],
+    "lentilhacomtofu": [
+      581,
+      582,
+      583,
+      584,
+      585
+    ],
+    "linguica_de_lombo": [
+      586,
+      587
+    ],
+    "linguicaacebolada": [
+      588
+    ],
+    "lula_e_camarao": [
+      589
+    ],
+    "língua_ao_molho": [
+      590
+    ],
+    "mamao": [
+      591
+    ],
+    "mamaoemcubos": [
+      592
+    ],
+    "maminhaaomolhomongolia": [
+      593,
+      594,
+      595,
+      596
+    ],
+    "maminhaaomolhomostarda": [
+      597,
+      598,
+      599,
+      600,
+      601
+    ],
+    "maminhamolhocebola": [
+      602,
+      603,
+      604,
+      605,
+      606
+    ],
+    "maminhanacervejapreta": [
+      607,
+      608,
+      609,
+      610,
+      611
+    ],
+    "mandioquinha": [
+      612
+    ],
+    "mandioquinhaassada": [
+      613,
+      614,
+      615,
+      616,
+      617
+    ],
+    "mandioquinhacomcamarao": [
+      618,
+      619,
+      620,
+      621,
+      622
+    ],
+    "manjar_de_coco": [
+      623
+    ],
+    "manjar_de_coco_com_calda_de_frutas_vermelhas": [
+      624,
+      625
+    ],
+    "manjardecococomcaldadeameixa": [
+      626
+    ],
+    "marinha_ao_molho_madeira": [
+      627,
+      628,
+      629,
+      630,
+      631
+    ],
+    "massaladecamaroes": [
+      632
+    ],
+    "mechouiatunisia": [
+      633,
+      634,
+      635,
+      636,
+      637
+    ],
+    "melancia": [
+      638
+    ],
+    "melhoria_tunisia": [
+      639
+    ],
+    "michouiatunisia": [
+      640
+    ],
+    "mini_polpetone": [
+      641
+    ],
+    "mini_sanduíches_de_pasta_de_frango": [
+      642
+    ],
+    "minipolpetonerecheadocomqueijo": [
+      643,
+      644,
+      645,
+      646,
+      647
+    ],
+    "mixdegraos": [
+      648
+    ],
+    "molho_tartaro": [
+      649,
+      650
+    ],
+    "molhocaeiro": [
+      651,
+      652,
+      653,
+      654,
+      655
+    ],
+    "molhodecebola": [
+      656
+    ],
+    "molhoparaorolinho": [
+      657,
+      658,
+      659,
+      660,
+      661
+    ],
+    "molhosugo": [
+      662
+    ],
+    "moquecadebanadaterra": [
+      663,
+      664,
+      665,
+      666,
+      667
+    ],
+    "moussedelimaosemacucar": [
+      668
+    ],
+    "moussedemaracuja": [
+      669,
+      670,
+      671,
+      672,
+      673
+    ],
+    "moussedemorango": [
+      674,
+      675,
+      676,
+      677,
+      678
+    ],
+    "muqueca_de_banana_da_terra": [
+      679,
+      680,
+      681,
+      682,
+      683
+    ],
+    "nachos": [
+      684,
+      685,
+      686,
+      687,
+      688
+    ],
+    "naoepossivelidentificar": [
+      689
+    ],
+    "nhoque": [
+      690,
+      691,
+      692
+    ],
+    "nhoque_ao_molho_branco_com_queijo": [
+      693,
+      694
+    ],
+    "nhoque_ao_molho_de_gorgonzola": [
+      695,
+      696
+    ],
+    "nhoque_com_molho_branco": [
+      697
+    ],
+    "nhoque_com_molho_branco_e_queijo": [
+      698
+    ],
+    "nhoque_com_molho_cremoso": [
+      699,
+      700,
+      701
+    ],
+    "nhoque_com_molho_e_queijo": [
+      702
+    ],
+    "nhoque_com_queijo": [
+      703
+    ],
+    "nhoqueaosugo": [
+      704,
+      705,
+      706,
+      707,
+      708
+    ],
+    "ovos_ao_forno": [
+      709
+    ],
+    "ovospochecomcarnemoida": [
+      710,
+      711
+    ],
+    "paella_de_frutos_do_mar": [
+      712
+    ],
+    "panacota_com_calda_de_frutas_vermelhas": [
+      713,
+      714,
+      715,
+      716
+    ],
+    "panceta": [
+      717,
+      718,
+      719,
+      720,
+      721
+    ],
+    "pancetapururca": [
+      722
+    ],
+    "pancettacrocante": [
+      723
+    ],
+    "panna_cotta_com_calda_de_frutas_vermelhas": [
+      724,
+      725,
+      726
+    ],
+    "pannacottacomfrutasvermelhas": [
+      727
+    ],
+    "pao_de_alho_negro_e_cumaru": [
+      728,
+      729
+    ],
+    "pastel": [
+      730,
+      731,
+      732,
+      733,
+      734
+    ],
+    "peitodefrangogrelhado": [
+      735
+    ],
+    "peixe": [
+      736,
+      737
+    ],
+    "peixe_a_milanesa": [
+      738,
+      739
+    ],
+    "peixe_ao_confit_de_tomates": [
+      740
+    ],
+    "peixe_ao_molho_branco": [
+      741
+    ],
+    "peixe_ao_molho_cremoso": [
+      742
+    ],
+    "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate": [
+      743
+    ],
+    "peixe_com_molho": [
+      744
+    ],
+    "peixe_com_molho_cremoso": [
+      745
+    ],
+    "peixe_empanado": [
+      746,
+      747
+    ],
+    "peixe_grelhado": [
+      748,
+      749
+    ],
+    "peixecomtomatecereja": [
+      750,
+      751
+    ],
+    "pepinocomiogurte": [
+      752,
+      753,
+      754,
+      755,
+      756
+    ],
+    "pernil_assado_com_legumes": [
+      757
+    ],
+    "pernildecordeiro": [
+      758,
+      759,
+      760,
+      761,
+      762
+    ],
+    "pernilsuinoaomolhodelimao": [
+      763
+    ],
+    "pimenta_biquinho": [
+      764
+    ],
+    "portobello_recheado": [
+      765
+    ],
+    "portobellorecheado": [
+      766,
+      767,
+      768,
+      769,
+      770
+    ],
+    "prato_com_legumes_e_queijo": [
+      771
+    ],
+    "prato_com_queijo_e_cebolinha": [
+      772
+    ],
+    "prato_com_queijo_ralado": [
+      773,
+      774
+    ],
+    "prato_de_legumes_com_queijo": [
+      775
+    ],
+    "prato_de_vegetais_com_queijo": [
+      776,
+      777,
+      778
+    ],
+    "prato_feito": [
+      779,
+      780
+    ],
+    "prato_feito_brasileiro": [
+      781
+    ],
+    "prato_feito_com_linguica": [
+      782
+    ],
+    "prato_gratinado": [
+      783
+    ],
+    "prato_gratinado_com_queijo": [
+      784,
+      785
+    ],
+    "pratofeito_pf": [
+      786
+    ],
+    "proteina_de_soja_ao_sugo": [
+      787
+    ],
+    "pudim": [
+      788,
+      789,
+      790,
+      791,
+      792
+    ],
+    "pudimdeleitecondensado": [
+      793,
+      794,
+      795,
+      796,
+      797
+    ],
+    "puredebatata": [
+      798
+    ],
+    "puredebatatadoce": [
+      799,
+      800,
+      801,
+      802,
+      803
+    ],
+    "puredemacaverde": [
+      804,
+      805,
+      806,
+      807,
+      808
+    ],
+    "puredemandioquinha": [
+      809,
+      810,
+      811,
+      812,
+      813
+    ],
+    "puredemandioquinhacomleitedecoco": [
+      814,
+      815
+    ],
+    "pão_de_queijo": [
+      816,
+      817,
+      818,
+      819
+    ],
+    "queijo_parmesao_ralado": [
+      820
+    ],
+    "queijoralado": [
+      821
+    ],
+    "quiabocomamendoim": [
+      822,
+      823,
+      824,
+      825,
+      826
+    ],
+    "quiaboempanado": [
+      827,
+      828,
+      829,
+      830,
+      831
+    ],
+    "quiche": [
+      832,
+      833,
+      834,
+      835,
+      836
+    ],
+    "quinoa_com_legumes": [
+      837,
+      838,
+      839
+    ],
+    "quinuacomtahine": [
+      840,
+      841,
+      842,
+      843,
+      844
+    ],
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas": [
+      845,
+      846,
+      847,
+      848
+    ],
+    "ratatouille": [
+      849,
+      850,
+      851,
+      852,
+      853
+    ],
+    "ravioli": [
+      854,
+      855
+    ],
+    "repolho": [
+      856,
+      857,
+      858,
+      859,
+      860
+    ],
+    "requeijao": [
+      861,
+      862,
+      863
+    ],
+    "risoneaocremedelimao": [
+      864,
+      865,
+      866,
+      867,
+      868
+    ],
+    "risoneaopesto": [
+      869,
+      870,
+      871,
+      872,
+      873
+    ],
+    "risoto": [
+      874
+    ],
+    "risoto_de_alho_poro": [
+      875
+    ],
+    "risoto_de_legumes_e_arroz_com_frutas_secas": [
+      876
+    ],
+    "risoto_de_pera_e_gorgonzola": [
+      877,
+      878
+    ],
+    "risoto_de_vegetais_com_queijo": [
+      879
+    ],
+    "rolinho_vietnamita_de_camarao": [
+      880,
+      881
+    ],
+    "rolinho_vietnamita_de_legumes": [
+      882
+    ],
+    "rolinhovietnamita": [
+      883,
+      884,
+      885,
+      886,
+      887
+    ],
+    "romeu": [
+      888,
+      889,
+      890,
+      891,
+      892
+    ],
+    "romeu_e_julieta": [
+      893,
+      894
+    ],
+    "romeuejulieta": [
+      895,
+      896,
+      897
+    ],
+    "rucula": [
+      898,
+      899,
+      900,
+      901,
+      902
+    ],
+    "salada_de_atum": [
+      903,
+      904
+    ],
+    "salada_de_atum_com_legumes": [
+      905
+    ],
+    "salada_de_feijao_fradinho": [
+      906
+    ],
+    "salada_de_frango": [
+      907
+    ],
+    "salada_de_orzo_com_nozes_e_folhas_verdes": [
+      908
+    ],
+    "salada_de_peixe": [
+      909
+    ],
+    "salada_de_quinoa": [
+      910,
+      911,
+      912
+    ],
+    "salada_michouia_tunisia": [
+      913
+    ],
+    "salada_oriental_de_biffun": [
+      914
+    ],
+    "salada_verde": [
+      915
+    ],
+    "saladadebeterrabacomlaranjaehortela": [
+      916
+    ],
+    "saladadebifumcompepino": [
+      917,
+      918
+    ],
+    "saladadefeijaobranco": [
+      919,
+      920,
+      921,
+      922,
+      923
+    ],
+    "saladadefeijaobrancocomtomateecebola": [
+      924
+    ],
+    "saladadefrangocomlegumes": [
+      925
+    ],
+    "saladadegraodebico": [
+      926,
+      927,
+      928,
+      929,
+      930
+    ],
+    "saladadelentilha": [
+      931,
+      932,
+      933,
+      934,
+      935
+    ],
+    "saladadeovoscombatata": [
+      936,
+      937,
+      938,
+      939,
+      940
+    ],
+    "saladadequinoacomlegumes": [
+      941
+    ],
+    "saladaderabanetecomlaranja": [
+      942
+    ],
+    "saladadetomateemrodelas": [
+      943
+    ],
+    "saladamediterranea": [
+      944,
+      945,
+      946,
+      947,
+      948
+    ],
+    "saladamichouiatunísia": [
+      949
+    ],
+    "saladatailandesa": [
+      950,
+      951,
+      952,
+      953,
+      954
+    ],
+    "saladeovos": [
+      955,
+      956,
+      957,
+      958,
+      959
+    ],
+    "saldacaprese": [
+      960
+    ],
+    "salpicaodefrango": [
+      961,
+      962,
+      963,
+      964,
+      965
+    ],
+    "shepherd's_pie": [
+      966,
+      967
+    ],
+    "sobrecoxa": [
+      968,
+      969,
+      970,
+      971,
+      972
+    ],
+    "sobrecoxaaotandoori": [
+      973,
+      974,
+      975,
+      976,
+      977
+    ],
+    "sobrecoxaaotucupi": [
+      978
+    ],
+    "sopa_de_legumes_gratinada": [
+      979
+    ],
+    "steakdecouveflor": [
+      980,
+      981,
+      982,
+      983,
+      984
+    ],
+    "strogonoff": [
+      985,
+      986,
+      987
+    ],
+    "strogonoff_vegano": [
+      988,
+      989,
+      990,
+      991,
+      992
+    ],
+    "strogonoffdefilemignon": [
+      993,
+      994
+    ],
+    "suflê_de_legumes_com_queijo": [
+      995,
+      996,
+      997
+    ],
+    "sushi": [
+      998
+    ],
+    "sushivietnamita": [
+      999,
+      1000,
+      1001,
+      1002,
+      1003
+    ],
+    "tabule_de_trigo": [
+      1004,
+      1005,
+      1006,
+      1007,
+      1008
+    ],
+    "tabuledequinoa": [
+      1009,
+      1010,
+      1011,
+      1012,
+      1013
+    ],
+    "tiramisu": [
+      1014,
+      1015,
+      1016
+    ],
+    "tiramisuvegano": [
+      1017
+    ],
+    "tofu_frito": [
+      1018
+    ],
+    "tomate": [
+      1019
+    ],
+    "tomateseco": [
+      1020
+    ],
+    "tomatesfatiados": [
+      1021
+    ],
+    "torradas": [
+      1022,
+      1023,
+      1024,
+      1025,
+      1026
+    ],
+    "torradas_com_ervas": [
+      1027
+    ],
+    "torradas_com_tempero": [
+      1028
+    ],
+    "torradas_de_alho": [
+      1029
+    ],
+    "torradas_temperadas": [
+      1030,
+      1031,
+      1032,
+      1033,
+      1034
+    ],
+    "torresmo": [
+      1035
+    ],
+    "torta_de_chocolate_com_frutas": [
+      1036
+    ],
+    "torta_de_legumes": [
+      1037
+    ],
+    "torta_de_legumes_gratinada": [
+      1038
+    ],
+    "torta_de_manga": [
+      1039
+    ],
+    "tortilha_de_figo_e_gorgonzola": [
+      1040
+    ],
+    "tortilha_espanhola_de_batata": [
+      1041,
+      1042
+    ],
+    "tortilla_chips": [
+      1043,
+      1044,
+      1045,
+      1046,
+      1047
+    ],
+    "tortinhadegongorzolaefigo": [
+      1048,
+      1049,
+      1050,
+      1051,
+      1052
+    ],
+    "umamidetomates": [
+      1053,
+      1054,
+      1055,
+      1056,
+      1057
+    ],
+    "uvas": [
+      1058
+    ],
+    "vermicelli": [
+      1059,
+      1060,
+      1061,
+      1062
+    ],
+    "vinagrete": [
+      1063,
+      1064,
+      1065,
+      1066,
+      1067
+    ],
+    "vol_au_vent": [
+      1068,
+      1069,
+      1070,
+      1071,
+      1072
+    ],
+    "volauventbatata": [
+      1073
+    ]
+  },
+  "metadata": {
+    "aboboraaocurry": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/aboboraaocurry"
+    },
+    "abobrinha_grelhada__copia": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/abobrinha_grelhada__copia"
+    },
+    "alhoporogratinadovegano": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/alhoporogratinadovegano"
+    },
+    "almdegasmolhosugo": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/almdegasmolhosugo"
+    },
+    "almondegasmolhosugo": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/almondegasmolhosugo"
+    },
+    "arroz7graos": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arroz7graos"
+    },
+    "arroz7graoscomfrutassecas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arroz7graoscomfrutassecas"
+    },
+    "arroz7graoscomlegumes": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arroz7graoscomlegumes"
+    },
+    "arrozbranco": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arrozbranco"
+    },
+    "arrozde7graoscomamendoas": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/arrozde7graoscomamendoas"
+    },
+    "arrozintegral": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arrozintegral"
+    },
+    "arrozintlegumes": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arrozintlegumes"
+    },
+    "atumaogergelim": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/atumaogergelim"
+    },
+    "bacalhaucomnatas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bacalhaucomnatas"
+    },
+    "bacalhaugomesdes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bacalhaugomesdes"
+    },
+    "bacalhaugomesdesa": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bacalhaugomesdesa"
+    },
+    "baiaodedois": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/baiaodedois"
+    },
+    "bananacaramelizada": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/bananacaramelizada"
+    },
+    "batataassada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/batataassada"
+    },
+    "batatacompaprica": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/batatacompaprica"
+    },
+    "batatadoce": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/batatadoce"
+    },
+    "beringela_ao_limao": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/beringela_ao_limao"
+    },
+    "beringelaaocurrykincam": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/beringelaaocurrykincam"
+    },
+    "beringelaaolimao": {
+      "image_count": 20,
+      "folder": "/app/datasets/organized/beringelaaolimao"
+    },
+    "beterrabaaobalsamico": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/beterrabaaobalsamico"
+    },
+    "bolinhodebacalhau": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bolinhodebacalhau"
+    },
+    "bolobrownie": {
+      "image_count": 8,
+      "folder": "/app/datasets/organized/bolobrownie"
+    },
+    "bolochocolatevegano": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bolochocolatevegano"
+    },
+    "bolodegengibre": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bolodegengibre"
+    },
+    "brocolis": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/brocolis"
+    },
+    "brocoliscomparmesao": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/brocoliscomparmesao"
+    },
+    "brocoliscouveflorgratinado": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/brocoliscouveflorgratinado"
+    },
+    "brocolisgratinado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/brocolisgratinado"
+    },
+    "canelonedeespinafre": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/canelonedeespinafre"
+    },
+    "caponata": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/caponata"
+    },
+    "carpacciodeabobrinha": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/carpacciodeabobrinha"
+    },
+    "carpacciodelaranja": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/carpacciodelaranja"
+    },
+    "carpacciodeperaruculaeamendoas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/carpacciodeperaruculaeamendoas"
+    },
+    "cebola": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cebola"
+    },
+    "cenouraaoiogurte": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cenouraaoiogurte"
+    },
+    "cenourapalito": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cenourapalito"
+    },
+    "cestinhasdecamarao": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/cestinhasdecamarao"
+    },
+    "cevicheperuano": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/cevicheperuano"
+    },
+    "cocada": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cocada"
+    },
+    "costelinhacibisana": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/costelinhacibisana"
+    },
+    "cuscuzdetapioca": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cuscuzdetapioca"
+    },
+    "cuscuzmarroquino": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cuscuzmarroquino"
+    },
+    "dadinhodetapioca": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/dadinhodetapioca"
+    },
+    "entrecotegrelhado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/entrecotegrelhado"
+    },
+    "ervadocecomlaranja": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/ervadocecomlaranja"
+    },
+    "escondidinhodecarneseca": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/escondidinhodecarneseca"
+    },
+    "espaguete": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/espaguete"
+    },
+    "farofadebacon": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/farofadebacon"
+    },
+    "farofadebananadaterra": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/farofadebananadaterra"
+    },
+    "feijaocariocasemcarne": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/feijaocariocasemcarne"
+    },
+    "feijaopretocomcarne": {
+      "image_count": 7,
+      "folder": "/app/datasets/organized/feijaopretocomcarne"
+    },
+    "feijaopretosemcarne": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/feijaopretosemcarne"
+    },
+    "feijaotropeiro": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/feijaotropeiro"
+    },
+    "figadoacebolado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/figadoacebolado"
+    },
+    "file_de_peixe_ao_confit_de_tomates": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/file_de_peixe_ao_confit_de_tomates"
+    },
+    "filedefrangoaparmegiana": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/filedefrangoaparmegiana"
+    },
+    "filedepeixeaomisso": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/filedepeixeaomisso"
+    },
+    "filedepeixeaomolhodelimao": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/filedepeixeaomolhodelimao"
+    },
+    "filedepeixeaomolhomisso": {
+      "image_count": 7,
+      "folder": "/app/datasets/organized/filedepeixeaomolhomisso"
+    },
+    "filedepeixemolhoconfit": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/filedepeixemolhoconfit"
+    },
+    "filedepeixemolhofrutassecas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/filedepeixemolhofrutassecas"
+    },
+    "frangocremedelimaosalnegro": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/frangocremedelimaosalnegro"
+    },
+    "gelatinadecereja": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/gelatinadecereja"
+    },
+    "goiabada": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/goiabada"
+    },
+    "graodebicotomatesecoespinafre": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/graodebicotomatesecoespinafre"
+    },
+    "hamburgerdecarne": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/hamburgerdecarne"
+    },
+    "hamburguedecarne": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/hamburguedecarne"
+    },
+    "hamburguervegano": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/hamburguervegano"
+    },
+    "hamcamaraocomcarnesuina": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/hamcamaraocomcarnesuina"
+    },
+    "jiloempanado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/jiloempanado"
+    },
+    "kibe": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/kibe"
+    },
+    "lasanhadeespinafre": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/lasanhadeespinafre"
+    },
+    "lasanhadeportobello": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/lasanhadeportobello"
+    },
+    "lentilhacomtofu": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/lentilhacomtofu"
+    },
+    "maminhaaomolhomongolia": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/maminhaaomolhomongolia"
+    },
+    "maminhaaomolhomostarda": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/maminhaaomolhomostarda"
+    },
+    "maminhamolhocebola": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/maminhamolhocebola"
+    },
+    "maminhanacervejapreta": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/maminhanacervejapreta"
+    },
+    "mandioquinhaassada": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/mandioquinhaassada"
+    },
+    "mandioquinhacomcamarao": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/mandioquinhacomcamarao"
+    },
+    "mechouiatunisia": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/mechouiatunisia"
+    },
+    "minipolpetonerecheadocomqueijo": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/minipolpetonerecheadocomqueijo"
+    },
+    "molhocaeiro": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/molhocaeiro"
+    },
+    "molhoparaorolinho": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/molhoparaorolinho"
+    },
+    "molhovinagrete": {
+      "image_count": 20,
+      "folder": "/app/datasets/organized/molhovinagrete"
+    },
+    "moquecadebanadaterra": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/moquecadebanadaterra"
+    },
+    "moussedemaracuja": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/moussedemaracuja"
+    },
+    "moussedemorango": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/moussedemorango"
+    },
+    "nhoqueaosugo": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/nhoqueaosugo"
+    },
+    "panceta_pururruca": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/panceta_pururruca"
+    },
+    "pancetapururuca": {
+      "image_count": 9,
+      "folder": "/app/datasets/organized/pancetapururuca"
+    },
+    "pepinocomiogurte": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/pepinocomiogurte"
+    },
+    "pernildecordeiro": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/pernildecordeiro"
+    },
+    "portobellorecheado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/portobellorecheado"
+    },
+    "pudim": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/pudim"
+    },
+    "puredebatatadoce": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/puredebatatadoce"
+    },
+    "puredemacaverde": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/puredemacaverde"
+    },
+    "puredemandioquinha": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/puredemandioquinha"
+    },
+    "quiabocomamendoim": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/quiabocomamendoim"
+    },
+    "quiaboempanado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/quiaboempanado"
+    },
+    "quiche4queijos": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/quiche4queijos"
+    },
+    "quichedealhoporo": {
+      "image_count": 11,
+      "folder": "/app/datasets/organized/quichedealhoporo"
+    },
+    "quichedebrocolis": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/quichedebrocolis"
+    },
+    "quichedeportobello": {
+      "image_count": 15,
+      "folder": "/app/datasets/organized/quichedeportobello"
+    },
+    "quichedetomateseco": {
+      "image_count": 8,
+      "folder": "/app/datasets/organized/quichedetomateseco"
+    },
+    "quinuacomtahine": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/quinuacomtahine"
+    },
+    "ratatouille": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/ratatouille"
+    },
+    "repolho": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/repolho"
+    },
+    "risoneaocremedelimao": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/risoneaocremedelimao"
+    },
+    "risoneaopesto": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/risoneaopesto"
+    },
+    "rolinhovietnamita": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/rolinhovietnamita"
+    },
+    "romeu": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/romeu"
+    },
+    "rucula": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/rucula"
+    },
+    "saladadefeijaobranco": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladadefeijaobranco"
+    },
+    "saladadegraodebico": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladadegraodebico"
+    },
+    "saladadelentilha": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladadelentilha"
+    },
+    "saladadeovos": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/saladadeovos"
+    },
+    "saladadeovoscombatata": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladadeovoscombatata"
+    },
+    "saladamediterranea": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladamediterranea"
+    },
+    "saladatailandesa": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladatailandesa"
+    },
+    "saladeovos": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/saladeovos"
+    },
+    "salpicaodefrango": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/salpicaodefrango"
+    },
+    "sobrecoxa": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/sobrecoxa"
+    },
+    "sobrecoxaaotandoori": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/sobrecoxaaotandoori"
+    },
+    "steakdecouveflor": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/steakdecouveflor"
+    },
+    "strogonoff": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/strogonoff"
+    },
+    "strogonoffdefilemignon": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/strogonoffdefilemignon"
+    },
+    "sushivietnamita": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/sushivietnamita"
+    },
+    "tabuledequinoa": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/tabuledequinoa"
+    },
+    "torta_de_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torta_de_legumes"
+    },
+    "tortinhadegongorzolaefigo": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/tortinhadegongorzolaefigo"
+    },
+    "umamidetomate": {
+      "image_count": 20,
+      "folder": "/app/datasets/organized/umamidetomate"
+    },
+    "umamidetomates": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/umamidetomates"
+    },
+    "uvas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/uvas"
+    },
+    "abobrinha_grelhada": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/abobrinha_grelhada"
+    },
+    "arroz_7_grãos_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/arroz_7_grãos_com_legumes"
+    },
+    "atum_ao_funghi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/atum_ao_funghi"
+    },
+    "bacalhau_gomes_de_sá": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/bacalhau_gomes_de_sá"
+    },
+    "batata_com_paprika": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/batata_com_paprika"
+    },
+    "beringela_a_parmegiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/beringela_a_parmegiana"
+    },
+    "beringela_ao_purê_de_limão_siciliano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/beringela_ao_purê_de_limão_siciliano"
+    },
+    "beringela_ao_purê_de_limão_siciliano_picles_de_dedo_de_moça": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/beringela_ao_purê_de_limão_siciliano_picles_de_dedo_de_moça"
+    },
+    "bolo_vegano_de_chocolate": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/bolo_vegano_de_chocolate"
+    },
+    "capuccino": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/capuccino"
+    },
+    "capuccino_com_chocolate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/capuccino_com_chocolate"
+    },
+    "carne_seca_com_abóbora": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_seca_com_abóbora"
+    },
+    "carpaccio_de_abobrinha_com_queijo_vegano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carpaccio_de_abobrinha_com_queijo_vegano"
+    },
+    "cenoura_com_iogurte_e_especiarias": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cenoura_com_iogurte_e_especiarias"
+    },
+    "ceviche_cibi_sana_filé_de_tilápia": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/ceviche_cibi_sana_filé_de_tilápia"
+    },
+    "ceviche_de_banana_da_terra": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ceviche_de_banana_da_terra"
+    },
+    "ceviche_de_manga": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ceviche_de_manga"
+    },
+    "costela_bovina": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/costela_bovina"
+    },
+    "farofa_de_bacon": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/farofa_de_bacon"
+    },
+    "farofa_de_banana_vegana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/farofa_de_banana_vegana"
+    },
+    "feijão_tropeiro": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/feijão_tropeiro"
+    },
+    "filé_de_tilápia_a_milanesa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/filé_de_tilápia_a_milanesa"
+    },
+    "fígado_acebolad9": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/fígado_acebolad9"
+    },
+    "fígado_acebolado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/fígado_acebolado"
+    },
+    "granola_cibi_sana": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/granola_cibi_sana"
+    },
+    "guacamole_com_manga": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/guacamole_com_manga"
+    },
+    "hambúrguer_bovino": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/hambúrguer_bovino"
+    },
+    "hambúrguer_vegano_de_nozes": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/hambúrguer_vegano_de_nozes"
+    },
+    "lasanha_de_berinjela": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/lasanha_de_berinjela"
+    },
+    "lasanha_de_espinafre": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/lasanha_de_espinafre"
+    },
+    "maminha_ao_molho_mostarda": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/maminha_ao_molho_mostarda"
+    },
+    "molho_tártaro": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/molho_tártaro"
+    },
+    "panceta_pururuca": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/panceta_pururuca"
+    },
+    "pastel_de_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pastel_de_queijo"
+    },
+    "peixe_a_milanesa": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/peixe_a_milanesa"
+    },
+    "pernil_assado_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pernil_assado_com_legumes"
+    },
+    "proteína_de_soja_ao_sugo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/proteína_de_soja_ao_sugo"
+    },
+    "quinoa_com_legumes": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/quinoa_com_legumes"
+    },
+    "quinoa_com_tahine": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/quinoa_com_tahine"
+    },
+    "risoto_de_alho_poró": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/risoto_de_alho_poró"
+    },
+    "rolinho_vietnamita_de_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/rolinho_vietnamita_de_legumes"
+    },
+    "salada_de_atum": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/salada_de_atum"
+    },
+    "salada_de_atum_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_de_atum_com_legumes"
+    },
+    "salada_de_feijão_fradinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_de_feijão_fradinho"
+    },
+    "salada_de_peixe": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_de_peixe"
+    },
+    "salada_mediterrânea": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/salada_mediterrânea"
+    },
+    "salada_oriental_de_biffun": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_oriental_de_biffun"
+    },
+    "tabule_de_trigo": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/tabule_de_trigo"
+    },
+    "tortilha_de_figo_e_gorgonzola": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tortilha_de_figo_e_gorgonzola"
+    },
+    "tortilha_espanhola_de_batata": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/tortilha_espanhola_de_batata"
+    },
+    "umame_de_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/umame_de_tomate"
+    },
+    "umami_de_tomates": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/umami_de_tomates"
+    },
+    "unknownabobrinhacaramelizadavegana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownabobrinhacaramelizadavegana"
+    },
+    "unknownabóboraassada": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownabóboraassada"
+    },
+    "unknownalmôndegasaomolhodeespeciariasindianas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownalmôndegasaomolhodeespeciariasindianas"
+    },
+    "unknownbatatadoceassada": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownbatatadoceassada"
+    },
+    "unknownbatatafrita": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownbatatafrita"
+    },
+    "unknowncanelonedeespinafrecomricotaaomolhodetomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncanelonedeespinafrecomricotaaomolhodetomate"
+    },
+    "unknowncebolascaramelizadas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncebolascaramelizadas"
+    },
+    "unknowncevichedemanga": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/unknowncevichedemanga"
+    },
+    "unknowncevichedepeixebranco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncevichedepeixebranco"
+    },
+    "unknownchocolatequente": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownchocolatequente"
+    },
+    "unknowncostelacommandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncostelacommandioca"
+    },
+    "unknowncouveflorgratinada": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknowncouveflorgratinada"
+    },
+    "unknowncravodaíndia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncravodaíndia"
+    },
+    "unknowndocedebananavegano(semaçúcar)": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknowndocedebananavegano(semaçúcar)"
+    },
+    "unknownestrogonofedefilémignon": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownestrogonofedefilémignon"
+    },
+    "unknownfeijoada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownfeijoada"
+    },
+    "unknownfeijãobranco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownfeijãobranco"
+    },
+    "unknownfígadoaceboladocompimentabiquinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownfígadoaceboladocompimentabiquinho"
+    },
+    "unknowngelatinadeabacaxi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowngelatinadeabacaxi"
+    },
+    "unknowngranola": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknowngranola"
+    },
+    "unknownguacamole": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownguacamole"
+    },
+    "unknownkiberecheado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownkiberecheado"
+    },
+    "unknownmanjardecococomcaldadeameixa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmanjardecococomcaldadeameixa"
+    },
+    "unknownmassaladecamarões": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmassaladecamarões"
+    },
+    "unknownmolhosugo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmolhosugo"
+    },
+    "unknownmoussedelimãosemaçúcar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmoussedelimãosemaçúcar"
+    },
+    "unknownpancettacrocante": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpancettacrocante"
+    },
+    "unknownpasteldefrangocomcatupiry": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpasteldefrangocomcatupiry"
+    },
+    "unknownpeitodefrangogrelhado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpeitodefrangogrelhado"
+    },
+    "unknownpernildecordeiroassado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpernildecordeiroassado"
+    },
+    "unknownpernilsuínoaomolhodelimão": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpernilsuínoaomolhodelimão"
+    },
+    "unknownpratofeito(pf)": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpratofeito(pf)"
+    },
+    "unknownpudimdeleitecondensado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownpudimdeleitecondensado"
+    },
+    "unknownpurêdemandioquinhacomleitedecoco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpurêdemandioquinhacomleitedecoco"
+    },
+    "unknownquiabocomamendoim": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownquiabocomamendoim"
+    },
+    "unknownquichedealhoporó": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownquichedealhoporó"
+    },
+    "unknownratatouille": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownratatouille"
+    },
+    "unknownrolinhovietnamita": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownrolinhovietnamita"
+    },
+    "unknownsaladadebeterrabacomlaranjaehortelã": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladadebeterrabacomlaranjaehortelã"
+    },
+    "unknownsaladadebifumcompepino": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownsaladadebifumcompepino"
+    },
+    "unknownsaladadequinoacomlegumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladadequinoacomlegumes"
+    },
+    "unknownsaladaderabanetecomlaranja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladaderabanetecomlaranja"
+    },
+    "unknownsaladadetomateemrodelas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladadetomateemrodelas"
+    },
+    "unknownsaladamediterrânea": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladamediterrânea"
+    },
+    "unknownsalpicãodefrango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsalpicãodefrango"
+    },
+    "unknownsobrecoxaaotucupi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsobrecoxaaotucupi"
+    },
+    "unknownspaghetticomtomatecerejaemanjericão": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownspaghetticomtomatecerejaemanjericão"
+    },
+    "unknownvinagrete": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownvinagrete"
+    },
+    "farofa_de_banana_da_terra_vegana": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/farofa_de_banana_da_terra_vegana"
+    },
+    "grelhado_dos_pescadores": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/grelhado_dos_pescadores"
+    },
+    "abobrinha_caramelizada_vegana": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/abobrinha_caramelizada_vegana"
+    },
+    "alface_frisée": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/alface_frisée"
+    },
+    "aligot_purê_de_batata_inglesa_com_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/aligot_purê_de_batata_inglesa_com_queijo"
+    },
+    "almondegas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/almondegas"
+    },
+    "almôndegas_com_especiarias_indiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/almôndegas_com_especiarias_indiana"
+    },
+    "bacalhau": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bacalhau"
+    },
+    "bife": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bife"
+    },
+    "bolinho_de_bacalhau": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/bolinho_de_bacalhau"
+    },
+    "bolinho_de_siri": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolinho_de_siri"
+    },
+    "camarao": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/camarao"
+    },
+    "camarao_grelhado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/camarao_grelhado"
+    },
+    "carne": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/carne"
+    },
+    "carne_de_porco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_de_porco"
+    },
+    "carne_moida": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/carne_moida"
+    },
+    "cebola_roxa_com_ervas_frescas_e_frutos_secos": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/cebola_roxa_com_ervas_frescas_e_frutos_secos"
+    },
+    "costela__cibi_sana": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/costela__cibi_sana"
+    },
+    "empanada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/empanada"
+    },
+    "espaguete_parisiense": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/espaguete_parisiense"
+    },
+    "filé_de_frango_parmegiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/filé_de_frango_parmegiana"
+    },
+    "frango_ao_molho": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/frango_ao_molho"
+    },
+    "frango_frito": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/frango_frito"
+    },
+    "frutos_do_mar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frutos_do_mar"
+    },
+    "frutos_do_mar_ao_molho_branco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frutos_do_mar_ao_molho_branco"
+    },
+    "gratinado_de_peixefrutos_do_mar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/gratinado_de_peixefrutos_do_mar"
+    },
+    "guacamole": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/guacamole"
+    },
+    "lula_e_camarao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lula_e_camarao"
+    },
+    "maminha_ao_molho_de_cebola": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/maminha_ao_molho_de_cebola"
+    },
+    "manjar_de_coco_com_calda_de_frutas_vermelhas": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/manjar_de_coco_com_calda_de_frutas_vermelhas"
+    },
+    "nhoque_de_banana_da_terra_vegana": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/nhoque_de_banana_da_terra_vegana"
+    },
+    "pastel_de_frango_com_catupiry": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pastel_de_frango_com_catupiry"
+    },
+    "peixe": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/peixe"
+    },
+    "peixe_ao_molho_branco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_ao_molho_branco"
+    },
+    "peixe_ao_molho_de_três_alhos_manteiga_e_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_ao_molho_de_três_alhos_manteiga_e_tomate"
+    },
+    "peixe_com_molho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_com_molho"
+    },
+    "peixe_empanado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/peixe_empanado"
+    },
+    "peixe_grelhado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/peixe_grelhado"
+    },
+    "purê_de_madioquinha_vegano_com_leite_de_coco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/purê_de_madioquinha_vegano_com_leite_de_coco"
+    },
+    "risoto_de_pêra_e_gorgonzola": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/risoto_de_pêra_e_gorgonzola"
+    },
+    "rolinho_vietnamita_de_camarão": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/rolinho_vietnamita_de_camarão"
+    },
+    "unknownarrozcombrócoliseamêndoas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownarrozcombrócoliseamêndoas"
+    },
+    "unknowndadinhodetapiocacomcamarão": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknowndadinhodetapiocacomcamarão"
+    },
+    "unknowngoiabada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowngoiabada"
+    },
+    "unknownovospochêcomcarnemoída": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownovospochêcomcarnemoída"
+    },
+    "beterraba_com_laranja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/beterraba_com_laranja"
+    },
+    "canelone_4_queijo": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/canelone_4_queijo"
+    },
+    "couveflor_gratinada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/couveflor_gratinada"
+    },
+    "filé_a_parmegiana": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/filé_a_parmegiana"
+    },
+    "filé_a_parmegiana__acompanhamentos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/filé_a_parmegiana__acompanhamentos"
+    },
+    "romeu_e_julieta": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/romeu_e_julieta"
+    },
+    "sobrecoxa_ao_tandori": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/sobrecoxa_ao_tandori"
+    },
+    "tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tomate"
+    },
+    "umami_de_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/umami_de_tomate"
+    },
+    "unknownbacalhauàportuguesa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownbacalhauàportuguesa"
+    },
+    "unknowncarnecomfritas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncarnecomfritas"
+    },
+    "unknowncebolaroxacomervasfrescasefrutossecos": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknowncebolaroxacomervasfrescasefrutossecos"
+    },
+    "unknowncocada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncocada"
+    },
+    "unknownfrangoàparmegiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownfrangoàparmegiana"
+    },
+    "unknowngelatinademorango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowngelatinademorango"
+    },
+    "unknownmamãoemcubos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmamãoemcubos"
+    },
+    "unknownpeixecomtomatecereja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpeixecomtomatecereja"
+    },
+    "unknownsaladadeovos": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownsaladadeovos"
+    },
+    "vermicelli": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/vermicelli"
+    },
+    "vol_au_vent_de_pimentão": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/vol_au_vent_de_pimentão"
+    },
+    "espagueti_ao_misso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/espagueti_ao_misso"
+    },
+    "file_a_parmegiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_a_parmegiana"
+    },
+    "file_de__peixe_em_manteiga_de_tomates": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_de__peixe_em_manteiga_de_tomates"
+    },
+    "file_de_peixe_em_manteiga_de_tomates": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/file_de_peixe_em_manteiga_de_tomates"
+    },
+    "file_de_peixe_rm_manteiga_de_tomates": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_de_peixe_rm_manteiga_de_tomates"
+    },
+    "grelahdo_dos_pescaodres": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/grelahdo_dos_pescaodres"
+    },
+    "sobrecoxa_ao_tandoori": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/sobrecoxa_ao_tandoori"
+    },
+    "baião_de_dois": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/baião_de_dois"
+    },
+    "costela_assada_com_mandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/costela_assada_com_mandioca"
+    },
+    "filé_de_peixe_ao_confir_de_tomates": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/filé_de_peixe_ao_confir_de_tomates"
+    },
+    "pão_de_alho_negro_e_cumaru": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pão_de_alho_negro_e_cumaru"
+    },
+    "salada_michouia_tunísia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_michouia_tunísia"
+    },
+    "unknownsaladadefeijãobrancocomtomateecebola": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladadefeijãobrancocomtomateecebola"
+    },
+    "melhoria_tunísia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/melhoria_tunísia"
+    },
+    "queijo_parmesão_ralado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/queijo_parmesão_ralado"
+    },
+    "radicais_ao_molho_de_mel_e_lamina_de_amendoas": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/radicais_ao_molho_de_mel_e_lamina_de_amendoas"
+    },
+    "radicchio_ao_molho_de_mel_e_lamina_de_amendoas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/radicchio_ao_molho_de_mel_e_lamina_de_amendoas"
+    },
+    "unknownbrownieemelancia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownbrownieemelancia"
+    },
+    "unknownvermicelli": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownvermicelli"
+    },
+    "cebola_caramelizada_vegana": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/cebola_caramelizada_vegana"
+    },
+    "unknownconchiglioneaocremecomsálviaeavelãs": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownconchiglioneaocremecomsálviaeavelãs"
+    },
+    "caneleira_quatro_queijos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/caneleira_quatro_queijos"
+    },
+    "cestinha_de_camarao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cestinha_de_camarao"
+    },
+    "ceviche_cibi_sana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ceviche_cibi_sana"
+    },
+    "cogumelo_recheado_com_legumes_e_queijo_vegano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cogumelo_recheado_com_legumes_e_queijo_vegano"
+    },
+    "costela_com_mandioca": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/costela_com_mandioca"
+    },
+    "coxinha_saudável_de_frango": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/coxinha_saudável_de_frango"
+    },
+    "cuscuz_marroquino_com_amêndoas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cuscuz_marroquino_com_amêndoas"
+    },
+    "entrecôte": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/entrecôte"
+    },
+    "espetinho_de_legumes_e_molho_pesto": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/espetinho_de_legumes_e_molho_pesto"
+    },
+    "estrogonofe_de_frango": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/estrogonofe_de_frango"
+    },
+    "ganache_de_chocolate_com_frutas": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/ganache_de_chocolate_com_frutas"
+    },
+    "hamburger_de_carne": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/hamburger_de_carne"
+    },
+    "lasanha_vegana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lasanha_vegana"
+    },
+    "lasanha_vegana_beringela_e_proteína_de_soja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lasanha_vegana_beringela_e_proteína_de_soja"
+    },
+    "lasanha_vegana_de_berinjela_e_proteína_de_soja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lasanha_vegana_de_berinjela_e_proteína_de_soja"
+    },
+    "linguiça_de_lombo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/linguiça_de_lombo"
+    },
+    "maminha_ao_molho_madeira": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/maminha_ao_molho_madeira"
+    },
+    "marinha_ao_molho_madeira": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/marinha_ao_molho_madeira"
+    },
+    "mechouia_tunísia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mechouia_tunísia"
+    },
+    "muqueca_de_banana_da_terra_vegana": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/muqueca_de_banana_da_terra_vegana"
+    },
+    "nhoque": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/nhoque"
+    },
+    "nhoque_ao_molho_de_gorgonzola": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/nhoque_ao_molho_de_gorgonzola"
+    },
+    "quiche_de_escarola_e_azeitonas_pretas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/quiche_de_escarola_e_azeitonas_pretas"
+    },
+    "radicchio_ao_molho_de_mel_e_lâmina_de_amêndoas": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/radicchio_ao_molho_de_mel_e_lâmina_de_amêndoas"
+    },
+    "salada_verde": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_verde"
+    },
+    "strogonoff_vegano": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/strogonoff_vegano"
+    },
+    "unknownarrozintegralcomlegumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownarrozintegralcomlegumes"
+    },
+    "unknownatumcomgergelimemolhotare": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownatumcomgergelimemolhotare"
+    },
+    "unknownatumseladocomgergelim": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownatumseladocomgergelim"
+    },
+    "unknownbacalhaugomesdesá": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownbacalhaugomesdesá"
+    },
+    "unknownbrownieveganocommorango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownbrownieveganocommorango"
+    },
+    "unknowncannelloniquatroqueijos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncannelloniquatroqueijos"
+    },
+    "unknowncestinhasdecamarão": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncestinhasdecamarão"
+    },
+    "unknownconchiglionirecheados": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownconchiglionirecheados"
+    },
+    "unknowncuscuzmarroquino": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncuscuzmarroquino"
+    },
+    "unknowncuscuzmarroquinocomvegetais": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowncuscuzmarroquinocomvegetais"
+    },
+    "unknownespetinhosdelegumesgrelhados": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownespetinhosdelegumesgrelhados"
+    },
+    "unknowngelatinadeuva": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknowngelatinadeuva"
+    },
+    "unknownmolhodecebola": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmolhodecebola"
+    },
+    "unknownmoussedemaracujá": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownmoussedemaracujá"
+    },
+    "unknownnãoépossívelidentificar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownnãoépossívelidentificar"
+    },
+    "unknownpasteldequeijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpasteldequeijo"
+    },
+    "unknownpurêdebatata": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpurêdebatata"
+    },
+    "unknownsaladadefrangocomlegumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsaladadefrangocomlegumes"
+    },
+    "aboboraassada": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/aboboraassada"
+    },
+    "abobrinha_grelhada_copia": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/abobrinha_grelhada_copia"
+    },
+    "abobrinhacaramelizadavegana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/abobrinhacaramelizadavegana"
+    },
+    "alface_frisee": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/alface_frisee"
+    },
+    "aligot_pure_de_batata_inglesa_com_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/aligot_pure_de_batata_inglesa_com_queijo"
+    },
+    "almondegas_com_especiarias_indiana": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/almondegas_com_especiarias_indiana"
+    },
+    "almondegasaomolhodeespeciariasindianas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/almondegasaomolhodeespeciariasindianas"
+    },
+    "arrozcombrocoliseamendoas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/arrozcombrocoliseamendoas"
+    },
+    "arrozintegralcomlegumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/arrozintegralcomlegumes"
+    },
+    "atum_ao_gergelim": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/atum_ao_gergelim"
+    },
+    "atumcomgergelimemolhotare": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/atumcomgergelimemolhotare"
+    },
+    "atumseladocomgergelim": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/atumseladocomgergelim"
+    },
+    "azeitona_preta": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/azeitona_preta"
+    },
+    "azeitonasverdes": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/azeitonasverdes"
+    },
+    "bacalhau_com_natas_e_champions": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bacalhau_com_natas_e_champions"
+    },
+    "bacalhau_com_natsa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bacalhau_com_natsa"
+    },
+    "bacalhau_gomes_de_sa": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/bacalhau_gomes_de_sa"
+    },
+    "bacalhauaportuguesa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bacalhauaportuguesa"
+    },
+    "baiao_de_dois": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/baiao_de_dois"
+    },
+    "batatadoceassada": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/batatadoceassada"
+    },
+    "batatafrita": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/batatafrita"
+    },
+    "beringela_ao_pure_de_limao_siciliano": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/beringela_ao_pure_de_limao_siciliano"
+    },
+    "beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/beringela_ao_pure_de_limao_siciliano_picles_de_dedo_de_moca"
+    },
+    "beterraba": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/beterraba"
+    },
+    "boloveganodechocolate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/boloveganodechocolate"
+    },
+    "brownieemelancia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/brownieemelancia"
+    },
+    "brownieveganocommorango": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/brownieveganocommorango"
+    },
+    "canelonedeespinafrecomricotaaomolhodetomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/canelonedeespinafrecomricotaaomolhodetomate"
+    },
+    "canelonequatroqueijos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/canelonequatroqueijos"
+    },
+    "cannelloniquatroqueijos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cannelloniquatroqueijos"
+    },
+    "caprese": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/caprese"
+    },
+    "carne_seca_com_abobora": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_seca_com_abobora"
+    },
+    "carnecomfritas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carnecomfritas"
+    },
+    "cebolaroxacomervasfrescasefrutossecos": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/cebolaroxacomervasfrescasefrutossecos"
+    },
+    "cebolascaramelizadas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cebolascaramelizadas"
+    },
+    "cestinha_de_camarão": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/cestinha_de_camarão"
+    },
+    "cestinhadecamarao": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cestinhadecamarao"
+    },
+    "ceviche_cibi_sana_file_de_tilapia": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/ceviche_cibi_sana_file_de_tilapia"
+    },
+    "cevichedemanga": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/cevichedemanga"
+    },
+    "cevichedepeixebranco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cevichedepeixebranco"
+    },
+    "chocolatequente": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/chocolatequente"
+    },
+    "cogumelo_recheado_de_com_legumes": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/cogumelo_recheado_de_com_legumes"
+    },
+    "conchiglione_ao_creme_com_salvia_e_avela": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/conchiglione_ao_creme_com_salvia_e_avela"
+    },
+    "conchiglioneaocremecomsalviaeavelas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/conchiglioneaocremecomsalviaeavelas"
+    },
+    "conchiglionirecheados": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/conchiglionirecheados"
+    },
+    "costela_cibi_sana": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/costela_cibi_sana"
+    },
+    "costelacommandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/costelacommandioca"
+    },
+    "couve_flor_gratinada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/couve_flor_gratinada"
+    },
+    "couveflorgratinada": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/couveflorgratinada"
+    },
+    "coxinha_saudavel_de_frango": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/coxinha_saudavel_de_frango"
+    },
+    "cravodaindia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cravodaindia"
+    },
+    "cuscuz_marroquino_com_amendoas": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/cuscuz_marroquino_com_amendoas"
+    },
+    "cuscuzmarroquinocomvegetais": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cuscuzmarroquinocomvegetais"
+    },
+    "dadinho_de_tapioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/dadinho_de_tapioca"
+    },
+    "dadinhodetapiocacomcamarao": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/dadinhodetapiocacomcamarao"
+    },
+    "docedebananavegano_semacucar": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/docedebananavegano_semacucar"
+    },
+    "entrecote": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/entrecote"
+    },
+    "espaguetecomtomatecereja": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/espaguetecomtomatecereja"
+    },
+    "espetinhosdelegumesgrelhados": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/espetinhosdelegumesgrelhados"
+    },
+    "estrogonofe_vegano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/estrogonofe_vegano"
+    },
+    "estrogonofedefilemignon": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/estrogonofedefilemignon"
+    },
+    "feijao_do_chef": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/feijao_do_chef"
+    },
+    "feijao_tropeiro": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/feijao_tropeiro"
+    },
+    "feijaobranco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/feijaobranco"
+    },
+    "feijoada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/feijoada"
+    },
+    "figado_acebolad9": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/figado_acebolad9"
+    },
+    "figado_acebolado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/figado_acebolado"
+    },
+    "figadoaceboladocompimentabiquinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/figadoaceboladocompimentabiquinho"
+    },
+    "file_a_parmegiana_acompanhamentos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_a_parmegiana_acompanhamentos"
+    },
+    "file_de_frango_parmegiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_de_frango_parmegiana"
+    },
+    "file_de_peixe_ao_confir_de_tomates": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/file_de_peixe_ao_confir_de_tomates"
+    },
+    "file_de_peixe_ao_molho_confit": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_de_peixe_ao_molho_confit"
+    },
+    "file_de_tilapia_a_milanesa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/file_de_tilapia_a_milanesa"
+    },
+    "fotos_balanca_temp": {
+      "image_count": 15,
+      "folder": "/app/datasets/organized/fotos_balanca_temp"
+    },
+    "frango_assado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_assado"
+    },
+    "frangoaparmegiana": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frangoaparmegiana"
+    },
+    "gelatinadeabacaxi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/gelatinadeabacaxi"
+    },
+    "gelatinademorango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/gelatinademorango"
+    },
+    "gelatinadeuva": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/gelatinadeuva"
+    },
+    "granola": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/granola"
+    },
+    "hamburguer_bovino": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/hamburguer_bovino"
+    },
+    "hamburguer_vegano_de_nozes": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/hamburguer_vegano_de_nozes"
+    },
+    "hamburguerangusaoponto": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/hamburguerangusaoponto"
+    },
+    "kiberecheado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/kiberecheado"
+    },
+    "lasanha_vegana_beringela_e_proteina_de_soja": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/lasanha_vegana_beringela_e_proteina_de_soja"
+    },
+    "lasanha_vegana_de_berinjela_e_proteina_de_soja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lasanha_vegana_de_berinjela_e_proteina_de_soja"
+    },
+    "linguica_de_lombo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/linguica_de_lombo"
+    },
+    "linguicaacebolada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/linguicaacebolada"
+    },
+    "mamao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mamao"
+    },
+    "mamaoemcubos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mamaoemcubos"
+    },
+    "manjardecococomcaldadeameixa": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/manjardecococomcaldadeameixa"
+    },
+    "massaladecamaroes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/massaladecamaroes"
+    },
+    "mechouia_tunisia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mechouia_tunisia"
+    },
+    "melancia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/melancia"
+    },
+    "melhoria_tunisia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/melhoria_tunisia"
+    },
+    "mixdegraos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mixdegraos"
+    },
+    "molho_tartaro": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/molho_tartaro"
+    },
+    "molhodecebola": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/molhodecebola"
+    },
+    "molhosugo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/molhosugo"
+    },
+    "mousse_de_maracuja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mousse_de_maracuja"
+    },
+    "moussedelimaosemacucar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/moussedelimaosemacucar"
+    },
+    "muqueca_de_banana_da_terra": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/muqueca_de_banana_da_terra"
+    },
+    "nachos": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/nachos"
+    },
+    "naoepossivelidentificar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/naoepossivelidentificar"
+    },
+    "ovospochecomcarnemoida": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/ovospochecomcarnemoida"
+    },
+    "panceta_pururca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/panceta_pururca"
+    },
+    "pancettacrocante": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pancettacrocante"
+    },
+    "pao_de_alho_negro_e_cumaru": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/pao_de_alho_negro_e_cumaru"
+    },
+    "pastel": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/pastel"
+    },
+    "pastel_de_carne": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pastel_de_carne"
+    },
+    "pasteldefrangocomcatupiry": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pasteldefrangocomcatupiry"
+    },
+    "pasteldequeijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pasteldequeijo"
+    },
+    "peitodefrangogrelhado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peitodefrangogrelhado"
+    },
+    "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_ao_molho_de_tres_alhos_manteiga_e_tomate"
+    },
+    "peixecomtomatecereja": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/peixecomtomatecereja"
+    },
+    "pernildecordeiroassado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pernildecordeiroassado"
+    },
+    "pernilsuinoaomolhodelimao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pernilsuinoaomolhodelimao"
+    },
+    "pimenta_biquinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pimenta_biquinho"
+    },
+    "pratofeito_pf": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pratofeito_pf"
+    },
+    "proteina_de_soja_ao_sugo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/proteina_de_soja_ao_sugo"
+    },
+    "pudimdeleitecondensado": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/pudimdeleitecondensado"
+    },
+    "pure_de_batata_doce": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/pure_de_batata_doce"
+    },
+    "pure_de_madioquinha_vegano_com_leite_de_coco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pure_de_madioquinha_vegano_com_leite_de_coco"
+    },
+    "puredebatata": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/puredebatata"
+    },
+    "puredemandioquinhacomleitedecoco": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/puredemandioquinhacomleitedecoco"
+    },
+    "queijo_parmesao_ralado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/queijo_parmesao_ralado"
+    },
+    "queijoralado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/queijoralado"
+    },
+    "quiche_de_escarola_com_azeitonas_pretas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/quiche_de_escarola_com_azeitonas_pretas"
+    },
+    "quiche_de_escarola_e_azeitona_preta": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/quiche_de_escarola_e_azeitona_preta"
+    },
+    "requeijao": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/requeijao"
+    },
+    "risoto_de_alho_poro": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/risoto_de_alho_poro"
+    },
+    "risoto_de_pera_e_gorgonzola": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/risoto_de_pera_e_gorgonzola"
+    },
+    "rolinho_vietnamita_de_camarao": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/rolinho_vietnamita_de_camarao"
+    },
+    "salada_de_feijao_fradinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_de_feijao_fradinho"
+    },
+    "salada_mediterranea": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/salada_mediterranea"
+    },
+    "salada_michouia_tunisia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_michouia_tunisia"
+    },
+    "saladadebeterrabacomlaranjaehortela": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladadebeterrabacomlaranjaehortela"
+    },
+    "saladadebifumcompepino": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/saladadebifumcompepino"
+    },
+    "saladadefeijaobrancocomtomateecebola": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladadefeijaobrancocomtomateecebola"
+    },
+    "saladadefrangocomlegumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladadefrangocomlegumes"
+    },
+    "saladadequinoacomlegumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladadequinoacomlegumes"
+    },
+    "saladaderabanetecomlaranja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladaderabanetecomlaranja"
+    },
+    "saladadetomateemrodelas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladadetomateemrodelas"
+    },
+    "sobrecoxaaotucupi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/sobrecoxaaotucupi"
+    },
+    "spaghetticomtomatecerejaemanjericao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/spaghetticomtomatecerejaemanjericao"
+    },
+    "strogonoffdefrango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/strogonoffdefrango"
+    },
+    "tiramisu": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/tiramisu"
+    },
+    "tomateseco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tomateseco"
+    },
+    "tomatesfatiados": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tomatesfatiados"
+    },
+    "torradas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/torradas"
+    },
+    "torta_de_manga": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torta_de_manga"
+    },
+    "vinagrete": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/vinagrete"
+    },
+    "vinaigrete": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/vinaigrete"
+    },
+    "vol_ai_vent_de_pimentao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/vol_ai_vent_de_pimentao"
+    },
+    "vol_au_vent_de_pimentao": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/vol_au_vent_de_pimentao"
+    },
+    "dadinho": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/dadinho"
+    },
+    "panceta": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/panceta"
+    },
+    "quiche": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/quiche"
+    },
+    "abobrinha_grelhada_com_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/abobrinha_grelhada_com_tomate"
+    },
+    "abobrinhagrelhada": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/abobrinhagrelhada"
+    },
+    "arroz_de_7_graos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/arroz_de_7_graos"
+    },
+    "atum_gergelim": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/atum_gergelim"
+    },
+    "atum_selado_com_gergelim": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/atum_selado_com_gergelim"
+    },
+    "atum_selado_com_gergelim_e_molho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/atum_selado_com_gergelim_e_molho"
+    },
+    "banana_grelhada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/banana_grelhada"
+    },
+    "beringelaaopuredelimao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/beringelaaopuredelimao"
+    },
+    "bife_ao_molho_de_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bife_ao_molho_de_ervas"
+    },
+    "bife_com_ervas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bife_com_ervas"
+    },
+    "bolinho_de_camarao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolinho_de_camarao"
+    },
+    "bolinhos_de_bacalhau": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/bolinhos_de_bacalhau"
+    },
+    "bolo_de_frutas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/bolo_de_frutas"
+    },
+    "bolo_de_gengibre": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolo_de_gengibre"
+    },
+    "brownie": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/brownie"
+    },
+    "brownie_de_chocolate": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/brownie_de_chocolate"
+    },
+    "browniedechocolate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/browniedechocolate"
+    },
+    "carne_ao_molho": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/carne_ao_molho"
+    },
+    "carne_com_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_com_ervas"
+    },
+    "ceviche": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/ceviche"
+    },
+    "cevichedepeixe": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/cevichedepeixe"
+    },
+    "conchiglioneaocremedeavelasesalvia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/conchiglioneaocremedeavelasesalvia"
+    },
+    "conchiglioneaocremedevaelasesalvia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/conchiglioneaocremedevaelasesalvia"
+    },
+    "cremedebanana": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/cremedebanana"
+    },
+    "filemignonemmanteigadeervas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/filemignonemmanteigadeervas"
+    },
+    "flan": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/flan"
+    },
+    "frango_com_batatas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_com_batatas"
+    },
+    "frango_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_com_legumes"
+    },
+    "frango_no_tacho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_no_tacho"
+    },
+    "frangoassado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frangoassado"
+    },
+    "frutas_ao_ganache_de_chocolate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frutas_ao_ganache_de_chocolate"
+    },
+    "frutasaoganachedechocolate": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/frutasaoganachedechocolate"
+    },
+    "frutos_do_mar_grelhados": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/frutos_do_mar_grelhados"
+    },
+    "grelhadodospescadores": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/grelhadodospescadores"
+    },
+    "leitao_a_pururuca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/leitao_a_pururuca"
+    },
+    "leitao_assado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/leitao_assado"
+    },
+    "manjar_de_coco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/manjar_de_coco"
+    },
+    "michouiatunisia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/michouiatunisia"
+    },
+    "paella": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/paella"
+    },
+    "paella_com_frutos_do_mar": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/paella_com_frutos_do_mar"
+    },
+    "paella_de_frutos_do_mar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/paella_de_frutos_do_mar"
+    },
+    "pancetapururca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pancetapururca"
+    },
+    "pudim_de_leite": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pudim_de_leite"
+    },
+    "ravioli": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/ravioli"
+    },
+    "romeuejulieta": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/romeuejulieta"
+    },
+    "salada_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_de_frango"
+    },
+    "saldacaprese": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saldacaprese"
+    },
+    "sushi_de_atum": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/sushi_de_atum"
+    },
+    "tartaro_de_atum_com_gergelim": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tartaro_de_atum_com_gergelim"
+    },
+    "tiramisuvegano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tiramisuvegano"
+    },
+    "tofu_frito": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/tofu_frito"
+    },
+    "unknownbúnchả": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownbúnchả"
+    },
+    "unknownkibbehcomarrozehomus": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownkibbehcomarrozehomus"
+    },
+    "unknownpratofeito": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknownpratofeito"
+    },
+    "unknownpratofeitobrasileiro": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpratofeitobrasileiro"
+    },
+    "unknownpratofeitocomlinguiça": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpratofeitocomlinguiça"
+    },
+    "unknownsushi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownsushi"
+    },
+    "volauvent": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/volauvent"
+    },
+    "beringelaaopuredelimaosiciliano": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/beringelaaopuredelimaosiciliano"
+    },
+    "bolinho_de_camarão_peixe": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolinho_de_camarão_peixe"
+    },
+    "conchiglione_ao_creme_com_salvia_e_avel": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/conchiglione_ao_creme_com_salvia_e_avel"
+    },
+    "ganachedechocolatecomfrutas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ganachedechocolatecomfrutas"
+    },
+    "saladamichouiatunísia": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/saladamichouiatunísia"
+    },
+    "volauuvent": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/volauuvent"
+    },
+    "creme_de_banana": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/creme_de_banana"
+    },
+    "vol_au_vent": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/vol_au_vent"
+    },
+    "aligot": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/aligot"
+    },
+    "arroz_7_graos_com_frutas_secas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/arroz_7_graos_com_frutas_secas"
+    },
+    "lentilha_com_tofu": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/lentilha_com_tofu"
+    },
+    "mini_polpetone": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mini_polpetone"
+    },
+    "pannacottacomfrutasvermelhas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/pannacottacomfrutasvermelhas"
+    },
+    "portobello_recheado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/portobello_recheado"
+    },
+    "unknown_abobrinha_grelhada_com_queijo_e_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_abobrinha_grelhada_com_queijo_e_tomate"
+    },
+    "unknown_aipim_na_manteiga": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_aipim_na_manteiga"
+    },
+    "unknown_arroz_com_frutas_e_ervas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_arroz_com_frutas_e_ervas"
+    },
+    "unknown_arroz_com_frutas_secas_e_ervas": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/unknown_arroz_com_frutas_secas_e_ervas"
+    },
+    "unknown_batatas_ao_molho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_batatas_ao_molho"
+    },
+    "unknown_berinjela_à_parmegiana": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/unknown_berinjela_à_parmegiana"
+    },
+    "unknown_bolinho_de_arroz": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_bolinho_de_arroz"
+    },
+    "unknown_bolinho_de_mandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_bolinho_de_mandioca"
+    },
+    "unknown_bolinho_de_queijo": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/unknown_bolinho_de_queijo"
+    },
+    "unknown_bolo_com_calda_de_frutas_vermelhas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_bolo_com_calda_de_frutas_vermelhas"
+    },
+    "unknown_bolo_de_leite_com_calda_de_frutas_vermelhas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_bolo_de_leite_com_calda_de_frutas_vermelhas"
+    },
+    "unknown_brownie": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_brownie"
+    },
+    "unknown_brownie_com_morango": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_brownie_com_morango"
+    },
+    "unknown_brownie_de_chocolate": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_brownie_de_chocolate"
+    },
+    "unknown_brownie_vegano_com_morangos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_brownie_vegano_com_morangos"
+    },
+    "unknown_carne_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_carne_com_legumes"
+    },
+    "unknown_carne_com_legumes_e_pimenta": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_carne_com_legumes_e_pimenta"
+    },
+    "unknown_carne_com_tomate_cereja_e_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_carne_com_tomate_cereja_e_ervas"
+    },
+    "unknown_carne_com_tomates_e_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_carne_com_tomates_e_ervas"
+    },
+    "unknown_carne_de_panela_com_mandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_carne_de_panela_com_mandioca"
+    },
+    "unknown_cogumelos_recheados": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/unknown_cogumelos_recheados"
+    },
+    "unknown_cogumelos_recheados_e_lentilha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_cogumelos_recheados_e_lentilha"
+    },
+    "unknown_cuscuz_marroquino_com_grãos_e_sementes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_cuscuz_marroquino_com_grãos_e_sementes"
+    },
+    "unknown_enroladinho_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_enroladinho_de_frango"
+    },
+    "unknown_ensopado_de_lentilha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_ensopado_de_lentilha"
+    },
+    "unknown_escondidinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_escondidinho"
+    },
+    "unknown_escondidinho_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_escondidinho_de_frango"
+    },
+    "unknown_escondidinho_vegetariano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_escondidinho_vegetariano"
+    },
+    "unknown_frango_ao_molho_cremoso": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/unknown_frango_ao_molho_cremoso"
+    },
+    "unknown_frango_com_molho_cremoso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_frango_com_molho_cremoso"
+    },
+    "unknown_frango_frito": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_frango_frito"
+    },
+    "unknown_frango_frito_com_tomate_cereja_e_cebolinha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_frango_frito_com_tomate_cereja_e_cebolinha"
+    },
+    "unknown_frango_à_parmegiana": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_frango_à_parmegiana"
+    },
+    "unknown_ganache_de_chocolate_com_frutas": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_ganache_de_chocolate_com_frutas"
+    },
+    "unknown_gnocchi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_gnocchi"
+    },
+    "unknown_gnocchi_ao_molho_branco": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_gnocchi_ao_molho_branco"
+    },
+    "unknown_gnocchi_com_molho_cremoso": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_gnocchi_com_molho_cremoso"
+    },
+    "unknown_gratinado_de_legumes": {
+      "image_count": 7,
+      "folder": "/app/datasets/organized/unknown_gratinado_de_legumes"
+    },
+    "unknown_lentilha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_lentilha"
+    },
+    "unknown_lentilha_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_lentilha_com_legumes"
+    },
+    "unknown_lentilha_com_tofu": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_lentilha_com_tofu"
+    },
+    "unknown_lentilha_com_vegetais": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/unknown_lentilha_com_vegetais"
+    },
+    "unknown_lentilha_refogada": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_lentilha_refogada"
+    },
+    "unknown_lentilha_refogada_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_lentilha_refogada_com_legumes"
+    },
+    "unknown_lentilha_refogada_com_tofu": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_lentilha_refogada_com_tofu"
+    },
+    "unknown_língua_ao_molho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_língua_ao_molho"
+    },
+    "unknown_mini_sanduíches_de_pasta_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_mini_sanduíches_de_pasta_de_frango"
+    },
+    "unknown_nachos": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/unknown_nachos"
+    },
+    "unknown_nhoque_com_molho_branco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_nhoque_com_molho_branco"
+    },
+    "unknown_nhoque_com_molho_cremoso": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_nhoque_com_molho_cremoso"
+    },
+    "unknown_ovos_ao_forno": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_ovos_ao_forno"
+    },
+    "unknown_panacota_com_calda_de_frutas_vermelhas": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/unknown_panacota_com_calda_de_frutas_vermelhas"
+    },
+    "unknown_panna_cotta_com_calda_de_frutas_vermelhas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_panna_cotta_com_calda_de_frutas_vermelhas"
+    },
+    "unknown_peixe_ao_molho_cremoso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_peixe_ao_molho_cremoso"
+    },
+    "unknown_peixe_com_molho_cremoso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_peixe_com_molho_cremoso"
+    },
+    "unknown_prato_com_legumes_e_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_prato_com_legumes_e_queijo"
+    },
+    "unknown_prato_com_queijo_e_cebolinha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_prato_com_queijo_e_cebolinha"
+    },
+    "unknown_prato_com_queijo_ralado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_prato_com_queijo_ralado"
+    },
+    "unknown_prato_de_legumes_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_prato_de_legumes_com_queijo"
+    },
+    "unknown_prato_de_vegetais_com_queijo": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_prato_de_vegetais_com_queijo"
+    },
+    "unknown_prato_gratinado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_prato_gratinado"
+    },
+    "unknown_prato_gratinado_com_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_prato_gratinado_com_queijo"
+    },
+    "unknown_pão_de_queijo": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/unknown_pão_de_queijo"
+    },
+    "unknown_risoto": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_risoto"
+    },
+    "unknown_risoto_de_legumes_e_arroz_com_frutas_secas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_risoto_de_legumes_e_arroz_com_frutas_secas"
+    },
+    "unknown_risoto_de_vegetais_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_risoto_de_vegetais_com_queijo"
+    },
+    "unknown_salada_de_orzo_com_nozes_e_folhas_verdes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_salada_de_orzo_com_nozes_e_folhas_verdes"
+    },
+    "unknown_salada_de_quinoa": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_salada_de_quinoa"
+    },
+    "unknown_shepherd's_pie": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_shepherd's_pie"
+    },
+    "unknown_sopa_de_legumes_gratinada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_sopa_de_legumes_gratinada"
+    },
+    "unknown_suflê_de_legumes_com_queijo": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/unknown_suflê_de_legumes_com_queijo"
+    },
+    "unknown_torradas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/unknown_torradas"
+    },
+    "unknown_torradas_com_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_torradas_com_ervas"
+    },
+    "unknown_torradas_com_tempero": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_torradas_com_tempero"
+    },
+    "unknown_torradas_de_alho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_torradas_de_alho"
+    },
+    "unknown_torradas_temperadas": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/unknown_torradas_temperadas"
+    },
+    "unknown_torresmo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_torresmo"
+    },
+    "unknown_torta_de_chocolate_com_frutas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_torta_de_chocolate_com_frutas"
+    },
+    "unknown_torta_de_legumes_gratinada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_torta_de_legumes_gratinada"
+    },
+    "unknown_tortilla_chips": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/unknown_tortilla_chips"
+    },
+    "volauventbatata": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/volauventbatata"
+    },
+    "pernil_de_cordeiro": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/pernil_de_cordeiro"
+    },
+    "unknown_batata_frita": {
+      "image_count": 9,
+      "folder": "/app/datasets/organized/unknown_batata_frita"
+    },
+    "unknown_empadas": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_empadas"
+    },
+    "unknown_empanadas": {
+      "image_count": 6,
+      "folder": "/app/datasets/organized/unknown_empanadas"
+    },
+    "unknown_frutos_do_mar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_frutos_do_mar"
+    },
+    "unknown_gnocchi_ao_molho_branco_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_gnocchi_ao_molho_branco_com_queijo"
+    },
+    "unknown_gnocchi_com_molho_cremoso_e_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_gnocchi_com_molho_cremoso_e_queijo"
+    },
+    "unknown_nhoque_ao_molho_branco_com_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_nhoque_ao_molho_branco_com_queijo"
+    },
+    "unknown_nhoque_com_molho_branco_e_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_nhoque_com_molho_branco_e_queijo"
+    },
+    "unknown_nhoque_com_molho_e_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_nhoque_com_molho_e_queijo"
+    },
+    "unknown_nhoque_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_nhoque_com_queijo"
+    },
+    "unknown_paella_de_frutos_do_mar": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_paella_de_frutos_do_mar"
+    },
+    "unknown_pastel": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/unknown_pastel"
+    },
+    "unknown_peixe_com_tomate_cereja": {
+      "image_count": 8,
+      "folder": "/app/datasets/organized/unknown_peixe_com_tomate_cereja"
+    },
+    "unknown_peixe_com_tomates_cereja": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknown_peixe_com_tomates_cereja"
+    },
+    "unknown_purê_de_batata": {
+      "image_count": 10,
+      "folder": "/app/datasets/organized/unknown_purê_de_batata"
+    },
+    "unknownpudim": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/unknownpudim"
+    },
+    "abobrinha_grelhada_com_queijo_e_tomate": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/abobrinha_grelhada_com_queijo_e_tomate"
+    },
+    "aipim_na_manteiga": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/aipim_na_manteiga"
+    },
+    "arroz_com_frutas_e_ervas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/arroz_com_frutas_e_ervas"
+    },
+    "arroz_com_frutas_secas_e_ervas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/arroz_com_frutas_secas_e_ervas"
+    },
+    "bacalhau_a_bras": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/bacalhau_a_bras"
+    },
+    "batata_frita": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/batata_frita"
+    },
+    "batatas_ao_molho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/batatas_ao_molho"
+    },
+    "berinjela_à_parmegiana": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/berinjela_à_parmegiana"
+    },
+    "bolinho_de_arroz": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolinho_de_arroz"
+    },
+    "bolinho_de_mandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolinho_de_mandioca"
+    },
+    "bolinho_de_queijo": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/bolinho_de_queijo"
+    },
+    "bolo_com_calda_de_frutas_vermelhas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolo_com_calda_de_frutas_vermelhas"
+    },
+    "bolo_de_leite_com_calda_de_frutas_vermelhas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bolo_de_leite_com_calda_de_frutas_vermelhas"
+    },
+    "brownie_com_morango": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/brownie_com_morango"
+    },
+    "brownie_vegano_com_morangos": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/brownie_vegano_com_morangos"
+    },
+    "bun_cha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/bun_cha"
+    },
+    "carne_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_com_legumes"
+    },
+    "carne_com_legumes_e_pimenta": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_com_legumes_e_pimenta"
+    },
+    "carne_com_tomate_cereja_e_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_com_tomate_cereja_e_ervas"
+    },
+    "carne_com_tomates_e_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_com_tomates_e_ervas"
+    },
+    "carne_de_panela_com_mandioca": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carne_de_panela_com_mandioca"
+    },
+    "carpacciodeabobrinhacomqueijovegano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/carpacciodeabobrinhacomqueijovegano"
+    },
+    "cogumelos_recheados": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/cogumelos_recheados"
+    },
+    "cogumelos_recheados_e_lentilha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cogumelos_recheados_e_lentilha"
+    },
+    "cuscuz_marroquino_com_grãos_e_sementes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/cuscuz_marroquino_com_grãos_e_sementes"
+    },
+    "empadas": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/empadas"
+    },
+    "enroladinho_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/enroladinho_de_frango"
+    },
+    "ensopado_de_lentilha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ensopado_de_lentilha"
+    },
+    "escondidinho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/escondidinho"
+    },
+    "escondidinho_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/escondidinho_de_frango"
+    },
+    "escondidinho_vegetariano": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/escondidinho_vegetariano"
+    },
+    "feijão_sem_carne": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/feijão_sem_carne"
+    },
+    "frango_ao_creme_de_limao": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_ao_creme_de_limao"
+    },
+    "frango_ao_molho_cremoso": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/frango_ao_molho_cremoso"
+    },
+    "frango_com_molho_cremoso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_com_molho_cremoso"
+    },
+    "frango_frito_com_tomate_cereja_e_cebolinha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/frango_frito_com_tomate_cereja_e_cebolinha"
+    },
+    "frango_à_parmegiana": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/frango_à_parmegiana"
+    },
+    "fígado_abolado": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/fígado_abolado"
+    },
+    "gnocchi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/gnocchi"
+    },
+    "gnocchi_ao_molho_branco": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/gnocchi_ao_molho_branco"
+    },
+    "gnocchi_ao_molho_branco_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/gnocchi_ao_molho_branco_com_queijo"
+    },
+    "gnocchi_com_molho_cremoso": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/gnocchi_com_molho_cremoso"
+    },
+    "gnocchi_com_molho_cremoso_e_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/gnocchi_com_molho_cremoso_e_queijo"
+    },
+    "gratinado_de_legumes": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/gratinado_de_legumes"
+    },
+    "kibbeh_com_arroz_e_homus": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/kibbeh_com_arroz_e_homus"
+    },
+    "lentilha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lentilha"
+    },
+    "lentilha_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lentilha_com_legumes"
+    },
+    "lentilha_com_vegetais": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/lentilha_com_vegetais"
+    },
+    "lentilha_refogada": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/lentilha_refogada"
+    },
+    "lentilha_refogada_com_legumes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lentilha_refogada_com_legumes"
+    },
+    "lentilha_refogada_com_tofu": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/lentilha_refogada_com_tofu"
+    },
+    "língua_ao_molho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/língua_ao_molho"
+    },
+    "mandioquinha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mandioquinha"
+    },
+    "mini_sanduíches_de_pasta_de_frango": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/mini_sanduíches_de_pasta_de_frango"
+    },
+    "nhoque_ao_molho_branco_com_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/nhoque_ao_molho_branco_com_queijo"
+    },
+    "nhoque_com_molho_branco": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/nhoque_com_molho_branco"
+    },
+    "nhoque_com_molho_branco_e_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/nhoque_com_molho_branco_e_queijo"
+    },
+    "nhoque_com_molho_cremoso": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/nhoque_com_molho_cremoso"
+    },
+    "nhoque_com_molho_e_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/nhoque_com_molho_e_queijo"
+    },
+    "nhoque_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/nhoque_com_queijo"
+    },
+    "ovos_ao_forno": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/ovos_ao_forno"
+    },
+    "panacota_com_calda_de_frutas_vermelhas": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/panacota_com_calda_de_frutas_vermelhas"
+    },
+    "panna_cotta_com_calda_de_frutas_vermelhas": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/panna_cotta_com_calda_de_frutas_vermelhas"
+    },
+    "peixe_ao_confit_de_tomates": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_ao_confit_de_tomates"
+    },
+    "peixe_ao_molho_cremoso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_ao_molho_cremoso"
+    },
+    "peixe_com_molho_cremoso": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/peixe_com_molho_cremoso"
+    },
+    "prato_com_legumes_e_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/prato_com_legumes_e_queijo"
+    },
+    "prato_com_queijo_e_cebolinha": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/prato_com_queijo_e_cebolinha"
+    },
+    "prato_com_queijo_ralado": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/prato_com_queijo_ralado"
+    },
+    "prato_de_legumes_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/prato_de_legumes_com_queijo"
+    },
+    "prato_de_vegetais_com_queijo": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/prato_de_vegetais_com_queijo"
+    },
+    "prato_feito": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/prato_feito"
+    },
+    "prato_feito_brasileiro": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/prato_feito_brasileiro"
+    },
+    "prato_feito_com_linguica": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/prato_feito_com_linguica"
+    },
+    "prato_gratinado": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/prato_gratinado"
+    },
+    "prato_gratinado_com_queijo": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/prato_gratinado_com_queijo"
+    },
+    "pão_de_queijo": {
+      "image_count": 4,
+      "folder": "/app/datasets/organized/pão_de_queijo"
+    },
+    "risoto": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/risoto"
+    },
+    "risoto_de_legumes_e_arroz_com_frutas_secas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/risoto_de_legumes_e_arroz_com_frutas_secas"
+    },
+    "risoto_de_vegetais_com_queijo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/risoto_de_vegetais_com_queijo"
+    },
+    "salada_de_orzo_com_nozes_e_folhas_verdes": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/salada_de_orzo_com_nozes_e_folhas_verdes"
+    },
+    "salada_de_quinoa": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/salada_de_quinoa"
+    },
+    "shepherd's_pie": {
+      "image_count": 2,
+      "folder": "/app/datasets/organized/shepherd's_pie"
+    },
+    "sopa_de_legumes_gratinada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/sopa_de_legumes_gratinada"
+    },
+    "suflê_de_legumes_com_queijo": {
+      "image_count": 3,
+      "folder": "/app/datasets/organized/suflê_de_legumes_com_queijo"
+    },
+    "sushi": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/sushi"
+    },
+    "torradas_com_ervas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torradas_com_ervas"
+    },
+    "torradas_com_tempero": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torradas_com_tempero"
+    },
+    "torradas_de_alho": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torradas_de_alho"
+    },
+    "torradas_temperadas": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/torradas_temperadas"
+    },
+    "torresmo": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torresmo"
+    },
+    "torta_de_chocolate_com_frutas": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torta_de_chocolate_com_frutas"
+    },
+    "torta_de_legumes_gratinada": {
+      "image_count": 1,
+      "folder": "/app/datasets/organized/torta_de_legumes_gratinada"
+    },
+    "tortilla_chips": {
+      "image_count": 5,
+      "folder": "/app/datasets/organized/tortilla_chips"
+    }
+  },
+  "version": "1.0",
+  "total_items": 1074,
+  "total_dishes": 375
+}
