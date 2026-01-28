@@ -2194,11 +2194,24 @@ function App() {
             {showPremium === 'register' && (
               <PremiumRegister 
                 onSuccess={(data) => {
-                  setPremiumUser({ nome: data.nome, meta_calorica: data.meta_calorica });
+                  setPremiumUser({ nome: data.nome, pin: data.pin, meta_calorica: data.meta_calorica });
                   setDailySummary({ nome: data.nome, meta: data.meta_calorica.meta_sugerida, consumido: 0, restante: data.meta_calorica.meta_sugerida, percentual: 0, pratos: [] });
-                  setShowPremium('dashboard');
+                  // Mostrar formulário de perfil após registro
+                  setShowPremium('profile');
                 }}
                 onCancel={() => setShowPremium('login')}
+              />
+            )}
+            
+            {/* Formulário de Perfil Premium */}
+            {showPremium === 'profile' && premiumUser && (
+              <PremiumProfileForm 
+                user={premiumUser}
+                onSave={(perfil) => {
+                  setPremiumUser(prev => ({ ...prev, perfil }));
+                  setShowPremium('dashboard');
+                }}
+                onSkip={() => setShowPremium('dashboard')}
               />
             )}
             
@@ -2207,6 +2220,7 @@ function App() {
                 user={premiumUser}
                 onLogout={handlePremiumLogout}
                 onClose={() => setShowPremium(null)}
+                onEditProfile={() => setShowPremium('profile')}
               />
             )}
           </div>
