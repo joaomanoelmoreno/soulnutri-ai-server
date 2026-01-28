@@ -1,5 +1,5 @@
 {
-  "nome": "Mandioquinhaassada",
+  "nome": "Mandioquinha Assada",
   "categoria": "vegano",
   "ingredientes": [
     "mandioquinha",
@@ -11,7 +11,9 @@
     "Rico em potássio",
     "Fácil digestão"
   ],
-  "riscos": [],
+  "riscos": [
+    "Nenhum em moderação"
+  ],
   "curiosidade": "A mandioquinha é uma raiz originária da América do Sul e seu cultivo é comum no Brasil, principalmente nas regiões Sul e Sudeste.",
   "slug": "mandioquinhaassada",
   "nutricao": {
