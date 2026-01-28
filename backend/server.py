@@ -367,6 +367,10 @@ async def identify_image(
         # SEM CHAMAR GEMINI - PRIORIDADE É NÃO GASTAR CRÉDITOS
         # ═══════════════════════════════════════════════════════════════════════
         THRESHOLD_LOCAL = 0.70  # 70% para resposta rápida em pratos conhecidos
+        THRESHOLD_MEDIO = 0.50  # 50% ainda usa local com confiança média
+        
+        # Flag para indicar se IA poderia melhorar o resultado
+        ia_disponivel = False
         
         # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO E SEM CRÉDITOS!)
         if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
@@ -375,24 +379,27 @@ async def identify_image(
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: Gemini Vision (DESABILITADO PARA ECONOMIZAR CRÉDITOS)
-        # Só usar se o usuário explicitamente solicitar ou for prato desconhecido
+        # NÍVEL 2: Gemini Vision - STAND-BY (só chama se usuário solicitar)
         # ─────────────────────────────────────────────────────────────────────
-        elif nivel1_score < THRESHOLD_LOCAL:
-            # NÃO chamar Gemini automaticamente - economizar créditos
-            # Usar o melhor resultado local disponível
-            if nivel1_score >= 0.50:
-                decision['source'] = 'local_index'
-                decision['cascade_level'] = 1
-                decision['confidence'] = 'média'
-                logger.info(f"[CASCATA] Usando resultado local (score médio: {nivel1_score:.0%}) - SEM CRÉDITOS")
-            else:
-                # Apenas para score muito baixo, marcar como não identificado
-                decision['source'] = 'local_index'
-                decision['cascade_level'] = 1
-                decision['confidence'] = 'baixa'
-                decision['message'] = 'Prato não identificado com certeza. Use o botão de correção para informar o nome correto.'
-                logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção manual")
+        elif nivel1_score >= THRESHOLD_MEDIO:
+            # Score médio - usa local mas indica que IA poderia ajudar
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'média'
+            ia_disponivel = True  # Marca que IA poderia melhorar
+            logger.info(f"[CASCATA] Resultado local médio ({nivel1_score:.0%}) - IA disponível se necessário")
+        
+        else:
+            # Score baixo - usa local mas sugere correção manual
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'baixa'
+            decision['message'] = 'Prato não identificado com certeza. Use o botão de correção.'
+            ia_disponivel = True  # Marca que IA poderia ajudar
+            logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção")
+        
+        # Adicionar flag de IA disponível na decisão
+        decision['ia_disponivel'] = ia_disponivel
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
