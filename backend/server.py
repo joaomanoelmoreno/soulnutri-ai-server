@@ -64,6 +64,23 @@ def format_dish_name(name: str) -> str:
     
     return formatted
 
+
+def get_confidence_level_message(score: float, confidence: str) -> str:
+    """
+    Gera mensagem descritiva para o nível de confiança.
+    Sistema de 3 níveis baseado no score:
+    - Alta (>= 85%): Identificação confiável
+    - Média (50-84%): Identificação provável, pode verificar
+    - Baixa (< 50%): Incerto, sugerir verificação
+    """
+    if score >= 0.85 or confidence == 'alta':
+        return "🟢 Alta confiança - Identificação precisa!"
+    elif score >= 0.50 or confidence == 'média':
+        return "🟡 Média confiança - Verifique se o prato está correto"
+    else:
+        return "🔴 Baixa confiança - Recomendamos verificar ou corrigir"
+
+
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(mongo_url)
