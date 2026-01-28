@@ -958,6 +958,8 @@ def obter_conteudo_premium(categoria: str, tipo_prato: str = None) -> dict:
         "beneficio_principal": "Contribui para uma alimentação equilibrada",
         "curiosidade_cientifica": "Uma dieta variada é a melhor forma de obter todos os nutrientes",
         "referencia_pesquisa": "OMS - Diretrizes Nutricionais",
+        "voce_sabia": "Comer devagar aumenta a saciedade e melhora a digestão",
+        "dica_chef": "Temperos frescos realçam o sabor sem adicionar sódio",
         "mito_verdade": None
     }
 
