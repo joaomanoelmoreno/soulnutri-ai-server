@@ -1,29 +1,39 @@
 {
   "nome": "Risone",
   "slug": "risone",
-  "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Risone - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "descricao": "Massa italiana em formato de grão de arroz, versátil e cremosa.",
+  "ingredientes": [
+    "risone (massa de trigo)",
+    "caldo",
+    "queijo parmesão",
+    "manteiga",
+    "temperos"
+  ],
+  "beneficios": [
+    "Fonte de carboidratos para energia",
+    "Fácil digestão",
+    "Versátil em receitas"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Pode conter lactose"
+  ],
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "160 kcal",
+    "proteinas": "5g",
+    "carboidratos": "32g",
+    "gorduras": "2g"
   },
-  "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_gluten": true,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
+  "tecnica": "Cozido em caldo",
   "indice_glicemico": "moderado",
   "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [],
-  "evitar_com": [],
-  "origem": "user_created_local"
+  "melhor_horario": "Almoço"
 }
