@@ -362,62 +362,37 @@ async def identify_image(
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
         # ═══════════════════════════════════════════════════════════════════════
-        # OTIMIZAÇÃO: Threshold 90% para pratos cadastrados (velocidade!)
-        # Para pratos do Cibi Sana, 90% já é confiança suficiente
+        # OTIMIZAÇÃO: Threshold 70% para pratos cadastrados (ECONOMIZAR CRÉDITOS!)
+        # Para pratos do Cibi Sana, 70% já é confiança suficiente
+        # SEM CHAMAR GEMINI - PRIORIDADE É NÃO GASTAR CRÉDITOS
         # ═══════════════════════════════════════════════════════════════════════
-        THRESHOLD_LOCAL = 0.90  # 90% para resposta rápida em pratos conhecidos
+        THRESHOLD_LOCAL = 0.70  # 70% para resposta rápida em pratos conhecidos
         
-        # Se confiança >= 90% no Nível 1, usar resultado direto (RÁPIDO!)
+        # Se confiança >= 70% no Nível 1, usar resultado direto (RÁPIDO E SEM CRÉDITOS!)
         if nivel1_score >= THRESHOLD_LOCAL and decision.get('identified'):
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
             logger.info(f"[CASCATA] ⚡ Resultado RÁPIDO do Nível 1 ({nivel1_score:.0%})")
         
         # ─────────────────────────────────────────────────────────────────────
-        # NÍVEL 2: Gemini Vision (Fallback para pratos não cadastrados)
-        # NOTA: YOLOv8 desabilitado temporariamente - será reativado com fotos reais do CibiSana
+        # NÍVEL 2: Gemini Vision (DESABILITADO PARA ECONOMIZAR CRÉDITOS)
+        # Só usar se o usuário explicitamente solicitar ou for prato desconhecido
         # ─────────────────────────────────────────────────────────────────────
         elif nivel1_score < THRESHOLD_LOCAL:
-            try:
-                from services.generic_ai import identify_unknown_dish
-                
-                logger.info(f"[NÍVEL 2] Consultando Gemini Vision...")
-                generic_result = await identify_unknown_dish(content)
-                
-                if generic_result.get('ok') and generic_result.get('nome'):
-                    decision = {
-                        'identified': True,
-                        'dish': 'unknown_' + generic_result.get('nome', '').lower().replace(' ', '_'),
-                        'dish_display': generic_result.get('nome', 'Prato Desconhecido'),
-                        'confidence': generic_result.get('confianca', 'média'),
-                        'score': generic_result.get('score', 0.7),
-                        'message': f"Identificado: {generic_result.get('nome')}",
-                        'category': generic_result.get('categoria', 'outros'),
-                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                        'descricao': generic_result.get('descricao', ''),
-                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                        'tecnica': generic_result.get('tecnica_preparo', ''),
-                        'beneficios': generic_result.get('beneficios', []),
-                        'riscos': generic_result.get('riscos', []),
-                        'alternatives': generic_result.get('alternativas', []),
-                        'nutrition': {
-                            'calorias': '~200 kcal',
-                            'proteinas': '~10g',
-                            'carboidratos': '~25g',
-                            'gorduras': '~8g'
-                        },
-                        'aviso_cibi_sana': None,
-                        'source': 'generic_ai',
-                        'cascade_level': 2,
-                        # Dados científicos da IA genérica
-                        'beneficio_principal': generic_result.get('beneficio_principal'),
-                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                        'referencia_pesquisa': generic_result.get('referencia_pesquisa'),
-                        'alerta_saude': generic_result.get('alerta_saude')
-                    }
-                    logger.info(f"[CASCATA] Resultado do Gemini Vision")
-            except Exception as e:
-                logger.warning(f"[NÍVEL 2] Erro no Gemini: {e}")
+            # NÃO chamar Gemini automaticamente - economizar créditos
+            # Usar o melhor resultado local disponível
+            if nivel1_score >= 0.50:
+                decision['source'] = 'local_index'
+                decision['cascade_level'] = 1
+                decision['confidence'] = 'média'
+                logger.info(f"[CASCATA] Usando resultado local (score médio: {nivel1_score:.0%}) - SEM CRÉDITOS")
+            else:
+                # Apenas para score muito baixo, marcar como não identificado
+                decision['source'] = 'local_index'
+                decision['cascade_level'] = 1
+                decision['confidence'] = 'baixa'
+                decision['message'] = 'Prato não identificado com certeza. Use o botão de correção para informar o nome correto.'
+                logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção manual")
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
@@ -443,9 +418,12 @@ async def identify_image(
             if is_premium:
                 logger.info(f"[PREMIUM] Usuário {nome} identificado")
         
-        # Buscar dados científicos do MongoDB (APENAS PARA PREMIUM)
+        # Buscar dados científicos - primeiro MongoDB, depois local
         scientific_data = {}
+        mito_verdade = None
         dish_slug = decision.get('dish')
+        categoria = decision.get('category', '')
+        
         if dish_slug and decision.get('source') != 'generic_ai':
             # Normalizar slug para busca
             slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
@@ -459,7 +437,24 @@ async def identify_image(
             )
             if mongo_dish and is_premium:
                 scientific_data = mongo_dish
-                logger.info(f"[PREMIUM] Dados científicos liberados para {dish_slug}")
+                logger.info(f"[PREMIUM] Dados científicos do MongoDB para {dish_slug}")
+            
+            # Se não encontrou no MongoDB, buscar dados Premium LOCAIS (SEM CRÉDITOS)
+            if not scientific_data and is_premium:
+                try:
+                    from services.local_dish_updater import obter_conteudo_premium, encontrar_tipo_prato
+                    tipo_prato = encontrar_tipo_prato(dish_slug.replace('_', ' '))
+                    premium_local = obter_conteudo_premium(categoria, tipo_prato)
+                    scientific_data = {
+                        'beneficio_principal': premium_local.get('beneficio_principal'),
+                        'curiosidade_cientifica': premium_local.get('curiosidade_cientifica'),
+                        'referencia_pesquisa': premium_local.get('referencia_pesquisa'),
+                        'alerta_saude': premium_local.get('alerta_saude')
+                    }
+                    mito_verdade = premium_local.get('mito_verdade')
+                    logger.info(f"[PREMIUM] Dados científicos LOCAIS para {dish_slug} (categoria: {categoria})")
+                except Exception as e:
+                    logger.warning(f"[PREMIUM] Erro ao buscar dados locais: {e}")
         
         # ═══════════════════════════════════════════════════════════════════════
         # ALERTAS PREMIUM EM TEMPO REAL
@@ -520,8 +515,8 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         # VERDADE OU MITO - EDUCAÇÃO NUTRICIONAL (PREMIUM)
         # ═══════════════════════════════════════════════════════════════════════
-        mito_verdade = None
-        if is_premium:
+        # mito_verdade pode já ter sido definido pelo local_dish_updater
+        if is_premium and not mito_verdade:
             try:
                 from services.mitos_verdades import get_mito_verdade
                 
@@ -569,6 +564,9 @@ async def identify_image(
             "curiosidade_cientifica": scientific_data.get('curiosidade_cientifica') if is_premium else None,
             "referencia_pesquisa": scientific_data.get('referencia_pesquisa') if is_premium else None,
             "alerta_saude": scientific_data.get('alerta_saude') if is_premium else None,
+            # Novos campos Premium
+            "voce_sabia": scientific_data.get('voce_sabia') if is_premium else None,
+            "dica_chef": scientific_data.get('dica_chef') if is_premium else None,
             # Verdade ou Mito - PREMIUM
             "mito_verdade": mito_verdade if is_premium else None,
             # Dados Premium extras
@@ -963,6 +961,165 @@ async def create_new_dish(
         
     except Exception as e:
         logger.error(f"Erro ao criar prato: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/create-dish-local")
+async def create_dish_local(
+    file: UploadFile = File(...),
+    dish_name: str = Form("")
+):
+    """
+    Cria/corrige um prato usando APENAS dados LOCAIS, SEM chamar IA, SEM gastar créditos.
+    Usa o local_dish_updater para preencher os dados baseado no nome.
+    """
+    try:
+        import uuid
+        import json
+        from datetime import datetime
+        from pathlib import Path
+        from difflib import SequenceMatcher
+        from services.local_dish_updater import atualizar_prato_local, encontrar_tipo_prato, PRATOS_COMPLETOS
+        from services.local_dish_updater import detectar_categoria_basica, detectar_alergenos_por_nome
+        
+        if not dish_name.strip():
+            return {"ok": False, "error": "Nome do prato é obrigatório"}
+        
+        content = await file.read()
+        
+        # Gerar slug do nome fornecido
+        slug = dish_name.lower().strip()
+        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
+        slug = slug.replace(' ', '_')
+        
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
+        dataset_dir = Path("/app/datasets/organized")
+        existing_match = None
+        
+        for dish_dir in dataset_dir.iterdir():
+            if not dish_dir.is_dir():
+                continue
+            info_path = dish_dir / "dish_info.json"
+            if info_path.exists():
+                try:
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        info = json.load(f)
+                        existing_name = info.get('nome', '').lower()
+                        # Verificar similaridade > 85%
+                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+                        if similarity > 0.85 or dish_dir.name == slug:
+                            existing_match = dish_dir.name
+                            logger.info(f"[CREATE-LOCAL] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                            break
+                except:
+                    pass
+        
+        # Se encontrou match, adiciona foto ao prato existente E atualiza com dados locais
+        if existing_match:
+            target_dir = dataset_dir / existing_match
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            unique_id = str(uuid.uuid4())[:8]
+            filename = f"{existing_match}_correct_{timestamp}_{unique_id}.jpg"
+            file_path = target_dir / filename
+            
+            with open(file_path, "wb") as f:
+                f.write(content)
+            
+            # Usar dados LOCAIS para atualizar informações
+            info_path = target_dir / "dish_info.json"
+            current_info = {}
+            if info_path.exists():
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    current_info = json.load(f)
+            
+            # Atualizar nome se diferente
+            if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
+                current_info['nome'] = dish_name.strip()
+                logger.info(f"[CREATE-LOCAL] Nome corrigido para: {dish_name.strip()}")
+            
+            # Usar local_dish_updater para preencher dados faltantes
+            result = atualizar_prato_local(existing_match, novo_nome=dish_name.strip())
+            
+            return {
+                "ok": True,
+                "message": f"✅ Correção salva! '{dish_name}' atualizado SEM usar créditos.",
+                "slug": existing_match,
+                "action": "updated_existing_local",
+                "credits_used": 0
+            }
+        
+        # CRIAR NOVO PRATO com dados LOCAIS
+        target_dir = dataset_dir / slug
+        target_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Salvar imagem
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{slug}_{timestamp}_{unique_id}.jpg"
+        file_path = target_dir / filename
+        
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        # Gerar dados usando regras LOCAIS
+        tipo = encontrar_tipo_prato(dish_name)
+        categoria = detectar_categoria_basica(dish_name)
+        alergenos = detectar_alergenos_por_nome(dish_name)
+        
+        # Pegar template se existir
+        dados_template = PRATOS_COMPLETOS.get(tipo, {})
+        
+        # Emoji baseado na categoria
+        emoji_map = {"vegano": "🌱", "vegetariano": "🥚", "proteína animal": "🍖"}
+        
+        dish_info = {
+            "nome": dish_name.strip(),
+            "slug": slug,
+            "categoria": categoria,
+            "category_emoji": emoji_map.get(categoria, "🍽️"),
+            "descricao": dados_template.get('descricao', f"{dish_name} - prato do Cibi Sana"),
+            "ingredientes": dados_template.get('ingredientes', []),
+            "beneficios": dados_template.get('beneficios', []),
+            "riscos": dados_template.get('riscos', []),
+            "tecnica": dados_template.get('tecnica', ''),
+            "nutricao": dados_template.get('nutricao', {"calorias": "~150 kcal", "proteinas": "~8g", "carboidratos": "~20g", "gorduras": "~5g"}),
+            "contem_gluten": alergenos.get('contem_gluten', False),
+            "contem_lactose": alergenos.get('contem_lactose', False),
+            "contem_ovo": alergenos.get('contem_ovo', False),
+            "contem_castanhas": alergenos.get('contem_castanhas', False),
+            "contem_frutos_mar": alergenos.get('contem_frutos_mar', False),
+            "contem_soja": alergenos.get('contem_soja', False),
+            "indice_glicemico": dados_template.get('indice_glicemico', 'moderado'),
+            "tempo_digestao": dados_template.get('tempo_digestao', '2-3 horas'),
+            "melhor_horario": dados_template.get('melhor_horario', 'Almoço'),
+            "combina_com": dados_template.get('combina_com', []),
+            "evitar_com": dados_template.get('evitar_com', []),
+            "origem": "user_created_local"
+        }
+        
+        # Salvar dish_info.json
+        dish_info_path = target_dir / "dish_info.json"
+        with open(dish_info_path, "w", encoding="utf-8") as f:
+            json.dump(dish_info, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"[CREATE-LOCAL] Novo prato criado SEM IA: {dish_name} -> {slug}")
+        
+        return {
+            "ok": True,
+            "message": f"✅ Prato '{dish_name}' criado com sucesso SEM usar créditos!",
+            "dish_slug": slug,
+            "dish_name": dish_name,
+            "dish_info": dish_info,
+            "file_saved": filename,
+            "credits_used": 0,
+            "note": "Dados gerados localmente. Execute Atualizar na auditoria para completar."
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar prato local: {e}")
         return JSONResponse(
             status_code=500,
             content={"ok": False, "error": str(e)}

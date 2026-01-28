@@ -419,6 +419,39 @@ PRATOS_COMPLETOS = {
         "indice_glicemico": "zero", "tempo_digestao": "4-5 horas", "melhor_horario": "Almoço especial",
         "combina_com": ["Arroz", "Farofa"], "evitar_com": ["Outras carnes gordurosas"],
     },
+    "cordeiro": {
+        "categoria": "proteína animal",
+        "ingredientes": ["carne de cordeiro", "alho", "alecrim", "sal", "azeite"],
+        "beneficios": ["Rica em proteínas de alta qualidade", "Excelente fonte de ferro heme", "Rico em vitamina B12", "Zinco biodisponível", "Ômega-3 (carne de pasto)"],
+        "riscos": ["Gordura saturada moderada", "Alto teor calórico"],
+        "nutricao": {"calorias": "294 kcal", "proteinas": "25g", "carboidratos": "0g", "gorduras": "21g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Assado lento com ervas", "descricao": "Carne de cordeiro macia e aromática, típica da culinária mediterrânea.",
+        "indice_glicemico": "zero", "tempo_digestao": "4-5 horas", "melhor_horario": "Almoço especial",
+        "combina_com": ["Arroz", "Legumes assados", "Molho de hortelã"], "evitar_com": ["Outras carnes gordurosas"],
+    },
+    "gnocchi": {
+        "categoria": "vegetariano",
+        "ingredientes": ["batata", "farinha de trigo", "ovo", "sal", "noz-moscada"],
+        "beneficios": ["Fonte de carboidratos", "Energia sustentada", "Conforto"],
+        "riscos": ["Contém glúten", "Contém ovo", "Alto índice glicêmico"],
+        "nutricao": {"calorias": "135 kcal", "proteinas": "3g", "carboidratos": "28g", "gorduras": "1g"},
+        "alergenos": {"contem_gluten": True, "contem_lactose": False, "contem_ovo": True},
+        "tecnica": "Cozido em água", "descricao": "Nhoque italiano de batata, leve e macio.",
+        "indice_glicemico": "alto", "tempo_digestao": "2-3 horas", "melhor_horario": "Almoço",
+        "combina_com": ["Molho de tomate", "Molho branco", "Pesto"], "evitar_com": ["Outras massas"],
+    },
+    "berinjela": {
+        "categoria": "vegano",
+        "ingredientes": ["berinjela", "azeite", "alho", "sal"],
+        "beneficios": ["Baixíssimas calorias", "Rica em fibras", "Antioxidantes (nasunina)", "Ajuda no controle do colesterol"],
+        "riscos": [],
+        "nutricao": {"calorias": "25 kcal", "proteinas": "1g", "carboidratos": "6g", "gorduras": "0.2g"},
+        "alergenos": {"contem_gluten": False, "contem_lactose": False, "contem_ovo": False},
+        "tecnica": "Grelhada ou assada", "descricao": "Berinjela versátil, base de muitos pratos mediterrâneos.",
+        "indice_glicemico": "muito baixo", "tempo_digestao": "2 horas", "melhor_horario": "Almoço ou jantar",
+        "combina_com": ["Tomate", "Queijo", "Azeite"], "evitar_com": [],
+    },
     "vinagrete": {
         "categoria": "vegano",
         "ingredientes": ["tomate", "cebola", "pimentão", "vinagre", "azeite"],
@@ -547,7 +580,10 @@ PALAVRAS_CHAVE = {
     "cogumelo": ["cogumelo", "cogumelos", "mushroom"],
     "camarão": ["camarão", "camarao"],
     "lasanha": ["lasanha"],
-    "pernil": ["pernil"],
+    "pernil": ["pernil suíno", "pernil suino"],
+    "cordeiro": ["cordeiro", "carneiro", "lamb"],
+    "gnocchi": ["gnocchi", "nhoque"],
+    "berinjela": ["berinjela", "beringela"],
     "vinagrete": ["vinagrete"],
     "maminha": ["maminha"],
     "sobrecoxa": ["sobrecoxa"],
@@ -765,6 +801,166 @@ def detectar_alergenos_por_nome(nome: str) -> dict:
         "contem_castanhas": any(p in nome_lower for p in ["castanha", "amêndoa", "nozes", "amendoim"]),
         "contem_frutos_mar": any(p in nome_lower for p in ["camarão", "lagosta", "siri", "lula", "polvo"]),
         "contem_soja": any(p in nome_lower for p in ["soja", "tofu", "shoyu"]),
+    }
+
+
+# =============================================================================
+# CONTEÚDO PREMIUM/CIENTÍFICO (informações adicionais para versão Premium)
+# =============================================================================
+CONTEUDO_PREMIUM = {
+    "proteína animal": {
+        "beneficio_principal": "Fonte completa de aminoácidos essenciais para manutenção e construção muscular",
+        "curiosidade_cientifica": "Proteínas animais têm valor biológico acima de 0.9, enquanto vegetais ficam entre 0.5-0.7",
+        "referencia_pesquisa": "Journal of Nutrition (2020)",
+        "voce_sabia": "A proteína animal é absorvida 95% pelo corpo, enquanto a vegetal fica entre 70-80%",
+        "dica_chef": "Carnes descansadas por 5 minutos após o preparo ficam mais suculentas",
+        "mito_verdade": {
+            "mito": "Carne vermelha sempre faz mal",
+            "verdade": "Cortes magros em porções moderadas (100-150g) são nutritivos"
+        }
+    },
+    "vegano": {
+        "beneficio_principal": "Rico em fibras, antioxidantes e fitonutrientes protetores",
+        "curiosidade_cientifica": "Dietas ricas em vegetais reduzem em até 30% o risco de doenças cardiovasculares",
+        "referencia_pesquisa": "American Journal of Clinical Nutrition (2019)",
+        "voce_sabia": "A cor dos vegetais indica seus nutrientes: verde=clorofila, laranja=betacaroteno, roxo=antocianinas",
+        "dica_chef": "Vegetais cozidos no vapor por 5-7 min preservam mais nutrientes que fervidos",
+        "mito_verdade": {
+            "mito": "Vegano não tem proteína",
+            "verdade": "Combinações como arroz+feijão fornecem todos os aminoácidos essenciais"
+        }
+    },
+    "vegetariano": {
+        "beneficio_principal": "Equilíbrio entre proteínas e nutrientes vegetais",
+        "curiosidade_cientifica": "Ovos são considerados padrão-ouro de proteína, com 97% de digestibilidade",
+        "referencia_pesquisa": "British Journal of Nutrition (2021)",
+        "voce_sabia": "A gema do ovo contém colina, essencial para a memória e função cerebral",
+        "dica_chef": "Ovos em temperatura ambiente emulsionam melhor em receitas",
+        "mito_verdade": {
+            "mito": "Ovo aumenta colesterol",
+            "verdade": "Estudos mostram que 1-3 ovos/dia não afetam negativamente pessoas saudáveis"
+        }
+    },
+    "cordeiro": {
+        "beneficio_principal": "Uma das melhores fontes de ferro heme e vitamina B12",
+        "curiosidade_cientifica": "Cordeiro de pasto tem até 50% mais ômega-3 que o criado em confinamento",
+        "referencia_pesquisa": "Meat Science Journal (2018)",
+        "voce_sabia": "O cordeiro é a carne mais consumida no mundo, especialmente no Oriente Médio",
+        "dica_chef": "Marinar com alecrim e alho por 2h realça o sabor e amacia as fibras",
+        "mito_verdade": {
+            "mito": "Cordeiro é muito gorduroso",
+            "verdade": "Cortes como pernil têm gordura similar ao frango com pele removida"
+        },
+        "alerta_saude": "Ideal para pessoas com anemia por deficiência de ferro"
+    },
+    "peixe": {
+        "beneficio_principal": "Ômega-3 EPA/DHA para saúde cardiovascular e cerebral",
+        "curiosidade_cientifica": "Consumir peixe 2x/semana reduz em 36% o risco de morte por doença cardíaca",
+        "referencia_pesquisa": "Circulation Journal (2019)",
+        "voce_sabia": "O salmão selvagem tem 3x mais ômega-3 que o de cativeiro",
+        "dica_chef": "Peixes brancos ficam mais saborosos grelhados com limão e ervas frescas",
+        "mito_verdade": {
+            "mito": "Todo peixe tem mercúrio",
+            "verdade": "Peixes menores (sardinha, tilápia) têm níveis muito baixos e seguros"
+        }
+    },
+    "arroz": {
+        "beneficio_principal": "Energia rápida e glicose para o cérebro",
+        "curiosidade_cientifica": "Arroz integral tem 3x mais fibras e mantém mais estável a glicemia",
+        "referencia_pesquisa": "Diabetes Care (2020)",
+        "voce_sabia": "O arroz alimenta mais de 3,5 bilhões de pessoas diariamente no mundo",
+        "dica_chef": "Lavar o arroz até a água sair clara remove o excesso de amido e deixa mais soltinho",
+        "mito_verdade": {
+            "mito": "Arroz engorda",
+            "verdade": "A porção adequada (4-5 colheres) fornece energia sem excesso calórico"
+        }
+    },
+    "feijão": {
+        "beneficio_principal": "Combinação única de proteína vegetal + fibras + ferro",
+        "curiosidade_cientifica": "Feijão com arroz forma uma proteína completa comparável à carne",
+        "referencia_pesquisa": "Food Chemistry (2019)",
+        "voce_sabia": "O Brasil é o maior consumidor de feijão do mundo per capita",
+        "dica_chef": "Deixar de molho por 8h e trocar a água reduz substâncias que causam gases",
+        "mito_verdade": {
+            "mito": "Feijão dá gases em todos",
+            "verdade": "Deixar de molho e trocar a água reduz 80% dos oligossacarídeos causadores"
+        }
+    },
+    "rolinho": {
+        "beneficio_principal": "Refeição leve com vegetais frescos e poucas calorias",
+        "curiosidade_cientifica": "A folha de arroz é naturalmente sem glúten e de fácil digestão",
+        "referencia_pesquisa": "Food Science & Nutrition (2020)",
+        "voce_sabia": "O rolinho vietnamita (gỏi cuốn) é considerado um dos pratos mais saudáveis do mundo",
+        "dica_chef": "Molhe a folha de arroz por apenas 2-3 segundos para não rasgar",
+        "mito_verdade": {
+            "mito": "Comida asiática é sempre gordurosa",
+            "verdade": "Rolinhos frescos não são fritos e têm menos de 50 calorias cada"
+        }
+    },
+    "quiche": {
+        "beneficio_principal": "Proteína completa do ovo com vegetais",
+        "curiosidade_cientifica": "A combinação ovo+queijo fornece cálcio de alta absorção",
+        "referencia_pesquisa": "European Journal of Nutrition (2019)",
+        "voce_sabia": "A quiche Lorraine original francesa leva apenas bacon, sem queijo",
+        "dica_chef": "Pré-assar a massa por 10min evita que fique encharcada",
+        "mito_verdade": {
+            "mito": "Quiche é muito calórica",
+            "verdade": "Uma fatia média (100g) tem cerca de 250 kcal - equivalente a um sanduíche"
+        }
+    },
+    "salada": {
+        "beneficio_principal": "Fibras, vitaminas e minerais com mínimas calorias",
+        "curiosidade_cientifica": "Folhas verde-escuras têm 10x mais nutrientes que as claras",
+        "referencia_pesquisa": "Nutrients Journal (2021)",
+        "voce_sabia": "Comer salada antes da refeição principal reduz a absorção de gorduras em até 20%",
+        "dica_chef": "Tempere a salada apenas na hora de servir para manter as folhas crocantes",
+        "mito_verdade": {
+            "mito": "Salada não sustenta",
+            "verdade": "Com proteína (ovo, frango, grão-de-bico), a salada é uma refeição completa"
+        }
+    },
+    "massa": {
+        "beneficio_principal": "Carboidrato de energia sustentada para atividades físicas",
+        "curiosidade_cientifica": "Massa al dente tem índice glicêmico 30% menor que a muito cozida",
+        "referencia_pesquisa": "Journal of Cereal Science (2020)",
+        "voce_sabia": "A Itália tem mais de 300 formatos diferentes de massa",
+        "dica_chef": "Guarde 1 xícara da água do cozimento para engrossar o molho naturalmente",
+        "mito_verdade": {
+            "mito": "Massa engorda",
+            "verdade": "A porção italiana tradicional é 80g (seco) - o problema é o excesso"
+        }
+    },
+    "sobremesa": {
+        "beneficio_principal": "Satisfação sensorial e energia rápida em pequenas porções",
+        "curiosidade_cientifica": "O chocolate amargo (70%+) tem flavonoides que protegem o coração",
+        "referencia_pesquisa": "Frontiers in Nutrition (2020)",
+        "voce_sabia": "Uma sobremesa pequena após a refeição ajuda na saciedade e evita beliscar depois",
+        "dica_chef": "Sobremesas com frutas frescas são mais leves e igualmente satisfatórias",
+        "mito_verdade": {
+            "mito": "Tem que cortar sobremesa para emagrecer",
+            "verdade": "Porções pequenas (50-100g) cabem em qualquer dieta equilibrada"
+        }
+    }
+}
+
+def obter_conteudo_premium(categoria: str, tipo_prato: str = None) -> dict:
+    """Retorna conteúdo Premium baseado na categoria ou tipo específico"""
+    # Primeiro tenta tipo específico (ex: cordeiro, peixe)
+    if tipo_prato and tipo_prato in CONTEUDO_PREMIUM:
+        return CONTEUDO_PREMIUM[tipo_prato]
+    
+    # Depois tenta pela categoria
+    if categoria in CONTEUDO_PREMIUM:
+        return CONTEUDO_PREMIUM[categoria]
+    
+    # Fallback genérico
+    return {
+        "beneficio_principal": "Contribui para uma alimentação equilibrada",
+        "curiosidade_cientifica": "Uma dieta variada é a melhor forma de obter todos os nutrientes",
+        "referencia_pesquisa": "OMS - Diretrizes Nutricionais",
+        "voce_sabia": "Comer devagar aumenta a saciedade e melhora a digestão",
+        "dica_chef": "Temperos frescos realçam o sabor sem adicionar sódio",
+        "mito_verdade": None
     }
 
 
