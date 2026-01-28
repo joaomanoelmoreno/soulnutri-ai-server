@@ -499,12 +499,49 @@ async def identify_image(
             logger.info(f"[CASCATA] Resultado local médio ({nivel1_score:.0%}) - IA disponível se necessário")
         
         else:
-            # Score baixo - usa local mas sugere correção manual
+            # Score baixo - tentar Google Vision como fallback (mais barato que Gemini)
             decision['source'] = 'local_index'
             decision['cascade_level'] = 1
             decision['confidence'] = 'baixa'
             decision['message'] = 'Prato não identificado com certeza. Use o botão de correção.'
             ia_disponivel = True  # Marca que IA poderia ajudar
+            
+            # ─────────────────────────────────────────────────────────────────────
+            # FALLBACK: Google Vision (BAIXO CUSTO - 1000/mês grátis)
+            # ─────────────────────────────────────────────────────────────────────
+            try:
+                from services.google_vision_service import (
+                    detect_labels_google_vision, 
+                    match_google_labels_to_dishes,
+                    is_google_vision_available
+                )
+                
+                if is_google_vision_available() and nivel1_score < 0.30:
+                    logger.info(f"[FALLBACK] Tentando Google Vision (score local muito baixo: {nivel1_score:.0%})")
+                    
+                    gv_result = await detect_labels_google_vision(content, max_results=10)
+                    
+                    if gv_result.get('ok') and gv_result.get('labels'):
+                        labels = gv_result['labels']
+                        logger.info(f"[Google Vision] Labels: {[l['description'] for l in labels[:3]]}")
+                        
+                        # Tentar mapear labels para pratos do índice
+                        match = match_google_labels_to_dishes(labels, index.dish_to_idx)
+                        
+                        if match and match.get('score', 0) > 0.7:
+                            # Encontrou correspondência! Usar resultado do Google
+                            matched_dish = match['dish']
+                            local_results = index.search_by_dish(matched_dish)
+                            if local_results:
+                                decision = analyze_result(local_results)
+                                decision['source'] = 'google_vision'
+                                decision['confidence'] = 'média'
+                                decision['cascade_level'] = 2
+                                decision['google_labels'] = [l['description'] for l in labels[:3]]
+                                logger.info(f"[Google Vision] ✅ Mapeado para: {matched_dish}")
+            except Exception as e:
+                logger.warning(f"[Google Vision] Erro no fallback: {e}")
+            
             logger.info(f"[CASCATA] Score baixo ({nivel1_score:.0%}) - solicitar correção")
         
         # Adicionar flag de IA disponível na decisão
