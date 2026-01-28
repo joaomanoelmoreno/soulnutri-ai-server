@@ -180,6 +180,8 @@ function App() {
   const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
   const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
   const [viewMode, setViewMode] = useState('buffet'); // 'buffet' = vista rápida, 'mesa' = vista completa
+  // IA sob demanda
+  const [loadingIA, setLoadingIA] = useState(false); // Carregando IA
   // Galeria de fotos capturadas
   const [photoGallery, setPhotoGallery] = useState(() => {
     const saved = localStorage.getItem('soulnutri_gallery');
@@ -976,7 +978,7 @@ function App() {
     }
   };
 
-  // Enviar feedback - INCORRETO (com correção)
+  // Enviar feedback - INCORRETO (com correção) - VERSÃO LOCAL (SEM CRÉDITOS)
   const sendFeedbackIncorrect = async (correctSlug) => {
     if (!lastImageBlob) return;
     
@@ -1002,6 +1004,8 @@ function App() {
       if (data.ok) {
         setFeedbackSent(true);
         setShowFeedback(false);
+        // Mostrar confirmação
+        alert(`✅ Correção salva!\n\nA foto foi adicionada ao prato correto.\n💰 Créditos usados: 0`);
       }
     } catch (e) {
       console.error('Erro ao enviar feedback:', e);
@@ -1061,7 +1065,7 @@ function App() {
     }
   };
 
-  // CRIAR PRATO NOVO com IA
+  // CRIAR PRATO NOVO - VERSÃO LOCAL (SEM CRÉDITOS)
   const createNewDish = async () => {
     if (!lastImageBlob || !newDishName.trim()) return;
     
@@ -1073,8 +1077,10 @@ function App() {
     
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s para criação
-      const res = await fetch(`${API}/ai/create-dish`, { 
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      
+      // USAR ENDPOINT LOCAL (SEM CRÉDITOS)
+      const res = await fetch(`${API}/ai/create-dish-local`, { 
         method: "POST", 
         body: fd,
         signal: controller.signal
@@ -1087,10 +1093,16 @@ function App() {
       if (data.ok) {
         setFeedbackSent(true);
         setShowFeedback(false);
+        const nomeSalvo = newDishName;
         setNewDishName("");
+        
         // Atualizar lista de pratos
         loadDishes();
-        // Mostrar resultado do novo prato
+        
+        // Mostrar confirmação clara ao usuário
+        alert(`✅ ${data.message}\n\n📝 Prato: ${nomeSalvo}\n💰 Créditos usados: 0`);
+        
+        // Mostrar resultado do novo prato se tiver dados
         if (data.dish_info) {
           setResult({
             ok: true,
@@ -1118,6 +1130,72 @@ function App() {
       if (mountedRef.current) {
         setCreatingDish(false);
       }
+    }
+  };
+
+  // MELHORAR IDENTIFICAÇÃO COM IA (sob demanda - consome créditos)
+  const melhorarComIA = async () => {
+    if (!lastImageBlob) {
+      alert('Nenhuma imagem para analisar');
+      return;
+    }
+    
+    // Confirmar com usuário
+    const confirmar = window.confirm(
+      '🤖 Usar IA para melhorar identificação?\n\n' +
+      '⚠️ Isso consome créditos do sistema.\n\n' +
+      'Continuar?'
+    );
+    
+    if (!confirmar) return;
+    
+    setLoadingIA(true);
+    
+    const fd = new FormData();
+    fd.append("file", lastImageBlob, "photo.jpg");
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      
+      const res = await fetch(`${API}/ai/identify-with-ai`, {
+        method: "POST",
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      const data = await res.json();
+      
+      if (data.ok && data.identified) {
+        // Atualizar resultado com dados da IA
+        setResult(prev => ({
+          ...prev,
+          ...data,
+          dish_display: data.dish_display,
+          category: data.category,
+          category_emoji: data.category_emoji,
+          confidence: data.confidence || 'alta',
+          ingredientes: data.ingredientes,
+          beneficios: data.beneficios,
+          descricao: data.descricao,
+          source: 'gemini_ai',
+          ia_disponivel: false // Já usou IA
+        }));
+        
+        alert(`✅ IA identificou: ${data.dish_display}\n\n💰 Créditos consumidos`);
+      } else {
+        alert(`❌ IA não conseguiu identificar\n\n${data.error || 'Tente corrigir manualmente'}`);
+      }
+    } catch (e) {
+      console.error('Erro ao chamar IA:', e);
+      if (e.name === 'AbortError') {
+        alert('Tempo limite excedido. Tente novamente.');
+      } else {
+        alert('Erro ao chamar IA: ' + (e.message || 'Erro de conexão'));
+      }
+    } finally {
+      setLoadingIA(false);
     }
   };
 
@@ -1606,6 +1684,28 @@ function App() {
           >
             {r.category_emoji} {r.category?.toUpperCase()}
           </div>
+
+          {/* BOTÃO IA - Aparece quando confiança é baixa/média e IA está disponível */}
+          {(r.confidence === 'baixa' || r.confidence === 'média' || r.ia_disponivel) && r.source !== 'gemini_ai' && (
+            <div className="ia-disponivel-box" data-testid="ia-disponivel-box">
+              <p className="ia-hint">🤔 Não tenho certeza sobre este prato</p>
+              <button 
+                className="ia-btn"
+                onClick={melhorarComIA}
+                disabled={loadingIA}
+                data-testid="melhorar-ia-btn"
+              >
+                {loadingIA ? '⏳ Consultando IA...' : '🤖 Usar IA para identificar (consome créditos)'}
+              </button>
+              <button 
+                className="corrigir-manual-btn"
+                onClick={() => setShowFeedback(true)}
+                data-testid="corrigir-manual-btn"
+              >
+                ✏️ Corrigir manualmente (grátis)
+              </button>
+            </div>
+          )}
 
           {/* ══════════════════════════════════════════════════════════
               VISTA BUFFET - Informações para DECISÃO RÁPIDA
