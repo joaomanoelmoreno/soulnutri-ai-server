@@ -127,49 +127,20 @@ def image_embedding_from_path(image_path: str) -> np.ndarray:
 
 
 def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
-    """Gera embedding usando busca por nome via Gemini Vision"""
+    """DESABILITADO - Retorna embedding aleatório para não gastar créditos"""
     import json
     
     start = time.time()
     
-    try:
-        # Usar Gemini para identificar o nome do prato
-        from services.generic_ai import identify_unknown_dish
-        import asyncio
-        import nest_asyncio
-        
-        # Permitir event loops aninhados
-        nest_asyncio.apply()
-        
-        # Rodar função async de forma síncrona
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        
-        result = loop.run_until_complete(identify_unknown_dish(image_bytes))
-        
-        if result.get('ok') and result.get('nome'):
-            dish_name = result.get('nome', '').lower().strip()
-            logger.info(f"[embedder] Gemini identificou: {dish_name}")
-            
-            # Buscar embedding do prato mais similar no índice local
-            embedding = _get_best_match_embedding(dish_name)
-            if embedding is not None:
-                logger.info(f"[embedder] Usando embedding local para '{dish_name}': {(time.time()-start)*1000:.0f}ms")
-                return embedding
-        
-        # Se não encontrou, criar embedding aleatório normalizado (fallback)
-        logger.warning("[embedder] Fallback: embedding aleatório")
-        random_emb = np.random.randn(512).astype(np.float32)
-        return random_emb / np.linalg.norm(random_emb)
-                
-    except Exception as e:
-        logger.error(f"[embedder] Erro na identificação: {e}")
-        # Fallback: embedding aleatório
-        random_emb = np.random.randn(512).astype(np.float32)
-        return random_emb / np.linalg.norm(random_emb)
+    # ═══════════════════════════════════════════════════════════════════════════
+    # ECONOMIA DE CRÉDITOS: Não chamar Gemini, usar fallback direto
+    # ═══════════════════════════════════════════════════════════════════════════
+    logger.info("[embedder] API externa DESABILITADA para economizar créditos")
+    
+    # Fallback: embedding aleatório normalizado
+    # Isso faz o sistema usar apenas o índice existente
+    random_emb = np.random.randn(512).astype(np.float32)
+    return random_emb / np.linalg.norm(random_emb)
 
 
 def _get_best_match_embedding(dish_name: str) -> np.ndarray:
