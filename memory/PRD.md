@@ -5,20 +5,25 @@ Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real
 
 ## O que foi implementado
 
-### 28/01/2026 - Otimização de Custos e Performance (HOJE)
-- **Índice CLIP reconstruído** - 301 pratos, 1321 embeddings, ~130-185ms
-- **Google Cloud Vision integrado** - Fallback de baixo custo (1.000 imagens/mês GRÁTIS)
-- **Sistema de confiança em 3 níveis restaurado**:
-  - 🟢 Alta (≥85%): "Identificação precisa!"
-  - 🟡 Média (50-84%): "Verifique se está correto"
-  - 🔴 Baixa (<50%): "Recomendamos verificar ou corrigir"
-- **Gemini removido do fluxo principal** - Usado apenas sob demanda (botão IA)
-- **Cascata de custo otimizada**:
-  1. CLIP Local (gratuito, ~130ms) - 100% do tráfego
-  2. Google Vision (quase grátis) - fallback quando score < 30%
-  3. Gemini (pago) - apenas por solicitação explícita
+### 28/01/2026 - Otimização de Custos, Perfil Premium e Correções (HOJE)
 
-### 28/01/2025 - Sistema SEM Créditos e Correções P0
+**Custos e Performance:**
+- Índice CLIP reconstruído - 301 pratos, 1321 embeddings, ~130-185ms
+- Google Cloud Vision integrado como fallback (1.000 imagens/mês GRÁTIS)
+- Sistema de confiança em 3 níveis restaurado com percentual visível
+- Gemini removido do fluxo principal - só usa sob demanda
+
+**Perfil Premium:**
+- Formulário de perfil coleta: peso, altura, idade, sexo, nível de atividade, restrições alimentares
+- Dicas personalizadas em tempo real baseadas no perfil do usuário
+- Alertas automáticos para restrições (diabético, celíaco, vegetariano, etc.)
+
+**Correções em Massa (sem usar IA):**
+- 265 pratos corrigidos automaticamente
+- Nomes formatados corretamente (espaços, acentos, capitalização)
+- Categorias corrigidas (vegetariano para pratos com queijo/ovo)
+
+### Sessões Anteriores
 - **Checkpoint v1 criado** - Versão funcional salva em `/app/checkpoints/v1_funcional_20260128_113435/`
 - **Restauração rápida** - Script `bash /app/checkpoints/RESTAURAR_V1.sh` restaura tudo
 - **Índice restaurado** - 492 pratos, 1806 embeddings funcionando
