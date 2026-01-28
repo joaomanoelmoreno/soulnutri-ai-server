@@ -2393,9 +2393,6 @@ async def translate_text_endpoint(
 
 
 
-# Incluir router
-app.include_router(api_router)
-
 # Evento de shutdown
 @app.on_event("shutdown")
 async def shutdown_db_client():
