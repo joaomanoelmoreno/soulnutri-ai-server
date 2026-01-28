@@ -2182,9 +2182,15 @@ function App() {
             {showPremium === 'login' && (
               <PremiumLogin 
                 onSuccess={(data) => {
-                  setPremiumUser(data.user);
+                  const user = data.user;
+                  setPremiumUser(user);
                   loadDailySummary();
-                  setShowPremium('dashboard');
+                  // Se não tem perfil preenchido, mostrar formulário
+                  if (!user.perfil || !user.perfil.peso) {
+                    setShowPremium('profile');
+                  } else {
+                    setShowPremium('dashboard');
+                  }
                 }}
                 onRegister={() => setShowPremium('register')}
                 onCancel={() => setShowPremium(null)}
