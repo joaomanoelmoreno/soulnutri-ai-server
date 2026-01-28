@@ -540,8 +540,8 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         # VERDADE OU MITO - EDUCAÇÃO NUTRICIONAL (PREMIUM)
         # ═══════════════════════════════════════════════════════════════════════
-        mito_verdade = None
-        if is_premium:
+        # mito_verdade pode já ter sido definido pelo local_dish_updater
+        if is_premium and not mito_verdade:
             try:
                 from services.mitos_verdades import get_mito_verdade
                 

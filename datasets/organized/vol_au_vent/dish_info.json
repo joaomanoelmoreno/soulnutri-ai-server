@@ -1,9 +1,11 @@
 {
   "slug": "vol_au_vent",
   "nome": "Vol au Vent",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "descricao": "",
-  "ingredientes": [],
+  "ingredientes": [
+    "Creme de Frango"
+  ],
   "beneficios": [],
   "riscos": [],
   "nutricao": {
@@ -18,5 +20,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥩",
+  "tecnica": ""
 }
