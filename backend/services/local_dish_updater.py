@@ -804,6 +804,95 @@ def detectar_alergenos_por_nome(nome: str) -> dict:
     }
 
 
+# =============================================================================
+# CONTEÚDO PREMIUM/CIENTÍFICO (informações adicionais para versão Premium)
+# =============================================================================
+CONTEUDO_PREMIUM = {
+    "proteína animal": {
+        "beneficio_principal": "Fonte completa de aminoácidos essenciais para manutenção e construção muscular",
+        "curiosidade_cientifica": "Proteínas animais têm valor biológico acima de 0.9, enquanto vegetais ficam entre 0.5-0.7",
+        "referencia_pesquisa": "Journal of Nutrition (2020)",
+        "mito_verdade": {
+            "mito": "Carne vermelha sempre faz mal",
+            "verdade": "Cortes magros em porções moderadas (100-150g) são nutritivos"
+        }
+    },
+    "vegano": {
+        "beneficio_principal": "Rico em fibras, antioxidantes e fitonutrientes protetores",
+        "curiosidade_cientifica": "Dietas ricas em vegetais reduzem em até 30% o risco de doenças cardiovasculares",
+        "referencia_pesquisa": "American Journal of Clinical Nutrition (2019)",
+        "mito_verdade": {
+            "mito": "Vegano não tem proteína",
+            "verdade": "Combinações como arroz+feijão fornecem todos os aminoácidos essenciais"
+        }
+    },
+    "vegetariano": {
+        "beneficio_principal": "Equilíbrio entre proteínas e nutrientes vegetais",
+        "curiosidade_cientifica": "Ovos são considerados padrão-ouro de proteína, com 97% de digestibilidade",
+        "referencia_pesquisa": "British Journal of Nutrition (2021)",
+        "mito_verdade": {
+            "mito": "Ovo aumenta colesterol",
+            "verdade": "Estudos mostram que 1-3 ovos/dia não afetam negativamente pessoas saudáveis"
+        }
+    },
+    "cordeiro": {
+        "beneficio_principal": "Uma das melhores fontes de ferro heme e vitamina B12",
+        "curiosidade_cientifica": "Cordeiro de pasto tem até 50% mais ômega-3 que o criado em confinamento",
+        "referencia_pesquisa": "Meat Science Journal (2018)",
+        "mito_verdade": {
+            "mito": "Cordeiro é muito gorduroso",
+            "verdade": "Cortes como pernil têm gordura similar ao frango com pele removida"
+        },
+        "alerta_saude": "Ideal para pessoas com anemia por deficiência de ferro"
+    },
+    "peixe": {
+        "beneficio_principal": "Ômega-3 EPA/DHA para saúde cardiovascular e cerebral",
+        "curiosidade_cientifica": "Consumir peixe 2x/semana reduz em 36% o risco de morte por doença cardíaca",
+        "referencia_pesquisa": "Circulation Journal (2019)",
+        "mito_verdade": {
+            "mito": "Todo peixe tem mercúrio",
+            "verdade": "Peixes menores (sardinha, tilápia) têm níveis muito baixos e seguros"
+        }
+    },
+    "arroz": {
+        "beneficio_principal": "Energia rápida e glicose para o cérebro",
+        "curiosidade_cientifica": "Arroz integral tem 3x mais fibras e mantém mais estável a glicemia",
+        "referencia_pesquisa": "Diabetes Care (2020)",
+        "mito_verdade": {
+            "mito": "Arroz engorda",
+            "verdade": "A porção adequada (4-5 colheres) fornece energia sem excesso calórico"
+        }
+    },
+    "feijão": {
+        "beneficio_principal": "Combinação única de proteína vegetal + fibras + ferro",
+        "curiosidade_cientifica": "Feijão com arroz forma uma proteína completa comparável à carne",
+        "referencia_pesquisa": "Food Chemistry (2019)",
+        "mito_verdade": {
+            "mito": "Feijão dá gases em todos",
+            "verdade": "Deixar de molho e trocar a água reduz 80% dos oligossacarídeos causadores"
+        }
+    }
+}
+
+def obter_conteudo_premium(categoria: str, tipo_prato: str = None) -> dict:
+    """Retorna conteúdo Premium baseado na categoria ou tipo específico"""
+    # Primeiro tenta tipo específico (ex: cordeiro, peixe)
+    if tipo_prato and tipo_prato in CONTEUDO_PREMIUM:
+        return CONTEUDO_PREMIUM[tipo_prato]
+    
+    # Depois tenta pela categoria
+    if categoria in CONTEUDO_PREMIUM:
+        return CONTEUDO_PREMIUM[categoria]
+    
+    # Fallback genérico
+    return {
+        "beneficio_principal": "Contribui para uma alimentação equilibrada",
+        "curiosidade_cientifica": "Uma dieta variada é a melhor forma de obter todos os nutrientes",
+        "referencia_pesquisa": "OMS - Diretrizes Nutricionais",
+        "mito_verdade": None
+    }
+
+
 def atualizar_todos_por_nome() -> dict:
     """Atualiza TODOS os pratos baseado no nome, SEM IA"""
     resultados = {"atualizados": 0, "erros": [], "total": 0, "por_tipo": {}}
