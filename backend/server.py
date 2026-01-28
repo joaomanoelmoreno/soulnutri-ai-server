@@ -563,6 +563,12 @@ async def identify_image(
         nutrition_data = decision.get('nutrition')
         nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
         
+        # Gerar mensagem de confiança em 3 níveis
+        confidence_level_msg = get_confidence_level_message(
+            decision['score'], 
+            decision['confidence']
+        )
+        
         # Montar resposta base
         response_data = {
             "ok": True,
@@ -570,6 +576,7 @@ async def identify_image(
             "dish": decision.get('dish'),
             "dish_display": format_dish_name(decision.get('dish_display', '')),
             "confidence": decision['confidence'],
+            "confidence_level": confidence_level_msg,  # NOVO: Mensagem descritiva
             "score": decision['score'],
             "message": decision['message'],
             "category": decision.get('category'),
