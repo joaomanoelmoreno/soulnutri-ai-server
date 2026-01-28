@@ -1693,7 +1693,7 @@ function App() {
               }}
               data-testid="confidence-level-badge"
             >
-              {r.confidence_level}
+              {r.confidence_level} ({Math.round(r.score * 100)}%)
             </div>
           )}
           
