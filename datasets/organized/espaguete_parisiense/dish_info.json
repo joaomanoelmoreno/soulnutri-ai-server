@@ -1,6 +1,6 @@
 {
   "nome": "Espaguete Parisiense",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
     "massa de trigo",
     "molho de tomate",
@@ -24,7 +24,7 @@
     "gorduras": "1g"
   },
   "tecnica": "Cozimento em água",
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
   "indice_glicemico": "moderado",
@@ -38,7 +38,7 @@
   "evitar_com": [
     "Molhos muito gordurosos"
   ],
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

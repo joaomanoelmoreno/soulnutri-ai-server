@@ -28,7 +28,7 @@
     "gorduras": "20g"
   },
   "category_emoji": "🥬",
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,

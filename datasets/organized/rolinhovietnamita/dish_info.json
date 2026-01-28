@@ -1,8 +1,8 @@
 {
-  "nome": "Robinho vietnamita",
+  "nome": "Rolinho vietnamita",
   "categoria": "vegano",
   "ingredientes": [
-    "Massa de arroz (papel de arroz)",
+    "(papel de arroz)",
     "Abobrinha",
     "Cenoura",
     "Hortelã fresca",
@@ -27,11 +27,12 @@
     "carboidratos": "15g",
     "gorduras": "1g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_soja": false,
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false
+  "contem_frutos_mar": false,
+  "tecnica": ""
 }
