@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import "./App.css";
 import "./Premium.css";
+import "./PremiumProfile.css";
 import { PremiumRegister, PremiumLogin, DailyCounter } from "./Premium";
+import { PremiumProfileForm, generatePersonalizedTip } from "./PremiumProfile";
 import CheckinRefeicao from "./CheckinRefeicao";
 import "./CheckinRefeicao.css";
 import { I18nProvider, useI18n, LanguageSelector } from "./I18nContext";
