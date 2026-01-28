@@ -1685,6 +1685,28 @@ function App() {
             {r.category_emoji} {r.category?.toUpperCase()}
           </div>
 
+          {/* BOTÃO IA - Aparece quando confiança é baixa/média e IA está disponível */}
+          {(r.confidence === 'baixa' || r.confidence === 'média' || r.ia_disponivel) && r.source !== 'gemini_ai' && (
+            <div className="ia-disponivel-box" data-testid="ia-disponivel-box">
+              <p className="ia-hint">🤔 Não tenho certeza sobre este prato</p>
+              <button 
+                className="ia-btn"
+                onClick={melhorarComIA}
+                disabled={loadingIA}
+                data-testid="melhorar-ia-btn"
+              >
+                {loadingIA ? '⏳ Consultando IA...' : '🤖 Usar IA para identificar (consome créditos)'}
+              </button>
+              <button 
+                className="corrigir-manual-btn"
+                onClick={() => setShowFeedback(true)}
+                data-testid="corrigir-manual-btn"
+              >
+                ✏️ Corrigir manualmente (grátis)
+              </button>
+            </div>
+          )}
+
           {/* ══════════════════════════════════════════════════════════
               VISTA BUFFET - Informações para DECISÃO RÁPIDA
               ══════════════════════════════════════════════════════════ */}
