@@ -1,38 +1,40 @@
 {
-  "nome": "Rolinho vietnamita",
-  "categoria": "vegano",
-  "ingredientes": [
-    "(papel de arroz)",
-    "Abobrinha",
-    "Cenoura",
-    "Hortelã fresca",
-    "Outras folhas verdes (rúcula ou alface)",
-    "Pepino"
-  ],
-  "descricao": "Rolinhos vietnamitas preparados com massa de arroz translúcida, recheados com cenoura ralada, abobrinha em julienne, folhas verdes e hortelã fresca. Servidos sobre fatias de pepino.",
-  "beneficios": [
-    "Rico em fibras provenientes dos vegetais, que auxiliam na digestão e promovem a saciedade.",
-    "Fonte de vitaminas e minerais, especialmente vitamina A (cenoura) e antioxidantes (folhas verdes e hortelã).",
-    "Baixo em calorias e gorduras, ideal para dietas de emagrecimento ou manutenção do peso."
-  ],
-  "riscos": [
-    "A massa de arroz pode conter glúten, dependendo da marca e ingredientes.",
-    "Não possui, se preparado com ingredientes 100% vegetais."
-  ],
-  "curiosidade": "Os rolinhos vietnamitas são tradicionalmente servidos com molhos à base de amendoim ou peixe, mas podem ser facilmente adaptados para opções veganas com molhos à base de soja ou tahini.",
+  "nome": "Rolinho Vietnamita",
   "slug": "rolinhovietnamita",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Rolinho vietnamita fresh roll (gỏi cuốn) - folha de arroz recheada com vegetais frescos e ervas aromáticas. Leve e refrescante.",
+  "ingredientes": [
+    "folha de arroz",
+    "pepino",
+    "cenoura",
+    "alface",
+    "hortelã",
+    "coentro",
+    "brotos de feijão"
+  ],
+  "beneficios": [
+    "Extremamente baixo em calorias",
+    "Rico em fibras e vitaminas",
+    "Sem glúten (folha de arroz)",
+    "Hidratante (vegetais frescos)",
+    "Digestão leve e rápida"
+  ],
+  "riscos": [],
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "2g",
-    "carboidratos": "15g",
-    "gorduras": "1g"
+    "calorias": "45 kcal",
+    "proteinas": "1g",
+    "carboidratos": "10g",
+    "gorduras": "0.2g"
   },
-  "category_emoji": "🥬",
-  "contem_soja": false,
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "tecnica": ""
+  "contem_soja": false,
+  "tecnica": "Montagem a frio com vegetais frescos",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Qualquer horário, ideal como entrada"
 }
