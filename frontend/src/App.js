@@ -1305,10 +1305,18 @@ function App() {
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
         setIsInstalled(true);
+        localStorage.setItem('soulnutri_install_dismissed', 'installed');
       }
       setDeferredPrompt(null);
     }
     setShowMenu(false);
+    setShowInstallPopup(false);
+  };
+
+  // Fechar popup de instalação (lembrar mais tarde)
+  const dismissInstallPopup = () => {
+    setShowInstallPopup(false);
+    localStorage.setItem('soulnutri_install_dismissed', Date.now().toString());
   };
 
   return (
