@@ -2590,16 +2590,20 @@ async def admin_list_premium_users():
 @api_router.post("/admin/premium/liberar")
 async def admin_liberar_premium(
     nome: str = Form(...),
-    dias: int = Form(30)
+    pin: str = Form(""),  # PIN opcional - cria se não existir
+    dias: int = Form(7)  # Padrão 7 dias para teste
 ):
     """
     Libera acesso Premium para um usuário por X dias.
+    Se o usuário não existir e PIN for fornecido, cria o usuário.
     
     Args:
         nome: Nome do usuário (case insensitive)
-        dias: Número de dias de acesso (padrão: 30)
+        pin: PIN do usuário (obrigatório para criar novo)
+        dias: Número de dias de acesso (padrão: 7 para teste)
     """
-    from datetime import datetime, timedelta
+    from datetime import datetime, timedelta, timezone
+    from services.profile_service import hash_pin
     
     try:
         # Buscar usuário pelo nome
@@ -2608,20 +2612,52 @@ async def admin_liberar_premium(
             {"_id": 0}
         )
         
-        if not user:
-            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
-        
         # Calcular data de expiração
-        data_expiracao = datetime.now() + timedelta(days=dias)
+        agora = datetime.now(timezone.utc)
+        data_expiracao = agora + timedelta(days=dias)
+        plano = "premium_trial" if dias <= 30 else "premium"
         
-        # Atualizar status Premium
+        if not user:
+            # Usuário não existe - criar se PIN fornecido
+            if not pin:
+                return {"ok": False, "error": f"Usuário '{nome}' não existe. Forneça um PIN para criar."}
+            
+            # Criar novo usuário Premium
+            novo_usuario = {
+                "nome": nome,
+                "pin_hash": hash_pin(pin),
+                "plano": plano,
+                "premium_ativo": True,
+                "premium_liberado_em": agora.isoformat(),
+                "premium_expira_em": data_expiracao.isoformat(),
+                "premium_ate": data_expiracao,
+                "premium_dias": dias,
+                "created_at": agora.isoformat()
+            }
+            
+            await db.users.insert_one(novo_usuario)
+            logger.info(f"[ADMIN] Novo usuário Premium criado: {nome} por {dias} dias")
+            
+            return {
+                "ok": True,
+                "message": f"✅ Novo usuário Premium criado: {nome}",
+                "nome": nome,
+                "dias": dias,
+                "plano": plano,
+                "expira_em": data_expiracao.isoformat(),
+                "acao": "criado"
+            }
+        
+        # Usuário existe - atualizar status Premium
         await db.users.update_one(
             {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
             {
                 "$set": {
+                    "plano": plano,
                     "premium_ativo": True,
-                    "premium_liberado_em": datetime.now().isoformat(),
+                    "premium_liberado_em": agora.isoformat(),
                     "premium_expira_em": data_expiracao.isoformat(),
+                    "premium_ate": data_expiracao,
                     "premium_dias": dias
                 }
             }
@@ -2631,10 +2667,12 @@ async def admin_liberar_premium(
         
         return {
             "ok": True,
-            "message": f"Premium liberado para {nome}",
+            "message": f"✅ Premium liberado para {nome}",
             "nome": nome,
             "dias": dias,
-            "expira_em": data_expiracao.isoformat()
+            "plano": plano,
+            "expira_em": data_expiracao.isoformat(),
+            "acao": "atualizado"
         }
         
     except Exception as e:
