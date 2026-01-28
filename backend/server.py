@@ -1468,10 +1468,11 @@ async def register_user(
     """
     Registra um novo usuário Premium com PIN local.
     Calcula automaticamente a meta calórica sugerida.
+    AUTOMÁTICO: 7 dias de Premium Trial grátis!
     """
     try:
         from services.profile_service import hash_pin, calcular_tmb, calcular_meta_calorica
-        from datetime import datetime, timezone
+        from datetime import datetime, timezone, timedelta
         
         # Validações
         if len(pin) < 4 or len(pin) > 6:
@@ -1484,7 +1485,11 @@ async def register_user(
         tmb = calcular_tmb(peso, altura, idade, sexo)
         meta_info = calcular_meta_calorica(tmb, nivel_atividade, objetivo)
         
-        # Criar perfil
+        # Calcular Premium Trial automático (7 dias)
+        agora = datetime.now(timezone.utc)
+        premium_expira = agora + timedelta(days=7)
+        
+        # Criar perfil com Premium Trial automático
         perfil = {
             "pin_hash": hash_pin(pin),
             "nome": nome,
@@ -1497,22 +1502,36 @@ async def register_user(
             "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
             "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
             "meta_calorica": meta_info,
-            "created_at": datetime.now(timezone.utc),
-            "updated_at": datetime.now(timezone.utc)
+            # Premium Trial automático - 7 dias grátis!
+            "plano": "premium_trial",
+            "premium_ativo": True,
+            "premium_ate": premium_expira,
+            "premium_expira_em": premium_expira.isoformat(),
+            "premium_liberado_em": agora.isoformat(),
+            "premium_dias": 7,
+            "premium_auto": True,  # Marca que foi automático
+            "created_at": agora,
+            "updated_at": agora
         }
         
         # Salvar no MongoDB
         result = await db.users.insert_one(perfil)
         user_id = str(result.inserted_id)
         
-        logger.info(f"[PREMIUM] Novo usuário registrado: {nome}")
+        logger.info(f"[PREMIUM] Novo usuário registrado: {nome} (7 dias trial automático)")
         
         return {
             "ok": True,
             "user_id": user_id,
             "nome": nome,
             "meta_calorica": meta_info,
-            "message": f"Bem-vindo ao SoulNutri Premium, {nome}!"
+            "premium": {
+                "ativo": True,
+                "plano": "premium_trial",
+                "dias": 7,
+                "expira_em": premium_expira.isoformat()
+            },
+            "message": f"🎉 Bem-vindo ao SoulNutri Premium, {nome}! Você tem 7 dias grátis para experimentar."
         }
         
     except Exception as e:
