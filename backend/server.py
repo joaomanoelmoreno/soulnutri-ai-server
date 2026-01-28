@@ -109,7 +109,8 @@ class IdentifyResponse(BaseModel):
     identified: bool
     dish: Optional[str] = None
     dish_display: Optional[str] = None
-    confidence: str
+    confidence: str  # 'alta', 'média', 'baixa'
+    confidence_level: Optional[str] = None  # Mensagem descritiva para o usuário
     score: float
     message: str
     category: Optional[str] = None
@@ -123,7 +124,7 @@ class IdentifyResponse(BaseModel):
     aviso_cibi_sana: Optional[str] = None
     alternatives: List[str] = []
     search_time_ms: Optional[float] = None
-    source: Optional[str] = "local_index"  # "local_index" ou "generic_ai"
+    source: Optional[str] = "local_index"  # "local_index", "google_vision" ou "generic_ai"
     # Novos campos científicos
     beneficio_principal: Optional[str] = None
     curiosidade_cientifica: Optional[str] = None
