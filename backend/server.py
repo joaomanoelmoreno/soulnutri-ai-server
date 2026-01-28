@@ -564,6 +564,9 @@ async def identify_image(
             "curiosidade_cientifica": scientific_data.get('curiosidade_cientifica') if is_premium else None,
             "referencia_pesquisa": scientific_data.get('referencia_pesquisa') if is_premium else None,
             "alerta_saude": scientific_data.get('alerta_saude') if is_premium else None,
+            # Novos campos Premium
+            "voce_sabia": scientific_data.get('voce_sabia') if is_premium else None,
+            "dica_chef": scientific_data.get('dica_chef') if is_premium else None,
             # Verdade ou Mito - PREMIUM
             "mito_verdade": mito_verdade if is_premium else None,
             # Dados Premium extras
