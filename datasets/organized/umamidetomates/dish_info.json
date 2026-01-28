@@ -2,7 +2,7 @@
   "nome": "Umami de Tomates",
   "slug": "umamidetomates",
   "categoria": "vegano",
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -14,5 +14,14 @@
     "proteinas": "~4g",
     "carboidratos": "~18g",
     "gorduras": "~2g"
-  }
+  },
+  "descricao": "",
+  "ingredientes": [
+    "Azeite de Oliva",
+    "Vinagre ",
+    "Tomates "
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": ""
 }
