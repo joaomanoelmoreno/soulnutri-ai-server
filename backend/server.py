@@ -362,64 +362,85 @@ async def identify_image(
         logger.info(f"[NÍVEL 1] OpenCLIP: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
         
         # ═══════════════════════════════════════════════════════════════════════
-        # NOVA LÓGICA: GEMINI PRIMEIRO, índice local como otimização
-        # O índice local está desatualizado, então priorizamos Gemini
+        # LÓGICA ECONÔMICA: ÍNDICE LOCAL PRIMEIRO, Gemini só quando necessário
+        # Prioriza economia de créditos!
         # ═══════════════════════════════════════════════════════════════════════
         
-        # Flag para indicar se IA poderia melhorar o resultado
         ia_disponivel = False
+        usar_gemini = False
         
-        # SEMPRE chamar Gemini para identificação confiável
-        try:
-            from services.generic_ai import identify_unknown_dish
-            
-            logger.info(f"[IDENTIFICAÇÃO] Consultando Gemini Vision...")
-            generic_result = await identify_unknown_dish(content)
-            
-            if generic_result.get('ok') and generic_result.get('nome'):
-                gemini_nome = generic_result.get('nome', '')
-                logger.info(f"[IDENTIFICAÇÃO] ✅ Gemini: {gemini_nome}")
-                
-                decision = {
-                    'identified': True,
-                    'dish': gemini_nome.lower().replace(' ', '_'),
-                    'dish_display': gemini_nome,
-                    'confidence': 'alta',
-                    'score': 0.95,
-                    'message': f"Identificado: {gemini_nome}",
-                    'category': generic_result.get('categoria', 'outros'),
-                    'category_emoji': generic_result.get('category_emoji', '🍽️'),
-                    'descricao': generic_result.get('descricao', ''),
-                    'ingredientes': generic_result.get('ingredientes_provaveis', []),
-                    'tecnica': generic_result.get('tecnica_preparo', ''),
-                    'beneficios': generic_result.get('beneficios', []),
-                    'riscos': generic_result.get('riscos', []),
-                    'alternatives': [],
-                    'nutrition': {
-                        'calorias': generic_result.get('calorias', '~150 kcal'),
-                        'proteinas': generic_result.get('proteinas', '~8g'),
-                        'carboidratos': generic_result.get('carboidratos', '~20g'),
-                        'gorduras': generic_result.get('gorduras', '~5g')
-                    },
-                    'aviso_cibi_sana': None,
-                    'source': 'gemini_ai',
-                    'cascade_level': 2,
-                    'ia_disponivel': False,
-                    'beneficio_principal': generic_result.get('beneficio_principal'),
-                    'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
-                }
-            else:
-                # Gemini falhou - usa resultado local como fallback
-                logger.warning(f"[IDENTIFICAÇÃO] Gemini falhou, usando índice local")
-                decision['source'] = 'local_index'
-                decision['confidence'] = 'média'
-                ia_disponivel = True
-                
-        except Exception as e:
-            logger.error(f"[IDENTIFICAÇÃO] Erro no Gemini: {e}")
+        # NÍVEL 1: Verificar score do índice local
+        if nivel1_score >= 0.70:
+            # Score alto - usar índice local (SEM CRÉDITOS!)
             decision['source'] = 'local_index'
-            decision['confidence'] = 'baixa'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'alta'
+            logger.info(f"[ECONOMIA] ✅ Índice local: {decision.get('dish_display')} ({nivel1_score:.0%}) - SEM CRÉDITOS")
+        
+        elif nivel1_score >= 0.50:
+            # Score médio - usar índice local mas marcar que IA pode melhorar
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'média'
             ia_disponivel = True
+            logger.info(f"[ECONOMIA] ⚠️ Índice local médio: {decision.get('dish_display')} ({nivel1_score:.0%}) - IA disponível")
+        
+        else:
+            # Score baixo - SOMENTE AGORA usar Gemini
+            usar_gemini = True
+            logger.info(f"[ECONOMIA] Score baixo ({nivel1_score:.0%}) - consultando Gemini...")
+        
+        # NÍVEL 2: Gemini Vision (SOMENTE quando score local < 50%)
+        if usar_gemini:
+            try:
+                from services.generic_ai import identify_unknown_dish
+                
+                generic_result = await identify_unknown_dish(content)
+                
+                if generic_result.get('ok') and generic_result.get('nome'):
+                    gemini_nome = generic_result.get('nome', '')
+                    logger.info(f"[GEMINI] ✅ Identificado: {gemini_nome}")
+                    
+                    decision = {
+                        'identified': True,
+                        'dish': gemini_nome.lower().replace(' ', '_'),
+                        'dish_display': gemini_nome,
+                        'confidence': 'alta',
+                        'score': 0.95,
+                        'message': f"Identificado: {gemini_nome}",
+                        'category': generic_result.get('categoria', 'outros'),
+                        'category_emoji': generic_result.get('category_emoji', '🍽️'),
+                        'descricao': generic_result.get('descricao', ''),
+                        'ingredientes': generic_result.get('ingredientes_provaveis', []),
+                        'tecnica': generic_result.get('tecnica_preparo', ''),
+                        'beneficios': generic_result.get('beneficios', []),
+                        'riscos': generic_result.get('riscos', []),
+                        'alternatives': [],
+                        'nutrition': {
+                            'calorias': generic_result.get('calorias', '~150 kcal'),
+                            'proteinas': generic_result.get('proteinas', '~8g'),
+                            'carboidratos': generic_result.get('carboidratos', '~20g'),
+                            'gorduras': generic_result.get('gorduras', '~5g')
+                        },
+                        'aviso_cibi_sana': None,
+                        'source': 'gemini_ai',
+                        'cascade_level': 2,
+                        'ia_disponivel': False,
+                        'beneficio_principal': generic_result.get('beneficio_principal'),
+                        'curiosidade_cientifica': generic_result.get('curiosidade_cientifica'),
+                    }
+                else:
+                    # Gemini falhou - usar resultado local mesmo com score baixo
+                    decision['source'] = 'local_index'
+                    decision['confidence'] = 'baixa'
+                    ia_disponivel = True
+                    logger.warning(f"[GEMINI] Falhou, usando local")
+                    
+            except Exception as e:
+                logger.error(f"[GEMINI] Erro: {e}")
+                decision['source'] = 'local_index'
+                decision['confidence'] = 'baixa'
+                ia_disponivel = True
         
         # Adicionar flag de IA disponível na decisão
         decision['ia_disponivel'] = ia_disponivel
