@@ -196,10 +196,11 @@ function App() {
   const [scannerResult, setScannerResult] = useState(null); // Resultado do scanner (overlay)
   const scanIntervalRef = useRef(null);
   // Premium states
-  const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard'
+  const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard', 'profile'
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
+  const [personalizedTips, setPersonalizedTips] = useState(null); // Dicas personalizadas
   // Menu e PWA
   const [showMenu, setShowMenu] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
