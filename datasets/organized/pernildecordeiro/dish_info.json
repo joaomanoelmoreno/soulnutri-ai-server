@@ -2,25 +2,30 @@
   "slug": "pernildecordeiro",
   "nome": "Pernil de Cordeiro",
   "categoria": "proteína animal",
-  "descricao": "Pernil assado suculento.",
+  "descricao": "Carne de cordeiro macia e aromática, assada lentamente com ervas mediterrâneas. Especialidade da casa.",
   "ingredientes": [
-    "pernil suíno",
+    "pernil de cordeiro",
+    "alecrim",
     "alho",
+    "azeite",
     "sal",
-    "ervas"
+    "pimenta"
   ],
   "beneficios": [
-    "Rico em proteínas",
-    "Sabor intenso"
+    "Rica em proteínas de alta qualidade",
+    "Excelente fonte de ferro heme (melhor absorção)",
+    "Rico em vitamina B12",
+    "Zinco biodisponível para imunidade",
+    "Ômega-3 quando de pasto"
   ],
   "riscos": [
-    "Gordura elevada"
+    "Gordura saturada moderada"
   ],
   "nutricao": {
-    "calorias": "260 kcal",
+    "calorias": "294 kcal",
     "proteinas": "25g",
     "carboidratos": "0g",
-    "gorduras": "17g"
+    "gorduras": "21g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -29,13 +34,15 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "category_emoji": "🍖",
-  "tecnica": "Assado lento",
+  "tecnica": "Assado lento com ervas",
   "indice_glicemico": "zero",
   "tempo_digestao": "4-5 horas",
   "melhor_horario": "Almoço especial",
   "combina_com": [
     "Arroz",
-    "Farofa"
+    "Legumes assados",
+    "Purê de batata",
+    "Molho de hortelã"
   ],
   "evitar_com": [
     "Outras carnes gordurosas"
