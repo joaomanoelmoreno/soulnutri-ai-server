@@ -506,14 +506,14 @@ async def identify_image(
         # 1.5 NÍVEL 1.5: YOLOv8 Local - Se disponível (~50-100ms)
         # 2. NÍVEL 2: Gemini Flash - Fallback universal (~700ms)
         # ═══════════════════════════════════════════════════════════════════════
-        # ARQUITETURA RESTAURADA:
-        # 1. CLIP Local (pratos brasileiros): ~200ms, GRÁTIS
-        # 2. Gemini Flash (internacional/fallback): ~700ms, 1500/dia grátis
+        # ARQUITETURA:
+        # - Cibi Sana: CLIP Local APENAS (Gemini BLOQUEADO, custo ZERO)
+        # - Outros restaurantes: Gemini primeiro (identifica qualquer prato)
         # ═══════════════════════════════════════════════════════════════════════
         
-        # Se fora do Brasil, vai direto para Gemini Flash
-        if not is_brazil:
-            logger.info(f"[INTERNACIONAL] Usando Gemini Flash direto")
+        # Se NÃO é Cibi Sana, usa Gemini (outros restaurantes no Brasil ou internacional)
+        if use_gemini:
+            logger.info(f"[GEMINI] Restaurante externo - usando Gemini Flash")
             try:
                 from services.gemini_flash_service import (
                     identify_dish_gemini_flash,
