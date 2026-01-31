@@ -1,30 +1,35 @@
 {
-  "slug": "nhoque_com_molho_branco",
-  "nome": "Nhoque com Molho Branco",
+  "slug": "Nhoque com Molho Branco",
+  "nome": "Nhoque ao Molho Branco",
   "categoria": "vegetariano",
   "descricao": "Nhoque de batata tradicional italiano.",
   "ingredientes": [
     "batata",
     "farinha de trigo",
     "ovo",
+    "leite",
     "sal"
   ],
   "beneficios": [
-    "Fonte de energia",
-    "Carboidratos"
+    "Fonte de carboidratos para energia",
+    "Contém cálcio do leite, importante para a saúde óssea",
+    "Pode ser uma opção reconfortante e saborosa",
+    "A batata oferece potássio, essencial para a função muscular."
   ],
   "riscos": [
-    "Contém glúten",
-    "Contém ovo"
+    "Alto teor de carboidratos, consumir com moderação.",
+    "Pode ser rico em sódio dependendo da quantidade de sal utilizada.",
+    "O molho branco pode ser calórico devido ao leite e derivados."
   ],
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "3g",
+    "calorias": "180 kcal",
+    "proteinas": "6g",
     "carboidratos": "25g",
-    "gorduras": "2g"
+    "gorduras": "7g",
+    "fibras": "2g"
   },
   "contem_gluten": true,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

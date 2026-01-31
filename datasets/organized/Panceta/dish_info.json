@@ -1,34 +1,37 @@
 {
-  "nome": "Panceta",
-  "slug": "panceta",
-  "categoria": "vegano",
+  "nome": "Panceta Pururuca",
+  "slug": "Panceta",
+  "categoria": "proteína animal",
   "ingredientes": [
     "Panceta suína",
-    "Sal grosso",
-    "Alho",
-    "Ervas"
+    "Sal ",
+    ""
   ],
   "descricao": "Panceta suína assada até ficar crocante por fora e macia por dentro. Um clássico da culinária brasileira.",
   "beneficios": [
-    "Rica em proteínas",
-    "Fonte de energia"
+    "Fonte de proteína.",
+    "Sabor intenso e característico.",
+    "Pode ser consumida em pequenas porções como petisco."
   ],
   "riscos": [
-    "Alto teor de gordura saturada",
-    "Alto teor de sódio"
+    "Alto teor de gordura saturada, devendo ser consumida com moderação.",
+    "Alto teor de sódio (devido ao sal).",
+    "Pode ser prejudicial para pessoas com problemas cardiovasculares."
   ],
   "curiosidade": "O nome 'pururuca' vem do tupi e significa 'o que estoura'.",
-  "category_emoji": "🌱",
+  "category_emoji": "🥩",
   "nutricao": {
-    "calorias": "450 kcal",
-    "proteinas": "30g",
-    "carboidratos": "2g",
-    "gorduras": "35g"
+    "calorias": "500 kcal",
+    "proteinas": "15g",
+    "carboidratos": "0g",
+    "gorduras": "50g",
+    "fibras": "0g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

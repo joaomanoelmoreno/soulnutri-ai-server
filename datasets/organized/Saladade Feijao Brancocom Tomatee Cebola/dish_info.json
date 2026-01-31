@@ -1,5 +1,5 @@
 {
-  "nome": "Salada de Feijão Branco com Tomate e Cebola",
+  "nome": "Salada de Feijão Branco ",
   "categoria": "vegano",
   "ingredientes": [
     "feijão",
@@ -19,7 +19,7 @@
     "Pode causar gases intestinais"
   ],
   "curiosidade": "O feijão branco é rico em ferro e pode ser um aliado no combate à anemia.",
-  "slug": "saladadefeijaobrancocomtomateecebola",
+  "slug": "Saladade Feijao Brancocom Tomatee Cebola",
   "nutricao": {
     "calorias": "77 kcal",
     "proteinas": "5g",
@@ -41,5 +41,8 @@
   "evitar_com": [
     "Excesso de embutidos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

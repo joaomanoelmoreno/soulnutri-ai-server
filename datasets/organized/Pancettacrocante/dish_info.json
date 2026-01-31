@@ -1,5 +1,5 @@
 {
-  "nome": "Pancettacrocante",
+  "nome": "Panceta Pururuca",
   "categoria": "proteína animal",
   "ingredientes": [
     "Pancetta (barriga de porco curada)",
@@ -18,14 +18,14 @@
     "Possível presença de nitratos e nitritos utilizados na cura, que podem ter riscos à saúde em excesso."
   ],
   "curiosidade": "A pancetta é um ingrediente essencial em diversas receitas italianas, como carbonara e amatriciana, sendo apreciada por seu sabor intenso e textura única.",
-  "slug": "pancettacrocante",
+  "slug": "Pancettacrocante",
   "nutricao": {
     "calorias": "~180 kcal",
     "proteinas": "~20g",
     "carboidratos": "~5g",
     "gorduras": "~8g"
   },
-  "category_emoji": "🍖",
+  "category_emoji": "🥩",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

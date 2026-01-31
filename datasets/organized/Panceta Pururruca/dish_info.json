@@ -1,9 +1,9 @@
 {
-  "slug": "panceta_pururruca",
+  "slug": "Panceta Pururruca",
   "ativo": true,
   "beneficios": [],
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
+  "category_emoji": "🥩",
   "contem_gluten": true,
   "created_at": "2026-01-24T16:20:10.700000",
   "descricao": "Prato com arroz, carne e outros acompanhamentos.",
@@ -13,7 +13,7 @@
     "Legumes",
     "Massa"
   ],
-  "nome": "panceta pururruca",
+  "nome": "Panceta Pururruca",
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",
@@ -26,5 +26,10 @@
     "Alérgeno: Pode conter soja no molho.",
     "Alérgeno: GLÚTEN (massa)"
   ],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

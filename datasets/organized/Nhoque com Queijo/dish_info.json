@@ -1,6 +1,6 @@
 {
-  "nome": "Nhoque com Queijo",
-  "slug": "nhoque_com_queijo",
+  "nome": "Nhoque ao Molho Branco",
+  "slug": "Nhoque com Queijo",
   "categoria": "vegetariano",
   "ingredientes": [
     "batata",
@@ -37,5 +37,8 @@
   ],
   "evitar_com": [
     "Molhos gordurosos"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
