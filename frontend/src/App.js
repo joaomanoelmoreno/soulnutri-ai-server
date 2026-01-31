@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo, Component } from "react";
 import "./App.css";
 import "./Premium.css";
 import "./PremiumProfile.css";
@@ -13,6 +13,61 @@ const API = `${BACKEND_URL}/api`;
 
 // Timeout para requisições (evita travamentos)
 const REQUEST_TIMEOUT = 15000; // 15 segundos
+
+// Error Boundary para capturar erros da câmera
+class CameraErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('[CameraErrorBoundary] Erro capturado:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="camera-error-fallback" style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          padding: '20px',
+          textAlign: 'center',
+          backgroundColor: '#1a1a2e',
+          color: '#fff'
+        }}>
+          <div style={{ fontSize: '48px', marginBottom: '16px' }}>📷</div>
+          <h3 style={{ marginBottom: '12px' }}>Erro na Câmera</h3>
+          <p style={{ marginBottom: '16px', color: '#aaa' }}>
+            Ocorreu um problema com a câmera. Por favor, recarregue a página.
+          </p>
+          <button 
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: '#4CAF50',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '16px'
+            }}
+          >
+            Recarregar Página
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Componente Welcome Popup - Boas-vindas com seleção de idioma
 function WelcomePopup({ onClose }) {
