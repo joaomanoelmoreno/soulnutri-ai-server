@@ -1,19 +1,36 @@
 {
-  "nome": "Tofu Frito",
-  "slug": "tofu_frito",
+  "slug": "Tofu Frito",
+  "nome": "Dadinho de Tapioca",
   "categoria": "vegano",
+  "descricao": "Cubos de tapioca artesanal com queijo coalho, assados em forno combinado",
   "ingredientes": [
     "tofu (soja)",
-    "temperos"
+    "temperos",
+    "queijo",
+    "farinha",
+    "ovo",
+    "tapioca",
+    "queijo coalho",
+    "sal"
   ],
-  "descricao": "Tofu, proteína vegetal versátil.",
   "beneficios": [
     "Proteína vegetal completa",
     "Cálcio",
-    "Isoflavonas"
+    "Isoflavonas",
+    "Sem glúten naturalmente",
+    "Cálcio do queijo: saúde óssea",
+    "Assado: mais leve que frito"
   ],
   "riscos": [
-    "Alérgeno: soja"
+    "Alérgeno: soja",
+    "Alérgeno: Laticínios",
+    "Alérgeno: Ovo",
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo)",
+    "Contém lactose",
+    "Pode conter traços de glúten"
   ],
   "nutricao": {
     "calorias": "76 kcal",
@@ -21,29 +38,10 @@
     "carboidratos": "1.9g",
     "gorduras": "4.8g"
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
-  "tecnica": "Grelhado ou refogado",
   "contem_ovo": false,
-  "contem_soja": true,
-  "indice_glicemico": "muito baixo",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Legumes",
-    "Molho shoyu",
-    "Gengibre"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ],
-  "category_emoji": "🌱",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "_calorias_suspeitas": true,
-  "_calorias_estimadas": {
-    "min": 250,
-    "max": 450,
-    "tipico": 350
-  }
+  "contem_soja": true
 }

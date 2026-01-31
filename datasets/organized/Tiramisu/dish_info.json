@@ -1,7 +1,10 @@
 {
-  "nome": "Tiramisu",
+  "slug": "Tiramisu",
+  "nome": "Tiramisu Vegano",
   "categoria": "vegano",
+  "descricao": "Sobremesa italiana clássica feita com biscoitos champagne embebidos em café, creme de mascarpone e cacau em pó.",
   "ingredientes": [
+    "ingredientes 100% vegetais",
     "Biscoito tipo champagne vegano",
     "Café",
     "soja",
@@ -9,30 +12,29 @@
     "creme vegetal",
     "Cacau em pó"
   ],
-  "descricao": "Sobremesa italiana clássica feita com biscoitos champagne embebidos em café, creme de mascarpone e cacau em pó.",
   "beneficios": [
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol",
     "Fonte de energia",
     "Proporciona prazer"
   ],
   "riscos": [
+    "Verificar fonte de B12 e ferro",
     "Contém lactose",
     "Alto teor de açúcar",
     "Alto teor de gordura"
   ],
-  "curiosidade": "A origem do Tiramisu é incerta, mas acredita-se que tenha surgido na região de Vêneto, na Itália. A receita original e tradicional utilizava ovos crus, por isso a importância de saber a procedência dos ingredientes.",
-  "slug": "tiramisu",
   "nutricao": {
-    "calorias": "350 kcal",
-    "proteinas": "6g",
-    "carboidratos": "40g",
-    "gorduras": "20g"
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
   },
-  "category_emoji": "🌱",
   "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": true,
-  "tecnica": ""
+  "contem_soja": true
 }

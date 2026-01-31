@@ -1,49 +1,56 @@
 {
-  "nome": "salada de Feijão Branco",
-  "slug": "saladadefeijãobranco",
+  "slug": "Saladadefeijão Branco",
+  "nome": "Salada de Feijão Branco",
   "categoria": "vegano",
+  "descricao": "Salada fria de feijão branco demolhado com ervas frescas orgânicas",
   "ingredientes": [
     "feijão",
     "água",
     "sal",
     "alho",
     "cebola",
-    "louro"
+    "louro",
+    "feijão branco demolhado",
+    "tomate sem pele",
+    "cebola orgânica",
+    "salsinha orgânica",
+    "azeite extravirgem",
+    "limão",
+    "feijão fradinho",
+    "tomate",
+    "pimentão",
+    "coentro",
+    "azeite"
   ],
   "beneficios": [
     "Rico em fibras, auxiliando na saúde intestinal e controle glicêmico.",
     "Fonte de proteínas vegetais, importante para a manutenção e construção de tecidos.",
     "Promove saciedade, auxiliando no controle do apetite.",
-    "Contém ferro e outros minerais importantes para a saúde."
+    "Contém ferro e outros minerais importantes para a saúde.",
+    "Proteína vegetal de alta qualidade",
+    "Fibras solúveis: reduzem colesterol",
+    "Potássio: saúde cardiovascular",
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade",
+    "Fibras solúveis: reduzem o colesterol ruim (LDL) e controlam o açúcar no sangue",
+    "Ferro vegetal (2.5mg/100g): combate anemia - consuma com vitamina C para melhor absorção"
   ],
   "riscos": [
     "Pode causar gases e inchaço em pessoas sensíveis.",
-    "O consumo excessivo de sal pode ser prejudicial à saúde."
+    "O consumo excessivo de sal pode ser prejudicial à saúde.",
+    "Pode conter traços de glúten",
+    "Pode causar gases intestinais"
   ],
   "nutricao": {
     "calorias": "77 kcal",
     "proteinas": "5g",
     "carboidratos": "13g",
-    "gorduras": "0.5g",
-    "fibras": "5g"
+    "gorduras": "0.5g"
   },
-  "tecnica": "Cozimento lento",
-  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "indice_glicemico": "baixo",
-  "tempo_digestao": "3-4 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Arroz",
-    "Couve",
-    "Farofa"
-  ],
-  "evitar_com": [
-    "Excesso de embutidos"
-  ],
-  "category_emoji": "🥬",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

@@ -1,50 +1,48 @@
 {
-  "slug": "ceviche",
+  "slug": "Ceviche",
   "nome": "Ceviche",
-  "nome_exibicao": "Ceviche Peruano",
   "categoria": "proteína animal",
-  "descricao": "Peixe fresco marinado em limão, típico peruano. Feito com tilápia.",
+  "descricao": "Peixe fresco (recebido a cada 1-2 dias) marinado em limão com cebola roxa orgânica",
   "ingredientes": [
-    "tilápia",
+    "peixe",
+    "sal",
     "limão",
+    "ervas",
+    "peixe branco fresco",
+    "limão fresco",
+    "cebola roxa orgânica",
+    "coentro orgânico",
+    "pimenta importada",
+    "milho",
+    "tilápia",
     "cebola roxa",
     "coentro",
-    "pimenta",
-    "sal"
+    "pimenta"
   ],
   "beneficios": [
     "Ômega-3",
     "Proteína de fácil digestão",
+    "Vitamina D",
+    "Ômega-3: proteção cardiovascular",
+    "Vitamina C do limão: fortalece imunidade",
+    "Proteína magra: baixíssima gordura",
     "Baixa caloria",
     "Rico em vitamina C do limão"
   ],
   "riscos": [
-    "Alérgeno: peixe"
+    "Alérgeno: peixe",
+    "Pode conter traços de glúten"
   ],
   "nutricao": {
     "calorias": "120 kcal",
     "proteinas": "22g",
-    "carboidratos": "5g",
-    "gorduras": "2g"
+    "carboidratos": "0g",
+    "gorduras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false,
-  "tecnica": "Marinado em limão (cru)",
-  "indice_glicemico": "baixo",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Milho",
-    "Batata doce",
-    "Chips de banana"
-  ],
-  "evitar_com": [
-    "Frituras pesadas"
-  ],
-  "category_emoji": "🐟",
-  "contem_peixe": true
+  "contem_soja": false
 }

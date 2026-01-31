@@ -1,8 +1,8 @@
 {
-  "slug": "cestinhadecamarao",
+  "slug": "Cestinha de Camarao",
   "nome": "Cestinha de Camarão",
   "categoria": "proteína animal",
-  "descricao": "Camarão fresco, cozido em creme numa casquinha crocante",
+  "descricao": "Cestinhas assadas em forno combinado recheadas com camarão fresco",
   "ingredientes": [
     "camarão",
     "creme de leite",
@@ -13,42 +13,39 @@
     "temperos orientais",
     "massa folhada",
     "manteiga",
-    "sal"
+    "sal",
+    "camarão fresco",
+    "massa wonton",
+    "cream cheese artesanal",
+    "cebolinha orgânica"
   ],
   "beneficios": [
     "Fonte de proteína (camarão).",
     "O camarão é rico em selênio, um antioxidante.",
     "Pode ser um prato saboroso e atraente.",
-    "A cebola e o alho possuem propriedades benéficas."
+    "A cebola e o alho possuem propriedades benéficas.",
+    "Proteína magra: baixo teor de gordura",
+    "Selênio: antioxidante poderoso",
+    "Zinco: fortalece imunidade"
   ],
   "riscos": [
     "Alto teor de gordura devido ao creme de leite e manteiga.",
     "Pode ser rico em sódio devido aos temperos.",
-    "Contém carboidratos da massa folhada."
+    "Contém carboidratos da massa folhada.",
+    "Alérgeno: crustáceo",
+    "Contém lactose",
+    "Contém glúten"
   ],
   "nutricao": {
     "calorias": "280 kcal",
     "proteinas": "12g",
     "carboidratos": "20g",
-    "gorduras": "18g",
-    "fibras": "1g"
+    "gorduras": "18g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false,
-  "tecnica": "Grelhado ou refogado",
-  "indice_glicemico": "zero",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Arroz",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Excesso de manteiga"
-  ],
-  "category_emoji": "🐟"
+  "contem_soja": false
 }

@@ -1,17 +1,23 @@
 {
-  "slug": "beringelaaolimao",
-  "nome": "Berinjela ao Limão",
+  "slug": "Berinjela ao Limao",
+  "nome": "Berinjela ao Purê de Limão Siciliano",
   "categoria": "vegano",
   "descricao": "Berinjela orgânica grelhada com molho cítrico de limão fresco",
   "ingredientes": [
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal",
     "berinjela orgânica",
     "limão fresco",
     "azeite extravirgem",
     "alho orgânico",
     "salsinha orgânica"
   ],
-  "tecnica": "Grelhado na grelha",
   "beneficios": [
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes",
     "Muito baixa caloria: apenas 25kcal/100g",
     "Antocianinas: protegem o coração",
     "Fibras: promovem saciedade"
@@ -19,20 +25,16 @@
   "riscos": [
     "Pode conter traços de glúten"
   ],
-  "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T15:13:08.325000",
-  "alerta_saude": null,
-  "beneficio_principal": "Contém nasunina (antioxidante da casca roxa) que protege membranas celulares do cérebro - estudos associam a menor risco de Alzheimer",
-  "curiosidade_cientifica": "A berinjela absorve muito óleo na fritura (até 4x seu peso) - grelhar ou assar preserva os benefícios sem adicionar gordura",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020"
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

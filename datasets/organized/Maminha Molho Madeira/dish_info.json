@@ -1,13 +1,13 @@
 {
-  "slug": "maminha_ao_molho_madeira",
-  "ativo": true,
-  "beneficios": [],
+  "slug": "Maminha Molho Madeira",
+  "nome": "Maminha ao Molho Mostarda",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": true,
-  "created_at": "2026-01-24T17:33:43.525000",
-  "descricao": "Carne cozida em um molho saboroso, geralmente servida em ocasiões especiais.",
+  "descricao": "Corte bovino nobre fresco preparado sous vide com molho de mostarda e creme fresco",
   "ingredientes": [
+    "maminha bovina fresca",
+    "mostarda",
+    "creme de leite fresco",
+    "vinho branco",
     "Carne bovina",
     "Caldo de carne",
     "Cebola",
@@ -15,16 +15,26 @@
     "Tomate",
     "Cogumelos"
   ],
-  "nome": "Maminha ao molho madeira",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Proteína completa: construção e reparo muscular",
+    "Ferro heme: energia e vitalidade",
+    "Vitamina B12: saúde do sistema nervoso"
+  ],
   "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten",
     "Alérgeno: Pode conter glúten dependendo dos ingredientes do molho."
   ],
-  "tecnica": ""
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

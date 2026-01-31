@@ -1,45 +1,40 @@
 {
-  "slug": "quinuacomtahine",
+  "slug": "Quinuacom Tahine",
   "nome": "Quinua com Tahine",
   "categoria": "vegano",
-  "descricao": "Quinoa nutritiva, superalimento.",
+  "descricao": "Quinoa com tahine - prato cadastrado pelo usuário",
   "ingredientes": [
     "quinoa",
     "água",
     "sal",
     "tahine",
-    ""
+    "pepino",
+    "tomate",
+    "hortelã",
+    "limão"
   ],
   "beneficios": [
     "Fonte de proteína vegetal completa",
     "Rico em fibras, auxiliando na saciedade e na saúde intestinal",
     "Fornece minerais importantes como magnésio e ferro",
-    "Opção leve e nutritiva para diversas refeições"
+    "Opção leve e nutritiva para diversas refeições",
+    "Tahine: rico em cálcio (420mg/100g) - fortalece ossos e dentes, mais cálcio que um copo de leite",
+    "Baixo índice glicêmico (53): libera energia lentamente, evitando picos de açúcar no sangue"
   ],
   "riscos": [
-    "Consumir com moderação devido ao teor calórico, se o objetivo for perda de peso."
+    "Consumir com moderação devido ao teor calórico, se o objetivo for perda de peso.",
+    "Pode conter traços de gergelim"
   ],
   "nutricao": {
     "calorias": "120 kcal",
     "proteinas": "4g",
     "carboidratos": "18g",
-    "gorduras": "4g",
-    "fibras": "3g"
+    "gorduras": "4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "category_emoji": "🥬",
-  "tecnica": "Cozida",
-  "indice_glicemico": "baixo",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Legumes",
-    "Saladas"
-  ],
-  "evitar_com": []
+  "contem_soja": false
 }

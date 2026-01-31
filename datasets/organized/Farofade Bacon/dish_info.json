@@ -1,39 +1,39 @@
 {
-  "slug": "farofadebacon",
+  "slug": "Farofade Bacon",
   "nome": "Farofa de Bacon",
-  "categoria": "proteína animal",
-  "descricao": "Farofa artesanal com bacon de preparo próprio",
+  "categoria": "vegano",
+  "descricao": "Prato feito com farinha de mandioca, que pode ser incrementado com diversos ingredientes.",
   "ingredientes": [
-    "farinha de mandioca",
+    "Farinha de mandioca",
+    "Gordura vegetal",
+    "Temperos",
     "bacon artesanal",
     "cebola orgânica",
     "manteiga fresca",
     "ovos"
   ],
-  "tecnica": "Preparo tradicional",
   "beneficios": [
     "Energia dos carboidratos",
     "Proteína do bacon e ovos",
     "Tiamina (B1): metabolismo energético"
   ],
   "riscos": [
+    "Pode conter glúten dependendo da farinha.",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (creme)",
     "Alérgeno: ovo",
     "Pode conter traços de glúten"
   ],
-  "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T21:46:42.123000",
-  "alerta_saude": "Bacon contém nitritos (mesmo em versões artesanais), que podem se converter em nitrosaminas, compostos ligados a câncer. O Instituto Nacional do Câncer dos EUA recomenda moderar a ingestão de carnes processadas para reduzir esse risco.",
-  "beneficio_principal": "Farinha de mandioca é rica em resistência a amido (20-40% dos carboidratos), que atua como fibra prebiótica, alimentando bactérias benéficas no cólon e melhorando a saúde digestiva. Um estudo da Universidade Federal de Viçosa (2017) mostrou que prebióticos podem aumentar a saciedade em até 10%.",
-  "curiosidade_cientifica": "O bacon artesanal, quando curado naturalmente, pode conter níveis mais elevados de ácidos graxos insaturados, que contribuem para a saúde cardiovascular, em comparação com bacon altamente processado.",
-  "referencia_pesquisa": "Universidade Federal de Viçosa, 2017"
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

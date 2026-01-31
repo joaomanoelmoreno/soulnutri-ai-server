@@ -1,38 +1,42 @@
 {
-  "slug": "feijaopretocomcarne",
-  "nome": "Feijão Preto com Carne",
-  "categoria": "proteína animal",
-  "descricao": "Feijão preto demolhado cozido com carne bovina fresca",
+  "slug": "Feijao Pretocom Carne",
+  "nome": "Feijão Preto sem Carne",
+  "categoria": "vegano",
+  "descricao": "Feijão carioca demolhado e cozido em caldo temperado artesanal, versão vegetariana",
   "ingredientes": [
     "feijão preto demolhado",
-    "carne bovina fresca",
     "alho orgânico",
     "cebola orgânica",
-    "louro"
+    "louro",
+    "sal",
+    "carne bovina fresca",
+    "feijão carioca demolhado"
   ],
-  "tecnica": "Feijão demolhado + cozimento tradicional",
   "beneficios": [
+    "Antocianinas: antioxidantes da casca preta",
+    "Ferro: combate anemia",
+    "Proteína vegetal de qualidade",
     "Proteína completa: carne + feijão",
     "Ferro de dupla fonte: absorção otimizada",
-    "Fibras: saciedade e intestino regulado"
+    "Fibras: saciedade e intestino regulado",
+    "Proteína vegetal: essencial para vegetarianos",
+    "Ferro: previne anemia",
+    "Fibras: promovem saciedade",
+    "Demolhado: melhor digestibilidade"
   ],
   "riscos": [
     "Pode conter traços de glúten"
   ],
-  "contem_gluten": false,
   "nutricao": {
     "calorias": "77 kcal",
     "proteinas": "5g",
     "carboidratos": "14g",
     "gorduras": "0.5g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T15:13:08.325000",
-  "alerta_saude": null,
-  "beneficio_principal": "Campeão em antocianinas (pigmento escuro) - mesmo antioxidante do mirtilo, protege células contra envelhecimento e doenças crônicas",
-  "curiosidade_cientifica": "O caldo do feijão preto contém até 3x mais antioxidantes que o grão - não descarte!",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2018"
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

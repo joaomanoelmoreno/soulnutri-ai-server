@@ -1,25 +1,37 @@
 {
-  "slug": "fígado_abolado",
-  "ativo": true,
-  "beneficios": [],
+  "slug": "Fígado Abolado",
+  "nome": "Fígado Abolado",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": false,
-  "created_at": "2026-01-27T13:58:33.692000",
   "descricao": "Prato com carne e legumes, difícil de identificar com precisão.",
   "ingredientes": [
     "Carne",
     "Legumes",
-    "Tomate"
+    "Tomate",
+    "fígado bovino fresco",
+    "cebola orgânica",
+    "alho orgânico",
+    "sal",
+    "azeite extravirgem"
   ],
-  "nome": "Fígado Abolado",
+  "beneficios": [
+    "Vitamina A: uma porção supre necessidade semanal",
+    "Ferro heme: absorção superior",
+    "Vitamina B12: saúde neurológica"
+  ],
+  "riscos": [
+    "Colesterol elevado: consumir com moderação",
+    "Pode conter traços de glúten"
+  ],
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",
     "carboidratos": "~25g",
     "gorduras": "~8g"
   },
-  "origem": "user_created",
-  "riscos": [],
-  "tecnica": ""
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,24 +1,28 @@
 {
-  "slug": "tomate",
-  "ativo": true,
-  "beneficios": [],
+  "slug": "Tomate",
+  "nome": "Tomate",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "contem_gluten": false,
-  "created_at": "2026-01-23T17:19:02.601000",
   "descricao": "Fatias de tomate fresco, geralmente temperadas com cebolinha ou outras ervas.",
   "ingredientes": [
-    "tomate",
-    "cebolinha"
+    "Tomates",
+    "Cebolinha",
+    "tomate"
   ],
-  "nome": "Tomate",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Fonte de vitaminas e antioxidantes",
+    "Baixo em calorias"
+  ],
   "riscos": [],
-  "tecnica": ""
+  "nutricao": {
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

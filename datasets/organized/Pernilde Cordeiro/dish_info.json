@@ -1,38 +1,37 @@
 {
-  "slug": "pernildecordeiro",
-  "nome": "Pernil de Cordeiro",
+  "slug": "Pernilde Cordeiro",
+  "nome": "Pernil de cordeiro",
   "categoria": "proteína animal",
   "descricao": "Pernil de cordeiro fresco braseado com ervas frescas orgânicas",
   "ingredientes": [
+    "carne",
+    "temperos",
+    "óleo",
     "pernil de cordeiro fresco",
     "alecrim orgânico",
     "alho orgânico",
     "vinho",
     "azeite extravirgem"
   ],
-  "tecnica": "Braseamento",
   "beneficios": [
     "Proteína de alta qualidade",
     "Ferro heme: absorção eficiente",
     "Zinco: fortalece sistema imunológico"
   ],
   "riscos": [
+    "Alérgeno: carne",
     "Pode conter traços de glúten"
   ],
-  "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T21:48:53.289000",
-  "alerta_saude": "O consumo de carne de cordeiro, assim como outras carnes vermelhas, deve ser moderado devido ao teor de gorduras saturadas, que é de aproximadamente 7-9g por porção de 100g. O alto consumo pode estar associado a aumento do risco cardiovascular (American Heart Association, 2017).",
-  "beneficio_principal": "O pernil de cordeiro é uma boa fonte de ácido linoleico conjugado (CLA), que é encontrado em cerca de 4,3 mg/g de gordura. Estudos indicam que o CLA pode ter propriedades antioxidantes e ajuda na redução da gordura corporal (Nutrition and Metabolism, 2018).",
-  "curiosidade_cientifica": "Marinar cordeiro com vinho tinto aumenta em até 26% os níveis de antioxidantes fenólicos no prato final, que podem contribuir para a saúde cardiovascular (Journal of Agricultural and Food Chemistry, 2008).",
-  "referencia_pesquisa": "Tabela de Composição de Alimentos - USP, 2020"
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

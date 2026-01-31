@@ -1,27 +1,52 @@
 {
-  "slug": "costela_com_mandioca",
-  "ativo": true,
-  "beneficios": [],
+  "slug": "Costela Assada",
+  "nome": "Costela Assada",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": false,
-  "created_at": "2026-01-24T17:35:54.276000",
-  "descricao": "Prato de carne cozida em molho saboroso.",
+  "descricao": "Costela bovina - prato cadastrado pelo usuário",
   "ingredientes": [
+    "carne bovina",
+    "sal",
+    "temperos",
+    "mandioca",
+    "alho",
+    "cebola",
+    "caldo. de carne",
+    "ervas e especiarias",
     "Carne",
     "Molho",
-    "Ervas"
+    "Ervas",
+    "costela bovina",
+    "sal grosso"
   ],
-  "nome": "Costela com mandioca",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco",
+    "Fonte de proteína, essencial para a construção e reparação muscular.",
+    "A mandioca fornece carboidratos para energia.",
+    "Contém vitaminas e minerais provenientes da carne e dos temperos.",
+    "O caldo de carne pode agregar sabor e nutrientes.",
+    "Zinco (4.5mg/100g): fortalece o sistema imunológico, cicatrização e saúde da pele",
+    "Creatina natural: melhora a performance muscular e energia para exercícios"
+  ],
   "riscos": [
-    "Alérgeno: Carne"
+    "Gordura saturada",
+    "Alto teor de gordura, dependendo do corte da costela.",
+    "Alto teor de sódio, devido ao sal e possivelmente ao caldo de carne industrializado.",
+    "Alérgeno: Carne",
+    "⚠️ ATENÇÃO: Alto teor de gordura saturada (15g/100g) - consumo excessivo aumenta colesterol e risco cardiovascular. Recomendado: porções moderadas, não diariamente"
   ],
-  "tecnica": ""
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

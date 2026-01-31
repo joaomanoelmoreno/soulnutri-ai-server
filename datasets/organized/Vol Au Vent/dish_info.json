@@ -1,25 +1,34 @@
 {
-  "slug": "vol_au_vent",
+  "slug": "Vol Au Vent",
   "nome": "Vol Au Vent",
-  "categoria": "proteína animal",
+  "categoria": "vegano",
   "descricao": "O vol-au-vent (do francês \"vôo ao vento\") é uma pequena caixa cilíndrica feita de massa folhada leve e crocante. Sua estrutura é oca e possui uma tampa circular, sendo projetada para ser preenchida com recheios cremosos salgados ou doces. ",
   "ingredientes": [
+    "massa folhada",
+    "requeijão",
+    "tomate",
+    "cheiro-verde",
+    "tempero",
     "Creme de Frango"
   ],
-  "beneficios": [],
-  "riscos": [],
+  "beneficios": [
+    "Fonte de energia",
+    "Fornece cálcio"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alto teor de gordura"
+  ],
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "350 kcal",
+    "proteinas": "8g",
+    "carboidratos": "25g",
+    "gorduras": "25g"
   },
-  "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_gluten": true,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "category_emoji": "🍖",
-  "tecnica": ""
+  "contem_soja": false
 }
