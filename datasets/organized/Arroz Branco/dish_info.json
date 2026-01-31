@@ -1,0 +1,37 @@
+{
+  "slug": "arrozbranco",
+  "nome": "Arroz Branco",
+  "categoria": "vegano",
+  "descricao": "Arroz branco cozido no vapor, acompanhamento clássico preparado artesanalmente",
+  "ingredientes": [
+    "arroz branco selecionado",
+    "sal",
+    "alho orgânico",
+    "azeite extravirgem"
+  ],
+  "tecnica": "Cozimento no vapor",
+  "beneficios": [
+    "Energia rápida: ideal para reposição energética",
+    "Fácil digestão: gentil com o estômago",
+    "Naturalmente sem glúten"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Índice glicêmico alto (73) - diabéticos devem preferir arroz integral ou parboilizado",
+  "beneficio_principal": "Fonte rápida de energia (carboidrato de fácil digestão). O arroz brasileiro é enriquecido com ferro e ácido fólico por lei desde 2002",
+  "curiosidade_cientifica": "O arroz integral tem 3x mais fibras, mas o branco é melhor absorvido por pessoas com intestino sensível",
+  "referencia_pesquisa": "ANVISA - RDC 150/2017"
+}

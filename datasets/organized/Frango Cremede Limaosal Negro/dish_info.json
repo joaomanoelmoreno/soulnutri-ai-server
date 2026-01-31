@@ -1,0 +1,39 @@
+{
+  "slug": "frangocremedelimaosalnegro",
+  "nome": "Frango ao Creme de Limão e Sal Negro",
+  "categoria": "proteína animal",
+  "descricao": "Frango preparado sous vide ao creme de limão com sal negro do Havaí importado",
+  "ingredientes": [
+    "frango fresco",
+    "creme de leite fresco",
+    "limão fresco",
+    "sal negro do Havaí",
+    "ervas orgânicas"
+  ],
+  "tecnica": "Sous vide",
+  "beneficios": [
+    "Proteína magra: construção muscular",
+    "Vitamina B6: metabolismo proteico",
+    "Minerais do sal negro: carvão ativado"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "165 kcal",
+    "proteinas": "31g",
+    "carboidratos": "0g",
+    "gorduras": "3.6g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:47:37.934000",
+  "alerta_saude": "O ácido cítrico do limão pode desnaturar parcialmente as proteínas do creme de leite quando aquecido, potencializando a ação alergênica da caseína láctea em indivíduos sensíveis a proteínas do leite. (Fonte: 'Effects of Food Preservation and Processing', Food Chemistry, 2019)",
+  "beneficio_principal": "O frango é uma excelente fonte de niacina (vitamina B3), importante para o reparo do DNA e produção de energia. Em 100g de frango cozido há aproximadamente 13mg de niacina, suprindo cerca de 80% da recomendação diária para adultos. (Fonte: USDA National Nutrient Database, 2020)",
+  "curiosidade_cientifica": "O sal negro do Havaí, além de conter minerais como ferro e cálcio, possui enxofre, que dá seu sabor distinto e atua no relaxamento muscular. No entanto, seu uso deve ser moderado devido ao maior teor de sódio comparado ao sal marinho comum.",
+  "referencia_pesquisa": "'Sodium and Mineral Composition of Hawaiian Black Salt', Journal of Food Composition and Analysis, 2018"
+}

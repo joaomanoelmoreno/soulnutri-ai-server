@@ -1,0 +1,37 @@
+{
+  "slug": "gelatinadecereja",
+  "nome": "Gelatina de Cereja",
+  "categoria": "vegetariano",
+  "descricao": "Sobremesa de gelatina artesanal sabor cereja",
+  "ingredientes": [
+    "gelatina",
+    "suco de cereja",
+    "maple light"
+  ],
+  "tecnica": "Refrigeração",
+  "beneficios": [
+    "Colágeno: beneficia pele e articulações",
+    "Baixíssimas calorias",
+    "Antocianinas da cereja: antioxidantes"
+  ],
+  "riscos": [
+    "Gelatina de origem animal",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:47:42.553000",
+  "alerta_saude": "Compostos fenólicos em altas concentrações no suco de cereja podem interferir na absorção de ferro não-heme (vegetal). Recomenda-se consumi-lo junto com uma fonte de vitamina C para mitigar esse efeito - Harvard Health Publishing.",
+  "beneficio_principal": "As cerejas são ricas em melatonina (13,5 ng/100g), hormônio importante na regulação do sono. Um estudo da Northumbria University (2012) mostrou que o consumo de sucos de cereja aumentou o tempo total de sono em até 85 minutos.",
+  "curiosidade_cientifica": "A combinação de suco de cereja com gelatina melhora a hidratação celular, especialmente em climas quentes, já que a gelatina é 99% água, facilitando a entrega eficiente de nutrientes e compostos bioativos ao corpo.",
+  "referencia_pesquisa": "Northumbria University, European Journal of Nutrition, 2012"
+}

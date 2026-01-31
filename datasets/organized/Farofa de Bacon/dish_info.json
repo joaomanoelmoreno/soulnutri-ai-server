@@ -1,0 +1,29 @@
+{
+  "slug": "farofa_de_bacon",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": true,
+  "created_at": "2026-01-23T17:28:17.518000",
+  "descricao": "Prato feito com farinha de mandioca, que pode ser incrementado com diversos ingredientes.",
+  "ingredientes": [
+    "Farinha de mandioca",
+    "Gordura vegetal",
+    "Temperos"
+  ],
+  "nome": "Farofa de Bacon",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Pode conter glúten dependendo da farinha.",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (creme)"
+  ],
+  "tecnica": ""
+}

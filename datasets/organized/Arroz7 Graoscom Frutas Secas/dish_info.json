@@ -1,0 +1,39 @@
+{
+  "slug": "arroz7graoscomfrutassecas",
+  "nome": "Arroz 7 Grãos com Frutas Secas",
+  "categoria": "vegano",
+  "descricao": "Arroz 7 grãos enriquecido com frutas secas selecionadas",
+  "ingredientes": [
+    "arroz 7 grãos",
+    "uva passa",
+    "damasco",
+    "castanhas",
+    "amêndoas"
+  ],
+  "tecnica": "Cozimento tradicional",
+  "beneficios": [
+    "Antioxidantes: combatem o envelhecimento celular",
+    "Ferro: previne anemia",
+    "Fibras: promovem saciedade"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alérgeno: oleaginosas"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": null,
+  "beneficio_principal": "Combinação de 7 grãos fornece aminoácidos complementares - juntos formam proteína completa equivalente à carne, ideal para vegetarianos",
+  "curiosidade_cientifica": "Estudo da UNICAMP mostrou que a combinação de grãos aumenta em 40% a biodisponibilidade de nutrientes comparado aos grãos isolados",
+  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+}

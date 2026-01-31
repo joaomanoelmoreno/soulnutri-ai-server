@@ -1,0 +1,26 @@
+{
+  "slug": "creme_de_banana",
+  "nome": "Creme de Banana",
+  "categoria": "vegano",
+  "descricao": "O banana ao creme é uma sobremesa reconfortante composta por camadas de bananas fatiadas (geralmente caramelizadas ou apenas maduras) imersas em um creme aveludado — que pode variar entre um creme de confeiteiro clássico, um creme branco simples ou uma mistura de leite condensado e ovos.",
+  "ingredientes": [
+    "Banana",
+    "Creme"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱",
+  "tecnica": ""
+}

@@ -1,0 +1,47 @@
+{
+  "slug": "feijaobranco",
+  "nome": "Feijão Branco",
+  "categoria": "vegano",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
+  "ingredientes": [
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
+  ],
+  "beneficios": [
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
+  ],
+  "riscos": [
+    "Pode causar gases intestinais"
+  ],
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozimento lento",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ],
+  "category_emoji": "🌱"
+}

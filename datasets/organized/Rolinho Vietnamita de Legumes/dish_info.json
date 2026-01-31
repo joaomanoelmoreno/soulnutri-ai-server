@@ -1,0 +1,31 @@
+{
+  "slug": "rolinho_vietnamita_de_legumes",
+  "ativo": true,
+  "beneficios": [
+    "Fonte de vitaminas e minerais",
+    "Baixo teor de gordura",
+    "Opção leve e refrescante"
+  ],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-22T15:21:45.712000",
+  "descricao": "Rolinhos translúcidos recheados com vegetais frescos e ervas, dispostos em fatias de abobrinha.",
+  "ingredientes": [
+    "Massa de arroz",
+    "Cenoura",
+    "Macarrão de arroz",
+    "Hortelã",
+    "Abobrinha"
+  ],
+  "nome": "Rolinho vietnamita de legumes",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [],
+  "tecnica": "Vegetais frescos enrolados em massa de arroz umedecida."
+}

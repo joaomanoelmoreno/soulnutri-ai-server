@@ -1,0 +1,50 @@
+{
+  "slug": "costela_cibi_sana",
+  "nome": "Costela Cibi Sana",
+  "nome_exibicao": "Costela Cibi Sana",
+  "categoria": "proteína animal",
+  "descricao": "Costela preparada no estilo Cibi Sana, assada lentamente até ficar macia e suculenta.",
+  "ingredientes": [
+    "costela bovina",
+    "sal grosso",
+    "temperos especiais",
+    "alho",
+    "ervas"
+  ],
+  "beneficios": [
+    "Rica em proteínas",
+    "Fonte de ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada",
+    "Consumo moderado recomendado"
+  ],
+  "nutricao": {
+    "calorias": "350 kcal",
+    "proteinas": "28g",
+    "carboidratos": "0g",
+    "gorduras": "26g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Assada lentamente",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Salada verde",
+    "Legumes assados",
+    "Arroz"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ],
+  "category_emoji": "🥩",
+  "contem_peixe": false
+}

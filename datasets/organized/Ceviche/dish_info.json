@@ -1,0 +1,50 @@
+{
+  "slug": "ceviche",
+  "nome": "Ceviche",
+  "nome_exibicao": "Ceviche Peruano",
+  "categoria": "proteína animal",
+  "descricao": "Peixe fresco marinado em limão, típico peruano. Feito com tilápia.",
+  "ingredientes": [
+    "tilápia",
+    "limão",
+    "cebola roxa",
+    "coentro",
+    "pimenta",
+    "sal"
+  ],
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Baixa caloria",
+    "Rico em vitamina C do limão"
+  ],
+  "riscos": [
+    "Alérgeno: peixe"
+  ],
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "5g",
+    "gorduras": "2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Marinado em limão (cru)",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Milho",
+    "Batata doce",
+    "Chips de banana"
+  ],
+  "evitar_com": [
+    "Frituras pesadas"
+  ],
+  "category_emoji": "🐟",
+  "contem_peixe": true
+}

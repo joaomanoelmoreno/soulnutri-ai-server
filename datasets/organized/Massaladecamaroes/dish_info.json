@@ -1,0 +1,50 @@
+{
+  "nome": "Masala de camaroes",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "camarao",
+    "baharat e masalas indianas",
+    "limao",
+    "creme de leite",
+    "sal",
+    ""
+  ],
+  "descricao": "Camaores ao creme de especiarias",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade proveniente do camarão.",
+    "Rico em antioxidantes e especiarias, que podem ter propriedades anti-inflamatórias.",
+    "O camarão fornece nutrientes importantes como selênio e vitamina B12.",
+    "O limão adiciona vitamina C e um toque refrescante ao prato."
+  ],
+  "riscos": [
+    "O prato pode ter alto teor de sódio devido ao sal.",
+    "O creme de leite adiciona gordura saturada ao prato."
+  ],
+  "curiosidade": "Massala é um termo hindi que se refere a uma mistura de especiarias em pó, geralmente utilizadas para dar sabor a pratos indianos. A composição da massala pode variar muito, dependendo da região e da receita.",
+  "slug": "massaladecamaroes",
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "15g",
+    "carboidratos": "5g",
+    "gorduras": "11g",
+    "fibras": "1g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false
+}

@@ -1,0 +1,53 @@
+{
+  "slug": "berinjela_à_parmegiana",
+  "nome": "File de Frango a Parmegiana",
+  "categoria": "proteína animal",
+  "descricao": "file de frango empanado e assado em forno com queijo. e molho de tomate",
+  "ingredientes": [
+    "frango",
+    "ovo",
+    "farinha de trigo",
+    "farinha de rosca",
+    "queijo mussarela",
+    "alho",
+    "sal"
+  ],
+  "beneficios": [
+    "Fonte de proteína para construção e reparo muscular.",
+    "Fornece cálcio do queijo, importante para a saúde óssea.",
+    "Pode ser uma opção saborosa para incluir proteína na dieta."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura e ao queijo.",
+    "Pode conter alto teor de sódio dependendo da quantidade de sal utilizada."
+  ],
+  "nutricao": {
+    "calorias": "280 kcal",
+    "proteinas": "18g",
+    "carboidratos": "15g",
+    "gorduras": "16g",
+    "fibras": "1g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhada ou assada",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🍗",
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 150,
+    "max": 300,
+    "tipico": 220
+  }
+}

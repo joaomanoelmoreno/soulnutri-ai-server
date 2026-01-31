@@ -1,0 +1,44 @@
+{
+  "nome": "Batata Frita (assada)",
+  "slug": "batata_frita",
+  "categoria": "vegano",
+  "ingredientes": [
+    "batata",
+    "sal"
+  ],
+  "descricao": "Batata preparada de forma saudável em forno",
+  "beneficios": [
+    "Fonte de carboidratos para energia.",
+    "Contém potássio, importante para a saúde muscular e nervosa.",
+    "A batata assada preserva mais nutrientes em comparação com a frita."
+  ],
+  "riscos": [
+    "Alto índice glicêmico (eleva rapidamente o açúcar no sangue).",
+    "Pode ser calórica dependendo da quantidade consumida."
+  ],
+  "nutricao": {
+    "calorias": "93 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "2g",
+    "fibras": "2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "tecnica": "Cozimento ou assado",
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

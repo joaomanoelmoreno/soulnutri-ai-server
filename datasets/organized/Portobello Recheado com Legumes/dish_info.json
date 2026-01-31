@@ -1,0 +1,41 @@
+{
+  "nome": "Portobello Recheado com Legumes",
+  "slug": "portobello_recheado_com_legumes",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Cogumelo portobello, substituto de carne.",
+  "ingredientes": [
+    "cogumelo portobello",
+    "azeite",
+    "alho",
+    "ervas"
+  ],
+  "beneficios": [
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em minerais"
+  ],
+  "riscos": [],
+  "tecnica": "Grelhado ou recheado",
+  "nutricao": {
+    "calorias": "22 kcal",
+    "proteinas": "2g",
+    "carboidratos": "4g",
+    "gorduras": "0.4g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Ervas"
+  ],
+  "evitar_com": [],
+  "origem": "user_created_local"
+}

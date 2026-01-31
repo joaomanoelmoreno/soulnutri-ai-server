@@ -1,0 +1,42 @@
+{
+  "nome": "Ovospochecomcarnemoida",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne bovina",
+    "sal",
+    "temperos"
+  ],
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "beneficios": [
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
+  "riscos": [
+    "Gordura saturada"
+  ],
+  "curiosidade": "O ovo pochê, quando bem feito, tem uma textura incrivelmente cremosa, com a clara cozida e a gema líquida, ideal para ser apreciada.",
+  "slug": "ovospochecomcarnemoida",
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ],
+  "category_emoji": "🍖"
+}

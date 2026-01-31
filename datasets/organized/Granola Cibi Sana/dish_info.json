@@ -1,0 +1,39 @@
+{
+  "slug": "granola_cibi_sana",
+  "ativo": true,
+  "beneficios": [
+    "Fonte de fibras",
+    "Rica em vitaminas e minerais",
+    "Fornece energia de liberação lenta",
+    "Promove a saúde cardiovascular"
+  ],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": true,
+  "created_at": "2026-01-22T15:06:13.942000",
+  "descricao": "Uma tigela de granola com uma mistura de grãos, frutas secas, sementes e nozes. A granola parece ser caseira, com uma coloração dourada escura e uma textura crocante. Há uma colher dentro da tigela.",
+  "ingredientes": [
+    "Aveia",
+    "Nozes (amêndoas)",
+    "Sementes de abóbora",
+    "Uvas passas",
+    "Cranberries",
+    "Coco ralado",
+    "Maçã desidratada",
+    "Frutas cristalizadas"
+  ],
+  "nome": "Granola Cibi Sana",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Contém GLÚTEN (se a aveia não for certificada sem glúten)",
+    "Pode conter alto teor de açúcar",
+    "Alérgeno: Pode conter NOZES"
+  ],
+  "tecnica": "Assada no forno"
+}

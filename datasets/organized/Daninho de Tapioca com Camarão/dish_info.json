@@ -1,0 +1,45 @@
+{
+  "nome": "Daninho de tapioca com camarão",
+  "slug": "daninho_de_tapioca_com_camarão",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Camarão fresco, rico em proteínas.",
+  "ingredientes": [
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
+  ],
+  "beneficios": [
+    "Proteína magra",
+    "Selênio",
+    "Ômega-3"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceo"
+  ],
+  "tecnica": "Grelhado ou refogado",
+  "nutricao": {
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga"
+  ],
+  "origem": "user_created_local"
+}

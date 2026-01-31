@@ -1,0 +1,50 @@
+{
+  "slug": "almondegas_com_especiarias_indiana",
+  "nome": "Almondegas com Especiarias Indianas",
+  "categoria": "proteína animal",
+  "descricao": "Almôndegas braseadas em molho especial com um toque da Tailandia",
+  "ingredientes": [
+    "carne moída",
+    "leite de coco",
+    "gengibre",
+    "cebola",
+    "alho",
+    "ovo",
+    "farinha de rosca",
+    "especiarias: canela. cardamomo, erva doce, zimbro, pimenta"
+  ],
+  "beneficios": [
+    "Fonte de proteína da carne, importante para a construção e reparo dos tecidos.",
+    "As especiarias adicionam compostos bioativos com propriedades antioxidantes e anti-inflamatórias.",
+    "O leite de coco pode fornecer gorduras saudáveis e um sabor agradável."
+  ],
+  "riscos": [
+    "Contém gorduras, monitorar o consumo para evitar excessos.",
+    "Pode conter alto teor de sódio dependendo da quantidade de sal utilizada no preparo."
+  ],
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "15g",
+    "carboidratos": "10g",
+    "gorduras": "12g",
+    "fibras": "1g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🍖",
+  "tecnica": "Assada ou frita",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Molho de tomate"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "nome": "Salada de Tomate em Rodelas",
+  "categoria": "vegano",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
+  ],
+  "descricao": "Salada fresca e nutritiva.",
+  "beneficios": [
+    "Rico em vitaminas e minerais, como vitamina C e potássio.",
+    "Promove a hidratação devido ao alto teor de água.",
+    "Fonte de antioxidantes, que combatem os radicais livres.",
+    "Auxilia na saúde da pele devido à presença de vitamina A."
+  ],
+  "riscos": [
+    "Nenhum risco significativo, mas a ingestão excessiva pode causar desconforto abdominal em algumas pessoas."
+  ],
+  "curiosidade": "O tomate é na verdade uma fruta, embora seja frequentemente usado como um vegetal em culinária.",
+  "slug": "saladadetomateemrodelas",
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.5g",
+    "fibras": "1.5g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

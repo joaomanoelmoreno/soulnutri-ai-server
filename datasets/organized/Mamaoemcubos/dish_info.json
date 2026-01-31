@@ -1,0 +1,29 @@
+{
+  "nome": "Mamaoemcubos",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Mamão"
+  ],
+  "descricao": "O prato é composto por cubos de mamão. O mamão parece estar fresco e cortado em cubos de tamanho médio, mostrando a cor alaranjada vibrante característica da fruta madura.",
+  "beneficios": [
+    "Rico em vitamina C, que fortalece o sistema imunológico",
+    "Fonte de fibras, auxiliando na digestão e prevenindo a constipação",
+    "Contém papaína, uma enzima que ajuda na digestão de proteínas"
+  ],
+  "riscos": [],
+  "curiosidade": "O mamão é uma fruta tropical comumente cultivada em regiões de clima quente, sendo uma excelente fonte de nutrientes e de sabor agradável.",
+  "slug": "mamaoemcubos",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

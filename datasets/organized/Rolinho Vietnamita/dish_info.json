@@ -1,0 +1,39 @@
+{
+  "slug": "rolinhovietnamita",
+  "nome": "Rolinho Vietnamita",
+  "categoria": "proteína animal",
+  "descricao": "Rolinho primavera vietnamita com camarão fresco e vegetais orgânicos",
+  "ingredientes": [
+    "papel de arroz",
+    "camarão fresco",
+    "vegetais orgânicos",
+    "macarrão de arroz",
+    "ervas orgânicas"
+  ],
+  "tecnica": "Preparo a frio",
+  "beneficios": [
+    "Proteína magra do camarão",
+    "Baixíssimas calorias",
+    "Sem fritura: versão saudável"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceo",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.326000",
+  "updated_at": "2026-01-21T21:49:08.042000",
+  "alerta_saude": "O camarão pode conter colesterol elevado (189mg/100g), o que exige moderação para indivíduos com níveis elevados de colesterol LDL. Entretanto, um estudo publicado no 'American Journal of Clinical Nutrition', 2009, sugere que o camarão pode ter um menor impacto no colesterol do que anteriormente pensado devido à presença de ácidos graxos ômega-3.",
+  "beneficio_principal": "Camarão é uma excelente fonte de astaxantina (glicopironaid 8-42mg/kg), um carotenoide com propriedades antioxidantes que podem proteger a pele dos danos UV e aumentar a elasticidade cutânea. Estudo da 'Food & Function', 2015, destacou seus efeitos anti-envelhecimento.",
+  "curiosidade_cientifica": "O papel de arroz, originário do sudeste asiático, tem cerca de 45 calorias por folha e é naturalmente isento de glúten, tornando-se uma opção segura para celíacos quando produzido em ambientes controlados.",
+  "referencia_pesquisa": "Estudo 'Food & Function', 2015; USDA Food Data."
+}

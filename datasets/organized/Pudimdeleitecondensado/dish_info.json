@@ -1,0 +1,45 @@
+{
+  "nome": "Pudim de Leite Condensado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "leite condensado",
+    "leite",
+    "ovos",
+    "açúcar"
+  ],
+  "descricao": "Pudim de leite tradicional brasileiro.",
+  "beneficios": [
+    "Fonte de proteína (ovos)",
+    "Cálcio"
+  ],
+  "riscos": [
+    "Alto teor de açúcar",
+    "Contém lactose",
+    "Contém ovo"
+  ],
+  "curiosidade": "O pudim tem origem na Europa, e sua receita se adaptou em diversos países, inclusive no Brasil. A adição do leite condensado é uma variação popular.",
+  "slug": "pudimdeleitecondensado",
+  "nutricao": {
+    "calorias": "240 kcal",
+    "proteinas": "6g",
+    "carboidratos": "35g",
+    "gorduras": "9g"
+  },
+  "tecnica": "Banho-maria",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Sobremesa ocasional",
+  "combina_com": [
+    "Café"
+  ],
+  "evitar_com": [
+    "Outras sobremesas no mesmo dia"
+  ],
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

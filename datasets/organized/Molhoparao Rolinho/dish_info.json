@@ -1,0 +1,31 @@
+{
+  "nome": "Molhoparaorolinho",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Palitos de molho",
+    "Recipiente de vidro"
+  ],
+  "descricao": "Conjunto de palitos individuais, provavelmente para degustação de molho. Os palitos estão dentro de um recipiente de vidro.",
+  "beneficios": [
+    "Praticidade: ideal para consumo individual e evitar contaminação.",
+    "Higiene: embalados individualmente garantem segurança."
+  ],
+  "riscos": [
+    "Desconhecidos: a composição do molho e dos palitos não são visíveis."
+  ],
+  "curiosidade": "Palitos individuais são uma solução prática para diversas preparações, como molhos, sobremesas e aperitivos.",
+  "slug": "molhoparaorolinho",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

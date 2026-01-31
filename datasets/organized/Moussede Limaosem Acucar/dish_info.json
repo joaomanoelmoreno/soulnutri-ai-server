@@ -1,0 +1,44 @@
+{
+  "nome": "Moussedelimaosemacucar",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "creme de leite",
+    "leite condensado",
+    "fruta"
+  ],
+  "descricao": "Mousse cremoso de frutas.",
+  "beneficios": [
+    "Fonte de cálcio",
+    "Energia rápida"
+  ],
+  "riscos": [
+    "Alto teor de açúcar",
+    "Contém lactose",
+    "Calórico"
+  ],
+  "curiosidade": "O limão, além de rico em vitamina C, é um alimento versátil, usado tanto em pratos doces quanto salgados, e possui propriedades antioxidantes.",
+  "slug": "moussedelimaosemacucar",
+  "nutricao": {
+    "calorias": "200 kcal",
+    "proteinas": "4g",
+    "carboidratos": "25g",
+    "gorduras": "10g"
+  },
+  "tecnica": "Refrigerado",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Sobremesa ocasional",
+  "combina_com": [
+    "Frutas frescas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ],
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

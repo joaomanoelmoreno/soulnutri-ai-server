@@ -1,0 +1,38 @@
+{
+  "nome": "Molho Tartaro",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Maionese",
+    "Cenoura ralada",
+    "Salsinha picada",
+    "Picles",
+    "Alcaparras (possivelmente)",
+    "Ovo"
+  ],
+  "descricao": "Molho cremoso à base de maionese, com pedaços visíveis de cenoura ralada, salsinha picada e possivelmente picles e alcaparras. A maionese caseira pode ter ovo em sua preparação.",
+  "beneficios": [
+    "A cenoura é rica em vitamina A, importante para a visão e a saúde da pele.",
+    "A salsinha é fonte de vitamina C e antioxidantes, que auxiliam no combate aos radicais livres."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à maionese.",
+    "Alérgenos: ovo (na maionese), pode conter glúten, dependendo dos ingredientes.",
+    "Pode conter sódio em excesso, dependendo da quantidade de picles e alcaparras."
+  ],
+  "curiosidade": "O molho tártaro é um acompanhamento clássico para peixes e frutos do mar, mas também pode ser servido com outros pratos.",
+  "slug": "molho_tartaro",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

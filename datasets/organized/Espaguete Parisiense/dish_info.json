@@ -1,0 +1,29 @@
+{
+  "slug": "espaguete_parisiense",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-23T17:21:27.413000",
+  "descricao": "Macarrão com molho cremoso e vegetais como ervilhas e tomate.",
+  "ingredientes": [
+    "macarrão",
+    "ervilhas",
+    "tomate",
+    "molho cremoso"
+  ],
+  "nome": "Espaguete parisiense",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten (macarrão)",
+    "Alérgeno: GLÚTEN (macarrao, macarrão)"
+  ],
+  "tecnica": ""
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "costela_bovina",
+  "ativo": true,
+  "beneficios": [
+    "Zinco (4.5mg/100g): fortalece o sistema imunológico, cicatrização e saúde da pele",
+    "Creatina natural: melhora a performance muscular e energia para exercícios"
+  ],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T17:01:27.404000",
+  "descricao": "Costela bovina - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "costela bovina",
+    "sal grosso",
+    "alho",
+    "ervas"
+  ],
+  "nome": "Costela bovina",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "⚠️ ATENÇÃO: Alto teor de gordura saturada (15g/100g) - consumo excessivo aumenta colesterol e risco cardiovascular. Recomendado: porções moderadas, não diariamente"
+  ],
+  "tecnica": "",
+  "beneficio_principal": "Rica em vitamina B12 (2.6mcg/100g) - essencial para o sistema nervoso, produção de energia, formação de células vermelhas e prevenção de anemia",
+  "curiosidade": "A gordura da costela contém ácido oleico, o mesmo presente no azeite de oliva"
+}

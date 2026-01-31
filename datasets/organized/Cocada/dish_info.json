@@ -1,0 +1,35 @@
+{
+  "slug": "cocada",
+  "nome": "Cocada",
+  "categoria": "vegetariano",
+  "descricao": "Doce cremoso feito com coco ralado, açúcar e leite condensado.",
+  "ingredientes": [
+    "Coco ralado",
+    "Açúcar",
+    "Leite condensado"
+  ],
+  "tecnica": "",
+  "beneficios": [],
+  "riscos": [
+    "Alto teor de açúcar",
+    "Alérgeno: Leite",
+    "Alérgeno: LACTOSE (leite)"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "user_created",
+  "created_at": "2026-01-24T17:30:04.134000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Alta caloria (~400kcal/100g). O açúcar da cocada é a preocupação principal, não a gordura do coco",
+  "beneficio_principal": "Coco fornece ácido láurico - gordura de cadeia média que o corpo usa rapidamente como energia, não armazenando como gordura",
+  "curiosidade_cientifica": "Populações que consomem muito coco (Polinésia) têm baixíssimas taxas de doença cardíaca apesar da gordura saturada",
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2017",
+  "category_emoji": "🥬"
+}

@@ -1,0 +1,36 @@
+{
+  "nome": "Cuscuz Marroquino com Grãos e Sementes",
+  "slug": "cuscuz_marroquino_com_grãos_e_sementes",
+  "categoria": "vegano",
+  "ingredientes": [
+    "farinha de milho",
+    "água",
+    "sal"
+  ],
+  "descricao": "Cuscuz nordestino tradicional.",
+  "beneficios": [
+    "Fonte de energia",
+    "Sem glúten",
+    "Leve"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "0.5g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "category_emoji": "🌱",
+  "tecnica": "Vapor",
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Café ou almoço",
+  "combina_com": [
+    "Ovo",
+    "Manteiga"
+  ],
+  "evitar_com": []
+}

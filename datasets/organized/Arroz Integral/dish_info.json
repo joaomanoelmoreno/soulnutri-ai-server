@@ -1,0 +1,35 @@
+{
+  "slug": "arrozintegral",
+  "nome": "Arroz Integral",
+  "categoria": "vegano",
+  "descricao": "Arroz integral rico em fibras e nutrientes, cozido no vapor",
+  "ingredientes": [
+    "arroz integral selecionado",
+    "sal"
+  ],
+  "tecnica": "Cozimento no vapor",
+  "beneficios": [
+    "Fibras: promovem saciedade prolongada",
+    "Índice glicêmico baixo: controla açúcar no sangue",
+    "Vitaminas do complexo B: energia e bem-estar"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": null,
+  "beneficio_principal": "Mantém o farelo rico em fibras (3.5g/100g) e magnésio (143mg) - mineral que 70% dos brasileiros consomem abaixo do recomendado",
+  "curiosidade_cientifica": "Harvard 2019: trocar arroz branco por integral reduz risco de diabetes tipo 2 em 16%",
+  "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2019"
+}

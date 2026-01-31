@@ -1,0 +1,28 @@
+{
+  "nome": "Gratinado de Legumes",
+  "slug": "gratinado_de_legumes",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "couve-flor",
+    "Sal, ",
+    "pimenta-do-reino,",
+    "Queijo Radalo"
+  ],
+  "descricao": " Prato composto por vegetais variados (como batata, brócolis e cenoura) envolvidos em um molho cremoso (geralmente bechamel) e cobertos com queijo ou farinha de rosca, levados ao forno para criar uma crosta dourada e crocante.",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "category_emoji": "🥚",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

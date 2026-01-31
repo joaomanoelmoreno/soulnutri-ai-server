@@ -1,0 +1,36 @@
+{
+  "slug": "mechouiatunisia",
+  "nome": "Mechouia-Tunisia",
+  "categoria": "vegetariano",
+  "descricao": "Salada composta por ovos cozidos, milho, azeitonas, alcaparras e outros vegetais.",
+  "ingredientes": [
+    "ovos",
+    "milho",
+    "azeitonas",
+    "alcaparras",
+    "tomate"
+  ],
+  "tecnica": "",
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "user_created",
+  "created_at": "2026-01-24T17:23:07.791000",
+  "updated_at": "2026-01-21T21:48:36.504000",
+  "alerta_saude": "A assadura prolongada em alta temperatura de pimentões pode formar acrilamida, um composto potencialmente carcinogênico. Estudo da Food Chemistry (2019) sugere que reduzir o tempo de exposição ao calor pode minimizar esses riscos.",
+  "beneficio_principal": "A Mechouia à Tunísia geralmente inclui pimentões, tomates e cebolas, ingredientes ricos em polifenóis. Um estudo da Universidade de Harvard (2018) verificou que dietas ricas em polifenóis podem reduzir o risco de doenças cardiovasculares em até 30% devido às suas propriedades antioxidantes.",
+  "curiosidade_cientifica": "Assar os legumes usados na Mechouia aumenta a concentração de certos compostos voláteis que intensificam o sabor, como enaltecido pelo Journal of Food Science em 2020, que descreveu um aumento de 15% em compostos aromáticos.",
+  "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2018; Journal of Food Science, 2020",
+  "category_emoji": "🥬"
+}

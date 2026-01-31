@@ -1,0 +1,46 @@
+{
+  "nome": "Feijoada",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "feijão preto",
+    "carne seca",
+    "linguiça",
+    "costela",
+    "bacon"
+  ],
+  "descricao": "Feijoada tradicional brasileira.",
+  "beneficios": [
+    "Rica em proteínas",
+    "Ferro",
+    "Prato completo"
+  ],
+  "riscos": [
+    "Alto teor de sódio",
+    "Gordura elevada"
+  ],
+  "curiosidade": "A feijoada é um prato tipicamente brasileiro, mas sua origem é controversa. Acredita-se que tenha surgido nos engenhos de cana-de-açúcar, onde os escravos aproveitavam as sobras do porco para preparar um cozido.",
+  "slug": "feijoada",
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "15g",
+    "carboidratos": "18g",
+    "gorduras": "14g"
+  },
+  "category_emoji": "🍖",
+  "tecnica": "Cozimento lento",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Couve",
+    "Farofa",
+    "Laranja"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "nome": "Salada de Feijão Branco com Tomate e Cebola",
+  "categoria": "vegano",
+  "ingredientes": [
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro"
+  ],
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
+  "beneficios": [
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade"
+  ],
+  "riscos": [
+    "Pode causar gases intestinais"
+  ],
+  "curiosidade": "O feijão branco é rico em ferro e pode ser um aliado no combate à anemia.",
+  "slug": "saladadefeijaobrancocomtomateecebola",
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
+  "tecnica": "Cozimento lento",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ],
+  "category_emoji": "🌱"
+}

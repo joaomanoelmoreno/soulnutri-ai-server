@@ -1,0 +1,38 @@
+{
+  "slug": "umamidetomate",
+  "nome": "Umami de Tomate",
+  "categoria": "vegano",
+  "descricao": "Tomates sem pele concentrados com sabor umami intenso",
+  "ingredientes": [
+    "tomate sem pele",
+    "azeite extravirgem",
+    "alho orgânico",
+    "ervas orgânicas",
+    "sal"
+  ],
+  "tecnica": "Concentração lenta",
+  "beneficios": [
+    "Licopeno concentrado: poderoso antioxidante",
+    "Vitamina C: fortalece imunidade",
+    "Baixa caloria"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.326000",
+  "updated_at": "2026-01-21T15:13:08.326000",
+  "alerta_saude": null,
+  "beneficio_principal": "Licopeno (4.6mg/100g) - antioxidante que dá cor vermelha e protege contra câncer de próstata. Cozinhar AUMENTA disponibilidade em 35%",
+  "curiosidade_cientifica": "Molho de tomate tem 5x mais licopeno biodisponível que tomate cru - a gordura do azeite ajuda absorção",
+  "referencia_pesquisa": "Journal of the National Cancer Institute, 2018"
+}

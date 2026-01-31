@@ -1,0 +1,39 @@
+{
+  "slug": "pepinocomiogurte",
+  "nome": "Pepino com Iogurte",
+  "categoria": "vegetariano",
+  "descricao": "Pepino orgânico fresco com molho de iogurte artesanal (tipo tzatziki)",
+  "ingredientes": [
+    "pepino orgânico",
+    "iogurte fresco",
+    "alho orgânico",
+    "hortelã orgânica",
+    "azeite extravirgem"
+  ],
+  "tecnica": "Preparo a frio",
+  "beneficios": [
+    "Hidratação: pepino é 96% água",
+    "Probióticos: saúde intestinal",
+    "Apenas 15kcal/100g: extremamente leve"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Alérgeno: Contém LACTOSE. Evite versões com muito açúcar adicionado",
+  "beneficio_principal": "Probióticos vivos (Lactobacillus, Bifidobacterium) equilibram flora intestinal - 70% do sistema imunológico está no intestino",
+  "curiosidade_cientifica": "Iogurte grego tem 2x mais proteína que normal. Estudo: consumo diário reduz risco de diabetes tipo 2 em 18%",
+  "referencia_pesquisa": "BMC Medicine, 2019"
+}

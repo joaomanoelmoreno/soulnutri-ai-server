@@ -1,0 +1,28 @@
+{
+  "slug": "filé_a_parmegiana",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "created_at": "2026-01-23T16:58:44.414000",
+  "descricao": "Prato com arroz, frango e molho.",
+  "ingredientes": [
+    "Arroz",
+    "Frango",
+    "Molho"
+  ],
+  "nome": "Filé a parmegiana",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Pode conter glúten (se o molho tiver)",
+    "Alto teor de sódio (dependendo do molho)"
+  ],
+  "tecnica": ""
+}

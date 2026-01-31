@@ -1,0 +1,29 @@
+{
+  "slug": "pastel_de_frango_com_catupiry",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "created_at": "2026-01-23T14:53:17.689000",
+  "descricao": "Deliciosas empadas, geralmente recheadas com frango, carne ou palmito, envoltas em massa folhada.",
+  "ingredientes": [
+    "massa folhada",
+    "frango",
+    "cebola",
+    "azeite"
+  ],
+  "nome": "Pastel de frango com catupiry",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten, pode conter traços de lactose dependendo da receita.",
+    "Alérgeno: GLÚTEN (massa)"
+  ],
+  "tecnica": ""
+}

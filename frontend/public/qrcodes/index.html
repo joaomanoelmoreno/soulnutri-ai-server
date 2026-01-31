@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Codes - SoulNutri</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .qr-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        .qr-item img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+        }
+        .qr-item p {
+            color: #333;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .qr-item a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+        .qr-item a:hover {
+            background: #45a049;
+        }
+        .principal-qr {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .principal-qr .qr-item {
+            min-width: 250px;
+        }
+        .instructions {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .instructions h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        .instructions ul {
+            margin-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍽️ SoulNutri - QR Codes</h1>
+    <p class="subtitle">QR Codes para as mesas do restaurante</p>
+
+    <div class="instructions">
+        <h3>📋 Instruções</h3>
+        <ul>
+            <li><strong>QR Principal:</strong> Para uso geral (balcão, entrada)</li>
+            <li><strong>QR Preview:</strong> Para testes (ambiente de desenvolvimento)</li>
+            <li><strong>QR Mesas:</strong> Um para cada mesa - identifica automaticamente</li>
+            <li>Clique em "Baixar" para salvar cada QR code</li>
+            <li>Imprima em tamanho adequado (mínimo 5x5cm)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🎯 QR Codes Principais</h2>
+        <div class="principal-qr">
+            <div class="qr-item">
+                <img src="qr_principal.png" alt="QR Principal">
+                <p>🌐 Produção</p>
+                <p style="font-size: 11px; color: #666;">soulnutri.app.br</p>
+                <a href="qr_principal.png" download="soulnutri_qr_principal.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_preview_teste.png" alt="QR Preview">
+                <p>🧪 Preview (Teste)</p>
+                <p style="font-size: 11px; color: #666;">preview.emergentagent.com</p>
+                <a href="qr_preview_teste.png" download="soulnutri_qr_preview.png">Baixar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🪑 QR Codes por Mesa</h2>
+        <div class="qr-grid">
+            <div class="qr-item">
+                <img src="qr_mesa_01.png" alt="Mesa 1">
+                <p>Mesa 1</p>
+                <a href="qr_mesa_01.png" download="soulnutri_mesa_01.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_02.png" alt="Mesa 2">
+                <p>Mesa 2</p>
+                <a href="qr_mesa_02.png" download="soulnutri_mesa_02.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_03.png" alt="Mesa 3">
+                <p>Mesa 3</p>
+                <a href="qr_mesa_03.png" download="soulnutri_mesa_03.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_04.png" alt="Mesa 4">
+                <p>Mesa 4</p>
+                <a href="qr_mesa_04.png" download="soulnutri_mesa_04.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_05.png" alt="Mesa 5">
+                <p>Mesa 5</p>
+                <a href="qr_mesa_05.png" download="soulnutri_mesa_05.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_06.png" alt="Mesa 6">
+                <p>Mesa 6</p>
+                <a href="qr_mesa_06.png" download="soulnutri_mesa_06.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_07.png" alt="Mesa 7">
+                <p>Mesa 7</p>
+                <a href="qr_mesa_07.png" download="soulnutri_mesa_07.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_08.png" alt="Mesa 8">
+                <p>Mesa 8</p>
+                <a href="qr_mesa_08.png" download="soulnutri_mesa_08.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_09.png" alt="Mesa 9">
+                <p>Mesa 9</p>
+                <a href="qr_mesa_09.png" download="soulnutri_mesa_09.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_10.png" alt="Mesa 10">
+                <p>Mesa 10</p>
+                <a href="qr_mesa_10.png" download="soulnutri_mesa_10.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_11.png" alt="Mesa 11">
+                <p>Mesa 11</p>
+                <a href="qr_mesa_11.png" download="soulnutri_mesa_11.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_12.png" alt="Mesa 12">
+                <p>Mesa 12</p>
+                <a href="qr_mesa_12.png" download="soulnutri_mesa_12.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_13.png" alt="Mesa 13">
+                <p>Mesa 13</p>
+                <a href="qr_mesa_13.png" download="soulnutri_mesa_13.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_14.png" alt="Mesa 14">
+                <p>Mesa 14</p>
+                <a href="qr_mesa_14.png" download="soulnutri_mesa_14.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_15.png" alt="Mesa 15">
+                <p>Mesa 15</p>
+                <a href="qr_mesa_15.png" download="soulnutri_mesa_15.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_16.png" alt="Mesa 16">
+                <p>Mesa 16</p>
+                <a href="qr_mesa_16.png" download="soulnutri_mesa_16.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_17.png" alt="Mesa 17">
+                <p>Mesa 17</p>
+                <a href="qr_mesa_17.png" download="soulnutri_mesa_17.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_18.png" alt="Mesa 18">
+                <p>Mesa 18</p>
+                <a href="qr_mesa_18.png" download="soulnutri_mesa_18.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_19.png" alt="Mesa 19">
+                <p>Mesa 19</p>
+                <a href="qr_mesa_19.png" download="soulnutri_mesa_19.png">Baixar</a>
+            </div>
+            <div class="qr-item">
+                <img src="qr_mesa_20.png" alt="Mesa 20">
+                <p>Mesa 20</p>
+                <a href="qr_mesa_20.png" download="soulnutri_mesa_20.png">Baixar</a>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 30px; color: #666;">
+        SoulNutri © 2026 - Cibi Sana
+    </p>
+</body>
+</html>

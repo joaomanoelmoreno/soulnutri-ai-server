@@ -1,0 +1,33 @@
+{
+  "slug": "nhoque_ao_molho_de_gorgonzola",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T17:26:33.300000",
+  "descricao": "Gnocchi cozido em molho cremoso.",
+  "ingredientes": [
+    "Batata",
+    "Farinha",
+    "Ovo",
+    "Leite",
+    "Creme de Leite",
+    "Ervas"
+  ],
+  "nome": "Nhoque ao molho de gorgonzola",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten, Lácteos, Ovos",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (leite, creme)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": ""
+}

@@ -1,0 +1,53 @@
+{
+  "nome": "Coxinha Saudavel de Frango",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "frango",
+    "sal",
+    "farinha linhaça",
+    "batata doce",
+    "alho ",
+    "cebola",
+    "caldo de carne",
+    "temperos"
+  ],
+  "descricao": "Frango preparado de forma saudável.",
+  "beneficios": [
+    "Fonte de proteína: O frango é uma excelente fonte de proteína, essencial para a construção e reparação dos tecidos do corpo.",
+    "Rico em fibras: A adição de farinha de linhaça e batata doce aumenta o teor de fibras, promovendo a saciedade e auxiliando na saúde digestiva.",
+    "Opção mais saudável: A utilização de ingredientes como batata doce e a forma de preparo (presume-se assada ou cozida) tornam a coxinha uma opção mais nutritiva em comparação às versões tradicionais fritas.",
+    "Controle de ingredientes: Ao preparar em casa, é possível controlar a qualidade dos ingredientes e evitar aditivos e conservantes."
+  ],
+  "riscos": [
+    "Teor de sódio: O caldo de carne e o sal podem elevar o teor de sódio, portanto, utilize com moderação.",
+    "Alergênicos: Verificar a procedência dos temperos para evitar ingredientes alergênicos.",
+    "Moderação: Apesar de saudável, consumir com moderação para manter uma dieta equilibrada."
+  ],
+  "curiosidade": "A coxinha é um salgado tipicamente brasileiro, originário de São Paulo, e sua popularidade se espalhou por todo o país. A coxinha é um exemplo da versatilidade da culinária brasileira, que adapta receitas com ingredientes locais.",
+  "slug": "coxinha_saudavel_de_frango",
+  "nutricao": {
+    "calorias": "170 kcal",
+    "proteinas": "15g",
+    "carboidratos": "12g",
+    "gorduras": "6g",
+    "fibras": "3g"
+  },
+  "contem_gluten": false,
+  "tecnica": "Grelhado ou assado",
+  "category_emoji": "🍗",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

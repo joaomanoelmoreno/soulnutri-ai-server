@@ -1,0 +1,45 @@
+{
+  "nome": "Alface Frisee",
+  "categoria": "vegano",
+  "ingredientes": [
+    "alface",
+    ""
+  ],
+  "descricao": "Salada fresca e nutritiva.",
+  "beneficios": [
+    "Rica em vitaminas A e K.",
+    "Baixa em calorias e rica em fibras, auxiliando na saciedade.",
+    "Possui propriedades antioxidantes."
+  ],
+  "riscos": [
+    "Pode conter resíduos de agrotóxicos, se não for orgânica."
+  ],
+  "curiosidade": "A Alface Frisée, com suas folhas encaracoladas e sabor levemente amargo, é parente da chicória e é frequentemente usada em saladas, agregando textura e um toque de amargor.",
+  "slug": "alface_frisee",
+  "nutricao": {
+    "calorias": "17 kcal",
+    "proteinas": "1g",
+    "carboidratos": "1.5g",
+    "gorduras": "0.2g",
+    "fibras": "1.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Proteínas",
+    "Azeite de oliva",
+    "Limão"
+  ],
+  "evitar_com": [
+    "Molhos industrializados calóricos"
+  ],
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

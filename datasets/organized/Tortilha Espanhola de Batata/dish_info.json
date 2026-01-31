@@ -1,0 +1,29 @@
+{
+  "slug": "tortilha_espanhola_de_batata",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "created_at": "2026-01-23T17:25:17.314000",
+  "descricao": "Batatas fatiadas cobertas com creme e queijo, levadas ao forno até dourar.",
+  "ingredientes": [
+    "Batata",
+    "Creme de leite",
+    "Queijo",
+    "Manteiga"
+  ],
+  "nome": "Tortilha espanhola de Batata",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Lácteos",
+    "Alérgeno: LACTOSE (leite, manteiga)"
+  ],
+  "tecnica": ""
+}

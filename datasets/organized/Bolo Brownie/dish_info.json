@@ -1,0 +1,42 @@
+{
+  "slug": "bolobrownie",
+  "nome": "Bolo Brownie",
+  "categoria": "vegetariano",
+  "descricao": "Bolo denso de chocolate artesanal tipo brownie, adoçado com maple",
+  "ingredientes": [
+    "chocolate",
+    "manteiga fresca",
+    "maple canadense",
+    "ovos",
+    "farinha (uso controlado)",
+    "nozes"
+  ],
+  "tecnica": "Assado em forno combinado",
+  "beneficios": [
+    "Flavonoides do cacau: melhoram humor e cognição",
+    "Magnésio: relaxamento e bem-estar",
+    "Antioxidantes: combatem radicais livres"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alérgeno: ovo",
+    "Contém lactose",
+    "Alérgeno: nozes"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "3g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:45:30.794000",
+  "alerta_saude": "Consumo excessivo de manteiga pode aumentar o LDL (colesterol ruim). A American Heart Association sugere não ultrapassar 5-6% das calorias diárias de gorduras saturadas.",
+  "beneficio_principal": "Nozes são uma rica fonte de Ácido Alfa Linolênico (ALA), um tipo de ômega-3 vegetal. Consumo de 28g por dia pode reduzir o risco de doenças cardíacas em 50%, segundo estudo publicado no Journal of Nutrition, 2020.",
+  "curiosidade_cientifica": "Maple syrup contém cerca de 24% das Necessidades Diárias de Manganês por porção de 60ml - mineral essencial que ajuda na formação de ossos e na ativação de enzimas.",
+  "referencia_pesquisa": "Journal of Nutrition, 2020; Departamento de Agricultura dos EUA, 2021"
+}

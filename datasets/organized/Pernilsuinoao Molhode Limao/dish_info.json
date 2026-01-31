@@ -1,0 +1,48 @@
+{
+  "nome": "Pernil Suino ao molho de limao",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "pernil suíno",
+    "alho",
+    "sal",
+    "ervas"
+  ],
+  "descricao": "Pernil assado suculento.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade",
+    "Rico em vitaminas do complexo B",
+    "O pernil suíno é fonte de ferro",
+    "Pode auxiliar na construção e reparo muscular"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, se consumido em excesso",
+    "Pode conter alto teor de sódio, dependendo da quantidade de sal utilizada"
+  ],
+  "curiosidade": "O pernil suíno é uma carne versátil, que pode ser preparada de diversas formas, sendo uma tradição em muitas culturas, especialmente em celebrações.",
+  "slug": "pernilsuinoaomolhodelimao",
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "22g",
+    "carboidratos": "2g",
+    "gorduras": "10g",
+    "fibras": "0g"
+  },
+  "category_emoji": "🥩",
+  "tecnica": "Assado lento",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço especial",
+  "combina_com": [
+    "Arroz",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

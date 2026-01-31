@@ -1,0 +1,39 @@
+{
+  "slug": "canelonedeespinafre",
+  "nome": "Canelone de Espinafre",
+  "categoria": "vegetariano",
+  "descricao": "Massa recheada com espinafre orgânico e ricota fresca, molho artesanal",
+  "ingredientes": [
+    "massa de canelone",
+    "espinafre orgânico",
+    "ricota fresca",
+    "molho de tomate artesanal",
+    "queijo"
+  ],
+  "tecnica": "Assado em forno combinado",
+  "beneficios": [
+    "Ferro do espinafre: combate anemia",
+    "Cálcio da ricota: saúde dos ossos",
+    "Vitamina A: saúde ocular"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém lactose"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Rico em oxalatos - pessoas com histórico de pedras nos rins devem consumir com moderação",
+  "beneficio_principal": "Campeão em luteína (12mg/100g) - antioxidante que se deposita na retina e protege contra degeneração macular, principal causa de cegueira após 60 anos",
+  "curiosidade_cientifica": "O erro de vírgula de 1870 fez Popeye famoso - o espinafre tem 10x menos ferro do que se pensava, mas ainda é nutritivo",
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2018"
+}

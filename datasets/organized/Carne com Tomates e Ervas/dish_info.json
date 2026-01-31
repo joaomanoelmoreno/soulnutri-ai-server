@@ -1,0 +1,44 @@
+{
+  "slug": "carne_com_tomates_e_ervas",
+  "nome": "Carne com Tomates e Ervas",
+  "categoria": "proteína animal",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "ingredientes": [
+    "carne bovina",
+    "sal",
+    "temperos"
+  ],
+  "beneficios": [
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
+  "riscos": [
+    "Gordura saturada"
+  ],
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ],
+  "category_emoji": "🍖"
+}

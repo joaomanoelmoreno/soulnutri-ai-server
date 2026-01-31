@@ -1,0 +1,38 @@
+{
+  "nome": "Tortinhadegongorzolaefigo",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Massa folhada",
+    "Figo fresco, fatiado e assado",
+    "Queijo gorgonzola",
+    "Cebolinha picada",
+    "Geleia de frutas vermelhas (para cobertura)"
+  ],
+  "descricao": "As tortinhas são preparadas com massa folhada, recheadas com figos assados e pedaços de queijo gorgonzola. A cobertura é de geleia de frutas vermelhas, e a cebolinha picada é utilizada para decorar. A massa folhada é assada até dourar, e o figo é caramelizado para realçar seu sabor adocicado.",
+  "beneficios": [
+    "O figo é rico em fibras, que auxiliam na digestão e promovem a saciedade.",
+    "O queijo gorgonzola é fonte de cálcio, importante para a saúde óssea.",
+    "A geleia de frutas vermelhas pode conter antioxidantes, dependendo das frutas utilizadas."
+  ],
+  "riscos": [
+    "Contém glúten (na massa folhada).",
+    "Alérgeno: leite (no queijo gorgonzola).",
+    "Pode conter alto teor de gordura e sódio, dependendo da quantidade de queijo e da massa folhada."
+  ],
+  "curiosidade": "O figo é uma fruta versátil, rica em vitaminas e minerais, e sua doçura natural harmoniza bem com queijos de sabor intenso como o gorgonzola.",
+  "slug": "tortinhadegongorzolaefigo",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

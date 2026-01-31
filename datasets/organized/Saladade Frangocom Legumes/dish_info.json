@@ -1,0 +1,42 @@
+{
+  "slug": "saladadefrangocomlegumes",
+  "nome": "Salada de Frango com Legumes",
+  "categoria": "proteína animal",
+  "descricao": "Salada fresca e nutritiva.",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
+  ],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Crua",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🍖"
+}

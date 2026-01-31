@@ -1,0 +1,31 @@
+{
+  "nome": "Queijo Parmesao Ralado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Queijo parmesão"
+  ],
+  "descricao": "Queijo parmesão ralado em lascas finas, pronto para consumo.",
+  "beneficios": [
+    "Fonte de cálcio, importante para a saúde óssea",
+    "Fonte de proteínas, que auxiliam na construção e reparação dos tecidos do corpo"
+  ],
+  "riscos": [
+    "Alto teor de sódio, que em excesso pode aumentar a pressão arterial",
+    "Alérgeno: leite"
+  ],
+  "curiosidade": "O queijo parmesão é um queijo de origem italiana, conhecido por seu sabor intenso e textura granulosa.",
+  "slug": "queijo_parmesao_ralado",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

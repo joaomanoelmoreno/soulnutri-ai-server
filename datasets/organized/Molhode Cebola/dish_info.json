@@ -1,0 +1,31 @@
+{
+  "nome": "Molhodecebola",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Cebola",
+    "Azeite de oliva",
+    "Tempero verde (possivelmente salsinha e cebolinha)",
+    "Especiarias (possivelmente pimenta do reino)"
+  ],
+  "descricao": "Molho de cebola preparado com cebolas fatiadas, refogadas em azeite de oliva e temperadas com especiarias. O modo de preparo parece ser lento, para caramelizar a cebola e intensificar o sabor. O caldo no fundo indica que o molho foi cozido em fogo baixo por um tempo.",
+  "beneficios": [
+    "A cebola é rica em antioxidantes, que combatem os radicais livres.",
+    "O azeite de oliva é fonte de gorduras saudáveis, benéficas para o coração."
+  ],
+  "riscos": [],
+  "curiosidade": "A cebola é um alimento versátil que pode ser utilizada crua, refogada, grelhada ou caramelizada, proporcionando diferentes nuances de sabor.",
+  "slug": "molhodecebola",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

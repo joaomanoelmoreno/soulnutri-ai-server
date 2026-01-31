@@ -1,0 +1,52 @@
+{
+  "nome": "Peixe ao Molho de Tres Alhos Manteiga e Tomate",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
+  ],
+  "descricao": "Peixe fresco, fonte de ômega-3.",
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
+  "riscos": [
+    "Alérgeno: peixe"
+  ],
+  "curiosidade": "O alho, um dos ingredientes principais, era usado pelos egípcios antigos para aumentar a força e a resistência dos trabalhadores, além de ser considerado um remédio para diversas doenças.",
+  "slug": "peixe_ao_molho_de_tres_alhos_manteiga_e_tomate",
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "contem_peixe": true,
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 250,
+    "max": 450,
+    "tipico": 350
+  }
+}

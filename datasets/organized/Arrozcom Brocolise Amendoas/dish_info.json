@@ -1,0 +1,49 @@
+{
+  "nome": "Arroz com Brócolis e Amêndoas",
+  "slug": "arrozcombrocoliseamendoas",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "ingredientes": [
+    "arroz",
+    "brocolis",
+    "amendoas",
+    "sal",
+    "alho"
+  ],
+  "beneficios": [
+    "Fonte de fibras, auxiliando na saúde intestinal.",
+    "Rico em vitaminas e minerais provenientes do brócolis.",
+    "As amêndoas fornecem gorduras saudáveis e vitamina E.",
+    "Opção leve e nutritiva para o dia a dia."
+  ],
+  "riscos": [
+    "Controlar a quantidade de sal para evitar excessos de sódio.",
+    "Consumir com moderação se tiver alergia a oleaginosas (amêndoas)."
+  ],
+  "nutricao": {
+    "calorias": "150 kcal",
+    "proteinas": "4g",
+    "carboidratos": "25g",
+    "gorduras": "5g",
+    "fibras": "3g"
+  },
+  "tecnica": "Cozimento em água",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ],
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

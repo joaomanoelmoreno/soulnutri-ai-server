@@ -1,0 +1,30 @@
+{
+  "slug": "espagueti_ao_misso",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T12:28:26.456000",
+  "descricao": "Prato composto por macarrão, molho e almôndegas.",
+  "ingredientes": [
+    "Macarrão",
+    "Almôndegas",
+    "Molho",
+    "Queijo"
+  ],
+  "nome": "espagueti ao misso",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten, Lácteos",
+    "Alérgeno: GLÚTEN (macarrao, macarrão)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": ""
+}

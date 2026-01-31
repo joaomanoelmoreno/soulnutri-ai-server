@@ -1,0 +1,38 @@
+{
+  "slug": "cenouraaoiogurte",
+  "nome": "Cenoura ao Iogurte",
+  "categoria": "vegetariano",
+  "descricao": "Cenoura orgânica ralada com molho de iogurte fresco artesanal",
+  "ingredientes": [
+    "cenoura orgânica",
+    "iogurte natural fresco",
+    "maple light",
+    "gengibre fresco"
+  ],
+  "tecnica": "Preparo a frio",
+  "beneficios": [
+    "Probióticos do iogurte: saúde intestinal",
+    "Betacaroteno: saúde da visão",
+    "Cálcio: fortalece os ossos"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Alérgeno: Contém LACTOSE. Evite versões com muito açúcar adicionado",
+  "beneficio_principal": "Probióticos vivos (Lactobacillus, Bifidobacterium) equilibram flora intestinal - 70% do sistema imunológico está no intestino",
+  "curiosidade_cientifica": "Iogurte grego tem 2x mais proteína que normal. Estudo: consumo diário reduz risco de diabetes tipo 2 em 18%",
+  "referencia_pesquisa": "BMC Medicine, 2019"
+}

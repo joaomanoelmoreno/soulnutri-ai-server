@@ -1,0 +1,30 @@
+{
+  "slug": "caneleira_quatro_queijos",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T14:52:32.005000",
+  "descricao": "Ravioli cozido, coberto com molho de tomate e possivelmente queijo, com ervas frescas.",
+  "ingredientes": [
+    "Massa de ravioli",
+    "Molho de tomate",
+    "Queijo",
+    "Ervas"
+  ],
+  "nome": "Caneleira quatro queijos",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten, Lácteos",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": ""
+}

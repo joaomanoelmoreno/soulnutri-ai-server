@@ -1,0 +1,44 @@
+{
+  "nome": "Kibe Recheado",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne moída",
+    "trigo para kibe",
+    "cebola",
+    "hortelã"
+  ],
+  "descricao": "Kibe árabe tradicional.",
+  "beneficios": [
+    "Rico em proteínas",
+    "Ferro"
+  ],
+  "riscos": [
+    "Contém glúten"
+  ],
+  "curiosidade": "O kibe é um prato de origem árabe, muito popular no Brasil, especialmente em festas e eventos.",
+  "slug": "kiberecheado",
+  "nutricao": {
+    "calorias": "200 kcal",
+    "proteinas": "12g",
+    "carboidratos": "15g",
+    "gorduras": "10g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Assado ou frito",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Coalhada",
+    "Salada"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
+}

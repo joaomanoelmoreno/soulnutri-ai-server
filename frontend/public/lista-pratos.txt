@@ -1,0 +1,469 @@
+
+================================================================================
+                        LISTA DE PRATOS - CIBI SANA
+================================================================================
+                    Total: 372 pratos  |  Janeiro 2026
+================================================================================
+
+LEGENDA:  [V] Vegano  |  [E] Vegetariano (ovo/leite)  |  [P] Proteína Animal
+
+
+========================================
+  A
+========================================
+  [V] Abobora Ao Curry
+  [V] Abobrinha Grelhada
+  [ ] Abobrinha Grelhada Com Queijo E Tomate
+  [ ] Aipim Na Manteiga
+  [V] Alface Frisée
+  [P] Almôndegas Ao Coco Com Especiarias 
+  [P] Almôndegas Ao Molho Sugo
+  [V] Arroz 7 Graos
+  [V] Arroz 7 Graos Com Frutas Secas
+  [V] Arroz 7 Grãos Com Legumes
+  [V] Arroz Branco
+  [ ] Arroz Com Brócolis E Amêndoas
+  [ ] Arroz Com Frutas E Ervas
+  [ ] Arroz Com Frutas Secas E Ervas
+  [V] Arroz Integral
+  [V] Arroz Integral Com Legumes
+  [P] Atum Ao Funghi
+  [P] Atum Ao Gergelim
+  [V] Azeitona Preta
+
+========================================
+  B
+========================================
+  [P] Bacalhau A Bras
+  [P] Bacalhau Com Natas
+  [P] Bacalhau Gomes De Sá
+  [P] Baiao De Dois
+  [E] Banana Ao Creme
+  [V] Batata Com Paprica
+  [V] Batata Doce Assada
+  [ ] Batata Frita
+  [ ] Batatas Ao Molho
+  [E] Beringela A Parmegiana
+  [V] Beringela Ao Curry E Kincam
+  [V] Beringela Ao Purê De Limão Siciliano
+  [ ] Berinjela À Parmegiana
+  [V] Beterraba  Ao Balsamico
+  [ ] Bolinho De Arroz
+  [P] Bolinho De Bacalhau
+  [P] Bolinho De Camarao
+  [ ] Bolinho De Mandioca
+  [ ] Bolinho De Queijo
+  [V] Bolo Brownie De Chocolate
+  [ ] Bolo Com Calda De Frutas Vermelhas
+  [E] Bolo De Gengibre
+  [ ] Bolo De Leite Com Calda De Frutas Vermelhas
+  [V] Boloc Vegano De Chocolate
+  [ ] Brownie Com Morango
+  [ ] Brownie De Chocolate
+  [ ] Brownie Vegano Com Morangos
+  [ ] Brócolis Com Parmesão
+  [E] Brócolis Gratinado
+  [ ] Bun Cha
+
+========================================
+  C
+========================================
+  [E] Caneleira Quatro Queijos
+  [E] Canelone De Espinafre
+  [V] Caponata
+  [ ] Carne Com Legumes
+  [ ] Carne Com Legumes E Pimenta
+  [ ] Carne Com Tomate Cereja E Ervas
+  [ ] Carne Com Tomates E Ervas
+  [ ] Carne De Panela Com Mandioca
+  [P] Carne Seca Com Abóbora
+  [V] Carpaccio De Abobrinha
+  [E] Carpaccio De Pera
+  [V] Cebola Caramelizada
+  [V] Cebola Roxa Com Ervas Frescas E Frutos Secos
+  [V] Cenoura
+  [E] Cenoura Com Iogurte E  Especiarias
+  [P] Cestinha De Camarão
+  [V] Ceviche De Banana Da Terra
+  [V] Ceviche De Manga
+  [P] Ceviche De Peixe
+  [E] Cocada
+  [ ] Cogumelos Recheados
+  [ ] Cogumelos Recheados E Lentilha
+  [E] Conchiglione Ao Creme De Avelas E Salvia
+  [P] Costela Com Mandioca
+  [P] Costelinha Cibi Sana
+  [ ] Costelinhacibisana
+  [E] Couve Flor Gratinada
+  [P] Coxinha Saudável De Frango
+  [E] Cuscuz De Tapioca
+  [V] Cuscuz Marroquino
+  [ ] Cuscuz Marroquino Com Grãos E Sementes
+
+========================================
+  D
+========================================
+  [E] Dadinho De Tapioca
+  [V] Docedebananavegano(Semaçúcar)
+
+========================================
+  E
+========================================
+  [ ] Empadas
+  [ ] Enroladinho De Frango
+  [ ] Ensopado De Lentilha
+  [P] Entrecotegrelhado
+  [P] Entrecôte
+  [V] Ervadocecomlaranja
+  [ ] Escondidinho
+  [ ] Escondidinho De Frango
+  [ ] Escondidinho Vegetariano
+  [P] Escondidinhodecarneseca
+  [V] Espaguete
+  [P] Espaguete Ao Missô
+  [P] Espaguete Parisiense
+  [E] Espetinho Caprese
+  [V] Espetinho De Legumes E Molho Pesto
+  [V] Espetinhosdelegumesgrelhados
+  [V] Estrogonofe Vegano
+  [P] Estrogonofedefilémignon
+
+========================================
+  F
+========================================
+  [P] Farofa Com Bacon
+  [V] Farofa De Banana Vegana
+  [P] Farofadebacon
+  [V] Farofadebananadaterra
+  [V] Feijaocariocasemcarne
+  [V] Feijaopretosemcarne
+  [P] Feijaotropeiro
+  [P] Feijoada
+  [P] Feijão Do Chef
+  [P] Feijão Sem Carne
+  [V] Feijãobranco
+  [P] Figadoacebolado
+  [P] Filedepeixeaomisso
+  [P] Filedepeixeaomolhodelimao
+  [P] Filedepeixemolhofrutassecas
+  [P] Filé A Parmegiana  Acompanhamentos
+  [P] Filé De Frango Parmegiana
+  [P] Filé De Peixe Ao Confir De Tomates
+  [P] Filé De Peixe Ao Molho Confit
+  [P] Filé De Peixe Em Manteiga De Tomates
+  [P] Filé De Tilápia A Milanesa
+  [ ] Filé Mignon Em Manteiga De Ervas
+  [P] Frango Ao Creme De Limao
+  [P] Frango Ao Molho
+  [ ] Frango Ao Molho Cremoso
+  [P] Frango Assado
+  [ ] Frango Com Batatas
+  [ ] Frango Com Legumes
+  [ ] Frango Com Molho Cremoso
+  [P] Frango Frito
+  [ ] Frango Frito Com Tomate Cereja E Cebolinha
+  [ ] Frango No Tacho
+  [ ] Frango À Parmegiana
+  [ ] Frangoassado
+  [P] Frangocremedelimaosalnegro
+  [P] Frangoàparmegiana
+  [E] Frutas Ao Ganache De Chocolate
+  [ ] Frutasaoganachedechocolate
+  [P] Frutos Do Mar
+  [P] Frutos Do Mar Ao Molho Branco
+  [P] Fígado Acebolado
+  [P] Fígadoaceboladocompimentabiquinho
+
+========================================
+  G
+========================================
+  [ ] Ganache De Chocolate Com Frutas
+  [E] Gelatina De Cereja
+  [V] Gelatinadeabacaxi
+  [E] Gelatinademorango
+  [V] Gelatinadeuva
+  [ ] Gnocchi
+  [ ] Gnocchi Ao Molho Branco
+  [ ] Gnocchi Ao Molho Branco Com Queijo
+  [ ] Gnocchi Com Molho Cremoso
+  [ ] Gnocchi Com Molho Cremoso E Queijo
+  [V] Goiabada
+  [V] Granola Cibi Sana
+  [V] Graodebicotomatesecoespinafre
+  [ ] Gratinado De Legumes
+  [P] Gratinado De Peixefrutos Do Mar
+  [P] Grelhado Dos Pescadores
+  [V] Guacamole
+  [V] Guacamole Com Manga
+
+========================================
+  H
+========================================
+  [ ] Hamburgerdecarne
+  [P] Hamburguedecarne
+  [V] Hamburguervegano
+  [P] Hambúrguer Angus Ao Ponto
+  [P] Hambúrguer Bovino
+  [V] Hambúrguer Vegano De Nozes
+  [P] Hamcamaraocomcarnesuina
+
+========================================
+  J
+========================================
+  [V] Jiloempanado
+
+========================================
+  K
+========================================
+  [ ] Kibbeh Com Arroz E Homus
+  [P] Kibe
+  [P] Kiberecheado
+
+========================================
+  L
+========================================
+  [E] Lasanha De Berinjela
+  [V] Lasanha Vegana
+  [V] Lasanha Vegana (Beringela E Proteína De Soja)
+  [E] Lasanhadeespinafre
+  [E] Lasanhadeportobello
+  [ ] Lentilha
+  [ ] Lentilha Com Legumes
+  [ ] Lentilha Com Tofu
+  [ ] Lentilha Com Vegetais
+  [ ] Lentilha Refogada
+  [ ] Lentilha Refogada Com Legumes
+  [ ] Lentilha Refogada Com Tofu
+  [V] Lentilhacomtofu
+  [P] Linguiça Calabresa Acebolada
+  [P] Linguiça De Lombo
+  [P] Lula E Camarao
+  [ ] Língua Ao Molho
+
+========================================
+  M
+========================================
+  [P] Maminhaaomolhomongolia
+  [P] Maminhaaomolhomostarda
+  [P] Maminhamolhocebola
+  [P] Maminhanacervejapreta
+  [V] Mamão
+  [V] Mamãoemcubos
+  [V] Mandioquinhaassada
+  [P] Mandioquinhacomcamarao
+  [ ] Manjar De Coco
+  [E] Manjar De Coco Com Calda De Frutas Vermelhas
+  [E] Manjardecococomcaldadeameixa
+  [P] Marinha Ao Molho Madeira
+  [P] Massaladecamarões
+  [E] Mechouia-Tunisia
+  [V] Melancia Em Cubos
+  [E] Melhoria Tunísia
+  [ ] Michouiatunisia
+  [ ] Mini Polpetone
+  [ ] Mini Sanduíches De Pasta De Frango
+  [P] Minipolpetonerecheadocomqueijo
+  [V] Mix De Grãos E Sementes
+  [E] Molho Tártaro
+  [V] Molhocaeiro
+  [V] Molhodecebola
+  [V] Molhoparaorolinho
+  [E] Molhosugo
+  [V] Moquecadebanadaterra
+  [E] Moussedelimãosemaçúcar
+  [E] Moussedemaracuja
+  [E] Moussedemorango
+  [V] Muqueca De Banana Da Terra Vegana
+
+========================================
+  N
+========================================
+  [V] Nachos
+  [E] Nhoque
+  [ ] Nhoque Ao Molho Branco Com Queijo
+  [E] Nhoque Ao Molho De Gorgonzola
+  [ ] Nhoque Ao Sugo
+  [ ] Nhoque Com Molho Branco
+  [ ] Nhoque Com Molho Branco E Queijo
+  [ ] Nhoque Com Molho Cremoso
+  [ ] Nhoque Com Molho E Queijo
+  [ ] Nhoque Com Queijo
+  [ ] Nãoépossívelidentificar
+
+========================================
+  O
+========================================
+  [ ] Ovos Ao Forno
+  [P] Ovospochêcomcarnemoída
+
+========================================
+  P
+========================================
+  [ ] Paella De Frutos Do Mar
+  [ ] Panacota Com Calda De Frutas Vermelhas
+  [P] Panceta Pururuca
+  [ ] Pancetapururca
+  [P] Pancettacrocante
+  [ ] Panna Cotta Com Calda De Frutas Vermelhas
+  [ ] Pannacottacomfrutasvermelhas
+  [ ] Pastel
+  [P] Peitodefrangogrelhado
+  [P] Peixe
+  [P] Peixe A Milanesa
+  [P] Peixe Ao Molho Branco
+  [ ] Peixe Ao Molho Cremoso
+  [P] Peixe Ao Molho De Três Alhos Manteiga E Tomate
+  [P] Peixe Com Molho
+  [ ] Peixe Com Molho Cremoso
+  [P] Peixe Empanado
+  [P] Peixe Grelhado
+  [P] Peixecomtomatecereja
+  [E] Pepinocomiogurte
+  [P] Pernil Assado Com Legumes
+  [P] Pernildecordeiro
+  [P] Pernilsuínoaomolhodelimão
+  [V] Pimenta Biquinho
+  [ ] Portobello Recheado
+  [V] Portobello Recheado Com Legumes
+  [E] Portobellorecheado
+  [ ] Prato Com Legumes E Queijo
+  [ ] Prato Com Queijo E Cebolinha
+  [ ] Prato Com Queijo Ralado
+  [ ] Prato De Legumes Com Queijo
+  [ ] Prato De Vegetais Com Queijo
+  [ ] Prato Feito
+  [ ] Prato Feito Brasileiro
+  [ ] Prato Feito Com Linguica
+  [ ] Prato Gratinado
+  [ ] Prato Gratinado Com Queijo
+  [P] Pratofeito(Pf)
+  [V] Proteína De Soja Ao Sugo
+  [ ] Pudim
+  [E] Pudimdeleitecondensado
+  [V] Puredemacaverde
+  [V] Puredemandioquinha
+  [ ] Purê De Batata Doce
+  [V] Purê De Madioquinha Vegano Com Leite De Coco
+  [E] Purêdebatata
+  [V] Pão De Alho Negro E Cumaru
+  [ ] Pão De Queijo
+
+========================================
+  Q
+========================================
+  [E] Queijo Parmesão Ralado
+  [E] Queijo Ralado
+  [V] Quiabocomamendoim
+  [V] Quiaboempanado
+  [E] Quiche
+  [V] Quinoa Com Legumes
+  [V] Quinuacomtahine
+
+========================================
+  R
+========================================
+  [V] Radicchio Ao Molho De Mel E Lamina De Amendoas
+  [V] Ratatouille
+  [ ] Ravioli
+  [V] Repolho
+  [E] Requeijão
+  [E] Risoneaocremedelimao
+  [V] Risoneaopesto
+  [ ] Risoto
+  [E] Risoto De Alho Poró
+  [ ] Risoto De Legumes E Arroz Com Frutas Secas
+  [E] Risoto De Pêra E Gorgonzola
+  [ ] Risoto De Vegetais Com Queijo
+  [V] Robinho Vietnamita
+  [P] Rolinho Vietnamita De Camarão
+  [V] Rolinho Vietnamita De Legumes
+  [E] Romeu
+  [E] Romeu E Julieta
+  [ ] Romeuejulieta
+  [V] Rucula
+
+========================================
+  S
+========================================
+  [P] Salada De Atum
+  [P] Salada De Atum Com Legumes
+  [V] Salada De Feijão Fradinho
+  [ ] Salada De Frango
+  [ ] Salada De Orzo Com Nozes E Folhas Verdes
+  [P] Salada De Peixe
+  [ ] Salada De Quinoa
+  [ ] Salada Mediterrânea
+  [E] Salada Michouia Tunísia
+  [V] Salada Oriental De Biffun
+  [V] Salada Verde
+  [V] Saladadebeterrabacomlaranjaehortelã
+  [V] Saladadebifumcompepino
+  [V] Saladadefeijaobranco
+  [V] Saladadefeijãobrancocomtomateecebola
+  [P] Saladadefrangocomlegumes
+  [V] Saladadegraodebico
+  [V] Saladadelentilha
+  [E] Saladadeovoscombatata
+  [V] Saladadequinoacomlegumes
+  [V] Saladaderabanetecomlaranja
+  [V] Saladadetomateemrodelas
+  [ ] Saladamichouiatunísia
+  [P] Saladatailandesa
+  [E] Saladeovos
+  [ ] Saldacaprese
+  [ ] Salpicão De Frango
+  [ ] Shepherd'S Pie
+  [P] Sobrecoxa
+  [P] Sobrecoxa Ao Tandori
+  [P] Sobrecoxaaotucupi
+  [ ] Sopa De Legumes Gratinada
+  [V] Spaghetticomtomatecerejaemanjericão
+  [V] Steakdecouveflor
+  [P] Strogonoff
+  [ ] Suflê De Legumes Com Queijo
+  [ ] Sushi
+  [P] Sushivietnamita
+
+========================================
+  T
+========================================
+  [V] Tabule De Trigo
+  [V] Tabuledequinoa
+  [E] Tiramisu
+  [ ] Tiramisuvegano
+  [ ] Tofu Frito
+  [V] Tomate
+  [V] Tomate Seco Conservado
+  [V] Tomates Fatiados
+  [ ] Torradas Com Ervas
+  [ ] Torradas Com Tempero
+  [ ] Torradas De Alho
+  [V] Torradas Temperadas
+  [ ] Torradas Temperadas
+  [ ] Torresmo
+  [ ] Torta De Chocolate Com Frutas
+  [E] Torta De Legumes
+  [ ] Torta De Legumes Gratinada
+  [E] Torta De Manga
+  [E] Tortilha De Figo E Gorgonzola
+  [E] Tortilha Espanhola De Batata
+  [ ] Tortilla Chips
+  [E] Tortinhadegongorzolaefigo
+
+========================================
+  U
+========================================
+  [ ] Umami De Tomates
+  [V] Uvas
+
+========================================
+  V
+========================================
+  [V] Vermicelli
+  [ ] Vinagrete
+  [ ] Vol Au Vent
+  [ ] Volauventbatata
+
+================================================================================
+                              FIM DA LISTA
+================================================================================

@@ -1,0 +1,25 @@
+{
+  "slug": "fígado_abolado",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-27T13:58:33.692000",
+  "descricao": "Prato com carne e legumes, difícil de identificar com precisão.",
+  "ingredientes": [
+    "Carne",
+    "Legumes",
+    "Tomate"
+  ],
+  "nome": "Fígado Abolado",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [],
+  "tecnica": ""
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "polpetone",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-28T11:24:23.536000",
+  "descricao": "Nhoque com molho e possivelmente queijo.",
+  "ingredientes": [
+    "batata",
+    "farinha",
+    "ovo",
+    "queijo"
+  ],
+  "nome": "Polpetone",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten, ovo, lactose",
+    "Alérgeno: GLÚTEN (farinha)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": ""
+}

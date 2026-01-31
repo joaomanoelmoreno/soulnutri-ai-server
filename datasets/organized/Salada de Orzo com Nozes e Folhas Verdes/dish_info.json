@@ -1,0 +1,40 @@
+{
+  "nome": "Salada de Orzo com Nozes e Folhas Verdes",
+  "slug": "salada_de_orzo_com_nozes_e_folhas_verdes",
+  "categoria": "vegano",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
+  ],
+  "descricao": "Salada fresca e nutritiva.",
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "tecnica": "Crua",
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🌱",
+  "contem_castanhas": true
+}

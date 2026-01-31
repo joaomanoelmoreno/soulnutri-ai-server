@@ -1,0 +1,40 @@
+{
+  "slug": "sobrecoxaaotandoori",
+  "nome": "Sobrecoxa ao Tandoori",
+  "categoria": "proteína animal",
+  "descricao": "Sobrecoxa de frango fresco marinada em especiarias tandoori importadas da Índia",
+  "ingredientes": [
+    "sobrecoxa de frango fresco",
+    "iogurte fresco",
+    "garam masala importado",
+    "cúrcuma importada",
+    "páprica importada",
+    "gengibre fresco"
+  ],
+  "tecnica": "Marinado em iogurte + assado em forno combinado",
+  "beneficios": [
+    "Cúrcuma: poderoso anti-inflamatório",
+    "Probióticos do iogurte: saúde intestinal",
+    "Proteína de qualidade"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "165 kcal",
+    "proteinas": "31g",
+    "carboidratos": "0g",
+    "gorduras": "3.6g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.326000",
+  "updated_at": "2026-01-21T15:13:08.326000",
+  "alerta_saude": null,
+  "beneficio_principal": "Mais suculenta que o peito por ter gordura intramuscular. Contém colágeno natural nas articulações - bom para pele e juntas",
+  "curiosidade_cientifica": "A sobrecoxa tem 2x mais ferro e zinco que o peito de frango",
+  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+}

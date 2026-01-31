@@ -1,0 +1,43 @@
+{
+  "nome": "Cogumelos Recheados",
+  "slug": "cogumelos_recheados",
+  "categoria": "vegano",
+  "ingredientes": [
+    "cogumelos",
+    "azeite",
+    "alho",
+    "sal"
+  ],
+  "descricao": "Cogumelos saborosos e nutritivos.",
+  "beneficios": [
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em vitamina D"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "22 kcal",
+    "proteinas": "3g",
+    "carboidratos": "3g",
+    "gorduras": "0.3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "category_emoji": "🌱",
+  "tecnica": "Refogado ou grelhado",
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Risotos",
+    "Massas"
+  ],
+  "evitar_com": [],
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 150,
+    "max": 300,
+    "tipico": 220
+  }
+}

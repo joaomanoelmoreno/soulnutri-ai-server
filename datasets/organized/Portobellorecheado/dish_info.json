@@ -1,0 +1,50 @@
+{
+  "slug": "portobellorecheado",
+  "nome": "Portobello Recheado",
+  "categoria": "vegano",
+  "descricao": "Cogumelo portobello, substituto de carne.",
+  "ingredientes": [
+    "cogumelo portobello",
+    "azeite",
+    "alho",
+    "ervas"
+  ],
+  "beneficios": [
+    "Fonte de antioxidantes e vitaminas do complexo B.",
+    "Rico em fibras, auxiliando na saúde digestiva.",
+    "Baixo em calorias e gorduras.",
+    "Promove a saciedade."
+  ],
+  "riscos": [
+    "Pode conter traços de outros alimentos se preparado em ambiente compartilhado."
+  ],
+  "nutricao": {
+    "calorias": "80 kcal",
+    "proteinas": "3g",
+    "carboidratos": "7g",
+    "gorduras": "5g",
+    "fibras": "3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou recheado",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Ervas"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🥬",
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 150,
+    "max": 300,
+    "tipico": 220
+  }
+}

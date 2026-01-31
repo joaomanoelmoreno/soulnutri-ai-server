@@ -1,0 +1,42 @@
+{
+  "nome": "Dadinho Com Camarão",
+  "slug": "dadinho_com_camarão",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Bolinho crocante e saboroso.",
+  "ingredientes": [
+    "base variada",
+    "temperos",
+    "óleo"
+  ],
+  "beneficios": [
+    "Fonte de energia"
+  ],
+  "riscos": [
+    "Frito",
+    "Calórico"
+  ],
+  "tecnica": "Frito",
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "4g",
+    "carboidratos": "20g",
+    "gorduras": "10g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Entrada ou lanche",
+  "combina_com": [
+    "Molhos"
+  ],
+  "evitar_com": [
+    "Outras frituras"
+  ],
+  "origem": "user_created_local"
+}

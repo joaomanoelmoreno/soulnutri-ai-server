@@ -1,0 +1,41 @@
+{
+  "slug": "entrecote",
+  "nome": "Entrecote",
+  "categoria": "vegano",
+  "descricao": "Entrecôte suculento e saboroso.",
+  "ingredientes": [
+    "entrecôte",
+    "sal grosso",
+    "ervas"
+  ],
+  "beneficios": [
+    "Rico em proteínas",
+    "Ferro",
+    "Sabor intenso"
+  ],
+  "riscos": [
+    "Gordura moderada"
+  ],
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "25g",
+    "carboidratos": "0g",
+    "gorduras": "16g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Batatas",
+    "Salada"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
+}

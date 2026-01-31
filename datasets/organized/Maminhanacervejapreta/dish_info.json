@@ -1,0 +1,39 @@
+{
+  "slug": "maminhanacervejapreta",
+  "nome": "Maminha na Cerveja Preta",
+  "categoria": "proteína animal",
+  "descricao": "Maminha bovina fresca braseada na cerveja preta",
+  "ingredientes": [
+    "maminha fresca",
+    "cerveja preta",
+    "cebola orgânica",
+    "alho orgânico",
+    "louro"
+  ],
+  "tecnica": "Braseamento",
+  "beneficios": [
+    "Proteína que se desfaz: fácil mastigação",
+    "Ferro heme: previne anemia",
+    "Vitaminas do complexo B"
+  ],
+  "riscos": [
+    "Contém álcool residual",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:48:26.341000",
+  "alerta_saude": "O consumo de cerveja preta no preparo pode deixar resíduos de álcool (em torno de 0.5% após cozimento prolongado), o que pode ser relevante para pessoas sensíveis ao álcool ou em dietas sem álcool, como gestantes. Além disso, compostos como sulfito, presentes na cerveja, podem desencadear reações em indivíduos asmáticos sensíveis, segundo a 'American Thoracic Society'.",
+  "beneficio_principal": "Cerveja preta contém polifenóis, especialmente procianidinas (1.75-3.50 mg/L), que têm propriedades antioxidantes e podem ajudar a reduzir o risco de doenças cardiovasculares. Um estudo publicado no 'Journal of Agricultural and Food Chemistry' em 2014 demonstrou que esses compostos podem melhorar a função endotelial.",
+  "curiosidade_cientifica": "A cebola contém quercetina (cerca de 20 mg/100g), um flavonoide que pode aumentar a absorção do ferro heme presente na maminha, potencializando suas propriedades nutricionais. A quercetina também possui efeitos anti-inflamatórios reconhecidos.",
+  "referencia_pesquisa": "'Journal of Agricultural and Food Chemistry', 2014; 'Journal of Nutrition' 2015"
+}

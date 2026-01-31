@@ -1,0 +1,39 @@
+{
+  "nome": "Linguica de Lombo",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne suína",
+    "temperos"
+  ],
+  "descricao": "Linguiça suína saborosa.",
+  "beneficios": [
+    "Rica em proteínas"
+  ],
+  "riscos": [
+    "Alto teor de sódio",
+    "Gordura elevada"
+  ],
+  "curiosidade": "A linguiça de lombo é feita com carne suína, geralmente do lombo, que é uma parte magra do porco. A adição de temperos e especiarias varia de acordo com a receita, conferindo diferentes sabores e aromas ao produto.",
+  "slug": "linguica_de_lombo",
+  "nutricao": {
+    "calorias": "300 kcal",
+    "proteinas": "15g",
+    "carboidratos": "2g",
+    "gorduras": "26g"
+  },
+  "category_emoji": "🍖",
+  "tecnica": "Grelhada ou frita",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Feijão"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "slug": "salpicaodefrango",
+  "nome": "Salpicão de Frango",
+  "categoria": "proteína animal",
+  "descricao": "Salada de frango preparado sous vide, desfiado com maionese artesanal e legumes orgânicos",
+  "ingredientes": [
+    "frango sous vide desfiado",
+    "maionese artesanal",
+    "cenoura orgânica",
+    "batata palha",
+    "milho",
+    "ervilha"
+  ],
+  "tecnica": "Frango sous vide + preparo a frio",
+  "beneficios": [
+    "Proteína magra: ideal para dietas",
+    "Vitaminas dos legumes: imunidade",
+    "Frango macio: técnica sous vide"
+  ],
+  "riscos": [
+    "Alérgeno: ovo (maionese)",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "165 kcal",
+    "proteinas": "31g",
+    "carboidratos": "0g",
+    "gorduras": "3.6g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.326000",
+  "updated_at": "2026-01-21T21:49:20.729000",
+  "alerta_saude": "A preparação sous vide não elimina a Campylobacter em frango quando não corretamente pasteurizado - cozinhar a 74°C por pelo menos 12 minutos é recomendado pelos padrões da FDA.",
+  "beneficio_principal": "Cenoura orgânica contém 6,5g de fibra por 100g, promovendo saciedade e melhorando a saúde digestiva. Segundo estudo da Harvard School of Public Health, uma dieta rica em fibras pode reduzir em 23% o risco de doenças coronarianas.",
+  "curiosidade_cientifica": "O processo sous vide não só mantém o frango macio como também preserva até 90% dos micronutrientes, como a vitamina B6, essencial para a função metabólica.",
+  "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 'Fiber and Heart Health', 2020"
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "quinoa_com_tahine",
+  "ativo": true,
+  "beneficios": [
+    "Tahine: rico em cálcio (420mg/100g) - fortalece ossos e dentes, mais cálcio que um copo de leite",
+    "Baixo índice glicêmico (53): libera energia lentamente, evitando picos de açúcar no sangue"
+  ],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T16:58:33.963000",
+  "descricao": "Quinoa com tahine - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "quinoa",
+    "tahine",
+    "pepino",
+    "tomate",
+    "hortelã",
+    "limão"
+  ],
+  "nome": "Quinoa com tahine",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Pode conter traços de gergelim"
+  ],
+  "tecnica": "",
+  "beneficio_principal": "A quinoa é uma das poucas fontes vegetais de proteína COMPLETA - contém todos os 9 aminoácidos essenciais que o corpo não produz, ideal para vegetarianos",
+  "curiosidade": "A NASA considera a quinoa ideal para missões espaciais pelo seu perfil nutricional completo"
+}

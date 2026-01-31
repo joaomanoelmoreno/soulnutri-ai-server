@@ -1,0 +1,40 @@
+{
+  "slug": "filedepeixemolhofrutassecas",
+  "nome": "Filé de Peixe ao Molho de Frutas Secas",
+  "categoria": "proteína animal",
+  "descricao": "Filé de peixe fresco ao vapor com molho artesanal de frutas secas",
+  "ingredientes": [
+    "peixe fresco",
+    "uva passa",
+    "damasco",
+    "vinho branco",
+    "manteiga fresca"
+  ],
+  "tecnica": "Cozimento no vapor",
+  "beneficios": [
+    "Ômega-3: proteção do coração",
+    "Antioxidantes das frutas secas",
+    "Potássio: equilíbrio de fluidos"
+  ],
+  "riscos": [
+    "Alérgeno: peixe",
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:47:32.056000",
+  "alerta_saude": "O consumo frequente de frutas secas adicionadas ao molho pode contribuir para ingestão elevada de açúcar - podem conter até 53g de açúcar por 100g (uva passa). Modere o consumo em dietas de controle glicêmico. (Cambridge University Press, 2019)",
+  "beneficio_principal": "O consumo regular de ômega-3, presente em peixes, pode reduzir os níveis de triglicérides no sangue em até 25-30%, ajudando a prevenir doenças cardiovasculares. (American Heart Association, 2018)",
+  "curiosidade_cientifica": "O damasco seco contém cerca de 3 vezes mais fibra que o fresco (7,3g/100g vs 2,1g/100g) - a secagem concentra nutrientes. Fibra ajuda a regular o intestino. (Tabela TACO - UNICAMP, 2011)",
+  "referencia_pesquisa": "Journal of Nutrition & Food Sciences, 2020"
+}

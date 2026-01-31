@@ -1,0 +1,45 @@
+{
+  "nome": "Ceviche de Peixe Com Maracujá",
+  "slug": "ceviche_de_peixe_com_maracujá",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
+  ],
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
+  "riscos": [
+    "Alérgeno: peixe"
+  ],
+  "tecnica": "Grelhado ou assado",
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "origem": "user_created_local"
+}

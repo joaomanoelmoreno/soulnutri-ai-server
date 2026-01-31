@@ -1,0 +1,40 @@
+{
+  "nome": "Proteina de Soja ao Sugo",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Proteína de soja texturizada",
+    "Tomate (ingrediente do molho sugo)",
+    "Cenoura (visível)",
+    "Cebola (provável ingrediente do molho sugo)",
+    "Alho (provável ingrediente do molho sugo)",
+    "Azeite de oliva (provável ingrediente do molho sugo)",
+    "Ervas e especiarias (provável ingrediente do molho sugo)"
+  ],
+  "descricao": "Prato feito com proteína de soja texturizada cozida em molho sugo, com pedaços de cenoura. O molho sugo provavelmente inclui tomate, cebola, alho, azeite de oliva e temperos.",
+  "beneficios": [
+    "Fonte de proteína vegetal, importante para a saúde muscular.",
+    "Rico em fibras, especialmente se for usado tomate com pele, auxiliando na saúde digestiva.",
+    "Pode auxiliar na redução do colesterol, devido à ausência de gorduras saturadas e presença de soja.",
+    "Pode ser adaptado para baixo teor de sódio, dependendo do tempero usado"
+  ],
+  "riscos": [
+    "Pode conter sódio em excesso dependendo dos temperos e molhos utilizados.",
+    "Potencial alérgeno: soja (para pessoas com alergia)",
+    "Em alguns casos, a proteína de soja texturizada pode conter glúten, verificar no rótulo."
+  ],
+  "curiosidade": "A proteína de soja texturizada (PTS) é um alimento versátil, feito a partir da soja desengordurada, que passa por um processo de extrusão para adquirir diferentes texturas, ideal para substituir a carne em diversas receitas.",
+  "slug": "proteina_de_soja_ao_sugo",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true
+}

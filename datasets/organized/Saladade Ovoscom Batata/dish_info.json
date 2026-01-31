@@ -1,0 +1,40 @@
+{
+  "nome": "Salada de Ovos com Batata",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "batata",
+    "sal"
+  ],
+  "descricao": "Batata preparada de forma saudável.",
+  "beneficios": [
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
+  ],
+  "riscos": [
+    "Alto índice glicêmico se consumida sozinha"
+  ],
+  "curiosidade": "Os ovos são classificados como um alimento completo, pois contêm quase todos os nutrientes essenciais que o corpo precisa.",
+  "slug": "saladadeovoscombatata",
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0.1g"
+  },
+  "tecnica": "Cozimento ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🥚"
+}

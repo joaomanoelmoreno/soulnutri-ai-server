@@ -1,0 +1,52 @@
+{
+  "nome": "File de Tilapia a Milanesa",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
+  ],
+  "descricao": "Peixe fresco, fonte de ômega-3.",
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
+  "riscos": [
+    "Alérgeno: peixe"
+  ],
+  "curiosidade": "A tilápia é um peixe de água doce de origem africana, mas amplamente cultivado em várias partes do mundo, inclusive no Brasil. É conhecida por seu sabor suave e textura delicada.",
+  "slug": "file_de_tilapia_a_milanesa",
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "contem_peixe": true,
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 250,
+    "max": 450,
+    "tipico": 350
+  }
+}

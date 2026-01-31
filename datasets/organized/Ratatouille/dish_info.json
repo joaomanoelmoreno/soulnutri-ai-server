@@ -1,0 +1,42 @@
+{
+  "nome": "Ratatouille",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Abobrinha",
+    "Tomate",
+    "Berinjela",
+    "Cenoura",
+    "Cebola",
+    "Pimentão vermelho",
+    "Alho",
+    "Azeite de oliva",
+    "Ervas frescas (cebolinha)",
+    "Cranberries secas",
+    "Tempero"
+  ],
+  "descricao": "O Ratatouille é um ensopado de legumes originário da região da Provença, na França. Nesta versão, os legumes (abobrinha, tomate, berinjela, cenoura, cebola e pimentão) foram cozidos em azeite de oliva, com adição de ervas frescas e cranberries secas, que adicionam um toque agridoce. Os ingredientes parecem estar levemente refogados e cozidos em seus próprios sucos, resultando em um prato rico em sabores e texturas. O uso de cebolinha picada como finalização adiciona frescor.",
+  "beneficios": [
+    "Rico em antioxidantes, devido aos vegetais coloridos, que combatem os radicais livres e protegem as células.",
+    "Fonte de fibras, que auxiliam na saúde digestiva e promovem a saciedade.",
+    "Baixo em calorias e rico em nutrientes essenciais, como vitaminas e minerais."
+  ],
+  "riscos": [
+    "Pode conter sódio em excesso, dependendo da quantidade de tempero utilizado.",
+    "Alérgeno: pode conter traços de ingredientes com alérgenos, dependendo do preparo."
+  ],
+  "curiosidade": "O nome \"Ratatouille\" vem do termo provençal \"ratatolha\", que significa \"misturar\" ou \"mexer\", referindo-se à maneira como os legumes são combinados no prato.",
+  "slug": "ratatouille",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

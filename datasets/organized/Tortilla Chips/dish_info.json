@@ -1,0 +1,25 @@
+{
+  "nome": "Tortilla Chips",
+  "slug": "tortilla_chips",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Apenas as Tortillas"
+  ],
+  "descricao": "Tortillas Crocantes",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "category_emoji": "🌱",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

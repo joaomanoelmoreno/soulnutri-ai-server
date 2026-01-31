@@ -1,0 +1,51 @@
+{
+  "nome": "Nhoque",
+  "slug": "batatas_ao_molho",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "nhoque",
+    "batatas",
+    "ovo",
+    "farinha de trigo",
+    "manteiga",
+    "leite",
+    "sal"
+  ],
+  "descricao": "Nhoque",
+  "beneficios": [
+    "Fonte de carboidratos para energia.",
+    "Contém nutrientes das batatas, como potássio e vitamina C.",
+    "Pode ser uma opção reconfortante e saborosa.",
+    "A presença do leite adiciona cálcio."
+  ],
+  "riscos": [
+    "Alto teor de carboidratos, se consumido em excesso.",
+    "Pode conter alto teor de gordura dependendo da quantidade de manteiga utilizada.",
+    "A presença de farinha de trigo pode ser um problema para pessoas com sensibilidade ao glúten."
+  ],
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "5g",
+    "carboidratos": "25g",
+    "gorduras": "7g",
+    "fibras": "2g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "tecnica": "Cozimento ou assado",
+  "contem_ovo": true,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Salada Caprese",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Tomate cereja",
+    "Mussarela de búfala",
+    "Folhas de manjericão fresco",
+    "Azeite de oliva",
+    "Palitos de dente"
+  ],
+  "descricao": "Mini espetinhos com tomate cereja, mussarela de búfala e manjericão fresco, temperados com azeite de oliva.",
+  "beneficios": [
+    "Fonte de cálcio e proteínas (mussarela).",
+    "Rico em antioxidantes (tomate).",
+    "Gorduras saudáveis (azeite).",
+    "Saborosa e refrescante."
+  ],
+  "riscos": [
+    "Consumir com moderação devido ao teor de gordura da mussarela."
+  ],
+  "curiosidade": "O nome 'Caprese' vem da ilha de Capri, Itália, onde a salada caprese tradicional teria se originado.",
+  "slug": "caprese",
+  "nutricao": {
+    "calorias": "160 kcal",
+    "proteinas": "8g",
+    "carboidratos": "4g",
+    "gorduras": "13g",
+    "fibras": "2g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

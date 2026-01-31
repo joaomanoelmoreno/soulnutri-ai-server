@@ -1,0 +1,28 @@
+{
+  "slug": "mandioquinha",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-27T14:36:59.513000",
+  "descricao": "Abóbora assada com pimentão e temperos.",
+  "ingredientes": [
+    "Abóbora",
+    "Azeite",
+    "Pimentão",
+    "Temperos"
+  ],
+  "nome": "Mandioquinha",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Pode conter traços de outros alimentos."
+  ],
+  "tecnica": ""
+}

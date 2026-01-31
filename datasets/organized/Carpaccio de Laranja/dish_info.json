@@ -1,0 +1,37 @@
+{
+  "slug": "carpacciodelaranja",
+  "nome": "Carpaccio de Laranja",
+  "categoria": "vegetariano",
+  "descricao": "Fatias finas de laranja fresca com maple canadense e hortelã orgânica",
+  "ingredientes": [
+    "laranja fresca",
+    "maple canadense",
+    "hortelã orgânica",
+    "canela importada"
+  ],
+  "tecnica": "Preparo a frio",
+  "beneficios": [
+    "Vitamina C: fortalece o sistema imunológico",
+    "Flavonoides: protegem o coração",
+    "Hidratação: alto teor de água"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:45:48.526000",
+  "alerta_saude": "A canela contém cumarina (5 mg/colher de chá), uma substância que pode ser hepatotóxica em altas doses. Recomenda-se não exceder 1 colher de chá por dia regularmente. Fonte: Federal Institute for Risk Assessment, Alemanha, 2012",
+  "beneficio_principal": "A laranja contém hesperidina (58mg/100g), um flavonoide que estudos indicam melhorar a saúde vascular ao reduzir a inflamação e pressão arterial. Um estudo da Universidade de Harvard (2014) demonstrou que a hesperidina pode reduzir em 10% o risco de doenças cardíacas.",
+  "curiosidade_cientifica": "O maple syrup, além de seu sabor distinto, contém compostos fenólicos específicos como quebecol, que possuem propriedades antioxidantes significativas. Pesquisas (Journal of Agricultural and Food Chemistry, 2011) indicam que estes compostos podem ajudar a proteger células do estresse oxidativo.",
+  "referencia_pesquisa": "Harvard Health Publishing, 2014; Journal of Agricultural and Food Chemistry, 2011"
+}

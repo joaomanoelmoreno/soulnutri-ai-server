@@ -1,0 +1,35 @@
+{
+  "slug": "salada_de_peixe",
+  "ativo": true,
+  "beneficios": [
+    "Proteína de alta biodisponibilidade: o corpo absorve 95% da proteína do peixe, ideal para músculos e recuperação",
+    "Selênio: mineral antioxidante que protege a tireoide e fortalece o sistema imunológico"
+  ],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T16:58:12.448000",
+  "descricao": "Salada de peixe - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "peixe branco",
+    "alface",
+    "tomate",
+    "cebola",
+    "azeite",
+    "limão"
+  ],
+  "nome": "Salada de peixe",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Contém PEIXE"
+  ],
+  "tecnica": "",
+  "beneficio_principal": "Ômega-3 do peixe - reduz inflamações no corpo, melhora a função cerebral, memória e concentração, além de proteger contra doenças cardíacas",
+  "curiosidade": "O consumo regular de peixe (2x por semana) está associado a 30% menos risco de doenças cardíacas"
+}

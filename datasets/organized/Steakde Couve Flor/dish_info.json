@@ -1,0 +1,38 @@
+{
+  "nome": "Steakdecouveflor",
+  "categoria": "vegano",
+  "ingredientes": [
+    "couve-flor",
+    "sal"
+  ],
+  "descricao": "Couve-flor versátil e nutritiva.",
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitamina C"
+  ],
+  "riscos": [
+    "Pode causar gases"
+  ],
+  "curiosidade": "A couve-flor, apesar de ser um vegetal, pertence à mesma família do brócolis, da couve e da rúcula, conhecida como Brassicaceae.",
+  "slug": "steakdecouveflor",
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "2g",
+    "carboidratos": "5g",
+    "gorduras": "0.3g"
+  },
+  "category_emoji": "🌱",
+  "tecnica": "Gratinada ou cozida",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Molho branco"
+  ],
+  "evitar_com": []
+}

@@ -1,0 +1,37 @@
+{
+  "nome": "Filemignonemmanteigadeervas",
+  "slug": "filemignonemmanteigadeervas",
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "ingredientes": [
+    "filé mignon",
+    "sal",
+    "pimenta",
+    "manteiga"
+  ],
+  "beneficios": [
+    "Proteína nobre",
+    "Ferro",
+    "Macio"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "8g"
+  },
+  "tecnica": "Grelhado ou selado",
+  "descricao": "Filé mignon macio e suculento.",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Salada"
+  ],
+  "evitar_com": []
+}

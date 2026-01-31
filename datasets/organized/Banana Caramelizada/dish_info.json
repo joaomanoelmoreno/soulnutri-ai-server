@@ -1,0 +1,38 @@
+{
+  "slug": "bananacaramelizada",
+  "nome": "Banana Caramelizada",
+  "categoria": "vegetariano",
+  "descricao": "Banana grelhada com maple canadense caramelizado",
+  "ingredientes": [
+    "banana",
+    "maple canadense",
+    "manteiga fresca",
+    "canela importada"
+  ],
+  "tecnica": "Grelhado + caramelização",
+  "beneficios": [
+    "Potássio: previne cãibras e regula pressão",
+    "Triptofano: precursor da serotonina (bem-estar)",
+    "Energia natural de rápida absorção"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:45:09.704000",
+  "alerta_saude": "A banana caramelizada tem um índice glicêmico médio elevado devido ao maple e açúcar natural da banana. Estudos do American Journal of Clinical Nutrition (2015) sugerem que alimentos de alto índice glicêmico podem contribuir para resistência à insulina se consumidos em excesso. Moderação é recomendada, especialmente para diabéticos.",
+  "beneficio_principal": "A canela contém cinamaldeído, que tem propriedades antioxidantes e pode ajudar na redução dos níveis de açúcar no sangue. Um estudo da Western University (Canadá, 2017) mostrou que o consumo de 3g de canela por dia pode reduzir a glicose pós-prandial em até 29%.",
+  "curiosidade_cientifica": "Maple syrup contém fenólicos como o quebecol, que têm propriedades anti-inflamatórias. Um estudo da Universidade de Rhode Island (2011) identificou mais de 20 compostos antioxidantes, sugerindo que o xarope de bordo é uma alternativa ao açúcar com benefícios adicionados.",
+  "referencia_pesquisa": "Journal of Medicinal Food, 2019; PLoS ONE, 2011"
+}

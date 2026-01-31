@@ -1,0 +1,32 @@
+{
+  "slug": "coxinha_saudável_de_frango",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T15:29:46.818000",
+  "descricao": "Clássico salgado brasileiro, feito com massa e recheio de frango desfiado.",
+  "ingredientes": [
+    "Frango",
+    "Farinha de trigo",
+    "Ovo",
+    "Tempero"
+  ],
+  "nome": "Coxinha saudável de frango",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten",
+    "Alérgeno: Ovo",
+    "Alto teor de gordura",
+    "Alérgeno: GLÚTEN (farinha, trigo)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": ""
+}

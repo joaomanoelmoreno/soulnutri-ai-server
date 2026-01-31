@@ -1,0 +1,37 @@
+{
+  "slug": "mandioquinhaassada",
+  "nome": "Mandioquinha Assada",
+  "categoria": "vegetariano",
+  "descricao": "Mandioquinha assada em forno combinado com ervas frescas orgânicas",
+  "ingredientes": [
+    "mandioquinha",
+    "azeite extravirgem",
+    "alecrim orgânico",
+    "sal"
+  ],
+  "tecnica": "Assado em forno combinado",
+  "beneficios": [
+    "Digestão fácil: ideal para estômagos sensíveis",
+    "Potássio: regula pressão arterial",
+    "Naturalmente sem glúten"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:48:31.117000",
+  "alerta_saude": "Mandioquinha tem alimentos FODMAPs, que podem causar desconforto gástrico em indivíduos sensíveis à síndrome do intestino irritável (SII). Em tais casos, recomenda-se moderação e acompanhamento por especialista.",
+  "beneficio_principal": "Mandioquinha é rica em inulina - fibra prebiótica (por volta de 3g/100g) que favorece a saúde intestinal ao nutrir bactérias benéficas. Pesquisa da American Journal of Clinical Nutrition (2015) mostra que prebióticos podem melhorar a absorção de cálcio em até 20%.",
+  "curiosidade_cientifica": "Azeite extravirgem contém polifenóis (hidroxitirosol, 5mg por colher de sopa), que possuem propriedades antioxidantes. Estudos indicam que seu consumo regular pode reduzir marcadores inflamatórios em até 15% (Journal of Nutritional Biochemistry, 2018).",
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2015; Journal of Nutritional Biochemistry, 2018"
+}

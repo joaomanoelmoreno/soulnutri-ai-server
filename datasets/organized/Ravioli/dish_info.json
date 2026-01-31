@@ -1,0 +1,26 @@
+{
+  "nome": "Ravioli",
+  "slug": "ravioli",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Farinha de trigo",
+    "Ovos"
+  ],
+  "descricao": "O ravioli (ou ravióli) é uma das massas recheadas mais tradicionais e populares da culinária italiana. Consiste em pequenos \"pastéis\" de massa fresca, geralmente feita com farinha de trigo e ovos, que envolvem um recheio generoso.",
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "category_emoji": "🥚",
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "granola",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T17:27:26.817000",
+  "descricao": "Mistura de grãos, frutas secas, nozes e sementes, geralmente assada e consumida com iogurte ou leite.",
+  "ingredientes": [
+    "aveia",
+    "frutas secas",
+    "nozes",
+    "sementes",
+    "mel"
+  ],
+  "nome": "Granola",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Nozes",
+    "Alérgeno: Glúten (se não for sem glúten)",
+    "Alérgeno: GLÚTEN (aveia)",
+    "Alérgeno: LACTOSE (leite, iogurte)",
+    "Alérgeno: NOZES (noz, nozes)"
+  ],
+  "tecnica": ""
+}

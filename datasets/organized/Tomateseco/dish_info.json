@@ -1,0 +1,36 @@
+{
+  "nome": "Tomateseco",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Tomate seco",
+    "Azeite de oliva",
+    "Alho",
+    "Ervas frescas (salsinha, manjericão)",
+    "Pimenta do reino"
+  ],
+  "descricao": "Tomates secos conservados em azeite de oliva com ervas e especiarias. Ideal como aperitivo ou acompanhamento.",
+  "beneficios": [
+    "Fonte de antioxidantes",
+    "Rico em licopeno",
+    "Gorduras saudáveis"
+  ],
+  "riscos": [
+    "Alto teor de sódio (se conservado em salmoura)",
+    "Alto teor de gordura (devido ao azeite)"
+  ],
+  "curiosidade": "O tomate seco, originalmente, era produzido para conservar tomates na ausência de refrigeração. A secagem concentra os sabores e nutrientes do tomate, tornando-o um ingrediente versátil na culinária.",
+  "slug": "tomateseco",
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "3g",
+    "carboidratos": "15g",
+    "gorduras": "20g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

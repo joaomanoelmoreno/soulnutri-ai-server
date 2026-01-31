@@ -1,0 +1,41 @@
+{
+  "slug": "bolodegengibre",
+  "nome": "Bolo de Gengibre",
+  "categoria": "vegetariano",
+  "descricao": "Bolo aromático de gengibre fresco com especiarias importadas, adoçado com maple",
+  "ingredientes": [
+    "farinha (uso controlado)",
+    "gengibre fresco",
+    "maple canadense",
+    "ovos",
+    "manteiga fresca",
+    "especiarias importadas"
+  ],
+  "tecnica": "Assado em forno combinado",
+  "beneficios": [
+    "Gengibre: poderoso anti-inflamatório e digestivo",
+    "Gingerol: alivia náuseas",
+    "Termogênico: acelera metabolismo"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alérgeno: ovo",
+    "Contém lactose"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "3g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:45:43.338000",
+  "alerta_saude": "O maple syrup, apesar de sua riqueza antioxidante, tem um alto teor de açúcar (aproximadamente 67,5g de açúcar total em 100g), o que ainda exige moderação. Além disso, especiarias importadas como a canela podem conter cumarina, que em excesso pode afetar a função hepática, conforme estudos do BfR (Bundesinstitut für Risikobewertung, 2006), sendo recomendado um máximo de 2g de canela Ceylon por dia para adultos.",
+  "beneficio_principal": "O gengibre contém gingerol e shogaol, compostos que um estudo da Universidade de Columbia (2016) demonstrou potencial para reduzir a glicose no sangue em modelos animais, além de melhorar a capacidade antioxidante. Especificamente, 100g de gengibre contém aproximadamente 48mg desses compostos.",
+  "curiosidade_cientifica": "O uso de maple syrup em vez de açúcar refinado não só reduz o índice glicêmico do prato (maple syrup é 54 vs açúcar refinado 65), como também adiciona antioxidantes. Um estudo na Universidade de Rhode Island (2011) identificou 54 compostos antioxidantes no maple syrup puro, contribuindo para uma dieta mais balanceada.",
+  "referencia_pesquisa": "Estudo publicado no Journal of Nutrition (Columbia University, 2016), Análise do Maple Syrup, URI (2011)"
+}

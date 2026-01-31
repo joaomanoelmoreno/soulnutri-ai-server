@@ -1,0 +1,46 @@
+{
+  "nome": "Peixe com tomate  cereja",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
+  ],
+  "descricao": "Peixe fresco, fonte de ômega-3.",
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
+  "riscos": [
+    "Alérgeno: peixe"
+  ],
+  "curiosidade": "O tomate cereja, além de saboroso, é uma variação do tomate com maior concentração de nutrientes por porção, comparado aos tomates comuns.",
+  "slug": "peixecomtomatecereja",
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🐟",
+  "contem_peixe": true,
+  "contem_castanhas": false,
+  "contem_soja": false
+}

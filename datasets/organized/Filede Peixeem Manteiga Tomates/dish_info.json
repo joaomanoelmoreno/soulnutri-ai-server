@@ -1,0 +1,28 @@
+{
+  "slug": "file_de__peixe_em_manteiga_de_tomates",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-24T12:44:15.616000",
+  "descricao": "Prato com camarão e outros ingredientes.",
+  "ingredientes": [
+    "camarão",
+    "molho",
+    "temperos"
+  ],
+  "nome": "file de  peixe em manteiga de tomates",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: crustáceos",
+    "Alérgeno: CRUSTÁCEOS (camarão, camarao)"
+  ],
+  "tecnica": ""
+}

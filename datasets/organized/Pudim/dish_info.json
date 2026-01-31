@@ -1,0 +1,30 @@
+{
+  "slug": "pudim",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "created_at": "2026-01-23T17:27:59.512000",
+  "descricao": "Sobremesa cremosa feita com ovos, leite e açúcar, com uma camada de caramelo.",
+  "ingredientes": [
+    "Leite",
+    "Ovos",
+    "Açúcar",
+    "Caramelo"
+  ],
+  "nome": "Pudim",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Ovos, Leite",
+    "Alérgeno: LACTOSE (leite)",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": ""
+}

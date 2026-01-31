@@ -1,0 +1,45 @@
+{
+  "slug": "quinuacomtahine",
+  "nome": "Quinua com Tahine",
+  "categoria": "vegano",
+  "descricao": "Quinoa nutritiva, superalimento.",
+  "ingredientes": [
+    "quinoa",
+    "água",
+    "sal",
+    "tahine",
+    ""
+  ],
+  "beneficios": [
+    "Fonte de proteína vegetal completa",
+    "Rico em fibras, auxiliando na saciedade e na saúde intestinal",
+    "Fornece minerais importantes como magnésio e ferro",
+    "Opção leve e nutritiva para diversas refeições"
+  ],
+  "riscos": [
+    "Consumir com moderação devido ao teor calórico, se o objetivo for perda de peso."
+  ],
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "4g",
+    "carboidratos": "18g",
+    "gorduras": "4g",
+    "fibras": "3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥬",
+  "tecnica": "Cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Legumes",
+    "Saladas"
+  ],
+  "evitar_com": []
+}

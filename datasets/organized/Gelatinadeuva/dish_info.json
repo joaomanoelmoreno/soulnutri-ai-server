@@ -1,0 +1,40 @@
+{
+  "nome": "Gelatina de Uva",
+  "categoria": "vegano",
+  "ingredientes": [
+    "gelatina",
+    "água",
+    "açúcar"
+  ],
+  "descricao": "Sobremesa leve e refrescante.",
+  "beneficios": [
+    "Colágeno",
+    "Baixas calorias",
+    "Hidratação"
+  ],
+  "riscos": [
+    "Alto teor de açúcar"
+  ],
+  "curiosidade": "A gelatina de origem vegetal, feita a partir de algas marinhas (agar-agar), é uma alternativa para vegetarianos e veganos, e tem menos calorias que a gelatina tradicional.",
+  "slug": "gelatinadeuva",
+  "nutricao": {
+    "calorias": "70 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0g"
+  },
+  "category_emoji": "🌱",
+  "tecnica": "Refrigerada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Sobremesa",
+  "combina_com": [
+    "Frutas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
+}

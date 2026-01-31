@@ -1,0 +1,48 @@
+{
+  "nome": "Salada de Frango",
+  "slug": "salada_de_frango",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
+  ],
+  "descricao": "Salada fresca e nutritiva.",
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "category_emoji": "🍖",
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Crua",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 100,
+    "max": 200,
+    "tipico": 150
+  }
+}

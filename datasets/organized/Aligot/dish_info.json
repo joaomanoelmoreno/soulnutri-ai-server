@@ -1,0 +1,29 @@
+{
+  "slug": "aligot_purê_de_batata_inglesa_com_queijo",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "created_at": "2026-01-23T15:04:51.002000",
+  "descricao": "Purê de batata cremoso com cobertura gratinada de queijo.",
+  "ingredientes": [
+    "Batata",
+    "Leite",
+    "Queijo",
+    "Manteiga"
+  ],
+  "nome": "Aligot purê de batata inglesa com queijo",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Lácteos",
+    "Alérgeno: LACTOSE (queijo, leite)"
+  ],
+  "tecnica": ""
+}

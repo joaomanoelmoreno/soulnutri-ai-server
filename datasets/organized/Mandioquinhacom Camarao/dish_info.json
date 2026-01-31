@@ -1,0 +1,40 @@
+{
+  "slug": "mandioquinhacomcamarao",
+  "nome": "Mandioquinha com Camarão",
+  "categoria": "proteína animal",
+  "descricao": "Purê de mandioquinha artesanal com camarões frescos salteados em azeite",
+  "ingredientes": [
+    "mandioquinha",
+    "camarão fresco",
+    "alho orgânico",
+    "manteiga fresca",
+    "salsinha orgânica"
+  ],
+  "tecnica": "Purê artesanal + camarão salteado em azeite",
+  "beneficios": [
+    "Proteína do camarão: baixa caloria",
+    "Selênio: antioxidante poderoso",
+    "Iodo: saúde da tireoide"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceo",
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Alérgeno: Contém CRUSTÁCEOS. Camarão de cativeiro pode conter antibióticos - prefira selvagem ou certificado",
+  "beneficio_principal": "Rico em astaxantina (pigmento rosa) - antioxidante 6000x mais potente que vitamina C, protege pele contra raios UV",
+  "curiosidade_cientifica": "O camarão tem mais proteína (24g/100g) e menos gordura (0.3g) que frango - excelente para dietas",
+  "referencia_pesquisa": "Marine Drugs Journal, 2020"
+}

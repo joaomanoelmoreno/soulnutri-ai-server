@@ -1,0 +1,39 @@
+{
+  "slug": "escondidinhodecarneseca",
+  "nome": "Escondidinho de Carne Seca",
+  "categoria": "proteína animal",
+  "descricao": "Purê de mandioca artesanal com carne seca desfiada gratinada em forno combinado",
+  "ingredientes": [
+    "mandioca",
+    "carne seca",
+    "queijo",
+    "manteiga fresca",
+    "creme de leite fresco"
+  ],
+  "tecnica": "Gratinado em forno combinado",
+  "beneficios": [
+    "Proteína concentrada da carne seca",
+    "Carboidratos da mandioca: energia",
+    "Cálcio do queijo: saúde óssea"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Mandioca crua contém compostos cianogênicos tóxicos - sempre cozinhar completamente",
+  "beneficio_principal": "Purê de mandioca é fonte de carboidrato sem glúten com amido resistente - alimenta bactérias intestinais benéficas",
+  "curiosidade_cientifica": "A mandioca foi domesticada na Amazônia há 10.000 anos - é o carboidrato mais antigo das Américas",
+  "referencia_pesquisa": "Journal of Ethnobiology, 2019"
+}

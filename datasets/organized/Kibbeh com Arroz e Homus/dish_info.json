@@ -1,0 +1,43 @@
+{
+  "nome": "Kibbeh com Arroz e Homus",
+  "slug": "kibbeh_com_arroz_e_homus",
+  "categoria": "vegano",
+  "ingredientes": [
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
+  ],
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
+  "beneficios": [
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
+  ],
+  "riscos": [
+    "Alto índice glicêmico"
+  ],
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "category_emoji": "🌱",
+  "tecnica": "Cozimento em água",
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "frutas_ao_ganache_de_chocolate",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "created_at": "2026-01-25T11:25:27.860000",
+  "descricao": "Ovo de Páscoa recheado com creme e frutas.",
+  "ingredientes": [
+    "Chocolate",
+    "Frutas",
+    "Creme"
+  ],
+  "nome": "Frutas ao ganache de chocolate",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Leite",
+    "Alérgeno: Ovos",
+    "Alérgeno: LACTOSE (creme)",
+    "Alérgeno: OVO (ovo)"
+  ],
+  "tecnica": ""
+}

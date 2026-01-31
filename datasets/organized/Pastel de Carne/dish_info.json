@@ -1,0 +1,27 @@
+{
+  "slug": "pastel_de_carne",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T17:25:18.177000",
+  "descricao": "Pastéis com recheio salgado ou doce.",
+  "ingredientes": [
+    "massa",
+    "recheio"
+  ],
+  "nome": "Pastel de carne",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (massa)"
+  ],
+  "tecnica": ""
+}

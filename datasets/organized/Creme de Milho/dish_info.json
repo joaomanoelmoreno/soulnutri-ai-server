@@ -1,0 +1,29 @@
+{
+  "nome": "Creme de Milho",
+  "slug": "creme_de_milho",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Creme de milho - prato do Cibi Sana",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~20g",
+    "gorduras": "~5g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [],
+  "evitar_com": [],
+  "origem": "user_created_local"
+}

@@ -1,0 +1,40 @@
+{
+  "slug": "lentilhacomtofu",
+  "nome": "Lentilha com Tofu",
+  "categoria": "vegano",
+  "descricao": "Lentilha cozida com cubos de tofu temperado com especiarias indianas importadas",
+  "ingredientes": [
+    "lentilha",
+    "tofu",
+    "tomate sem pele",
+    "cebola orgânica",
+    "curry indiano importado",
+    "coentro orgânico"
+  ],
+  "tecnica": "Cozimento tradicional",
+  "beneficios": [
+    "Proteína completa: lentilha + tofu",
+    "Ferro: essencial para energia",
+    "Isoflavonas do tofu: equilíbrio hormonal"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten",
+    "Alérgeno: soja"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": null,
+  "beneficio_principal": "Maior teor de proteína entre as leguminosas (9g/100g cozida). Rica em ferro (3.3mg) - mais que a carne bovina!",
+  "curiosidade_cientifica": "A lentilha tem índice glicêmico muito baixo (29) - libera energia lentamente por até 4 horas",
+  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+}

@@ -1,0 +1,50 @@
+{
+  "nome": "Quiabo com Amendoim",
+  "categoria": "vegano",
+  "ingredientes": [
+    "quiabo",
+    "amendoim",
+    "alho",
+    "cebola",
+    "shoyu",
+    "oleo de gergilim",
+    "ervar",
+    "sal"
+  ],
+  "descricao": "Quiabo, legume típico brasileiro.",
+  "beneficios": [
+    "Rico em fibras, auxiliando na saúde intestinal.",
+    "Fonte de vitaminas e minerais provenientes do quiabo e amendoim.",
+    "O amendoim contribui com proteínas e gorduras saudáveis.",
+    "Pode auxiliar no controle do colesterol."
+  ],
+  "riscos": [
+    "O amendoim é alergênico.",
+    "O shoyu pode conter sódio em excesso."
+  ],
+  "curiosidade": "O quiabo é um ingrediente versátil na culinária brasileira, sendo usado em diversas preparações, como o famoso quiabo com carne seca.",
+  "slug": "quiabocomamendoim",
+  "nutricao": {
+    "calorias": "80 kcal",
+    "proteinas": "8g",
+    "carboidratos": "15g",
+    "gorduras": "10g",
+    "fibras": "5g"
+  },
+  "category_emoji": "🥬",
+  "tecnica": "Refogado ou empanado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Frango",
+    "Carne"
+  ],
+  "evitar_com": [],
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

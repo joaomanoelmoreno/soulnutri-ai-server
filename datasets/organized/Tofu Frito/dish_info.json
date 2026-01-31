@@ -1,0 +1,49 @@
+{
+  "nome": "Tofu Frito",
+  "slug": "tofu_frito",
+  "categoria": "vegano",
+  "ingredientes": [
+    "tofu (soja)",
+    "temperos"
+  ],
+  "descricao": "Tofu, proteína vegetal versátil.",
+  "beneficios": [
+    "Proteína vegetal completa",
+    "Cálcio",
+    "Isoflavonas"
+  ],
+  "riscos": [
+    "Alérgeno: soja"
+  ],
+  "nutricao": {
+    "calorias": "76 kcal",
+    "proteinas": "8g",
+    "carboidratos": "1.9g",
+    "gorduras": "4.8g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "tecnica": "Grelhado ou refogado",
+  "contem_ovo": false,
+  "contem_soja": true,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Legumes",
+    "Molho shoyu",
+    "Gengibre"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 250,
+    "max": 450,
+    "tipico": 350
+  }
+}

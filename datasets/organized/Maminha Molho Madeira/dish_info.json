@@ -1,0 +1,30 @@
+{
+  "slug": "maminha_ao_molho_madeira",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T17:33:43.525000",
+  "descricao": "Carne cozida em um molho saboroso, geralmente servida em ocasiões especiais.",
+  "ingredientes": [
+    "Carne bovina",
+    "Caldo de carne",
+    "Cebola",
+    "Alho",
+    "Tomate",
+    "Cogumelos"
+  ],
+  "nome": "Maminha ao molho madeira",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Pode conter glúten dependendo dos ingredientes do molho."
+  ],
+  "tecnica": ""
+}

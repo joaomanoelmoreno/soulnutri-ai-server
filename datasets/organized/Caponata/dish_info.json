@@ -1,0 +1,40 @@
+{
+  "slug": "caponata",
+  "nome": "Caponata",
+  "categoria": "vegano",
+  "descricao": "Prato siciliano de berinjela orgânica com tomate sem pele e especiarias importadas",
+  "ingredientes": [
+    "berinjela orgânica",
+    "tomate sem pele",
+    "cebola orgânica",
+    "aipo orgânico",
+    "azeitonas",
+    "alcaparras",
+    "vinagre"
+  ],
+  "tecnica": "Refogado em azeite",
+  "beneficios": [
+    "Licopeno do tomate: protege a próstata",
+    "Fibras: regulam o intestino",
+    "Antioxidantes: combatem envelhecimento"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": null,
+  "beneficio_principal": "Berinjela + azeite + vinagre = trio anti-inflamatório. Nasunina da berinjela protege gorduras do cérebro contra oxidação",
+  "curiosidade_cientifica": "Receita siciliana de 1.000 anos. O vinagre melhora resposta glicêmica da refeição em 30%",
+  "referencia_pesquisa": "European Journal of Clinical Nutrition, 2019"
+}

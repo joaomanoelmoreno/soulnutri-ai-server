@@ -1,0 +1,33 @@
+{
+  "slug": "guacamole_com_manga",
+  "ativo": true,
+  "beneficios": [
+    "Potássio (485mg/100g): regula a pressão arterial, previne cãibras musculares e mantém o ritmo cardíaco saudável",
+    "Vitamina E: antioxidante que protege as células do envelhecimento precoce e fortalece o sistema imunológico"
+  ],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T16:56:24.291000",
+  "descricao": "Guacamole com manga - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "abacate",
+    "manga",
+    "cebola roxa",
+    "coentro",
+    "limão",
+    "pimenta"
+  ],
+  "nome": "Guacamole com manga",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [],
+  "tecnica": "",
+  "beneficio_principal": "Rico em gorduras monoinsaturadas do abacate - reduzem o colesterol ruim (LDL), protegem o coração e melhoram a absorção de vitaminas lipossolúveis (A, D, E, K)",
+  "curiosidade": "O abacate contém mais potássio que a banana - essencial para quem pratica exercícios físicos"
+}

@@ -1,0 +1,32 @@
+{
+  "nome": "Molhocaeiro",
+  "categoria": "vegano",
+  "ingredientes": [
+    "Ingredientes não identificados (provavelmente legumes e temperos)",
+    "água"
+  ],
+  "descricao": "Molho espesso e escuro, possivelmente preparado com legumes cozidos e temperos, resultando em uma textura cremosa e saborosa. A ausência de ingredientes visíveis não permite uma análise precisa.",
+  "beneficios": [
+    "Potencialmente rico em vitaminas e minerais, dependendo dos ingredientes utilizados.",
+    "Pode ser uma boa fonte de fibras, se contiver vegetais"
+  ],
+  "riscos": [
+    "Depende dos ingredientes utilizados; pode conter sódio em excesso se preparado com molhos industrializados.",
+    "Alérgenos: não identificados"
+  ],
+  "curiosidade": "Molhos escuros como este podem ter sua cor intensificada através do processo de caramelização de açúcares presentes nos vegetais, resultando em um sabor adocicado e complexo.",
+  "slug": "molhocaeiro",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

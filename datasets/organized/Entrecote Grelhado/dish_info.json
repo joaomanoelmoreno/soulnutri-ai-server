@@ -1,0 +1,37 @@
+{
+  "slug": "entrecotegrelhado",
+  "nome": "Entrecôte Grelhado",
+  "categoria": "proteína animal",
+  "descricao": "Corte nobre de carne bovina fresca grelhado na grelha",
+  "ingredientes": [
+    "entrecôte bovino fresco",
+    "sal grosso",
+    "pimenta importada",
+    "alho orgânico"
+  ],
+  "tecnica": "Grelhado na grelha",
+  "beneficios": [
+    "Proteína completa: todos aminoácidos essenciais",
+    "Ferro heme: combate anemia eficientemente",
+    "Creatina natural: energia muscular"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:46:25.100000",
+  "alerta_saude": "Durante a grelha, há formação de hidrocarbonetos policíclicos aromáticos (HPA) na superfície da carne, que podem ser cancerígenos. Marinar a carne com suco de limão ou vinagre reduz a formação de HPAs em até 90% (Estudo do Instituto Nacional do Câncer, 2014).",
+  "beneficio_principal": "A vitamina B12 (2.0 mcg/100g) presente no entrecôte suporta a síntese de glóbulos vermelhos e a saúde neurológica. Estudos da Harvard Medical School (2020) sugerem que a ingestão adequada de B12 pode reduzir o risco de degeneração cognitiva em até 30% em idosos.",
+  "curiosidade_cientifica": "Cozinhar a carne no ponto (aproximadamente 63°C no interior) aumenta a retenção de nutrientes, como vitaminas B12 e B6, sem incrementar significativamente compostos tóxicos como aminas heterocíclicas, comparado a altas temperaturas.",
+  "referencia_pesquisa": "Harvard Medical School - Nutrição e Saúde Mental: Relatório 2020"
+}

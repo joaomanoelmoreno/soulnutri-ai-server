@@ -1,0 +1,43 @@
+{
+  "nome": "Lula e Camarao",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "camarão",
+    "alho",
+    "azeite",
+    "sal"
+  ],
+  "descricao": "Camarão fresco, rico em proteínas.",
+  "beneficios": [
+    "Proteína magra",
+    "Selênio",
+    "Ômega-3"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceo"
+  ],
+  "curiosidade": "A lula, assim como o camarão, é uma excelente fonte de proteínas e possui pouca gordura, além de ser rica em minerais como selênio, fósforo e zinco.",
+  "slug": "lula_e_camarao",
+  "nutricao": {
+    "calorias": "99 kcal",
+    "proteinas": "24g",
+    "carboidratos": "0.2g",
+    "gorduras": "0.3g"
+  },
+  "tecnica": "Grelhado ou refogado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga"
+  ],
+  "category_emoji": "🍖"
+}

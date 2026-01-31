@@ -1,0 +1,40 @@
+{
+  "slug": "almondegasmolhosugo",
+  "nome": "Almôndegas ao Molho Sugo",
+  "categoria": "proteína animal",
+  "descricao": "Almôndegas de carne bovina fresca ao molho de tomate artesanal feito em nossa cozinha",
+  "ingredientes": [
+    "carne bovina fresca",
+    "cebola orgânica",
+    "alho orgânico",
+    "ovo",
+    "farinha (uso controlado)",
+    "molho de tomate artesanal"
+  ],
+  "tecnica": "Braseado",
+  "beneficios": [
+    "Proteína de alto valor biológico: construção muscular",
+    "Ferro heme: absorção 3x maior que ferro vegetal",
+    "Vitaminas B12: essencial para sistema nervoso"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alérgeno: ovo"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Pode conter glúten (farinha de rosca)",
+  "beneficio_principal": "Combinação de carne + molho de tomate = ferro heme + vitamina C. A vitamina C do tomate aumenta absorção do ferro em até 6x",
+  "curiosidade_cientifica": "O licopeno do molho de tomate cozido é 4x mais biodisponível que do tomate cru",
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2018"
+}

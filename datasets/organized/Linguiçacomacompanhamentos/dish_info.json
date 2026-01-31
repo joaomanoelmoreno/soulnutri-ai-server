@@ -1,0 +1,38 @@
+{
+  "nome": "Linguiçacomacompanhamentos",
+  "slug": "linguiçacomacompanhamentos",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne suína",
+    "temperos"
+  ],
+  "descricao": "Linguiça suína saborosa.",
+  "beneficios": [
+    "Rica em proteínas"
+  ],
+  "riscos": [
+    "Alto teor de sódio",
+    "Gordura elevada"
+  ],
+  "nutricao": {
+    "calorias": "300 kcal",
+    "proteinas": "15g",
+    "carboidratos": "2g",
+    "gorduras": "26g"
+  },
+  "tecnica": "Grelhada ou frita",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Feijão"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ],
+  "category_emoji": "🍖"
+}

@@ -1,0 +1,47 @@
+{
+  "nome": "Salada Mediterrânea",
+  "slug": "saladamediterranea",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura",
+    "queijo "
+  ],
+  "beneficios": [
+    "Rica em vitaminas e minerais provenientes dos vegetais.",
+    "Fonte de fibras, auxiliando na saúde intestinal.",
+    "Baixa em calorias, ideal para dietas de controle de peso.",
+    "Promove a saciedade."
+  ],
+  "riscos": [
+    "Pode conter alto teor de sódio dependendo do tipo de queijo utilizado."
+  ],
+  "nutricao": {
+    "calorias": "80 kcal",
+    "proteinas": "4g",
+    "carboidratos": "7g",
+    "gorduras": "4g",
+    "fibras": "3g"
+  },
+  "tecnica": "Crua",
+  "descricao": "Salada fresca e nutritiva.",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

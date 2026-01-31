@@ -1,0 +1,48 @@
+{
+  "nome": "Pure de Mandioquinha",
+  "categoria": "vegano",
+  "ingredientes": [
+    "mandioquinha",
+    "sal",
+    "Leite de coco",
+    "alho ",
+    "cebola",
+    "legumes"
+  ],
+  "descricao": "Mandioquinha cremosa e nutritiva.",
+  "beneficios": [
+    "Fonte de energia devido aos carboidratos.",
+    "Rico em fibras, auxiliando na saúde digestiva.",
+    "Fornece vitaminas e minerais provenientes da mandioquinha e legumes.",
+    "Opção vegana com ingredientes acessíveis."
+  ],
+  "riscos": [
+    "Pode ser calórico dependendo da quantidade de leite de coco utilizada.",
+    "O consumo excessivo pode levar ao ganho de peso."
+  ],
+  "curiosidade": "A mandioquinha, também conhecida como batata baroa, é um tubérculo nativo da América do Sul, rico em vitaminas e minerais.",
+  "slug": "puredemandioquinha",
+  "nutricao": {
+    "calorias": "110 kcal",
+    "proteinas": "1g",
+    "carboidratos": "18g",
+    "gorduras": "4g",
+    "fibras": "2g"
+  },
+  "category_emoji": "🥬",
+  "tecnica": "Cozida ou como purê",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Carnes",
+    "Purê"
+  ],
+  "evitar_com": [],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

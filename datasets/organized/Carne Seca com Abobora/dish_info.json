@@ -1,0 +1,42 @@
+{
+  "nome": "Carne Seca com Abobora",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne bovina",
+    "sal",
+    "temperos"
+  ],
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "beneficios": [
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
+  "riscos": [
+    "Gordura saturada"
+  ],
+  "curiosidade": "A carne seca, também conhecida como charque, é um método de conservação da carne muito utilizado no Brasil, especialmente nas regiões do nordeste.",
+  "slug": "carne_seca_com_abobora",
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ],
+  "category_emoji": "🍖"
+}

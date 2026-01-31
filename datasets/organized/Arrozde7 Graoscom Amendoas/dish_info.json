@@ -1,0 +1,39 @@
+{
+  "slug": "arrozde7graoscomamendoas",
+  "nome": "Arroz 7 Grãos com Amêndoas",
+  "categoria": "vegano",
+  "descricao": "Arroz 7 grãos com amêndoas tostadas artesanalmente",
+  "ingredientes": [
+    "arroz 7 grãos",
+    "amêndoas tostadas",
+    "azeite extravirgem",
+    "sal",
+    "ervas frescas orgânicas"
+  ],
+  "tecnica": "Cozimento tradicional",
+  "beneficios": [
+    "Vitamina E: protege as células contra oxidação",
+    "Gorduras boas: beneficiam o coração",
+    "Fibras: auxiliam na digestão"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alérgeno: amêndoas"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:44:39.139000",
+  "alerta_saude": "O azeite extravirgem, quando aquecido acima de 180°C, pode perder seus antioxidantes e formar compostos potencialmente inflamatórios. Recomenda-se adicionar após o cozimento para preservar seus benefícios (Journal of Agricultural and Food Chemistry, 2014).",
+  "beneficio_principal": "Arroz 7 grãos contém manganês (1,1mg/100g), essencial para o metabolismo energético e função antioxidante enzimática. Estudo da Harvard T.H. Chan School of Public Health (2020) associou dieta rica em grãos integrais com menor risco de doenças cardiovasculares devido a estes nutrientes.",
+  "curiosidade_cientifica": "As amêndoas são ricas em magnésio (268mg/100g), o que pode ajudar a melhorar o humor e reduzir o risco de depressão, segundo pesquisa publicada na 'Nutrients' em 2018. A combinação com arroz 7 grãos aumenta a variedade de micronutrientes consumidos.",
+  "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2020; Nutrients, 2018"
+}

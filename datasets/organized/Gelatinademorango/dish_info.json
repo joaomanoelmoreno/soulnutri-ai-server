@@ -1,0 +1,43 @@
+{
+  "nome": "Gelatina de Morango",
+  "categoria": "vegano",
+  "ingredientes": [
+    "gelatina",
+    "água",
+    "açúcar"
+  ],
+  "descricao": "Sobremesa leve e refrescante.",
+  "beneficios": [
+    "Colágeno",
+    "Baixas calorias",
+    "Hidratação"
+  ],
+  "riscos": [
+    "Alto teor de açúcar"
+  ],
+  "curiosidade": "A gelatina em pó é rica em colágeno, uma proteína que o corpo produz naturalmente e que ajuda a manter a pele firme e elástica.",
+  "slug": "gelatinademorango",
+  "nutricao": {
+    "calorias": "70 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0g"
+  },
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Refrigerada",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Sobremesa",
+  "combina_com": [
+    "Frutas"
+  ],
+  "evitar_com": [
+    "Outras sobremesas"
+  ]
+}

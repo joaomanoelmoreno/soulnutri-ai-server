@@ -1,0 +1,39 @@
+{
+  "nome": "Torta de Legumes",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Tomate cereja",
+    "Cebolinha",
+    "Couve-roxa",
+    "Cebola",
+    "Pimentão vermelho",
+    "Ervas finas (salsa, cebolinha)",
+    "Ovos",
+    "Queijo"
+  ],
+  "descricao": "Torta de legumes feita com diversos vegetais picados, provavelmente refogados ou salteados, misturados a ovos e queijo, formando uma massa que foi assada ou grelhada até dourar.  O tomate cereja e a cebolinha picada são utilizados como decoração.",
+  "beneficios": [
+    "Rica em fibras devido aos legumes, auxiliando na saúde intestinal.",
+    "Fonte de vitaminas e minerais provenientes dos vegetais, como vitamina C do pimentão e antioxidantes da couve-roxa."
+  ],
+  "riscos": [
+    "Contém glúten se a massa for feita com farinha de trigo.",
+    "Alérgeno: ovos e laticínios (queijo)."
+  ],
+  "curiosidade": "A adição de queijo à torta pode aumentar o teor de cálcio e proteína, mas também elevar o teor de gordura saturada, por isso, é importante controlar a quantidade.",
+  "slug": "torta_de_legumes",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

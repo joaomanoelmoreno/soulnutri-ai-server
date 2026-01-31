@@ -1,0 +1,34 @@
+{
+  "nome": "Requeijao",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Leite",
+    "Coalho",
+    "Cultura láctea",
+    "Sal"
+  ],
+  "descricao": "O requeijão é um queijo fresco cremoso, feito a partir do soro do leite (do processo de fabricação de outros queijos) ou do leite integral. O produto é cozido e depois coalhado com ácido cítrico ou vinagre, resultando em sua consistência cremosa.",
+  "beneficios": [
+    "Fonte de proteínas, importantes para a construção e reparação dos tecidos do corpo.",
+    "Rico em cálcio, essencial para a saúde dos ossos e dentes."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada, que em excesso pode aumentar o colesterol.",
+    "Alérgeno: lactose e proteína do leite (caseína)."
+  ],
+  "curiosidade": "O requeijão é um alimento muito popular no Brasil, sendo consumido puro, com pães, torradas, ou em receitas como recheios e patês.",
+  "slug": "requeijao",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

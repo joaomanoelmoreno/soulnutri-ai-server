@@ -1,0 +1,30 @@
+{
+  "slug": "ceviche_de_manga",
+  "ativo": true,
+  "beneficios": [
+    "Rica em antioxidantes",
+    "Fonte de vitamina C",
+    "Promove a saúde digestiva"
+  ],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-22T15:17:31.696000",
+  "descricao": "Uma salada vibrante com cubos de manga madura, finas fatias de cebola roxa, coentro picado e um molho brilhante. Alguns pedaços de pimenta vermelha são visíveis.",
+  "ingredientes": [
+    "Manga",
+    "Cebola Roxa",
+    "Coentro",
+    "Pimenta Vermelha"
+  ],
+  "nome": "Ceviche de manga",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [],
+  "tecnica": "As mangas são cortadas em cubos e misturadas com cebola roxa fatiada, coentro picado e um molho. Parece ser uma preparação fresca, sem cocção."
+}

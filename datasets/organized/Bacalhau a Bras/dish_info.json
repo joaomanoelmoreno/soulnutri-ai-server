@@ -1,0 +1,31 @@
+{
+  "slug": "bacalhau_a_bras",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-26T20:35:13.370000",
+  "descricao": "Prato tradicional português com bacalhau, arroz, ovos cozidos, legumes e azeitonas.",
+  "ingredientes": [
+    "Bacalhau",
+    "Arroz",
+    "Ovos",
+    "Brócolis",
+    "Azeitonas"
+  ],
+  "nome": "Bacalhau a bras",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Peixe, Ovo",
+    "Alérgeno: OVO (ovo, ovos)",
+    "Alérgeno: PEIXE (bacalhau)"
+  ],
+  "tecnica": ""
+}

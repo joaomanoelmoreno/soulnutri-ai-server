@@ -1,0 +1,39 @@
+{
+  "slug": "grelhadodospescadores",
+  "nome": "Grelhadodospescadores",
+  "categoria": "proteína animal",
+  "descricao": "Prato que aparenta ser preparado em uma panela grande, com os frutos do mar grelhados e dispostos com legumes. O peixe branco e o camarão parecem ter sido temperados com ervas finas antes de serem grelhados, proporcionando um sabor mais intenso. O brócolis e o tomate cereja oferecem um toque de frescor e complementam a refeição.",
+  "ingredientes": [
+    "Peixe branco (grelhado)",
+    "Camarão (grelhado)",
+    "Lula (grelhada)",
+    "Brócolis",
+    "Tomate cereja",
+    "Limão em rodelas",
+    "Ervas (salsa/cebolinha)"
+  ],
+  "beneficios": [
+    "Alto teor de proteínas, essencial para a construção e reparação muscular",
+    "Rico em ômega-3, que contribui para a saúde cardiovascular",
+    "Fonte de vitaminas e minerais, como selênio e vitamina D, importantes para a saúde óssea e imunidade"
+  ],
+  "riscos": [
+    "Alérgeno: crustáceos e peixes",
+    "Alto teor de colesterol, dependendo da quantidade de frutos do mar consumida"
+  ],
+  "nutricao": {
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "category_emoji": "🍖",
+  "tecnica": "",
+  "contem_peixe": true
+}

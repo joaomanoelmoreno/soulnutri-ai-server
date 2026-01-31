@@ -1,0 +1,39 @@
+{
+  "slug": "molhovinagrete",
+  "nome": "Molho Vinagrete",
+  "categoria": "vegano",
+  "descricao": "Molho fresco de tomate sem pele, cebola orgânica e pimentão picados",
+  "ingredientes": [
+    "tomate sem pele",
+    "cebola orgânica",
+    "pimentão orgânico",
+    "vinagre",
+    "azeite extravirgem",
+    "coentro orgânico"
+  ],
+  "tecnica": "Preparo a frio",
+  "beneficios": [
+    "Vitamina C: fortalece a imunidade",
+    "Licopeno: protetor cardiovascular",
+    "Baixíssimas calorias"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:48:42.565000",
+  "alerta_saude": "O vinagre pode afetar a saúde dental devido à sua acidez (pH entre 2-3), que pode enfraquecer o esmalte dos dentes se consumido em excesso e não acompanhado de uma boa higiene bucal. É recomendável enxaguar a boca com água após consumo (Journal of Dentistry, 2015).",
+  "beneficio_principal": "O azeite extravirgem contém ácidos graxos monoinsaturados, principalmente ácido oleico (55-83% do conteúdo total), que estão associados à redução de inflamações e à melhoria do perfil lipídico, contribuindo para a saúde cardiovascular. Estudos mostram que dietas ricas em ácido oleico podem reduzir o risco de doenças cardíacas em até 30% (Harvard School of Public Health, 2020).",
+  "curiosidade_cientifica": "O coentro orgânico contém um composto chamado linalol, que representa cerca de 60-70% de seu óleo essencial. O linalol possui propriedades ansiolíticas, auxiliando no alívio do estresse e da ansiedade, segundo um estudo publicado na 'Journal of Ethnopharmacology' (2016).",
+  "referencia_pesquisa": "Harvard School of Public Health, 2020; Journal of Ethnopharmacology, 2016"
+}

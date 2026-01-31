@@ -1,0 +1,39 @@
+{
+  "nome": "Linguicaacebolada",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne suína",
+    "temperos"
+  ],
+  "descricao": "Linguiça suína saborosa.",
+  "beneficios": [
+    "Rica em proteínas"
+  ],
+  "riscos": [
+    "Alto teor de sódio",
+    "Gordura elevada"
+  ],
+  "curiosidade": "A linguiça calabresa é um produto de origem italiana, adaptado no Brasil, e seu sabor característico provém da defumação e do uso de especiarias como pimenta e alho.",
+  "slug": "linguicaacebolada",
+  "nutricao": {
+    "calorias": "300 kcal",
+    "proteinas": "15g",
+    "carboidratos": "2g",
+    "gorduras": "26g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "tecnica": "Grelhada ou frita",
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Feijão"
+  ],
+  "evitar_com": [
+    "Outras carnes gordurosas"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "slug": "salada_de_atum",
+  "ativo": true,
+  "beneficios": [
+    "Selênio: protege as células contra danos oxidativos e apoia a função da tireoide",
+    "Ômega-3 EPA e DHA: anti-inflamatórios naturais que melhoram a saúde do cérebro e articulações"
+  ],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T16:58:57.874000",
+  "descricao": "Salada de atum - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "atum",
+    "alface",
+    "tomate",
+    "cebola",
+    "azeitonas",
+    "azeite"
+  ],
+  "nome": "Salada de atum",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Contém PEIXE",
+    "⚠️ ATENÇÃO: Limite o consumo a 2x por semana devido ao mercúrio"
+  ],
+  "tecnica": "",
+  "beneficio_principal": "O atum é uma das melhores fontes naturais de vitamina D (4.5mcg/100g) - essencial para absorção de cálcio, saúde óssea, imunidade e prevenção de depressão",
+  "curiosidade": "A vitamina D do atum é especialmente importante para quem tem pouca exposição ao sol"
+}

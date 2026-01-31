@@ -1,0 +1,32 @@
+{
+  "slug": "quiche_de_escarola_com_azeitonas_pretas",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": true,
+  "created_at": "2026-01-24T17:32:38.325000",
+  "descricao": "Prato feito com massa folhada e recheio cremoso à base de ovos e queijo.",
+  "ingredientes": [
+    "Ovos",
+    "Queijo",
+    "Massa folhada"
+  ],
+  "nome": "Quiche de escarola com azeitonas pretas",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Ovo",
+    "Alérgeno: Laticínios",
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)",
+    "Alérgeno: OVO (ovo, ovos)"
+  ],
+  "tecnica": ""
+}

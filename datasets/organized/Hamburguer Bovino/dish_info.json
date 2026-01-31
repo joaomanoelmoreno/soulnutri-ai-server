@@ -1,0 +1,34 @@
+{
+  "nome": "Hamburguer Bovino",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "Carne bovina (hambúrguer)",
+    "Tomate cereja",
+    "Cebolinha"
+  ],
+  "descricao": "Hambúrgueres de carne bovina, aparentemente grelhados ou fritos, decorados com tomates cereja cortados e cebolinha picada. O preparo do hambúrguer envolve o cozimento da carne moída, geralmente temperada com sal e pimenta do reino.",
+  "beneficios": [
+    "A carne bovina é rica em proteínas de alta qualidade, essenciais para a construção e reparação dos tecidos do corpo.",
+    "Tomate cereja e cebolinha oferecem vitaminas e antioxidantes."
+  ],
+  "riscos": [
+    "A carne bovina pode ser rica em gorduras saturadas, dependendo do corte utilizado. O consumo excessivo pode aumentar o colesterol.",
+    "Pode conter glúten, dependendo dos temperos usados ou se o hambúrguer for industrializado e utilizar algum tipo de aglomerante."
+  ],
+  "curiosidade": "A carne bovina é uma das fontes mais ricas de ferro heme, que é mais facilmente absorvido pelo corpo em comparação com o ferro não-heme encontrado em fontes vegetais.",
+  "slug": "hamburguer_bovino",
+  "nutricao": {
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
+  },
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": ""
+}

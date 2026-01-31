@@ -1,0 +1,40 @@
+{
+  "slug": "lasanhadeespinafre",
+  "nome": "Lasanha de Espinafre",
+  "categoria": "vegetariano",
+  "descricao": "Lasanha verde com camadas de espinafre orgânico, ricota fresca e molho branco artesanal",
+  "ingredientes": [
+    "massa de lasanha",
+    "espinafre orgânico",
+    "ricota fresca",
+    "mussarela",
+    "molho branco artesanal",
+    "creme de leite fresco"
+  ],
+  "tecnica": "Assado em forno combinado",
+  "beneficios": [
+    "Ferro do espinafre: previne anemia",
+    "Cálcio: fortalece ossos e dentes",
+    "Vitaminas A e K: saúde geral"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém lactose"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "131 kcal",
+    "proteinas": "5g",
+    "carboidratos": "25g",
+    "gorduras": "1g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Contém glúten e lactose. Versão tradicional tem ~350kcal por porção - moderação recomendada",
+  "beneficio_principal": "Combinação de proteína (carne/queijo), carboidrato (massa) e vegetais fornece refeição completa com liberação gradual de energia",
+  "curiosidade_cientifica": "A lasanha à bolonhesa original de Bologna não leva tomate - foi adicionado só no século XIX",
+  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+}

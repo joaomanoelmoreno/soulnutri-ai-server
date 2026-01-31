@@ -1,0 +1,40 @@
+{
+  "slug": "atumaogergelim",
+  "nome": "Atum ao Gergelim",
+  "categoria": "proteína animal",
+  "descricao": "Atum fresco (recebido a cada 1-2 dias) selado com crosta de gergelim importado",
+  "ingredientes": [
+    "atum fresco",
+    "gergelim importado",
+    "shoyu",
+    "gengibre fresco",
+    "wasabi importado do Japão"
+  ],
+  "tecnica": "Selado na grelha",
+  "beneficios": [
+    "Ômega-3: protege coração e cérebro",
+    "Proteína magra: ideal para músculos",
+    "Selênio: antioxidante que protege células"
+  ],
+  "riscos": [
+    "Alérgeno: peixe",
+    "Alérgeno: gergelim",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:44:58.692000",
+  "alerta_saude": "O atum, especialmente quando consumido em grandes espécies, pode ter níveis elevados de mercúrio. A FDA recomenda limitar o consumo a não mais que 170g por semana para grupos sensíveis, como gestantes, para prevenir riscos ao sistema nervoso.",
+  "beneficio_principal": "O gergelim é uma excelente fonte de cálcio, com cerca de 975mg/100g, ajudando na manutenção da saúde óssea. Estudos indicam que o consumo regular de sementes de gergelim pode melhorar a densidade mineral óssea (Nutrition Journal, 2016).",
+  "curiosidade_cientifica": "O wasabi verdadeiro contém isotiocianato (ITC), que possui propriedades antimicrobianas que podem ajudar a combater bactérias orais, como a Streptococcus mutans, que está associada à cárie dental (Journal of Applied Microbiology, 2004).",
+  "referencia_pesquisa": "Journal of Applied Microbiology, 2004; Nutrition Journal, 2016"
+}

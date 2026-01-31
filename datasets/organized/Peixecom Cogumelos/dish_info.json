@@ -1,0 +1,49 @@
+{
+  "nome": "Peixe com Cogumelos",
+  "slug": "peixecomcogumelos",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas",
+    "cogumelos"
+  ],
+  "descricao": "Peixe fresco, fonte de ômega-3.",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade.",
+    "Rico em vitaminas e minerais provenientes do peixe e dos cogumelos.",
+    "Baixo em carboidratos, ideal para dietas de baixo carboidrato.",
+    "Os cogumelos fornecem antioxidantes."
+  ],
+  "riscos": [
+    "Pode conter espinhas, dependendo do peixe.",
+    "Pessoas com alergia a peixes devem evitar."
+  ],
+  "nutricao": {
+    "calorias": "160 kcal",
+    "proteinas": "20g",
+    "carboidratos": "2g",
+    "gorduras": "8g",
+    "fibras": "1g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🐟",
+  "contem_peixe": true,
+  "contem_castanhas": false,
+  "contem_soja": false
+}

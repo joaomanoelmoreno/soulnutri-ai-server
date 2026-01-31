@@ -1,0 +1,43 @@
+{
+  "slug": "lentilha",
+  "nome": "Lentilha",
+  "categoria": "vegano",
+  "descricao": "Lentilha nutritiva, símbolo de prosperidade.",
+  "ingredientes": [
+    "lentilha",
+    "água",
+    "sal",
+    "alho",
+    "cebola"
+  ],
+  "beneficios": [
+    "Alta proteína vegetal",
+    "Rico em ferro",
+    "Fibras"
+  ],
+  "riscos": [
+    "Pode causar gases"
+  ],
+  "nutricao": {
+    "calorias": "116 kcal",
+    "proteinas": "9g",
+    "carboidratos": "20g",
+    "gorduras": "0.4g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true,
+  "tecnica": "Cozida",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Legumes"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
+}

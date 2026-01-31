@@ -1,0 +1,40 @@
+{
+  "nome": "Salada de Lentilha",
+  "categoria": "vegano",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
+  ],
+  "descricao": "Salada fresca e nutritiva.",
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais"
+  ],
+  "riscos": [],
+  "curiosidade": "A lentilha é um alimento muito antigo, consumido há mais de 10 mil anos. É um grão versátil e fácil de preparar, sendo uma ótima opção para vegetarianos e veganos.",
+  "slug": "saladadelentilha",
+  "nutricao": {
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Crua",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🌱"
+}

@@ -1,0 +1,51 @@
+{
+  "nome": "Frango à Milanesa",
+  "slug": "frangoàmilanesa",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "frango",
+    "farniha de trigo",
+    "ovo",
+    "farinha de rosca",
+    "ervas em geral",
+    "queijo parmesão ",
+    "sal",
+    "temperos"
+  ],
+  "descricao": "Frango preparado de forma saudável.",
+  "beneficios": [
+    "Fonte de proteína para construção e reparo muscular.",
+    "Pode ser uma opção saborosa para incluir proteína na dieta.",
+    "O frango é relativamente acessível."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura.",
+    "Pode ser rico em sódio dependendo da quantidade de sal e temperos utilizados.",
+    "O consumo excessivo de frituras pode aumentar o risco de doenças cardiovasculares."
+  ],
+  "nutricao": {
+    "calorias": "280 kcal",
+    "proteinas": "18g",
+    "carboidratos": "20g",
+    "gorduras": "15g",
+    "fibras": "1g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍗",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

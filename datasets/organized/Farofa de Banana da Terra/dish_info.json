@@ -1,0 +1,38 @@
+{
+  "slug": "farofadebananadaterra",
+  "nome": "Farofa de Banana da Terra",
+  "categoria": "vegano",
+  "descricao": "Farofa artesanal com banana da terra assada em forno combinado (sem fritura)",
+  "ingredientes": [
+    "farinha de mandioca",
+    "banana da terra",
+    "cebola orgânica",
+    "azeite extravirgem",
+    "sal"
+  ],
+  "tecnica": "Banana assada em forno combinado (sem fritura)",
+  "beneficios": [
+    "Potássio da banana: saúde muscular",
+    "Energia de liberação lenta",
+    "Preparada sem fritura"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:46:47.641000",
+  "alerta_saude": "O consumo excessivo de azeite extravirgem, embora benéfico para o coração devido aos ácidos graxos monoinsaturados, pode aumentar a ingestão calórica significativamente. Recomenda-se até 15ml por refeição para balancear calorias e nutrientes.",
+  "beneficio_principal": "A farinha de mandioca é rica em amido resistente (38g/100g), que atua como fibra solúvel, promovendo saúde intestinal e podendo ajudar na redução do colesterol LDL. Um estudo da Universidade de São Paulo (2018) mostrou que seu consumo regular pode reduzir em até 10% o LDL em adultos.",
+  "curiosidade_cientifica": "A banana da terra possui uma quantidade significativa de triptofano (9 mg/100g), um aminoácido precursor da serotonina, que pode melhorar o humor e ajudar no bem-estar mental. A biodisponibilidade de triptofano é otimizada quando banha ou azeite são incluídos na refeição.",
+  "referencia_pesquisa": "Estudo da Universidade de São Paulo, 2018; Tabela Brasileira de Composição de Alimentos - TACO, UNICAMP, 2011"
+}

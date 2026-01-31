@@ -1,0 +1,35 @@
+{
+  "nome": "Manjar de Coco com Calda de Ameixa",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "Leite de coco",
+    "Açúcar",
+    "Amido de milho",
+    "Ameixas pretas (na calda e para decorar)",
+    "Calda de ameixa (provavelmente feita com as ameixas, açúcar e água)"
+  ],
+  "descricao": "Sobremesa cremosa, feita com leite de coco, amido de milho e açúcar, com calda à base de ameixas pretas e açúcar. As ameixas também são usadas para decorar. O preparo envolve o cozimento dos ingredientes até obter uma consistência firme.",
+  "beneficios": [
+    "O coco é rico em gorduras saudáveis, que podem auxiliar na saúde cardiovascular.",
+    "As ameixas são ricas em fibras, que auxiliam na digestão e no controle glicêmico."
+  ],
+  "riscos": [
+    "Contém lactose (se for utilizado leite de coco misturado com leite de vaca)",
+    "Rico em açúcares, o consumo em excesso pode levar ao ganho de peso e outros problemas de saúde."
+  ],
+  "curiosidade": "O manjar de coco, originalmente, não levava coco em sua composição. A receita original é de origem francesa e foi adaptada no Brasil, onde o coco foi incorporado.",
+  "slug": "manjardecococomcaldadeameixa",
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🥚",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

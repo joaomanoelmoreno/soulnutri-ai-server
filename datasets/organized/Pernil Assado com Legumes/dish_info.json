@@ -1,0 +1,33 @@
+{
+  "slug": "pernil_assado_com_legumes",
+  "ativo": true,
+  "beneficios": [
+    "Fonte de proteína de alto valor biológico",
+    "Rico em vitaminas do complexo B",
+    "Pode ser uma boa fonte de minerais como ferro e zinco"
+  ],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-22T13:15:36.086000",
+  "descricao": "Um lombo de porco assado fatiado, coberto com uma geleia de frutas avermelhada e brilhante. Há um acompanhamento de lentilha e cenoura.",
+  "ingredientes": [
+    "lombo de porco",
+    "geleia de frutas (vermelha)",
+    "lentilha",
+    "cenoura"
+  ],
+  "nome": "Pernil assado com legumes",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: N/A (a menos que haja alergia específica a algum ingrediente da geleia)",
+    "Alto teor de sódio (dependendo do tempero)"
+  ],
+  "tecnica": "Assado no forno, provavelmente com a geleia adicionada nos últimos minutos para caramelizar."
+}

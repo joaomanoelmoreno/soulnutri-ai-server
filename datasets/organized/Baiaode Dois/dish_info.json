@@ -1,0 +1,40 @@
+{
+  "slug": "baiaodedois",
+  "nome": "Baião de Dois",
+  "categoria": "proteína animal",
+  "descricao": "Prato típico nordestino com arroz e feijão-de-corda demolhado cozidos juntos",
+  "ingredientes": [
+    "arroz",
+    "feijão-de-corda demolhado",
+    "bacon artesanal",
+    "queijo coalho",
+    "manteiga fresca",
+    "temperos"
+  ],
+  "tecnica": "Cozimento tradicional",
+  "beneficios": [
+    "Proteína completa: arroz + feijão",
+    "Fibras: saciedade prolongada",
+    "Energia de longa duração"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:45:03.949000",
+  "alerta_saude": "O bacon artesanal pode conter nitritos, que em excesso formam compostos potencialmente carcinogênicos durante a digestão. Associações de saúde como a OMS recomendam limitar a ingestão de carne processada a 50g por dia.",
+  "beneficio_principal": "O feijão-de-corda contém 157 mg de magnésio por 100g, mineral essencial para a função muscular e nervosa. Estudos mostram que magnésio adequado pode melhorar a qualidade do sono e reduzir a ansiedade (American Journal of Clinical Nutrition, 2012).",
+  "curiosidade_cientifica": "Ao cozinhar o arroz e feijão juntos, formam oligossacarídeos prebióticos que aumentam a população de bactérias benéficas no intestino, favorecendo a digestão e saúde intestinal (Journal of Agricultural and Food Chemistry, 2018).",
+  "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos (TACO) - UNICAMP, 2011"
+}

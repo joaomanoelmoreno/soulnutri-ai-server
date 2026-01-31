@@ -1,0 +1,50 @@
+{
+  "slug": "frango_ao_molho_cremoso",
+  "nome": "Frango com Molho Cremoso",
+  "categoria": "proteína animal",
+  "descricao": "Frango preparado de forma saudável.",
+  "ingredientes": [
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal",
+    "frango",
+    "temperos"
+  ],
+  "beneficios": [
+    "Fonte de energia",
+    "Carboidratos",
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo",
+    "Verificar procedência"
+  ],
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
+}

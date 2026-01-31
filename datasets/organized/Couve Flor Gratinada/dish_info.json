@@ -1,0 +1,40 @@
+{
+  "slug": "couveflorgratinada",
+  "nome": "Couve-Flor Gratinada",
+  "categoria": "vegano",
+  "descricao": "Couve-flor versátil e nutritiva.",
+  "ingredientes": [
+    "couve-flor",
+    "sal"
+  ],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitamina C"
+  ],
+  "riscos": [
+    "Pode causar gases"
+  ],
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "2g",
+    "carboidratos": "5g",
+    "gorduras": "0.3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱",
+  "tecnica": "Gratinada ou cozida",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Molho branco"
+  ],
+  "evitar_com": []
+}

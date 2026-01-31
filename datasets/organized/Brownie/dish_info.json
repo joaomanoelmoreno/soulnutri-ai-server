@@ -1,0 +1,35 @@
+{
+  "slug": "brownie",
+  "nome": "Brownie",
+  "categoria": "vegetariano",
+  "descricao": "Bolo caseiro tradicional.",
+  "ingredientes": [
+    "farinha de trigo",
+    "açúcar",
+    "ovos",
+    "manteiga",
+    "leite"
+  ],
+  "beneficios": [
+    "Fonte de energia"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alto teor de açúcar",
+    "Calórico"
+  ],
+  "nutricao": {
+    "calorias": "260 kcal",
+    "proteinas": "4g",
+    "carboidratos": "40g",
+    "gorduras": "10g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚",
+  "tecnica": ""
+}

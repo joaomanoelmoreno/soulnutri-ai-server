@@ -1,0 +1,37 @@
+{
+  "slug": "dadinhodetapioca",
+  "nome": "Dadinho de Tapioca",
+  "categoria": "vegetariano",
+  "descricao": "Cubos de tapioca artesanal com queijo coalho, assados em forno combinado",
+  "ingredientes": [
+    "tapioca",
+    "queijo coalho",
+    "sal"
+  ],
+  "tecnica": "Assado em forno combinado (sem fritura)",
+  "beneficios": [
+    "Sem glúten naturalmente",
+    "Cálcio do queijo: saúde óssea",
+    "Assado: mais leve que frito"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:46:19.028000",
+  "alerta_saude": "Tapioca tem alto índice glicêmico (IG 67), o que pode impactar a glicemia. Pessoas com resistência à insulina devem monitorar a ingestão de carboidratos - combiná-la com fibras ou proteínas pode ajudar na moderação do pico glicêmico.",
+  "beneficio_principal": "Queijo coalho contém ácido linoleico conjugado (CLA) - associado à redução de gordura corporal. Estudo em ''Nutrition Research'' (2011) sugere possível efeito benéfico na saúde metabólica.",
+  "curiosidade_cientifica": "100g de tapioca possui 38mg de cálcio - representa 3,8% da recomendação diária (1.000mg) para adultos. Embora conhecida pela sua baixa densidade nutricional, contribui ligeiramente para a ingestão de cálcio.",
+  "referencia_pesquisa": "FoodData Central - USDA, 2019"
+}

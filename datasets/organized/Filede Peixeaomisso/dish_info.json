@@ -1,0 +1,40 @@
+{
+  "slug": "filedepeixeaomisso",
+  "nome": "Filé de Peixe ao Missô",
+  "categoria": "proteína animal",
+  "descricao": "Filé de peixe fresco (recebido a cada 1-2 dias) ao vapor com molho de missô japonês",
+  "ingredientes": [
+    "peixe branco fresco",
+    "missô importado do Japão",
+    "saquê",
+    "gengibre fresco",
+    "cebolinha orgânica"
+  ],
+  "tecnica": "Cozimento no vapor",
+  "beneficios": [
+    "Ômega-3: protege coração e artérias",
+    "Probióticos do missô: saúde intestinal",
+    "Proteína magra de fácil digestão"
+  ],
+  "riscos": [
+    "Alérgeno: peixe",
+    "Alérgeno: soja",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:47:09.739000",
+  "alerta_saude": "O missô é rico em sódio, com cerca de 3750 mg por 100g, o que pode elevar a pressão arterial em indivíduos sensíveis ao sal. Moderação é recomendada, especialmente para aqueles com hipertensão (American Heart Association, 2020)",
+  "beneficio_principal": "Peixe branco como o bacalhau contém quantidades significativas de vitamina D (aproximadamente 400 UI por 100g), crucial para a absorção de cálcio e saúde óssea, especialmente em regiões com baixa exposição solar. (Holick, M.F., New England Journal of Medicine, 2007)",
+  "curiosidade_cientifica": "O missô, feito de soja fermentada, contém compostos bioativos como isoflavonas, que têm mostrado potencial em estudos para redução de risco de câncer e doenças cardiovasculares (American Journal of Clinical Nutrition, 2001)",
+  "referencia_pesquisa": "Holick, M.F., New England Journal of Medicine, 2007; American Journal of Clinical Nutrition, 2001"
+}

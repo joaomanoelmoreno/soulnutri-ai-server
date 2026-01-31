@@ -1,0 +1,57 @@
+{
+  "slug": "frango_no_tacho",
+  "nome": "Frango Assado",
+  "categoria": "proteína animal",
+  "descricao": "Frango marinado e assado em forno com legumes",
+  "ingredientes": [
+    "frango",
+    "batata",
+    "cenoura",
+    "ervas",
+    "limao",
+    "sal",
+    "temperos"
+  ],
+  "beneficios": [
+    "Fonte de proteína de alta qualidade para construção e reparo muscular.",
+    "Fornece vitaminas do complexo B, importantes para o metabolismo energético.",
+    "Contém minerais como ferro e zinco, essenciais para diversas funções do organismo.",
+    "A presença de legumes (batata e cenoura) adiciona fibras e vitaminas.",
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura",
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
+  ],
+  "riscos": [
+    "Pode conter alto teor de sódio dependendo da quantidade de sal e temperos utilizados.",
+    "A pele do frango, se consumida, pode aumentar o teor de gordura saturada.",
+    "Verificar procedência",
+    "Alto índice glicêmico se consumida sozinha"
+  ],
+  "nutricao": {
+    "calorias": "170 kcal",
+    "proteinas": "20g",
+    "carboidratos": "10g",
+    "gorduras": "6g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
+}

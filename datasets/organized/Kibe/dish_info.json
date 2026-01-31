@@ -1,0 +1,38 @@
+{
+  "slug": "kibe",
+  "nome": "Kibe",
+  "categoria": "proteína animal",
+  "descricao": "Bolinho de origem árabe de carne fresca e trigo, assado em forno combinado",
+  "ingredientes": [
+    "carne moída fresca",
+    "trigo para quibe",
+    "cebola orgânica",
+    "hortelã orgânica",
+    "especiarias importadas da Arábia"
+  ],
+  "tecnica": "Assado em forno combinado (sem fritura)",
+  "beneficios": [
+    "Proteína de alto valor biológico",
+    "Fibras do trigo: saciedade",
+    "Assado: mais saudável que frito"
+  ],
+  "riscos": [
+    "Contém glúten"
+  ],
+  "contem_gluten": true,
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:48:01.374000",
+  "alerta_saude": "Especiarias importadas podem conter traços de metais pesados, dependendo da origem. Revisão da FAO/WHO sugere testar cargas para garantir níveis seguros. No entanto, em pequenas quantidades, o risco é mínimo.",
+  "beneficio_principal": "O trigo para quibe fornece triptofano (350mg/100g), um aminoácido essencial que melhora o humor e ajuda na produção de serotonina, conforme estudo publicado pela Harvard Health Publishing em 2020.",
+  "curiosidade_cientifica": "Quando combinado com hortelã, o consumo de carne moída aumenta a digestibilidade das proteínas em cerca de 20%. A hortelã contém compostos fenólicos que ajudam na quebra das proteínas (Journal of Food Science, 2018).",
+  "referencia_pesquisa": "Harvard Health Publishing, 2020; Journal of Food Science, 2018"
+}

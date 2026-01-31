@@ -1,0 +1,35 @@
+{
+  "slug": "goiabada",
+  "nome": "Goiabada",
+  "categoria": "vegano",
+  "descricao": "Molho de tomate caseiro.",
+  "ingredientes": [
+    "Tomate",
+    "Alho",
+    "Cebola",
+    "Azeite",
+    "Ervas"
+  ],
+  "tecnica": "",
+  "beneficios": [],
+  "riscos": [
+    "Alérgeno: Pode conter traços de ingredientes se for feito em cozinha compartilhada."
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "user_created",
+  "created_at": "2026-01-24T17:30:18.353000",
+  "updated_at": "2026-01-21T21:47:47.613000",
+  "alerta_saude": "Maple canadense é rico em manganês (2.91 mg/100g), ultrapassando a ingestão diária recomendada quando consumido em excesso, o que pode levar a efeitos neurológicos adversos - consumir moderadamente. Fonte: National Institutes of Health (NIH).",
+  "beneficio_principal": "Goiaba contém quercetina (10-15 mg/100g), um flavonoide que estudos mostram ajudar na redução da pressão arterial e melhora na saúde cardiovascular. Um estudo da American Heart Association em 2020 descobriu que uma alta ingestão de flavonoides está associada a um risco 15% menor de eventos cardiovasculares.",
+  "curiosidade_cientifica": "A pectina na goiaba, uma fibra solúvel, é eficaz na formação de um gel durante a digestão, ajudando a reduzir a absorção de glicose e a regular os níveis de açúcar no sangue. Isso é particularmente benéfico em um doce, como a goiabada, que já possui açúcar adicionado.",
+  "referencia_pesquisa": "American Heart Association, Circulation Journal, 2020",
+  "category_emoji": "🌱"
+}

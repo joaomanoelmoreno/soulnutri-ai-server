@@ -1,0 +1,30 @@
+{
+  "slug": "lasanha_de_berinjela",
+  "ativo": true,
+  "beneficios": [],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": true,
+  "created_at": "2026-01-23T14:52:21.427000",
+  "descricao": "Prato de massa em camadas, com molho de tomate, queijo e recheio.",
+  "ingredientes": [
+    "Massa de lasanha",
+    "Molho de tomate",
+    "Queijo",
+    "Recheio (possivelmente ricota)"
+  ],
+  "nome": "Lasanha de Berinjela",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Glúten (massa), Lácteos (queijo)",
+    "Alérgeno: GLÚTEN (massa)",
+    "Alérgeno: LACTOSE (queijo)"
+  ],
+  "tecnica": ""
+}

@@ -1,0 +1,36 @@
+{
+  "slug": "repolho",
+  "nome": "Repolho",
+  "categoria": "vegano",
+  "descricao": "Repolho orgânico refogado em azeite",
+  "ingredientes": [
+    "repolho orgânico",
+    "sal",
+    "azeite extravirgem"
+  ],
+  "tecnica": "Refogado em azeite",
+  "beneficios": [
+    "Vitamina C: mais que a laranja por porção",
+    "Compostos anticancerígenos",
+    "Muito baixa caloria: apenas 25kcal/100g"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.326000",
+  "updated_at": "2026-01-21T21:48:57.277000",
+  "alerta_saude": "O repolho contém goitrogênicos, compostos que podem interferir na função da tireoide ao reduzir a absorção de iodo. Cozinhar o repolho pode diminuir seu efeito. Pessoas com disfunções na tireoide devem equilibrar seu consumo conforme orientação médica. (Journal of Clinical Endocrinology & Metabolism, 2016)",
+  "beneficio_principal": "O repolho contém antocianinas, especialmente no repolho roxo, que são antioxidantes poderosos. Elas ajudam a reduzir o risco de doenças cardiovasculares. Por exemplo, 100g de repolho roxo contém cerca de 36.6mg de antocianinas. Estudos da Universidade de Harvard, 2017, sugerem que essas substâncias podem melhorar a função endotelial e reduzir a pressão arterial.",
+  "curiosidade_cientifica": "Fermentar repolho para fazer chucrute melhora significativamente o perfil nutricional. O processo aumenta a biodisponibilidade de vitaminas do complexo B, como B12, devido à ação de bactérias probióticas. Um estudo da European Journal of Nutrition, 2018, mostrou que o chucrute contém níveis mais altos de bactérias benéficas comparado ao repolho fresco.",
+  "referencia_pesquisa": "Harvard Health Publishing, 2017"
+}

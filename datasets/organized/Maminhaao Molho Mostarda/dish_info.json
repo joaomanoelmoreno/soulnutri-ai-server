@@ -1,0 +1,38 @@
+{
+  "slug": "maminhaaomolhomostarda",
+  "nome": "Maminha ao Molho Mostarda",
+  "categoria": "proteína animal",
+  "descricao": "Corte bovino nobre fresco preparado sous vide com molho de mostarda e creme fresco",
+  "ingredientes": [
+    "maminha bovina fresca",
+    "mostarda",
+    "creme de leite fresco",
+    "vinho branco"
+  ],
+  "tecnica": "Sous vide",
+  "beneficios": [
+    "Proteína completa: construção e reparo muscular",
+    "Ferro heme: energia e vitalidade",
+    "Vitamina B12: saúde do sistema nervoso"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:48:13.202000",
+  "alerta_saude": "O consumo excessivo de carnes vermelhas e processadas pode aumentar o risco de doenças cardiovasculares. A OMS recomenda limitar o consumo de carnes vermelhas a menos de 500g por semana. Para equilibrar, complemente a dieta com fibras e vegetais. (Fonte: World Health Organization, 2015)",
+  "beneficio_principal": "A carne bovina é uma excelente fonte de creatina, um derivado de aminoácidos que é armazenado nos músculos e utilizado durante atividades físicas intensas. Cerca de 1 kg de carne pode fornecer aproximadamente 5 gramas de creatina, essencial para a regeneração do ATP, fundamental para o desempenho muscular. (Fonte: Journal of the International Society of Sports Nutrition, 2017)",
+  "curiosidade_cientifica": "A mostarda contém compostos bioativos chamados glucosinolatos, que são convertidos em isotiocianatos durante a mastigação. Estudos indicam que esses compostos têm potentes propriedades antioxidantes, o que pode ajudar na redução do estresse oxidativo nas células. (Fonte: Molecular Nutrition & Food Research, 2011)",
+  "referencia_pesquisa": "Tabela TACO - UNICAMP, 2011"
+}

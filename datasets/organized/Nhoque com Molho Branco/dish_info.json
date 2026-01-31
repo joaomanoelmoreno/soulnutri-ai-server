@@ -1,0 +1,44 @@
+{
+  "slug": "nhoque_com_molho_branco",
+  "nome": "Nhoque com Molho Branco",
+  "categoria": "vegetariano",
+  "descricao": "Nhoque de batata tradicional italiano.",
+  "ingredientes": [
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal"
+  ],
+  "beneficios": [
+    "Fonte de energia",
+    "Carboidratos"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo"
+  ],
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚",
+  "tecnica": "Cozido em água",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ]
+}

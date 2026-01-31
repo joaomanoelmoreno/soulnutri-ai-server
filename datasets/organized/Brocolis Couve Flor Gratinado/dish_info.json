@@ -1,0 +1,39 @@
+{
+  "slug": "brocoliscouveflorgratinado",
+  "nome": "Brócolis e Couve-flor Gratinados",
+  "categoria": "vegetariano",
+  "descricao": "Brócolis e couve-flor orgânicos no vapor, gratinados com molho branco artesanal",
+  "ingredientes": [
+    "brócolis orgânico",
+    "couve-flor orgânica",
+    "queijo",
+    "creme de leite fresco",
+    "noz-moscada importada"
+  ],
+  "tecnica": "Vapor + gratinado em forno combinado",
+  "beneficios": [
+    "Vitamina C: fortalece imunidade",
+    "Fibras: regulam intestino",
+    "Cálcio do queijo: saúde óssea"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Pode causar gases em pessoas com intestino sensível - introduzir gradualmente",
+  "beneficio_principal": "Contém sulforafano e indol-3-carbinol - compostos que ativam enzimas desintoxicantes do fígado e têm ação anticancerígena",
+  "curiosidade_cientifica": "Couve-flor roxa tem antocianinas adicionais. Pode substituir arroz para reduzir 75% das calorias",
+  "referencia_pesquisa": "Cancer Prevention Research, 2019"
+}

@@ -1,0 +1,43 @@
+{
+  "nome": "Hamburguer Vegano de Nozes",
+  "categoria": "vegano",
+  "ingredientes": [
+    "ingredientes 100% vegetais"
+  ],
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+  "beneficios": [
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
+  ],
+  "riscos": [
+    "Verificar fonte de B12 e ferro"
+  ],
+  "curiosidade": "Nozes são ricas em antioxidantes e podem ajudar a reduzir o colesterol LDL (o \"colesterol ruim\") e a inflamação.",
+  "slug": "hamburguer_vegano_de_nozes",
+  "nutricao": {
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
+  },
+  "tecnica": "Variada",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ],
+  "category_emoji": "🌱",
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

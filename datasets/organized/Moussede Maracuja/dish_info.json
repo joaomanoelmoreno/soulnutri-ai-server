@@ -1,0 +1,38 @@
+{
+  "slug": "moussedemaracuja",
+  "nome": "Mousse de Maracujá",
+  "categoria": "vegetariano",
+  "descricao": "Mousse cremoso de maracujá fresco com creme de leite fresco, adoçado com maple",
+  "ingredientes": [
+    "maracujá fresco",
+    "creme de leite fresco",
+    "leite condensado artesanal",
+    "maple light"
+  ],
+  "tecnica": "Banho maria + refrigeração",
+  "beneficios": [
+    "Maracujá: calmante natural que reduz ansiedade",
+    "Vitamina C: fortalece imunidade",
+    "Flavonoides: protegem o coração"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "3g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T15:13:08.325000",
+  "alerta_saude": "Contém lactose. Versões industriais podem ter gordura trans - prefira caseiro",
+  "beneficio_principal": "Se for de chocolate amargo (70%+), fornece flavonoides que melhoram fluxo sanguíneo cerebral e função cognitiva",
+  "curiosidade_cientifica": "Estudo de Harvard: consumo moderado de chocolate amargo associado a 37% menos risco de doença cardíaca",
+  "referencia_pesquisa": "Heart Journal, 2019"
+}

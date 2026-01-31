@@ -1,0 +1,36 @@
+{
+  "slug": "pastel_de_queijo",
+  "ativo": true,
+  "beneficios": [
+    "Vitamina A do queijo: importante para visão noturna, pele saudável e sistema imunológico"
+  ],
+  "categoria": "vegetariano",
+  "category_emoji": "🥬",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T17:01:59.927000",
+  "descricao": "Pastel de queijo - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "massa de pastel",
+    "queijo mussarela",
+    "óleo para fritura"
+  ],
+  "nome": "Pastel de queijo",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Contém LACTOSE",
+    "Contém glúten",
+    "⚠️ ATENÇÃO: FRITURA - alto teor calórico (300kcal/unidade). O óleo aquecido pode gerar compostos inflamatórios. Consumo ocasional recomendado"
+  ],
+  "tecnica": "",
+  "beneficio_principal": "Fermentação produz vitamina K2 (MK-7) - forma mais eficiente para transportar cálcio do sangue para os ossos, prevenindo osteoporose E calcificação arterial",
+  "curiosidade": "A fermentação do queijo produz peptídeos bioativos que podem ajudar a reduzir a pressão arterial",
+  "alerta_saude": "Alérgeno: Contém LACTOSE (queijos envelhecidos têm menos)",
+  "curiosidade_cientifica": "Queijos envelhecidos (parmesão, gouda) têm mais K2. Estudo holandês: pessoas que consomem queijo envelhecido têm 50% menos calcificação arterial",
+  "referencia_pesquisa": "European Journal of Nutrition, 2019"
+}

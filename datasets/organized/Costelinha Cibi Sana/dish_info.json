@@ -1,0 +1,38 @@
+{
+  "slug": "costelinhacibisana",
+  "nome": "Costelinha Cibi Sana",
+  "categoria": "proteína animal",
+  "descricao": "Costelinha suína preparada sous vide e finalizada na grelha com molho especial artesanal",
+  "ingredientes": [
+    "costela de porco fresca",
+    "alho orgânico",
+    "maple canadense",
+    "shoyu",
+    "gengibre fresco"
+  ],
+  "tecnica": "Sous vide + finalização na grelha",
+  "beneficios": [
+    "Colágeno: beneficia pele e articulações",
+    "Vitaminas do complexo B: energia",
+    "Zinco: fortalece sistema imune"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:46:09.087000",
+  "alerta_saude": "O shoyu contém elevado teor de sódio (cerca de 5.7g/100mL), o que pode elevar a pressão arterial em consumidores sensíveis a sal. Reduzir o consumo concomitante de outros alimentos ricos em sódio ou optar por versões com menor teor salino pode ser uma alternativa mais saudável.",
+  "beneficio_principal": "O gengibre fresco contém gingerol, um composto bioativo que possui potentes propriedades anti-inflamatórias e antioxidantes. Estudos demonstram que o gingerol pode reduzir náusea e mal-estar estomacal, e em doses de 1-1.5g pode reduzir dores musculares em 25% após exercícios físicos intensos (Journal of Pain Research, 2015).",
+  "curiosidade_cientifica": "A combinação de alho e proteína animal pode aumentar a biodisponibilidade do ferro heme presente na carne, graças a compostos sulfurados. Isso é especialmente útil em dietas com necessidade aumentada de ferro, como em casos de anemia.",
+  "referencia_pesquisa": "'Gingerol: A Therapeutic Agent for Treating Inflammation and Cancer' - J Pharmacol Sci, 2013; 'Sulfur Compounds in Garlic as Selective Enhancers of Iron Bioavailability' - Nutrition Research, 2008"
+}

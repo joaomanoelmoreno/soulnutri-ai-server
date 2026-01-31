@@ -1,0 +1,40 @@
+{
+  "slug": "feijaotropeiro",
+  "nome": "Feijão Tropeiro",
+  "categoria": "proteína animal",
+  "descricao": "Prato mineiro tradicional com feijão demolhado, bacon artesanal e couve orgânica",
+  "ingredientes": [
+    "feijão demolhado",
+    "bacon artesanal",
+    "linguiça artesanal",
+    "farinha de mandioca",
+    "ovos",
+    "couve orgânica"
+  ],
+  "tecnica": "Preparo tradicional",
+  "beneficios": [
+    "Proteína de múltiplas fontes",
+    "Ferro: combate anemia",
+    "Vitamina K da couve: coagulação sanguínea"
+  ],
+  "riscos": [
+    "Alérgeno: ovo",
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:46:53.608000",
+  "alerta_saude": "Bacon e linguiça, sendo carnes processadas, contêm nitritos e nitratos que, se consumidos em altas quantidades, foram associados a um risco ligeiramente maior de câncer colorretal. Moderação é aconselhada. Fonte: International Agency for Research on Cancer (IARC), 2015.",
+  "beneficio_principal": "Feijão é rico em oligossacarídeos, como a rafinose (0,1-2% do feijão), que servem como prebióticos e alimentam bactérias benéficas do intestino, potencialmente melhorando a saúde digestiva. Fonte: American Journal of Clinical Nutrition, 2019.",
+  "curiosidade_cientifica": "Demolhar feijão por 12 horas pode reduzir o teor de fitato em até 60%, aumentando a biodisponibilidade do ferro e zinco presentes. Fonte: Journal of Food Science and Technology, 2020.",
+  "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos - TACO, UNICAMP, 2011"
+}

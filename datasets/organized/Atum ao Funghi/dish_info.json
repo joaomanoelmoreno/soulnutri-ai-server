@@ -1,0 +1,35 @@
+{
+  "slug": "atum_ao_funghi",
+  "ativo": true,
+  "beneficios": [
+    "Atum: rico em niacina (B3) que converte alimentos em energia e mantém pele saudável",
+    "Beta-glucanas dos cogumelos: estimulam o sistema imunológico e podem ajudar a combater tumores"
+  ],
+  "categoria": "proteína animal",
+  "category_emoji": "🍖",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T17:07:36.599000",
+  "descricao": "Atum ao funghi - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "atum fresco",
+    "cogumelos",
+    "azeite",
+    "alho",
+    "vinho branco"
+  ],
+  "nome": "Atum ao funghi",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [
+    "Alérgeno: Contém PEIXE",
+    "⚠️ ATENÇÃO: Limite atum a 2x por semana devido ao mercúrio"
+  ],
+  "tecnica": "",
+  "beneficio_principal": "Os cogumelos são a ÚNICA fonte vegetal natural de vitamina D - essencial para absorção de cálcio, imunidade, prevenção de depressão e saúde óssea",
+  "curiosidade": "Cogumelos podem \"recarregar\" vitamina D se expostos ao sol por 30min - mesmo depois de colhidos!"
+}

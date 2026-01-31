@@ -1,0 +1,33 @@
+{
+  "slug": "salada_de_feijão_fradinho",
+  "ativo": true,
+  "beneficios": [
+    "Fibras solúveis: reduzem o colesterol ruim (LDL) e controlam o açúcar no sangue",
+    "Ferro vegetal (2.5mg/100g): combate anemia - consuma com vitamina C para melhor absorção"
+  ],
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-21T17:00:33.389000",
+  "descricao": "Salada de feijão fradinho - prato cadastrado pelo usuário",
+  "ingredientes": [
+    "feijão fradinho",
+    "tomate",
+    "cebola",
+    "pimentão",
+    "coentro",
+    "azeite"
+  ],
+  "nome": "Salada de feijão fradinho",
+  "nutricao": {
+    "calorias": "~200 kcal",
+    "proteinas": "~10g",
+    "carboidratos": "~25g",
+    "gorduras": "~8g"
+  },
+  "origem": "user_created",
+  "riscos": [],
+  "tecnica": "",
+  "beneficio_principal": "O feijão fradinho é rico em folato (208mcg/100g) - vitamina B9 essencial para gestantes (previne má formação do bebê), formação de células novas e produção de energia",
+  "curiosidade": "No Brasil, o feijão fradinho é símbolo de prosperidade no Ano Novo - e também de saúde intestinal!"
+}

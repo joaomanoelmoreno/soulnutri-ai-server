@@ -1,0 +1,39 @@
+{
+  "slug": "maminhaaomolhomongolia",
+  "nome": "Maminha ao Molho Mongólia",
+  "categoria": "proteína animal",
+  "descricao": "Maminha bovina fresca preparada sous vide ao molho agridoce mongoliano com maple",
+  "ingredientes": [
+    "maminha fresca",
+    "shoyu",
+    "gengibre fresco",
+    "alho orgânico",
+    "maple canadense",
+    "cebolinha orgânica"
+  ],
+  "tecnica": "Sous vide + finalização",
+  "beneficios": [
+    "Proteína de alta qualidade: regeneração muscular",
+    "Ferro: oxigenação do sangue",
+    "Zinco: cicatrização e imunidade"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "contem_gluten": false,
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
+  "ativo": true,
+  "origem": "cibi_sana",
+  "created_at": "2026-01-21T15:13:08.325000",
+  "updated_at": "2026-01-21T21:48:06.461000",
+  "alerta_saude": "O shoyu é rico em sódio, contendo cerca de 5.600mg por 100ml. A OMS recomenda um consumo máximo diário de 2.000mg de sódio. Pessoas com hipertensão devem moderar o consumo ou optar por versões com teor reduzido de sódio.",
+  "beneficio_principal": "O gengibre fresco contém gingerol, um composto bioativo que possui potentes propriedades anti-inflamatórias e antioxidantes. Consumo regular de 1-2g de gengibre por dia pode ajudar a reduzir dores musculares pós-exercício em até 25%, segundo estudo publicado no 'Journal of Pain', 2010.",
+  "curiosidade_cientifica": "O shoyu é fermentado, o que pode aumentar a biodisponibilidade de isoflavonas e peptídeos bioativos. Estudo da 'Food Chemistry', 2017, destaca que o shoyu pode conter até 0,7mg/100g de peptídeos que podem melhorar a digestão de proteínas.",
+  "referencia_pesquisa": "'Journal of Pain', 2010; 'Food Chemistry', 2017"
+}

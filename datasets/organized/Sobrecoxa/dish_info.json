@@ -1,0 +1,40 @@
+{
+  "nome": "Sobrecoxa",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "sobrecoxa de frango",
+    "sal",
+    "temperos"
+  ],
+  "descricao": "Sobrecoxa de frango suculenta.",
+  "beneficios": [
+    "Proteína de qualidade",
+    "Mais suculenta que o peito"
+  ],
+  "riscos": [
+    "Maior teor de gordura que peito"
+  ],
+  "curiosidade": "A sobrecoxa é uma parte do frango com maior concentração de gordura, o que contribui para sua suculência e sabor. Ela pode ser cozida de diversas formas, sendo o cozimento lento em caldos uma das mais saborosas.",
+  "slug": "sobrecoxa",
+  "nutricao": {
+    "calorias": "190 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "9g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
+}

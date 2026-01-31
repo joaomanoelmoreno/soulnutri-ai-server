@@ -1,0 +1,43 @@
+{
+  "nome": "Risoto de Alho Poro",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "arroz arbóreo",
+    "caldo",
+    "vinho branco",
+    "manteiga",
+    "queijo parmesão"
+  ],
+  "descricao": "Risoto cremoso italiano.",
+  "beneficios": [
+    "Fonte de energia",
+    "Cremoso e nutritivo"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Alto teor calórico"
+  ],
+  "curiosidade": "O risoto é um prato tradicional da culinária italiana, conhecido pela sua textura cremosa, que é alcançada pela liberação do amido do arroz durante o cozimento lento e constante.",
+  "slug": "risoto_de_alho_poro",
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "5g",
+    "carboidratos": "30g",
+    "gorduras": "5g"
+  },
+  "category_emoji": "🥚",
+  "tecnica": "Cozimento lento com caldo",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Cogumelos",
+    "Vegetais"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ]
+}

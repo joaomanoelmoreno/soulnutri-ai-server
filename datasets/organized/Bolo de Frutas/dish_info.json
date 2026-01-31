@@ -1,0 +1,38 @@
+{
+  "slug": "bolo_de_frutas",
+  "nome": "Frutas ao Ganache de Chocolate",
+  "categoria": "vegetariano",
+  "descricao": "frutas em creme de baunilha cobertas por ganache de chocolate",
+  "ingredientes": [
+    "Chocolate",
+    "Frutas",
+    "Creme",
+    "baunilha",
+    "amido de milho"
+  ],
+  "beneficios": [
+    "Rico em antioxidantes (frutas e chocolate)",
+    "Fonte de vitaminas e minerais (frutas)",
+    "Pode melhorar o humor (chocolate)",
+    "Opção para sobremesa com frutas"
+  ],
+  "riscos": [
+    "Alto teor de açúcar (chocolate e creme)",
+    "Calorias moderadas"
+  ],
+  "nutricao": {
+    "calorias": "300 kcal",
+    "proteinas": "4g",
+    "carboidratos": "40g",
+    "gorduras": "16g",
+    "fibras": "4g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚",
+  "tecnica": ""
+}

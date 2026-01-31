@@ -1,0 +1,46 @@
+{
+  "slug": "lasanha_vegana_beringela_e_proteina_de_soja",
+  "nome": "Lasanha Vegana Beringela e Proteina de Soja",
+  "categoria": "vegano",
+  "descricao": "Berinjela preparada de forma saudável.",
+  "ingredientes": [
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
+  ],
+  "beneficios": [
+    "Baixas calorias",
+    "Rica em fibras",
+    "Antioxidantes"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": true,
+  "category_emoji": "🌱",
+  "tecnica": "Grelhada ou assada",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": [],
+  "_calorias_suspeitas": true,
+  "_calorias_estimadas": {
+    "min": 150,
+    "max": 300,
+    "tipico": 220
+  }
+}

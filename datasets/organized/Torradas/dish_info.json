@@ -1,0 +1,44 @@
+{
+  "slug": "torradas",
+  "nome": "Torradas",
+  "categoria": "vegano",
+  "descricao": "Torradas crocantes temperadas com azeite e ervas finas, ideais para aperitivos e acompanhamentos.",
+  "ingredientes": [
+    "Pão",
+    "Azeite",
+    "Alho",
+    "Ervas finas",
+    "Sal",
+    "Pão (farinha de trigo, água, fermento, sal)",
+    "Azeite de oliva",
+    "Alho em pó",
+    "Orégano",
+    "Manjericão"
+  ],
+  "beneficios": [
+    "Fonte de energia rápida",
+    "Pode ser uma opção de snack para celíacos (se pão sem glúten)",
+    "Rico em carboidratos",
+    "Fonte de energia"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alto teor de sódio (dependendo da quantidade de sal)",
+    "Pode conter lactose (dependendo do pão)",
+    "Alto teor de sódio (se sal em excesso)"
+  ],
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "6g",
+    "carboidratos": "35g",
+    "gorduras": "10g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱",
+  "tecnica": ""
+}

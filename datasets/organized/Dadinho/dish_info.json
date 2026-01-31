@@ -1,0 +1,46 @@
+{
+  "slug": "dadinho",
+  "nome": "Dadinho",
+  "categoria": "vegetariano",
+  "descricao": "Bolinho crocante e saboroso.",
+  "ingredientes": [
+    "base variada",
+    "queijo",
+    "tapioca",
+    "temperos",
+    "leite"
+  ],
+  "beneficios": [
+    "Fonte de cálcio (se o queijo for fonte)",
+    "Opção saborosa para vegetarianos",
+    "Prático para lanches e petiscos"
+  ],
+  "riscos": [
+    "Alto teor de gordura, dependendo do queijo e da forma de preparo",
+    "Pode ser rico em sódio, dependendo dos temperos utilizados"
+  ],
+  "nutricao": {
+    "calorias": "280 kcal",
+    "proteinas": "12g",
+    "carboidratos": "25g",
+    "gorduras": "15g",
+    "fibras": "1g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Frito",
+  "category_emoji": "🥚",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Entrada ou lanche",
+  "combina_com": [
+    "Molhos"
+  ],
+  "evitar_com": [
+    "Outras frituras"
+  ]
+}

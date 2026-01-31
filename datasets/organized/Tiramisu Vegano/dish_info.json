@@ -1,0 +1,42 @@
+{
+  "nome": "Tiramisù Vegano",
+  "slug": "tiramisuvegano",
+  "categoria": "vegano",
+  "ingredientes": [
+    "ingredientes 100% vegetais"
+  ],
+  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+  "beneficios": [
+    "Livre de produtos animais",
+    "Rico em fibras",
+    "Baixo colesterol"
+  ],
+  "riscos": [
+    "Verificar fonte de B12 e ferro"
+  ],
+  "nutricao": {
+    "calorias": "~120 kcal",
+    "proteinas": "~5g",
+    "carboidratos": "~20g",
+    "gorduras": "~3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "tecnica": "Variada",
+  "contem_ovo": false,
+  "indice_glicemico": "variável",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Qualquer refeição",
+  "combina_com": [
+    "Outros vegetais",
+    "Grãos",
+    "Leguminosas"
+  ],
+  "evitar_com": [
+    "Produtos animais"
+  ],
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

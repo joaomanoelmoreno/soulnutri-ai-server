@@ -1,0 +1,42 @@
+{
+  "slug": "sopa_de_legumes_gratinada",
+  "nome": "Sopa de Legumes Gratinada",
+  "categoria": "vegano",
+  "descricao": "Couve-flor versátil e nutritiva.",
+  "ingredientes": [
+    "couve-flor",
+    "sal"
+  ],
+  "beneficios": [
+    "Rica em vitaminas e minerais provenientes dos legumes.",
+    "Baixo teor calórico, auxiliando no controle de peso.",
+    "Boa fonte de fibras, que contribuem para a saúde digestiva.",
+    "Promove a saciedade."
+  ],
+  "riscos": [
+    "Pode conter alto teor de sódio dependendo da quantidade de sal adicionada."
+  ],
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "2g",
+    "carboidratos": "5g",
+    "gorduras": "0g",
+    "fibras": "2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥬",
+  "tecnica": "Gratinada ou cozida",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Molho branco"
+  ],
+  "evitar_com": []
+}

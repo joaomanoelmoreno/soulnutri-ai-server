@@ -1,0 +1,38 @@
+{
+  "slug": "purêdeabóbora",
+  "nome": "Purê de Abobora",
+  "categoria": "vegano",
+  "descricao": "Abóbora nutritiva, versátil na cozinha.",
+  "ingredientes": [
+    "abóbora",
+    "sal"
+  ],
+  "beneficios": [
+    "Rica em betacaroteno",
+    "Vitamina A",
+    "Baixas calorias"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "26 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6.5g",
+    "gorduras": "0.1g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozida ou assada",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Curry",
+    "Gengibre"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
+}
