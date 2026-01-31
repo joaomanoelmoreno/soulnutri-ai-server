@@ -564,6 +564,12 @@ function App() {
       setCameraError(null);
       console.log('[Camera] Iniciando...');
       
+      // Verificar se componente ainda está montado
+      if (!mountedRef.current) {
+        console.log('[Camera] Componente desmontado, abortando...');
+        return;
+      }
+      
       // Verificar se mediaDevices está disponível
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         console.error('[Camera] mediaDevices não disponível');
@@ -571,9 +577,16 @@ function App() {
         return;
       }
       
-      // Parar stream anterior se existir
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(t => t.stop());
+      // Parar stream anterior se existir (com try-catch para evitar erros)
+      try {
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(t => {
+            try { t.stop(); } catch(e) { console.warn('[Camera] Erro ao parar track:', e); }
+          });
+          streamRef.current = null;
+        }
+      } catch (e) {
+        console.warn('[Camera] Erro ao limpar stream anterior:', e);
       }
       
       // Resolução reduzida para economizar memória em celulares
@@ -584,27 +597,47 @@ function App() {
           height: { ideal: 480, max: 720 } 
         } 
       });
+      
+      // Verificar novamente se ainda está montado após await
+      if (!mountedRef.current) {
+        console.log('[Camera] Componente desmontado durante inicialização, liberando recursos...');
+        s.getTracks().forEach(t => t.stop());
+        return;
+      }
+      
       console.log('[Camera] Stream obtido:', s);
       streamRef.current = s;
       setStream(s);
+      
       if (videoRef.current) {
         videoRef.current.srcObject = s;
-        console.log('[Camera] Video conectado');
+        // Aguardar video estar pronto
+        videoRef.current.onloadedmetadata = () => {
+          console.log('[Camera] Video conectado e pronto');
+        };
       }
     } catch (err) { 
       console.error("[Camera] Erro:", err);
-      setCameraError(err.name === 'NotAllowedError' ? 'permission_denied' : 'camera_error');
+      if (mountedRef.current) {
+        setCameraError(err.name === 'NotAllowedError' ? 'permission_denied' : 'camera_error');
+      }
     }
   };
   
   // Função interna para parar câmera sem depender de state
   const stopCameraInternal = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(t => t.stop());
-      streamRef.current = null;
-    }
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
+    try {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => {
+          try { t.stop(); } catch(e) { console.warn('[Camera] Erro ao parar track:', e); }
+        });
+        streamRef.current = null;
+      }
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+    } catch (e) {
+      console.warn('[Camera] Erro ao parar câmera:', e);
     }
   };
 
