@@ -2928,7 +2928,9 @@ function App() {
 function AppWithI18n() {
   return (
     <I18nProvider>
-      <App />
+      <CameraErrorBoundary>
+        <App />
+      </CameraErrorBoundary>
     </I18nProvider>
   );
 }
