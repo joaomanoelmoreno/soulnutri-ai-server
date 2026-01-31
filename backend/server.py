@@ -433,21 +433,32 @@ async def identify_image(
     file: UploadFile = File(...),
     pin: Optional[str] = Form(None),
     nome: Optional[str] = Form(None),
-    country: Optional[str] = Form("BR")  # País do usuário: BR ou OTHER
+    country: Optional[str] = Form("BR"),  # País do usuário: BR ou OTHER
+    restaurant: Optional[str] = Form("cibi_sana")  # Restaurante: cibi_sana ou outro
 ):
     """
     Identifica um prato a partir de uma imagem.
     Se PIN e nome forem fornecidos, retorna dados Premium.
-    Se country=BR, usa CLIP local primeiro (mais rápido para pratos brasileiros).
-    Se country=OTHER, usa Gemini Flash direto (pratos internacionais).
+    
+    LÓGICA DE RECONHECIMENTO:
+    - Cibi Sana (restaurant=cibi_sana): CLIP local APENAS (Gemini TRAVADO, custo zero)
+    - Brasil outros (country=BR, restaurant!=cibi_sana): Gemini primeiro
+    - Internacional (country!=BR): Gemini primeiro
     
     Returns:
         IdentifyResponse com o prato identificado e nível de confiança
     """
     start_time = time.time()
     is_brazil = country == "BR"
+    is_cibi_sana = restaurant.lower() == "cibi_sana" if restaurant else True
     
-    logger.info(f"[IDENTIFY] País: {country} ({'CLIP primeiro' if is_brazil else 'Gemini direto'})")
+    # LÓGICA DE ROTEAMENTO:
+    # - Cibi Sana: CLIP apenas (Gemini BLOQUEADO)
+    # - Brasil outros: Gemini primeiro
+    # - Internacional: Gemini primeiro
+    use_gemini = not is_cibi_sana  # Gemini só para restaurantes fora do Cibi Sana
+    
+    logger.info(f"[IDENTIFY] País: {country}, Restaurante: {restaurant}, Gemini: {'BLOQUEADO' if is_cibi_sana else 'ATIVO'}")
     
     try:
         from ai.index import get_index
