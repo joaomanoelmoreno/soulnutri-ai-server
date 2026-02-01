@@ -772,6 +772,7 @@ function App() {
     // Usar localização já detectada (não esperar - seria lento!)
     // A localização é atualizada em background a cada 5 minutos
     fd.append("country", userLocation?.country || 'BR');
+    fd.append("restaurant", currentRestaurant || 'cibi_sana');
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
