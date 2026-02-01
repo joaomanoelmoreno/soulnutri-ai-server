@@ -434,7 +434,7 @@ async def identify_image(
     pin: Optional[str] = Form(None),
     nome: Optional[str] = Form(None),
     country: Optional[str] = Form("BR"),  # País do usuário: BR ou OTHER
-    restaurant: Optional[str] = Form("cibi_sana")  # Restaurante: cibi_sana ou outro
+    restaurant: Optional[str] = Form(None)  # Restaurante: cibi_sana ou None/outro
 ):
     """
     Identifica um prato a partir de uma imagem.
