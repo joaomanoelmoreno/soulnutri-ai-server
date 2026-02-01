@@ -95,21 +95,15 @@ async def identify_dish_gemini_flash(
     """
     Identifica um prato usando Gemini Flash.
     Usa API direta do Google (GOOGLE_API_KEY) - custo ~$0.000006/clique
+    Fallback para EMERGENT_LLM_KEY se cota do Google estiver esgotada.
     """
     from PIL import Image
+    from google import genai
     import io
-    import google.generativeai as genai
     
     start_time = time.time()
     
     try:
-        # Usar chave direta do Google (custo muito menor)
-        api_key = os.environ.get('GOOGLE_API_KEY')
-        if not api_key:
-            return {"ok": False, "error": "GOOGLE_API_KEY não configurada"}
-        
-        genai.configure(api_key=api_key)
-        
         # ═══════════════════════════════════════════════════════════════════
         # OTIMIZAÇÃO: Melhor balanço entre velocidade e qualidade
         # ═══════════════════════════════════════════════════════════════════
@@ -124,6 +118,11 @@ async def identify_dish_gemini_flash(
         if img.mode != 'RGB':
             img = img.convert('RGB')
         
+        # Salvar imagem para envio
+        buffer = io.BytesIO()
+        img.save(buffer, format='JPEG', quality=75)
+        img_bytes = buffer.getvalue()
+        
         # ═══════════════════════════════════════════════════════════════════
         # CHAMAR GEMINI - Tenta Google API primeiro, depois Emergent como fallback
         # ═══════════════════════════════════════════════════════════════════
@@ -131,21 +130,27 @@ async def identify_dish_gemini_flash(
         response_text = None
         source_used = None
         
+        prompt = f"""{SYSTEM_PROMPT_FLASH}
+
+Identifique este prato. O que você vê na imagem? Seja preciso."""
+        
         # OPÇÃO 1: Tentar Google API direta (mais barato)
         google_key = os.environ.get('GOOGLE_API_KEY')
         if google_key:
-            models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash-lite']
+            models_to_try = ['gemini-2.0-flash-lite', 'gemini-2.5-flash']
             
             for model_name in models_to_try:
                 try:
-                    model = genai.GenerativeModel(model_name)
-                    
-                    prompt = f"""{SYSTEM_PROMPT_FLASH}
-
-Identifique este prato. O que você vê na imagem? Seja preciso."""
+                    client = genai.Client(api_key=google_key)
                     
                     api_start = time.time()
-                    response = model.generate_content([prompt, img])
+                    response = client.models.generate_content(
+                        model=model_name,
+                        contents=[
+                            prompt,
+                            genai.types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg")
+                        ]
+                    )
                     api_time = (time.time() - api_start) * 1000
                     
                     response_text = response.text.strip()
@@ -154,7 +159,11 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                     break
                     
                 except Exception as e:
-                    logger.warning(f"[GeminiFlash] Google API ({model_name}) falhou: {str(e)[:80]}")
+                    error_str = str(e)
+                    if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
+                        logger.warning(f"[GeminiFlash] Cota Google esgotada ({model_name}), tentando próximo...")
+                    else:
+                        logger.warning(f"[GeminiFlash] Google API ({model_name}) falhou: {error_str[:80]}")
                     continue
         
         # OPÇÃO 2: Fallback para Emergent LLM Key
