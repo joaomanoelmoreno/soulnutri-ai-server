@@ -491,32 +491,37 @@ async def identify_image(
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
-        # SISTEMA DE IDENTIFICAÇÃO EM CASCATA (LÓGICA ORIGINAL QUE FUNCIONAVA)
+        # SISTEMA DE IDENTIFICAÇÃO - 3 NÍVEIS DE CONFIANÇA
         # ═══════════════════════════════════════════════════════════════════════
-        # 1. SEMPRE tenta CLIP primeiro (custo ZERO)
-        # 2. Se CLIP >= 85% confiança → usa resultado do CLIP
-        # 3. Se CLIP < 85% confiança → chama Gemini como fallback
+        # ≥85%: Resultado final (confiança alta)
+        # 50-85%: "Consulte o atendente, pode não ser este prato" (confiança média)
+        # <50%: "Pode não ser o prato fotografado" (confiança baixa)
         # ═══════════════════════════════════════════════════════════════════════
         
-        # NÍVEL 1: Índice Local CLIP (sempre primeiro - custo zero)
+        # Busca no índice local CLIP
         results = index.search(content, top_k=5)
         decision = analyze_result(results)
         
-        nivel1_score = decision.get('score', 0.0)
-        nivel1_confidence = decision.get('confidence', 'baixa')
+        score = decision.get('score', 0.0)
         
-        logger.info(f"[NÍVEL 1] CLIP Local: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
+        logger.info(f"[CLIP] {decision.get('dish_display', 'N/A')} - Score: {score:.2%}")
         
-        # THRESHOLD: 85% = confiança alta, usar CLIP direto
-        THRESHOLD_ALTA = 0.85
-        
-        # Se CLIP tem confiança ALTA, usar resultado direto (custo zero)
-        if nivel1_score >= THRESHOLD_ALTA and decision.get('identified'):
-            decision['source'] = 'local_index'
-            decision['cascade_level'] = 1
+        # Definir confiança e mensagem baseada no score
+        if score >= 0.85:
             decision['confidence'] = 'alta'
-            decision['ia_disponivel'] = False
-            logger.info(f"[CASCATA] ✅ CLIP confiante ({nivel1_score:.0%}) - usando resultado local")
+            decision['message'] = f"Identificado: {decision.get('dish_display', 'Prato')}"
+            decision['aviso_confianca'] = None
+        elif score >= 0.50:
+            decision['confidence'] = 'média'
+            decision['message'] = f"Possível: {decision.get('dish_display', 'Prato')}"
+            decision['aviso_confianca'] = "Consulte o atendente, pode não ser este prato"
+        else:
+            decision['confidence'] = 'baixa'
+            decision['message'] = f"Incerto: {decision.get('dish_display', 'Prato')}"
+            decision['aviso_confianca'] = "Pode não ser o prato fotografado"
+        
+        decision['source'] = 'local_index'
+        decision['ia_disponivel'] = False
         
         # Se CLIP não tem confiança, usar Gemini como fallback
         else:
