@@ -3060,8 +3060,8 @@ function App() {
                 onSuccess={(data) => {
                   setPremiumUser({ nome: data.nome, pin: data.pin, meta_calorica: data.meta_calorica });
                   setDailySummary({ nome: data.nome, meta: data.meta_calorica.meta_sugerida, consumido: 0, restante: data.meta_calorica.meta_sugerida, percentual: 0, pratos: [] });
-                  // Mostrar formulário de perfil após registro
-                  setShowPremium('profile');
+                  // Ir direto para o dashboard - dados já foram coletados no registro
+                  setShowPremium('dashboard');
                 }}
                 onCancel={() => setShowPremium('login')}
               />
