@@ -136,6 +136,7 @@ class IdentifyResponse(BaseModel):
     dish_display: Optional[str] = None
     confidence: str  # 'alta', 'média', 'baixa'
     confidence_level: Optional[str] = None  # Mensagem descritiva para o usuário
+    aviso_confianca: Optional[str] = None  # Aviso baseado no nível de confiança
     score: float
     message: str
     category: Optional[str] = None
