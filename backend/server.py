@@ -2103,7 +2103,8 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
             return {"ok": False, "error": "Nome ou PIN incorreto"}
         
         # Verificar se Premium está ativo e não expirou
-        premium_ativo = user.get("premium_ativo", False)
+        # Se o campo não existir, assume True para usuários já registrados
+        premium_ativo = user.get("premium_ativo", True)  # Default True para manter compatibilidade
         premium_expira_em = user.get("premium_expira_em")
         
         if premium_expira_em:
