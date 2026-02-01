@@ -1754,6 +1754,38 @@ function App() {
         </div>
       </header>
 
+      {/* Toggle Cibi Sana / Outro local */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '6px',
+        background: isCibiSana ? 'rgba(0,200,100,0.15)' : 'rgba(255,150,0,0.15)',
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <button
+          onClick={() => setIsCibiSana(!isCibiSana)}
+          data-testid="toggle-restaurant"
+          style={{
+            padding: '6px 16px',
+            borderRadius: '20px',
+            border: 'none',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            background: isCibiSana ? '#00c864' : '#ff9500',
+            color: '#000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}
+        >
+          {isCibiSana ? '🏠 Cibi Sana' : '🌍 Outro local'}
+          <span style={{ fontSize: '10px', opacity: 0.7 }}>
+            {isCibiSana ? '(custo zero)' : '(usa créditos)'}
+          </span>
+        </button>
+      </div>
+
       {/* Toast de confirmação - Refeição registrada */}
       {mealRegistered && (
         <div 
