@@ -450,7 +450,7 @@ async def identify_image(
     """
     start_time = time.time()
     is_brazil = country == "BR"
-    is_cibi_sana = restaurant.lower() == "cibi_sana" if restaurant else True
+    is_cibi_sana = restaurant and restaurant.lower() == "cibi_sana"  # Só é Cibi Sana se EXPLICITAMENTE informado
     
     # LÓGICA DE ROTEAMENTO:
     # - Cibi Sana: CLIP apenas (Gemini BLOQUEADO)
