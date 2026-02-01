@@ -449,16 +449,8 @@ async def identify_image(
         IdentifyResponse com o prato identificado e nível de confiança
     """
     start_time = time.time()
-    is_brazil = country == "BR"
-    is_cibi_sana = restaurant and restaurant.lower() == "cibi_sana"  # Só é Cibi Sana se EXPLICITAMENTE informado
     
-    # LÓGICA DE ROTEAMENTO:
-    # - Cibi Sana: CLIP apenas (Gemini BLOQUEADO)
-    # - Brasil outros: Gemini primeiro
-    # - Internacional: Gemini primeiro
-    use_gemini = not is_cibi_sana  # Gemini só para restaurantes fora do Cibi Sana
-    
-    logger.info(f"[IDENTIFY] País: {country}, Restaurante: {restaurant}, Gemini: {'BLOQUEADO' if is_cibi_sana else 'ATIVO'}")
+    logger.info(f"[IDENTIFY] País: {country}, Restaurante: {restaurant}")
     
     try:
         from ai.index import get_index
@@ -499,25 +491,87 @@ async def identify_image(
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
-        # SISTEMA DE IDENTIFICAÇÃO EM CASCATA
+        # SISTEMA DE IDENTIFICAÇÃO EM CASCATA (LÓGICA ORIGINAL QUE FUNCIONAVA)
         # ═══════════════════════════════════════════════════════════════════════
-        # 0. CACHE: Verifica se imagem já foi identificada (~0ms)
-        # 1. NÍVEL 1: Índice Local (OpenCLIP) - Parceiros cadastrados (~200-300ms)
-        # 1.5 NÍVEL 1.5: YOLOv8 Local - Se disponível (~50-100ms)
-        # 2. NÍVEL 2: Gemini Flash - Fallback universal (~700ms)
-        # ═══════════════════════════════════════════════════════════════════════
-        # ARQUITETURA:
-        # - Cibi Sana: CLIP Local APENAS (Gemini BLOQUEADO, custo ZERO)
-        # - Outros restaurantes: Gemini primeiro (identifica qualquer prato)
+        # 1. SEMPRE tenta CLIP primeiro (custo ZERO)
+        # 2. Se CLIP >= 85% confiança → usa resultado do CLIP
+        # 3. Se CLIP < 85% confiança → chama Gemini como fallback
         # ═══════════════════════════════════════════════════════════════════════
         
-        # Se NÃO é Cibi Sana, usa Gemini (outros restaurantes no Brasil ou internacional)
-        if use_gemini:
-            logger.info(f"[GEMINI] Restaurante externo - usando Gemini Flash")
+        # NÍVEL 1: Índice Local CLIP (sempre primeiro - custo zero)
+        results = index.search(content, top_k=5)
+        decision = analyze_result(results)
+        
+        nivel1_score = decision.get('score', 0.0)
+        nivel1_confidence = decision.get('confidence', 'baixa')
+        
+        logger.info(f"[NÍVEL 1] CLIP Local: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
+        
+        # THRESHOLD: 85% = confiança alta, usar CLIP direto
+        THRESHOLD_ALTA = 0.85
+        
+        # Se CLIP tem confiança ALTA, usar resultado direto (custo zero)
+        if nivel1_score >= THRESHOLD_ALTA and decision.get('identified'):
+            decision['source'] = 'local_index'
+            decision['cascade_level'] = 1
+            decision['confidence'] = 'alta'
+            decision['ia_disponivel'] = False
+            logger.info(f"[CASCATA] ✅ CLIP confiante ({nivel1_score:.0%}) - usando resultado local")
+        
+        # Se CLIP não tem confiança, usar Gemini como fallback
+        else:
+            logger.info(f"[CASCATA] ⚠️ CLIP incerto ({nivel1_score:.0%}) - chamando Gemini Flash")
+            
             try:
                 from services.gemini_flash_service import (
                     identify_dish_gemini_flash,
                     is_gemini_flash_available
+                )
+                
+                if is_gemini_flash_available():
+                    flash_profile = None
+                    if pin and nome:
+                        from services.profile_service import hash_pin
+                        pin_hash = hash_pin(pin)
+                        flash_profile = await db.users.find_one(
+                            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                            {"_id": 0}
+                        )
+                    
+                    flash_result = await identify_dish_gemini_flash(content, flash_profile)
+                    
+                    if flash_result.get('ok'):
+                        logger.info(f"[NÍVEL 2] ✅ Gemini: {flash_result.get('nome')}")
+                        decision = {
+                            'identified': True,
+                            'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
+                            'dish_display': flash_result.get('nome'),
+                            'score': flash_result.get('score', 0.90),
+                            'confidence': 'alta',
+                            'message': f"Identificado: {flash_result.get('nome')}",
+                            'source': 'gemini_flash',
+                            'cascade_level': 2,
+                            'category': flash_result.get('categoria'),
+                            'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteína animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
+                            'nutrition': flash_result.get('nutricao'),
+                            'alergenos': flash_result.get('alergenos', {}),
+                            'alertas_personalizados': flash_result.get('alertas_personalizados', []),
+                            'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
+                            'ia_disponivel': False
+                        }
+                    else:
+                        # Gemini falhou, manter CLIP mesmo com baixa confiança
+                        decision['source'] = 'local_index'
+                        decision['ia_disponivel'] = False
+                        logger.info(f"[NÍVEL 2] ❌ Gemini falhou, usando CLIP")
+                else:
+                    decision['source'] = 'local_index'
+                    decision['ia_disponivel'] = False
+                    logger.info(f"[NÍVEL 2] ❌ Gemini indisponível, usando CLIP")
+            except Exception as e:
+                logger.error(f"[NÍVEL 2] Erro Gemini: {e}")
+                decision['source'] = 'local_index'
+                decision['ia_disponivel'] = False
                 )
                 
                 if is_gemini_flash_available():
