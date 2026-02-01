@@ -1640,6 +1640,95 @@ function App() {
 
   return (
     <div className="app">
+      {/* Tela de Permissões Unificada */}
+      {showPermissions && (
+        <div className="permissions-screen" style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10000,
+          padding: '20px'
+        }}>
+          <img src="/images/soulnutri-logo.png" alt="SoulNutri" style={{ width: '120px', marginBottom: '24px' }} />
+          <h2 style={{ color: '#fff', fontSize: '24px', marginBottom: '16px', textAlign: 'center' }}>
+            Bem-vindo ao SoulNutri
+          </h2>
+          <p style={{ color: '#aaa', textAlign: 'center', marginBottom: '32px', maxWidth: '300px' }}>
+            Para identificar seus pratos, precisamos de acesso à câmera e localização.
+          </p>
+          
+          <div style={{ 
+            background: 'rgba(255,255,255,0.1)', 
+            borderRadius: '16px', 
+            padding: '24px',
+            width: '100%',
+            maxWidth: '320px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px', color: '#fff' }}>
+              <span style={{ fontSize: '28px', marginRight: '16px' }}>📷</span>
+              <div>
+                <div style={{ fontWeight: 'bold' }}>Câmera</div>
+                <div style={{ fontSize: '13px', color: '#aaa' }}>Para fotografar os pratos</div>
+              </div>
+              {permissionsStatus.camera === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
+            </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', color: '#fff' }}>
+              <span style={{ fontSize: '28px', marginRight: '16px' }}>📍</span>
+              <div>
+                <div style={{ fontWeight: 'bold' }}>Localização</div>
+                <div style={{ fontSize: '13px', color: '#aaa' }}>Para personalizar o serviço</div>
+              </div>
+              {permissionsStatus.location === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
+            </div>
+          </div>
+          
+          <button
+            onClick={requestAllPermissions}
+            style={{
+              marginTop: '32px',
+              padding: '16px 48px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              boxShadow: '0 4px 20px rgba(34, 197, 94, 0.4)'
+            }}
+          >
+            Permitir e Continuar
+          </button>
+          
+          <button
+            onClick={() => {
+              localStorage.setItem('soulnutri_permissions_granted', 'true');
+              setShowPermissions(false);
+            }}
+            style={{
+              marginTop: '16px',
+              padding: '12px 24px',
+              fontSize: '14px',
+              background: 'transparent',
+              color: '#888',
+              border: '1px solid #444',
+              borderRadius: '8px',
+              cursor: 'pointer'
+            }}
+          >
+            Pular por agora
+          </button>
+        </div>
+      )}
+
       {/* Header com Logo e Menu */}
       <header className="hdr">
         <div className="logo-container">
