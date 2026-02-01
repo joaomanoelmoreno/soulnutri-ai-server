@@ -113,6 +113,68 @@ O objetivo é fornecer informações detalhadas e personalizadas com alta veloci
 - Endpoint `POST /api/admin/revisar-lote-ia` para revisar múltiplos pratos
 - Processa até 20 pratos por vez com Gemini Flash
 
+---
+
+## 🔒 ARQUITETURA DE IA - TRAVADA (01/02/2026)
+
+### Fluxo de Identificação (NÃO ALTERAR)
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    IMAGEM RECEBIDA                          │
+└─────────────────────┬───────────────────────────────────────┘
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│  NÍVEL 1: CLIP LOCAL (GRÁTIS, ~200ms)                       │
+│  - Modelo: clip-vit-base-patch32                            │
+│  - Embeddings: 2301 (pratos Cibi Sana)                      │
+│  - Arquivo: /app/backend/ai/index.py                        │
+│  - Calibração de confiança implementada                     │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+            Confiança >= 90%?
+           /                \
+         SIM                NÃO
+          │                  │
+          ▼                  ▼
+┌──────────────┐   ┌─────────────────────────────────────────┐
+│   RETORNA    │   │  NÍVEL 2: GEMINI FLASH (PAGO, ~300ms)   │
+│   RESULTADO  │   │  - Modelo: gemini-2.0-flash-lite         │
+│   DO CLIP    │   │  - API: Google AI (GOOGLE_API_KEY)       │
+│              │   │  - Custo: ~R$ 0,0006/identificação       │
+│              │   │  - Arquivo: gemini_flash_service.py      │
+└──────────────┘   └─────────────────────┬───────────────────┘
+                                         │
+                               Google OK (200)?
+                              /              \
+                            SIM              NÃO (429)
+                             │                │
+                             ▼                ▼
+                   ┌──────────────┐  ┌────────────────────────┐
+                   │   RETORNA    │  │  FALLBACK: EMERGENT    │
+                   │   RESULTADO  │  │  - Mais lento (~5s)    │
+                   │   GEMINI     │  │  - Mais caro           │
+                   │              │  │  - Só em emergência    │
+                   └──────────────┘  └────────────────────────┘
+```
+
+### Configuração de Chaves (backend/.env)
+```
+GOOGLE_API_KEY=xxx     # Chave do Google AI Studio (PRIORITÁRIA)
+EMERGENT_LLM_KEY=xxx   # Fallback apenas
+```
+
+### Performance Esperada (com Google Billing ativo)
+| Cenário | Tempo | Custo |
+|---------|-------|-------|
+| Prato Cibi Sana (CLIP) | ~200ms | GRÁTIS |
+| Prato Externo (Gemini) | ~300-500ms | ~R$ 0,0006 |
+| Fallback Emergent | ~5000ms | ~R$ 0,01 |
+
+### Endpoint de Monitoramento
+- `GET /api/ai/google-quota-status` - Verifica se Google API está disponível
+
+---
+
 ## Arquitetura
 
 ```
