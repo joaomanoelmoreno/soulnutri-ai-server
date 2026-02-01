@@ -177,8 +177,6 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
         # OPÇÃO 2: Emergent LLM Key (FALLBACK - mais lento mas confiável)
         # Esperado: 3000-8000ms
         # ═══════════════════════════════════════════════════════════════════
-        
-        # OPÇÃO 2: Fallback para Emergent LLM Key
         if response_text is None:
             emergent_key = os.environ.get('EMERGENT_LLM_KEY')
             if emergent_key:
@@ -212,11 +210,11 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                         
                         api_start = time.time()
                         response = await chat.send_message(user_message)
-                        api_time = (time.time() - api_start) * 1000
+                        api_time_ms = (time.time() - api_start) * 1000
                         
                         response_text = response.strip()
-                        source_used = "emergent_llm"
-                        logger.info(f"[GeminiFlash] Emergent LLM respondeu em {api_time:.0f}ms")
+                        source_used = "emergent_fallback"
+                        logger.info(f"[GeminiFlash] ⚠️ EMERGENT FALLBACK respondeu em {api_time_ms:.0f}ms (mais lento)")
                     finally:
                         if os.path.exists(tmp_path):
                             os.remove(tmp_path)
