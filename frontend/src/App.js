@@ -773,6 +773,11 @@ function App() {
     // A localização é atualizada em background a cada 5 minutos
     fd.append("country", userLocation?.country || 'BR');
     
+    // CRÍTICO: Enviar restaurante para controlar uso de créditos
+    // Cibi Sana = CLIP local (custo zero)
+    // Outro = Gemini (consome créditos)
+    fd.append("restaurant", isCibiSana ? "cibi_sana" : "outro");
+    
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
       const pin = localStorage.getItem('soulnutri_pin');
