@@ -1,0 +1,237 @@
+{
+  "data": "2026-02-01 20:43:37",
+  "total_testes": 25,
+  "sucessos": 25,
+  "taxa_sucesso": "100.0%",
+  "tempo_medio_ms": 1059.0,
+  "score_medio": "90%",
+  "google_calls": 0,
+  "emergent_calls": 0,
+  "detalhes": [
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Filé Mignon",
+      "identificado": "Bife grelhado fatiado",
+      "tempo_ms": 1561.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Salmão Grelhado",
+      "identificado": "Salmão grelhado com legumes e molho balsâmico",
+      "tempo_ms": 958.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Risoto",
+      "identificado": "Risoto de Cogumelos e Aspargos",
+      "tempo_ms": 890.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Massa/Espaguete",
+      "identificado": "Espaguete com camarão e tomate cereja",
+      "tempo_ms": 1213.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Frango Grelhado",
+      "identificado": "Peito de frango grelhado com legumes",
+      "tempo_ms": 915.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Camarão",
+      "identificado": "Camarões cozidos",
+      "tempo_ms": 1287.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Pizza",
+      "identificado": "Pizza com frango desfiado, abacaxi, cebola roxa e salsinha",
+      "tempo_ms": 1068.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Sushi",
+      "identificado": "Sushi (Uramaki com salmão e cream cheese)",
+      "tempo_ms": 961.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Hambúrguer Gourmet",
+      "identificado": "Hambúrguer Duplo com Queijo e Vegetais",
+      "tempo_ms": 1015.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "RESTAURANTES À LA CARTE (10)",
+      "esperado": "Salada Caesar",
+      "identificado": "Salada Caesar",
+      "tempo_ms": 1008.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "BOLOS E DOCES (5)",
+      "esperado": "Bolo de Chocolate",
+      "identificado": "Bolo de chocolate com cobertura e gotas de chocolate",
+      "tempo_ms": 987.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "BOLOS E DOCES (5)",
+      "esperado": "Cheesecake",
+      "identificado": "Fatia de Cheesecake com Frutas",
+      "tempo_ms": 961.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "BOLOS E DOCES (5)",
+      "esperado": "Tiramisù",
+      "identificado": "Tiramisù",
+      "tempo_ms": 1157.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "BOLOS E DOCES (5)",
+      "esperado": "Brownie",
+      "identificado": "Brownie com Cobertura de Chocolate",
+      "tempo_ms": 1229.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "BOLOS E DOCES (5)",
+      "esperado": "Donuts",
+      "identificado": "Torre de Donuts com Cobertura e Confeitos",
+      "tempo_ms": 947.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SANDUÍCHES (5)",
+      "esperado": "Club Sandwich",
+      "identificado": "Sanduíche tostado com acompanhamentos",
+      "tempo_ms": 1016.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SANDUÍCHES (5)",
+      "esperado": "BLT Sandwich",
+      "identificado": "Sanduíche BLT (Bacon, Alface e Tomate)",
+      "tempo_ms": 1289.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SANDUÍCHES (5)",
+      "esperado": "Croissant",
+      "identificado": "Croissant com açúcar de confeiteiro",
+      "tempo_ms": 942.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SANDUÍCHES (5)",
+      "esperado": "Wrap/Burrito",
+      "identificado": "Wrap de Frango com Salada Coleslaw",
+      "tempo_ms": 1004.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SANDUÍCHES (5)",
+      "esperado": "Panini",
+      "identificado": "Sanduíche com queijo, tomate e folhas verdes",
+      "tempo_ms": 1069.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SUCOS E BEBIDAS (5)",
+      "esperado": "Suco de Laranja",
+      "identificado": "Suco de frutas cítricas com maracujá",
+      "tempo_ms": 1053.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SUCOS E BEBIDAS (5)",
+      "esperado": "Smoothie Verde",
+      "identificado": "Suco verde com frutas e folhas",
+      "tempo_ms": 1052.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SUCOS E BEBIDAS (5)",
+      "esperado": "Smoothie de Frutas",
+      "identificado": "Smoothie de frutas vermelhas",
+      "tempo_ms": 867.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SUCOS E BEBIDAS (5)",
+      "esperado": "Milkshake",
+      "identificado": "Milkshake de chocolate com biscoito",
+      "tempo_ms": 1009.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    },
+    {
+      "categoria": "SUCOS E BEBIDAS (5)",
+      "esperado": "Água de Coco",
+      "identificado": "Laranjas no pé",
+      "tempo_ms": 1017.0,
+      "score": 0.9,
+      "source": "gemini_flash",
+      "sucesso": true
+    }
+  ]
+}
