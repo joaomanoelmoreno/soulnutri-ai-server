@@ -127,17 +127,35 @@ async def identify_dish_gemini_flash(
         # ═══════════════════════════════════════════════════════════════════
         # CHAMAR GEMINI DIRETAMENTE (sem Emergent)
         # ═══════════════════════════════════════════════════════════════════
-        model = genai.GenerativeModel('gemini-2.0-flash-lite')
+        # Tentar modelos em ordem de preferência
+        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash-lite']
         
-        prompt = f"""{SYSTEM_PROMPT_FLASH}
+        response = None
+        last_error = None
+        
+        for model_name in models_to_try:
+            try:
+                model = genai.GenerativeModel(model_name)
+                
+                prompt = f"""{SYSTEM_PROMPT_FLASH}
 
 Identifique este prato. O que você vê na imagem? Seja preciso."""
+                
+                api_start = time.time()
+                response = model.generate_content([prompt, img])
+                api_time = (time.time() - api_start) * 1000
+                
+                logger.info(f"[GeminiFlash] Modelo {model_name} respondeu em {api_time:.0f}ms")
+                break  # Sucesso, sair do loop
+                
+            except Exception as e:
+                last_error = str(e)
+                logger.warning(f"[GeminiFlash] Modelo {model_name} falhou: {str(e)[:100]}")
+                continue
         
-        api_start = time.time()
-        response = model.generate_content([prompt, img])
-        api_time = (time.time() - api_start) * 1000
-        
-        logger.info(f"[GeminiFlash] Resposta da API Google em {api_time:.0f}ms")
+        if response is None:
+            logger.error(f"[GeminiFlash] Todos os modelos falharam. Último erro: {last_error}")
+            return {"ok": False, "error": f"Todos os modelos Gemini indisponíveis: {last_error[:100]}"}
         
         response_text = response.text.strip()
         logger.info(f"[GeminiFlash] Resposta bruta: {response_text[:200]}...")
