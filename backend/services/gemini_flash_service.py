@@ -125,40 +125,88 @@ async def identify_dish_gemini_flash(
             img = img.convert('RGB')
         
         # ═══════════════════════════════════════════════════════════════════
-        # CHAMAR GEMINI DIRETAMENTE (sem Emergent)
+        # CHAMAR GEMINI - Tenta Google API primeiro, depois Emergent como fallback
         # ═══════════════════════════════════════════════════════════════════
-        # Tentar modelos em ordem de preferência
-        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash-lite']
         
-        response = None
-        last_error = None
+        response_text = None
+        source_used = None
         
-        for model_name in models_to_try:
-            try:
-                model = genai.GenerativeModel(model_name)
-                
-                prompt = f"""{SYSTEM_PROMPT_FLASH}
+        # OPÇÃO 1: Tentar Google API direta (mais barato)
+        google_key = os.environ.get('GOOGLE_API_KEY')
+        if google_key:
+            models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash-lite']
+            
+            for model_name in models_to_try:
+                try:
+                    model = genai.GenerativeModel(model_name)
+                    
+                    prompt = f"""{SYSTEM_PROMPT_FLASH}
 
 Identifique este prato. O que você vê na imagem? Seja preciso."""
-                
-                api_start = time.time()
-                response = model.generate_content([prompt, img])
-                api_time = (time.time() - api_start) * 1000
-                
-                logger.info(f"[GeminiFlash] Modelo {model_name} respondeu em {api_time:.0f}ms")
-                break  # Sucesso, sair do loop
-                
-            except Exception as e:
-                last_error = str(e)
-                logger.warning(f"[GeminiFlash] Modelo {model_name} falhou: {str(e)[:100]}")
-                continue
+                    
+                    api_start = time.time()
+                    response = model.generate_content([prompt, img])
+                    api_time = (time.time() - api_start) * 1000
+                    
+                    response_text = response.text.strip()
+                    source_used = f"google_api_{model_name}"
+                    logger.info(f"[GeminiFlash] Google API ({model_name}) respondeu em {api_time:.0f}ms")
+                    break
+                    
+                except Exception as e:
+                    logger.warning(f"[GeminiFlash] Google API ({model_name}) falhou: {str(e)[:80]}")
+                    continue
         
-        if response is None:
-            logger.error(f"[GeminiFlash] Todos os modelos falharam. Último erro: {last_error}")
-            return {"ok": False, "error": f"Todos os modelos Gemini indisponíveis: {last_error[:100]}"}
+        # OPÇÃO 2: Fallback para Emergent LLM Key
+        if response_text is None:
+            emergent_key = os.environ.get('EMERGENT_LLM_KEY')
+            if emergent_key:
+                try:
+                    from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContentWithMimeType
+                    
+                    # Salvar imagem temporária
+                    buffer = io.BytesIO()
+                    img.save(buffer, format='JPEG', quality=70)
+                    
+                    with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+                        tmp_file.write(buffer.getvalue())
+                        tmp_path = tmp_file.name
+                    
+                    try:
+                        chat = LlmChat(
+                            api_key=emergent_key,
+                            session_id=f"sn-{int(time.time())}",
+                            system_message=SYSTEM_PROMPT_FLASH
+                        ).with_model("gemini", "gemini-2.0-flash-lite")
+                        
+                        image_file = FileContentWithMimeType(
+                            file_path=tmp_path,
+                            mime_type="image/jpeg"
+                        )
+                        
+                        user_message = UserMessage(
+                            text="Identifique este prato. O que você vê na imagem? Seja preciso.",
+                            file_contents=[image_file]
+                        )
+                        
+                        api_start = time.time()
+                        response = await chat.send_message(user_message)
+                        api_time = (time.time() - api_start) * 1000
+                        
+                        response_text = response.strip()
+                        source_used = "emergent_llm"
+                        logger.info(f"[GeminiFlash] Emergent LLM respondeu em {api_time:.0f}ms")
+                    finally:
+                        if os.path.exists(tmp_path):
+                            os.remove(tmp_path)
+                            
+                except Exception as e:
+                    logger.error(f"[GeminiFlash] Emergent LLM também falhou: {e}")
         
-        response_text = response.text.strip()
-        logger.info(f"[GeminiFlash] Resposta bruta: {response_text[:200]}...")
+        if response_text is None:
+            return {"ok": False, "error": "Todos os serviços de IA indisponíveis"}
+        
+        logger.info(f"[GeminiFlash] Resposta via {source_used}: {response_text[:200]}...")
         
         # ═══════════════════════════════════════════════════════════════════
         # PARSE DA RESPOSTA JSON
