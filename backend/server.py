@@ -2059,6 +2059,7 @@ async def register_user(
             "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
             "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
             "meta_calorica": meta_info,
+            "premium_ativo": True,  # Ativar Premium automaticamente no registro
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc)
         }
