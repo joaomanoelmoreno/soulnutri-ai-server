@@ -2145,6 +2145,26 @@ function App() {
               🗑️ Limpar prato
             </button>
           </div>
+          
+          {/* BOTÃO SAIR */}
+          <button 
+            className="exit-btn"
+            onClick={() => { clearPlate(); clearResult(); setViewMode('buffet'); }}
+            style={{
+              marginTop: '16px',
+              padding: '12px 24px',
+              background: '#666',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '14px',
+              cursor: 'pointer',
+              width: '100%'
+            }}
+            data-testid="exit-button"
+          >
+            ✕ Sair
+          </button>
         </div>
       )}
 
