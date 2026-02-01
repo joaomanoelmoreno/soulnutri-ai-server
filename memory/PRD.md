@@ -6,6 +6,29 @@ O objetivo é fornecer informações detalhadas e personalizadas com alta veloci
 
 ## O que foi implementado
 
+### 01/02/2026 - Tabela TACO Completa Oficial
+
+**✅ Implementado:**
+- **Tabela TACO expandida de 150 para 597 alimentos** - Base oficial da UNICAMP/NEPA (4ª edição)
+- **Categorias incluídas**: 15 categorias (Carnes, Peixes, Aves, Laticínios, Cereais, Frutas, Verduras, Leguminosas, etc.)
+- **Novos nutrientes rastreados**: colesterol, vitamina C, por alimento
+- **Funções preservadas**: `buscar_dados_taco()`, `calcular_nutricao_prato()`, `calcular_percentual_vdr()`, `search_taco()`
+- **Mapeamento atualizado**: Ingredientes comuns mapeados para chaves TACO corretas
+- **ZERO créditos de IA** - 100% dados locais
+
+**Tamanho do arquivo**: 174 KB (vs 50 KB anterior)
+
+**Arquivos modificados:**
+- `/app/backend/data/taco_database.py` - Nova versão com 597 alimentos
+- `/app/backend/data/taco_database_BACKUP_*.py` - Backup da versão anterior
+
+**Pesquisa de Armazenamento Externo (para próxima fase):**
+- **Cloudflare R2 recomendado**: 10GB grátis, ZERO taxas de egress, S3-compatível
+- Sem impacto na latência (CDN global)
+- Integração simples via boto3
+
+---
+
 ### 30/01/2026 - Atualização do Dataset e Reindexação
 
 **✅ Implementado:**
