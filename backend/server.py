@@ -614,18 +614,10 @@ async def identify_image(
                 decision['confidence'] = 'alta'
                 logger.info(f"[CASCATA] ✅ CLIP Local confiante ({nivel1_score:.0%})")
             
-            # CONFIANÇA MÉDIA - Usar CLIP mas indicar que pode melhorar
-            elif nivel1_score >= THRESHOLD_MEDIA and decision.get('identified'):
-                decision['source'] = 'local_index'
-                decision['cascade_level'] = 1
-                decision['confidence'] = 'média'
-                ia_disponivel = True
-                logger.info(f"[CASCATA] ⚠️ CLIP Local médio ({nivel1_score:.0%})")
-            
-            # CONFIANÇA BAIXA - Usar Gemini Flash como FALLBACK
-            # Se o CLIP não conseguiu identificar bem, tenta com Gemini
-            elif nivel1_score >= THRESHOLD_BAIXA:
-                logger.info(f"[CASCATA] ⚠️ Score baixo ({nivel1_score:.0%}) - tentando Gemini Flash como fallback")
+            # CONFIANÇA MÉDIA OU BAIXA - Usar Gemini Flash como FALLBACK
+            # Se o CLIP não tem certeza, deixa o Gemini decidir
+            elif nivel1_score >= THRESHOLD_BAIXA and decision.get('identified'):
+                logger.info(f"[CASCATA] ⚠️ Score médio/baixo ({nivel1_score:.0%}) - usando Gemini Flash")
                 
                 try:
                     from services.gemini_flash_service import (
@@ -651,7 +643,7 @@ async def identify_image(
                                 'identified': True,
                                 'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
                                 'dish_display': flash_result.get('nome'),
-                                'score': flash_result.get('score', 0.85),
+                                'score': flash_result.get('score', 0.90),
                                 'confidence': 'alta',
                                 'message': f"Identificado: {flash_result.get('nome')}",
                                 'source': 'gemini_flash_fallback',
@@ -666,20 +658,20 @@ async def identify_image(
                             }
                         else:
                             # Gemini falhou, manter resultado do CLIP
-                            decision['confidence'] = 'baixa'
+                            decision['confidence'] = 'média' if nivel1_score >= THRESHOLD_MEDIA else 'baixa'
                             decision['source'] = 'local_index'
-                            decision['message'] = f"Identificado com baixa confiança: {decision.get('dish_display', 'Prato')}"
+                            decision['message'] = f"Identificado: {decision.get('dish_display', 'Prato')}"
                             logger.info(f"[FALLBACK] ❌ Gemini falhou, usando CLIP")
                     else:
                         # Gemini não disponível, manter CLIP
-                        decision['confidence'] = 'baixa'
+                        decision['confidence'] = 'média' if nivel1_score >= THRESHOLD_MEDIA else 'baixa'
                         decision['source'] = 'local_index'
-                        decision['message'] = f"Identificado com baixa confiança: {decision.get('dish_display', 'Prato')}"
+                        decision['message'] = f"Identificado: {decision.get('dish_display', 'Prato')}"
                 except Exception as e:
                     logger.error(f"[FALLBACK] Erro no Gemini: {e}")
-                    decision['confidence'] = 'baixa'
+                    decision['confidence'] = 'média' if nivel1_score >= THRESHOLD_MEDIA else 'baixa'
                     decision['source'] = 'local_index'
-                    decision['message'] = f"Identificado com baixa confiança: {decision.get('dish_display', 'Prato')}"
+                    decision['message'] = f"Identificado: {decision.get('dish_display', 'Prato')}"
             
             # MUITO BAIXO - Também tenta Gemini como última chance
             else:
