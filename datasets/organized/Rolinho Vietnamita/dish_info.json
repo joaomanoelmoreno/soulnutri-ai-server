@@ -2,38 +2,32 @@
   "slug": "Rolinho Vietnamita",
   "nome": "Rolinho Vietnamita ",
   "categoria": "vegano",
-  "descricao": "Rolinhos translúcidos recheados com vegetais frescos e ervas, dispostos em fatias de abobrinha.",
+  "descricao": "Enroladinho de papel de arroz vietnamita com legumes e ervas frescas",
   "ingredientes": [
-    "Massa de arroz",
+    "Papel de arroz",
     "Cenoura",
-    "Macarrão de arroz",
     "Hortelã",
     "Abobrinha",
-    "papel de arroz",
-    "camarão fresco",
-    "vegetais orgânicos",
-    "ervas orgânicas"
+    "alface",
+    "pepino",
+    ""
   ],
   "beneficios": [
-    "Rico em vitaminas e minerais provenientes dos vegetais.",
+    "Rico em vitaminas e minerais provenientes dos vegetais frescos.",
     "Opção leve e refrescante, ideal para dietas de baixa caloria.",
-    "Fonte de carboidratos de fácil digestão.",
-    "Livre de colesterol e gorduras saturadas.",
-    "Proteína magra do camarão",
-    "Baixíssimas calorias",
-    "Sem fritura: versão saudável"
+    "Boa fonte de fibras, auxiliando na saúde digestiva.",
+    "Versátil, permitindo diversas combinações de recheios saudáveis."
   ],
   "riscos": [
-    "Pode ser pobre em proteínas, dependendo dos acompanhamentos.",
-    "O molho que acompanha pode conter alto teor de sódio ou açúcar (se for industrializado).",
-    "Alérgeno: crustáceo",
-    "Pode conter traços de glúten"
+    "Pode conter sódio dependendo do molho utilizado.",
+    "Alergia ao gergelim (se presente no papel de arroz)."
   ],
   "nutricao": {
-    "calorias": "85 kcal",
+    "calorias": "60 kcal",
     "proteinas": "2g",
-    "carboidratos": "18g",
-    "gorduras": "0.5g"
+    "carboidratos": "12g",
+    "gorduras": "0.5g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -41,5 +35,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": ""
 }

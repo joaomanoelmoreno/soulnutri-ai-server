@@ -1,33 +1,32 @@
 {
   "slug": "Farofa de Banana da Terra",
-  "nome": "farofadebananadaterravegana",
+  "nome": "Farofa de Banana da Terra",
   "categoria": "vegano",
-  "descricao": "Farofa artesanal com banana da terra assada em forno combinado (sem fritura)",
+  "descricao": "Farofa artesanal com banana da terra assada em forno ",
   "ingredientes": [
     "farinha de mandioca",
-    "manteiga",
     "sal",
     "cebola",
     "banana da terra",
-    "cebola orgânica",
-    "azeite extravirgem"
+    "azeite extravirgem",
+    "ervas frescas"
   ],
   "beneficios": [
-    "Fonte de energia",
-    "Carboidratos",
-    "Potássio da banana: saúde muscular",
-    "Energia de liberação lenta",
-    "Preparada sem fritura"
+    "Fonte de energia devido aos carboidratos da farinha de mandioca e da banana.",
+    "Rica em fibras, auxiliando na saúde intestinal.",
+    "A banana da terra fornece potássio, importante para a saúde muscular e controle da pressão arterial.",
+    "O azeite de oliva extravirgem oferece gorduras saudáveis e antioxidantes."
   ],
   "riscos": [
-    "Calórica se em excesso",
-    "Pode conter traços de glúten"
+    "Pode ser calórica devido ao teor de gordura (azeite) e carboidratos.",
+    "Consumir com moderação em dietas de restrição calórica."
   ],
   "nutricao": {
-    "calorias": "150 kcal",
-    "proteinas": "1g",
-    "carboidratos": "25g",
-    "gorduras": "5g"
+    "calorias": "220 kcal",
+    "proteinas": "2g",
+    "carboidratos": "30g",
+    "gorduras": "10g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

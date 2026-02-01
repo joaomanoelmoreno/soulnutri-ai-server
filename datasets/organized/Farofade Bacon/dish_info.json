@@ -1,38 +1,35 @@
 {
   "slug": "Farofade Bacon",
   "nome": "Farofa de Bacon",
-  "categoria": "vegano",
-  "descricao": "Prato feito com farinha de mandioca, que pode ser incrementado com diversos ingredientes.",
+  "categoria": "proteína animal",
+  "descricao": "Farinha de mandioca com bacon dourados e crocantes ",
   "ingredientes": [
     "Farinha de mandioca",
-    "Gordura vegetal",
     "Temperos",
     "bacon artesanal",
-    "cebola orgânica",
-    "manteiga fresca",
+    "cebola",
     "ovos"
   ],
   "beneficios": [
-    "Energia dos carboidratos",
-    "Proteína do bacon e ovos",
-    "Tiamina (B1): metabolismo energético"
+    "Fonte de energia devido aos carboidratos da farinha de mandioca.",
+    "Ovo contribui com proteínas de alto valor biológico.",
+    "Pode ser consumida em diversas refeições, como acompanhamento."
   ],
   "riscos": [
-    "Pode conter glúten dependendo da farinha.",
-    "Alérgeno: GLÚTEN (farinha)",
-    "Alérgeno: LACTOSE (creme)",
-    "Alérgeno: ovo",
-    "Pode conter traços de glúten"
+    "Alto teor de gordura, principalmente devido ao bacon.",
+    "Alto teor de sódio, dependendo da quantidade de bacon e temperos.",
+    "Consumir com moderação devido ao valor calórico."
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "380 kcal",
+    "proteinas": "15g",
+    "carboidratos": "30g",
+    "gorduras": "22g",
+    "fibras": "3g"
   },
-  "contem_gluten": true,
+  "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
@@ -47,5 +44,5 @@
   "evitar_com": [
     "Outros carboidratos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🍖"
 }

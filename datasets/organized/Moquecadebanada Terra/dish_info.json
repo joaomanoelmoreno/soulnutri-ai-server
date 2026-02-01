@@ -1,51 +1,32 @@
 {
   "slug": "Moquecadebanada Terra",
   "nome": "Muqueca de banana da terra",
-  "categoria": "vegetariano",
-  "descricao": "Moqueca de peixe fresco com banana da terra e leite de coco",
+  "categoria": "vegano",
+  "descricao": "banana da terra cozida com legumes, leite de coco e ervas frescas",
   "ingredientes": [
-    "legumes",
-    "pimentão",
-    "molho cremoso",
-    "cebola",
     "banana da terra",
-    "limão",
-    "cebola roxa",
-    "coentro",
-    "pimenta",
-    "tomate",
-    "peixe fresco",
+    "pimentão",
     "leite de coco",
-    "azeite de dendê",
-    "pimentão orgânico",
-    "tomate sem pele",
-    "batata",
-    "farinha de trigo",
-    "ovo",
-    "sal"
+    "cebola",
+    "tomates",
+    "ervas frescas",
+    ""
   ],
   "beneficios": [
-    "Potássio (499mg/100g): controla a pressão arterial e reduz retenção de líquidos",
-    "Vitamina B6: essencial para o sistema nervoso, produção de serotonina (hormônio do bem-estar) e metabolismo de proteínas",
-    "Ômega-3: saúde cerebral",
-    "Potássio da banana: saúde cardiovascular",
-    "Betacaroteno do dendê: antioxidante",
-    "Fonte de energia",
-    "Carboidratos"
+    "Rica em vitaminas e minerais provenientes dos vegetais.",
+    "Fonte de fibras que auxiliam na saúde digestiva.",
+    "Baixo teor de gorduras saturadas, promovendo a saúde cardiovascular.",
+    "A banana da terra fornece energia e potássio."
   ],
   "riscos": [
-    "Alérgeno: Pode conter leite ou derivados",
-    "Alérgeno: peixe",
-    "Alérgeno: coco",
-    "Pode conter traços de glúten",
-    "Contém glúten",
-    "Contém ovo"
+    "Pode conter sódio dependendo da quantidade de temperos utilizados."
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "85 kcal",
+    "proteinas": "1.5g",
+    "carboidratos": "12g",
+    "gorduras": "4g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -53,5 +34,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🌱",
+  "tecnica": ""
 }

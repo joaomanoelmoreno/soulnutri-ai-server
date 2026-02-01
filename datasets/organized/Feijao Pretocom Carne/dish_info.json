@@ -1,37 +1,34 @@
 {
   "slug": "Feijao Pretocom Carne",
-  "nome": "Feijão Preto sem Carne",
-  "categoria": "vegano",
-  "descricao": "Feijão carioca demolhado e cozido em caldo temperado artesanal, versão vegetariana",
+  "nome": "Feijão Preto com Carne",
+  "categoria": "proteína animal",
+  "descricao": "Feijão preto demolhado e cozido em caldo com embutidos e temperado com cebola, alho e ervas secas",
   "ingredientes": [
     "feijão preto demolhado",
     "alho orgânico",
     "cebola orgânica",
     "louro",
     "sal",
-    "carne bovina fresca",
-    "feijão carioca demolhado"
+    "embutidos defumados",
+    "ervas",
+    ""
   ],
   "beneficios": [
-    "Antocianinas: antioxidantes da casca preta",
-    "Ferro: combate anemia",
-    "Proteína vegetal de qualidade",
-    "Proteína completa: carne + feijão",
-    "Ferro de dupla fonte: absorção otimizada",
-    "Fibras: saciedade e intestino regulado",
-    "Proteína vegetal: essencial para vegetarianos",
-    "Ferro: previne anemia",
-    "Fibras: promovem saciedade",
-    "Demolhado: melhor digestibilidade"
+    "Fonte de proteínas e ferro, importantes para a saúde.",
+    "Rico em fibras, auxiliando na digestão e saciedade.",
+    "O feijão preto é fonte de antioxidantes.",
+    "Oferece variedade de nutrientes devido aos temperos naturais."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "O consumo excessivo de embutidos pode aumentar o teor de sódio e gorduras saturadas.",
+    "Pode conter alto teor de sódio dependendo da quantidade de sal e embutidos utilizados."
   ],
   "nutricao": {
-    "calorias": "77 kcal",
-    "proteinas": "5g",
-    "carboidratos": "14g",
-    "gorduras": "0.5g"
+    "calorias": "160 kcal",
+    "proteinas": "10g",
+    "carboidratos": "18g",
+    "gorduras": "6g",
+    "fibras": "7g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -51,5 +48,5 @@
   "evitar_com": [
     "Excesso de embutidos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🍖"
 }
