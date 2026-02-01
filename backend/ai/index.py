@@ -214,13 +214,65 @@ class DishIndex:
         
         elapsed_ms = (time.time() - start_time) * 1000
         
-        # Formatar resultados
+        # ═══════════════════════════════════════════════════════════════════════
+        # CALIBRAÇÃO DE CONFIANÇA - Tornar scores mais "honestos"
+        # ═══════════════════════════════════════════════════════════════════════
+        # O CLIP sempre acha algo "parecido", mesmo que não seja comida.
+        # Usamos 2 técnicas para calibrar:
+        # 1. Gap Analysis: Se top-2 são muito próximos, indica incerteza
+        # 2. Temperature Scaling: Transforma cosine similarity em probabilidade
+        # ═══════════════════════════════════════════════════════════════════════
+        
+        calibrated_score = 0.0
+        if len(sorted_dishes) >= 2:
+            top1_score = sorted_dishes[0][1]
+            top2_score = sorted_dishes[1][1]
+            
+            # Gap entre 1º e 2º lugar (quanto maior, mais confiante)
+            gap = top1_score - top2_score
+            
+            # Temperature scaling: T=0.07 é padrão do CLIP, mas usamos T mais alto para ser mais conservador
+            # Score bruto do CLIP geralmente fica entre 0.15 e 0.35 para matches bons
+            # Vamos normalizar para escala 0-1 mais realista
+            
+            # Se o gap é pequeno (< 0.02), o modelo está muito incerto
+            if gap < 0.02:
+                calibrated_score = min(top1_score * 0.6, 0.50)  # Máximo 50%
+            # Se o gap é médio (0.02-0.05), confiança média
+            elif gap < 0.05:
+                calibrated_score = min(top1_score * 0.8, 0.70)  # Máximo 70%
+            # Se o gap é grande (> 0.05), mais confiante
+            else:
+                # Escalar o score bruto para uma faixa mais realista
+                # Score bruto de 0.30+ indica match muito bom
+                if top1_score >= 0.35:
+                    calibrated_score = min(0.85 + (top1_score - 0.35) * 0.5, 0.95)
+                elif top1_score >= 0.30:
+                    calibrated_score = 0.70 + (top1_score - 0.30) * 3.0  # 0.70 a 0.85
+                elif top1_score >= 0.25:
+                    calibrated_score = 0.50 + (top1_score - 0.25) * 4.0  # 0.50 a 0.70
+                else:
+                    calibrated_score = top1_score * 2.0  # Abaixo de 0.25 = baixa confiança
+            
+            logger.info(f"[CLIP Calibration] Raw: {top1_score:.3f}, Gap: {gap:.3f}, Calibrated: {calibrated_score:.2%}")
+        elif len(sorted_dishes) == 1:
+            # Sem gap para comparar, ser mais conservador
+            calibrated_score = min(sorted_dishes[0][1] * 0.7, 0.60)
+        
+        # Formatar resultados com score calibrado
         results = []
-        for dish_name, score in sorted_dishes:
-            confidence_level = self._get_confidence_level(score)
+        for i, (dish_name, raw_score) in enumerate(sorted_dishes):
+            # Primeiro resultado usa score calibrado, resto usa proporcional
+            if i == 0:
+                final_score = calibrated_score
+            else:
+                final_score = raw_score / sorted_dishes[0][1] * calibrated_score * 0.8
+            
+            confidence_level = self._get_confidence_level(final_score)
             results.append({
                 'dish': dish_name,
-                'score': round(score, 4),
+                'score': round(final_score, 4),
+                'raw_score': round(raw_score, 4),  # Score original para debug
                 'confidence': confidence_level,
                 'image_count': self.metadata.get(dish_name, {}).get('image_count', 0)
             })
