@@ -9,6 +9,9 @@ import numpy as np
 from typing import List, Dict, Tuple, Optional
 from pathlib import Path
 import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 from .embedder import image_embedding_from_path, image_embedding_from_bytes
 
