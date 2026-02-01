@@ -1,5 +1,5 @@
 {
-  "slug": "salada_oriental_de_biffun",
+  "slug": "Salada Oriental de Biffun",
   "ativo": true,
   "beneficios": [
     "Gergelim: rico em lignanas - compostos que equilibram hormônios e podem reduzir sintomas da menopausa",
@@ -28,7 +28,19 @@
   "riscos": [
     "Pode conter SOJA (shoyu)"
   ],
-  "tecnica": "",
+  "tecnica": "Crua",
   "beneficio_principal": "O macarrão de arroz é naturalmente sem glúten e de fácil digestão - ideal para pessoas com sensibilidade ao glúten ou intestino sensível",
-  "curiosidade": "O gergelim preto tem 60% mais cálcio que o branco - ótimo para saúde óssea"
+  "curiosidade": "O gergelim preto tem 60% mais cálcio que o branco - ótimo para saúde óssea",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ]
 }

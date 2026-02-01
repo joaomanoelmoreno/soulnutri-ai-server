@@ -13,9 +13,11 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "O bifum é um tipo de macarrão fino feito de farinha de arroz, popular na culinária asiática, e é naturalmente livre de glúten.",
-  "slug": "saladadebifumcompepino",
+  "slug": "Saladadebifumcompepino",
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

@@ -1,6 +1,6 @@
 {
   "nome": "Salada de Orzo com Nozes e Folhas Verdes",
-  "slug": "salada_de_orzo_com_nozes_e_folhas_verdes",
+  "slug": "Salada de Orzo com Nozes e Folhas Verdes",
   "categoria": "vegano",
   "ingredientes": [
     "alface",
@@ -14,7 +14,9 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

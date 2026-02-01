@@ -1,5 +1,5 @@
 {
-  "slug": "molhovinagrete",
+  "slug": "Molhovinagrete",
   "nome": "Molho Vinagrete",
   "categoria": "vegano",
   "descricao": "Molho fresco de tomate sem pele, cebola orgânica e pimentão picados",
@@ -35,5 +35,16 @@
   "alerta_saude": "O vinagre pode afetar a saúde dental devido à sua acidez (pH entre 2-3), que pode enfraquecer o esmalte dos dentes se consumido em excesso e não acompanhado de uma boa higiene bucal. É recomendável enxaguar a boca com água após consumo (Journal of Dentistry, 2015).",
   "beneficio_principal": "O azeite extravirgem contém ácidos graxos monoinsaturados, principalmente ácido oleico (55-83% do conteúdo total), que estão associados à redução de inflamações e à melhoria do perfil lipídico, contribuindo para a saúde cardiovascular. Estudos mostram que dietas ricas em ácido oleico podem reduzir o risco de doenças cardíacas em até 30% (Harvard School of Public Health, 2020).",
   "curiosidade_cientifica": "O coentro orgânico contém um composto chamado linalol, que representa cerca de 60-70% de seu óleo essencial. O linalol possui propriedades ansiolíticas, auxiliando no alívio do estresse e da ansiedade, segundo um estudo publicado na 'Journal of Ethnopharmacology' (2016).",
-  "referencia_pesquisa": "Harvard School of Public Health, 2020; Journal of Ethnopharmacology, 2016"
+  "referencia_pesquisa": "Harvard School of Public Health, 2020; Journal of Ethnopharmacology, 2016",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1 hora",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Churrasco",
+    "Feijão"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

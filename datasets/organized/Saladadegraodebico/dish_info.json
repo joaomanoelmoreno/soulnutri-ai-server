@@ -13,9 +13,11 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "O grão de bico é um alimento versátil, usado em diversas culinárias ao redor do mundo, como no hummus e falafel, e é um ingrediente chave na dieta mediterrânea.",
-  "slug": "saladadegraodebico",
+  "slug": "Saladadegraodebico",
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

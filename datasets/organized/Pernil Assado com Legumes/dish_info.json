@@ -1,5 +1,5 @@
 {
-  "slug": "pernil_assado_com_legumes",
+  "slug": "Pernil Assado com Legumes",
   "ativo": true,
   "beneficios": [
     "Fonte de proteína de alto valor biológico",
@@ -29,5 +29,10 @@
     "Alérgeno: N/A (a menos que haja alergia específica a algum ingrediente da geleia)",
     "Alto teor de sódio (dependendo do tempero)"
   ],
-  "tecnica": "Assado no forno, provavelmente com a geleia adicionada nos últimos minutos para caramelizar."
+  "tecnica": "Assado no forno, provavelmente com a geleia adicionada nos últimos minutos para caramelizar.",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

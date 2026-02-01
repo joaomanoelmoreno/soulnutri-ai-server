@@ -1,5 +1,5 @@
 {
-  "slug": "risoneaopesto",
+  "slug": "Risoneaopesto",
   "nome": "Risone ao Pesto",
   "categoria": "vegetariano",
   "descricao": "Massa risone com molho pesto artesanal de manjericão orgânico",
@@ -37,5 +37,11 @@
   "alerta_saude": "A composição do parmesão inclui tiramina, uma amina biogênica que pode desencadear enxaquecas em indivíduos suscetíveis. Recomenda-se que sejam consumidos no máximo 50g por refeição para minimizar riscos (Estudo da Headache: The Journal of Head and Face Pain, 2019).",
   "beneficio_principal": "O manjericão contém luteína e zeaxantina (aproximadamente 1,1mg por 100g), dois antioxidantes carotenoides que ajudam a proteger a saúde ocular ao filtrar luz azul prejudicial. Estudo do Journal of Nutrition, 2020, mostrou que eles podem reduzir o risco de degeneração macular ligada à idade em até 40%.",
   "curiosidade_cientifica": "O formato da massa risone, semelhante ao arroz, proporciona uma maior área de superfície de contato no prato, o que pode aumentar a absorção de sabores do molho pesto em até 20% comparado a massas de formato tubular - favorecendo uma experiência gustativa mais intensa.",
-  "referencia_pesquisa": "Food Chemistry, 2021"
+  "referencia_pesquisa": "Food Chemistry, 2021",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

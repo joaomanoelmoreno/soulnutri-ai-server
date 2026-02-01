@@ -1,5 +1,5 @@
 {
-  "slug": "arroz7graos",
+  "slug": "Arroz 7 Graos",
   "nome": "Arroz 7 Grãos",
   "categoria": "vegano",
   "descricao": "Mistura artesanal de arroz com grãos integrais e sementes nutritivas",
@@ -36,5 +36,19 @@
   "alerta_saude": null,
   "beneficio_principal": "Combinação de 7 grãos fornece aminoácidos complementares - juntos formam proteína completa equivalente à carne, ideal para vegetarianos",
   "curiosidade_cientifica": "Estudo da UNICAMP mostrou que a combinação de grãos aumenta em 40% a biodisponibilidade de nutrientes comparado aos grãos isolados",
-  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+  "referencia_pesquisa": "Tabela TACO - UNICAMP",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ],
+  "category_emoji": "🌱"
 }

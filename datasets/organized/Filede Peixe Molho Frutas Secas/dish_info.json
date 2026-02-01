@@ -1,5 +1,5 @@
 {
-  "slug": "filedepeixemolhofrutassecas",
+  "slug": "Filede Peixe Molho Frutas Secas",
   "nome": "Filé de Peixe ao Molho de Frutas Secas",
   "categoria": "proteína animal",
   "descricao": "Filé de peixe fresco ao vapor com molho artesanal de frutas secas",
@@ -36,5 +36,19 @@
   "alerta_saude": "O consumo frequente de frutas secas adicionadas ao molho pode contribuir para ingestão elevada de açúcar - podem conter até 53g de açúcar por 100g (uva passa). Modere o consumo em dietas de controle glicêmico. (Cambridge University Press, 2019)",
   "beneficio_principal": "O consumo regular de ômega-3, presente em peixes, pode reduzir os níveis de triglicérides no sangue em até 25-30%, ajudando a prevenir doenças cardiovasculares. (American Heart Association, 2018)",
   "curiosidade_cientifica": "O damasco seco contém cerca de 3 vezes mais fibra que o fresco (7,3g/100g vs 2,1g/100g) - a secagem concentra nutrientes. Fibra ajuda a regular o intestino. (Tabela TACO - UNICAMP, 2011)",
-  "referencia_pesquisa": "Journal of Nutrition & Food Sciences, 2020"
+  "referencia_pesquisa": "Journal of Nutrition & Food Sciences, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

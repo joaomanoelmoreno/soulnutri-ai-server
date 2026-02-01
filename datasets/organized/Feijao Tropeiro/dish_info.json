@@ -1,5 +1,5 @@
 {
-  "slug": "feijaotropeiro",
+  "slug": "Feijao Tropeiro",
   "nome": "Feijão Tropeiro",
   "categoria": "proteína animal",
   "descricao": "Prato mineiro tradicional com feijão demolhado, bacon artesanal e couve orgânica",
@@ -36,5 +36,19 @@
   "alerta_saude": "Bacon e linguiça, sendo carnes processadas, contêm nitritos e nitratos que, se consumidos em altas quantidades, foram associados a um risco ligeiramente maior de câncer colorretal. Moderação é aconselhada. Fonte: International Agency for Research on Cancer (IARC), 2015.",
   "beneficio_principal": "Feijão é rico em oligossacarídeos, como a rafinose (0,1-2% do feijão), que servem como prebióticos e alimentam bactérias benéficas do intestino, potencialmente melhorando a saúde digestiva. Fonte: American Journal of Clinical Nutrition, 2019.",
   "curiosidade_cientifica": "Demolhar feijão por 12 horas pode reduzir o teor de fitato em até 60%, aumentando a biodisponibilidade do ferro e zinco presentes. Fonte: Journal of Food Science and Technology, 2020.",
-  "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos - TACO, UNICAMP, 2011"
+  "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos - TACO, UNICAMP, 2011",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Couve",
+    "Farofa"
+  ],
+  "evitar_com": [
+    "Excesso de embutidos"
+  ],
+  "category_emoji": "🍖"
 }

@@ -1,5 +1,5 @@
 {
-  "slug": "mandioquinhacomcamarao",
+  "slug": "Mandioquinhacom Camarao",
   "nome": "Mandioquinha com Camarão",
   "categoria": "proteína animal",
   "descricao": "Purê de mandioquinha artesanal com camarões frescos salteados em azeite",
@@ -36,5 +36,16 @@
   "alerta_saude": "Alérgeno: Contém CRUSTÁCEOS. Camarão de cativeiro pode conter antibióticos - prefira selvagem ou certificado",
   "beneficio_principal": "Rico em astaxantina (pigmento rosa) - antioxidante 6000x mais potente que vitamina C, protege pele contra raios UV",
   "curiosidade_cientifica": "O camarão tem mais proteína (24g/100g) e menos gordura (0.3g) que frango - excelente para dietas",
-  "referencia_pesquisa": "Marine Drugs Journal, 2020"
+  "referencia_pesquisa": "Marine Drugs Journal, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Carnes",
+    "Purê"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🍖"
 }

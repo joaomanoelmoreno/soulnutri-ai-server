@@ -1,7 +1,11 @@
 {
-  "slug": "tabule_de_trigo",
+  "slug": "Tabule de Trigo",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Rico em fibras",
+    "Vitaminas",
+    "Refrescante"
+  ],
   "categoria": "vegano",
   "category_emoji": "🌱",
   "contem_gluten": true,
@@ -27,5 +31,15 @@
     "Alérgeno: Glúten",
     "Alérgeno: GLÚTEN (trigo)"
   ],
-  "tecnica": ""
+  "tecnica": "Crua",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Kibe",
+    "Carnes grelhadas"
+  ],
+  "evitar_com": []
 }

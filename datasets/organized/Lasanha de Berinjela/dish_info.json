@@ -1,7 +1,12 @@
 {
-  "slug": "lasanha_de_berinjela",
+  "slug": "Lasanha de Berinjela",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Antioxidantes (nasunina)",
+    "Ajuda no controle do colesterol"
+  ],
   "categoria": "proteína animal",
   "category_emoji": "🍖",
   "contem_gluten": true,
@@ -26,5 +31,16 @@
     "Alérgeno: GLÚTEN (massa)",
     "Alérgeno: LACTOSE (queijo)"
   ],
-  "tecnica": ""
+  "tecnica": "Grelhada ou assada",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Tomate",
+    "Queijo",
+    "Azeite"
+  ],
+  "evitar_com": []
 }

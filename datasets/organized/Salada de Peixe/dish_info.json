@@ -1,5 +1,5 @@
 {
-  "slug": "salada_de_peixe",
+  "slug": "Salada de Peixe",
   "ativo": true,
   "beneficios": [
     "Proteína de alta biodisponibilidade: o corpo absorve 95% da proteína do peixe, ideal para músculos e recuperação",
@@ -29,7 +29,19 @@
   "riscos": [
     "Alérgeno: Contém PEIXE"
   ],
-  "tecnica": "",
+  "tecnica": "Crua",
   "beneficio_principal": "Ômega-3 do peixe - reduz inflamações no corpo, melhora a função cerebral, memória e concentração, além de proteger contra doenças cardíacas",
-  "curiosidade": "O consumo regular de peixe (2x por semana) está associado a 30% menos risco de doenças cardíacas"
+  "curiosidade": "O consumo regular de peixe (2x por semana) está associado a 30% menos risco de doenças cardíacas",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ]
 }

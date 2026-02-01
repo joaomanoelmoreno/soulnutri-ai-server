@@ -1,5 +1,5 @@
 {
-  "slug": "graodebicotomatesecoespinafre",
+  "slug": "Graodebico Tomateseco Espinafre",
   "nome": "Grão de Bico com Tomate Seco e Espinafre",
   "categoria": "vegano",
   "descricao": "Grão de bico sem pele salteado com tomate seco e espinafre orgânico",
@@ -34,5 +34,11 @@
   "alerta_saude": null,
   "beneficio_principal": "Licopeno (4.6mg/100g) - antioxidante que dá cor vermelha e protege contra câncer de próstata. Cozinhar AUMENTA disponibilidade em 35%",
   "curiosidade_cientifica": "Molho de tomate tem 5x mais licopeno biodisponível que tomate cru - a gordura do azeite ajuda absorção",
-  "referencia_pesquisa": "Journal of the National Cancer Institute, 2018"
+  "referencia_pesquisa": "Journal of the National Cancer Institute, 2018",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

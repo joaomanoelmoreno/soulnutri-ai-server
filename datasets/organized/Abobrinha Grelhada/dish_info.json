@@ -1,5 +1,5 @@
 {
-  "slug": "abobrinha_grelhada",
+  "slug": "Abobrinha Grelhada",
   "ativo": true,
   "beneficios": [
     "Potássio (261mg/100g): regula pressão arterial e equilíbrio de fluidos no corpo",
@@ -25,10 +25,20 @@
   },
   "origem": "user_created",
   "riscos": [],
-  "tecnica": "",
+  "tecnica": "Grelhada ou refogada",
   "beneficio_principal": "Apenas 17kcal/100g com 95% de água - hidrata e sacia com mínimas calorias. Rica em potássio para equilíbrio de fluidos",
   "curiosidade": "A abobrinha é tecnicamente uma fruta (tem sementes), não um legume!",
   "alerta_saude": null,
   "curiosidade_cientifica": "A abobrinha é tecnicamente uma fruta (tem sementes) e pode ser consumida crua como \"espaguete de abobrinha\"",
-  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+  "referencia_pesquisa": "Tabela TACO - UNICAMP",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": []
 }

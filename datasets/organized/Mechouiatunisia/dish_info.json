@@ -1,5 +1,5 @@
 {
-  "slug": "mechouiatunisia",
+  "slug": "Mechouiatunisia",
   "nome": "Mechouia-Tunisia",
   "categoria": "vegetariano",
   "descricao": "Salada composta por ovos cozidos, milho, azeitonas, alcaparras e outros vegetais.",
@@ -32,5 +32,10 @@
   "beneficio_principal": "A Mechouia à Tunísia geralmente inclui pimentões, tomates e cebolas, ingredientes ricos em polifenóis. Um estudo da Universidade de Harvard (2018) verificou que dietas ricas em polifenóis podem reduzir o risco de doenças cardiovasculares em até 30% devido às suas propriedades antioxidantes.",
   "curiosidade_cientifica": "Assar os legumes usados na Mechouia aumenta a concentração de certos compostos voláteis que intensificam o sabor, como enaltecido pelo Journal of Food Science em 2020, que descreveu um aumento de 15% em compostos aromáticos.",
   "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2018; Journal of Food Science, 2020",
-  "category_emoji": "🥬"
+  "category_emoji": "🥚",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,5 +1,5 @@
 {
-  "slug": "cenouraaoiogurte",
+  "slug": "Cenoura ao Iogurte",
   "nome": "Cenoura ao Iogurte",
   "categoria": "vegetariano",
   "descricao": "Cenoura orgânica ralada com molho de iogurte fresco artesanal",
@@ -34,5 +34,16 @@
   "alerta_saude": "Alérgeno: Contém LACTOSE. Evite versões com muito açúcar adicionado",
   "beneficio_principal": "Probióticos vivos (Lactobacillus, Bifidobacterium) equilibram flora intestinal - 70% do sistema imunológico está no intestino",
   "curiosidade_cientifica": "Iogurte grego tem 2x mais proteína que normal. Estudo: consumo diário reduz risco de diabetes tipo 2 em 18%",
-  "referencia_pesquisa": "BMC Medicine, 2019"
+  "referencia_pesquisa": "BMC Medicine, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Saladas",
+    "Sopas"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🥚"
 }

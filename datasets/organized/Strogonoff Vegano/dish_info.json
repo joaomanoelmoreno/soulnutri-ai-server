@@ -1,29 +1,57 @@
 {
-  "slug": "strogonoff_vegano",
+  "slug": "Strogonoff Vegano",
   "ativo": true,
-  "beneficios": [],
-  "categoria": "vegetariano",
+  "beneficios": [
+    "Rico em vitaminas e minerais provenientes dos vegetais.",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "Opção com baixo teor de gorduras saturadas e colesterol.",
+    "Versão vegana, adequada para diferentes dietas e restrições alimentares."
+  ],
+  "categoria": "vegano",
   "category_emoji": "🥬",
   "contem_gluten": false,
   "created_at": "2026-01-24T14:54:52.542000",
-  "descricao": "Couve-flor gratinada com queijo cremoso e temperos.",
+  "descricao": "Legumes cozidos com creme de caju  mostarda, ketchup cremoso e temperos.",
   "ingredientes": [
-    "Couve-flor",
-    "Queijo",
-    "Creme de leite",
-    "Temperos"
+    "brocolis",
+    "cenoura",
+    "portobello",
+    "batata",
+    "cebola",
+    "couve flor",
+    "alho",
+    "creme de caju",
+    "mostarda",
+    "ketchup",
+    "sal"
   ],
   "nome": "Strogonoff vegano",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "120 kcal",
+    "proteinas": "3g",
+    "carboidratos": "15g",
+    "gorduras": "6g",
+    "fibras": "3g"
   },
   "origem": "user_created",
   "riscos": [
-    "Alérgeno: Laticínios",
-    "Alérgeno: LACTOSE (creme, leite)"
+    "Pode conter alto teor de sódio, dependendo da quantidade de sal e ketchup.",
+    "Verificar a qualidade do creme de caju para evitar aditivos desnecessários."
   ],
-  "tecnica": ""
+  "tecnica": "Refogado com creme",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Batata palha"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ],
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

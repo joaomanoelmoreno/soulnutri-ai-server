@@ -36,5 +36,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": true
+  "contem_soja": true,
+  "category_emoji": "🌱"
 }

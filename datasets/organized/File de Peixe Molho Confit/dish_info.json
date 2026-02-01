@@ -1,5 +1,5 @@
 {
-  "slug": "filedepeixemolhoconfit",
+  "slug": "File de Peixe Molho Confit",
   "nome": "Filé de Peixe ao Molho Confit",
   "categoria": "proteína animal",
   "descricao": "Filé de peixe fresco ao vapor com tomate sem pele confit",
@@ -35,5 +35,19 @@
   "alerta_saude": "O alho, embora benéfico, pode interagir com medicamentos para anticoagulação por induzir efeitos potencializadores; recomenda-se moderar o consumo e consultar um médico se estiver sob tais medicamentos (Harvard Medical School, 2019)",
   "beneficio_principal": "Azeite extravirgem contém ácidos fenólicos e tocoferóis, que atuam como antioxidantes potentes; 10g de azeite fornece cerca de 0,2mg de alfa-tocoferol (vitamina E). Estudos mostram que o consumo regular é associado à redução de 26% em riscos de doenças cardíacas (American Journal of Clinical Nutrition, 2014).",
   "curiosidade_cientifica": "Tomate sem pele cozido, presente no molho confit, fornece 4x mais licopeno biodisponível do que o cru, pois o calor ajuda a quebrar as células, facilitando a absorção no corpo.",
-  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2014; International Journal of Food Sciences and Nutrition, 2005"
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2014; International Journal of Food Sciences and Nutrition, 2005",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

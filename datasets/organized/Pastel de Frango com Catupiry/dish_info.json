@@ -1,7 +1,11 @@
 {
-  "slug": "pastel_de_frango_com_catupiry",
+  "slug": "Pastel de Frango com Catupiry",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura"
+  ],
   "categoria": "proteína animal",
   "category_emoji": "🍖",
   "contem_gluten": true,
@@ -25,5 +29,17 @@
     "Alérgeno: Glúten, pode conter traços de lactose dependendo da receita.",
     "Alérgeno: GLÚTEN (massa)"
   ],
-  "tecnica": ""
+  "tecnica": "Grelhado ou assado",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

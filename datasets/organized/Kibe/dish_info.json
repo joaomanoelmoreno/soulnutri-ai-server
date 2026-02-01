@@ -1,5 +1,5 @@
 {
-  "slug": "kibe",
+  "slug": "Kibe",
   "nome": "Kibe",
   "categoria": "proteína animal",
   "descricao": "Bolinho de origem árabe de carne fresca e trigo, assado em forno combinado",
@@ -34,5 +34,18 @@
   "alerta_saude": "Especiarias importadas podem conter traços de metais pesados, dependendo da origem. Revisão da FAO/WHO sugere testar cargas para garantir níveis seguros. No entanto, em pequenas quantidades, o risco é mínimo.",
   "beneficio_principal": "O trigo para quibe fornece triptofano (350mg/100g), um aminoácido essencial que melhora o humor e ajuda na produção de serotonina, conforme estudo publicado pela Harvard Health Publishing em 2020.",
   "curiosidade_cientifica": "Quando combinado com hortelã, o consumo de carne moída aumenta a digestibilidade das proteínas em cerca de 20%. A hortelã contém compostos fenólicos que ajudam na quebra das proteínas (Journal of Food Science, 2018).",
-  "referencia_pesquisa": "Harvard Health Publishing, 2020; Journal of Food Science, 2018"
+  "referencia_pesquisa": "Harvard Health Publishing, 2020; Journal of Food Science, 2018",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Coalhada",
+    "Salada"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

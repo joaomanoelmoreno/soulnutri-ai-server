@@ -1,5 +1,5 @@
 {
-  "slug": "filé_de_peixe_ao_molho_de_limão",
+  "slug": "Filé de Peixe ao Molho de Limão",
   "nome": "Filé de Peixe ao Molho de Limão",
   "nome_exibicao": "Filé de Peixe ao Molho de Limão",
   "categoria": "proteína animal",
@@ -45,6 +45,6 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🐟",
+  "category_emoji": "🍖",
   "contem_peixe": true
 }

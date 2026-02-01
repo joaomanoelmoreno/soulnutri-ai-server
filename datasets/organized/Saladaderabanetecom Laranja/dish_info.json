@@ -13,9 +13,11 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "O rabanete era cultivado no Egito antigo e foi levado para a Europa pelos romanos. Existem diversas variedades, com diferentes formatos e cores.",
-  "slug": "saladaderabanetecomlaranja",
+  "slug": "Saladaderabanetecom Laranja",
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

@@ -1,5 +1,5 @@
 {
-  "slug": "bacalhaucomnatas",
+  "slug": "Bacalhaucomnatas",
   "nome": "Bacalhau com Natas",
   "categoria": "proteína animal",
   "descricao": "Bacalhau fresco desfiado gratinado com creme de leite fresco artesanal",
@@ -37,5 +37,19 @@
   "alerta_saude": "Muito rico em sódio após cura - demolhar por 72h trocando água reduz 70% do sal",
   "beneficio_principal": "Proteína de altíssima qualidade (18g/100g) com baixíssima gordura. Rico em selênio - mineral antioxidante que protege a tireoide",
   "curiosidade_cientifica": "O bacalhau é curado em sal por até 6 meses - processo que preserva nutrientes mas aumenta sódio",
-  "referencia_pesquisa": "Food Chemistry, 2019"
+  "referencia_pesquisa": "Food Chemistry, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

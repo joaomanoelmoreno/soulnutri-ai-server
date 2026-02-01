@@ -13,9 +13,11 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "A salada tailandesa é conhecida por seus sabores balanceados: doce, azedo, salgado e picante.",
-  "slug": "saladatailandesa",
+  "slug": "Saladatailandesa",
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

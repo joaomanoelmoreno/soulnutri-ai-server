@@ -1,5 +1,5 @@
 {
-  "slug": "tabuledequinoa",
+  "slug": "Tabulede Quinoa",
   "nome": "Tabule de Quinoa",
   "categoria": "vegano",
   "descricao": "Salada libanesa com quinoa, ervas frescas orgânicas e especiarias do Oriente Médio",
@@ -36,5 +36,16 @@
   "alerta_saude": "Contém GLÚTEN (trigo)",
   "beneficio_principal": "Salsa fresca é campeã em vitamina C (133mg/100g) e apigenina - flavonoide com ação anti-inflamatória comprovada",
   "curiosidade_cientifica": "Tabule libanês tradicional tem mais salsa que trigo - é essencialmente uma salada de salsa",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020"
+  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Legumes",
+    "Saladas"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

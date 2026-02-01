@@ -1,5 +1,5 @@
 {
-  "slug": "bolobrownie",
+  "slug": "Bolo Brownie de Chocolate",
   "nome": "Bolo Brownie",
   "categoria": "vegetariano",
   "descricao": "Bolo denso de chocolate artesanal tipo brownie, adoçado com maple",
@@ -38,5 +38,11 @@
   "alerta_saude": "Consumo excessivo de manteiga pode aumentar o LDL (colesterol ruim). A American Heart Association sugere não ultrapassar 5-6% das calorias diárias de gorduras saturadas.",
   "beneficio_principal": "Nozes são uma rica fonte de Ácido Alfa Linolênico (ALA), um tipo de ômega-3 vegetal. Consumo de 28g por dia pode reduzir o risco de doenças cardíacas em 50%, segundo estudo publicado no Journal of Nutrition, 2020.",
   "curiosidade_cientifica": "Maple syrup contém cerca de 24% das Necessidades Diárias de Manganês por porção de 60ml - mineral essencial que ajuda na formação de ossos e na ativação de enzimas.",
-  "referencia_pesquisa": "Journal of Nutrition, 2020; Departamento de Agricultura dos EUA, 2021"
+  "referencia_pesquisa": "Journal of Nutrition, 2020; Departamento de Agricultura dos EUA, 2021",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

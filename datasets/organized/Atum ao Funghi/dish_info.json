@@ -1,5 +1,5 @@
 {
-  "slug": "atum_ao_funghi",
+  "slug": "Atum ao Funghi",
   "ativo": true,
   "beneficios": [
     "Atum: rico em niacina (B3) que converte alimentos em energia e mantém pele saudável",
@@ -29,7 +29,20 @@
     "Alérgeno: Contém PEIXE",
     "⚠️ ATENÇÃO: Limite atum a 2x por semana devido ao mercúrio"
   ],
-  "tecnica": "",
+  "tecnica": "Grelhado ou assado",
   "beneficio_principal": "Os cogumelos são a ÚNICA fonte vegetal natural de vitamina D - essencial para absorção de cálcio, imunidade, prevenção de depressão e saúde óssea",
-  "curiosidade": "Cogumelos podem \"recarregar\" vitamina D se expostos ao sol por 30min - mesmo depois de colhidos!"
+  "curiosidade": "Cogumelos podem \"recarregar\" vitamina D se expostos ao sol por 30min - mesmo depois de colhidos!",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

@@ -18,7 +18,7 @@
     "Pode conter resíduos de agrotóxicos, dependendo da procedência dos vegetais. Lave bem os ingredientes antes do consumo."
   ],
   "curiosidade": "A maçã verde é rica em ácido málico, que contribui para o sabor azedo característico e também auxilia na limpeza dos dentes.",
-  "slug": "puredemacaverde",
+  "slug": "Puredemaca Verde",
   "nutricao": {
     "calorias": "30 kcal",
     "proteinas": "1g",
@@ -41,7 +41,7 @@
   "evitar_com": [
     "Molhos industrializados calóricos"
   ],
-  "category_emoji": "🥬",
+  "category_emoji": "🌱",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

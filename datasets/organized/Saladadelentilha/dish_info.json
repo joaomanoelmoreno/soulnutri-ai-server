@@ -13,9 +13,11 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "A lentilha é um alimento muito antigo, consumido há mais de 10 mil anos. É um grão versátil e fácil de preparar, sendo uma ótima opção para vegetarianos e veganos.",
-  "slug": "saladadelentilha",
+  "slug": "Saladadelentilha",
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

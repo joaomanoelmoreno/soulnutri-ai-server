@@ -1,5 +1,5 @@
 {
-  "slug": "aboboraaocurry",
+  "slug": "Abobora ao Curry",
   "nome": "Abóbora ao Curry",
   "categoria": "vegano",
   "descricao": "Abóbora orgânica cozida no vapor com especiarias indianas importadas em molho cremoso de leite de coco",
@@ -36,5 +36,16 @@
   "alerta_saude": null,
   "beneficio_principal": "Curry contém curcumina - anti-inflamatório natural que estudos mostram ser tão eficaz quanto ibuprofeno para dor articular",
   "curiosidade_cientifica": "A pimenta preta no curry aumenta absorção de curcumina em 2000% - sempre combine!",
-  "referencia_pesquisa": "Journal of Medicinal Food, 2019"
+  "referencia_pesquisa": "Journal of Medicinal Food, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Curry",
+    "Gengibre"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

@@ -1,0 +1,18 @@
+{
+  "nome": "Canelone 4 Queijos",
+  "slug": "Canelone 4 Queijos",
+  "categoria": "vegetariano",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
+  },
+  "category_emoji": "🥚"
+}

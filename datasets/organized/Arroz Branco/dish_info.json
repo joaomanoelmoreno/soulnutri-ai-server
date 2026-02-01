@@ -1,5 +1,5 @@
 {
-  "slug": "arrozbranco",
+  "slug": "Arroz Branco",
   "nome": "Arroz Branco",
   "categoria": "vegano",
   "descricao": "Arroz branco cozido no vapor, acompanhamento clássico preparado artesanalmente",
@@ -33,5 +33,19 @@
   "alerta_saude": "Índice glicêmico alto (73) - diabéticos devem preferir arroz integral ou parboilizado",
   "beneficio_principal": "Fonte rápida de energia (carboidrato de fácil digestão). O arroz brasileiro é enriquecido com ferro e ácido fólico por lei desde 2002",
   "curiosidade_cientifica": "O arroz integral tem 3x mais fibras, mas o branco é melhor absorvido por pessoas com intestino sensível",
-  "referencia_pesquisa": "ANVISA - RDC 150/2017"
+  "referencia_pesquisa": "ANVISA - RDC 150/2017",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ],
+  "category_emoji": "🌱"
 }

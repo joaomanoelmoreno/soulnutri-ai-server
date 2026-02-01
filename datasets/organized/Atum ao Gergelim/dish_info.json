@@ -1,5 +1,5 @@
 {
-  "slug": "atumaogergelim",
+  "slug": "Atum ao Gergelim",
   "nome": "Atum ao Gergelim",
   "categoria": "proteína animal",
   "descricao": "Atum fresco (recebido a cada 1-2 dias) selado com crosta de gergelim importado",
@@ -36,5 +36,19 @@
   "alerta_saude": "O atum, especialmente quando consumido em grandes espécies, pode ter níveis elevados de mercúrio. A FDA recomenda limitar o consumo a não mais que 170g por semana para grupos sensíveis, como gestantes, para prevenir riscos ao sistema nervoso.",
   "beneficio_principal": "O gergelim é uma excelente fonte de cálcio, com cerca de 975mg/100g, ajudando na manutenção da saúde óssea. Estudos indicam que o consumo regular de sementes de gergelim pode melhorar a densidade mineral óssea (Nutrition Journal, 2016).",
   "curiosidade_cientifica": "O wasabi verdadeiro contém isotiocianato (ITC), que possui propriedades antimicrobianas que podem ajudar a combater bactérias orais, como a Streptococcus mutans, que está associada à cárie dental (Journal of Applied Microbiology, 2004).",
-  "referencia_pesquisa": "Journal of Applied Microbiology, 2004; Nutrition Journal, 2016"
+  "referencia_pesquisa": "Journal of Applied Microbiology, 2004; Nutrition Journal, 2016",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

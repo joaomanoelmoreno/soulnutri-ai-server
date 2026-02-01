@@ -1,9 +1,9 @@
 {
-  "slug": "torta_de_manga",
+  "slug": "Torta de Manga",
   "ativo": true,
   "beneficios": [],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": true,
   "created_at": "2026-01-24T16:46:53.190000",
   "descricao": "Uma pequena torta ou pastelaria doce, geralmente recheada com frutas ou creme.",
@@ -25,5 +25,10 @@
     "Alérgeno: GLÚTEN (massa, torta)",
     "Alérgeno: LACTOSE (creme)"
   ],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

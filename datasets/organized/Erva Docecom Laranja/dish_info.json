@@ -1,5 +1,5 @@
 {
-  "slug": "ervadocecomlaranja",
+  "slug": "Erva Docecom Laranja",
   "nome": "Erva Doce com Laranja",
   "categoria": "vegano",
   "descricao": "Erva doce (funcho) orgânica salteada em azeite com suco de laranja fresco",
@@ -33,5 +33,11 @@
   "alerta_saude": "O consumo excessivo de erva-doce pode interferir com medicamentos que afetam o estrogênio, como anticoncepcionais. A interação pode alterar a eficácia desses medicamentos, por isso é recomendada moderação para quem os utiliza (International Journal of Molecular Sciences, 2019).",
   "beneficio_principal": "A erva-doce contém um composto chamado quercetina (10mg/100g), que possui propriedades antioxidantes e pode ajudar a reduzir o risco de doenças cardíacas ao melhorar a saúde dos vasos sanguíneos. Estudos sugerem que a quercetina pode diminuir os níveis de colesterol LDL 'ruim' (European Journal of Nutrition, 2018).",
   "curiosidade_cientifica": "O suco de laranja fresco contém hesperidina, que é mais biodisponível quando a laranja é consumida como suco (aproximadamente 30% mais absorvível do que na polpa inteira). A hesperidina pode melhorar a circulação sanguínea e reduzir a inflamação (Journal of Agricultural and Food Chemistry, 2020).",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020"
+  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

@@ -1,9 +1,9 @@
 {
-  "slug": "espaguete_parisiense",
+  "slug": "Espaguete Parisiense",
   "ativo": true,
   "beneficios": [],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": true,
   "created_at": "2026-01-23T17:21:27.413000",
   "descricao": "Macarrão com molho cremoso e vegetais como ervilhas e tomate.",
@@ -25,5 +25,10 @@
     "Alérgeno: Glúten (macarrão)",
     "Alérgeno: GLÚTEN (macarrao, macarrão)"
   ],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,5 +1,5 @@
 {
-  "slug": "beterrabaaobalsamico",
+  "slug": "Beterrabaaobalsamico",
   "nome": "Beterraba ao Balsâmico",
   "categoria": "vegano",
   "descricao": "Beterraba orgânica assada em forno combinado com redução de vinagre balsâmico",
@@ -34,5 +34,16 @@
   "alerta_saude": "Pode deixar urina e fezes avermelhadas - é normal e inofensivo (beetúria)",
   "beneficio_principal": "Rica em nitratos naturais - o corpo converte em óxido nítrico que dilata vasos sanguíneos, reduzindo pressão arterial em 4-10mmHg",
   "curiosidade_cientifica": "Atletas olímpicos usam suco de beterraba para melhorar performance - aumenta eficiência do uso de oxigênio em 5%",
-  "referencia_pesquisa": "British Journal of Sports Medicine, 2020"
+  "referencia_pesquisa": "British Journal of Sports Medicine, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Saladas",
+    "Sucos"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

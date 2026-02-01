@@ -1,7 +1,11 @@
 {
-  "slug": "bacalhau_a_bras",
+  "slug": "Bacalhau a Bras",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
   "categoria": "proteína animal",
   "category_emoji": "🍖",
   "contem_gluten": false,
@@ -27,5 +31,18 @@
     "Alérgeno: OVO (ovo, ovos)",
     "Alérgeno: PEIXE (bacalhau)"
   ],
-  "tecnica": ""
+  "tecnica": "Grelhado ou assado",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

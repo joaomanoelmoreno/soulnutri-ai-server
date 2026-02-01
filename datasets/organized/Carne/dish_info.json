@@ -1,35 +1,36 @@
 {
   "slug": "Carne",
-  "nome": "Entrecote",
-  "categoria": "vegano",
-  "descricao": "Prato composto por carne grelhada, acompanhamentos e um bolinho frito.",
+  "nome": "Hamburger",
+  "categoria": "proteína animal",
+  "descricao": "Prato composto por carne grelhada",
   "ingredientes": [
-    "entrecôte",
-    "sal grosso",
-    "ervas",
-    "Carne",
-    "Batata",
-    "Vegetais"
+    "carne moida blend Cibi Sana",
+    "sal ",
+    ""
   ],
   "beneficios": [
-    "Rico em proteínas",
-    "Ferro",
-    "Sabor intenso"
+    "Fonte de proteína de alta qualidade.",
+    "Rico em ferro, essencial para a saúde sanguínea.",
+    "Pode auxiliar no ganho de massa muscular.",
+    "Promove a saciedade."
   ],
   "riscos": [
-    "Gordura moderada",
-    "Alérgeno: Pode conter traços de ingredientes alergênicos."
+    "Alto teor de gordura saturada, se consumido em excesso.",
+    "Potencial aumento do colesterol, dependendo da frequência e quantidade consumida."
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "25g",
+    "calorias": "200 kcal",
+    "proteinas": "20g",
     "carboidratos": "0g",
-    "gorduras": "16g"
+    "gorduras": "13g",
+    "fibras": "0g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🍖"
 }

@@ -1,5 +1,5 @@
 {
-  "slug": "lentilhacomtofu",
+  "slug": "Lentilhacomtofu",
   "nome": "Lentilha com Tofu",
   "categoria": "vegano",
   "descricao": "Lentilha cozida com cubos de tofu temperado com especiarias indianas importadas",
@@ -36,5 +36,16 @@
   "alerta_saude": null,
   "beneficio_principal": "Maior teor de proteína entre as leguminosas (9g/100g cozida). Rica em ferro (3.3mg) - mais que a carne bovina!",
   "curiosidade_cientifica": "A lentilha tem índice glicêmico muito baixo (29) - libera energia lentamente por até 4 horas",
-  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+  "referencia_pesquisa": "Tabela TACO - UNICAMP",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Legumes"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

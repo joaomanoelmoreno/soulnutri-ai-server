@@ -1,5 +1,5 @@
 {
-  "slug": "lasanhadeportobello",
+  "slug": "Lasanhade Portobello",
   "nome": "Lasanha de Portobello",
   "categoria": "vegetariano",
   "descricao": "Lasanha com cogumelos portobello frescos e molho branco artesanal",
@@ -36,5 +36,16 @@
   "alerta_saude": "Contém glúten e lactose. Versão tradicional tem ~350kcal por porção - moderação recomendada",
   "beneficio_principal": "Combinação de proteína (carne/queijo), carboidrato (massa) e vegetais fornece refeição completa com liberação gradual de energia",
   "curiosidade_cientifica": "A lasanha à bolonhesa original de Bologna não leva tomate - foi adicionado só no século XIX",
-  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+  "referencia_pesquisa": "Tabela TACO - UNICAMP",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Ervas"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🥚"
 }

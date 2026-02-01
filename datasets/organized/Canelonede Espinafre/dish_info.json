@@ -1,5 +1,5 @@
 {
-  "slug": "canelonedeespinafre",
+  "slug": "Canelonede Espinafre",
   "nome": "Canelone de Espinafre",
   "categoria": "vegetariano",
   "descricao": "Massa recheada com espinafre orgânico e ricota fresca, molho artesanal",
@@ -35,5 +35,11 @@
   "alerta_saude": "Rico em oxalatos - pessoas com histórico de pedras nos rins devem consumir com moderação",
   "beneficio_principal": "Campeão em luteína (12mg/100g) - antioxidante que se deposita na retina e protege contra degeneração macular, principal causa de cegueira após 60 anos",
   "curiosidade_cientifica": "O erro de vírgula de 1870 fez Popeye famoso - o espinafre tem 10x menos ferro do que se pensava, mas ainda é nutritivo",
-  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2018"
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2018",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

@@ -1,5 +1,5 @@
 {
-  "slug": "repolho",
+  "slug": "Repolho",
   "nome": "Repolho",
   "categoria": "vegano",
   "descricao": "Repolho orgânico refogado em azeite",
@@ -32,5 +32,11 @@
   "alerta_saude": "O repolho contém goitrogênicos, compostos que podem interferir na função da tireoide ao reduzir a absorção de iodo. Cozinhar o repolho pode diminuir seu efeito. Pessoas com disfunções na tireoide devem equilibrar seu consumo conforme orientação médica. (Journal of Clinical Endocrinology & Metabolism, 2016)",
   "beneficio_principal": "O repolho contém antocianinas, especialmente no repolho roxo, que são antioxidantes poderosos. Elas ajudam a reduzir o risco de doenças cardiovasculares. Por exemplo, 100g de repolho roxo contém cerca de 36.6mg de antocianinas. Estudos da Universidade de Harvard, 2017, sugerem que essas substâncias podem melhorar a função endotelial e reduzir a pressão arterial.",
   "curiosidade_cientifica": "Fermentar repolho para fazer chucrute melhora significativamente o perfil nutricional. O processo aumenta a biodisponibilidade de vitaminas do complexo B, como B12, devido à ação de bactérias probióticas. Um estudo da European Journal of Nutrition, 2018, mostrou que o chucrute contém níveis mais altos de bactérias benéficas comparado ao repolho fresco.",
-  "referencia_pesquisa": "Harvard Health Publishing, 2017"
+  "referencia_pesquisa": "Harvard Health Publishing, 2017",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

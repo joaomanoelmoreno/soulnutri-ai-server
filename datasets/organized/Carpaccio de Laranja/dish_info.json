@@ -41,5 +41,15 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhada ou refogada",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Queijo",
+    "Tomate"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

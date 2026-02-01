@@ -1,5 +1,5 @@
 {
-  "slug": "cenourapalito",
+  "slug": "Cenourapalito",
   "nome": "Cenoura Palito",
   "categoria": "vegano",
   "descricao": "Cenouras orgânicas cortadas em palito, cozidas no vapor",
@@ -31,5 +31,16 @@
   "alerta_saude": null,
   "beneficio_principal": "Maior fonte de betacaroteno (8.3mg/100g) - o corpo converte em vitamina A conforme necessidade, impossível ter hipervitaminose",
   "curiosidade_cientifica": "Cozinhar a cenoura AUMENTA a disponibilidade de betacaroteno em 25% - ao contrário da maioria dos vegetais",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2019"
+  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Saladas",
+    "Sopas"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

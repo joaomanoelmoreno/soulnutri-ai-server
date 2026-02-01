@@ -1,0 +1,41 @@
+{
+  "nome": "Strogonoff de File Mignon",
+  "slug": "Strogonoff de File Mignon",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne ou frango",
+    "creme de leite",
+    "mostarda",
+    "ketchup"
+  ],
+  "beneficios": [
+    "Rico em proteínas",
+    "Saboroso"
+  ],
+  "riscos": [
+    "Contém lactose",
+    "Alto teor calórico"
+  ],
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "18g",
+    "carboidratos": "8g",
+    "gorduras": "14g"
+  },
+  "tecnica": "Refogado com creme",
+  "descricao": "Strogonoff cremoso e saboroso.",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Batata palha"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ],
+  "category_emoji": "🍖"
+}

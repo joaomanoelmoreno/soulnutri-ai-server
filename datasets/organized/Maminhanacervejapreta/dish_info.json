@@ -1,5 +1,5 @@
 {
-  "slug": "maminhanacervejapreta",
+  "slug": "Maminhanacervejapreta",
   "nome": "Maminha na Cerveja Preta",
   "categoria": "proteína animal",
   "descricao": "Maminha bovina fresca braseada na cerveja preta",
@@ -35,5 +35,18 @@
   "alerta_saude": "O consumo de cerveja preta no preparo pode deixar resíduos de álcool (em torno de 0.5% após cozimento prolongado), o que pode ser relevante para pessoas sensíveis ao álcool ou em dietas sem álcool, como gestantes. Além disso, compostos como sulfito, presentes na cerveja, podem desencadear reações em indivíduos asmáticos sensíveis, segundo a 'American Thoracic Society'.",
   "beneficio_principal": "Cerveja preta contém polifenóis, especialmente procianidinas (1.75-3.50 mg/L), que têm propriedades antioxidantes e podem ajudar a reduzir o risco de doenças cardiovasculares. Um estudo publicado no 'Journal of Agricultural and Food Chemistry' em 2014 demonstrou que esses compostos podem melhorar a função endotelial.",
   "curiosidade_cientifica": "A cebola contém quercetina (cerca de 20 mg/100g), um flavonoide que pode aumentar a absorção do ferro heme presente na maminha, potencializando suas propriedades nutricionais. A quercetina também possui efeitos anti-inflamatórios reconhecidos.",
-  "referencia_pesquisa": "'Journal of Agricultural and Food Chemistry', 2014; 'Journal of Nutrition' 2015"
+  "referencia_pesquisa": "'Journal of Agricultural and Food Chemistry', 2014; 'Journal of Nutrition' 2015",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

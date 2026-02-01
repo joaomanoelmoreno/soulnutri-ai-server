@@ -1,5 +1,5 @@
 {
-  "slug": "brocolisgratinado",
+  "slug": "Brocolis Gratinado",
   "nome": "Brócolis Gratinado",
   "categoria": "vegetariano",
   "descricao": "Brócolis orgânico ao forno combinado com queijo gratinado e creme fresco",
@@ -34,5 +34,11 @@
   "alerta_saude": null,
   "beneficio_principal": "Contém sulforafano - composto que ativa genes de desintoxicação do fígado e tem ação anticancerígena comprovada",
   "curiosidade_cientifica": "Mastigar bem o brócolis cru libera 10x mais sulforafano que cozido. Se cozinhar, adicione sementes de mostarda para recuperar o composto",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020"
+  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020",
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

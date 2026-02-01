@@ -1,5 +1,5 @@
 {
-  "slug": "carpacciodeperaruculaeamendoas",
+  "slug": "Carpacciode Pera Ruculae Amendoas",
   "nome": "Carpaccio de Pera com Rúcula e Amêndoas",
   "categoria": "vegetariano",
   "descricao": "Fatias de pera fresca com rúcula orgânica e amêndoas tostadas",
@@ -36,5 +36,11 @@
   "alerta_saude": null,
   "beneficio_principal": "Contém glucosinolatos - compostos que estudos associam à prevenção de câncer de próstata e mama",
   "curiosidade_cientifica": "O sabor picante da rúcula vem dos mesmos compostos anticancerígenos - quanto mais amarga, mais nutritiva",
-  "referencia_pesquisa": "Cancer Prevention Research, 2019"
+  "referencia_pesquisa": "Cancer Prevention Research, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

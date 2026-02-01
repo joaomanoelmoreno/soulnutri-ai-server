@@ -1,5 +1,5 @@
 {
-  "slug": "batatacompaprica",
+  "slug": "Batatacom Paprica",
   "nome": "Batata com Páprica",
   "categoria": "vegano",
   "descricao": "Batatas temperadas com páprica defumada importada, assadas em forno combinado",
@@ -34,5 +34,18 @@
   "alerta_saude": "A páprica defumada pode conter benzo(a)pireno, um composto que surge durante o processo de defumação, sendo potencialmente cancerígeno quando consumido em grandes quantidades. O European Food Safety Authority (EFSA, 2012) recomenda moderação no consumo de produtos defumados.",
   "beneficio_principal": "A batata contém fibras (2,2g/100g) que promovem saciedade e melhoram a saúde intestinal. Estudo da Universidade de Wageningen (2020) mostrou que dietas ricas em fibras estão associadas a uma redução de até 25% no risco de doenças cardiovasculares.",
   "curiosidade_cientifica": "A páprica defumada possui compostos fenólicos, que têm propriedades antioxidantes. Estudos revelam que seu uso regular pode aumentar a atividade antioxidante no sangue, contribuindo para a proteção celular (Journal of Food Science, 2020).",
-  "referencia_pesquisa": "Journal of Food Science, 2020; Universidade de Wageningen, 2020"
+  "referencia_pesquisa": "Journal of Food Science, 2020; Universidade de Wageningen, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱"
 }

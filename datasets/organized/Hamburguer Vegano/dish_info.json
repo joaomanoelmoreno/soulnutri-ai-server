@@ -1,5 +1,5 @@
 {
-  "slug": "hamburguervegano",
+  "slug": "Hamburguer Vegano",
   "nome": "Hambúrguer Vegano",
   "categoria": "vegano",
   "descricao": "Hambúrguer de proteína vegetal artesanal com especiarias importadas, grelhado",
@@ -33,5 +33,11 @@
   "alerta_saude": "Apesar do grão de bico ser uma boa fonte de proteína, também contém ácido fítico, que pode reduzir absorção de minerais como ferro e zinco. Fermentar o grão pode reduzir este efeito em até 40% (Harvard Health Publishing, 2018).",
   "beneficio_principal": "Proteína de grão de bico contém 8 dos 9 aminoácidos essenciais, sendo muito próxima ao perfil proteico ideal. Estudo da FAO 2016 indica absorção eficiente pela digestibilidade (83%).",
   "curiosidade_cientifica": "Especiarias como páprica e cúrcuma em hambúrgueres veganos podem aumentar a atividade antioxidante, potencializando a neutralização de radicais livres até 2x mais que o consumo isolado destas especiarias.",
-  "referencia_pesquisa": "FAO, 'Legume Protein Digestibility', 2016; Journal of Nutrition 2020, estudo sobre antioxidantes"
+  "referencia_pesquisa": "FAO, 'Legume Protein Digestibility', 2016; Journal of Nutrition 2020, estudo sobre antioxidantes",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

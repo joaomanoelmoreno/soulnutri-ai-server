@@ -1,5 +1,5 @@
 {
-  "slug": "batatadoce",
+  "slug": "Batata Doce",
   "nome": "Batata Doce",
   "categoria": "vegano",
   "descricao": "Batata doce orgânica assada em forno combinado, naturalmente doce",
@@ -30,5 +30,18 @@
   "alerta_saude": "Batata doce possui oxalatos, que podem interferir na absorção de cálcio e magnésio. Pessoas propensas a desenvolver pedras nos rins devem consumir com moderação e balancear com alimentos ricos em cálcio. Fonte: National Kidney Foundation, 2020.",
   "beneficio_principal": "A batata doce é rica em antocianinas, especialmente a variedade de polpa roxa, que podem reduzir a inflamação e melhorar a função cognitiva. Um estudo da Universidade de Tecnologia de Nanyang, Singapura, em 2019, encontrou níveis de até 725 mg de antocianinas por 100g, o que pode auxiliar na proteção contra doenças neurodegenerativas.",
   "curiosidade_cientifica": "Assar a batata doce aumenta seus níveis de amido resistente, que passa intacto pelo intestino delgado e atua como fibra fermentável no cólon, melhorando a saúde intestinal e prolongando a sensação de saciedade. Este efeito foi destacado em um estudo publicado pelo Journal of Nutrition, 2020.",
-  "referencia_pesquisa": "Estudo 'Bioactive Anthocyanins in Sweet Potatoes', Universidade de Tecnologia de Nanyang, 2019"
+  "referencia_pesquisa": "Estudo 'Bioactive Anthocyanins in Sweet Potatoes', Universidade de Tecnologia de Nanyang, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱"
 }

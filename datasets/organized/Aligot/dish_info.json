@@ -1,9 +1,13 @@
 {
-  "slug": "aligot_purê_de_batata_inglesa_com_queijo",
+  "slug": "Aligot",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
+  ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-23T15:04:51.002000",
   "descricao": "Purê de batata cremoso com cobertura gratinada de queijo.",
@@ -25,5 +29,17 @@
     "Alérgeno: Lácteos",
     "Alérgeno: LACTOSE (queijo, leite)"
   ],
-  "tecnica": ""
+  "tecnica": "Cozimento ou assado",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

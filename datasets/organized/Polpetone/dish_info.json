@@ -1,9 +1,9 @@
 {
-  "slug": "polpetone",
+  "slug": "Polpetone",
   "ativo": true,
   "beneficios": [],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": true,
   "created_at": "2026-01-28T11:24:23.536000",
   "descricao": "Nhoque com molho e possivelmente queijo.",
@@ -27,5 +27,10 @@
     "Alérgeno: LACTOSE (queijo)",
     "Alérgeno: OVO (ovo)"
   ],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

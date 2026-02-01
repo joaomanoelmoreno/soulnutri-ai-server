@@ -1,5 +1,5 @@
 {
-  "slug": "entrecotegrelhado",
+  "slug": "Entrecote Grelhado",
   "nome": "Entrecôte Grelhado",
   "categoria": "proteína animal",
   "descricao": "Corte nobre de carne bovina fresca grelhado na grelha",
@@ -33,5 +33,16 @@
   "alerta_saude": "Durante a grelha, há formação de hidrocarbonetos policíclicos aromáticos (HPA) na superfície da carne, que podem ser cancerígenos. Marinar a carne com suco de limão ou vinagre reduz a formação de HPAs em até 90% (Estudo do Instituto Nacional do Câncer, 2014).",
   "beneficio_principal": "A vitamina B12 (2.0 mcg/100g) presente no entrecôte suporta a síntese de glóbulos vermelhos e a saúde neurológica. Estudos da Harvard Medical School (2020) sugerem que a ingestão adequada de B12 pode reduzir o risco de degeneração cognitiva em até 30% em idosos.",
   "curiosidade_cientifica": "Cozinhar a carne no ponto (aproximadamente 63°C no interior) aumenta a retenção de nutrientes, como vitaminas B12 e B6, sem incrementar significativamente compostos tóxicos como aminas heterocíclicas, comparado a altas temperaturas.",
-  "referencia_pesquisa": "Harvard Medical School - Nutrição e Saúde Mental: Relatório 2020"
+  "referencia_pesquisa": "Harvard Medical School - Nutrição e Saúde Mental: Relatório 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Batatas",
+    "Salada"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🍖"
 }

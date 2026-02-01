@@ -13,9 +13,11 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "curiosidade": "A beterraba tem um pigmento avermelhado chamado betalaína, que é um antioxidante poderoso e pode ajudar a proteger as células do corpo contra danos.",
-  "slug": "saladadebeterrabacomlaranjaehortela",
+  "slug": "Saladade Beterrabacom Laranjaehortela",
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

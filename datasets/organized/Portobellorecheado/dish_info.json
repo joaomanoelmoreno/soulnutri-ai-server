@@ -1,5 +1,5 @@
 {
-  "slug": "portobellorecheado",
+  "slug": "Portobellorecheado",
   "nome": "Portobello Recheado",
   "categoria": "vegano",
   "descricao": "Cogumelo portobello, substituto de carne.",
@@ -40,7 +40,7 @@
     "Ervas"
   ],
   "evitar_com": [],
-  "category_emoji": "🥬",
+  "category_emoji": "🌱",
   "_calorias_suspeitas": true,
   "_calorias_estimadas": {
     "min": 150,

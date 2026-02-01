@@ -34,5 +34,17 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Refogada",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Churrasco"
+  ],
+  "evitar_com": [
+    "Outros carboidratos"
+  ],
+  "category_emoji": "🌱"
 }

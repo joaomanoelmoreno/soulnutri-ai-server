@@ -1,5 +1,5 @@
 {
-  "slug": "cebola_roxa_com_ervas_frescas_e_frutos_secos",
+  "slug": "Cebola Roxa com Ervas Frescas e Frutos Secos",
   "ativo": true,
   "beneficios": [],
   "categoria": "vegano",
@@ -22,5 +22,10 @@
   },
   "origem": "user_created",
   "riscos": [],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

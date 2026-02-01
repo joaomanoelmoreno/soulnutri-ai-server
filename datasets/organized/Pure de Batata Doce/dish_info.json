@@ -1,0 +1,39 @@
+{
+  "nome": "Pure de Batata Doce",
+  "slug": "Pure de Batata Doce",
+  "categoria": "vegano",
+  "ingredientes": [
+    "batata",
+    "sal"
+  ],
+  "beneficios": [
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
+  ],
+  "riscos": [
+    "Alto índice glicêmico se consumida sozinha"
+  ],
+  "nutricao": {
+    "calorias": "77 kcal",
+    "proteinas": "2g",
+    "carboidratos": "17g",
+    "gorduras": "0.1g"
+  },
+  "tecnica": "Cozimento ou assado",
+  "descricao": "Batata preparada de forma saudável.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱"
+}

@@ -47,5 +47,17 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhado ou refogado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Arroz",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Excesso de manteiga"
+  ],
+  "category_emoji": "🍖"
 }

@@ -1,7 +1,11 @@
 {
-  "slug": "mandioquinha",
+  "slug": "Mandioquinha",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de energia",
+    "Rico em potássio",
+    "Fácil digestão"
+  ],
   "categoria": "vegano",
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -24,5 +28,15 @@
   "riscos": [
     "Alérgeno: Pode conter traços de outros alimentos."
   ],
-  "tecnica": ""
+  "tecnica": "Cozida ou como purê",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Carnes",
+    "Purê"
+  ],
+  "evitar_com": []
 }

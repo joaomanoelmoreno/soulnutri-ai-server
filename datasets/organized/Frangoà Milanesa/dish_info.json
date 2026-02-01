@@ -1,6 +1,6 @@
 {
   "nome": "Frango à Milanesa",
-  "slug": "frangoàmilanesa",
+  "slug": "Frangoà Milanesa",
   "categoria": "proteína animal",
   "ingredientes": [
     "frango",
@@ -44,7 +44,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍗",
+  "category_emoji": "🍖",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

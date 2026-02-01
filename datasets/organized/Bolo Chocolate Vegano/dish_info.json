@@ -1,5 +1,5 @@
 {
-  "slug": "bolochocolatevegano",
+  "slug": "Bolo Chocolate Vegano",
   "nome": "Bolo de Chocolate Vegano",
   "categoria": "vegano",
   "descricao": "Bolo de chocolate vegano preparado artesanalmente com cacau de qualidade, adoçado com maple",
@@ -34,5 +34,11 @@
   "alerta_saude": "Óleo vegetal, frequentemente usado em bolos veganos, pode ter alto teor de ácidos graxos ômega-6, que, em excesso comparado aos ômega-3, podem aumentar marcadores inflamatórios. Manter uma proporção equilibrada de ômega-6/ômega-3 é recomendado para saúde cardiovascular. Fonte: 'Lipids, 2020'.",
   "beneficio_principal": "O cacau em pó contém teobromina (aproximadamente 1.2% a 2% por peso), que possui um leve efeito estimulante similar à cafeína, mas mais suave e com menos impacto no sistema nervoso central. Além de melhorar o humor, estudos indicam que a teobromina pode auxiliar na melhora do fluxo sanguíneo. Fonte: 'The American Journal of Clinical Nutrition, 2015'.",
   "curiosidade_cientifica": "O maple canadense é uma fonte única de polifenóis, incluindo o composto antioxidante quebecol, que é formado durante o processo de fabricação do xarope. Pesquisas indicam que o quebecol pode ter atividades anti-inflamatórias. Estudo publicado no 'Journal of Functional Foods, 2011'.",
-  "referencia_pesquisa": "Journal of Functional Foods, 2011; The American Journal of Clinical Nutrition, 2015"
+  "referencia_pesquisa": "Journal of Functional Foods, 2011; The American Journal of Clinical Nutrition, 2015",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

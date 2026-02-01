@@ -1,12 +1,12 @@
 {
-  "slug": "lasanha_de_espinafre",
+  "slug": "Lasanha de Espinafre",
   "ativo": true,
   "beneficios": [
     "Ferro vegetal (2.7mg/100g): combate anemia e fadiga - consuma com vitamina C para dobrar a absorção",
     "Vitamina K: essencial para coagulação sanguínea e mineralização óssea"
   ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-21T17:07:05.472000",
   "descricao": "Lasanha de espinafre - prato cadastrado pelo usuário",
@@ -30,10 +30,21 @@
     "Contém glúten",
     "⚠️ ATENÇÃO: Molho branco é calórico - porções moderadas recomendadas"
   ],
-  "tecnica": "",
+  "tecnica": "Assado em forno",
   "beneficio_principal": "Combinação de proteína (carne/queijo), carboidrato (massa) e vegetais fornece refeição completa com liberação gradual de energia",
   "curiosidade": "Popeye popularizou o espinafre, mas o teor de ferro foi superestimado por erro de vírgula em 1870!",
   "alerta_saude": "Contém glúten e lactose. Versão tradicional tem ~350kcal por porção - moderação recomendada",
   "curiosidade_cientifica": "A lasanha à bolonhesa original de Bologna não leva tomate - foi adicionado só no século XIX",
-  "referencia_pesquisa": "Tabela TACO - UNICAMP"
+  "referencia_pesquisa": "Tabela TACO - UNICAMP",
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Salada verde"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ]
 }

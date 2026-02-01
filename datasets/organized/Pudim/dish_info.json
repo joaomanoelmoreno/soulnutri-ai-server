@@ -1,9 +1,9 @@
 {
-  "slug": "pudim",
+  "slug": "Pudim",
   "ativo": true,
   "beneficios": [],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-23T17:27:59.512000",
   "descricao": "Sobremesa cremosa feita com ovos, leite e açúcar, com uma camada de caramelo.",
@@ -26,5 +26,10 @@
     "Alérgeno: LACTOSE (leite)",
     "Alérgeno: OVO (ovo, ovos)"
   ],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

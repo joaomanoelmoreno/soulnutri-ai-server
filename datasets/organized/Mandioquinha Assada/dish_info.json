@@ -1,5 +1,5 @@
 {
-  "slug": "mandioquinhaassada",
+  "slug": "Mandioquinha Assada",
   "nome": "Mandioquinha Assada",
   "categoria": "vegetariano",
   "descricao": "Mandioquinha assada em forno combinado com ervas frescas orgânicas",
@@ -33,5 +33,16 @@
   "alerta_saude": "Mandioquinha tem alimentos FODMAPs, que podem causar desconforto gástrico em indivíduos sensíveis à síndrome do intestino irritável (SII). Em tais casos, recomenda-se moderação e acompanhamento por especialista.",
   "beneficio_principal": "Mandioquinha é rica em inulina - fibra prebiótica (por volta de 3g/100g) que favorece a saúde intestinal ao nutrir bactérias benéficas. Pesquisa da American Journal of Clinical Nutrition (2015) mostra que prebióticos podem melhorar a absorção de cálcio em até 20%.",
   "curiosidade_cientifica": "Azeite extravirgem contém polifenóis (hidroxitirosol, 5mg por colher de sopa), que possuem propriedades antioxidantes. Estudos indicam que seu consumo regular pode reduzir marcadores inflamatórios em até 15% (Journal of Nutritional Biochemistry, 2018).",
-  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2015; Journal of Nutritional Biochemistry, 2018"
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2015; Journal of Nutritional Biochemistry, 2018",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Carnes",
+    "Purê"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🥚"
 }

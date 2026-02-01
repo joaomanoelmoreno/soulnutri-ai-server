@@ -1,5 +1,5 @@
 {
-  "slug": "frangocremedelimaosalnegro",
+  "slug": "Frango Cremede Limaosal Negro",
   "nome": "Frango ao Creme de Limão e Sal Negro",
   "categoria": "proteína animal",
   "descricao": "Frango preparado sous vide ao creme de limão com sal negro do Havaí importado",
@@ -35,5 +35,18 @@
   "alerta_saude": "O ácido cítrico do limão pode desnaturar parcialmente as proteínas do creme de leite quando aquecido, potencializando a ação alergênica da caseína láctea em indivíduos sensíveis a proteínas do leite. (Fonte: 'Effects of Food Preservation and Processing', Food Chemistry, 2019)",
   "beneficio_principal": "O frango é uma excelente fonte de niacina (vitamina B3), importante para o reparo do DNA e produção de energia. Em 100g de frango cozido há aproximadamente 13mg de niacina, suprindo cerca de 80% da recomendação diária para adultos. (Fonte: USDA National Nutrient Database, 2020)",
   "curiosidade_cientifica": "O sal negro do Havaí, além de conter minerais como ferro e cálcio, possui enxofre, que dá seu sabor distinto e atua no relaxamento muscular. No entanto, seu uso deve ser moderado devido ao maior teor de sódio comparado ao sal marinho comum.",
-  "referencia_pesquisa": "'Sodium and Mineral Composition of Hawaiian Black Salt', Journal of Food Composition and Analysis, 2018"
+  "referencia_pesquisa": "'Sodium and Mineral Composition of Hawaiian Black Salt', Journal of Food Composition and Analysis, 2018",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

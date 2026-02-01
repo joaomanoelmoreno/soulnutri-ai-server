@@ -1,5 +1,5 @@
 {
-  "slug": "alhoporogratinadovegano",
+  "slug": "Alho Poro Gratinado Vegano",
   "nome": "Alho Poró Gratinado Vegano",
   "categoria": "vegano",
   "descricao": "Alho poró orgânico gratinado no forno combinado com creme vegetal e ervas frescas orgânicas",
@@ -33,5 +33,11 @@
   "alerta_saude": "Contém LACTOSE (queijo gratinado)",
   "beneficio_principal": "Alho-poró é prebiótico - alimenta Bifidobacterium no intestino, fortalecendo sistema imunológico e produção de vitaminas B",
   "curiosidade_cientifica": "Compostos sulfurados do alho-poró são antimicrobianos naturais - usados em curativos na Grécia antiga",
-  "referencia_pesquisa": "Nutrients Journal, 2020"
+  "referencia_pesquisa": "Nutrients Journal, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

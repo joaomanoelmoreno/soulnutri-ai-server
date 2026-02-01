@@ -26,12 +26,21 @@
     "carboidratos": "15g",
     "gorduras": "20g"
   },
-  "category_emoji": "🥬",
+  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "tecnica": "Assada em forno",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço ou lanche",
+  "combina_com": [
+    "Salada verde"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ]
 }

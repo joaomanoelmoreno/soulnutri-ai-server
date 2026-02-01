@@ -1,5 +1,5 @@
 {
-  "slug": "ceviche_de_manga",
+  "slug": "Ceviche de Manga",
   "ativo": true,
   "beneficios": [
     "Rica em antioxidantes",
@@ -26,5 +26,10 @@
   },
   "origem": "user_created",
   "riscos": [],
-  "tecnica": "As mangas são cortadas em cubos e misturadas com cebola roxa fatiada, coentro picado e um molho. Parece ser uma preparação fresca, sem cocção."
+  "tecnica": "As mangas são cortadas em cubos e misturadas com cebola roxa fatiada, coentro picado e um molho. Parece ser uma preparação fresca, sem cocção.",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

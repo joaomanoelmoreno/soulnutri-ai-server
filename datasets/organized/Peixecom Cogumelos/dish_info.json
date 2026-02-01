@@ -1,6 +1,6 @@
 {
   "nome": "Peixe com Cogumelos",
-  "slug": "peixecomcogumelos",
+  "slug": "Peixecom Cogumelos",
   "categoria": "proteína animal",
   "ingredientes": [
     "peixe",
@@ -42,7 +42,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🐟",
+  "category_emoji": "🍖",
   "contem_peixe": true,
   "contem_castanhas": false,
   "contem_soja": false

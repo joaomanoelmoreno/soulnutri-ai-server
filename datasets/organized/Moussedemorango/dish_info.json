@@ -1,5 +1,5 @@
 {
-  "slug": "moussedemorango",
+  "slug": "Moussedemorango",
   "nome": "Mousse de Morango",
   "categoria": "vegetariano",
   "descricao": "Mousse cremoso de morango fresco com creme de leite fresco, adoçado com maple",
@@ -34,5 +34,11 @@
   "alerta_saude": "Contém lactose. Versões industriais podem ter gordura trans - prefira caseiro",
   "beneficio_principal": "Se for de chocolate amargo (70%+), fornece flavonoides que melhoram fluxo sanguíneo cerebral e função cognitiva",
   "curiosidade_cientifica": "Estudo de Harvard: consumo moderado de chocolate amargo associado a 37% menos risco de doença cardíaca",
-  "referencia_pesquisa": "Heart Journal, 2019"
+  "referencia_pesquisa": "Heart Journal, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

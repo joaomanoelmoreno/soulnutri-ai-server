@@ -1,5 +1,5 @@
 {
-  "slug": "saladeovos",
+  "slug": "Salade Ovos",
   "nome": "Salada de Ovos",
   "categoria": "vegetariano",
   "descricao": "Salada fresca e nutritiva.",
@@ -14,7 +14,9 @@
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
-  "riscos": [],
+  "riscos": [
+    "Verificar higienização"
+  ],
   "nutricao": {
     "calorias": "20 kcal",
     "proteinas": "1g",

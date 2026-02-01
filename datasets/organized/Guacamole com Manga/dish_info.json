@@ -1,5 +1,5 @@
 {
-  "slug": "guacamole_com_manga",
+  "slug": "Guacamole com Manga",
   "ativo": true,
   "beneficios": [
     "Potássio (485mg/100g): regula a pressão arterial, previne cãibras musculares e mantém o ritmo cardíaco saudável",
@@ -26,8 +26,20 @@
     "gorduras": "~8g"
   },
   "origem": "user_created",
-  "riscos": [],
-  "tecnica": "",
+  "riscos": [
+    "Calórico se em excesso"
+  ],
+  "tecnica": "Crua",
   "beneficio_principal": "Rico em gorduras monoinsaturadas do abacate - reduzem o colesterol ruim (LDL), protegem o coração e melhoram a absorção de vitaminas lipossolúveis (A, D, E, K)",
-  "curiosidade": "O abacate contém mais potássio que a banana - essencial para quem pratica exercícios físicos"
+  "curiosidade": "O abacate contém mais potássio que a banana - essencial para quem pratica exercícios físicos",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Nachos",
+    "Tacos"
+  ],
+  "evitar_com": []
 }

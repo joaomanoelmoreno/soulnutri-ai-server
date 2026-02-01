@@ -1,5 +1,5 @@
 {
-  "slug": "granola_cibi_sana",
+  "slug": "Granola Cibi Sana",
   "ativo": true,
   "beneficios": [
     "Fonte de fibras",
@@ -35,5 +35,10 @@
     "Pode conter alto teor de açúcar",
     "Alérgeno: Pode conter NOZES"
   ],
-  "tecnica": "Assada no forno"
+  "tecnica": "Assada no forno",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

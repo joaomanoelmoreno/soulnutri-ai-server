@@ -17,7 +17,7 @@
     "Alérgeno: peixe"
   ],
   "curiosidade": "O tomate cereja, além de saboroso, é uma variação do tomate com maior concentração de nutrientes por porção, comparado aos tomates comuns.",
-  "slug": "peixecomtomatecereja",
+  "slug": "Peixecom Tomatecereja",
   "nutricao": {
     "calorias": "120 kcal",
     "proteinas": "22g",
@@ -39,7 +39,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🐟",
+  "category_emoji": "🍖",
   "contem_peixe": true,
   "contem_castanhas": false,
   "contem_soja": false

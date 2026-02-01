@@ -1,5 +1,5 @@
 {
-  "slug": "bolodegengibre",
+  "slug": "Bolodegengibre",
   "nome": "Bolo de Gengibre",
   "categoria": "vegetariano",
   "descricao": "Bolo aromático de gengibre fresco com especiarias importadas, adoçado com maple",
@@ -37,5 +37,11 @@
   "alerta_saude": "O maple syrup, apesar de sua riqueza antioxidante, tem um alto teor de açúcar (aproximadamente 67,5g de açúcar total em 100g), o que ainda exige moderação. Além disso, especiarias importadas como a canela podem conter cumarina, que em excesso pode afetar a função hepática, conforme estudos do BfR (Bundesinstitut für Risikobewertung, 2006), sendo recomendado um máximo de 2g de canela Ceylon por dia para adultos.",
   "beneficio_principal": "O gengibre contém gingerol e shogaol, compostos que um estudo da Universidade de Columbia (2016) demonstrou potencial para reduzir a glicose no sangue em modelos animais, além de melhorar a capacidade antioxidante. Especificamente, 100g de gengibre contém aproximadamente 48mg desses compostos.",
   "curiosidade_cientifica": "O uso de maple syrup em vez de açúcar refinado não só reduz o índice glicêmico do prato (maple syrup é 54 vs açúcar refinado 65), como também adiciona antioxidantes. Um estudo na Universidade de Rhode Island (2011) identificou 54 compostos antioxidantes no maple syrup puro, contribuindo para uma dieta mais balanceada.",
-  "referencia_pesquisa": "Estudo publicado no Journal of Nutrition (Columbia University, 2016), Análise do Maple Syrup, URI (2011)"
+  "referencia_pesquisa": "Estudo publicado no Journal of Nutrition (Columbia University, 2016), Análise do Maple Syrup, URI (2011)",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

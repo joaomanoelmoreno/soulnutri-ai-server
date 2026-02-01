@@ -1,0 +1,41 @@
+{
+  "nome": "Quiche de Tomate Seco",
+  "slug": "Quiche de Tomate Seco",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "massa folhada",
+    "ovos",
+    "creme de leite",
+    "queijo"
+  ],
+  "beneficios": [
+    "Proteínas do ovo",
+    "Refeição completa"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém lactose",
+    "Contém ovo"
+  ],
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "8g",
+    "carboidratos": "18g",
+    "gorduras": "16g"
+  },
+  "tecnica": "Assada em forno",
+  "descricao": "Torta salgada francesa cremosa.",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço ou lanche",
+  "combina_com": [
+    "Salada verde"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ],
+  "category_emoji": "🥚"
+}

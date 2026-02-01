@@ -1,9 +1,13 @@
 {
-  "slug": "guacamole",
+  "slug": "Guacamole",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Gorduras boas",
+    "Rico em potássio",
+    "Fibras"
+  ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": true,
   "created_at": "2026-01-24T15:53:03.633000",
   "descricao": "Prato com uma seleção de acompanhamentos e saladas, incluindo guacamole e tortilhas, possivelmente com queijo.",
@@ -25,5 +29,15 @@
     "Alérgeno: Pode conter glúten nas tortilhas",
     "Alérgeno: LACTOSE (queijo)"
   ],
-  "tecnica": ""
+  "tecnica": "Crua",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Nachos",
+    "Tacos"
+  ],
+  "evitar_com": []
 }

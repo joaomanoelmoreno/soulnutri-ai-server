@@ -1,9 +1,13 @@
 {
-  "slug": "tortilha_espanhola_de_batata",
+  "slug": "Tortilha Espanhola de Batata",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
+  ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-23T17:25:17.314000",
   "descricao": "Batatas fatiadas cobertas com creme e queijo, levadas ao forno até dourar.",
@@ -25,5 +29,17 @@
     "Alérgeno: Lácteos",
     "Alérgeno: LACTOSE (leite, manteiga)"
   ],
-  "tecnica": ""
+  "tecnica": "Cozimento ou assado",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

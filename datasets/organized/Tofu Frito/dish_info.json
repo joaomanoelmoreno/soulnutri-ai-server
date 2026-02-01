@@ -1,47 +1,48 @@
 {
   "slug": "Tofu Frito",
   "nome": "Dadinho de Tapioca",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "Cubos de tapioca artesanal com queijo coalho, assados em forno combinado",
   "ingredientes": [
-    "tofu (soja)",
-    "temperos",
-    "queijo",
-    "farinha",
-    "ovo",
     "tapioca",
+    "temperos",
     "queijo coalho",
+    "leite",
     "sal"
   ],
   "beneficios": [
-    "Proteína vegetal completa",
-    "Cálcio",
-    "Isoflavonas",
-    "Sem glúten naturalmente",
-    "Cálcio do queijo: saúde óssea",
-    "Assado: mais leve que frito"
+    "Fonte de energia devido aos carboidratos da tapioca.",
+    "Contém cálcio proveniente do queijo coalho.",
+    "Pode ser uma opção sem glúten (verificar ingredientes).",
+    "Prato versátil e fácil de preparar."
   ],
   "riscos": [
-    "Alérgeno: soja",
-    "Alérgeno: Laticínios",
-    "Alérgeno: Ovo",
-    "Alérgeno: Glúten",
-    "Alérgeno: GLÚTEN (farinha)",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo)",
-    "Contém lactose",
-    "Pode conter traços de glúten"
+    "Alto teor de gordura, dependendo da quantidade de queijo e da forma de preparo (frito).",
+    "Pode ser rico em sódio devido ao queijo e temperos.",
+    "Consumir com moderação devido ao valor calórico."
   ],
   "nutricao": {
-    "calorias": "76 kcal",
-    "proteinas": "8g",
-    "carboidratos": "1.9g",
-    "gorduras": "4.8g"
+    "calorias": "280 kcal",
+    "proteinas": "12g",
+    "carboidratos": "30g",
+    "gorduras": "12g",
+    "fibras": "1g"
   },
-  "contem_gluten": true,
-  "contem_lactose": false,
+  "contem_gluten": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": true
+  "contem_soja": true,
+  "tecnica": "Frito",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Entrada ou lanche",
+  "combina_com": [
+    "Molhos"
+  ],
+  "evitar_com": [
+    "Outras frituras"
+  ],
+  "category_emoji": "🥚"
 }

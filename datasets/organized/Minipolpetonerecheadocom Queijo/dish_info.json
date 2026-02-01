@@ -1,5 +1,5 @@
 {
-  "slug": "minipolpetonerecheadocomqueijo",
+  "slug": "Minipolpetonerecheadocom Queijo",
   "nome": "Mini Polpetone Recheado com Queijo",
   "categoria": "proteína animal",
   "descricao": "Polpetone artesanal de carne fresca recheado com queijo",
@@ -36,5 +36,11 @@
   "alerta_saude": "Alérgeno: Contém LACTOSE (queijos envelhecidos têm menos)",
   "beneficio_principal": "Fermentação produz vitamina K2 (MK-7) - forma mais eficiente para transportar cálcio do sangue para os ossos, prevenindo osteoporose E calcificação arterial",
   "curiosidade_cientifica": "Queijos envelhecidos (parmesão, gouda) têm mais K2. Estudo holandês: pessoas que consomem queijo envelhecido têm 50% menos calcificação arterial",
-  "referencia_pesquisa": "European Journal of Nutrition, 2019"
+  "referencia_pesquisa": "European Journal of Nutrition, 2019",
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🍖"
 }

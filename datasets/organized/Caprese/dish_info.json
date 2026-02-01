@@ -19,7 +19,7 @@
     "Consumir com moderação devido ao teor de gordura da mussarela."
   ],
   "curiosidade": "O nome 'Caprese' vem da ilha de Capri, Itália, onde a salada caprese tradicional teria se originado.",
-  "slug": "caprese",
+  "slug": "Caprese",
   "nutricao": {
     "calorias": "160 kcal",
     "proteinas": "8g",
@@ -34,5 +34,15 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "tecnica": "Crua",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ]
 }

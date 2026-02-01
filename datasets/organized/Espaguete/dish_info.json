@@ -1,5 +1,5 @@
 {
-  "slug": "espaguete",
+  "slug": "Espaguete",
   "nome": "Espaguete",
   "categoria": "vegetariano",
   "descricao": "Massa italiana artesanal servida com molho de tomate feito em nossa cozinha",
@@ -34,5 +34,11 @@
   "alerta_saude": "Embora o manjericão seja rico em vitamina K, essencial para a coagulação do sangue, pessoas que tomam anticoagulantes devem consumir esta erva com moderação, pois pode interferir na eficácia dos medicamentos, segundo pesquisa publicada no Journal of Thrombosis and Thrombolysis em 2020.",
   "beneficio_principal": "Azeite extravirgem contém alto teor de ácidos graxos monoinsaturados (cerca de 73% em 100g), que estão associados à redução dos níveis de LDL (colesterol 'ruim') e ao aumento das funções antioxidantes do HDL (colesterol 'bom'). Um estudo da Universidade de Harvard em 2016 mostrou que dietas ricas em azeite de oliva podem reduzir o risco de doenças cardiovasculares em até 30%.",
   "curiosidade_cientifica": "O alho orgânico contém alicina, que auxilia na regulação da pressão arterial e melhora a saúde cardiovascular. A alicina é mais eficaz quando o alho é esmagado e deixado em repouso por 10 minutos antes de ser cozido, pois isso potencializa sua liberação.",
-  "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2016"
+  "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2016",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

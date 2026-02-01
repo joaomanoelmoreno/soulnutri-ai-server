@@ -1,0 +1,18 @@
+{
+  "nome": "Pernil ao Molho de Limao",
+  "slug": "Pernil ao Molho de Limao",
+  "categoria": "proteína animal",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "nutricao": {
+    "calorias": "~180 kcal",
+    "proteinas": "~20g",
+    "carboidratos": "~5g",
+    "gorduras": "~8g"
+  },
+  "category_emoji": "🍖"
+}

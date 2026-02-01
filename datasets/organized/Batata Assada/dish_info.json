@@ -1,5 +1,5 @@
 {
-  "slug": "batataassada",
+  "slug": "Batata Assada",
   "nome": "Batata Assada",
   "categoria": "vegano",
   "descricao": "Batatas assadas em forno combinado com ervas frescas orgânicas aromáticas",
@@ -34,5 +34,18 @@
   "alerta_saude": "O alho, quando cozido, perde parte de sua alicina ativa, um composto bioativo que possui propriedades antimicrobianas e cardioprotetoras. Para maximizar benefícios, esmagar o alho e aguardar 10 minutos antes de assar favorece a formação de alicina. Fonte: Food Chemistry Journal, 2017.",
   "beneficio_principal": "A batata assada preserva maior parte do seu teor de potássio após o cozimento (aproximadamente 425mg/100g), o que ajuda na saúde cardiovascular. Um estudo da American Heart Association de 2020 demonstrou que a inclusão de alimentos ricos em potássio pode reduzir o risco de acidente vascular cerebral em 27%.",
   "curiosidade_cientifica": "O óleo de oliva extravirgem, quando aquecido a temperaturas moderadas, como em uma batata assada, mantém até 70% de seus compostos fenólicos antioxidantes, que são benéficos para a saúde cardiovascular. Isso foi observado em estudo publicado no Journal of Food Composition and Analysis, 2018.",
-  "referencia_pesquisa": "USDA National Nutrient Database for Standard Reference, 2019; Journal of Food Composition and Analysis, 2018"
+  "referencia_pesquisa": "USDA National Nutrient Database for Standard Reference, 2019; Journal of Food Composition and Analysis, 2018",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Proteínas",
+    "Vegetais verdes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🌱"
 }

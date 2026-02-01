@@ -36,5 +36,16 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Grelhada ou assada",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Tomate",
+    "Queijo",
+    "Azeite"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

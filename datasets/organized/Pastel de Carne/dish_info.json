@@ -1,9 +1,14 @@
 {
-  "slug": "pastel_de_carne",
+  "slug": "Pastel de Carne",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": true,
   "created_at": "2026-01-24T17:25:18.177000",
   "descricao": "Pastéis com recheio salgado ou doce.",
@@ -23,5 +28,17 @@
     "Alérgeno: Glúten",
     "Alérgeno: GLÚTEN (massa)"
   ],
-  "tecnica": ""
+  "tecnica": "Grelhado ou assado",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ]
 }

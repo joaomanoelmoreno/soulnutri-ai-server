@@ -1,7 +1,11 @@
 {
-  "slug": "salada_verde",
+  "slug": "Salada Verde",
   "ativo": true,
-  "beneficios": [],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais"
+  ],
   "categoria": "vegano",
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -21,6 +25,20 @@
     "gorduras": "~8g"
   },
   "origem": "user_created",
-  "riscos": [],
-  "tecnica": ""
+  "riscos": [
+    "Verificar higienização"
+  ],
+  "tecnica": "Crua",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ]
 }

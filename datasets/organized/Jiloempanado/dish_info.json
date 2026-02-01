@@ -1,5 +1,5 @@
 {
-  "slug": "jiloempanado",
+  "slug": "Jiloempanado",
   "nome": "Jiló Empanado",
   "categoria": "vegetariano",
   "descricao": "Jiló orgânico empanado artesanalmente, assado em forno combinado (sem fritura)",
@@ -34,5 +34,16 @@
   "alerta_saude": null,
   "beneficio_principal": "O amargor vem de compostos que estimulam produção de bile - melhora digestão de gorduras e função hepática",
   "curiosidade_cientifica": "Quanto mais amargo o jiló, mais compostos benéficos. Pessoas que toleram amargo tendem a ter flora intestinal mais diversa",
-  "referencia_pesquisa": "Food Research International, 2019"
+  "referencia_pesquisa": "Food Research International, 2019",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Feijão"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🥚"
 }

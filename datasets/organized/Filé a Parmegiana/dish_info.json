@@ -1,5 +1,5 @@
 {
-  "slug": "filé_a_parmegiana",
+  "slug": "Filé a Parmegiana",
   "ativo": true,
   "beneficios": [],
   "categoria": "proteína animal",
@@ -24,5 +24,10 @@
     "Alérgeno: Pode conter glúten (se o molho tiver)",
     "Alto teor de sódio (dependendo do molho)"
   ],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

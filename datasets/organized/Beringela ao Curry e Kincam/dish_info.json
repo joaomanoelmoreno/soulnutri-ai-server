@@ -1,0 +1,39 @@
+{
+  "nome": "Beringela ao Curry e Kincam",
+  "slug": "Beringela ao Curry e Kincam",
+  "categoria": "vegano",
+  "ingredientes": [
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal"
+  ],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Antioxidantes (nasunina)",
+    "Ajuda no controle do colesterol"
+  ],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
+  },
+  "tecnica": "Grelhada ou assada",
+  "descricao": "Berinjela versátil, base de muitos pratos mediterrâneos.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Tomate",
+    "Queijo",
+    "Azeite"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
+}

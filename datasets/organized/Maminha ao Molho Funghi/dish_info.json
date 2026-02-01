@@ -1,0 +1,40 @@
+{
+  "nome": "Maminha ao Molho Funghi",
+  "slug": "Maminha ao Molho Funghi",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "maminha bovina",
+    "sal grosso",
+    "alho"
+  ],
+  "beneficios": [
+    "Corte macio",
+    "Rico em proteínas",
+    "Ferro"
+  ],
+  "riscos": [
+    "Gordura moderada"
+  ],
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "28g",
+    "carboidratos": "0g",
+    "gorduras": "12g"
+  },
+  "tecnica": "Assado ou grelhado",
+  "descricao": "Maminha bovina macia e saborosa.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
+}

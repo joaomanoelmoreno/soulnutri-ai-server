@@ -1,5 +1,5 @@
 {
-  "slug": "maminhaaomolhomongolia",
+  "slug": "Maminhaao Molhomongolia",
   "nome": "Maminha ao Molho Mongólia",
   "categoria": "proteína animal",
   "descricao": "Maminha bovina fresca preparada sous vide ao molho agridoce mongoliano com maple",
@@ -35,5 +35,18 @@
   "alerta_saude": "O shoyu é rico em sódio, contendo cerca de 5.600mg por 100ml. A OMS recomenda um consumo máximo diário de 2.000mg de sódio. Pessoas com hipertensão devem moderar o consumo ou optar por versões com teor reduzido de sódio.",
   "beneficio_principal": "O gengibre fresco contém gingerol, um composto bioativo que possui potentes propriedades anti-inflamatórias e antioxidantes. Consumo regular de 1-2g de gengibre por dia pode ajudar a reduzir dores musculares pós-exercício em até 25%, segundo estudo publicado no 'Journal of Pain', 2010.",
   "curiosidade_cientifica": "O shoyu é fermentado, o que pode aumentar a biodisponibilidade de isoflavonas e peptídeos bioativos. Estudo da 'Food Chemistry', 2017, destaca que o shoyu pode conter até 0,7mg/100g de peptídeos que podem melhorar a digestão de proteínas.",
-  "referencia_pesquisa": "'Journal of Pain', 2010; 'Food Chemistry', 2017"
+  "referencia_pesquisa": "'Journal of Pain', 2010; 'Food Chemistry', 2017",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

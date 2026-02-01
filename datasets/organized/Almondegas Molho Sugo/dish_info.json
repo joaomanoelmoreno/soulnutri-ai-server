@@ -1,5 +1,5 @@
 {
-  "slug": "almondegasmolhosugo",
+  "slug": "Almondegas Molho Sugo",
   "nome": "Almôndegas ao Molho Sugo",
   "categoria": "proteína animal",
   "descricao": "Almôndegas de carne bovina fresca ao molho de tomate artesanal feito em nossa cozinha",
@@ -36,5 +36,18 @@
   "alerta_saude": "Pode conter glúten (farinha de rosca)",
   "beneficio_principal": "Combinação de carne + molho de tomate = ferro heme + vitamina C. A vitamina C do tomate aumenta absorção do ferro em até 6x",
   "curiosidade_cientifica": "O licopeno do molho de tomate cozido é 4x mais biodisponível que do tomate cru",
-  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2018"
+  "referencia_pesquisa": "American Journal of Clinical Nutrition, 2018",
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Arroz",
+    "Molho de tomate"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
 }

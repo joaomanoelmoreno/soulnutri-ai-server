@@ -1,5 +1,5 @@
 {
-  "slug": "cuscuzdetapioca",
+  "slug": "Cuscuzdetapioca",
   "nome": "Cuscuz de Tapioca",
   "categoria": "vegetariano",
   "descricao": "Cuscuz doce de tapioca artesanal com coco, adoçado com maple",
@@ -34,5 +34,16 @@
   "alerta_saude": "Apesar de ser naturalmente sem glúten, a tapioca é composta principalmente de carboidratos, com mais de 86g de carboidratos por 100g, o que pode impactar os níveis de glicose no sangue se consumido em excesso, especialmente para pessoas com resistência à insulina. Fonte: Tabela Brasileira de Composição de Alimentos (TACO), UNICAMP.",
   "beneficio_principal": "O leite de coco é rico em ácido láurico, que compõe aproximadamente 50% dos ácidos graxos do coco. Estudos mostram que o ácido láurico pode aumentar o colesterol HDL 'bom' e melhorar a saúde cardiovascular (Journal of Nutrition, 2016).",
   "curiosidade_cientifica": "A adição de coco ralado fresco ao cuscuz de tapioca não só adiciona textura, mas também fornece fibra insolúvel que pode ajudar na digestão, uma vez que a tapioca por si só é baixa em fibras.",
-  "referencia_pesquisa": "Journal of Nutrition, 2016 - Estudo sobre ácidos graxos de cadeia média no leite de coco."
+  "referencia_pesquisa": "Journal of Nutrition, 2016 - Estudo sobre ácidos graxos de cadeia média no leite de coco.",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Café ou almoço",
+  "combina_com": [
+    "Ovo",
+    "Manteiga"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🥚"
 }

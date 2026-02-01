@@ -1,0 +1,18 @@
+{
+  "nome": "Frutas ao Ganache de Chocolate",
+  "slug": "Frutas ao Ganache de Chocolate",
+  "categoria": "vegano",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🌱"
+}

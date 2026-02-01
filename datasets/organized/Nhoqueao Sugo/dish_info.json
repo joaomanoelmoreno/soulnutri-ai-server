@@ -1,5 +1,5 @@
 {
-  "slug": "nhoqueaosugo",
+  "slug": "Nhoqueao Sugo",
   "nome": "Nhoque ao Sugo",
   "categoria": "vegetariano",
   "descricao": "Nhoque de batata artesanal com molho de tomate feito em nossa cozinha",
@@ -35,5 +35,18 @@
   "alerta_saude": "Contém glúten",
   "beneficio_principal": "Batata do nhoque fornece amido resistente quando resfriada - funciona como fibra prebiótica alimentando bactérias boas do intestino",
   "curiosidade_cientifica": "Resfriar e reaquecer o nhoque aumenta o amido resistente em 50% - melhor para diabéticos",
-  "referencia_pesquisa": "European Journal of Clinical Nutrition, 2019"
+  "referencia_pesquisa": "European Journal of Clinical Nutrition, 2019",
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🥚"
 }

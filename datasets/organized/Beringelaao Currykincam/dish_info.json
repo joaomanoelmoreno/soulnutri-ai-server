@@ -1,5 +1,5 @@
 {
-  "slug": "beringelaaocurrykincam",
+  "slug": "Beringelaao Currykincam",
   "nome": "Berinjela ao Curry",
   "categoria": "vegano",
   "descricao": "Berinjela orgânica ao curry indiano importado com especiarias aromáticas",
@@ -35,5 +35,17 @@
   "alerta_saude": null,
   "beneficio_principal": "Contém nasunina (antioxidante da casca roxa) que protege membranas celulares do cérebro - estudos associam a menor risco de Alzheimer",
   "curiosidade_cientifica": "A berinjela absorve muito óleo na fritura (até 4x seu peso) - grelhar ou assar preserva os benefícios sem adicionar gordura",
-  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020"
+  "referencia_pesquisa": "Journal of Agricultural and Food Chemistry, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Tomate",
+    "Queijo",
+    "Azeite"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

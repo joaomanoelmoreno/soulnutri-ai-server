@@ -1,12 +1,12 @@
 {
-  "slug": "beringela_a_parmegiana",
+  "slug": "Berinjela a Parmegiana",
   "ativo": true,
   "beneficios": [
     "Baixíssima caloria (25kcal/100g) com alta saciedade - ideal para controle de peso",
     "Fibras que ajudam no controle glicêmico e saúde intestinal"
   ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-21T17:02:35.111000",
   "descricao": "Beringela a parmegiana - prato cadastrado pelo usuário",
@@ -27,7 +27,18 @@
   "riscos": [
     "Alérgeno: Contém LACTOSE"
   ],
-  "tecnica": "",
+  "tecnica": "Grelhada ou assada",
   "beneficio_principal": "A berinjela contém nasunina - antioxidante exclusivo que protege as membranas celulares do cérebro, pode melhorar memória e função cognitiva",
-  "curiosidade": "A casca roxa da berinjela tem 3x mais antioxidantes que a polpa - não descasque!"
+  "curiosidade": "A casca roxa da berinjela tem 3x mais antioxidantes que a polpa - não descasque!",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Tomate",
+    "Queijo",
+    "Azeite"
+  ],
+  "evitar_com": []
 }

@@ -1,5 +1,5 @@
 {
-  "slug": "peixe_a_milanesa",
+  "slug": "Peixe a Milanesa",
   "ativo": true,
   "beneficios": [
     "Fonte de proteína de alto valor biológico",
@@ -30,5 +30,18 @@
     "Alto teor de gordura se frito",
     "Contém GLÚTEN"
   ],
-  "tecnica": "Empanado e frito"
+  "tecnica": "Empanado e frito",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_frutos_mar": true,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

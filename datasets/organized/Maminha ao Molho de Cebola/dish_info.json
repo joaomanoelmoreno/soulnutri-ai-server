@@ -1,5 +1,5 @@
 {
-  "slug": "maminhamolhocebola",
+  "slug": "Maminha ao Molho de Cebola",
   "nome": "Maminha ao Molho de Cebola",
   "categoria": "proteína animal",
   "descricao": "Maminha fresca preparada sous vide com molho de cebola orgânica caramelizada",
@@ -36,5 +36,18 @@
   "alerta_saude": "O consumo excessivo de carnes vermelhas, como a maminha, está associado a um aumento de 15% no risco de doenças cardiovasculares quando mais de 700g são consumidos semanalmente. Recomenda-se moderação (Circulation, American Heart Association, 2020).",
   "beneficio_principal": "A cebola contém compostos chamados flavonoides, que incluem a quercetina. Estudos mostram que a quercetina pode ajudar a reduzir a pressão arterial em doses de 500 mg/dia (American Journal of Clinical Nutrition, 2015). Cada 100g de cebola contém aproximadamente 20-30mg de quercetina, ajudando a compor essa necessidade.",
   "curiosidade_cientifica": "A absorção de polifenóis da cebola é otimizada quando cozida em vinho, pois o etanol pode aumentar a biodisponibilidade destes compostos devido à quebra das membranas celulares, facilitando a liberação de substâncias bioativas.",
-  "referencia_pesquisa": "Koutsos A, et al. 'Flavonoids, the natural wound healing agents: Biomolecular and Therapeutic Evidences'. Open Chemistry, 2020."
+  "referencia_pesquisa": "Koutsos A, et al. 'Flavonoids, the natural wound healing agents: Biomolecular and Therapeutic Evidences'. Open Chemistry, 2020.",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Farofa",
+    "Vinagrete"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🍖"
 }

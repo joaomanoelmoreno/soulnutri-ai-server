@@ -1,5 +1,5 @@
 {
-  "slug": "baiaodedois",
+  "slug": "Baiaode Dois",
   "nome": "Baião de Dois",
   "categoria": "proteína animal",
   "descricao": "Prato típico nordestino com arroz e feijão-de-corda demolhado cozidos juntos",
@@ -36,5 +36,11 @@
   "alerta_saude": "O bacon artesanal pode conter nitritos, que em excesso formam compostos potencialmente carcinogênicos durante a digestão. Associações de saúde como a OMS recomendam limitar a ingestão de carne processada a 50g por dia.",
   "beneficio_principal": "O feijão-de-corda contém 157 mg de magnésio por 100g, mineral essencial para a função muscular e nervosa. Estudos mostram que magnésio adequado pode melhorar a qualidade do sono e reduzir a ansiedade (American Journal of Clinical Nutrition, 2012).",
   "curiosidade_cientifica": "Ao cozinhar o arroz e feijão juntos, formam oligossacarídeos prebióticos que aumentam a população de bactérias benéficas no intestino, favorecendo a digestão e saúde intestinal (Journal of Agricultural and Food Chemistry, 2018).",
-  "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos (TACO) - UNICAMP, 2011"
+  "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos (TACO) - UNICAMP, 2011",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🍖"
 }

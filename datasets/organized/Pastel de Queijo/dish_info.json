@@ -1,11 +1,11 @@
 {
-  "slug": "pastel_de_queijo",
+  "slug": "Pastel de Queijo",
   "ativo": true,
   "beneficios": [
     "Vitamina A do queijo: importante para visão noturna, pele saudável e sistema imunológico"
   ],
   "categoria": "vegetariano",
-  "category_emoji": "🥬",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-21T17:01:59.927000",
   "descricao": "Pastel de queijo - prato cadastrado pelo usuário",
@@ -32,5 +32,10 @@
   "curiosidade": "A fermentação do queijo produz peptídeos bioativos que podem ajudar a reduzir a pressão arterial",
   "alerta_saude": "Alérgeno: Contém LACTOSE (queijos envelhecidos têm menos)",
   "curiosidade_cientifica": "Queijos envelhecidos (parmesão, gouda) têm mais K2. Estudo holandês: pessoas que consomem queijo envelhecido têm 50% menos calcificação arterial",
-  "referencia_pesquisa": "European Journal of Nutrition, 2019"
+  "referencia_pesquisa": "European Journal of Nutrition, 2019",
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

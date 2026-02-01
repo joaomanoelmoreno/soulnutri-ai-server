@@ -1,5 +1,5 @@
 {
-  "slug": "cuscuzmarroquino",
+  "slug": "Cuscuz Marroquino",
   "nome": "Cuscuz Marroquino",
   "categoria": "vegano",
   "descricao": "Semolina de trigo cozida no vapor com especiarias importadas do Oriente Médio",
@@ -33,5 +33,16 @@
   "alerta_saude": "Contém GLÚTEN",
   "beneficio_principal": "Trigo integral do cuscuz tem baixo índice glicêmico (65) comparado a arroz branco (73) - melhor para controle de açúcar",
   "curiosidade_cientifica": "Cuscuz é o prato nacional do Marrocos e foi incluído no patrimônio cultural da UNESCO",
-  "referencia_pesquisa": "UNESCO Cultural Heritage, 2020"
+  "referencia_pesquisa": "UNESCO Cultural Heritage, 2020",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Café ou almoço",
+  "combina_com": [
+    "Ovo",
+    "Manteiga"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

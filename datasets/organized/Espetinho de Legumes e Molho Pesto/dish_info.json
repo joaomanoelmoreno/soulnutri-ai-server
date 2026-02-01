@@ -1,5 +1,5 @@
 {
-  "slug": "espetinho_de_legumes_e_molho_pesto",
+  "slug": "Espetinho de Legumes e Molho Pesto",
   "ativo": true,
   "beneficios": [],
   "categoria": "vegano",
@@ -23,5 +23,10 @@
   },
   "origem": "user_created",
   "riscos": [],
-  "tecnica": ""
+  "tecnica": "",
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
