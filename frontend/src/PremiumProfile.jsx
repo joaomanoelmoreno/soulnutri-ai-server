@@ -24,9 +24,8 @@ export function PremiumProfileForm({ user, onSave, onSkip }) {
     { id: 'sem_gluten', label: '🌾 Sem Glúten', desc: 'Intolerância/Celíaco' },
     { id: 'sem_lactose', label: '🥛 Sem Lactose', desc: 'Intolerância à lactose' },
     { id: 'sem_frutos_mar', label: '🦐 Sem Frutos do Mar', desc: 'Alergia' },
-    { id: 'sem_amendoim', label: '🥜 Sem Amendoim/Castanhas', desc: 'Alergia' },
-    { id: 'diabetico', label: '💉 Diabético', desc: 'Controle de açúcar' },
-    { id: 'hipertenso', label: '❤️ Hipertenso', desc: 'Controle de sódio' }
+    { id: 'sem_amendoim', label: '🥜 Sem Amendoim/Castanhas', desc: 'Alergia' }
+    // REMOVIDO: diabetico e hipertenso - questões jurídicas
   ];
 
   const handleRestricaoToggle = (id) => {
