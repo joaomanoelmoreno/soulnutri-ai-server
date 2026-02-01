@@ -278,21 +278,8 @@ export function generatePersonalizedTip(prato, perfil) {
     });
   }
 
-  if (restricoes.includes('diabetico') && carboidratos > 30) {
-    tips.push({
-      tipo: 'atencao',
-      icone: '💉',
-      texto: `Alto em carboidratos (${carboidratos}g). Controle a porção.`
-    });
-  }
-
-  if (restricoes.includes('hipertenso') && prato.riscos?.some(r => r.toLowerCase().includes('sódio'))) {
-    tips.push({
-      tipo: 'atencao',
-      icone: '❤️',
-      texto: 'Pode ter alto teor de sódio'
-    });
-  }
+  // NOTA: Lógica de diabético/hipertenso removida por questões jurídicas
+  // O código permanece comentado para referência futura se necessário
 
   // Dicas baseadas em atividade física
   if (perfil.nivel_atividade === 'intenso' && proteinas > 15) {
