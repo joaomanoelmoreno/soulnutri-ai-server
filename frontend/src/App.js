@@ -1877,6 +1877,14 @@ function App() {
       {/* Botões de ação */}
       <div className="action-btns">
         <button 
+          className="action-btn upload" 
+          onClick={() => fileInputRef.current?.click()}
+          data-testid="upload-button"
+          style={{ background: '#4a9eff' }}
+        >
+          📁 Foto
+        </button>
+        <button 
           className="action-btn gallery" 
           onClick={() => setShowGalleryView(true)}
           data-testid="gallery-button"
