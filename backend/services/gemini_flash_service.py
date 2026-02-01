@@ -93,19 +93,22 @@ async def identify_dish_gemini_flash(
     user_profile: Optional[Dict] = None
 ) -> Dict:
     """
-    Identifica um prato usando Gemini Flash OTIMIZADO PARA VELOCIDADE.
-    Target: < 1 segundo
+    Identifica um prato usando Gemini Flash.
+    Usa API direta do Google (GOOGLE_API_KEY) - custo ~$0.000006/clique
     """
-    from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContentWithMimeType
     from PIL import Image
     import io
+    import google.generativeai as genai
     
     start_time = time.time()
     
     try:
-        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        # Usar chave direta do Google (custo muito menor)
+        api_key = os.environ.get('GOOGLE_API_KEY')
         if not api_key:
-            return {"ok": False, "error": "API key não configurada"}
+            return {"ok": False, "error": "GOOGLE_API_KEY não configurada"}
+        
+        genai.configure(api_key=api_key)
         
         # ═══════════════════════════════════════════════════════════════════
         # OTIMIZAÇÃO: Melhor balanço entre velocidade e qualidade
@@ -121,40 +124,23 @@ async def identify_dish_gemini_flash(
         if img.mode != 'RGB':
             img = img.convert('RGB')
         
-        # Qualidade moderada (melhor reconhecimento)
-        buffer = io.BytesIO()
-        img.save(buffer, format='JPEG', quality=70)
+        # ═══════════════════════════════════════════════════════════════════
+        # CHAMAR GEMINI DIRETAMENTE (sem Emergent)
+        # ═══════════════════════════════════════════════════════════════════
+        model = genai.GenerativeModel('gemini-2.0-flash-lite')
         
-        # Salvar temp
-        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
-            tmp_file.write(buffer.getvalue())
-            tmp_path = tmp_file.name
+        prompt = f"""{SYSTEM_PROMPT_FLASH}
+
+Identifique este prato. O que você vê na imagem? Seja preciso."""
         
-        try:
-            # ═══════════════════════════════════════════════════════════════
-            # MODELO LITE = MAIS RÁPIDO
-            # ═══════════════════════════════════════════════════════════════
-            chat = LlmChat(
-                api_key=api_key,
-                session_id=f"sn-{int(time.time())}",
-                system_message=SYSTEM_PROMPT_FLASH
-            ).with_model("gemini", "gemini-2.0-flash-lite")  # LITE = ~700ms
-            
-            image_file = FileContentWithMimeType(
-                file_path=tmp_path,
-                mime_type="image/jpeg"
-            )
-            
-            user_message = UserMessage(
-                text="Identifique este prato. O que você vê na imagem? Seja preciso.",
-                file_contents=[image_file]
-            )
-            
-            api_start = time.time()
-            response = await chat.send_message(user_message)
-            api_time = (time.time() - api_start) * 1000
-            
-            logger.info(f"[GeminiFlash] Resposta da API em {api_time:.0f}ms")
+        api_start = time.time()
+        response = model.generate_content([prompt, img])
+        api_time = (time.time() - api_start) * 1000
+        
+        logger.info(f"[GeminiFlash] Resposta da API Google em {api_time:.0f}ms")
+        
+        response_text = response.text.strip()
+        logger.info(f"[GeminiFlash] Resposta bruta: {response_text[:200]}...")
             
         finally:
             # Limpar arquivo temporário
