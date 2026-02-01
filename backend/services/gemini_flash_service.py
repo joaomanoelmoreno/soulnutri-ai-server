@@ -160,11 +160,11 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
             result = json.loads(response_clean)
         except json.JSONDecodeError as e:
             logger.error(f"[GeminiFlash] Erro ao parsear JSON: {e}")
-            logger.error(f"[GeminiFlash] Resposta raw: {response[:500]}")
+            logger.error(f"[GeminiFlash] Resposta raw: {response_text[:500]}")
             return {
                 "ok": False,
                 "error": "Erro ao processar resposta da IA",
-                "raw_response": response[:500]
+                "raw_response": response_text[:500]
             }
         
         # ═══════════════════════════════════════════════════════════════════
