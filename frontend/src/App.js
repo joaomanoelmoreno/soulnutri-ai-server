@@ -285,7 +285,6 @@ function App() {
   // Geolocalização para regionalização (Brasil vs Internacional)
   const [userLocation, setUserLocation] = useState(null); // {lat, lng, country: 'BR' | 'OTHER'}
   const [locationPermission, setLocationPermission] = useState('pending'); // 'pending', 'granted', 'denied'
-  const [currentRestaurant, setCurrentRestaurant] = useState('cibi_sana'); // 'cibi_sana' ou 'outro'
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
