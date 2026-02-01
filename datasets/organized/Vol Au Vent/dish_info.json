@@ -1,29 +1,33 @@
 {
   "slug": "Vol Au Vent",
   "nome": "Vol Au Vent",
-  "categoria": "vegano",
-  "descricao": "O vol-au-vent (do francês \"vôo ao vento\") é uma pequena caixa cilíndrica feita de massa folhada leve e crocante. Sua estrutura é oca e possui uma tampa circular, sendo projetada para ser preenchida com recheios cremosos salgados ou doces. ",
+  "categoria": "vegetariano",
+  "descricao": "O vol-au-vent (do francês \"vôo ao vento\") massinha folhada com recheio de creme a base de ricota fesca",
   "ingredientes": [
     "massa folhada",
-    "requeijão",
+    "ricota",
     "tomate",
     "cheiro-verde",
-    "tempero",
-    "Creme de Frango"
+    "temperos",
+    ""
   ],
   "beneficios": [
-    "Fonte de energia",
-    "Fornece cálcio"
+    "Fonte de cálcio (ricota)",
+    "Pode ser adaptado com diversos recheios nutritivos",
+    "Prato versátil e saboroso",
+    "Permite o consumo de vegetais"
   ],
   "riscos": [
-    "Contém glúten",
-    "Alto teor de gordura"
+    "Alto teor de gordura dependendo do recheio",
+    "Pode ser rico em sódio devido aos temperos",
+    "A massa folhada pode conter gordura saturada"
   ],
   "nutricao": {
-    "calorias": "350 kcal",
+    "calorias": "280 kcal",
     "proteinas": "8g",
     "carboidratos": "25g",
-    "gorduras": "25g"
+    "gorduras": "16g",
+    "fibras": "2g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -31,5 +35,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": ""
 }
