@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://nutriscan-157.preview.emergentagent.com
-- Admin: https://nutriscan-157.preview.emergentagent.com/admin
-- Lista de Pratos: https://nutriscan-157.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://nutriscan-159.preview.emergentagent.com
+- Admin: https://nutriscan-159.preview.emergentagent.com/admin
+- Lista de Pratos: https://nutriscan-159.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

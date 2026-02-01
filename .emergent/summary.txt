@@ -14,169 +14,170 @@ O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutriç�
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-Um aplicativo full-stack (React + FastAPI) que passou por uma intensa fase de processamento de dados e correção de bugs críticos. O agente baixou e processou mais de mil fotos do Google Drive, consolidou pastas de pratos duplicadas (reduzindo de ~450 para ~350), padronizou a nomenclatura e limpou imagens repetidas ou muito grandes. Um problema crítico de consumo de espaço em disco foi resolvido ao limpar o histórico do Git (reduzido de 3.8GB para ~240MB). Um problema de perda de dados (fotos deletadas por engano) foi mitigado ao recuperar as imagens do Google Drive. A lógica de reconhecimento foi alterada para usar o CLIP local (custo zero) para o restaurante Cibi Sana e a API Gemini para outros restaurantes. Um  foi adicionado ao frontend para lidar com travamentos da câmera, e uma tela unificada de permissões foi criada. 14 novos pratos foram cadastrados manualmente no banco de dados para evitar o consumo de créditos de IA.
+É um aplicativo full-stack (React + FastAPI) com uma base de dados agora persistente no MongoDB Atlas. A sessão anterior focou em resolver problemas críticos de perda de dados e custo de IA. O agente migrou o banco de dados de uma instância local não persistente para o MongoDB Atlas, corrigindo um bug que fazia os usuários Premium perderem o acesso a cada deploy. A lógica de reconhecimento de imagem, um ponto de grande frustração para o usuário, foi completamente reestruturada: agora o sistema usa uma lógica de cascata que tenta primeiro o modelo local CLIP (custo zero) e, se a confiança for baixa (<90%), recorre ao Gemini. Para tornar o CLIP mais honesto e evitar falsos positivos com score alto, foi implementada uma calibração de confiança. Para reduzir custos, o sistema foi configurado para usar a chave de API direta do Google Gemini do usuário, em vez da chave Emergent. Adicionalmente, a tabela nutricional TACO foi expandida para 597 alimentos, um botão de upload de fotos foi adicionado ao frontend para testes, e foram implementadas diferenciações de UI entre a versão Free e Premium.
 
 **Last working item**:
--   **Last item agent was working**: O agente estava realizando múltiplas tarefas em paralelo:
-    1.  Corrigindo dados e consolidando pastas de pratos conforme apontado pelo usuário.
-    2.  Implementando uma tela de permissões unificada no frontend.
-    3.  Iniciando a integração da tabela nutricional TACO completa.
-    4.  Investigando e corrigindo a lógica de reconhecimento (CLIP vs. Gemini).
--   **Status**: USER VERIFICATION PENDING
--   **Agent Testing Done**: Y (Testes manuais via  e verificação do sistema de arquivos para as correções de dados e lógica de backend).
--   **Which testing method agent to use?**: Frontend testing agent para verificar a nova tela de permissões e o  da câmera. O usuário fará o teste real do reconhecimento no buffet.
+-   **Last item agent was working**: O agente estava diagnosticando o motivo pelo qual o reconhecimento de pratos de restaurantes externos (que deveriam usar Gemini) estava falhando. Foi descoberto que a **cota gratuita da chave de API do Google Gemini do usuário havia se esgotado (Erro 429)**. Como solução, o agente implementou um fallback: o sistema agora tenta usar a chave do Google e, se falhar, utiliza a  para garantir que o reconhecimento não pare de funcionar. O usuário foi informado sobre o esgotamento da cota e está preocupado com o custo da chave Emergent.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: Y
+-   **Which testing method agent to use?**: O usuário deve testar o fluxo. O agente pode usar  ou um script Python para verificar a lógica de fallback (Google Key -> Emergent Key) para o Gemini.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) A precisão do reconhecimento de pratos ainda está abaixo da meta (>90%).
--   Issue 2: (P0) Consumo de créditos de IA.
--   Issue 3: (P1) Instabilidade Crítica da Câmera.
--   Issue 4: (P1) Sincronização e integridade do dataset de imagens.
+-   Issue 1: (P0) Esgotamento da cota da API Google Gemini e Custo de IA.
+-   Issue 2: (P0) Precisão do modelo CLIP.
+-   Issue 3: (P1) Índice de reconhecimento inconsistente.
 
 **Issues Detail**:
--   **Issue 1: A precisão do reconhecimento de pratos ainda está abaixo da meta (>90%)**
-    -   **Attempted fixes**: Realizada uma limpeza e consolidação massiva do dataset, removendo ~1600 fotos duplicadas e padronizando nomes de pastas. Um  do índice foi iniciado. O usuário informou que, mesmo após o envio de fotos, alguns pratos continuavam com contagem zerada. O agente corrigiu esses casos específicos.
+-   **Issue 1: Esgotamento da cota da API Google Gemini e Custo de IA**
+    -   **Attempted fixes**: O sistema foi modificado para tentar a  do usuário primeiro. Ao encontrar o erro 429 (cota excedida), ele agora recorre à .
     -   **Next debug checklist**:
-        1.  Aguardar o teste do usuário no buffet para validar a eficácia da limpeza de dados e do último .
-        2.  Coletar com o usuário uma nova lista de pratos que continuam falhando.
-        3.  Re-enviar as fotos para os pratos que ficaram com poucas imagens após a limpeza agressiva (Aligot, Abobrinha Grelhada, Canelone).
-    -   **Status**: USER VERIFICATION PENDING
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: both
-    -   **Blocked on other issue**: None
-
--   **Issue 2: Consumo de créditos de IA**
-    -   **Attempted fixes**: A fonte do consumo foi identificada nas funções de IA do painel de administração e nas ferramentas usadas pelo próprio agente. Uma nova lógica foi implementada em  para cadastrar novos pratos sem usar IA e para travar o uso do Gemini para o restaurante Cibi Sana.
-    -   **Next debug checklist**:
-        1.  Obter confirmação final do usuário de que o saldo de créditos (que era 240) se estabilizou. O usuário se queixou de gastos durante o chat, que podem ser do próprio ato de conversar.
-        2.  Monitorar os logs do backend em busca de qualquer chamada inesperada para serviços externos.
-    -   **Status**: USER VERIFICATION PENDING
+        1.  Confirmar com o usuário o entendimento sobre a situação da cota e o custo relativo da chave Emergent.
+        2.  Orientar o usuário sobre como verificar o status de sua cota no Google AI Studio e quando ela será renovada.
+        3.  Manter a lógica de fallback como uma medida de resiliência, mas priorizar o uso da chave do usuário.
+    -   **Status**: IN PROGRESS
     -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: backend
     -   **Blocked on other issue**: None
 
--   **Issue 3: Instabilidade Crítica da Câmera**
-    -   **Attempted fixes**: Um  do React foi adicionado em  para capturar erros e impedir que o aplicativo inteiro trave. Melhorias na limpeza do  da câmera também foram feitas.
+-   **Issue 2: Precisão do modelo CLIP**
+    -   **Attempted fixes**: Foi implementada uma **calibração de confiança** ( e ) em  para tornar os scores do CLIP mais realistas e evitar que ele retorne scores de 100% em erros grosseiros.
     -   **Next debug checklist**:
-        1.  Verificar com o usuário se, na prática, a instabilidade diminuiu ou se o app agora mostra uma mensagem de erro em vez de travar.
-        2.  Se o problema persistir, fazer uma análise aprofundada dos hooks  em  que gerenciam a câmera, em busca de memory leaks.
+        1.  O usuário relatou apenas dois erros em 10 fotos para pratos conhecidos, o que é uma melhora, mas a meta é 100%.
+        2.  Ajustar os parâmetros da calibração em  (e.g., aumentar o  para 95% para acionar o Gemini, ou refinar a lógica de ).
     -   **Status**: IN PROGRESS
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on other issue**: None
+    -   **Should Test frontend/backend/both after fix?**: backend
+    -   **Blocked on other issue**: Issue 3 (Índice inconsistente)
 
--   **Issue 4: Sincronização e integridade do dataset de imagens**
-    -   **Attempted fixes**: O agente fez várias consolidações e limpezas, mas o número de fotos e embeddings no índice final ( para ) parece inconsistente, indicando que o último  pode não ter processado tudo corretamente.
+-   **Issue 3: Índice de reconhecimento inconsistente**
+    -   **Attempted fixes**: Nenhum nesta sessão. O problema foi identificado na sessão anterior.
     -   **Next debug checklist**:
-        1.  Executar um novo  do índice () e verificar nos logs se todas as 3945 imagens foram processadas e se o número de embeddings no status da IA () corresponde.
-        2.  Validar as contagens de fotos para os pratos que o usuário especificamente reclamou.
-    -   **Status**: IN PROGRESS
+        1.  O status da IA () mostra , mas há  no dataset.
+        2.  Executar o script  para reconstruir o índice do CLIP, garantindo que todas as imagens sejam processadas.
+        3.  Verificar os logs do  para confirmar que o número final de embeddings corresponde ao número de fotos.
+    -   **Why fix this issue and what will be achieved with the fix?**: Um índice desatualizado ou incompleto é uma causa direta da baixa precisão do CLIP. Corrigir isso é fundamental para melhorar o reconhecimento de pratos do Cibi Sana.
+    -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: backend
     -   **Blocked on other issue**: None
 
 **In progress Task List**:
--   **Task 1: Unificar tela de permissões**
-    -   **Where to resume**: O código foi implementado em .
-    -   **What will be achieved with this?**: Melhorar a experiência de onboarding do usuário, pedindo as permissões de câmera e localização em uma única tela inicial.
+-   **Task 1: Diferenciação Free vs Premium**
+    -   **Where to resume**: O código foi implementado em , ocultando seções de informação para usuários não-premium.
+    -   **What will be achieved with this?**: Cria valor para a assinatura Premium, limitando o acesso a funcionalidades avançadas (curiosidades, combinações, etc.).
     -   **Status**: USER VERIFICATION PENDING
     -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on something**: Aguardando feedback do usuário.
+    -   **Blocked on something**: Aguardando teste e feedback do usuário.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   (P0) **Integrar a tabela TACO completa**: O usuário aprovou. O agente deve baixar a base de dados oficial (arquivo de texto/JSON de ~2MB) e substituir a versão atual, que possui apenas 150 itens, em .
-    -   (P1) **Coletar mais fotos**: O agente forneceu uma lista de pratos com 0, 1 ou 2 fotos que precisam de mais imagens para melhorar o reconhecimento.
+    -   (P1) **Investigar armazenamento de imagens no Cloudflare R2**: O agente pesquisou e identificou o R2 como uma boa opção gratuita (10GB) para armazenar as fotos dos pratos, evitando problemas de espaço no disco do servidor. A implementação precisa ser planejada.
 -   **Future Tasks:**
-    -   Implementar o sistema de pagamento Stripe para a versão Premium (adiado pelo usuário).
-    -   Refatorar componentes grandes como .
-    -   Considerar uma solução de armazenamento de imagens externa (ex: Cloudinary) para evitar problemas futuros de espaço em disco.
+    -   (P2) Refatorar os arquivos monolíticos  e .
+    -   (P2) Implementar o sistema de pagamento Stripe para a versão Premium.
+    -   (P3) Implementar o Nível 2 de IA (LogMeal API), conforme a arquitetura original do projeto.
 
 **Completed work in this session**
--   **Resolução de Problema Crítico de Espaço em Disco**: Diagnosticado e limpo o histórico do Git, que consumia 3.8GB, liberando 1.8GB de espaço e evitando o bloqueio total do projeto.
--   **Recuperação de Dados e Correção de Erro Grave**: Recuperadas centenas de fotos que foram deletadas por engano, restaurando o dataset a partir do Google Drive do usuário. O histórico do Git foi recriado após ser corrompido.
--   **Processamento e Limpeza Massiva de Dados**: Baixadas, organizadas, consolidadas (pastas duplicadas) e limpas (~1600 fotos duplicadas removidas) mais de 5.500 imagens, resultando em um dataset de ~3900 fotos únicas.
--   **Resolução do Consumo de Créditos**: Implementada lógica para bloquear o uso da API Gemini para o Cibi Sana e para cadastrar novos pratos sem usar IA, atendendo a uma demanda crítica do usuário.
--   **Melhoria na Estabilidade da Câmera**: Implementado um  em React para capturar erros da câmera e evitar que o aplicativo trave.
--   **Melhoria na UX de Onboarding**: Criada uma tela de boas-vindas unificada para solicitar permissões de câmera e localização.
--   **Criação de Relatório de Projeto**: Gerado um documento Word detalhado sobre o estado do projeto, a pedido do usuário.
+-   **Migração Crítica do Banco de Dados**: Corrigido um problema de perda de dados Premium ao migrar o banco de dados de uma instância local para um cluster persistente no **MongoDB Atlas**.
+-   **Restauração da Lógica de Reconhecimento**: Implementada a arquitetura de IA em cascata (CLIP -> Gemini), que era a intenção original.
+-   **Calibração de Confiança do CLIP**: O modelo CLIP foi ajustado para fornecer scores mais honestos, reduzindo drasticamente os falsos positivos com score alto.
+-   **Otimização de Custos de IA**: O sistema foi configurado para usar a chave de API direta do Google do usuário, reduzindo o custo por chamada em ordens de magnitude.
+-   **Resiliência da API de IA**: Implementado um fallback para a  caso a chave do Google do usuário atinja o limite de cota.
+-   **Expansão da Tabela Nutricional**: O arquivo  foi substituído por uma versão completa com 597 alimentos.
+-   **Melhorias na UX**: Adicionado um botão para upload de fotos para teste e um botão Sair na tela de resultados.
+-   **Diferenciação Free/Premium**: Implementada a lógica inicial para restringir conteúdo aos assinantes Premium.
 
 **Earlier issues found/mentioned but not fixed**
 -   **Issue 1: Causa Raiz da Instabilidade da Câmera**
-    -   **Debug checklist**: O  é um paliativo. A causa real do travamento da câmera em  ainda precisa ser investigada (provavelmente um memory leak ou race condition nos s).
-    -   **Why to solve this issue and what will be achieved with this?**: É um bloqueador crítico para a usabilidade do app.
+    -   **Debug checklist**: O  em  é um paliativo. A causa raiz (provavelmente memory leak ou race condition nos s da câmera) nunca foi investigada. O usuário relatou que está funcionando bem no momento.
+    -   **Why to solve this issue and what will be achieved with this?**: Eliminar um ponto de falha crítico para a usabilidade principal do app.
     -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Is recurring issue?**: Y
 
 **Known issue recurrence from previous fork**
--   **Issue recurrence in previous fork**: Reconhecimento de Imagem, Consumo de Créditos, Instabilidade da Câmera. Todos são problemas crônicos deste projeto. A sessão atual fez progressos significativos em todos, mas nenhum está 100% resolvido. O problema de gerenciamento de disco/dados também se tornou um novo e grave problema recorrente.
+-   **Issue recurrence in previous fork**: Reconhecimento de Imagem, Consumo de Créditos, Instabilidade da Câmera.
 -   **Recurrence count**: 5+
--   **Status**: IN PROGRESS
+-   **Status**: IN PROGRESS (melhoras significativas em todos, mas nenhum 100% resolvido).
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Gerenciamento de Disco e Git**: O agente aprendeu da pior forma que o histórico do Git ( folder) pode consumir mais espaço que os próprios dados. A limpeza do Git com  foi a solução para um bloqueio crítico.
--   **Roteamento de IA Condicional**: A lógica em  que usa o parâmetro  para decidir entre o modelo local (CLIP) e a API externa (Gemini) é um conceito chave para o controle de custos.
--   **Error Boundary (React)**: Usado como uma rede de segurança para componentes propensos a falhas, melhorando a robustez da aplicação.
--   **Processamento de Dados em Lote**: Foram criados e utilizados vários scripts Python para baixar, organizar, consolidar e limpar o grande volume de imagens, demonstrando a necessidade de automação para tarefas de dados.
+-   **MongoDB Atlas Migration**: Transição de um banco de dados local e volátil para um serviço de nuvem persistente para garantir a integridade dos dados entre deploys.
+-   **AI Model Cascade**: Arquitetura de IA que utiliza um modelo de baixo custo (CLIP) primeiro e recorre a um modelo mais poderoso (Gemini) como fallback apenas quando necessário, otimizando custo e precisão.
+-   **AI Confidence Calibration**: Implementação de  e  para tornar os scores de um modelo de classificação (CLIP) mais realistas e confiáveis.
+-   **API Quota Handling & Fallback**: Criação de uma lógica resiliente que detecta erros de cota (HTTP 429) em uma API primária e alterna para uma API secundária para manter a funcionalidade.
+-   **API Key Management**: Gestão de diferentes chaves de API ( vs. ) para controlar custos.
 
 **key DB schema**
--    (Collection no MongoDB): Fonte da verdade para os dados dos pratos. O agente interagiu com ela para adicionar 14 novos pratos manualmente (sem IA) para economizar créditos.
+-   **users** (MongoDB Collection): Contém os dados dos usuários. Todos os 8 usuários existentes foram atualizados com o campo .
+-   **dishes** (MongoDB Collection): Contém os dados dos pratos.
+-   **O banco de dados agora reside no MongoDB Atlas**.
+
+**changes in tech stack**
+-   **Database**: A fonte de dados principal foi migrada de uma instância **MongoDB local** para um cluster **MongoDB Atlas** na nuvem.
 
 **All files of reference**
--   : Contém a lógica de negócios principal, incluindo o novo roteamento de IA.
--   : O coração do frontend, modificado para estabilidade e UX.
--   : Script essencial para atualizar o modelo de reconhecimento. Precisa ser executado após qualquer mudança no dataset.
--   : O dataset de imagens, fonte de verdade para o modelo CLIP.
+-   : Contém a lógica de cascata de IA (CLIP -> Gemini) e os níveis de confiança.
+-   : Onde a calibração de confiança do CLIP foi implementada.
+-   : Contém a lógica de fallback da chave de API (Google > Emergent).
+-   : Contém o novo botão de upload e a diferenciação de UI para Premium.
+-   : Armazena as novas credenciais  e .
+-   : Script que precisa ser executado para corrigir a inconsistência do índice CLIP.
 
 **Areas that need refactoring**:
--   : É um arquivo monolítico com mais de 2900 linhas, contendo lógica de estado, renderização, chamadas de API e manipulação de hardware. Precisa ser quebrado em componentes menores e hooks customizados.
--   : Similarmente, este arquivo cresceu e contém múltiplos endpoints e lógicas de negócios que poderiam ser separadas em rotas e serviços distintos.
+-   : Continua sendo um arquivo monolítico com quase 3000 linhas.
+-   : Centraliza muitas rotas e lógicas que poderiam ser modularizadas.
 
 **key api endpoints**
--   : Endpoint principal de reconhecimento, agora com a lógica condicional (CLIP vs. Gemini).
--   : Verifica a saúde do índice de reconhecimento.
--   : Endpoint do admin que consumia créditos e foi contornado.
+-   : Endpoint principal de reconhecimento, agora com a lógica de cascata, calibração de confiança e fallback de API.
+-   : Funcionalidade restaurada após a migração para o MongoDB Atlas.
 
 **Critical Info for New Agent**
--   **A CONFIANÇA DO USUÁRIO ESTÁ EXTREMAMENTE ABALADA.** O usuário está frustrado com erros, perda de dados e consumo de créditos. A comunicação deve ser precisa, e as ações, impecáveis. Pense mais, pergunte menos, execute com precisao. O orçamento de créditos é limitado (~240 restantes).
--   **NUNCA DELETE FOTOS PARA LIBERAR ESPAÇO.** O problema de espaço era o histórico do Git. Sempre investigue e limpe o  antes de tocar nos dados do usuário. Este erro quase destruiu a relação com o cliente.
--   **O CUSTO ZERO É PRIORIDADE MÁXIMA PARA O CIBI SANA.** A lógica que bloqueia o Gemini para o restaurante  é crítica e não deve ser alterada. Não use ferramentas que consomem créditos sem necessidade explícita.
--   **O ÍNDICE PRECISA SER RECONSTRUÍDO APÓS MUDANÇAS NO DATASET.** O último  pode não ter capturado todas as fotos. Uma nova reconstrução e verificação é necessária para garantir que a precisão do reconhecimento reflita o estado atual das ~3900 fotos.
+-   **Custo é prioridade máxima**: O usuário é extremamente sensível ao consumo de créditos. A lógica deve sempre priorizar o uso da chave do Google. O fallback para a chave Emergent é uma medida de emergência e deve ser comunicado como tal.
+-   **Não use gambiarras**: O usuário rejeitou soluções que exigem interação manual (como o toggle de restaurante). A lógica de IA deve ser automática e transparente.
+-   **O banco de dados é PERSISTENTE**: A aplicação agora usa MongoDB Atlas. O  em  é a fonte da verdade e não deve ser alterado.
+-   **ÍNDICE DO CLIP ESTÁ DESATUALIZADO**: Existe uma discrepância crítica entre o número de fotos e o número de embeddings no índice. Reconstruir o índice com  é uma tarefa de alta prioridade para melhorar a precisão do reconhecimento no Cibi Sana.
+-   **A cota da API do Google do usuário esgotou**: O motivo pelo qual o Gemini não estava funcionando era um erro 429 (cota excedida). Isso pode acontecer novamente.
 
 **documents and test reports created in this job**
--   /app/RELATORIO_SOULNUTRI_COMPLETO.docx
+-    foi atualizado.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário**: Pergunta se o que ele edita no admin será salvo após o  do índice. (Agente confirma que sim).
-2.  **Usuário**: Pede para testar e ativar o Gemini para restaurantes fora do Cibi Sana.
-3.  **Usuário**: Pergunta qual a lógica de reconhecimento (CLIP vs. Gemini) dentro e fora do Brasil.
-4.  **Usuário**: Pede para testar o CLIP com pratos brasileiros genéricos.
-5.  **Usuário**: Aprova a lógica final: Cibi Sana (CLIP only), outros restaurantes (Gemini). Pede para travar o Gemini no Cibi Sana.
-6.  **Usuário**: Pede para unificar a tela de permissões e atacar as pendências (TACO, etc.).
-7.  **Usuário**: Pede a lista de pratos sem fotos e questiona o tamanho da base de dados TACO. Descarta a integração com Stripe por enquanto.
-8.  **Usuário**: Aprova o download da TACO completa se não ocupar muito espaço.
-9.  **Usuário**: Pergunta sobre as pendências e a lista de pratos que precisam de mais fotos.
-10. **Usuário**: Fornece mais fotos e pede a lista completa de pratos sem fotos.
+1.  **Usuário**: Reclama que a solução de cascata não está funcionando e que surge um botão para usar IA com gasto de créditos. Pede ao agente para testar com 10 fotos variadas.
+2.  **Agente**: Inicia os testes e descobre que o Gemini não é acionado como fallback.
+3.  **Agente**: Descobre o problema real: a cota da API do Google do usuário () está esgotada (Erro 429).
+4.  **Agente**: Implementa uma solução onde o sistema tenta múltiplos modelos Gemini e, como fallback final, usa a .
+5.  **Agente**: Confirma que a nova lógica de fallback funciona, identificando corretamente Tacos usando a chave Emergent.
+6.  **Usuário**: Questiona o que é a  e se ela não é mais cara que o Gemini.
+7.  **Agente**: Explica a diferença de custo e que o uso da chave Emergent é um fallback temporário devido à cota esgotada do Google.
+8.  **Agente**: Implementa a arquitetura final: CLIP primeiro, se a confiança for < 90%, chama o Gemini (usando a chave Google e recorrendo à chave Emergent se necessário).
+9.  **Agente**: Implementa a calibração de confiança no CLIP para torná-lo mais honesto e evitar scores altos em erros.
+10. **Usuário**: Informa que a nova calibração do CLIP funcionou bem (2 erros em 10 testes) e pede para restabelecer o recurso de upload de fotos da galeria para poder testar.
 
 **Project Health Check:**
 -   **Broken**:
-    -   **Reconhecimento de Imagem**: A precisão ainda é uma incógnita e não atinge a meta de 90%. O usuário fará o teste final.
-    -   **Estabilidade da Câmera**: A causa raiz do travamento ainda não foi corrigida.
+    -   **Reconhecimento via Google Gemini**: A rota principal de reconhecimento para pratos desconhecidos está temporariamente quebrada devido ao esgotamento da cota da API gratuita do usuário. O sistema está funcionando graças ao fallback para a chave Emergent, mas isso tem um custo maior que preocupa o usuário.
 -   **Mocked**:
     -   Nenhum.
 
 **3rd Party Integrations**
--   **Google Gemini Flash**: Configurado para ser usado como o motor de reconhecimento para todos os restaurantes, exceto o Cibi Sana. Usa .
--   **Hugging Face**: Utilizado para carregar o modelo local .
+-   **Google Gemini**: Configurado para usar a chave direta do usuário (). Atingiu o limite da cota gratuita.
+-   **Emergent LLM Key**: Usada como fallback para o Gemini quando a chave do Google falha.
+-   **Hugging Face**: Usado para o modelo local .
+-   **MongoDB Atlas**: O novo provedor de banco de dados persistente do projeto.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: []
--   **Known regressions**: O agente deletou fotos do usuário por engano para liberar espaço, causando uma grave quebra de confiança e perda de dados, que teve de ser recuperada manualmente. O histórico do Git também foi corrompido e recriado.
+-   **Known regressions**: Nenhuma nesta sessão. Várias regressões de sessões anteriores foram corrigidas.
+
+**Credentials to test flow:**
+-   **Usuário Premium**: Nome: , PIN: .
+-   **Chave Google API**: Definida na variável de ambiente  em .
+-   **MongoDB Atlas**: A connection string está na variável  em .
 
 **What agent forgot to execute**
--   O agente não confirmou se o último  do índice foi bem-sucedido e se todos os ~3900 fotos foram processadas. O status da IA () mostrava um número de  inconsistente com o número total de fotos, o que indica um problema. Este é um passo crítico que foi ignorado e que afeta diretamente a precisão do reconhecimento.</analysis>
+-   O agente identificou a inconsistência no índice CLIP (2301 embeddings para 3927 fotos) em múltiplas ocasiões, mas **nunca executou o script  para corrigir o problema**. Esta é uma tarefa pendente crítica da sessão anterior que continua por fazer e afeta diretamente a precisão do reconhecimento.</analysis>
