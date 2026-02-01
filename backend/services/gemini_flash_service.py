@@ -141,16 +141,11 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
         
         response_text = response.text.strip()
         logger.info(f"[GeminiFlash] Resposta bruta: {response_text[:200]}...")
-            
-        finally:
-            # Limpar arquivo temporário
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
         
         # ═══════════════════════════════════════════════════════════════════
         # PARSE DA RESPOSTA JSON
         # ═══════════════════════════════════════════════════════════════════
-        response_clean = response.strip()
+        response_clean = response_text.strip()
         
         # Remover marcadores de código se presentes
         if response_clean.startswith("```"):
