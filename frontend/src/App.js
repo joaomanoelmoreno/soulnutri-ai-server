@@ -1750,49 +1750,6 @@ function App() {
         </div>
       </header>
 
-      {/* Seletor de restaurante */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '8px',
-        padding: '8px',
-        background: 'rgba(0,0,0,0.3)',
-        borderBottom: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <button
-          onClick={() => setCurrentRestaurant('cibi_sana')}
-          data-testid="restaurant-cibi"
-          style={{
-            padding: '6px 12px',
-            borderRadius: '20px',
-            border: 'none',
-            fontSize: '12px',
-            fontWeight: currentRestaurant === 'cibi_sana' ? 'bold' : 'normal',
-            background: currentRestaurant === 'cibi_sana' ? '#00ff88' : 'rgba(255,255,255,0.1)',
-            color: currentRestaurant === 'cibi_sana' ? '#000' : '#fff',
-            cursor: 'pointer'
-          }}
-        >
-          🏠 Cibi Sana
-        </button>
-        <button
-          onClick={() => setCurrentRestaurant('outro')}
-          data-testid="restaurant-outro"
-          style={{
-            padding: '6px 12px',
-            borderRadius: '20px',
-            border: 'none',
-            fontSize: '12px',
-            fontWeight: currentRestaurant === 'outro' ? 'bold' : 'normal',
-            background: currentRestaurant === 'outro' ? '#ff8800' : 'rgba(255,255,255,0.1)',
-            color: currentRestaurant === 'outro' ? '#000' : '#fff',
-            cursor: 'pointer'
-          }}
-        >
-          🌍 Outro local
-        </button>
-      </div>
-
       {/* Toast de confirmação - Refeição registrada */}
       {mealRegistered && (
         <div 
