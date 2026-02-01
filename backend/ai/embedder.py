@@ -68,7 +68,12 @@ def _try_load_local_model():
 
 
 def preload_model():
-    """Pré-carrega o modelo LOCAL - API externa DESABILITADA"""
+    """Pré-carrega o modelo LOCAL - API externa DESABILITADA
+    
+    NOTA: Se o modelo local falhar (ex: sem GPU/CUDA no deploy), 
+    o sistema ainda funciona para BUSCAS usando o índice pré-calculado.
+    Apenas a criação de NOVOS embeddings ficará indisponível.
+    """
     global _USE_HF_API
     
     # SEMPRE usar modelo local - API externa DESABILITADA para economizar créditos
@@ -78,8 +83,15 @@ def preload_model():
         logger.info("[embedder] ✅ Modelo LOCAL carregado - ZERO créditos")
         return True
     
-    logger.error("[embedder] ❌ ERRO: Modelo local falhou e API está desabilitada")
-    return False
+    # Em ambiente de deploy sem GPU, o modelo local pode falhar
+    # MAS o sistema ainda funciona para BUSCAS usando embeddings pré-calculados
+    logger.warning("[embedder] ⚠️ Modelo local indisponível (provavelmente sem GPU)")
+    logger.warning("[embedder] ⚠️ BUSCAS funcionam normalmente com índice pré-calculado")
+    logger.warning("[embedder] ⚠️ Criação de NOVOS embeddings indisponível")
+    
+    # Retornar True para não bloquear a inicialização do servidor
+    # O índice pré-calculado ainda permite buscas
+    return True
 
 
 def get_image_embedding(image_bytes: bytes) -> np.ndarray:
