@@ -475,8 +475,8 @@ RETORNE JSON:
 
 
 def is_gemini_flash_available() -> bool:
-    """Verifica se Gemini Flash está configurado"""
-    return bool(os.environ.get('EMERGENT_LLM_KEY'))
+    """Verifica se Gemini Flash está configurado (API direta do Google)"""
+    return bool(os.environ.get('GOOGLE_API_KEY'))
 
 
 def get_gemini_flash_status() -> Dict:
