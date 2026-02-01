@@ -3043,8 +3043,10 @@ function App() {
                   const user = { ...data.user, pin: localStorage.getItem('soulnutri_pin') };
                   setPremiumUser(user);
                   loadDailySummary();
-                  // Se não tem perfil preenchido, mostrar formulário
-                  if (!user.perfil || !user.perfil.peso) {
+                  // Se não tem dados físicos preenchidos, mostrar formulário
+                  // Dados podem estar em user.peso ou user.perfil.peso
+                  const temDadosFisicos = user.peso || (user.perfil && user.perfil.peso);
+                  if (!temDadosFisicos) {
                     setShowPremium('profile');
                   } else {
                     setShowPremium('dashboard');
