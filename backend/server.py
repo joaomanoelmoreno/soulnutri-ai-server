@@ -600,10 +600,10 @@ async def identify_image(
             
             logger.info(f"[NÍVEL 1] CLIP Local: {decision.get('dish_display', 'N/A')} - {nivel1_confidence} ({nivel1_score:.2%})")
             
-            # THRESHOLDS
-            THRESHOLD_ALTA = 0.70    # >= 70% = confiança alta, usar direto
-            THRESHOLD_MEDIA = 0.50   # >= 50% = confiança média, usar com aviso
-            THRESHOLD_BAIXA = 0.30   # >= 30% = tentar Gemini Flash
+            # THRESHOLDS - Ajustados para melhor precisão
+            THRESHOLD_ALTA = 0.85    # >= 85% = confiança alta, usar direto (antes era 70%)
+            THRESHOLD_MEDIA = 0.70   # >= 70% = confiança média, usar Gemini para confirmar
+            THRESHOLD_BAIXA = 0.50   # >= 50% = baixa confiança, usar Gemini como principal
             
             ia_disponivel = False
             
