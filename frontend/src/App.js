@@ -2033,66 +2033,102 @@ function App() {
               CONTEÚDO PREMIUM - Radar de Notícias (apenas na vista completa)
               ══════════════════════════════════════════════════════════ */}
           
-          {/* VOCÊ SABIA? */}
-          {radarInfo?.voce_sabia && (
-            <div className="mesa-section voce-sabia" style={{
-              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15))',
-              borderLeft: '3px solid #3b82f6',
-              borderRadius: '8px',
-              padding: '12px'
+          {/* AVISO PARA USUÁRIOS FREE */}
+          {!premiumUser && (
+            <div className="premium-upsell" style={{
+              background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1))',
+              border: '1px solid rgba(255, 215, 0, 0.3)',
+              borderRadius: '12px',
+              padding: '16px',
+              textAlign: 'center',
+              margin: '12px 0'
             }}>
-              <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Você sabia?</h4>
-              <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                {radarInfo.voce_sabia}
+              <h4 style={{ color: '#ffd700', marginBottom: '8px' }}>⭐ Versão Premium</h4>
+              <p style={{ color: '#ccc', fontSize: '13px', margin: '0 0 12px' }}>
+                Desbloqueie: Curiosidades científicas, Combinações inteligentes, Alertas personalizados e mais!
               </p>
+              <button 
+                onClick={() => setShowPremiumModal(true)}
+                style={{
+                  background: 'linear-gradient(135deg, #ffd700, #ff8c00)',
+                  color: '#000',
+                  border: 'none',
+                  borderRadius: '20px',
+                  padding: '8px 24px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                Conhecer Premium
+              </button>
             </div>
           )}
+          
+          {/* CONTEÚDO EXCLUSIVO PREMIUM */}
+          {premiumUser && (
+            <>
+              {/* VOCÊ SABIA? */}
+              {radarInfo?.voce_sabia && (
+                <div className="mesa-section voce-sabia" style={{
+                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15))',
+                  borderLeft: '3px solid #3b82f6',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Você sabia?</h4>
+                  <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
+                    {radarInfo.voce_sabia}
+                  </p>
+                </div>
+              )}
 
-          {/* COMBINAÇÕES QUE POTENCIALIZAM */}
-          {radarInfo?.combinacoes?.length > 0 && (
-            <div className="mesa-section combinacoes" style={{
-              background: 'rgba(34, 197, 94, 0.1)',
-              borderLeft: '3px solid #22c55e',
-              borderRadius: '8px',
-              padding: '12px'
-            }}>
-              <h4 style={{ color: '#22c55e', marginBottom: '8px' }}>🔗 Combinações que potencializam</h4>
-              {radarInfo.combinacoes.map((combo, i) => (
-                <p key={i} style={{ color: '#ccc', fontSize: '12px', margin: '4px 0' }}>• {combo}</p>
-              ))}
-            </div>
-          )}
+              {/* COMBINAÇÕES QUE POTENCIALIZAM */}
+              {radarInfo?.combinacoes?.length > 0 && (
+                <div className="mesa-section combinacoes" style={{
+                  background: 'rgba(34, 197, 94, 0.1)',
+                  borderLeft: '3px solid #22c55e',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#22c55e', marginBottom: '8px' }}>🔗 Combinações que potencializam</h4>
+                  {radarInfo.combinacoes.map((combo, i) => (
+                    <p key={i} style={{ color: '#ccc', fontSize: '12px', margin: '4px 0' }}>• {combo}</p>
+                  ))}
+                </div>
+              )}
 
-          {/* FATOS INTERESSANTES / ALERTAS */}
-          {radarInfo?.has_alert && radarInfo?.facts?.length > 0 && (
-            <div className="mesa-section fatos" style={{
-              background: radarInfo.type === 'alerta' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
-              borderLeft: `3px solid ${radarInfo.type === 'alerta' ? '#ef4444' : '#f59e0b'}`,
-              borderRadius: '8px',
-              padding: '12px'
-            }}>
-              <h4 style={{ 
-                color: radarInfo.type === 'alerta' ? '#f87171' : '#fbbf24', 
-                marginBottom: '8px' 
-              }}>
-                {radarInfo.type === 'alerta' ? '⚠️ Alerta Nutricional' : '📰 Fatos Interessantes'}
-              </h4>
-              {radarInfo.facts.slice(0, 2).map((fato, i) => (
-                <div key={i} style={{ marginBottom: '8px' }}>
-                  {fato.fatos?.slice(0, 1).map((f, j) => (
-                    <div key={j}>
-                      <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>
-                        {fato.emoji} {f.titulo}
-                      </p>
-                      <p style={{ color: '#ccc', fontSize: '12px', margin: '0 0 4px', lineHeight: '1.4' }}>
-                        {f.resumo}
-                      </p>
-                      <small style={{ color: '#888', fontSize: '10px' }}>Fonte: {f.fonte}</small>
+              {/* FATOS INTERESSANTES / ALERTAS */}
+              {radarInfo?.has_alert && radarInfo?.facts?.length > 0 && (
+                <div className="mesa-section fatos" style={{
+                  background: radarInfo.type === 'alerta' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
+                  borderLeft: `3px solid ${radarInfo.type === 'alerta' ? '#ef4444' : '#f59e0b'}`,
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ 
+                    color: radarInfo.type === 'alerta' ? '#f87171' : '#fbbf24', 
+                    marginBottom: '8px' 
+                  }}>
+                    {radarInfo.type === 'alerta' ? '⚠️ Alerta Nutricional' : '📰 Fatos Interessantes'}
+                  </h4>
+                  {radarInfo.facts.slice(0, 2).map((fato, i) => (
+                    <div key={i} style={{ marginBottom: '8px' }}>
+                      {fato.fatos?.slice(0, 1).map((f, j) => (
+                        <div key={j}>
+                          <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>
+                            {fato.emoji} {f.titulo}
+                          </p>
+                          <p style={{ color: '#ccc', fontSize: '12px', margin: '0 0 4px', lineHeight: '1.4' }}>
+                            {f.resumo}
+                          </p>
+                          <small style={{ color: '#888', fontSize: '10px' }}>Fonte: {f.fonte}</small>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
 
           {/* RISCOS CONSOLIDADOS */}
