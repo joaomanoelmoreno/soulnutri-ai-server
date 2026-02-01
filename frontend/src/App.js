@@ -294,6 +294,14 @@ function App() {
   const [mealRegistered, setMealRegistered] = useState(false); // Confirmação de registro
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  // Tela de permissões unificada
+  const [showPermissions, setShowPermissions] = useState(() => {
+    return !localStorage.getItem('soulnutri_permissions_granted');
+  });
+  const [permissionsStatus, setPermissionsStatus] = useState({
+    camera: 'pending',
+    location: 'pending'
+  });
   // Welcome popup com seleção de idioma
   const [showWelcome, setShowWelcome] = useState(() => {
     return !localStorage.getItem('soulnutri_welcomed');
@@ -309,10 +317,66 @@ function App() {
   const mountedRef = useRef(true);
   const lastTouchRef = useRef(0);
 
+  // Função para solicitar todas as permissões de uma vez
+  const requestAllPermissions = async () => {
+    let cameraGranted = false;
+    let locationGranted = false;
+    
+    // 1. Solicitar permissão de câmera
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      stream.getTracks().forEach(t => t.stop());
+      cameraGranted = true;
+      setPermissionsStatus(prev => ({ ...prev, camera: 'granted' }));
+    } catch (e) {
+      setPermissionsStatus(prev => ({ ...prev, camera: 'denied' }));
+    }
+    
+    // 2. Solicitar permissão de localização
+    try {
+      await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            locationGranted = true;
+            setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
+            setUserLocation({
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+              country: 'BR'
+            });
+            resolve();
+          },
+          (err) => {
+            setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
+            setUserLocation({ lat: null, lng: null, country: 'BR' });
+            resolve(); // Não rejeita, apenas marca como negado
+          },
+          { enableHighAccuracy: false, timeout: 5000 }
+        );
+      });
+    } catch (e) {
+      setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
+    }
+    
+    // Marcar permissões como solicitadas
+    localStorage.setItem('soulnutri_permissions_granted', 'true');
+    setShowPermissions(false);
+    
+    // Iniciar câmera se permitido
+    if (cameraGranted) {
+      startCamera();
+    }
+  };
+
   useEffect(() => { 
     mountedRef.current = true;
     checkStatus(); 
-    startCamera();
+    
+    // Só inicia câmera automaticamente se as permissões já foram concedidas
+    if (!showPermissions) {
+      startCamera();
+    }
+    
     loadDishes();
     checkPremiumSession();
     
