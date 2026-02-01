@@ -523,60 +523,6 @@ async def identify_image(
         decision['source'] = 'local_index'
         decision['ia_disponivel'] = False
         
-        # Se CLIP não tem confiança, usar Gemini como fallback
-        else:
-            logger.info(f"[CASCATA] ⚠️ CLIP incerto ({nivel1_score:.0%}) - chamando Gemini Flash")
-            
-            try:
-                from services.gemini_flash_service import (
-                    identify_dish_gemini_flash,
-                    is_gemini_flash_available
-                )
-                
-                if is_gemini_flash_available():
-                    flash_profile = None
-                    if pin and nome:
-                        from services.profile_service import hash_pin
-                        pin_hash = hash_pin(pin)
-                        flash_profile = await db.users.find_one(
-                            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
-                            {"_id": 0}
-                        )
-                    
-                    flash_result = await identify_dish_gemini_flash(content, flash_profile)
-                    
-                    if flash_result.get('ok'):
-                        logger.info(f"[NÍVEL 2] ✅ Gemini: {flash_result.get('nome')}")
-                        decision = {
-                            'identified': True,
-                            'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
-                            'dish_display': flash_result.get('nome'),
-                            'score': flash_result.get('score', 0.90),
-                            'confidence': 'alta',
-                            'message': f"Identificado: {flash_result.get('nome')}",
-                            'source': 'gemini_flash',
-                            'cascade_level': 2,
-                            'category': flash_result.get('categoria'),
-                            'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteína animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
-                            'nutrition': flash_result.get('nutricao'),
-                            'alergenos': flash_result.get('alergenos', {}),
-                            'alertas_personalizados': flash_result.get('alertas_personalizados', []),
-                            'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
-                            'ia_disponivel': False
-                        }
-                    else:
-                        # Gemini falhou, manter CLIP mesmo com baixa confiança
-                        decision['source'] = 'local_index'
-                        decision['ia_disponivel'] = False
-                        logger.info(f"[NÍVEL 2] ❌ Gemini falhou, usando CLIP")
-                else:
-                    decision['source'] = 'local_index'
-                    decision['ia_disponivel'] = False
-                    logger.info(f"[NÍVEL 2] ❌ Gemini indisponível, usando CLIP")
-            except Exception as e:
-                logger.error(f"[NÍVEL 2] Erro Gemini: {e}")
-                decision['source'] = 'local_index'
-                decision['ia_disponivel'] = False
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
         
