@@ -1357,6 +1357,67 @@ async def gemini_flash_status():
     return get_gemini_flash_status()
 
 
+@api_router.get("/ai/google-quota-status")
+async def google_quota_status():
+    """
+    Verifica se a cota do Google API está disponível.
+    Faz um teste rápido com texto simples (custo mínimo).
+    Útil para saber quando a cota gratuita foi renovada.
+    """
+    import time
+    from google import genai
+    
+    google_key = os.environ.get('GOOGLE_API_KEY')
+    
+    if not google_key:
+        return {
+            "ok": False,
+            "google_api_available": False,
+            "message": "GOOGLE_API_KEY não configurada",
+            "recommendation": "Configure a chave em backend/.env"
+        }
+    
+    try:
+        client = genai.Client(api_key=google_key)
+        
+        start = time.time()
+        response = client.models.generate_content(
+            model='gemini-2.0-flash-lite',
+            contents='Diga apenas: OK'
+        )
+        elapsed_ms = (time.time() - start) * 1000
+        
+        return {
+            "ok": True,
+            "google_api_available": True,
+            "message": "✅ Cota do Google disponível! API funcionando.",
+            "response_time_ms": round(elapsed_ms, 2),
+            "model": "gemini-2.0-flash-lite",
+            "recommendation": "Sistema usando Google API (mais rápido e barato)"
+        }
+        
+    except Exception as e:
+        error_str = str(e)
+        
+        if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
+            return {
+                "ok": True,
+                "google_api_available": False,
+                "message": "❌ Cota do Google esgotada (429)",
+                "error": "RESOURCE_EXHAUSTED",
+                "recommendation": "Aguarde renovação (~24h) ou use Emergent Key como fallback",
+                "check_quota_url": "https://aistudio.google.com/"
+            }
+        else:
+            return {
+                "ok": False,
+                "google_api_available": False,
+                "message": f"Erro na API: {error_str[:100]}",
+                "error": error_str[:200],
+                "recommendation": "Verifique a configuração da GOOGLE_API_KEY"
+            }
+
+
 @api_router.get("/ai/dishes")
 async def list_dishes():
     """
