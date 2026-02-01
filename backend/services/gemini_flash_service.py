@@ -30,12 +30,22 @@ logger = logging.getLogger(__name__)
 # Foco: Precisão, velocidade e dados completos em UM único request
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# PROMPT OTIMIZADO PARA VELOCIDADE - Prompt curto = resposta rápida
-SYSTEM_PROMPT_FLASH = """Identifique o prato brasileiro. Retorne JSON:
-{"nome":"Nome","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"]}
-cat: v=vegano, veg=vegetariano, p=proteína animal
-alerg: lista apenas os presentes (gluten,lactose,ovo,castanhas,frutos_mar,soja)
-Valores por porção ~150g. Só JSON."""
+# PROMPT OTIMIZADO - Melhor precisão mantendo velocidade
+SYSTEM_PROMPT_FLASH = """Você é um especialista em identificação de alimentos. Analise a imagem e identifique EXATAMENTE o que está no prato.
+
+REGRAS CRÍTICAS:
+1. OLHE COM ATENÇÃO para os ingredientes visíveis
+2. Linguiça/salsicha/embutidos = proteína animal, NÃO confunda com legumes
+3. Carne vermelha/frango/peixe = proteína animal
+4. Se houver dúvida, descreva o que você VÊ na imagem
+
+Retorne APENAS JSON válido:
+{"nome":"Nome descritivo do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9}
+
+cat: v=vegano (só vegetais), veg=vegetariano (tem ovo/queijo), p=proteína animal (carne/peixe/frango/embutidos)
+score: sua confiança de 0.0 a 1.0
+alerg: lista apenas os presentes
+Valores por porção ~150g."""
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROMPT PARA ALERTAS PERSONALIZADOS (segunda etapa, se necessário)
