@@ -1752,6 +1752,30 @@ function App() {
         </div>
       </header>
 
+      {/* Seletor de local - SIMPLES */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '4px',
+        background: 'rgba(0,0,0,0.2)',
+      }}>
+        <button
+          onClick={() => setIsCibiSana(!isCibiSana)}
+          data-testid="toggle-local"
+          style={{
+            padding: '4px 12px',
+            borderRadius: '12px',
+            border: 'none',
+            fontSize: '11px',
+            background: isCibiSana ? '#00c864' : '#ff9500',
+            color: '#000',
+            cursor: 'pointer',
+          }}
+        >
+          {isCibiSana ? '📍 Cibi Sana' : '🌍 Outro local'}
+        </button>
+      </div>
+
       {/* Toast de confirmação - Refeição registrada */}
       {mealRegistered && (
         <div 
