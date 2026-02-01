@@ -94,8 +94,11 @@ async def identify_dish_gemini_flash(
 ) -> Dict:
     """
     Identifica um prato usando Gemini Flash.
-    Usa API direta do Google (GOOGLE_API_KEY) - custo ~$0.000006/clique
-    Fallback para EMERGENT_LLM_KEY se cota do Google estiver esgotada.
+    PRIORIDADE: Google API (rápido ~300ms, barato) -> Emergent Key (fallback ~5s)
+    
+    Performance esperada:
+    - Google API: 200-500ms ✅
+    - Emergent Key: 3000-8000ms (fallback)
     """
     from PIL import Image
     from google import genai
@@ -105,66 +108,75 @@ async def identify_dish_gemini_flash(
     
     try:
         # ═══════════════════════════════════════════════════════════════════
-        # OTIMIZAÇÃO: Melhor balanço entre velocidade e qualidade
+        # OTIMIZAÇÃO DE IMAGEM: Balanço entre qualidade e velocidade
+        # Imagem menor = upload mais rápido = resposta mais rápida
         # ═══════════════════════════════════════════════════════════════════
         img = Image.open(io.BytesIO(image_bytes))
         
-        # Aumentar para 512px para melhor reconhecimento
-        max_size = 512
+        # 384px é suficiente para identificação e mais rápido que 512px
+        max_size = 384
         ratio = max_size / max(img.size)
-        if ratio < 1:  # Só redimensionar se for maior
+        if ratio < 1:
             img = img.resize((int(img.size[0] * ratio), int(img.size[1] * ratio)), Image.LANCZOS)
         
         if img.mode != 'RGB':
             img = img.convert('RGB')
         
-        # Salvar imagem para envio
+        # JPEG quality 65 é suficiente para identificação
         buffer = io.BytesIO()
-        img.save(buffer, format='JPEG', quality=75)
+        img.save(buffer, format='JPEG', quality=65)
         img_bytes = buffer.getvalue()
         
+        prep_time = (time.time() - start_time) * 1000
+        logger.info(f"[GeminiFlash] Imagem preparada em {prep_time:.0f}ms ({len(img_bytes)/1024:.1f}KB)")
+        
         # ═══════════════════════════════════════════════════════════════════
-        # CHAMAR GEMINI - Tenta Google API primeiro, depois Emergent como fallback
+        # CHAMAR GEMINI - Google API primeiro (rápido), Emergent como fallback
         # ═══════════════════════════════════════════════════════════════════
         
         response_text = None
         source_used = None
+        api_time_ms = 0
         
         prompt = f"""{SYSTEM_PROMPT_FLASH}
 
 Identifique este prato. O que você vê na imagem? Seja preciso."""
         
-        # OPÇÃO 1: Tentar Google API direta (mais barato)
+        # ═══════════════════════════════════════════════════════════════════
+        # OPÇÃO 1: Google API direta (PREFERIDO - rápido e barato)
+        # Esperado: 200-500ms
+        # ═══════════════════════════════════════════════════════════════════
         google_key = os.environ.get('GOOGLE_API_KEY')
         if google_key:
-            models_to_try = ['gemini-2.0-flash-lite', 'gemini-2.5-flash']
-            
-            for model_name in models_to_try:
-                try:
-                    client = genai.Client(api_key=google_key)
-                    
-                    api_start = time.time()
-                    response = client.models.generate_content(
-                        model=model_name,
-                        contents=[
-                            prompt,
-                            genai.types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg")
-                        ]
-                    )
-                    api_time = (time.time() - api_start) * 1000
-                    
-                    response_text = response.text.strip()
-                    source_used = f"google_api_{model_name}"
-                    logger.info(f"[GeminiFlash] Google API ({model_name}) respondeu em {api_time:.0f}ms")
-                    break
-                    
-                except Exception as e:
-                    error_str = str(e)
-                    if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
-                        logger.warning(f"[GeminiFlash] Cota Google esgotada ({model_name}), tentando próximo...")
-                    else:
-                        logger.warning(f"[GeminiFlash] Google API ({model_name}) falhou: {error_str[:80]}")
-                    continue
+            # Usar apenas o modelo mais rápido primeiro
+            try:
+                client = genai.Client(api_key=google_key)
+                
+                api_start = time.time()
+                response = client.models.generate_content(
+                    model='gemini-2.0-flash-lite',
+                    contents=[
+                        prompt,
+                        genai.types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg")
+                    ]
+                )
+                api_time_ms = (time.time() - api_start) * 1000
+                
+                response_text = response.text.strip()
+                source_used = "google_api"
+                logger.info(f"[GeminiFlash] ✅ GOOGLE API respondeu em {api_time_ms:.0f}ms")
+                
+            except Exception as e:
+                error_str = str(e)
+                if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
+                    logger.warning(f"[GeminiFlash] ⚠️ Cota Google ESGOTADA - usando fallback Emergent...")
+                else:
+                    logger.warning(f"[GeminiFlash] Google API erro: {error_str[:80]}")
+        
+        # ═══════════════════════════════════════════════════════════════════
+        # OPÇÃO 2: Emergent LLM Key (FALLBACK - mais lento mas confiável)
+        # Esperado: 3000-8000ms
+        # ═══════════════════════════════════════════════════════════════════
         
         # OPÇÃO 2: Fallback para Emergent LLM Key
         if response_text is None:
