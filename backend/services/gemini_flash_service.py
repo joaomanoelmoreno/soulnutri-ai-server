@@ -146,7 +146,7 @@ async def identify_dish_gemini_flash(
             )
             
             user_message = UserMessage(
-                text="?",  # Prompt mínimo = resposta rápida
+                text="Identifique este prato. O que você vê na imagem? Seja preciso.",
                 file_contents=[image_file]
             )
             
