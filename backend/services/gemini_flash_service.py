@@ -108,21 +108,22 @@ async def identify_dish_gemini_flash(
             return {"ok": False, "error": "API key não configurada"}
         
         # ═══════════════════════════════════════════════════════════════════
-        # OTIMIZAÇÃO AGRESSIVA: Imagem pequena = resposta rápida
+        # OTIMIZAÇÃO: Melhor balanço entre velocidade e qualidade
         # ═══════════════════════════════════════════════════════════════════
         img = Image.open(io.BytesIO(image_bytes))
         
-        # Reduzir para 256px (velocidade > qualidade)
-        max_size = 256
+        # Aumentar para 512px para melhor reconhecimento
+        max_size = 512
         ratio = max_size / max(img.size)
-        img = img.resize((int(img.size[0] * ratio), int(img.size[1] * ratio)), Image.LANCZOS)
+        if ratio < 1:  # Só redimensionar se for maior
+            img = img.resize((int(img.size[0] * ratio), int(img.size[1] * ratio)), Image.LANCZOS)
         
         if img.mode != 'RGB':
             img = img.convert('RGB')
         
-        # Compressão agressiva
+        # Qualidade moderada (melhor reconhecimento)
         buffer = io.BytesIO()
-        img.save(buffer, format='JPEG', quality=40)
+        img.save(buffer, format='JPEG', quality=70)
         
         # Salvar temp
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
