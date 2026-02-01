@@ -451,24 +451,12 @@ async def identify_image(
     """
     start_time = time.time()
     
-    logger.info(f"[IDENTIFY] País: {country}, Restaurante: {restaurant}")
+    # Detectar se é Cibi Sana (CLIP) ou outro local (Gemini)
+    is_cibi_sana = restaurant and restaurant.lower() == "cibi_sana"
+    
+    logger.info(f"[IDENTIFY] Restaurante: {restaurant}, Motor: {'CLIP' if is_cibi_sana else 'GEMINI'}")
     
     try:
-        from ai.index import get_index
-        from ai.policy import analyze_result
-        from services.cache_service import get_cached_result, cache_result
-        
-        # Verificar se índice está pronto
-        index = get_index()
-        if not index.is_ready():
-            return IdentifyResponse(
-                ok=False,
-                identified=False,
-                confidence="baixa",
-                score=0.0,
-                message="Índice não carregado. Execute /api/ai/reindex primeiro."
-            )
-        
         # Ler imagem
         content = await file.read()
         
@@ -484,6 +472,7 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         # CACHE: Verificar se já identificamos esta imagem antes
         # ═══════════════════════════════════════════════════════════════════════
+        from services.cache_service import get_cached_result, cache_result
         cached = get_cached_result(content)
         if cached:
             elapsed_ms = (time.time() - start_time) * 1000
@@ -492,22 +481,99 @@ async def identify_image(
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
-        # SISTEMA DE IDENTIFICAÇÃO - 3 NÍVEIS DE CONFIANÇA
+        # LÓGICA PRINCIPAL:
+        # - Cibi Sana: CLIP local (custo ZERO)
+        # - Fora do Cibi Sana: Gemini (usa créditos)
         # ═══════════════════════════════════════════════════════════════════════
-        # ≥85%: Resultado final (confiança alta)
-        # 50-85%: "Consulte o atendente, pode não ser este prato" (confiança média)
-        # <50%: "Pode não ser o prato fotografado" (confiança baixa)
+        # NÍVEIS DE CONFIANÇA (para ambos):
+        # ≥85%: Resultado final
+        # 50-85%: "Consulte o atendente, pode não ser este prato"
+        # <50%: "Pode não ser o prato fotografado"
         # ═══════════════════════════════════════════════════════════════════════
         
-        # Busca no índice local CLIP
-        results = index.search(content, top_k=5)
-        decision = analyze_result(results)
+        decision = None
         
+        if is_cibi_sana:
+            # ══════════════════════════════════════════════════════════════════
+            # CIBI SANA: Usa CLIP local (custo ZERO)
+            # ══════════════════════════════════════════════════════════════════
+            from ai.index import get_index
+            from ai.policy import analyze_result
+            
+            index = get_index()
+            if not index.is_ready():
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Índice não carregado."
+                )
+            
+            results = index.search(content, top_k=5)
+            decision = analyze_result(results)
+            decision['source'] = 'local_index'
+            logger.info(f"[CLIP] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
+        
+        else:
+            # ══════════════════════════════════════════════════════════════════
+            # FORA DO CIBI SANA: Usa Gemini (usa créditos)
+            # ══════════════════════════════════════════════════════════════════
+            from services.gemini_flash_service import (
+                identify_dish_gemini_flash,
+                is_gemini_flash_available
+            )
+            
+            if not is_gemini_flash_available():
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Serviço de IA indisponível."
+                )
+            
+            # Buscar perfil do usuário se disponível
+            flash_profile = None
+            if pin and nome:
+                from services.profile_service import hash_pin
+                pin_hash = hash_pin(pin)
+                flash_profile = await db.users.find_one(
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                    {"_id": 0}
+                )
+            
+            flash_result = await identify_dish_gemini_flash(content, flash_profile)
+            
+            if flash_result.get('ok'):
+                decision = {
+                    'identified': True,
+                    'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
+                    'dish_display': flash_result.get('nome'),
+                    'score': flash_result.get('score', 0.90),
+                    'source': 'gemini_flash',
+                    'category': flash_result.get('categoria'),
+                    'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteína animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
+                    'nutrition': flash_result.get('nutricao'),
+                    'alergenos': flash_result.get('alergenos', {}),
+                    'alertas_personalizados': flash_result.get('alertas_personalizados', []),
+                    'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
+                }
+                logger.info(f"[GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
+            else:
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Não foi possível identificar o prato."
+                )
+        
+        # ══════════════════════════════════════════════════════════════════════
+        # APLICAR NÍVEIS DE CONFIANÇA (igual para CLIP e Gemini)
+        # ══════════════════════════════════════════════════════════════════════
         score = decision.get('score', 0.0)
         
-        logger.info(f"[CLIP] {decision.get('dish_display', 'N/A')} - Score: {score:.2%}")
-        
-        # Definir confiança e mensagem baseada no score
         if score >= 0.85:
             decision['confidence'] = 'alta'
             decision['message'] = f"Identificado: {decision.get('dish_display', 'Prato')}"
@@ -521,8 +587,9 @@ async def identify_image(
             decision['message'] = f"Incerto: {decision.get('dish_display', 'Prato')}"
             decision['aviso_confianca'] = "Pode não ser o prato fotografado"
         
-        decision['source'] = 'local_index'
         decision['ia_disponivel'] = False
+        decision['ok'] = True
+        decision['identified'] = True
         
         # Calcular tempo total
         elapsed_ms = (time.time() - start_time) * 1000
