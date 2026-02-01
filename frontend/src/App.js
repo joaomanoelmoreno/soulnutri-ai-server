@@ -767,13 +767,7 @@ function App() {
     
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
-    
-    // Usar localização já detectada (não esperar - seria lento!)
-    // A localização é atualizada em background a cada 5 minutos
     fd.append("country", userLocation?.country || 'BR');
-    
-    // Cibi Sana = CLIP (custo zero), Outro = Gemini (usa créditos)
-    fd.append("restaurant", isCibiSana ? "cibi_sana" : "outro");
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
