@@ -303,8 +303,12 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
         # ALERTAS PERSONALIZADOS (se tiver perfil Premium)
         # ═══════════════════════════════════════════════════════════════════
         if user_profile:
-            alertas = gerar_alertas_personalizados(result, user_profile)
-            result["alertas_personalizados"] = alertas
+            try:
+                alertas = gerar_alertas_personalizados(result, user_profile)
+                result["alertas_personalizados"] = alertas
+            except Exception as alert_error:
+                logger.warning(f"[GeminiFlash] Erro ao gerar alertas: {alert_error}")
+                result["alertas_personalizados"] = []  # Não falhar por causa de alertas
         
         logger.info(f"[GeminiFlash] ✅ Identificado: {result.get('nome')} ({result.get('confianca')}) em {total_time:.0f}ms")
         
