@@ -3,19 +3,33 @@
   "slug": "arancine_de_tomate_cereja",
   "categoria": "vegano",
   "category_emoji": "🌱",
-  "descricao": "Arancine de tomate cereja - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "bolinho de risoto e tomate cereja",
+  "ingredientes": [
+    "risoto basico",
+    "tomate cereja",
+    "farinha de rosca"
+  ],
+  "beneficios": [
+    "Fonte de carboidratos para energia.",
+    "Contém licopeno do tomate, um antioxidante.",
+    "O tomate cereja oferece vitaminas e minerais.",
+    "Fácil de preparar e consumir."
+  ],
+  "riscos": [
+    "Pode ser calórico dependendo da quantidade de óleo utilizado na fritura.",
+    "A fritura pode aumentar o teor de gordura.",
+    "Consumir com moderação devido ao processo de fritura."
+  ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "210 kcal",
+    "proteinas": "5g",
+    "carboidratos": "30g",
+    "gorduras": "8g",
+    "fibras": "2g"
   },
-  "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_gluten": true,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

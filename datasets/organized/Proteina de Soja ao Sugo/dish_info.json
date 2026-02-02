@@ -1,6 +1,8 @@
 {
+  "slug": "Proteina de Soja ao Sugo",
   "nome": "Proteina de Soja ao Sugo",
   "categoria": "vegano",
+  "descricao": "Prato feito com proteína de soja texturizada cozida em molho sugo, com pedaços de cenoura. O molho sugo provavelmente inclui tomate, cebola, alho, azeite de oliva e temperos.",
   "ingredientes": [
     "Proteína de soja texturizada",
     "Tomate (ingrediente do molho sugo)",
@@ -8,29 +10,36 @@
     "Cebola (provável ingrediente do molho sugo)",
     "Alho (provável ingrediente do molho sugo)",
     "Azeite de oliva (provável ingrediente do molho sugo)",
-    "Ervas e especiarias (provável ingrediente do molho sugo)"
+    "Ervas e especiarias (provável ingrediente do molho sugo)",
+    "proteina de soja",
+    "limao",
+    "tomates",
+    "cebola",
+    "alho ",
+    "ervas"
   ],
-  "descricao": "Prato feito com proteína de soja texturizada cozida em molho sugo, com pedaços de cenoura. O molho sugo provavelmente inclui tomate, cebola, alho, azeite de oliva e temperos.",
   "beneficios": [
     "Fonte de proteína vegetal, importante para a saúde muscular.",
     "Rico em fibras, especialmente se for usado tomate com pele, auxiliando na saúde digestiva.",
     "Pode auxiliar na redução do colesterol, devido à ausência de gorduras saturadas e presença de soja.",
-    "Pode ser adaptado para baixo teor de sódio, dependendo do tempero usado"
+    "Pode ser adaptado para baixo teor de sódio, dependendo do tempero usado",
+    "Rico em proteínas vegetais, importante para a saúde muscular.",
+    "Fonte de fibras, auxiliando na saúde digestiva e na saciedade.",
+    "Baixo teor de gordura, contribuindo para uma dieta mais equilibrada.",
+    "Rico em antioxidantes, provenientes dos tomates e ervas."
   ],
   "riscos": [
     "Pode conter sódio em excesso dependendo dos temperos e molhos utilizados.",
     "Potencial alérgeno: soja (para pessoas com alergia)",
-    "Em alguns casos, a proteína de soja texturizada pode conter glúten, verificar no rótulo."
+    "Em alguns casos, a proteína de soja texturizada pode conter glúten, verificar no rótulo.",
+    "Pode conter sódio, dependendo da quantidade de temperos e molhos utilizados."
   ],
-  "curiosidade": "A proteína de soja texturizada (PTS) é um alimento versátil, feito a partir da soja desengordurada, que passa por um processo de extrusão para adquirir diferentes texturas, ideal para substituir a carne em diversas receitas.",
-  "slug": "Proteina de Soja ao Sugo",
   "nutricao": {
     "calorias": "~100 kcal",
     "proteinas": "~4g",
     "carboidratos": "~18g",
     "gorduras": "~2g"
   },
-  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

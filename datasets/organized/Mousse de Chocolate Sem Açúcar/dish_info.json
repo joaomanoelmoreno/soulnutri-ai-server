@@ -1,21 +1,36 @@
 {
   "nome": "Mousse de Chocolate Sem Açúcar",
   "slug": "Mousse de Chocolate Sem Açúcar",
-  "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Mousse de chocolate (sem açúcar) - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "descricao": "Mousse de chocolate ",
+  "ingredientes": [
+    "cacau",
+    "creme de leite",
+    "gelatina",
+    "adocante natural a base de maltose"
+  ],
+  "beneficios": [
+    "Fonte de antioxidantes do cacau",
+    "Pode auxiliar na melhora do humor devido ao cacau",
+    "Opção com baixo teor de açúcar, ideal para quem busca reduzir o consumo",
+    "Fonte de cálcio do creme de leite"
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada proveniente do creme de leite",
+    "Consumir com moderação devido ao valor calórico",
+    "Pode conter traços de glúten devido ao processamento do cacau"
+  ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "220 kcal",
+    "proteinas": "4g",
+    "carboidratos": "15g",
+    "gorduras": "16g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

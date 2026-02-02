@@ -9,10 +9,30 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "~180 kcal",
-    "proteinas": "~20g",
-    "carboidratos": "~5g",
-    "gorduras": "~8g"
+    "calorias": "180 kcal",
+    "proteinas": "28g",
+    "carboidratos": "4g",
+    "gorduras": "6g",
+    "fibras": "1g"
   },
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "descricao": "Pernil suino assado lentamente com molho citrico a base de limao",
+  "ingredientes": [
+    "Pernil",
+    "alho",
+    "caldo de legumes",
+    "limao",
+    "ervas secas"
+  ],
+  "beneficios": [
+    "Fonte de proteína de alta qualidade.",
+    "Rico em vitaminas do complexo B.",
+    "O limão auxilia na absorção de ferro.",
+    "Baixo teor de carboidratos."
+  ],
+  "riscos": [
+    "Pode ser rico em sódio dependendo da quantidade de temperos.",
+    "Consumir com moderação devido ao teor de gordura (mesmo que seja magra)"
+  ],
+  "tecnica": ""
 }

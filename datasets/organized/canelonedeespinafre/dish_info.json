@@ -1,0 +1,39 @@
+{
+  "slug": "canelonedeespinafre",
+  "nome": "Canelone de Espinafre",
+  "categoria": "vegetariano",
+  "descricao": "Massa recheada com espinafre orgânico e ricota fresca, molho artesanal",
+  "ingredientes": [
+    "massa de canelone",
+    "espinafre orgânico",
+    "ricota fresca",
+    "molho de tomate artesanal",
+    "queijo"
+  ],
+  "beneficios": [
+    "Fonte de vitaminas e minerais do espinafre.",
+    "Rico em cálcio e proteínas da ricota.",
+    "O molho de tomate oferece licopeno, um antioxidante.",
+    "Opção com menos gordura em comparação a outros pratos."
+  ],
+  "riscos": [
+    "Pode ser rico em sódio dependendo do queijo e do molho de tomate.",
+    "O teor de gordura pode variar dependendo do tipo de queijo utilizado.",
+    "Alergênicos presentes: lactose e glúten (se a massa não for sem glúten)."
+  ],
+  "nutricao": {
+    "calorias": "160 kcal",
+    "proteinas": "8g",
+    "carboidratos": "20g",
+    "gorduras": "6g",
+    "fibras": "3g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥚"
+}

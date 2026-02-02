@@ -1,0 +1,38 @@
+{
+  "nome": "Arancini",
+  "slug": "Arancini",
+  "categoria": "vegetariano",
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "nutricao": {
+    "calorias": "280 kcal",
+    "proteinas": "8g",
+    "carboidratos": "30g",
+    "gorduras": "14g",
+    "fibras": "1g"
+  },
+  "category_emoji": "🥚",
+  "descricao": "Bolinho de arroz arboreo",
+  "ingredientes": [
+    "arroz arboreo",
+    "vinho branco",
+    "caldo de legumes",
+    "manteiga",
+    "queijo parmesao",
+    "farinha de rosca"
+  ],
+  "beneficios": [
+    "Fonte de carboidratos para energia.",
+    "Queijo parmesão oferece cálcio e proteínas.",
+    "O arroz arbóreo contribui com amido, que dá cremosidade."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à fritura.",
+    "Pode ser rico em sódio, dependendo da quantidade de queijo e caldo utilizado."
+  ],
+  "tecnica": ""
+}

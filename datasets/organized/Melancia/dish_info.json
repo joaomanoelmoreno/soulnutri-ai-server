@@ -1,24 +1,28 @@
 {
+  "slug": "Melancia",
   "nome": "Melancia",
   "categoria": "vegano",
+  "descricao": "Melancia fresca cortada em cubos, ideal para um lanche leve e refrescante.",
   "ingredientes": [
     "Melancia"
   ],
-  "descricao": "Melancia fresca cortada em cubos, ideal para um lanche leve e refrescante.",
   "beneficios": [
     "Hidratação",
-    "Fonte de vitaminas e antioxidantes"
+    "Fonte de vitaminas e antioxidantes",
+    "Hidratação: A melancia é composta por cerca de 92% de água, auxiliando na hidratação do corpo.",
+    "Rica em vitaminas: Contém vitaminas A e C, importantes para a saúde da pele e do sistema imunológico.",
+    "Antioxidantes: Possui licopeno, um antioxidante que pode ajudar a proteger as células do corpo.",
+    "Baixa em calorias: Ideal para quem busca opções de lanches com poucas calorias."
   ],
-  "riscos": [],
-  "curiosidade": "A melancia é composta por cerca de 92% de água, o que a torna uma excelente opção para se manter hidratado, especialmente em dias quentes.",
-  "slug": "Melancia",
+  "riscos": [
+    "Consumo excessivo pode causar desconforto abdominal devido ao alto teor de água e frutose."
+  ],
   "nutricao": {
     "calorias": "30 kcal",
     "proteinas": "0.6g",
     "carboidratos": "8g",
     "gorduras": "0.2g"
   },
-  "category_emoji": "🌱",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,

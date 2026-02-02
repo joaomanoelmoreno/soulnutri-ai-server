@@ -1,43 +1,54 @@
 {
   "slug": "Tomateseco",
   "nome": "Quiche de tomate seco",
-  "categoria": "vegano",
-  "descricao": "Tomates secos conservados em azeite de oliva com ervas e especiarias. Ideal como aperitivo ou acompanhamento.",
+  "categoria": "vegetariano",
+  "descricao": "Tomates secos com ervas e especiarias. ",
   "ingredientes": [
     "Tomate seco",
-    "Azeite de oliva",
     "Alho",
-    "Ervas frescas (salsinha, manjericão)",
-    "Pimenta do reino",
-    "massa folhada",
+    "Ervas frescas",
+    "farinha de trigo",
     "ovos",
     "creme de leite",
-    "queijo"
+    "queijo",
+    "massa folhada"
   ],
   "beneficios": [
-    "Fonte de antioxidantes",
-    "Rico em licopeno",
-    "Gorduras saudáveis",
+    "Fonte de licopeno (tomate seco), um antioxidante que combate radicais livres.",
+    "Ovos fornecem proteínas de alta qualidade.",
+    "Pode ser uma forma saborosa de incluir vegetais na dieta.",
     "Proteínas do ovo",
     "Refeição completa"
   ],
   "riscos": [
-    "Alto teor de sódio (se conservado em salmoura)",
-    "Alto teor de gordura (devido ao azeite)",
+    "Alto teor de gordura devido ao creme de leite e queijo.",
+    "Pode conter alto teor de sódio dependendo da quantidade de queijo e tomate seco (que pode ser conservado em salmoura).",
+    "Consumir com moderação devido ao valor calórico.",
     "Contém glúten",
     "Contém lactose",
     "Contém ovo"
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "3g",
-    "carboidratos": "15g",
-    "gorduras": "20g"
+    "calorias": "280 kcal",
+    "proteinas": "8g",
+    "carboidratos": "20g",
+    "gorduras": "18g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Assada em forno",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Almoço ou lanche",
+  "combina_com": [
+    "Salada verde"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ],
+  "category_emoji": "🥚"
 }

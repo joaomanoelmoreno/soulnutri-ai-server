@@ -1,18 +1,39 @@
 {
   "nome": "Vol au Vent de Espinafre",
   "slug": "Vol au Vent de Espinafre",
-  "categoria": "vegano",
-  "contem_gluten": false,
-  "contem_lactose": false,
+  "categoria": "vegetariano",
+  "contem_gluten": true,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "320 kcal",
+    "proteinas": "8g",
+    "carboidratos": "25g",
+    "gorduras": "20g",
+    "fibras": "3g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "descricao": "massa folhada com ricota e espinafres",
+  "ingredientes": [
+    "farinha de trigo",
+    "manteiga",
+    "ricota",
+    "espinafre",
+    "sal"
+  ],
+  "beneficios": [
+    "Fonte de vitaminas e minerais do espinafre.",
+    "Rico em cálcio e proteínas da ricota.",
+    "Pode ser uma opção para variar a alimentação.",
+    "Boa fonte de fibras."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido à manteiga.",
+    "Pode ser calórico dependendo da quantidade consumida.",
+    "O consumo em excesso pode levar ao ganho de peso."
+  ],
+  "tecnica": ""
 }

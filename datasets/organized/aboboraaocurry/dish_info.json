@@ -1,0 +1,50 @@
+{
+  "slug": "aboboraaocurry",
+  "nome": "aboboraaocurry",
+  "categoria": "vegano",
+  "descricao": "Abóbora orgânica cozida no vapor com especiarias indianas importadas em molho cremoso de leite de coco",
+  "ingredientes": [
+    "abóbora",
+    "sal",
+    "abóbora orgânica",
+    "curry indiano importado",
+    "leite de coco",
+    "gengibre fresco",
+    "cúrcuma importada",
+    "cebola orgânica",
+    "alho orgânico"
+  ],
+  "beneficios": [
+    "Rica em betacaroteno",
+    "Vitamina A",
+    "Baixas calorias",
+    "Betacaroteno: fortalece a visão e a pele",
+    "Cúrcuma: poderoso anti-inflamatório natural",
+    "Baixo valor calórico: auxilia no controle de peso"
+  ],
+  "riscos": [
+    "Alérgeno: coco"
+  ],
+  "nutricao": {
+    "calorias": "26 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6.5g",
+    "gorduras": "0.1g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozida ou assada",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Curry",
+    "Gengibre"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
+}

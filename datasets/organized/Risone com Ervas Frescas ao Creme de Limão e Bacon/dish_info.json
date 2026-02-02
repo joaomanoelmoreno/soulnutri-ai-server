@@ -3,19 +3,37 @@
   "slug": "Risone com Ervas Frescas ao Creme de Limão e Bacon",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
-  "descricao": "Risone com ervas frescas ao creme de limão e Bacon - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "Risone com ervas frescas ao creme de limão e Bacon ",
+  "ingredientes": [
+    "risone",
+    "caldo de carne",
+    "creme de leite",
+    "bacon",
+    "manteiga",
+    "parmesao",
+    "manjericao",
+    "laranja"
+  ],
+  "beneficios": [
+    "Fonte de energia devido aos carboidratos do risone.",
+    "O manjericão e a laranja adicionam vitaminas e antioxidantes.",
+    "O parmesão fornece cálcio."
+  ],
+  "riscos": [
+    "Alto teor de gordura devido ao creme de leite, manteiga e bacon.",
+    "Contém alto teor de sódio devido ao caldo de carne e bacon.",
+    "Pode ser calórico devido à combinação de ingredientes."
+  ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "280 kcal",
+    "proteinas": "10g",
+    "carboidratos": "25g",
+    "gorduras": "15g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

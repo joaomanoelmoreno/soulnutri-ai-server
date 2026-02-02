@@ -1,0 +1,49 @@
+{
+  "slug": "berinjelaàparmegiana",
+  "nome": "Berinjela a Parmegiana",
+  "categoria": "vegetariano",
+  "descricao": "Berinjela versátil, base de muitos pratos mediterrâneos.",
+  "ingredientes": [
+    "berinjela",
+    "azeite",
+    "alho",
+    "sal",
+    "molho de tomate",
+    "queijo parmesão",
+    "manjericão"
+  ],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Antioxidantes (nasunina)",
+    "Ajuda no controle do colesterol",
+    "Baixíssima caloria (25kcal/100g) com alta saciedade - ideal para controle de peso",
+    "Fibras que ajudam no controle glicêmico e saúde intestinal"
+  ],
+  "riscos": [
+    "Alérgeno: Contém LACTOSE"
+  ],
+  "nutricao": {
+    "calorias": "25 kcal",
+    "proteinas": "1g",
+    "carboidratos": "6g",
+    "gorduras": "0.2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhada ou assada",
+  "category_emoji": "🥚",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Tomate",
+    "Queijo",
+    "Azeite"
+  ],
+  "evitar_com": []
+}

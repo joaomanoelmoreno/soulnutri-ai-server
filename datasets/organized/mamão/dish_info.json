@@ -3,16 +3,26 @@
   "slug": "mamão",
   "categoria": "vegano",
   "category_emoji": "🌱",
-  "descricao": "Mamão - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "descricao": "Mamão",
+  "ingredientes": [
+    "mamao"
+  ],
+  "beneficios": [
+    "Rico em vitamina C, fortalecendo o sistema imunológico.",
+    "Fonte de fibras, auxiliando na digestão e no controle do colesterol.",
+    "Contém antioxidantes que combatem os radicais livres.",
+    "Pode auxiliar na saúde da pele."
+  ],
+  "riscos": [
+    "Pode causar reações alérgicas em pessoas sensíveis."
+  ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "39 kcal",
+    "proteinas": "0.6g",
+    "carboidratos": "9g",
+    "gorduras": "0.1g",
+    "fibras": "1.8g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

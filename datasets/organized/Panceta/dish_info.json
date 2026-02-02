@@ -1,6 +1,6 @@
 {
   "slug": "Panceta",
-  "nome": "Parcela Pururuca",
+  "nome": "panceta Pururuca",
   "categoria": "proteína animal",
   "descricao": "A pancetta é preparada por meio de cura e pode ser defumada. Neste prato, a pancetta é cortada e frita ou assada até ficar crocante, resultando em uma textura crocante por fora e macia por dentro. O prato é finalizado com tomates cereja frescos e cebolinha picada, possivelmente salpicado com temperos.",
   "ingredientes": [
@@ -42,16 +42,17 @@
     "Pode conter traços de glúten"
   ],
   "nutricao": {
-    "calorias": "500 kcal",
-    "proteinas": "15g",
-    "carboidratos": "0g",
-    "gorduras": "50g"
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
   "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
+  "tecnica": "",
   "category_emoji": "🍖"
 }

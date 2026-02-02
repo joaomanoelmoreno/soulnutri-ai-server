@@ -1,0 +1,54 @@
+{
+  "slug": "atumaogergelim",
+  "nome": "atumaogergelim",
+  "categoria": "proteína animal",
+  "descricao": "Atum fresco (recebido a cada 1-2 dias) selado com crosta de gergelim importado",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas",
+    "atum fresco",
+    "gergelim importado",
+    "shoyu",
+    "gengibre fresco",
+    "wasabi importado do Japão"
+  ],
+  "beneficios": [
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D",
+    "Ômega-3: protege coração e cérebro",
+    "Proteína magra: ideal para músculos",
+    "Selênio: antioxidante que protege células"
+  ],
+  "riscos": [
+    "Alérgeno: peixe",
+    "Alérgeno: gergelim",
+    "Pode conter traços de glúten"
+  ],
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Limão",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ],
+  "category_emoji": "🍖"
+}

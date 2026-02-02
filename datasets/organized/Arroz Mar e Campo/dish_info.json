@@ -1,0 +1,43 @@
+{
+  "nome": "Arroz Mar e Campo",
+  "slug": "Arroz Mar e Campo",
+  "categoria": "vegano",
+  "ingredientes": [
+    "arroz",
+    "água",
+    "sal",
+    "alho",
+    "óleo"
+  ],
+  "beneficios": [
+    "Fonte de energia rápida",
+    "Fácil digestão",
+    "Naturalmente sem glúten"
+  ],
+  "riscos": [
+    "Alto índice glicêmico"
+  ],
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "28g",
+    "gorduras": "0.3g"
+  },
+  "tecnica": "Cozimento em água",
+  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Feijão",
+    "Proteínas",
+    "Saladas"
+  ],
+  "evitar_com": [
+    "Outros carboidratos refinados"
+  ],
+  "category_emoji": "🌱"
+}

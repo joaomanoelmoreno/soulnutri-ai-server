@@ -1,7 +1,7 @@
 {
   "slug": "Caponata",
   "nome": "Caponata",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "Caponata siciliana de berinjela",
   "ingredientes": [
     "berinjela",
@@ -14,7 +14,6 @@
     "aipo",
     "vinho branco"
   ],
-  "tecnica": "Refogado em azeite",
   "beneficios": [
     "Rica em antioxidantes, combatendo os radicais livres.",
     "Fonte de fibras, auxiliando na saúde intestinal.",
@@ -24,27 +23,17 @@
   "riscos": [
     "Pode conter sódio em excesso dependendo da quantidade de azeitonas e alcaparras."
   ],
-  "contem_gluten": false,
   "nutricao": {
-    "calorias": "85 kcal",
-    "proteinas": "1g",
-    "carboidratos": "8g",
-    "gorduras": "5g",
-    "fibras": "3g"
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T15:13:08.325000",
-  "alerta_saude": null,
-  "beneficio_principal": "Berinjela + azeite + vinagre = trio anti-inflamatório. Nasunina da berinjela protege gorduras do cérebro contra oxidação",
-  "curiosidade_cientifica": "Receita siciliana de 1.000 anos. O vinagre melhora resposta glicêmica da refeição em 30%",
-  "referencia_pesquisa": "European Journal of Clinical Nutrition, 2019",
+  "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥬"
+  "category_emoji": "🥚"
 }

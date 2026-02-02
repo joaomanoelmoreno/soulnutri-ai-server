@@ -1,0 +1,41 @@
+{
+  "nome": "Ham Camarao com Carne Suina",
+  "slug": "Ham Camarao com Carne Suina",
+  "categoria": "proteína animal",
+  "ingredientes": [
+    "carne bovina",
+    "sal",
+    "temperos"
+  ],
+  "beneficios": [
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
+  "riscos": [
+    "Gordura saturada"
+  ],
+  "nutricao": {
+    "calorias": "250 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "15g"
+  },
+  "tecnica": "Grelhado ou assado",
+  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "indice_glicemico": "zero",
+  "tempo_digestao": "4-5 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Outras gorduras"
+  ],
+  "category_emoji": "🍖"
+}

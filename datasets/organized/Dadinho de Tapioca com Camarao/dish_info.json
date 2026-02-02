@@ -1,0 +1,50 @@
+{
+  "slug": "Dadinho de Tapioca com Camarao",
+  "nome": "Dadinho de Tapioca com Camarao",
+  "categoria": "proteína animal",
+  "descricao": "Dadinho de tapioca assado com um toque de maionese com camarão grelhado",
+  "ingredientes": [
+    "tapioca",
+    "queijo coalho",
+    "leite",
+    "temperos",
+    "camarão",
+    "alho",
+    "maionese",
+    "sal"
+  ],
+  "beneficios": [
+    "Fonte de proteína (camarão)",
+    "Rápido e fácil de preparar",
+    "Saboroso e versátil"
+  ],
+  "riscos": [
+    "Alto teor de sódio (devido ao queijo e temperos)",
+    "Alto teor de gordura (devido à fritura, se for o caso)",
+    "Pode ser calórico dependendo da quantidade de óleo utilizada na fritura."
+  ],
+  "nutricao": {
+    "calorias": "280 kcal",
+    "proteinas": "15g",
+    "carboidratos": "25g",
+    "gorduras": "12g",
+    "fibras": "1g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false,
+  "tecnica": "Frito",
+  "category_emoji": "🍖",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Entrada ou lanche",
+  "combina_com": [
+    "Molhos"
+  ],
+  "evitar_com": [
+    "Outras frituras"
+  ]
+}

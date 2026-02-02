@@ -1,0 +1,34 @@
+{
+  "slug": "graodebicotomatesecoespinafre",
+  "nome": "Grão de Bico com Tomate Seco e Espinafre",
+  "categoria": "vegano",
+  "descricao": "Grão de bico sem pele salteado com tomate seco e espinafre orgânico",
+  "ingredientes": [
+    "grão de bico sem pele",
+    "tomate seco",
+    "espinafre orgânico",
+    "alho orgânico",
+    "azeite extravirgem"
+  ],
+  "beneficios": [
+    "Proteína completa: contém todos aminoácidos essenciais",
+    "Ferro do espinafre: combate anemia",
+    "Sem pele: digestão mais fácil"
+  ],
+  "riscos": [
+    "Pode conter traços de glúten"
+  ],
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
+}

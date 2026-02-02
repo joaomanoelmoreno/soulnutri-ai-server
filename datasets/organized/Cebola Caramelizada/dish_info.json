@@ -1,21 +1,7 @@
 {
-  "nome": "Cebola Caramelizada",
   "slug": "Cebola Caramelizada",
+  "nome": "cebolinhascaramelizadas",
   "categoria": "vegano",
-  "contem_gluten": false,
-  "contem_lactose": false,
-  "contem_ovo": false,
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false,
-  "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "1g",
-    "carboidratos": "28g",
-    "gorduras": "0g",
-    "fibras": "2g"
-  },
-  "category_emoji": "🥬",
   "descricao": "Cebola cozida com acucar mascavo e maple",
   "ingredientes": [
     "cebola",
@@ -30,5 +16,17 @@
   "riscos": [
     "Alto teor de açúcar, consumir com moderação."
   ],
-  "tecnica": ""
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }

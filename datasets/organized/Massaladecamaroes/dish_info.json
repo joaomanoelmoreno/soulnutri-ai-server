@@ -1,7 +1,7 @@
 {
   "slug": "Massaladecamaroes",
   "nome": "Masala de Camaroes",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "descricao": "Camaores ao creme de especiarias",
   "ingredientes": [
     "camarao",
@@ -11,25 +11,28 @@
     "sal"
   ],
   "beneficios": [
-    "Fonte de proteína de alta qualidade proveniente do camarão.",
-    "Rico em antioxidantes e especiarias, que podem ter propriedades anti-inflamatórias.",
-    "O camarão fornece nutrientes importantes como selênio e vitamina B12.",
-    "O limão adiciona vitamina C e um toque refrescante ao prato."
+    "Fonte de proteína de alta qualidade, essencial para a saúde muscular.",
+    "Rico em vitaminas do complexo B, importantes para o metabolismo.",
+    "Contém antioxidantes provenientes das especiarias, que combatem os radicais livres.",
+    "O camarão é fonte de selênio, importante para a função da tireoide."
   ],
   "riscos": [
-    "O prato pode ter alto teor de sódio devido ao sal.",
-    "O creme de leite adiciona gordura saturada ao prato."
+    "Pode ser rico em sódio devido ao uso de temperos.",
+    "O creme de leite aumenta o teor de gorduras saturadas."
   ],
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "170 kcal",
+    "proteinas": "14g",
+    "carboidratos": "5g",
+    "gorduras": "10g",
+    "fibras": "1g"
   },
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🍖"
 }

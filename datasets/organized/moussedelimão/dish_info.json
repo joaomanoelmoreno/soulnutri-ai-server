@@ -1,0 +1,23 @@
+{
+  "nome": "Mousse de Limão",
+  "slug": "moussedelimão",
+  "categoria": "vegetariano",
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "nutricao": {
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
+  },
+  "category_emoji": "🥚",
+  "descricao": "",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": ""
+}

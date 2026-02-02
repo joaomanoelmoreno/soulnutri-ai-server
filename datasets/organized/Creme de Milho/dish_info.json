@@ -1,21 +1,35 @@
 {
   "nome": "Creme de Milho",
   "slug": "Creme de Milho",
-  "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Creme de milho - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "descricao": "Creme de milho",
+  "ingredientes": [
+    "milho",
+    "creme de leite",
+    "ervas e temperos"
+  ],
+  "beneficios": [
+    "Fonte de energia devido aos carboidratos do milho.",
+    "Pode ser rico em antioxidantes, dependendo das ervas utilizadas.",
+    "O milho é fonte de fibras, auxiliando na saúde intestinal.",
+    "O creme de leite adiciona cremosidade e sabor."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada proveniente do creme de leite.",
+    "Pode conter alto teor de sódio dependendo dos temperos utilizados.",
+    "O consumo excessivo pode levar ao ganho de peso devido ao valor calórico."
+  ],
   "tecnica": "",
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "120 kcal",
+    "proteinas": "3g",
+    "carboidratos": "10g",
+    "gorduras": "8g",
+    "fibras": "1g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

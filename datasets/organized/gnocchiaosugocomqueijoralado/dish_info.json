@@ -1,0 +1,45 @@
+{
+  "nome": "gnocchiaosugocomqueijoralado",
+  "slug": "gnocchiaosugocomqueijoralado",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal",
+    "noz-moscada"
+  ],
+  "beneficios": [
+    "Fonte de carboidratos",
+    "Energia sustentada",
+    "Conforto"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo",
+    "Alto índice glicêmico"
+  ],
+  "nutricao": {
+    "calorias": "135 kcal",
+    "proteinas": "3g",
+    "carboidratos": "28g",
+    "gorduras": "1g"
+  },
+  "tecnica": "Cozido em água",
+  "descricao": "Nhoque italiano de batata, leve e macio.",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "alto",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Molho branco",
+    "Pesto"
+  ],
+  "evitar_com": [
+    "Outras massas"
+  ],
+  "category_emoji": "🥚"
+}

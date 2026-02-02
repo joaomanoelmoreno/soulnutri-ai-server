@@ -1,18 +1,27 @@
 {
-  "nome": "Uva",
   "slug": "uva",
+  "nome": "Uvas",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Uva - prato do Cibi Sana",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": "",
+  "descricao": "Uva ",
+  "ingredientes": [
+    "uva"
+  ],
+  "beneficios": [
+    "Rica em antioxidantes, como o resveratrol, que protegem as células.",
+    "Boa fonte de vitaminas C e K.",
+    "Auxilia na hidratação devido ao alto teor de água.",
+    "Pode melhorar a saúde cardiovascular."
+  ],
+  "riscos": [
+    "Consumo excessivo pode levar a desconforto abdominal devido à quantidade de frutose.",
+    "Pode conter resíduos de agrotóxicos, dependendo da procedência."
+  ],
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~20g",
-    "gorduras": "~5g"
+    "calorias": "69 kcal",
+    "proteinas": "0.7g",
+    "carboidratos": "18g",
+    "gorduras": "0.2g",
+    "fibras": "0.9g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -20,10 +29,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [],
-  "evitar_com": [],
-  "origem": "user_created_local"
+  "category_emoji": "🌱",
+  "tecnica": ""
 }
