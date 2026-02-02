@@ -2808,9 +2808,10 @@ async def admin_list_dishes_full():
             info_file = dish_dir / "dish_info.json"
             
             # Contar e listar imagens
-            images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg"))
+            images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg")) + list(dish_dir.glob("*.png"))
             image_count = len(images)
             first_image = images[0].name if images else None
+            all_images = [img.name for img in images]  # Lista de todos os nomes de imagem
             
             dish_data = {
                 "slug": slug,
@@ -2831,7 +2832,8 @@ async def admin_list_dishes_full():
                 "contem_peixe": False,
                 "tecnica": "",
                 "image_count": image_count,
-                "first_image": first_image
+                "first_image": first_image,
+                "all_images": all_images  # Nova lista com todas as imagens
             }
             
             # Carregar info completa se existir
