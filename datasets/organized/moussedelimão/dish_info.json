@@ -9,15 +9,29 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "220 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "12g",
+    "fibras": "0g"
   },
   "category_emoji": "🥚",
   "descricao": "",
-  "ingredientes": [],
-  "beneficios": [],
-  "riscos": [],
+  "ingredientes": [
+    "leite",
+    "gelatina",
+    "creme de leite",
+    "limao",
+    "acucar"
+  ],
+  "beneficios": [
+    "Fonte de vitamina C do limão, que auxilia na imunidade.",
+    "Pode ser uma sobremesa refrescante.",
+    "O limão possui antioxidantes que combatem radicais livres."
+  ],
+  "riscos": [
+    "Alto teor de açúcar.",
+    "Rico em gorduras saturadas provenientes do creme de leite."
+  ],
   "tecnica": ""
 }
