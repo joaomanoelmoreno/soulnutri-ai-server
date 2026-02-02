@@ -140,16 +140,10 @@ def image_embedding_from_path(image_path: str) -> np.ndarray:
 
 def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
     """DESABILITADO - NÃO usar API externa para economizar créditos"""
-    # GEMINI DESABILITADO - usar apenas modelo local
-    logger.warning("[embedder] API externa DESABILITADA - forçando modelo local")
-    # Forçar carregamento do modelo local
-    global _MODEL, _PREPROCESS, _USE_HF_API
-    if _MODEL is None:
-        _try_load_local_model()
-    if _MODEL is not None:
-        _USE_HF_API = False
-        return get_image_embedding(image_bytes)
-    logger.error("[embedder] ERRO: Modelo local não disponível e API desabilitada")
+    # API externa está desabilitada para economizar créditos
+    # Retorna None se o modelo local falhar - evita loop infinito
+    logger.error("[embedder] ERRO: Modelo local falhou e API externa está desabilitada")
+    logger.error("[embedder] A busca usará apenas o índice pré-calculado")
     return None
 
 
