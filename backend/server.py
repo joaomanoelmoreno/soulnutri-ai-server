@@ -2872,8 +2872,8 @@ async def admin_list_dishes_full():
 
 
 @api_router.get("/admin/dish-image/{slug}")
-async def admin_get_dish_image(slug: str):
-    """Retorna a primeira imagem de um prato."""
+async def admin_get_dish_image(slug: str, img: str = None):
+    """Retorna uma imagem de um prato. Se img for especificado, retorna essa imagem específica."""
     from fastapi.responses import FileResponse
     
     try:
@@ -2882,8 +2882,16 @@ async def admin_get_dish_image(slug: str):
         if not dataset_dir.exists():
             raise HTTPException(status_code=404, detail="Prato não encontrado")
         
-        # Buscar primeira imagem
-        images = list(dataset_dir.glob("*.jpg")) + list(dataset_dir.glob("*.jpeg"))
+        # Se uma imagem específica foi solicitada
+        if img:
+            img_path = dataset_dir / img
+            if img_path.exists():
+                return FileResponse(img_path, media_type="image/jpeg")
+            else:
+                raise HTTPException(status_code=404, detail="Imagem não encontrada")
+        
+        # Senão, retorna a primeira imagem
+        images = list(dataset_dir.glob("*.jpg")) + list(dataset_dir.glob("*.jpeg")) + list(dataset_dir.glob("*.png"))
         
         if not images:
             raise HTTPException(status_code=404, detail="Sem imagens")
