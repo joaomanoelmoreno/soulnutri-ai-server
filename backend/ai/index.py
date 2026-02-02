@@ -201,8 +201,9 @@ class DishIndex:
         # Como os embeddings já estão normalizados, o dot product = cosine similarity
         similarities = np.dot(self.embeddings, query_embedding)
         
-        # Pegar top-k índices
-        top_indices = np.argsort(similarities)[::-1][:top_k * 3]  # Pega mais para agregar
+        # Pegar top índices - aumentado para garantir diversidade de pratos
+        # Pratos populares podem ter 30+ imagens, então precisamos pegar mais
+        top_indices = np.argsort(similarities)[::-1][:min(top_k * 20, len(similarities))]
         
         # Agregar por prato (pegar melhor score de cada prato)
         dish_scores: Dict[str, float] = {}
@@ -211,6 +212,9 @@ class DishIndex:
             score = float(similarities[idx])
             if dish not in dish_scores or score > dish_scores[dish]:
                 dish_scores[dish] = score
+            # Parar quando tiver pratos suficientes para comparação
+            if len(dish_scores) >= top_k * 3:
+                break
         
         # Ordenar por score
         sorted_dishes = sorted(dish_scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
