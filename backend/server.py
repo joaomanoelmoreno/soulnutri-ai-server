@@ -512,9 +512,17 @@ async def identify_image(
                 decision = clip_decision
                 decision['source'] = 'local_index'
                 logger.info(f"[CASCATA] ✅ CLIP confiante ({clip_score:.0%}) - usando resultado local")
+            
+            # ══════════════════════════════════════════════════════════════════
+            # CIBI SANA: Usar CLIP APENAS (Gemini TRAVADO)
+            # ══════════════════════════════════════════════════════════════════
+            elif restaurant and restaurant.lower() == "cibi_sana":
+                decision = clip_decision
+                decision['source'] = 'local_index'
+                logger.info(f"[CIBI SANA] CLIP apenas ({clip_score:.0%}) - Gemini TRAVADO")
         
         # ══════════════════════════════════════════════════════════════════════
-        # NÍVEL 2: Se CLIP não confiante, usar Gemini (custo ~$0.000006)
+        # NÍVEL 2: Se CLIP não confiante E NÃO é Cibi Sana, usar Gemini
         # ══════════════════════════════════════════════════════════════════════
         if decision is None:
             logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
