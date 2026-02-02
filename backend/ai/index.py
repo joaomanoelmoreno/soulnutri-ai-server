@@ -201,9 +201,8 @@ class DishIndex:
         # Como os embeddings já estão normalizados, o dot product = cosine similarity
         similarities = np.dot(self.embeddings, query_embedding)
         
-        # Pegar top índices - aumentado para garantir diversidade de pratos
-        # Pratos populares podem ter 30+ imagens, então precisamos pegar mais
-        top_indices = np.argsort(similarities)[::-1][:min(top_k * 20, len(similarities))]
+        # Pegar top-k índices
+        top_indices = np.argsort(similarities)[::-1][:top_k * 3]  # Pega mais para agregar
         
         # Agregar por prato (pegar melhor score de cada prato)
         dish_scores: Dict[str, float] = {}
@@ -212,9 +211,6 @@ class DishIndex:
             score = float(similarities[idx])
             if dish not in dish_scores or score > dish_scores[dish]:
                 dish_scores[dish] = score
-            # Parar quando tiver pratos suficientes para comparação
-            if len(dish_scores) >= top_k * 3:
-                break
         
         # Ordenar por score
         sorted_dishes = sorted(dish_scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
@@ -224,48 +220,47 @@ class DishIndex:
         # ═══════════════════════════════════════════════════════════════════════
         # CALIBRAÇÃO DE CONFIANÇA - Tornar scores mais "honestos"
         # ═══════════════════════════════════════════════════════════════════════
-        # CALIBRAÇÃO DE CONFIANÇA PARA PRATOS DO CIBI SANA
-        # ═══════════════════════════════════════════════════════════════════════
-        # O índice CLIP foi treinado com imagens do Cibi Sana.
-        # Scores muito altos (>0.85) indicam match exato com imagens do dataset.
-        # Usamos gap analysis apenas para scores moderados.
+        # O CLIP sempre acha algo "parecido", mesmo que não seja comida.
+        # Usamos 2 técnicas para calibrar:
+        # 1. Gap Analysis: Se top-2 são muito próximos, indica incerteza
+        # 2. Temperature Scaling: Transforma cosine similarity em probabilidade
         # ═══════════════════════════════════════════════════════════════════════
         
         calibrated_score = 0.0
-        top1_score = sorted_dishes[0][1] if sorted_dishes else 0.0
-        
-        # REGRA 1: Score muito alto (>0.85) = match direto com dataset
-        # Isso acontece quando a imagem é muito similar às imagens de treino
-        if top1_score >= 0.85:
-            # Score >0.85 é quase certeza para pratos do Cibi Sana
-            calibrated_score = min(0.90 + (top1_score - 0.85) * 0.5, 0.98)
-            logger.info(f"[CLIP] Alta confiança: Raw={top1_score:.3f} → {calibrated_score:.2%}")
-        
-        # REGRA 2: Score alto (0.70-0.85) = provável match
-        elif top1_score >= 0.70:
-            calibrated_score = 0.80 + (top1_score - 0.70) * 0.67  # 0.80 a 0.90
-            logger.info(f"[CLIP] Confiança média-alta: Raw={top1_score:.3f} → {calibrated_score:.2%}")
-        
-        # REGRA 3: Score moderado - usar gap analysis
-        elif len(sorted_dishes) >= 2:
+        if len(sorted_dishes) >= 2:
+            top1_score = sorted_dishes[0][1]
             top2_score = sorted_dishes[1][1]
+            
+            # Gap entre 1º e 2º lugar (quanto maior, mais confiante)
             gap = top1_score - top2_score
             
-            # Gap grande = mais confiança
-            if gap >= 0.10:
-                calibrated_score = min(0.75 + top1_score * 0.3, 0.85)
-            elif gap >= 0.05:
-                calibrated_score = min(0.60 + top1_score * 0.4, 0.75)
-            else:
-                # Gap pequeno = incerteza
-                calibrated_score = min(top1_score * 0.8, 0.60)
+            # Temperature scaling: T=0.07 é padrão do CLIP, mas usamos T mais alto para ser mais conservador
+            # Score bruto do CLIP geralmente fica entre 0.15 e 0.35 para matches bons
+            # Vamos normalizar para escala 0-1 mais realista
             
-            logger.info(f"[CLIP] Gap analysis: Raw={top1_score:.3f}, Gap={gap:.3f} → {calibrated_score:.2%}")
-        
-        # REGRA 4: Apenas 1 prato encontrado com score baixo
-        else:
-            calibrated_score = min(top1_score * 0.9, 0.50)
-            logger.info(f"[CLIP] Único resultado: Raw={top1_score:.3f} → {calibrated_score:.2%}")
+            # Se o gap é pequeno (< 0.02), o modelo está muito incerto
+            if gap < 0.02:
+                calibrated_score = min(top1_score * 0.6, 0.50)  # Máximo 50%
+            # Se o gap é médio (0.02-0.05), confiança média
+            elif gap < 0.05:
+                calibrated_score = min(top1_score * 0.8, 0.70)  # Máximo 70%
+            # Se o gap é grande (> 0.05), mais confiante
+            else:
+                # Escalar o score bruto para uma faixa mais realista
+                # Score bruto de 0.30+ indica match muito bom
+                if top1_score >= 0.35:
+                    calibrated_score = min(0.85 + (top1_score - 0.35) * 0.5, 0.95)
+                elif top1_score >= 0.30:
+                    calibrated_score = 0.70 + (top1_score - 0.30) * 3.0  # 0.70 a 0.85
+                elif top1_score >= 0.25:
+                    calibrated_score = 0.50 + (top1_score - 0.25) * 4.0  # 0.50 a 0.70
+                else:
+                    calibrated_score = top1_score * 2.0  # Abaixo de 0.25 = baixa confiança
+            
+            logger.info(f"[CLIP Calibration] Raw: {top1_score:.3f}, Gap: {gap:.3f}, Calibrated: {calibrated_score:.2%}")
+        elif len(sorted_dishes) == 1:
+            # Sem gap para comparar, ser mais conservador
+            calibrated_score = min(sorted_dishes[0][1] * 0.7, 0.60)
         
         # Formatar resultados com score calibrado
         results = []
