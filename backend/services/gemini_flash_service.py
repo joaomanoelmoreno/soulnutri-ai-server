@@ -415,12 +415,18 @@ def gerar_alertas_personalizados(prato: Dict, perfil: Dict) -> List[Dict]:
     # ═══════════════════════════════════════════════════════════════════════
     # VERIFICAR CALORIAS vs META
     # ═══════════════════════════════════════════════════════════════════════
-    meta_calorica = perfil.get('meta_calorica', 0)
+    meta_calorica_raw = perfil.get('meta_calorica', 0)
+    # meta_calorica pode ser um dict {'meta_sugerida': 2000} ou um int
+    if isinstance(meta_calorica_raw, dict):
+        meta_calorica = meta_calorica_raw.get('meta_sugerida', 0)
+    else:
+        meta_calorica = meta_calorica_raw or 0
+    
     objetivo = perfil.get('objetivo', 'manter')
     
     try:
         calorias_str = prato.get('nutricao', {}).get('calorias', '0')
-        calorias_prato = int(''.join(c for c in calorias_str if c.isdigit()) or '0')
+        calorias_prato = int(''.join(c for c in str(calorias_str) if c.isdigit()) or '0')
     except:
         calorias_prato = 0
     
