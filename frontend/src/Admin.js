@@ -1745,14 +1745,34 @@ export default function Admin() {
             </div>
             
             <div className="modal-body">
-              {/* Foto do prato */}
+              {/* Galeria de fotos do prato */}
               <div className="edit-photo-section">
-                {editingDish.first_image ? (
-                  <img src={`${API}/admin/dish-image/${editingDish.slug}`} alt={editingDish.nome} />
-                ) : (
-                  <div className="no-photo-large">{editingDish.category_emoji || '🍽️'}</div>
-                )}
-                <p className="photo-info">📷 {editingDish.image_count} fotos</p>
+                <div className="photo-gallery" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
+                  {editingDish.all_images && editingDish.all_images.length > 0 ? (
+                    editingDish.all_images.map((img, idx) => (
+                      <div key={idx} style={{ position: 'relative' }}>
+                        <img 
+                          src={`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`} 
+                          alt={`${editingDish.nome} ${idx + 1}`}
+                          style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer' }}
+                          onClick={() => window.open(`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`, '_blank')}
+                        />
+                        <span style={{ position: 'absolute', bottom: '2px', right: '2px', background: 'rgba(0,0,0,0.6)', color: '#fff', fontSize: '10px', padding: '2px 4px', borderRadius: '4px' }}>
+                          {idx + 1}
+                        </span>
+                      </div>
+                    ))
+                  ) : editingDish.first_image ? (
+                    <img 
+                      src={`${API}/admin/dish-image/${editingDish.slug}`} 
+                      alt={editingDish.nome}
+                      style={{ maxWidth: '200px', borderRadius: '8px' }}
+                    />
+                  ) : (
+                    <div className="no-photo-large">{editingDish.category_emoji || '🍽️'}</div>
+                  )}
+                </div>
+                <p className="photo-info">📷 {editingDish.image_count} fotos - Clique para ampliar</p>
               </div>
               
               <div className="edit-fields">
