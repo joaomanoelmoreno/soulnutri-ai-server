@@ -1,6 +1,6 @@
 {
   "slug": "Maminhaao Molhomongolia",
-  "nome": "Maminha ao Molho Mongólia",
+  "nome": "Marinha ao Molho Mongólia",
   "categoria": "proteína animal",
   "descricao": "Maminha bovina fresca preparada sous vide ao molho agridoce mongoliano com maple",
   "ingredientes": [
@@ -48,5 +48,8 @@
   "evitar_com": [
     "Molhos gordurosos"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

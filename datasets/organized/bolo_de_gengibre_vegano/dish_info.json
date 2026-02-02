@@ -1,0 +1,29 @@
+{
+  "nome": "Bolo de Gengibre Vegano",
+  "slug": "bolo_de_gengibre_vegano",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "descricao": "Bolo de Gengibre Vegano - prato do Cibi Sana",
+  "ingredientes": [],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": "",
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~20g",
+    "gorduras": "~5g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [],
+  "evitar_com": [],
+  "origem": "user_created_local"
+}

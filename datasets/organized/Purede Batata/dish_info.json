@@ -7,41 +7,31 @@
     "batata",
     "sal",
     "leite ",
-    "alho",
-    ""
+    "alho"
   ],
   "beneficios": [
     "Fonte de carboidratos para energia.",
     "Contém potássio, importante para a saúde muscular e nervosa.",
-    "Pode auxiliar na saciedade devido ao teor de fibras."
+    "Pode auxiliar na saciedade devido ao teor de fibras.",
+    "Fonte de potássio",
+    "Energia sustentada",
+    "Vitamina C"
   ],
   "riscos": [
     "Pode ser calórico dependendo da quantidade de leite utilizada.",
-    "O consumo excessivo pode levar ao ganho de peso."
+    "O consumo excessivo pode levar ao ganho de peso.",
+    "Alto índice glicêmico se consumida sozinha"
   ],
   "nutricao": {
     "calorias": "90 kcal",
     "proteinas": "2g",
     "carboidratos": "15g",
-    "gorduras": "2g",
-    "fibras": "1g"
+    "gorduras": "2g"
   },
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "Cozimento ou assado",
-  "indice_glicemico": "alto",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Proteínas",
-    "Vegetais verdes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ],
-  "category_emoji": "🥚"
+  "contem_soja": false
 }

@@ -1,40 +1,30 @@
 {
   "slug": "Carpaccio de Laranja",
-  "nome": "Carpaccio de Abobrinha",
+  "nome": "Carpaccio de Laranja",
   "categoria": "vegano",
-  "descricao": "Finas fatias de abobrinha orgânica crua com azeite extravirgem e limão",
+  "descricao": "Finas fatias de laranja com chocolate 70%  e flor de sal",
   "ingredientes": [
-    "abobrinha orgânica",
-    "azeite extravirgem",
-    "limão fresco",
-    "sal",
-    "rúcula orgânica",
-    "laranja fresca",
-    "maple canadense",
-    "hortelã orgânica",
-    "canela importada",
-    "abobrinha",
-    "azeite"
+    "Laranja",
+    "chocolate 70%",
+    "flor de sal",
+    "pimenta dedo de moca"
   ],
   "beneficios": [
-    "Apenas 17kcal/100g: extremamente leve",
-    "Hidratação: 95% de água",
-    "Potássio: equilíbrio dos fluidos corporais",
-    "Vitamina C: fortalece o sistema imunológico",
-    "Flavonoides: protegem o coração",
-    "Hidratação: alto teor de água",
-    "Muito baixa caloria",
-    "Rica em água",
-    "Vitaminas B"
+    "Rico em vitamina C, que fortalece o sistema imunológico.",
+    "A presença de antioxidantes auxilia no combate aos radicais livres.",
+    "O chocolate 70% cacau pode trazer benefícios para a saúde cardiovascular.",
+    "A laranja é fonte de fibras, que auxiliam na digestão."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Consumir com moderação devido ao teor de açúcar do chocolate.",
+    "A pimenta pode não ser adequada para pessoas com sensibilidade."
   ],
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "220 kcal",
+    "proteinas": "3g",
+    "carboidratos": "30g",
+    "gorduras": "10g",
+    "fibras": "5g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -51,5 +41,5 @@
     "Tomate"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

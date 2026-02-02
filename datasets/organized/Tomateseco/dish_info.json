@@ -1,46 +1,43 @@
 {
+  "slug": "Tomateseco",
   "nome": "Quiche de tomate seco",
   "categoria": "vegano",
+  "descricao": "Tomates secos conservados em azeite de oliva com ervas e especiarias. Ideal como aperitivo ou acompanhamento.",
   "ingredientes": [
     "Tomate seco",
     "Azeite de oliva",
     "Alho",
     "Ervas frescas (salsinha, manjericão)",
-    "Pimenta do reino"
+    "Pimenta do reino",
+    "massa folhada",
+    "ovos",
+    "creme de leite",
+    "queijo"
   ],
-  "descricao": "Tomates secos conservados em azeite de oliva com ervas e especiarias. Ideal como aperitivo ou acompanhamento.",
   "beneficios": [
     "Fonte de antioxidantes",
     "Rico em licopeno",
-    "Gorduras saudáveis"
+    "Gorduras saudáveis",
+    "Proteínas do ovo",
+    "Refeição completa"
   ],
   "riscos": [
     "Alto teor de sódio (se conservado em salmoura)",
-    "Alto teor de gordura (devido ao azeite)"
+    "Alto teor de gordura (devido ao azeite)",
+    "Contém glúten",
+    "Contém lactose",
+    "Contém ovo"
   ],
-  "curiosidade": "O tomate seco, originalmente, era produzido para conservar tomates na ausência de refrigeração. A secagem concentra os sabores e nutrientes do tomate, tornando-o um ingrediente versátil na culinária.",
-  "slug": "Tomateseco",
   "nutricao": {
     "calorias": "250 kcal",
     "proteinas": "3g",
     "carboidratos": "15g",
     "gorduras": "20g"
   },
-  "category_emoji": "🌱",
-  "contem_gluten": false,
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "Assada em forno",
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "3 horas",
-  "melhor_horario": "Almoço ou lanche",
-  "combina_com": [
-    "Salada verde"
-  ],
-  "evitar_com": [
-    "Outras massas"
-  ]
+  "contem_soja": false
 }

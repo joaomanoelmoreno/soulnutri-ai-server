@@ -5,26 +5,32 @@
   "descricao": "Caponata siciliana de berinjela",
   "ingredientes": [
     "berinjela",
+    "cenoura",
+    "abobrinha",
+    "cebola",
     "tomate",
     "alcaparras",
     "azeitonas",
-    "aipo"
+    "aipo",
+    "vinho branco"
   ],
   "tecnica": "Refogado em azeite",
   "beneficios": [
-    "Licopeno do tomate: protege a próstata",
-    "Fibras: regulam o intestino",
-    "Antioxidantes: combatem envelhecimento"
+    "Rica em antioxidantes, combatendo os radicais livres.",
+    "Fonte de fibras, auxiliando na saúde intestinal.",
+    "Baixa em calorias, ideal para dietas de controle de peso.",
+    "Promove a saciedade, contribuindo para o controle da fome."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Pode conter sódio em excesso dependendo da quantidade de azeitonas e alcaparras."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "85 kcal",
+    "proteinas": "1g",
+    "carboidratos": "8g",
+    "gorduras": "5g",
+    "fibras": "3g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -40,5 +46,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

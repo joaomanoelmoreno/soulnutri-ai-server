@@ -1,39 +1,35 @@
 {
-  "nome": "batatadoce",
   "slug": "batatadoce",
+  "nome": "Batata Doce",
   "categoria": "vegano",
+  "descricao": "Batata doce orgânica assada em forno combinado, naturalmente doce",
   "ingredientes": [
+    "batata doce orgânica",
     "batata",
     "sal"
   ],
   "beneficios": [
+    "Índice glicêmico baixo: energia sem picos de açúcar",
+    "Betacaroteno: saúde da pele e visão",
+    "Fibras: auxiliam no emagrecimento",
     "Fonte de potássio",
     "Energia sustentada",
     "Vitamina C"
   ],
   "riscos": [
+    "Pode conter traços de glúten",
     "Alto índice glicêmico se consumida sozinha"
   ],
   "nutricao": {
-    "calorias": "77 kcal",
+    "calorias": "90 kcal",
     "proteinas": "2g",
-    "carboidratos": "17g",
+    "carboidratos": "20g",
     "gorduras": "0.1g"
   },
-  "tecnica": "Cozimento ou assado",
-  "descricao": "Batata preparada de forma saudável.",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "indice_glicemico": "alto",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Proteínas",
-    "Vegetais verdes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ],
-  "category_emoji": "🌱"
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

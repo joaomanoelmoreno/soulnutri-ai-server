@@ -6,24 +6,33 @@
     "cogumelos",
     "azeite",
     "alho",
-    "sal"
+    "sal",
+    "cenoura",
+    "abobrinha",
+    "batatas",
+    "creme de caju",
+    "queijo vegano"
   ],
-  "descricao": "Cogumelos saborosos e nutritivos.",
+  "descricao": "Cogumelos portobello recheados com legumes e creme de caju",
   "beneficios": [
-    "Baixas calorias",
-    "Proteína vegetal",
-    "Rico em vitamina D"
+    "Fonte de fibras, auxiliando na saúde intestinal.",
+    "Rico em vitaminas e minerais provenientes dos legumes.",
+    "Opção com baixo teor de gorduras saturadas."
   ],
-  "riscos": [],
+  "riscos": [
+    "Pode conter alto teor de sódio dependendo da quantidade de sal.",
+    "O consumo excessivo de azeite pode aumentar o valor calórico total."
+  ],
   "nutricao": {
-    "calorias": "22 kcal",
-    "proteinas": "3g",
-    "carboidratos": "3g",
-    "gorduras": "0.3g"
+    "calorias": "160 kcal",
+    "proteinas": "4g",
+    "carboidratos": "12g",
+    "gorduras": "10g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "tecnica": "Refogado ou grelhado",
   "contem_ovo": false,
   "indice_glicemico": "muito baixo",
@@ -39,5 +48,8 @@
     "min": 150,
     "max": 300,
     "tipico": 220
-  }
+  },
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

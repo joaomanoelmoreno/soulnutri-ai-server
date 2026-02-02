@@ -7,43 +7,35 @@
     "peixe",
     "sal",
     "limão",
-    "ervas",
     "peixe branco fresco",
-    "limão fresco",
     "cebola roxa orgânica",
-    "coentro orgânico",
-    "pimenta importada",
-    "milho",
-    "tilápia",
+    "pimenta dedo de moca",
     "cebola roxa",
-    "coentro",
-    "pimenta"
+    ""
   ],
   "beneficios": [
-    "Ômega-3",
-    "Proteína de fácil digestão",
-    "Vitamina D",
-    "Ômega-3: proteção cardiovascular",
-    "Vitamina C do limão: fortalece imunidade",
-    "Proteína magra: baixíssima gordura",
-    "Baixa caloria",
-    "Rico em vitamina C do limão"
+    "Fonte de proteína de alta qualidade",
+    "Rico em ômega-3 (dependendo do peixe)",
+    "Baixo em calorias",
+    "Digestão facilitada devido ao limão"
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Pode conter traços de glúten"
+    "Risco de contaminação por peixe cru (parasitas)",
+    "Pode conter sódio em excesso (devido ao sal)"
   ],
   "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "22g",
-    "carboidratos": "0g",
-    "gorduras": "3g"
+    "calorias": "110 kcal",
+    "proteinas": "20g",
+    "carboidratos": "5g",
+    "gorduras": "2g",
+    "fibras": "1g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": true,
+  "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "tecnica": ""
 }

@@ -1,11 +1,17 @@
 {
-  "nome": "frangoaocremedelimao",
   "slug": "frangoaocremedelimao",
+  "nome": "frangoaocremedelimao",
   "categoria": "proteína animal",
+  "descricao": "Frango cozido em creme, geralmente com ervas frescas.",
   "ingredientes": [
     "frango",
     "sal",
-    "temperos"
+    "temperos",
+    "Peito de frango",
+    "Creme de leite",
+    "Salsa",
+    "Alho",
+    "Cebola"
   ],
   "beneficios": [
     "Proteína magra de alta qualidade",
@@ -13,7 +19,10 @@
     "Baixo teor de gordura"
   ],
   "riscos": [
-    "Verificar procedência"
+    "Verificar procedência",
+    "Alérgeno: Leite",
+    "Alto teor de gordura",
+    "Alérgeno: LACTOSE (creme, leite)"
   ],
   "nutricao": {
     "calorias": "165 kcal",
@@ -21,20 +30,10 @@
     "carboidratos": "0g",
     "gorduras": "3.6g"
   },
-  "tecnica": "Grelhado ou assado",
-  "descricao": "Frango preparado de forma saudável.",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "indice_glicemico": "zero",
-  "tempo_digestao": "3-4 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Saladas",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ],
-  "category_emoji": "🍖"
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

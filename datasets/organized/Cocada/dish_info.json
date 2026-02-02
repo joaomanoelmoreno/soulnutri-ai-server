@@ -1,26 +1,33 @@
 {
   "slug": "Cocada",
   "nome": "Cocada",
-  "categoria": "sobremesa",
+  "categoria": "vegano",
   "descricao": "Cocada cremosa tradicional",
   "ingredientes": [
-    "coco ralado",
+    "coco fresco ralado",
     "açúcar",
-    "leite condensado"
+    "leite condensado",
+    "leite de coco"
   ],
   "tecnica": "",
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de energia devido aos carboidratos.",
+    "Contém gorduras saudáveis do coco.",
+    "Pode fornecer vitaminas e minerais do coco.",
+    "Saborosa e apreciada na culinária brasileira."
+  ],
   "riscos": [
-    "Alto teor de açúcar",
-    "Alérgeno: Leite",
-    "Alérgeno: LACTOSE (leite)"
+    "Alto teor de açúcar.",
+    "Calorias elevadas devido ao açúcar e leite condensado.",
+    "Consumir com moderação devido ao alto valor calórico."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "320 kcal",
+    "proteinas": "3g",
+    "carboidratos": "45g",
+    "gorduras": "15g",
+    "fibras": "4g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,

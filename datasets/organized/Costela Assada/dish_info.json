@@ -2,7 +2,7 @@
   "slug": "Costela Assada",
   "nome": "Costela Assada",
   "categoria": "proteína animal",
-  "descricao": "Costela bovina - prato cadastrado pelo usuário",
+  "descricao": "Costela bovina  cozida em caldo com mandioca",
   "ingredientes": [
     "carne bovina",
     "sal",
@@ -11,37 +11,26 @@
     "alho",
     "cebola",
     "caldo. de carne",
-    "ervas e especiarias",
-    "Carne",
-    "Molho",
-    "Ervas",
-    "costela bovina",
-    "sal grosso"
+    "",
+    "",
+    ""
   ],
   "beneficios": [
-    "Proteína completa",
-    "Ferro heme",
-    "Vitamina B12",
-    "Zinco",
-    "Fonte de proteína, essencial para a construção e reparação muscular.",
-    "A mandioca fornece carboidratos para energia.",
-    "Contém vitaminas e minerais provenientes da carne e dos temperos.",
-    "O caldo de carne pode agregar sabor e nutrientes.",
-    "Zinco (4.5mg/100g): fortalece o sistema imunológico, cicatrização e saúde da pele",
-    "Creatina natural: melhora a performance muscular e energia para exercícios"
+    "Fonte de proteína de alta qualidade para construção e reparo muscular.",
+    "Rica em ferro, importante para a saúde do sangue e prevenção da anemia.",
+    "A mandioca fornece carboidratos para energia e fibras para a saúde digestiva.",
+    "Contém vitaminas e minerais provenientes dos temperos e da carne."
   ],
   "riscos": [
-    "Gordura saturada",
-    "Alto teor de gordura, dependendo do corte da costela.",
-    "Alto teor de sódio, devido ao sal e possivelmente ao caldo de carne industrializado.",
-    "Alérgeno: Carne",
-    "⚠️ ATENÇÃO: Alto teor de gordura saturada (15g/100g) - consumo excessivo aumenta colesterol e risco cardiovascular. Recomendado: porções moderadas, não diariamente"
+    "Alto teor de gordura saturada, que pode aumentar o colesterol se consumido em excesso.",
+    "Potencialmente alto teor de sódio dependendo da quantidade de sal e temperos utilizados."
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "26g",
-    "carboidratos": "0g",
-    "gorduras": "15g"
+    "calorias": "210 kcal",
+    "proteinas": "22g",
+    "carboidratos": "10g",
+    "gorduras": "10g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -49,5 +38,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "tecnica": ""
 }
