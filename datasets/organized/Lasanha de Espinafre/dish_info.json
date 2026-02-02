@@ -2,14 +2,16 @@
   "slug": "Lasanha de Espinafre",
   "ativo": true,
   "beneficios": [
-    "Ferro vegetal (2.7mg/100g): combate anemia e fadiga - consuma com vitamina C para dobrar a absorção",
-    "Vitamina K: essencial para coagulação sanguínea e mineralização óssea"
+    "Fonte de cálcio e proteínas (ricota)",
+    "Rico em vitaminas e minerais (espinafre)",
+    "Boa opção para vegetarianos",
+    "Versátil e saborosa"
   ],
   "categoria": "vegetariano",
   "category_emoji": "🥚",
-  "contem_gluten": false,
+  "contem_gluten": true,
   "created_at": "2026-01-21T17:07:05.472000",
-  "descricao": "Lasanha de espinafre - prato cadastrado pelo usuário",
+  "descricao": "Lasanha de espinafre ",
   "ingredientes": [
     "massa de lasanha",
     "espinafre",
@@ -19,16 +21,16 @@
   ],
   "nome": "Lasanha de espinafre",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "160 kcal",
+    "proteinas": "8g",
+    "carboidratos": "18g",
+    "gorduras": "7g",
+    "fibras": "2g"
   },
   "origem": "user_created",
   "riscos": [
-    "Alérgeno: Contém LACTOSE",
-    "Contém glúten",
-    "⚠️ ATENÇÃO: Molho branco é calórico - porções moderadas recomendadas"
+    "Pode ser alta em gorduras dependendo da quantidade de queijo e molho branco",
+    "Pode conter alto teor de sódio dependendo dos ingredientes"
   ],
   "tecnica": "Assado em forno",
   "beneficio_principal": "Combinação de proteína (carne/queijo), carboidrato (massa) e vegetais fornece refeição completa com liberação gradual de energia",
@@ -37,7 +39,7 @@
   "curiosidade_cientifica": "A lasanha à bolonhesa original de Bologna não leva tomate - foi adicionado só no século XIX",
   "referencia_pesquisa": "Tabela TACO - UNICAMP",
   "contem_lactose": true,
-  "contem_ovo": true,
+  "contem_ovo": false,
   "indice_glicemico": "moderado",
   "tempo_digestao": "3-4 horas",
   "melhor_horario": "Almoço",
@@ -46,5 +48,8 @@
   ],
   "evitar_com": [
     "Outras massas"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

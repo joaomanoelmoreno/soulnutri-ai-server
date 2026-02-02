@@ -2,30 +2,33 @@
   "slug": "Maminhanacervejapreta",
   "nome": "Maminha na Cerveja Preta",
   "categoria": "proteína animal",
-  "descricao": "Maminha bovina fresca braseada na cerveja preta",
+  "descricao": "Maminha bovina braseada na cerveja preta",
   "ingredientes": [
     "maminha fresca",
     "cerveja preta",
-    "cebola orgânica",
-    "alho orgânico",
+    "caldo de legumes",
+    "cebola",
+    "alho",
     "louro"
   ],
   "tecnica": "Braseamento",
   "beneficios": [
-    "Proteína que se desfaz: fácil mastigação",
-    "Ferro heme: previne anemia",
-    "Vitaminas do complexo B"
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparação muscular.",
+    "A maminha é rica em ferro, importante para a prevenção da anemia.",
+    "A cerveja preta pode conter antioxidantes, benéficos para a saúde cardiovascular.",
+    "O caldo de legumes adiciona nutrientes e sabor ao prato."
   ],
   "riscos": [
-    "Contém álcool residual",
-    "Pode conter traços de glúten"
+    "Consumir com moderação devido ao teor de gordura da carne.",
+    "A cerveja preta contém álcool, evite em excesso."
   ],
-  "contem_gluten": false,
+  "contem_gluten": true,
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "26g",
-    "carboidratos": "0g",
-    "gorduras": "15g"
+    "calorias": "180 kcal",
+    "proteinas": "28g",
+    "carboidratos": "4g",
+    "gorduras": "6g",
+    "fibras": "1g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -48,5 +51,8 @@
   "evitar_com": [
     "Molhos gordurosos"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

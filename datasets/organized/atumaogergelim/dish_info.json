@@ -1,43 +1,39 @@
 {
   "slug": "atumaogergelim",
-  "nome": "atumaogergelim",
+  "nome": "Atum ao Gergelim",
   "categoria": "proteína animal",
-  "descricao": "Atum fresco (recebido a cada 1-2 dias) selado com crosta de gergelim importado",
+  "descricao": "Atum fresco selado em crosta de gergelim ",
   "ingredientes": [
     "peixe",
     "sal",
-    "limão",
     "ervas",
     "atum fresco",
     "gergelim importado",
-    "shoyu",
-    "gengibre fresco",
-    "wasabi importado do Japão"
+    "molho tare",
+    "kewpie",
+    ""
   ],
   "beneficios": [
-    "Ômega-3",
-    "Proteína de fácil digestão",
-    "Vitamina D",
-    "Ômega-3: protege coração e cérebro",
-    "Proteína magra: ideal para músculos",
-    "Selênio: antioxidante que protege células"
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparação dos tecidos do corpo.",
+    "Rico em ômega-3, que contribui para a saúde cardiovascular e cerebral.",
+    "O gergelim oferece antioxidantes e minerais importantes, como cálcio e magnésio."
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Alérgeno: gergelim",
-    "Pode conter traços de glúten"
+    "O molho tare pode conter quantidades significativas de sódio, verificar a quantidade na receita.",
+    "Consumo moderado devido ao teor de gordura, principalmente se houver adição de óleos no preparo."
   ],
   "nutricao": {
-    "calorias": "120 kcal",
+    "calorias": "180 kcal",
     "proteinas": "22g",
-    "carboidratos": "0g",
-    "gorduras": "3g"
+    "carboidratos": "8g",
+    "gorduras": "8g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": false,
-  "contem_castanhas": false,
-  "contem_frutos_mar": true,
+  "contem_ovo": true,
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "Grelhado ou assado",
   "indice_glicemico": "zero",

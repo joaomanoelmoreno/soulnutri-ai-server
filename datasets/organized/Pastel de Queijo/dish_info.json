@@ -2,30 +2,33 @@
   "slug": "Pastel de Queijo",
   "ativo": true,
   "beneficios": [
-    "Vitamina A do queijo: importante para visão noturna, pele saudável e sistema imunológico"
+    "Fonte de cálcio (queijo).",
+    "Prático e fácil de consumir.",
+    "Pode ser uma opção para matar a fome rapidamente."
   ],
   "categoria": "vegetariano",
   "category_emoji": "🥚",
-  "contem_gluten": false,
+  "contem_gluten": true,
   "created_at": "2026-01-21T17:01:59.927000",
-  "descricao": "Pastel de queijo - prato cadastrado pelo usuário",
+  "descricao": "Pastel de queijo assdo em forno",
   "ingredientes": [
     "massa de pastel",
     "queijo mussarela",
-    "óleo para fritura"
+    ""
   ],
   "nome": "Pastel de queijo",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "320 kcal",
+    "proteinas": "14g",
+    "carboidratos": "30g",
+    "gorduras": "18g",
+    "fibras": "1g"
   },
   "origem": "user_created",
   "riscos": [
-    "Alérgeno: Contém LACTOSE",
-    "Contém glúten",
-    "⚠️ ATENÇÃO: FRITURA - alto teor calórico (300kcal/unidade). O óleo aquecido pode gerar compostos inflamatórios. Consumo ocasional recomendado"
+    "Alto teor de gordura devido à fritura.",
+    "Pode ser rico em sódio, dependendo do queijo.",
+    "Baixo teor de fibras."
   ],
   "tecnica": "",
   "beneficio_principal": "Fermentação produz vitamina K2 (MK-7) - forma mais eficiente para transportar cálcio do sangue para os ossos, prevenindo osteoporose E calcificação arterial",

@@ -2,8 +2,10 @@
   "slug": "Salada Oriental de Biffun",
   "ativo": true,
   "beneficios": [
-    "Gergelim: rico em lignanas - compostos que equilibram hormônios e podem reduzir sintomas da menopausa",
-    "Gengibre: propriedades anti-náusea comprovadas cientificamente, também acelera o metabolismo"
+    "Fonte de carboidratos para energia.",
+    "Rico em fibras provenientes dos legumes, auxiliando na saúde intestinal.",
+    "Opção leve e de fácil digestão.",
+    "O gergelim oferece gorduras saudáveis e minerais."
   ],
   "categoria": "vegano",
   "category_emoji": "🌱",
@@ -17,16 +19,18 @@
     "gergelim",
     "gengibre"
   ],
-  "nome": "Salada oriental de biffun",
+  "nome": "Vermicceli",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "150 kcal",
+    "proteinas": "4g",
+    "carboidratos": "30g",
+    "gorduras": "1g",
+    "fibras": "2g"
   },
   "origem": "user_created",
   "riscos": [
-    "Pode conter SOJA (shoyu)"
+    "O shoyu pode conter sódio em excesso, cuidado com a quantidade.",
+    "Verificar a procedência do macarrão de arroz para evitar contaminação por outros grãos."
   ],
   "tecnica": "Crua",
   "beneficio_principal": "O macarrão de arroz é naturalmente sem glúten e de fácil digestão - ideal para pessoas com sensibilidade ao glúten ou intestino sensível",
@@ -42,5 +46,8 @@
   ],
   "evitar_com": [
     "Molhos calóricos"
-  ]
+  ],
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
