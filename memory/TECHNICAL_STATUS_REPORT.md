@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://nutriscan-159.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://nutri-scanner-10.preview.emergentagent.com
 ```
 
 ---
