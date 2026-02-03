@@ -2,41 +2,34 @@
   "slug": "Berinjela À Parmegiana",
   "nome": "Filé de Frango à Parmegiana",
   "categoria": "proteína animal",
-  "descricao": "Filé de frango preparado sous vide, empanado artesanalmente e finalizado em forno combinado",
+  "descricao": "Filé de frango empanado artesanalmente e fassado em forno combinado ao molho de tomates e queijo mussarela",
   "ingredientes": [
     "peito de frango fresco",
-    "farinha (uso controlado)",
+    "farinha de trigo",
+    "farinha de rosca",
     "ovo",
     "molho de tomate artesanal",
     "mussarela",
-    "presunto",
-    "frango",
-    "farinha de trigo",
-    "farinha de rosca",
-    "queijo mussarela",
     "alho",
     "sal"
   ],
   "beneficios": [
-    "Proteína magra: ideal para dietas",
-    "Cálcio do queijo: fortalece ossos",
-    "Assado: mais leve que a versão tradicional frita",
     "Fonte de proteína para construção e reparo muscular.",
-    "Fornece cálcio do queijo, importante para a saúde óssea.",
-    "Pode ser uma opção saborosa para incluir proteína na dieta."
+    "O molho de tomate oferece licopeno, um antioxidante.",
+    "Pode ser adaptado para uma versão mais saudável com menos gordura.",
+    "O frango é uma boa fonte de vitaminas do complexo B."
   ],
   "riscos": [
-    "Contém glúten",
-    "Alérgeno: ovo",
-    "Contém lactose",
-    "Alto teor de gordura devido à fritura e ao queijo.",
-    "Pode conter alto teor de sódio dependendo da quantidade de sal utilizada."
+    "Alto teor de sódio devido ao sal e possivelmente ao molho de tomate.",
+    "Pode ser calórico dependendo da quantidade de óleo utilizado na fritura.",
+    "Consumir com moderação devido ao teor de gordura da mussarela e da fritura."
   ],
   "nutricao": {
-    "calorias": "165 kcal",
-    "proteinas": "31g",
-    "carboidratos": "0g",
-    "gorduras": "3.6g"
+    "calorias": "220 kcal",
+    "proteinas": "18g",
+    "carboidratos": "15g",
+    "gorduras": "10g",
+    "fibras": "1g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -55,5 +48,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍗"
 }

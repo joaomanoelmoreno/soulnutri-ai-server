@@ -1,30 +1,34 @@
 {
   "slug": "Banana Caramelizada",
   "nome": "Banana Caramelizada",
-  "categoria": "vegetariano",
-  "descricao": "Banana grelhada com maple canadense caramelizado",
+  "categoria": "vegano",
+  "descricao": "Banana cozida com maple , manteiga e acucar",
   "ingredientes": [
     "banana",
     "maple canadense",
     "manteiga fresca",
-    "canela importada"
+    "canela importada",
+    "acucar",
+    "canela"
   ],
   "tecnica": "Grelhado + caramelização",
   "beneficios": [
-    "Potássio: previne cãibras e regula pressão",
-    "Triptofano: precursor da serotonina (bem-estar)",
-    "Energia natural de rápida absorção"
+    "Fonte de potássio, importante para a saúde muscular e nervosa.",
+    "Fornece energia rápida devido aos carboidratos.",
+    "A canela possui propriedades antioxidantes e anti-inflamatórias.",
+    "A banana é rica em fibras, auxiliando na saciedade e digestão."
   ],
   "riscos": [
-    "Contém lactose",
-    "Pode conter traços de glúten"
+    "Alto teor de açúcar, consumir com moderação.",
+    "Pode ser calórico devido à adição de açúcar e maple."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "220 kcal",
+    "proteinas": "1g",
+    "carboidratos": "40g",
+    "gorduras": "6g",
+    "fibras": "2g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -40,5 +44,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🥬"
 }

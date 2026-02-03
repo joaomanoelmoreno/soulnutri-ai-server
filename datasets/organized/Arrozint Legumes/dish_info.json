@@ -2,32 +2,31 @@
   "slug": "Arrozint Legumes",
   "nome": "Quinoa com legumes",
   "categoria": "vegano",
-  "descricao": "Uma salada colorida e nutritiva, rica em quinoa, com pedaços de vegetais.",
+  "descricao": "Quinoa refogada e cozida com lehumes sortidos",
   "ingredientes": [
     "Quinoa",
     "Cenoura",
-    "Pimentão",
+    "cebola",
     "Azeite",
-    "arroz integral",
-    "cenoura orgânica",
-    "brócolis orgânico",
-    "ervilha",
-    "abobrinha orgânica",
-    "azeite extravirgem"
+    "mandioquinha",
+    "abobrinha",
+    "ervas frescas"
   ],
   "beneficios": [
-    "Refeição completa: carboidratos, fibras e vitaminas",
-    "Controle glicêmico: libera energia gradualmente",
-    "Vitaminas: fortalecem a imunidade"
+    "Rico em fibras, auxiliando na saúde intestinal.",
+    "Fonte de proteínas vegetais, importante para a saúde muscular.",
+    "Baixo teor de gordura saturada, contribuindo para a saúde cardiovascular.",
+    "Versátil e permite diversas combinações de legumes, agregando variedade de vitaminas e minerais."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Pode conter traços de outros alimentos se preparado em ambiente com contaminação cruzada."
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "110 kcal",
+    "proteinas": "4g",
+    "carboidratos": "18g",
+    "gorduras": "3g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -44,5 +43,5 @@
     "Saladas"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

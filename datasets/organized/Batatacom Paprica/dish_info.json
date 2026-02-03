@@ -2,29 +2,30 @@
   "slug": "Batatacom Paprica",
   "nome": "Batata com Páprica",
   "categoria": "vegano",
-  "descricao": "Batatas temperadas com páprica defumada importada, assadas em forno combinado",
+  "descricao": "Batatas temperadas com páprica defumada assadas em forno combinado",
   "ingredientes": [
     "batata",
-    "páprica defumada importada",
+    "páprica defumada",
     "azeite extravirgem",
-    "alho orgânico",
     "sal"
   ],
   "tecnica": "Assado em forno combinado (sem fritura)",
   "beneficios": [
-    "Capsaicina da páprica: acelera o metabolismo",
-    "Potássio: saúde cardiovascular",
-    "Preparado sem fritura: mais leve e saudável"
+    "Fonte de carboidratos complexos, que fornecem energia.",
+    "A páprica defumada é rica em antioxidantes.",
+    "O azeite de oliva é fonte de gorduras saudáveis.",
+    "Pode auxiliar na saciedade devido ao teor de fibras."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Consumir com moderação devido ao teor calórico, especialmente se for frita."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "90 kcal",
+    "calorias": "110 kcal",
     "proteinas": "2g",
-    "carboidratos": "20g",
-    "gorduras": "0.1g"
+    "carboidratos": "15g",
+    "gorduras": "4g",
+    "fibras": "2g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -47,5 +48,8 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

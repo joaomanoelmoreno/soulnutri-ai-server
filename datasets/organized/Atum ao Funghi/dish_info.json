@@ -2,39 +2,44 @@
   "slug": "Atum ao Funghi",
   "ativo": true,
   "beneficios": [
-    "Atum: rico em niacina (B3) que converte alimentos em energia e mantém pele saudável",
-    "Beta-glucanas dos cogumelos: estimulam o sistema imunológico e podem ajudar a combater tumores"
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparo dos tecidos.",
+    "Rico em ácidos graxos ômega-3, importantes para a saúde cardiovascular e cerebral.",
+    "O funghi secchi adiciona sabor e antioxidantes, contribuindo para a saúde geral.",
+    "O azeite de oliva fornece gorduras saudáveis e contribui para a absorção de nutrientes."
   ],
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": false,
+  "category_emoji": "🐟",
+  "contem_gluten": true,
   "created_at": "2026-01-21T17:07:36.599000",
-  "descricao": "Atum ao funghi - prato cadastrado pelo usuário",
+  "descricao": "Atum ao Funghi Secchi",
   "ingredientes": [
     "atum fresco",
-    "cogumelos",
+    "funghi secchi",
     "azeite",
     "alho",
-    "vinho branco"
+    "vinho branco",
+    "farinha de trigo",
+    "cheiro verde"
   ],
-  "nome": "Atum ao funghi",
+  "nome": "Atum ao funghi Secchi",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "180 kcal",
+    "proteinas": "22g",
+    "carboidratos": "8g",
+    "gorduras": "8g",
+    "fibras": "1g"
   },
   "origem": "user_created",
   "riscos": [
-    "Alérgeno: Contém PEIXE",
-    "⚠️ ATENÇÃO: Limite atum a 2x por semana devido ao mercúrio"
+    "Contém glúten devido à farinha de trigo.",
+    "Pode ser rico em sódio dependendo da quantidade de sal utilizada no preparo."
   ],
   "tecnica": "Grelhado ou assado",
   "beneficio_principal": "Os cogumelos são a ÚNICA fonte vegetal natural de vitamina D - essencial para absorção de cálcio, imunidade, prevenção de depressão e saúde óssea",
   "curiosidade": "Cogumelos podem \"recarregar\" vitamina D se expostos ao sol por 30min - mesmo depois de colhidos!",
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_frutos_mar": true,
+  "contem_frutos_mar": false,
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
@@ -44,5 +49,7 @@
   ],
   "evitar_com": [
     "Frituras"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_soja": false
 }

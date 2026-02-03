@@ -1,32 +1,31 @@
 {
   "slug": "Batata Assada",
-  "nome": "batatasassadas",
+  "nome": "Batata Assada",
   "categoria": "vegano",
-  "descricao": "Batatas assadas em forno combinado com ervas frescas orgânicas aromáticas",
+  "descricao": "Batatas assadas em forno combinado com ervas frescas ",
   "ingredientes": [
     "batata",
     "sal",
     "azeite extravirgem",
-    "alecrim fresco orgânico",
-    "alho orgânico"
+    "",
+    ""
   ],
   "beneficios": [
-    "Fonte de potássio",
-    "Energia sustentada",
-    "Vitamina C",
-    "Potássio: regula a pressão arterial",
-    "Vitamina C: fortalece a imunidade",
-    "Energia sustentada: carboidratos complexos"
+    "Fonte de carboidratos complexos para energia.",
+    "Rica em potássio, importante para a saúde cardiovascular.",
+    "Boa fonte de vitamina C e antioxidantes.",
+    "Opção versátil e fácil de preparar."
   ],
   "riscos": [
-    "Alto índice glicêmico se consumida sozinha",
-    "Pode conter traços de glúten"
+    "O consumo em excesso pode levar ao ganho de peso.",
+    "Pode conter alto teor de sódio dependendo da quantidade de sal utilizada."
   ],
   "nutricao": {
-    "calorias": "77 kcal",
+    "calorias": "110 kcal",
     "proteinas": "2g",
-    "carboidratos": "17g",
-    "gorduras": "0.1g"
+    "carboidratos": "20g",
+    "gorduras": "3g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -45,5 +44,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }
