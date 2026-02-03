@@ -1813,12 +1813,12 @@ function App() {
         </div>
       </header>
 
-      {/* Indicador de localização Cibi Sana (para debug) */}
+      {/* Indicador de localização Cibi Sana */}
       {userLocation?.lat && (
         <div style={{
           position: 'fixed',
-          top: '60px',
-          right: '10px',
+          bottom: '80px',
+          left: '10px',
           background: isAtCibiSana() ? 'rgba(34, 197, 94, 0.9)' : 'rgba(255, 150, 0, 0.9)',
           color: '#fff',
           padding: '4px 10px',
