@@ -1121,6 +1121,11 @@ function App() {
           const fd = new FormData();
           fd.append("file", blob, "scan.jpg");
           
+          // Detecção automática: Se está no Cibi Sana, usa CLIP
+          if (isAtCibiSana()) {
+            fd.append("restaurant", "cibi_sana");
+          }
+          
           const res = await fetch(`${API}/ai/identify`, {
             method: "POST",
             body: fd
