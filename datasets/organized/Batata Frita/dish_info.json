@@ -4,23 +4,24 @@
   "categoria": "vegano",
   "ingredientes": [
     "batata",
-    "sal"
+    "sal",
+    "azeite"
   ],
   "descricao": "Batata preparada de forma saudável em forno",
   "beneficios": [
     "Fonte de carboidratos para energia.",
-    "Contém potássio, importante para a saúde muscular e nervosa.",
-    "A batata assada preserva mais nutrientes em comparação com a frita."
+    "Contém fibras, que auxiliam na saúde intestinal.",
+    "Pode ser uma opção mais saudável quando assada em vez de frita."
   ],
   "riscos": [
-    "Alto índice glicêmico (eleva rapidamente o açúcar no sangue).",
-    "Pode ser calórica dependendo da quantidade consumida."
+    "O consumo excessivo pode levar ao ganho de peso.",
+    "O teor de gordura pode variar dependendo da quantidade de azeite utilizada."
   ],
   "nutricao": {
-    "calorias": "93 kcal",
+    "calorias": "100 kcal",
     "proteinas": "2g",
-    "carboidratos": "17g",
-    "gorduras": "2g",
+    "carboidratos": "15g",
+    "gorduras": "4g",
     "fibras": "2g"
   },
   "contem_gluten": false,
@@ -37,7 +38,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false
