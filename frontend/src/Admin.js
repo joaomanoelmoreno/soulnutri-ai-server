@@ -479,10 +479,13 @@ export default function Admin() {
 
   const saveDish = async (dish) => {
     try {
+      // Remover campos que não devem ser enviados ao backend
+      const { all_images, first_image, image_count, ...dishData } = dish;
+      
       const res = await fetch(`${API}/admin/dishes/${dish.slug}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dish)
+        body: JSON.stringify(dishData)
       });
       
       // Verificar se a resposta é válida antes de parsear
