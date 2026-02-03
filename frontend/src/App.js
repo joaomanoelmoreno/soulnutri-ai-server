@@ -1527,6 +1527,11 @@ function App() {
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
     
+    // Detecção automática: Se está no Cibi Sana, usa CLIP
+    if (isAtCibiSana()) {
+      fd.append("restaurant", "cibi_sana");
+    }
+    
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000);
