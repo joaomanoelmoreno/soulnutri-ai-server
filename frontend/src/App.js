@@ -369,19 +369,41 @@ function App() {
           (pos) => {
             locationGranted = true;
             setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
+            const userLat = pos.coords.latitude;
+            const userLng = pos.coords.longitude;
             setUserLocation({
-              lat: pos.coords.latitude,
-              lng: pos.coords.longitude,
+              lat: userLat,
+              lng: userLng,
               country: 'BR'
             });
+            // Log para debug - mostrar coordenadas e distância do Cibi Sana
+            const cibiLat = -23.0373642;
+            const cibiLng = -46.9767934;
+            const R = 6371000;
+            const dLat = (cibiLat - userLat) * Math.PI / 180;
+            const dLon = (cibiLng - userLng) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(userLat * Math.PI / 180) * Math.cos(cibiLat * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            const distance = R * c;
+            console.log(`[GPS] Sua localização: ${userLat.toFixed(6)}, ${userLng.toFixed(6)}`);
+            console.log(`[GPS] Cibi Sana: ${cibiLat}, ${cibiLng}`);
+            console.log(`[GPS] Distância do Cibi Sana: ${distance.toFixed(0)} metros`);
+            if (distance <= 100) {
+              console.log('[GPS] ✅ Você está no Cibi Sana! Usando CLIP (custo zero)');
+            } else {
+              console.log('[GPS] Você está fora do Cibi Sana. Gemini pode ser usado.');
+            }
             resolve();
           },
           (err) => {
             setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
             setUserLocation({ lat: null, lng: null, country: 'BR' });
+            console.log('[GPS] Localização negada ou erro:', err.message);
             resolve(); // Não rejeita, apenas marca como negado
           },
-          { enableHighAccuracy: false, timeout: 5000 }
+          { enableHighAccuracy: true, timeout: 10000 }
         );
       });
     } catch (e) {
