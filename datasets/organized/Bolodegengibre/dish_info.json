@@ -2,30 +2,33 @@
   "slug": "Bolodegengibre",
   "nome": "Bolo de Gengibre",
   "categoria": "vegano",
-  "descricao": "Bolo aromático de gengibre fresco com especiarias importadas, adoçado com maple",
+  "descricao": "Bolo aromático de gengibre fresco com especiarias, adoçado com maple",
   "ingredientes": [
     "farinha (uso controlado)",
     "gengibre fresco",
     "maple canadense",
-    "ovos",
-    "manteiga fresca",
+    "acucar",
+    "oleo vegetal",
+    "manteiga vegana",
     "especiarias importadas"
   ],
   "beneficios": [
-    "Gengibre: poderoso anti-inflamatório e digestivo",
-    "Gingerol: alivia náuseas",
-    "Termogênico: acelera metabolismo"
+    "Fonte de antioxidantes do gengibre.",
+    "Pode auxiliar na digestão devido ao gengibre.",
+    "Opção vegana de sobremesa."
   ],
   "riscos": [
-    "Contém glúten",
-    "Alérgeno: ovo",
-    "Contém lactose"
+    "Alto teor de açúcar.",
+    "Alto teor de gordura.",
+    "Pode conter glúten dependendo da farinha utilizada.",
+    "Consumir com moderação devido ao alto valor calórico."
   ],
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "350 kcal",
+    "proteinas": "4g",
+    "carboidratos": "45g",
+    "gorduras": "18g",
+    "fibras": "2g"
   },
   "contem_gluten": true,
   "contem_lactose": false,
@@ -33,5 +36,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": ""
 }

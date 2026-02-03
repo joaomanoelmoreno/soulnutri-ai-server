@@ -2,32 +2,33 @@
   "slug": "Bolinho de Bacalhau",
   "nome": "Bolinho de Bacalhau",
   "categoria": "proteína animal",
-  "descricao": "Bolinho artesanal de bacalhau fresco com batata - ÚNICO ITEM FRITO",
+  "descricao": "Bolinho artesanal de bacalhau fresco com batata ",
   "ingredientes": [
-    "bacalhau fresco",
+    "bacalhau espanhol",
     "batata",
     "ovo",
-    "cebola orgânica",
-    "salsinha orgânica"
+    "cebola ",
+    "salsinha "
   ],
   "tecnica": "Frito em óleo (ÚNICA EXCEÇÃO de fritura)",
   "beneficios": [
-    "Ômega-3 do bacalhau: saúde do coração",
-    "Proteína de alta qualidade",
-    "Vitamina D: saúde óssea"
+    "Fonte de proteína de alta qualidade",
+    "Fornece nutrientes como ômega-3 (do bacalhau)",
+    "Contém carboidratos da batata para energia",
+    "Pode ser um prato saboroso e satisfatório"
   ],
   "riscos": [
-    "Alérgeno: peixe",
-    "Alérgeno: ovo",
-    "Fritura",
-    "Pode conter traços de glúten"
+    "Alto teor de sódio (devido ao bacalhau)",
+    "Pode ser frito, aumentando o teor de gordura e calorias",
+    "Deve ser consumido com moderação devido ao teor de gordura e fritura"
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "22g",
-    "carboidratos": "0g",
-    "gorduras": "3g"
+    "calorias": "280 kcal",
+    "proteinas": "14g",
+    "carboidratos": "20g",
+    "gorduras": "15g",
+    "fibras": "2g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -39,8 +40,8 @@
   "curiosidade_cientifica": "O bacalhau é curado em sal por até 6 meses - processo que preserva nutrientes mas aumenta sódio",
   "referencia_pesquisa": "Food Chemistry, 2019",
   "contem_lactose": false,
-  "contem_ovo": false,
-  "contem_frutos_mar": true,
+  "contem_ovo": true,
+  "contem_frutos_mar": false,
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
@@ -51,5 +52,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_soja": false
 }

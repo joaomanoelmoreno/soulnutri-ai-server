@@ -1,0 +1,41 @@
+{
+  "nome": "Nhoque de Banana da Terra",
+  "slug": "Nhoque de Banana da Terra",
+  "categoria": "vegetariano",
+  "ingredientes": [
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal"
+  ],
+  "beneficios": [
+    "Fonte de energia",
+    "Carboidratos"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo"
+  ],
+  "nutricao": {
+    "calorias": "130 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "2g"
+  },
+  "tecnica": "Cozido em água",
+  "descricao": "Nhoque de batata tradicional italiano.",
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ],
+  "category_emoji": "🥚"
+}

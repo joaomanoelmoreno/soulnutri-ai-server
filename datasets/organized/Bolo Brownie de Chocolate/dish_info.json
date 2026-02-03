@@ -2,33 +2,33 @@
   "slug": "Bolo Brownie de Chocolate",
   "nome": "Bolo Brownie",
   "categoria": "vegetariano",
-  "descricao": "Bolo denso de chocolate artesanal tipo brownie, adoçado com maple",
+  "descricao": "Bolo de chocolate  tipo brownie, adoçado com acucar e maple",
   "ingredientes": [
     "chocolate",
-    "manteiga fresca",
-    "maple canadense",
+    "manteiga",
+    "maple",
     "ovos",
-    "farinha (uso controlado)",
-    "nozes"
+    "farinha",
+    "acucar"
   ],
   "tecnica": "Assado em forno combinado",
   "beneficios": [
-    "Flavonoides do cacau: melhoram humor e cognição",
-    "Magnésio: relaxamento e bem-estar",
-    "Antioxidantes: combatem radicais livres"
+    "Pode fornecer energia devido aos carboidratos.",
+    "O chocolate amargo pode ter antioxidantes.",
+    "Pode trazer satisfação e prazer."
   ],
   "riscos": [
-    "Contém glúten",
-    "Alérgeno: ovo",
-    "Contém lactose",
-    "Alérgeno: nozes"
+    "Alto teor de açúcar, o que pode levar a picos de glicose no sangue.",
+    "Rico em gorduras saturadas, provenientes da manteiga.",
+    "Pode ser calórico e contribuir para o ganho de peso se consumido em excesso."
   ],
   "contem_gluten": true,
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "3g",
-    "carboidratos": "30g",
-    "gorduras": "5g"
+    "calorias": "380 kcal",
+    "proteinas": "6g",
+    "carboidratos": "45g",
+    "gorduras": "20g",
+    "fibras": "3g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -39,8 +39,8 @@
   "beneficio_principal": "Nozes são uma rica fonte de Ácido Alfa Linolênico (ALA), um tipo de ômega-3 vegetal. Consumo de 28g por dia pode reduzir o risco de doenças cardíacas em 50%, segundo estudo publicado no Journal of Nutrition, 2020.",
   "curiosidade_cientifica": "Maple syrup contém cerca de 24% das Necessidades Diárias de Manganês por porção de 60ml - mineral essencial que ajuda na formação de ossos e na ativação de enzimas.",
   "referencia_pesquisa": "Journal of Nutrition, 2020; Departamento de Agricultura dos EUA, 2021",
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,

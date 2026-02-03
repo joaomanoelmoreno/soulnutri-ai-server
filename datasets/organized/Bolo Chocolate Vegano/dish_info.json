@@ -2,29 +2,34 @@
   "slug": "Bolo Chocolate Vegano",
   "nome": "Bolo de Chocolate Vegano",
   "categoria": "vegano",
-  "descricao": "Bolo de chocolate vegano preparado artesanalmente com cacau de qualidade, adoçado com maple",
+  "descricao": "Bolo de chocolate vegano preparado artesanalmente com cacau puro adoçado com maple e acucar",
   "ingredientes": [
-    "farinha (uso controlado)",
+    "farinha de trigo",
     "cacau em pó",
     "maple canadense",
+    "acucar",
     "óleo vegetal",
     "leite vegetal"
   ],
   "tecnica": "Assado em forno combinado",
   "beneficios": [
-    "Flavonoides do cacau: protegem o coração",
-    "Livre de lactose: ideal para intolerantes",
-    "Sem colesterol"
+    "Fonte de carboidratos para energia.",
+    "Pode conter antioxidantes do cacau.",
+    "Opção sem produtos de origem animal, adequada para veganos.",
+    "Satisfaz a vontade de comer doce de forma mais ética."
   ],
   "riscos": [
-    "Contém glúten"
+    "Alto teor de açúcar.",
+    "Pode ser calórico.",
+    "O consumo em excesso pode levar ao ganho de peso."
   ],
   "contem_gluten": true,
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "3g",
-    "carboidratos": "30g",
-    "gorduras": "5g"
+    "calorias": "380 kcal",
+    "proteinas": "5g",
+    "carboidratos": "55g",
+    "gorduras": "16g",
+    "fibras": "3g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
