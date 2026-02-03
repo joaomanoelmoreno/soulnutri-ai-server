@@ -799,6 +799,12 @@ function App() {
     fd.append("file", blob, "photo.jpg");
     fd.append("country", userLocation?.country || 'BR');
     
+    // Detecção automática: Se está no Cibi Sana (raio de 100m), usa CLIP (custo zero)
+    if (isAtCibiSana()) {
+      fd.append("restaurant", "cibi_sana");
+      console.log('[GPS] Detectado no Cibi Sana - usando CLIP local');
+    }
+    
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
       const pin = localStorage.getItem('soulnutri_pin');
