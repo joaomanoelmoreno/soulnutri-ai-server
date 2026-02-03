@@ -3267,19 +3267,32 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
     """Deleta uma imagem específica de um prato"""
     try:
         import urllib.parse
+        import unicodedata
+        
         img_decoded = urllib.parse.unquote(img)
+        slug_decoded = urllib.parse.unquote(slug)
+        
+        # Normalizar slug para comparação
+        def normalize(s):
+            # Remove acentos e converte para minúsculas
+            s = unicodedata.normalize('NFD', s)
+            s = ''.join(c for c in s if not unicodedata.combining(c))
+            return s.lower().replace(" ", "").replace("-", "").replace("_", "")
+        
+        slug_norm = normalize(slug_decoded)
         
         # Encontrar a pasta do prato
         dataset_dir = "/app/datasets/organized"
         dish_folder = None
         
         for folder in os.listdir(dataset_dir):
-            folder_slug = folder.lower().replace(" ", "-").replace("_", "-")
-            if folder_slug == slug or folder.lower().replace(" ", "") == slug.replace("-", ""):
+            folder_norm = normalize(folder)
+            if folder_norm == slug_norm or slug_norm in folder_norm or folder_norm in slug_norm:
                 dish_folder = os.path.join(dataset_dir, folder)
                 break
         
         if not dish_folder or not os.path.isdir(dish_folder):
+            logger.error(f"[DELETE] Pasta não encontrada para slug: {slug_decoded} (norm: {slug_norm})")
             return {"ok": False, "error": "Prato não encontrado"}
         
         # Caminho completo da imagem
