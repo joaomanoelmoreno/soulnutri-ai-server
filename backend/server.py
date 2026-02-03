@@ -22,7 +22,7 @@ os.environ["FORCE_CPU"] = "1"
 from datetime import datetime
 import json
 import asyncio
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
