@@ -3262,6 +3262,46 @@ async def admin_batch_fix_dishes(request: dict):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.delete("/admin/dish-image/{slug}")
+async def delete_dish_image(slug: str, img: str = Query(...)):
+    """Deleta uma imagem específica de um prato"""
+    try:
+        import urllib.parse
+        img_decoded = urllib.parse.unquote(img)
+        
+        # Encontrar a pasta do prato
+        dataset_dir = "/app/datasets/organized"
+        dish_folder = None
+        
+        for folder in os.listdir(dataset_dir):
+            folder_slug = folder.lower().replace(" ", "-").replace("_", "-")
+            if folder_slug == slug or folder.lower().replace(" ", "") == slug.replace("-", ""):
+                dish_folder = os.path.join(dataset_dir, folder)
+                break
+        
+        if not dish_folder or not os.path.isdir(dish_folder):
+            return {"ok": False, "error": "Prato não encontrado"}
+        
+        # Caminho completo da imagem
+        img_path = os.path.join(dish_folder, img_decoded)
+        
+        if not os.path.exists(img_path):
+            return {"ok": False, "error": f"Imagem não encontrada: {img_decoded}"}
+        
+        # Deletar a imagem
+        os.remove(img_path)
+        logger.info(f"[ADMIN] Imagem deletada: {img_path}")
+        
+        # Contar imagens restantes
+        remaining = len([f for f in os.listdir(dish_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
+        
+        return {"ok": True, "message": f"Imagem deletada", "remaining_images": remaining}
+        
+    except Exception as e:
+        logger.error(f"Erro ao deletar imagem: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.get("/admin/duplicates")
 async def get_duplicate_groups():
     """Retorna grupos de pratos duplicados para consolidação"""
