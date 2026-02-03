@@ -285,6 +285,36 @@ function App() {
   // Geolocalização para regionalização (Brasil vs Internacional)
   const [userLocation, setUserLocation] = useState(null); // {lat, lng, country: 'BR' | 'OTHER'}
   const [locationPermission, setLocationPermission] = useState('pending'); // 'pending', 'granted', 'denied'
+  
+  // ══════════════════════════════════════════════════════════════════════════
+  // CIBI SANA - Detecção automática por GPS
+  // Endereço: Av Independência 1222, Centro, Vinhedo SP, 13280-162
+  // ══════════════════════════════════════════════════════════════════════════
+  const CIBI_SANA_COORDS = { lat: -23.0373642, lng: -46.9767934 };
+  const CIBI_SANA_RADIUS_METERS = 100; // Raio de 100 metros
+  
+  // Função para calcular distância entre duas coordenadas (fórmula de Haversine)
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371000; // Raio da Terra em metros
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Distância em metros
+  };
+  
+  // Verifica se está no Cibi Sana baseado nas coordenadas
+  const isAtCibiSana = () => {
+    if (!userLocation?.lat || !userLocation?.lng) return false;
+    const distance = calculateDistance(
+      userLocation.lat, userLocation.lng,
+      CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng
+    );
+    return distance <= CIBI_SANA_RADIUS_METERS;
+  };
+  
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
