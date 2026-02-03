@@ -2,35 +2,40 @@
   "slug": "Aligot",
   "ativo": true,
   "beneficios": [
-    "Fonte de potássio",
-    "Energia sustentada",
-    "Vitamina C"
+    "Fonte de cálcio (queijo e leite)",
+    "Energia proveniente dos carboidratos da batata",
+    "Sabor marcante e textura cremosa",
+    "Pode ser uma opção para aumentar a ingestão de vegetais (batata)"
   ],
   "categoria": "vegetariano",
   "category_emoji": "🥚",
   "contem_gluten": false,
   "created_at": "2026-01-23T15:04:51.002000",
-  "descricao": "Purê de batata cremoso com cobertura gratinada de queijo.",
+  "descricao": "Purê de batata cremoso com creme de leite, mantega e queijos especiais gratinado com parmesao",
   "ingredientes": [
     "Batata",
     "Leite",
     "Queijo",
-    "Manteiga"
+    "Manteiga",
+    "creme de leite",
+    "paremsao"
   ],
-  "nome": "Aligot purê de batata inglesa com queijo",
+  "nome": "Aligot ",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "220 kcal",
+    "proteinas": "8g",
+    "carboidratos": "20g",
+    "gorduras": "12g",
+    "fibras": "2g"
   },
   "origem": "user_created",
   "riscos": [
-    "Alérgeno: Lácteos",
-    "Alérgeno: LACTOSE (queijo, leite)"
+    "Alto teor de gordura saturada (manteiga, creme de leite e queijo)",
+    "Alto teor de sódio (queijo)",
+    "Pode ser calórico devido ao uso de ingredientes ricos em gordura"
   ],
   "tecnica": "Cozimento ou assado",
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "indice_glicemico": "alto",
   "tempo_digestao": "2-3 horas",
@@ -41,5 +46,8 @@
   ],
   "evitar_com": [
     "Frituras"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

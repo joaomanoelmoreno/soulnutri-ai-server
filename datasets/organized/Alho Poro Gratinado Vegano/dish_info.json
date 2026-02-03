@@ -2,28 +2,33 @@
   "slug": "Alho Poro Gratinado Vegano",
   "nome": "Alho Poró Gratinado Vegano",
   "categoria": "vegano",
-  "descricao": "Alho poró orgânico gratinado no forno combinado com creme vegetal e ervas frescas orgânicas",
+  "descricao": "Alho poró  gratinado no forno combinado com creme vegetal e ervas frescas ",
   "ingredientes": [
-    "alho poró orgânico",
+    "alho poró",
     "creme vegetal artesanal",
-    "ervas frescas orgânicas",
-    "azeite extravirgem"
+    "ervas frescas ",
+    "azeite extravirgem",
+    "cebola",
+    "queijo vegano"
   ],
   "tecnica": "Gratinado em forno combinado",
   "beneficios": [
-    "Prebiótico: alimenta as bactérias benéficas do intestino",
-    "Vitamina K: essencial para coagulação sanguínea",
-    "Fibras: promovem saciedade e regulam o intestino"
+    "Fonte de fibras, auxiliando na saúde intestinal.",
+    "Rico em vitaminas e minerais provenientes do alho poró.",
+    "Opção vegana, adequada para restrições alimentares.",
+    "Pode auxiliar no controle do colesterol devido à ausência de produtos de origem animal."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Alto teor de gordura, dependendo da quantidade de creme vegetal e queijo vegano.",
+    "O consumo excessivo pode levar ao ganho de peso devido ao valor calórico."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "180 kcal",
+    "proteinas": "3g",
+    "carboidratos": "12g",
+    "gorduras": "13g",
+    "fibras": "3g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -39,5 +44,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }
