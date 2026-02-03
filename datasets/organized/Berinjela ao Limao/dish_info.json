@@ -1,38 +1,32 @@
 {
   "slug": "Berinjela ao Limao",
-  "nome": "Beringela ao Pure de Limao Siciliano",
+  "nome": "Berinjela ao Pure de Limao Siciliano",
   "categoria": "vegano",
-  "descricao": "Berinjela orgânica grelhada com molho cítrico de limão fresco",
+  "descricao": "Berinjela assada com molho cítrico de limão siciliano",
   "ingredientes": [
-    "berinjela",
-    "azeite",
-    "alho",
+    "",
     "sal",
-    "berinjela orgânica",
+    "berinjela",
     "limão fresco",
     "azeite extravirgem",
-    "alho orgânico",
-    "salsinha orgânica"
+    "ervas frescas"
   ],
   "beneficios": [
-    "Baixíssimas calorias",
-    "Rica em fibras",
-    "Antioxidantes (nasunina)",
-    "Ajuda no controle do colesterol",
-    "Baixas calorias",
-    "Antioxidantes",
-    "Muito baixa caloria: apenas 25kcal/100g",
-    "Antocianinas: protegem o coração",
-    "Fibras: promovem saciedade"
+    "Rico em antioxidantes, que combatem os radicais livres.",
+    "Promove a saúde cardiovascular devido às fibras e gorduras saudáveis.",
+    "Pode auxiliar no controle do colesterol.",
+    "Fonte de vitaminas e minerais, como potássio e vitamina C."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Consumo excessivo de azeite pode aumentar o valor calórico.",
+    "Alergia a ingredientes específicos (raro)."
   ],
   "nutricao": {
-    "calorias": "25 kcal",
+    "calorias": "85 kcal",
     "proteinas": "1g",
     "carboidratos": "6g",
-    "gorduras": "0.2g"
+    "gorduras": "6g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -50,5 +44,5 @@
     "Azeite"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }
