@@ -1763,6 +1763,48 @@ export default function Admin() {
                         <span style={{ position: 'absolute', bottom: '2px', right: '2px', background: 'rgba(0,0,0,0.6)', color: '#fff', fontSize: '10px', padding: '2px 4px', borderRadius: '4px' }}>
                           {idx + 1}
                         </span>
+                        <button
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            if (window.confirm(`Deletar foto ${idx + 1}?`)) {
+                              try {
+                                const res = await fetch(`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
+                                const data = await res.json();
+                                if (data.ok) {
+                                  setEditingDish({
+                                    ...editingDish,
+                                    all_images: editingDish.all_images.filter((_, i) => i !== idx),
+                                    image_count: data.remaining_images
+                                  });
+                                  alert('✅ Foto deletada!');
+                                } else {
+                                  alert('❌ Erro: ' + data.error);
+                                }
+                              } catch (err) {
+                                alert('❌ Erro ao deletar');
+                              }
+                            }
+                          }}
+                          style={{
+                            position: 'absolute',
+                            top: '2px',
+                            right: '2px',
+                            background: 'rgba(220,53,69,0.9)',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '20px',
+                            height: '20px',
+                            fontSize: '12px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          title="Deletar foto"
+                        >
+                          ✕
+                        </button>
                       </div>
                     ))
                   ) : editingDish.first_image ? (
