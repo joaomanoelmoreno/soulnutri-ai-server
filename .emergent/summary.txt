@@ -14,62 +14,65 @@ O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutriç�
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-É um aplicativo full-stack (React + FastAPI) com banco de dados no MongoDB Atlas. A arquitetura de IA é uma cascata: primeiro o modelo local **CLIP** (gratuito) tenta o reconhecimento; se a confiança for baixa (<90%), o sistema recorre ao **Google Gemini**. O agente anterior orientou o usuário a ativar o faturamento em sua conta Google, o que resolveu os problemas de limite de cota da API Gemini, tornando o reconhecimento de pratos externos rápido (~1s) e muito barato. Foi identificado e corrigido um bug crítico que só ocorria para usuários Premium logados, onde um erro no cálculo de metas calóricas fazia o sistema retornar o resultado incorreto do CLIP em vez do resultado do Gemini. O dataset de imagens foi expandido com 272 novas fotos e passou por uma limpeza extensiva, organizando mais de 1.600 arquivos soltos em pastas de pratos.
+É um aplicativo full-stack (React + FastAPI + MongoDB). A arquitetura de IA é uma cascata: o modelo local CLIP tenta o reconhecimento; se a confiança for baixa (<90%), o sistema recorre ao Google Gemini. Foi implementada uma detecção automática por GPS no frontend que, ao identificar que o usuário está no restaurante Cibi Sana, força o uso exclusivo do CLIP para economizar créditos. O painel de Admin foi aprimorado com uma funcionalidade de exclusão de imagens por item. O dataset de imagens passou por uma limpeza e organização extensiva, com a adição de mais de 80 novas fotos e a separação de pratos que estavam com imagens misturadas.
 
 **Last working item**:
--   **Last item agent was working**: O agente estava finalizando a correção da baixa precisão do modelo CLIP (que estava em 70%). Foi descoberto que, apesar da limpeza do dataset, o índice de busca do CLIP ainda estava desatualizado, contendo nomes de pratos antigos e mal formatados. Para resolver a causa raiz do problema, o agente iniciou a reconstrução completa do índice CLIP executando o script  em segundo plano.
--   **Status**: IN PROGRESS
+-   **Last item agent was working**: O agente estava depurando uma queda drástica na precisão do modelo CLIP (<50%) que ocorreu após uma série de correções e reconstruções do índice. O usuário relatou que, um dia antes, a precisão estava boa (>90%), mas agora nenhum prato era reconhecido corretamente no Cibi Sana.
+-   **Status**: BLOCKED
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: backend testing agent. Após a conclusão da reconstrução do índice, o agente deve rodar testes de acurácia para os pratos do Cibi Sana para validar se a precisão atinge a meta de >95%.
--   **User Testing Done**: N
+-   **Which testing method agent to use?**: backend testing agent. O objetivo é restaurar a precisão do CLIP para >90% nos pratos do Cibi Sana.
+-   **User Testing Done**: Y (e falhou)
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) Acurácia do modelo CLIP para pratos do Cibi Sana está abaixo do aceitável (70%).
--   Issue 2: (P1) O usuário precisa validar as melhorias no painel de Admin.
+-   Issue 1: (P0) Acurácia do modelo CLIP para pratos do Cibi Sana caiu drasticamente (<50%), tornando o reconhecimento inútil.
+-   Issue 2: (P1) O usuário precisa validar as melhorias no painel de Admin (exclusão de fotos) e continuar a limpeza de pratos com imagens incorretas.
 
 **Issues Detail**:
--   **Issue 1: Acurácia do modelo CLIP para pratos do Cibi Sana está abaixo do aceitável (70%)**
-    -   **Attempted fixes**: O dataset () foi limpo e reorganizado. Pastas duplicadas foram unificadas. O script  foi executado para sincronizar o índice com a nova estrutura de pastas correta.
+-   **Issue 1: Acurácia do modelo CLIP para pratos do Cibi Sana caiu drasticamente (<50%)**
+    -   **Attempted fixes**: O agente identificou que a calibração de confiança original estava penalizando excessivamente os resultados quando o gap entre o 1º e o 2º candidato era pequeno, resultando em scores de 50%. O usuário vetou a alteração da lógica de calibração. O agente então tentou restaurar um backup dos arquivos de índice ( e ) do dia anterior, quando a precisão estava alta. No entanto, mesmo após a restauração e reinicialização do serviço, o problema de baixa confiança persistiu (scores de 60%).
     -   **Next debug checklist**:
-        1.  Verificar os logs para confirmar se o script  foi concluído com sucesso.
-        2.  Verificar o status do novo índice () para confirmar se o número de pratos e embeddings foi atualizado.
-        3.  Executar um conjunto de testes de reconhecimento (com usuário Premium logado) em pelo menos 15 pratos do Cibi Sana para medir a nova taxa de acerto.
-        4.  Analisar os erros restantes para identificar se são de nomes similares (ex: Strogonoff vs Estrogonofe) ou outros problemas.
-    -   **Why fix this issue and what will be achieved with the fix?**: Corrigir isso é a tarefa mais crítica. Atingir alta precisão no CLIP para os pratos do Cibi Sana é o pilar da estratégia de custos do app, pois essas identificações são gratuitas.
-    -   **Status**: IN PROGRESS
+        1.  **Validar a Restauração:** Confirmar se *todos* os arquivos de índice gerados por  foram corretamente restaurados a partir do backup. Pode haver outros arquivos além do  e .
+        2.  **Isolar o Problema:** Executar um script de teste independente (como o  usado anteriormente) que carregue os arquivos de índice restaurados e uma imagem de teste (Arroz Branco). Verificar o  e o  que ele produz. Comparar esse resultado com os logs do servidor quando a mesma imagem é processada. Se os resultados forem diferentes, o problema está em como o servidor está carregando/usando o índice.
+        3.  **Analisar a Calibração vs. Dados:** A causa raiz é a incompatibilidade entre a lógica de calibração (que espera scores brutos baixos e gaps maiores) e o índice atual (que produz scores brutos altos e gaps menores). O próximo agente deve explicar ao usuário que, para manter a calibração original, o índice precisa ser gerado de uma forma que produza scores similares aos do índice antigo. Uma alternativa é propor um ajuste mínimo e cirúrgico na calibração, com a aprovação explícita do usuário (ex: ).
+    -   **Why fix this issue and what will be achieved with the fix?**: É o problema mais crítico. Sem precisão no CLIP, o app não funciona no Cibi Sana e a principal estratégia de economia de custos falha.
+    -   **Status**: BLOCKED
     -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: backend
     -   **Blocked on other issue**: none
 
 -   **Issue 2: O usuário precisa validar as melhorias no painel de Admin**
-    -   **Attempted fixes**: O agente modificou o modal de edição de pratos no Admin () para exibir uma galeria com todas as fotos de um prato, em vez de apenas a primeira. O backend () foi ajustado para fornecer a lista de imagens.
-    -   **Next debug checklist**:
-        1.  O usuário precisa acessar o painel de Admin, selecionar um prato para editar e confirmar que consegue ver todas as imagens associadas.
+    -   **Attempted fixes**: Foi adicionado um botão de exclusão para cada foto na galeria do modal de edição.
+    -   **Next debug checklist**: O usuário precisa usar a nova funcionalidade para limpar as fotos do prato Quinoa com Legumes e outros que estão com imagens misturadas e confirmar que funciona como esperado.
     -   **Status**: USER VERIFICATION PENDING
     -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Blocked on other issue**: none
 
 **In progress Task List**:
-Nenhum.
+-   Task 1: Limpeza e organização do dataset.
+    -   **Where to resume**: O usuário continuará a identificar pratos com fotos incorretas no painel de Admin. O próximo agente deve estar pronto para realizar a movimentação de arquivos e a reconstrução do índice quando solicitado.
+    -   **What will be achieved with this?**: Melhorar a qualidade dos dados para aumentar a precisão do modelo CLIP a longo prazo.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: backend (reconstruir índice)
+    -   **Blocked on something**: Aguardando feedback do usuário.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
     -   (P1) **Implementar aprendizado contínuo:** Fazer com que o sistema aprenda com as identificações do Gemini. Quando o Gemini reconhece um prato novo, o sistema deve salvá-lo automaticamente no dataset e no índice do CLIP.
-    -   (P2) **Revisar organização de fotos novas:** O agente usou o CLIP para sugerir o agrupamento de 272 fotos novas. O usuário optou pela Opção D (Deixar no admin para eu ver). É preciso garantir que essa funcionalidade de edição no admin está perfeita (relacionado ao Issue 2).
-    -   (P3) **Investigar armazenamento de imagens no Cloudflare R2:** Pesquisar e planejar a migração do armazenamento de imagens para uma solução escalável, já que o disco está com mais de 80% de uso.
+    -   (P2) **Investigar armazenamento de imagens no Cloudflare R2:** Pesquisar e planejar a migração do armazenamento de imagens para uma solução escalável, já que o disco está com mais de 80% de uso.
 -   **Future Tasks:**
     -   Refatorar os arquivos monolíticos  e .
     -   Implementar o sistema de pagamento Stripe.
     -   Integrar uma API de reconhecimento de comida de Nível 2 (ex: LogMeal), conforme arquitetura original.
 
 **Completed work in this session**
--   **Bug Crítico de Lógica Corrigido**: Resolvido um erro de tipo ( / ) no cálculo de  que só ocorria para usuários Premium logados. Esse bug fazia com que o sistema ignorasse a resposta correta do Gemini e retornasse o resultado incorreto do CLIP.
--   **Validação da API Google**: Confirmado que, com o faturamento ativado, a API do Google funciona de forma rápida (~1s) e barata, e o bug não ocorre mais.
--   **Limpeza e Organização do Dataset**: O agente moveu mais de 1.600 arquivos de imagem que estavam soltos no diretório raiz para suas respectivas pastas de pratos e unificou pastas duplicadas.
--   **Melhoria do Painel de Admin**: Adicionada uma galeria de imagens ao modal de edição de pratos, permitindo ao usuário visualizar todas as fotos de um item.
--   **Correções de Frontend**: Removida a exibição duplicada do formulário de perfil após o registro e removidos os campos diabético e hipertenso conforme solicitado.
--   **Liberação de Espaço em Disco**: Excluídos ~900MB de arquivos de cache e ZIPs antigos, reduzindo o uso do disco de 91% para ~82%.
+-   **Detecção de Localização por GPS**: Implementada a detecção automática para identificar se o usuário está no Cibi Sana (<100m de raio) e forçar o uso exclusivo do CLIP.
+-   **Correção de Bug de Frontend (Stale Closure)**: Resolvido um bug crítico no React onde o status da localização não era enviado corretamente na requisição da foto devido a um stale closure, usando  como solução.
+-   **Funcionalidade de Excluir Imagem no Admin**: Implementado um endpoint no backend e o botão no frontend para permitir a exclusão de imagens individuais na galeria do Admin.
+-   **Correção de Bugs no Admin**: Resolvido um erro que impedia o salvamento de pratos e ajudou o usuário a contornar problemas de cache do navegador (Service Worker) e certificado SSL do ambiente de preview.
+-   **Organização Massiva do Dataset**: Movidas e organizadas centenas de fotos entre diferentes pastas de pratos (Abobrinha Grelhada, Alho Poro, múltiplos tipos de Brócolis) e adicionados 5 novos pratos com 86 fotos.
+-   **Geração de Documentação Técnica**: Criado um documento PDF completo () detalhando toda a arquitetura e componentes do sistema.
+-   **Lógica de Negócio Implementada**: A regra de negócio para travar o uso do Gemini quando  foi implementada no backend.
 
 **Earlier issues found/mentioned but not fixed**
 -   **Issue 1: Causa Raiz da Instabilidade da Câmera**
@@ -80,73 +83,100 @@ Nenhum.
 
 **Known issue recurrence from previous fork**
 -   **Issue recurrence in previous fork**: Reconhecimento de Imagem (Acurácia do CLIP).
--   **Recurrence count**: 5+
--   **Status**: IN PROGRESS. A reconstrução do índice é a tentativa atual para resolver a causa raiz do problema.
+-   **Recurrence count**: 6+
+-   **Status**: BLOCKED. O problema é uma incompatibilidade entre o índice de dados atual e a lógica de calibração de confiança.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Diagnóstico de Bug Específico de Contexto**: Identificação de um bug que só se manifestava quando um usuário Premium estava logado, devido a um caminho de código condicional ().
--   **Limpeza de Dataset**: Processo de organização de um sistema de arquivos desestruturado, movendo arquivos e consolidando pastas para criar uma fonte de dados confiável para o treinamento/indexação da IA.
--   **Indexação de IA (CLIP)**: O conceito de que a IA (CLIP) depende de um índice pré-computado (, ) que mapeia embeddings de imagem para nomes de pratos. Se o índice estiver dessincronizado com os dados reais (nomes de pastas), a precisão cai drasticamente. A reconstrução é a solução.
+-   **Geolocation (Geofencing)**: Implementação de lógica para detectar se as coordenadas de GPS do usuário estão dentro de um raio definido (100m) de um ponto fixo, usando a fórmula de Haversine no frontend.
+-   **React Stale Closure**: Diagnóstico e correção de um bug clássico do React onde um manipulador de eventos () capturava um valor de estado antigo. A solução foi usar um  para garantir o acesso ao valor mais recente do estado.
+-   **Incompatibilidade entre Código e Dados**: A sessão revelou um problema complexo onde a lógica de calibração de confiança do CLIP () foi projetada para um padrão de dados (scores brutos e gaps) que não é mais produzido pelo índice de IA após as limpezas e reconstruções, causando uma falha sistêmica na precisão.
+-   **Depuração de Cache de Frontend**: O agente guiou o usuário na resolução de um problema em que o aplicativo não carregava devido a um **Service Worker** antigo em cache no navegador do cliente.
 
 **key DB schema**
--   **users**: (MongoDB) Contém dados do usuário, incluindo  e dados de perfil (, , , etc.).
--   **dishes**: (MongoDB) Contém os metadados dos pratos cadastrados, como , , . As imagens são referenciadas a partir do sistema de arquivos.
+-   **users**: (MongoDB) Contém dados do usuário, incluindo .
+-   **dishes**: (MongoDB) Contém metadados dos pratos.
 
 **changes in tech stack**
 -   Nenhuma.
 
 **All files of reference**
--   : Script que está reconstruindo o índice CLIP.
--   : Contém a lógica de busca do CLIP que precisa ser testada.
--   : Onde o bug crítico do usuário Premium foi corrigido.
--   : Onde a galeria de fotos foi adicionada para o usuário validar.
--   : A fonte da verdade para os pratos do Cibi Sana.
+-   : Contém a lógica de calibração de confiança que é a causa raiz do problema de precisão.
+-   : Contém a lógica de geofencing (GPS) e a correção do bug de stale closure.
+-   : Contém a interface do painel de administração, incluindo a nova funcionalidade de exclusão de imagem.
+-   : Contém a lógica de roteamento principal, incluindo a regra para travar o Gemini.
+-   : A fonte de verdade para os pratos, que foi extensivamente modificada.
+-   : Documentação técnica gerada na sessão.
 
 **Areas that need refactoring**:
--    e  continuam sendo arquivos monolíticos.
+-    e  continuam sendo arquivos monolíticos e complexos.
 
 **key api endpoints**
--   : Endpoint principal de reconhecimento. O fluxo de erro foi corrigido.
--   : Endpoint para verificar o status da API do Google.
--   : Modificado para aceitar um parâmetro  para carregar imagens específicas na galeria do admin.
--   : Endpoint que alimenta o painel de admin. Foi modificado para retornar a lista  para cada prato.
+-   : Endpoint principal de reconhecimento.
+-   : Novo endpoint para excluir uma imagem específica de um prato.
 
 **Critical Info for New Agent**
--   **A prioridade MÁXIMA é validar a reconstrução do índice CLIP**. Verifique se o script terminou e teste a acurácia para pratos do Cibi Sana. O objetivo é >95%. O sucesso do app depende disso.
--   **Teste SEMPRE como usuário Premium logado**. O bug mais grave da sessão só aparecia nesse cenário. Use as credenciais  /  para simular o ambiente real do usuário.
--   O usuário está muito frustrado com bugs recorrentes e com o consumo de créditos. Seja transparente sobre os custos (que agora são baixos com o Google) e adote uma postura de teste rigorosa para reconquistar a confiança.
--   A arquitetura de IA (CLIP primeiro, Gemini como fallback) está travada por decisão do usuário. Não a altere sem discutir primeiro.
--   A próxima grande melhoria desejada pelo usuário é o **aprendizado contínuo**: o sistema deve aprender com o Gemini para reduzir custos a longo prazo.
+-   **PRIORIDADE MÁXIMA (BLOQUEADOR):** A precisão do CLIP está extremamente baixa (<50%). A causa é uma incompatibilidade entre o índice de dados atual (que gera scores brutos altos, mas com gaps pequenos entre candidatos) e a lógica de calibração original (que penaliza duramente gaps pequenos). O agente anterior tentou restaurar um backup do índice, mas não funcionou. Você precisa resolver isso, mas **NÃO PODE MUDAR A LÓGICA DE CALIBRAÇÃO** sem explicar detalhadamente o porquê para o usuário e obter aprovação explícita. A confiança do usuário está baixa.
+-   **Lógica de Negócio Crítica:** O sistema deve detectar automaticamente se o usuário está no Cibi Sana via GPS e, nesse caso, usar **SOMENTE O CLIP**. O código para isso está implementado no frontend () e no backend (), mas foi a fonte de muitos problemas recentes. Verifique se ele continua funcionando.
+-   **Interação com o Usuário:** O usuário está tecnicamente engajado, mas muito frustrado com regressões e consumo de créditos. Seja extremamente claro, explique suas hipóteses antes de agir e peça permissão para qualquer mudança na lógica central.
+-   **Gerenciamento de Dataset:** Esteja preparado para mais solicitações de limpeza de dados no Admin. Cada vez que fotos forem movidas ou adicionadas, lembre-se de executar [index] Índice carregado: 2301 itens, 319 pratos
+[index] Iniciando indexação de /app/datasets/organized...
+[index] Processados 10 pratos...
+[index] Processados 20 pratos...
+[index] Processados 30 pratos...
+[index] Processados 40 pratos...
+[index] Processados 50 pratos...
+[index] Processados 60 pratos...
+[index] Processados 70 pratos...
+[index] Processados 80 pratos...
+[index] Processados 90 pratos...
+[index] Processados 100 pratos...
+[index] Processados 110 pratos...
+[index] Processados 120 pratos...
+[index] Processados 130 pratos...
+[index] Processados 140 pratos...
+[index] Processados 150 pratos...
+[index] Processados 160 pratos...
+[index] Processados 170 pratos...
+[index] Processados 180 pratos...
+[index] Processados 190 pratos...
+[index] Processados 200 pratos...
+[index] Processados 210 pratos...
+[index] Processados 220 pratos...
+[index] Processados 230 pratos...
+[index] Processados 240 pratos...
+[index] Processados 250 pratos...
+[index] Processados 260 pratos...
+[index] Processados 270 pratos...
+[index] Processados 280 pratos...
+[index] Processados 290 pratos...
+[index] Índice salvo: /app/datasets/dish_index.json
+[index] ✅ Indexação concluída: {'total_dishes': 291, 'total_images': 1711, 'embedding_dim': 512, 'elapsed_seconds': 249.69} e reiniciar o backend (backend: stopped
+backend: started).
 
 **documents and test reports created in this job**
 -   
--    (atualizado)
--   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário**: Informa que, apesar dos testes do agente funcionarem, os testes no mundo real falharam catastroficamente (pizza reconhecida como couve-flor), suspeitando que o Gemini não foi usado.
-2.  **Agente**: Investiga os logs e descobre a causa raiz: um bug no código de processamento da resposta do Gemini que só era ativado para usuários Premium logados, fazendo o sistema cair no fallback e retornar o resultado errado do CLIP.
-3.  **Agente**: Corrige o bug e explica por que os testes anteriores não o pegaram (não foram feitos com um usuário logado).
-4.  **Usuário**: Pede para não mudar a lógica (CLIP->Gemini) e solicita testes nos pratos do Cibi Sana antes de prosseguir.
-5.  **Agente**: Testa o CLIP e obtém 87% de acurácia, com erros sendo de formatação de nome, e pergunta ao usuário sobre as ferramentas de apps concorrentes como o CalAI.
-6.  **Usuário**: Pede para compartilhar o projeto e discute a estratégia de aprendizado da IA, concordando que o foco deve ser fazer o Cibi funcionar bem primeiro. Pede para fazer o deploy das correções.
-7.  **Usuário**: Após o deploy, relata que o reconhecimento melhorou, mas ainda não é perfeito. Fornece 271 novas fotos para adicionar ao sistema, para pratos novos e existentes.
-8.  **Usuário**: Concorda com a limpeza de arquivos temporários e pede para agrupar as fotos, mas precisa poder vê-las no admin.
-9.  **Agente**: Organiza as fotos e identifica que a acurácia do CLIP continua em 70%, mesmo após a limpeza do dataset.
-10. **Usuário**: Fica frustrado com a acurácia do CLIP e com o consumo de créditos. Pergunta se o CLIP pode aprender a lidar com erros de formatação. O agente identifica que o problema é o índice desatualizado e o usuário aprova a reconstrução do índice e mais testes.
+1.  **Usuário**: Informa que a detecção por GPS está funcionando no celular, mas a precisão do reconhecimento no Cibi Sana despencou, errando tudo.
+2.  **Agente**: Investiga e confirma que o problema é a calibração de confiança, que está derrubando scores brutos altos para 50% por causa de um gap pequeno entre o 1º e 2º resultado.
+3.  **Usuário**: Pergunta por que não podem voltar para a calibração de ontem, quando funcionava bem.
+4.  **Agente**: Tenta restaurar um backup do índice de dados ( e ) do dia anterior, acreditando que isso resolveria o problema mantendo a calibração intacta.
+5.  **Agente**: Testa após a restauração e descobre que o problema persiste (scores baixos). Fica sem saber como proceder.
+6.  **Usuário**: Pede para fazer um fork e passar o trabalho para o próximo agente.
+7.  **Agente**: Concorda em preparar o resumo para a transição.
+8.  **Usuário**: Pede para gerar o resumo.
 
 **Project Health Check:**
 -   **Broken**:
-    -   A acurácia do reconhecimento de pratos do Cibi Sana via CLIP está em 70%, o que é inaceitável. Isso está sendo corrigido com a reconstrução do índice.
+    -   A funcionalidade principal de reconhecimento de pratos via CLIP no Cibi Sana está quebrada devido à baixíssima precisão.
 -   **Mocked**:
     -   Nenhum.
 
 **3rd Party Integrations**
--   **Google Gemini**: Usado para reconhecimento de pratos externos. A chave de API do usuário está configurada e com faturamento ativo.
--   **Emergent LLM Key**: Usada como fallback de emergência para o Gemini.
+-   **Google Gemini**: Usado para reconhecimento de pratos externos. A chave de API do usuário está configurada.
 -   **Hugging Face**: Usado para o modelo local .
 -   **MongoDB Atlas**: Banco de dados principal do projeto.
 
@@ -154,10 +184,10 @@ Nenhum.
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: []
--   **Known regressions**: Nenhuma.
+-   **Known regressions**: A precisão do modelo CLIP regrediu significativamente.
 
 **Credentials to test flow:**
--   **Usuário Premium**: Nome: , PIN: . Use este usuário para todos os testes de reconhecimento para simular o ambiente real.
+-   **Usuário Premium**: Nome: , PIN: . Use este usuário para testes.
 
 **What agent forgot to execute**
--   Nesta sessão, o agente finalmente abordou um problema antigo: a inconsistência do índice CLIP. Ele executou o script , uma ação que agentes anteriores identificaram como necessária, mas nunca realizaram. A tarefa agora é verificar o resultado dessa ação.</analysis>
+-   O agente ficou preso na complexidade da interação entre os dados do índice de IA e o código de calibração. Ao restaurar os arquivos de backup, pode ter esquecido de algum arquivo ou não validou completamente se o ambiente de servidor estava carregando os arquivos restaurados corretamente, levando ao bloqueio atual.</analysis>
