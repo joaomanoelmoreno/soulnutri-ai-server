@@ -332,9 +332,11 @@ function App() {
       const isInside = distance <= CIBI_SANA_RADIUS_METERS;
       console.log(`[GPS useEffect] Distância: ${distance.toFixed(0)}m, Dentro: ${isInside}`);
       setAtCibiSana(isInside);
+      atCibiSanaRef.current = isInside; // Atualiza ref também
     } else {
       console.log('[GPS useEffect] userLocation inválido, setando atCibiSana=false');
       setAtCibiSana(false);
+      atCibiSanaRef.current = false;
     }
   }, [userLocation, CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng, CIBI_SANA_RADIUS_METERS]);
   
