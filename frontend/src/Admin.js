@@ -1963,25 +1963,43 @@ export default function Admin() {
                     style={{ minHeight: '120px', width: '100%' }}
                     placeholder="Digite um ingrediente por linha..."
                   />
-                  <button 
-                    className="ia-review-btn"
-                    onClick={revisarComIA}
-                    disabled={revisandoIA}
-                    style={{
-                      marginTop: '8px',
-                      padding: '8px 16px',
-                      backgroundColor: revisandoIA ? '#666' : '#4CAF50',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: revisandoIA ? 'wait' : 'pointer',
-                      fontSize: '14px'
-                    }}
-                  >
-                    {revisandoIA ? '⏳ Analisando...' : '🤖 Revisar com IA'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                    <button 
+                      className="taco-review-btn"
+                      onClick={revisarComTACO}
+                      disabled={revisandoIA}
+                      style={{
+                        padding: '8px 16px',
+                        backgroundColor: revisandoIA ? '#666' : '#2196F3',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: revisandoIA ? 'wait' : 'pointer',
+                        fontSize: '14px',
+                        flex: 1
+                      }}
+                    >
+                      {revisandoIA ? '⏳ Calculando...' : '📊 Nutrição TACO (grátis)'}
+                    </button>
+                    <button 
+                      className="ia-review-btn"
+                      onClick={revisarComIA}
+                      disabled={revisandoIA}
+                      style={{
+                        padding: '8px 16px',
+                        backgroundColor: revisandoIA ? '#666' : '#ff9800',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: revisandoIA ? 'wait' : 'pointer',
+                        fontSize: '14px'
+                      }}
+                    >
+                      🤖 IA (💰)
+                    </button>
+                  </div>
                   <small style={{ display: 'block', marginTop: '4px', color: '#888' }}>
-                    A IA sugere categoria, benefícios e riscos baseado nos ingredientes
+                    📊 TACO: Tabela Brasileira (GRÁTIS) | 🤖 IA: Gemini (GASTA CRÉDITOS)
                   </small>
                 </div>
 
