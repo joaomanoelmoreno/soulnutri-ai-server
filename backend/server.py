@@ -897,6 +897,94 @@ async def identify_with_ai(
         }
 
 
+@api_router.post("/admin/revisar-prato-taco")
+async def revisar_prato_com_taco(request: Request):
+    """
+    Busca informações nutricionais usando a Tabela TACO.
+    ZERO CRÉDITOS - 100% LOCAL
+    """
+    try:
+        from data.taco_database import buscar_dados_taco, calcular_nutricao_prato, search_taco
+        
+        data = await request.json()
+        nome = data.get('nome', '')
+        ingredientes = data.get('ingredientes', [])
+        
+        if not ingredientes:
+            return {"ok": False, "error": "Ingredientes são obrigatórios"}
+        
+        # Calcular nutrição baseada nos ingredientes
+        nutricao = calcular_nutricao_prato(ingredientes, 100)  # por 100g
+        
+        # Detectar categoria baseada nos ingredientes
+        ing_texto = ' '.join(ingredientes).lower()
+        
+        # Ingredientes de origem animal
+        animais = ['frango', 'carne', 'boi', 'porco', 'bacon', 'peixe', 'camarão', 
+                   'atum', 'salmão', 'bacalhau', 'costela', 'linguiça', 'presunto']
+        vegetarianos = ['ovo', 'leite', 'queijo', 'manteiga', 'creme de leite', 'iogurte']
+        
+        # Excluir versões veganas
+        veganos_ok = ['leite de coco', 'leite de soja', 'queijo vegano', 'manteiga vegetal']
+        
+        categoria = 'vegano'  # assume vegano
+        for ing in animais:
+            if ing in ing_texto:
+                categoria = 'proteína animal'
+                break
+        
+        if categoria == 'vegano':
+            for ing in vegetarianos:
+                if ing in ing_texto:
+                    # Verificar se não é versão vegana
+                    is_vegano = False
+                    for v in veganos_ok:
+                        if v in ing_texto:
+                            is_vegano = True
+                            break
+                    if not is_vegano:
+                        categoria = 'vegetariano'
+                        break
+        
+        # Detectar alérgenos
+        alergenos = {
+            "gluten": any(x in ing_texto for x in ['farinha', 'pão', 'massa', 'trigo']),
+            "lactose": any(x in ing_texto for x in ['leite', 'queijo', 'creme']) and 'coco' not in ing_texto,
+            "ovo": 'ovo' in ing_texto,
+            "frutos_do_mar": any(x in ing_texto for x in ['camarão', 'peixe', 'atum', 'salmão', 'lula']),
+            "oleaginosas": any(x in ing_texto for x in ['castanha', 'nozes', 'amendoim', 'amêndoa'])
+        }
+        
+        # Formatar resultado
+        resultado = {
+            "ok": True,
+            "fonte": "TACO (zero créditos)",
+            "categoria": categoria,
+            "nutricao": {
+                "calorias": f"{nutricao.get('calorias', 0):.0f} kcal",
+                "proteinas": f"{nutricao.get('proteinas', 0):.1f}g",
+                "carboidratos": f"{nutricao.get('carboidratos', 0):.1f}g",
+                "gorduras": f"{nutricao.get('gorduras', 0):.1f}g",
+                "fibras": f"{nutricao.get('fibras', 0):.1f}g",
+                "sodio": f"{nutricao.get('sodio', 0):.0f}mg",
+                "calcio": f"{nutricao.get('calcio', 0):.0f}mg"
+            },
+            "alergenos": alergenos,
+            "contem_gluten": alergenos["gluten"],
+            "contem_lactose": alergenos["lactose"],
+            "contem_ovo": alergenos["ovo"],
+            "contem_frutos_mar": alergenos["frutos_do_mar"],
+            "contem_castanhas": alergenos["oleaginosas"]
+        }
+        
+        logger.info(f"[TACO] {nome}: {categoria} - {nutricao.get('calorias', 0):.0f} kcal (ZERO CRÉDITOS)")
+        return resultado
+        
+    except Exception as e:
+        logger.error(f"[TACO] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.post("/admin/revisar-prato-ia")
 async def revisar_prato_com_ia(request: Request):
     """
