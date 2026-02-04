@@ -522,21 +522,9 @@ async def identify_image(
                 logger.info(f"[CIBI SANA] CLIP apenas ({clip_score:.0%}) - Gemini TRAVADO")
         
         # ══════════════════════════════════════════════════════════════════════
-        # EMERGÊNCIA: GEMINI TRAVADO TEMPORARIAMENTE PARA TODOS
-        # Motivo: Frontend não está enviando restaurant=cibi_sana
-        # TODO: Remover quando frontend for corrigido
+        # NÍVEL 2: Se CLIP não confiante E NÃO é Cibi Sana, usar Gemini
         # ══════════════════════════════════════════════════════════════════════
         if decision is None:
-            logger.warning(f"[EMERGÊNCIA] Gemini TRAVADO - usando CLIP ({clip_score:.0%})")
-            decision = clip_decision
-            decision['source'] = 'local_index'
-            decision['aviso_emergencia'] = 'Gemini temporariamente desabilitado'
-        
-        # ══════════════════════════════════════════════════════════════════════
-        # NÍVEL 2: Se CLIP não confiante E NÃO é Cibi Sana, usar Gemini
-        # DESABILITADO TEMPORARIAMENTE
-        # ══════════════════════════════════════════════════════════════════════
-        if False and decision is None:
             logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
             
             from services.gemini_flash_service import (
