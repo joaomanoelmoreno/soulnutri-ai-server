@@ -2470,24 +2470,16 @@ function App() {
             {r.category_emoji} {r.category?.toUpperCase()}
           </div>
 
-          {/* BOTÃO IA - Aparece APENAS quando confiança é BAIXA */}
-          {r.confidence === 'baixa' && r.source !== 'gemini_ai' && (
+          {/* BOTÃO CORRIGIR - Aparece APENAS quando confiança é BAIXA */}
+          {r.confidence === 'baixa' && (
             <div className="ia-disponivel-box" data-testid="ia-disponivel-box">
               <p className="ia-hint">🤔 Não tenho certeza sobre este prato</p>
-              <button 
-                className="ia-btn"
-                onClick={melhorarComIA}
-                disabled={loadingIA}
-                data-testid="melhorar-ia-btn"
-              >
-                {loadingIA ? '⏳ Consultando IA...' : '🤖 Usar IA para identificar (consome créditos)'}
-              </button>
               <button 
                 className="corrigir-manual-btn"
                 onClick={() => setShowFeedback(true)}
                 data-testid="corrigir-manual-btn"
               >
-                ✏️ Corrigir manualmente (grátis)
+                ✏️ Corrigir manualmente
               </button>
             </div>
           )}
