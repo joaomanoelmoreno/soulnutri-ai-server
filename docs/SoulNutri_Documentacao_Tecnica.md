@@ -753,7 +753,7 @@ autorestart=true
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://nutri-scanner-10.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://nutriradar.preview.emergentagent.com
 ```
 
 ### Backend (.env)
