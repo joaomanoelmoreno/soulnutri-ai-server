@@ -451,7 +451,7 @@ async def identify_image(
     """
     start_time = time.time()
     
-    logger.info(f"[IDENTIFY] Iniciando identificação")
+    logger.info(f"[IDENTIFY] Iniciando identificação - restaurant={restaurant}, country={country}")
     
     try:
         # Ler imagem
