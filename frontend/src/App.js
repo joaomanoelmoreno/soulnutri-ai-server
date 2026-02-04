@@ -1605,6 +1605,12 @@ function App() {
       return;
     }
     
+    // BLOQUEAR no Cibi Sana para não gastar créditos
+    if (atCibiSanaRef.current) {
+      alert('🚫 No Cibi Sana, use apenas o reconhecimento local (CLIP).\n\nSe o prato não foi reconhecido corretamente, corrija pelo Admin.');
+      return;
+    }
+    
     // Confirmar com usuário
     const confirmar = window.confirm(
       '🤖 Usar IA para melhorar identificação?\n\n' +
@@ -1618,11 +1624,6 @@ function App() {
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
-    
-    // Detecção automática: Se está no Cibi Sana, usa CLIP
-    if (atCibiSanaRef.current) {
-      fd.append("restaurant", "cibi_sana");
-    }
     
     try {
       const controller = new AbortController();
