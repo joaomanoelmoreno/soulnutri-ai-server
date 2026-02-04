@@ -38,17 +38,29 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch - Network first, fallback to cache
+// Fetch - Network first para HTML/JS, cache only para imagens
 self.addEventListener('fetch', (event) => {
   // Ignorar requisições de API (sempre online)
   if (event.request.url.includes('/api/')) {
     return;
   }
   
+  // HTML e JS sempre do servidor (evita cache desatualizado)
+  if (event.request.url.endsWith('.html') || 
+      event.request.url.endsWith('.js') ||
+      event.request.url.endsWith('/') ||
+      event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+  
+  // Outros recursos: network first com fallback para cache
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Clonar resposta para cache
         if (response.status === 200) {
           const responseClone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
