@@ -1585,7 +1585,7 @@ function App() {
     fd.append("file", lastImageBlob, "photo.jpg");
     
     // Detecção automática: Se está no Cibi Sana, usa CLIP
-    if (isAtCibiSana()) {
+    if (atCibiSanaRef.current) {
       fd.append("restaurant", "cibi_sana");
     }
     
