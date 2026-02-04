@@ -315,6 +315,22 @@ function App() {
     return distance <= CIBI_SANA_RADIUS_METERS;
   };
   
+  // Estado dedicado para Cibi Sana (atualizado quando localização muda)
+  const [atCibiSana, setAtCibiSana] = useState(false);
+  
+  // Atualizar estado de Cibi Sana quando localização mudar
+  React.useEffect(() => {
+    if (userLocation?.lat && userLocation?.lng) {
+      const distance = calculateDistance(
+        userLocation.lat, userLocation.lng,
+        CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng
+      );
+      const isInside = distance <= CIBI_SANA_RADIUS_METERS;
+      setAtCibiSana(isInside);
+      console.log(`[GPS] Distância do Cibi Sana: ${distance.toFixed(0)}m, Dentro: ${isInside}`);
+    }
+  }, [userLocation]);
+  
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
