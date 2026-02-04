@@ -142,18 +142,57 @@ def audit_all_dishes() -> Dict[str, Any]:
         
         # Função para verificar se ingrediente é de origem animal (excluindo versões vegetais)
         def tem_ingrediente_animal(ing, texto):
-            # Não considerar "leite de coco", "leite de soja", etc. como leite animal
-            if ing == 'leite de vaca':
-                # Verifica se tem "leite" mas não é vegetal
-                if 'leite' in texto:
-                    vegetais = ['leite de coco', 'leite de soja', 'leite de amêndoas', 
-                               'leite de aveia', 'leite de arroz', 'leite vegetal']
-                    for v in vegetais:
-                        if v in texto:
-                            return False
-                    return True
-                return False
-            return ing in texto
+            # Lista de termos que indicam versão vegana/vegetal
+            termos_veganos = ['vegano', 'vegetal', 'de coco', 'de soja', 'de amêndoas', 
+                             'de aveia', 'de arroz', 'de castanha', 'plant-based']
+            
+            # Se o ingrediente está no texto
+            if ing in texto:
+                # Verificar se não é uma versão vegana
+                # Ex: "queijo vegano", "manteiga vegetal", "leite de coco"
+                for termo in termos_veganos:
+                    # Busca padrões como "queijo vegano", "manteiga vegetal"
+                    if f"{ing} {termo}" in texto or f"{ing}{termo}" in texto:
+                        return False
+                    # Busca padrões como "leite de coco" 
+                    if termo in texto and ing in termo.split():
+                        return False
+                
+                # Casos especiais
+                if ing == 'leite':
+                    # "leite de coco", "leite de soja", etc. são veganos
+                    if any(v in texto for v in ['leite de coco', 'leite de soja', 'leite de amêndoas', 
+                                                 'leite de aveia', 'leite de arroz', 'leite vegetal',
+                                                 'leite de castanha', 'leite de caju']):
+                        return False
+                
+                if ing == 'queijo':
+                    # "queijo vegano", "queijo de castanha" são veganos
+                    if any(v in texto for v in ['queijo vegano', 'queijo de castanha', 'queijo de caju',
+                                                 'queijo vegetal', 'queijo plant']):
+                        return False
+                
+                if ing == 'manteiga':
+                    # "manteiga vegetal", "manteiga de coco" são veganos
+                    if any(v in texto for v in ['manteiga vegetal', 'manteiga de coco', 'manteiga vegana',
+                                                 'manteiga de cacau', 'manteiga de amendoim']):
+                        return False
+                
+                if ing == 'creme':
+                    # "creme de coco", "creme vegetal" são veganos  
+                    if any(v in texto for v in ['creme de coco', 'creme vegetal', 'creme vegano']):
+                        return False
+                
+                if ing == 'mel':
+                    # Alguns veganos evitam mel, mas não vamos considerar como conflito crítico
+                    # Mel de agave, melado de cana são veganos
+                    if any(v in texto for v in ['mel de agave', 'melado', 'maple', 'xarope']):
+                        return False
+                    # Se tem apenas "mel" simples, não considerar conflito (é debatível)
+                    return False
+                
+                return True
+            return False
         
         if categoria == 'vegano':
             for ing in INGREDIENTES_ANIMAL:
