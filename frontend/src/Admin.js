@@ -553,7 +553,74 @@ export default function Admin() {
     }
   };
 
-  // Revisar prato com IA (Gemini Flash)
+  // Revisar prato com TACO (ZERO CRÉDITOS)
+  const revisarComTACO = async () => {
+    if (!editingDish) return;
+    
+    const ingredientes = editingDish.ingredientes || [];
+    if (ingredientes.length === 0 || (ingredientes.length === 1 && !ingredientes[0].trim())) {
+      alert('⚠️ Adicione os ingredientes primeiro!');
+      return;
+    }
+    
+    setRevisandoIA(true);
+    try {
+      const res = await fetch(`${API}/admin/revisar-prato-taco`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: editingDish.nome,
+          ingredientes: ingredientes.filter(i => i.trim())
+        })
+      });
+      
+      const data = await res.json();
+      
+      if (data.ok) {
+        const n = data.nutricao || {};
+        
+        // Mostrar resultado
+        const msg = `📊 Dados da Tabela TACO (ZERO CRÉDITOS):\n\n` +
+          `📂 Categoria: ${data.categoria}\n\n` +
+          `📊 Nutrição (por 100g):\n` +
+          `  🔥 Calorias: ${n.calorias || 'N/A'}\n` +
+          `  💪 Proteínas: ${n.proteinas || 'N/A'}\n` +
+          `  🍞 Carboidratos: ${n.carboidratos || 'N/A'}\n` +
+          `  🧈 Gorduras: ${n.gorduras || 'N/A'}\n` +
+          `  🥬 Fibras: ${n.fibras || 'N/A'}\n\n` +
+          `Deseja aplicar estes dados?`;
+        
+        if (window.confirm(msg)) {
+          setEditingDish({
+            ...editingDish,
+            categoria: data.categoria,
+            nutricao: {
+              calorias: n.calorias || '',
+              proteinas: n.proteinas || '',
+              carboidratos: n.carboidratos || '',
+              gorduras: n.gorduras || '',
+              fibras: n.fibras || ''
+            },
+            contem_gluten: data.contem_gluten || false,
+            contem_lactose: data.contem_lactose || false,
+            contem_ovo: data.contem_ovo || false,
+            contem_frutos_mar: data.contem_frutos_mar || false,
+            contem_castanhas: data.contem_castanhas || false
+          });
+          alert('✅ Dados aplicados! Clique em "Salvar" para confirmar.');
+        }
+      } else {
+        alert('❌ Erro: ' + (data.error || 'Não foi possível calcular'));
+      }
+    } catch (e) {
+      console.error('Erro ao buscar TACO:', e);
+      alert('❌ Erro: ' + e.message);
+    } finally {
+      setRevisandoIA(false);
+    }
+  };
+
+  // Revisar prato com IA (Gemini Flash) - GASTA CRÉDITOS
   const revisarComIA = async () => {
     if (!editingDish) return;
     
