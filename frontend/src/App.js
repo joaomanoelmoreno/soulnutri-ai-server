@@ -293,6 +293,9 @@ function App() {
   const CIBI_SANA_COORDS = { lat: -23.0373642, lng: -46.9767934 };
   const CIBI_SANA_RADIUS_METERS = 100; // Raio de 100 metros
   
+  // Ref para garantir valor atual (evita stale closure)
+  const atCibiSanaRef = React.useRef(false);
+  
   // Função para calcular distância entre duas coordenadas (fórmula de Haversine)
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371000; // Raio da Terra em metros
