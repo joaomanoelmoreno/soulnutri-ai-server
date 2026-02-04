@@ -628,17 +628,46 @@ export default function Admin() {
   };
 
   const reindex = async () => {
-    if (!window.confirm('Reindexar todo o dataset? Isso pode levar alguns minutos.')) return;
+    if (!window.confirm('Reconstruir índice com as correções? Isso leva 2-3 minutos.')) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API}/ai/reindex?max_per_dish=10`, { method: 'POST' });
+      // Iniciar reconstrução em background
+      const res = await fetch(`${API}/ai/reindex-background?max_per_dish=10`, { method: 'POST' });
       const data = await res.json();
-      alert(`✅ Reindexado: ${data.total_dishes} pratos, ${data.total_images} imagens`);
-      loadStats();
-      loadDishes();
+      
+      if (!data.ok) {
+        throw new Error(data.error || 'Erro ao iniciar');
+      }
+      
+      alert('⏳ Reconstrução iniciada em background!\n\nAguarde 2-3 minutos e clique em "Verificar Status".');
+      
+      // Polling para verificar status
+      const checkStatus = async () => {
+        try {
+          const statusRes = await fetch(`${API}/ai/reindex-status`);
+          const statusData = await statusRes.json();
+          
+          if (statusData.completed) {
+            alert(`✅ Reindexação concluída!\n\n${statusData.stats?.total_dishes || '?'} pratos\n${statusData.stats?.total_images || '?'} imagens`);
+            loadStats();
+            loadDishes();
+            setLoading(false);
+          } else if (statusData.in_progress) {
+            // Continuar verificando
+            setTimeout(checkStatus, 5000);
+          } else {
+            setLoading(false);
+          }
+        } catch (e) {
+          setLoading(false);
+        }
+      };
+      
+      // Começar a verificar após 10 segundos
+      setTimeout(checkStatus, 10000);
+      
     } catch (e) {
       alert('Erro: ' + e.message);
-    } finally {
       setLoading(false);
     }
   };
