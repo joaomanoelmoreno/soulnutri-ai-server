@@ -2,32 +2,35 @@
   "slug": "Guacamole com Manga",
   "ativo": true,
   "beneficios": [
-    "Potássio (485mg/100g): regula a pressão arterial, previne cãibras musculares e mantém o ritmo cardíaco saudável",
-    "Vitamina E: antioxidante que protege as células do envelhecimento precoce e fortalece o sistema imunológico"
+    "Rico em gorduras saudáveis, provenientes do abacate, que auxiliam na saúde cardiovascular.",
+    "Fonte de vitaminas e antioxidantes, especialmente vitamina C, presentes na manga e no limão, que fortalecem o sistema imunológico.",
+    "Alto teor de fibras, que contribui para a saúde digestiva e promove a saciedade.",
+    "Combinação de ingredientes frescos e naturais, que oferecem diversos micronutrientes essenciais."
   ],
   "categoria": "vegano",
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_gluten": false,
   "created_at": "2026-01-21T16:56:24.291000",
-  "descricao": "Guacamole com manga - prato cadastrado pelo usuário",
+  "descricao": "Salada de abacate com manga ",
   "ingredientes": [
     "abacate",
     "manga",
     "cebola roxa",
-    "coentro",
+    "tomate",
     "limão",
-    "pimenta"
+    "cheiro verde"
   ],
   "nome": "Guacamole com manga",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "110 kcal",
+    "proteinas": "1.5g",
+    "carboidratos": "10g",
+    "gorduras": "7g",
+    "fibras": "4g"
   },
   "origem": "user_created",
   "riscos": [
-    "Calórico se em excesso"
+    "Consumir com moderação devido ao teor calórico, especialmente para quem busca controle de peso."
   ],
   "tecnica": "Crua",
   "beneficio_principal": "Rico em gorduras monoinsaturadas do abacate - reduzem o colesterol ruim (LDL), protegem o coração e melhoram a absorção de vitaminas lipossolúveis (A, D, E, K)",
@@ -41,5 +44,8 @@
     "Nachos",
     "Tacos"
   ],
-  "evitar_com": []
+  "evitar_com": [],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
