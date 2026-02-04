@@ -1,5 +1,11 @@
 # SoulNutri - Product Requirements Document
 
+## Última Atualização: 2026-02-04
+
+### Status do Projeto: ✅ CLIP Funcionando
+
+---
+
 ## Visão Geral
 Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real a partir de imagens.
 O objetivo é fornecer informações detalhadas e personalizadas com alta velocidade (< 500ms) e precisão (> 90%).
