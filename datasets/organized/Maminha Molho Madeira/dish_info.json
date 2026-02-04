@@ -1,11 +1,13 @@
 {
   "slug": "Maminha Molho Madeira",
-  "nome": "Maminha ao Molho Mostarda",
+  "nome": "Maminha ao Molho de Mostarda",
   "categoria": "proteína animal",
   "descricao": "Corte bovino nobre fresco preparado sous vide com molho de mostarda e creme fresco",
   "ingredientes": [
-    "maminha bovina fresca",
+    "maminha ",
+    "creme de leite",
     "mostarda",
+    "maminha bovina fresca",
     "creme de leite fresco",
     "vinho branco",
     "Carne bovina",
@@ -13,40 +15,44 @@
     "Cebola",
     "Alho",
     "Tomate",
-    "Cogumelos"
+    "Cogumelos",
+    "maminha fresca",
+    "cebola orgânica",
+    "vinho",
+    "manteiga fresca",
+    "tomilho orgânico"
   ],
   "beneficios": [
+    "Fonte de energia",
+    "Carboidratos",
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura",
     "Proteína completa: construção e reparo muscular",
     "Ferro heme: energia e vitalidade",
-    "Vitamina B12: saúde do sistema nervoso"
+    "Vitamina B12: saúde do sistema nervoso",
+    "Proteína de alto valor biológico",
+    "Ferro: combate fadiga e anemia",
+    "Quercetina da cebola: anti-inflamatório"
   ],
   "riscos": [
+    "Contém glúten",
+    "Contém ovo",
+    "Verificar procedência",
     "Contém lactose",
     "Pode conter traços de glúten",
     "Alérgeno: Pode conter glúten dependendo dos ingredientes do molho."
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "26g",
-    "carboidratos": "0g",
-    "gorduras": "15g"
+    "calorias": "80 kcal",
+    "proteinas": "1.2g",
+    "carboidratos": "2.6g",
+    "gorduras": "7.6g"
   },
   "contem_gluten": true,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "Assado ou grelhado",
-  "indice_glicemico": "zero",
-  "tempo_digestao": "4-5 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [
-    "Farofa",
-    "Vinagrete"
-  ],
-  "evitar_com": [
-    "Molhos gordurosos"
-  ],
-  "category_emoji": "🍖"
+  "contem_soja": false
 }

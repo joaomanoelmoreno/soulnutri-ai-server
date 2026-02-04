@@ -10,30 +10,34 @@
     "cebola",
     "tomates",
     "ervas frescas",
-    ""
+    "batata",
+    "farinha de trigo",
+    "ovo",
+    "sal"
   ],
   "beneficios": [
     "Rica em vitaminas e minerais provenientes dos vegetais.",
     "Fonte de fibras que auxiliam na saúde digestiva.",
     "Baixo teor de gorduras saturadas, promovendo a saúde cardiovascular.",
-    "A banana da terra fornece energia e potássio."
+    "A banana da terra fornece energia e potássio.",
+    "Fonte de energia",
+    "Carboidratos"
   ],
   "riscos": [
-    "Pode conter sódio dependendo da quantidade de temperos utilizados."
+    "Pode conter sódio dependendo da quantidade de temperos utilizados.",
+    "Contém glúten",
+    "Contém ovo"
   ],
   "nutricao": {
     "calorias": "85 kcal",
     "proteinas": "1.5g",
     "carboidratos": "12g",
-    "gorduras": "4g",
-    "fibras": "2g"
+    "gorduras": "4g"
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "category_emoji": "🌱",
-  "tecnica": ""
+  "contem_soja": false
 }

@@ -1,38 +1,57 @@
 {
   "slug": "Granola",
-  "ativo": true,
-  "beneficios": [],
-  "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "contem_gluten": true,
-  "created_at": "2026-01-24T17:27:26.817000",
-  "descricao": "Mistura de grãos, frutas secas, nozes e sementes, geralmente assada e consumida com iogurte ou leite.",
+  "nome": "Granola Cibi Sana",
+  "categoria": "vegano",
+  "descricao": "Uma tigela de granola com uma mistura de grãos, frutas secas, sementes e nozes. A granola parece ser caseira, com uma coloração dourada escura e uma textura crocante. Há uma colher dentro da tigela.",
   "ingredientes": [
-    "aveia",
+    "Aveia",
+    "Nozes (amêndoas)",
+    "Sementes de abóbora",
+    "Uvas passas",
+    "Cranberries",
+    "Coco ralado",
+    "Maçã desidratada",
+    "Frutas cristalizadas",
+    "cevada",
+    "trigo",
+    "cranberry",
+    "goji berry",
     "frutas secas",
     "nozes",
-    "sementes",
-    "mel"
+    "amendoas",
+    "castanhas",
+    "sementes de abobora ",
+    "sementes de girassol",
+    "melaco",
+    "maple"
   ],
-  "nome": "Granola",
+  "beneficios": [
+    "Fonte de fibras",
+    "Rica em vitaminas e minerais",
+    "Fornece energia de liberação lenta",
+    "Promove a saúde cardiovascular",
+    "Fonte de fibras, auxiliando na saúde intestinal.",
+    "Rico em antioxidantes provenientes das frutas secas e sementes.",
+    "Fornece energia de liberação lenta devido aos carboidratos complexos.",
+    "Contém gorduras saudáveis das oleaginosas."
+  ],
+  "riscos": [
+    "Contém GLÚTEN (se a aveia não for certificada sem glúten)",
+    "Pode conter alto teor de açúcar",
+    "Alérgeno: Pode conter NOZES",
+    "Alto valor calórico devido à presença de frutas secas, oleaginosas e mel/maple.",
+    "Consumir com moderação devido ao alto teor de açúcares naturais."
+  ],
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",
     "carboidratos": "~25g",
     "gorduras": "~8g"
   },
-  "origem": "user_created",
-  "riscos": [
-    "Alérgeno: Nozes",
-    "Alérgeno: Glúten (se não for sem glúten)",
-    "Alérgeno: GLÚTEN (aveia)",
-    "Alérgeno: LACTOSE (leite, iogurte)",
-    "Alérgeno: NOZES (noz, nozes)"
-  ],
-  "tecnica": "",
+  "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_castanhas": false,
+  "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false
 }

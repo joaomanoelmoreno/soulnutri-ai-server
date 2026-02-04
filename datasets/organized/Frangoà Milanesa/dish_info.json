@@ -16,19 +16,19 @@
   "beneficios": [
     "Fonte de proteína para construção e reparo muscular.",
     "Pode ser uma opção saborosa para incluir proteína na dieta.",
-    "O frango é relativamente acessível."
+    "Ovo e frango fornecem nutrientes importantes como vitaminas do complexo B."
   ],
   "riscos": [
     "Alto teor de gordura devido à fritura.",
-    "Pode ser rico em sódio dependendo da quantidade de sal e temperos utilizados.",
-    "O consumo excessivo de frituras pode aumentar o risco de doenças cardiovasculares."
+    "Pode ser rico em sódio devido ao uso de temperos e sal.",
+    "Consumir com moderação devido ao processo de fritura."
   ],
   "nutricao": {
-    "calorias": "123 kcal",
-    "proteinas": "9.9g",
-    "carboidratos": "9.7g",
-    "gorduras": "4.7g",
-    "fibras": "0.6g"
+    "calorias": "280 kcal",
+    "proteinas": "18g",
+    "carboidratos": "20g",
+    "gorduras": "15g",
+    "fibras": "1g"
   },
   "tecnica": "Grelhado ou assado",
   "contem_gluten": true,

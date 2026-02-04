@@ -1,27 +1,35 @@
 {
-  "nome": "Gratinado de Legumes",
+  "nome": "Alho Poro Gratinado",
   "slug": "Gratinado de Legumes",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "ingredientes": [
-    "couve-flor",
-    "Sal, ",
-    "pimenta-do-reino,",
-    "Queijo Radalo"
+    "alho poro",
+    "creme vegetal",
+    "queijo vegano"
   ],
-  "descricao": " Prato composto por vegetais variados (como batata, brócolis e cenoura) envolvidos em um molho cremoso (geralmente bechamel) e cobertos com queijo ou farinha de rosca, levados ao forno para criar uma crosta dourada e crocante.",
-  "beneficios": [],
-  "riscos": [],
+  "descricao": " Alho poro ao creme vegano gratinado",
+  "beneficios": [
+    "Fonte de fibras, que auxiliam na saúde intestinal.",
+    "Rico em vitaminas e minerais provenientes do alho-poró.",
+    "Opção vegana saborosa e nutritiva.",
+    "O alho-poró possui propriedades antioxidantes."
+  ],
+  "riscos": [
+    "Pode ser rico em gorduras, dependendo da quantidade de creme vegetal utilizada.",
+    "Verificar a quantidade de sódio no queijo vegano."
+  ],
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~15g",
-    "gorduras": "~6g"
+    "calorias": "180 kcal",
+    "proteinas": "4g",
+    "carboidratos": "10g",
+    "gorduras": "14g",
+    "fibras": "2g"
   },
   "contem_gluten": false,
-  "contem_lactose": true,
-  "category_emoji": "🥚",
+  "contem_lactose": false,
+  "category_emoji": "🥬",
   "contem_ovo": false,
-  "contem_castanhas": false,
+  "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": ""

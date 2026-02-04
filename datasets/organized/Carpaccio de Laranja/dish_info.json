@@ -1,45 +1,45 @@
 {
   "slug": "Carpaccio de Laranja",
-  "nome": "Carpaccio de Laranja",
+  "nome": "Carpaccio de Abobrinha",
   "categoria": "vegano",
   "descricao": "Finas fatias de laranja com chocolate 70%  e flor de sal",
   "ingredientes": [
+    "abobrinha",
+    "oregano",
+    "azeite",
+    "vinagre",
+    "queijo vegano",
+    "sal",
     "Laranja",
     "chocolate 70%",
     "flor de sal",
     "pimenta dedo de moca"
   ],
   "beneficios": [
+    "Rico em vitaminas e minerais provenientes da abobrinha.",
+    "Fonte de antioxidantes do orégano.",
+    "Promove a saúde cardiovascular devido ao azeite.",
+    "Baixo em calorias e rico em fibras, auxiliando na saciedade.",
     "Rico em vitamina C, que fortalece o sistema imunológico.",
     "A presença de antioxidantes auxilia no combate aos radicais livres.",
     "O chocolate 70% cacau pode trazer benefícios para a saúde cardiovascular.",
     "A laranja é fonte de fibras, que auxiliam na digestão."
   ],
   "riscos": [
+    "Consumir com moderação devido ao teor de sódio do sal adicionado.",
     "Consumir com moderação devido ao teor de açúcar do chocolate.",
     "A pimenta pode não ser adequada para pessoas com sensibilidade."
   ],
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "3g",
-    "carboidratos": "30g",
-    "gorduras": "10g",
-    "fibras": "5g"
+    "calorias": "80 kcal",
+    "proteinas": "2g",
+    "carboidratos": "4g",
+    "gorduras": "6g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "tecnica": "Grelhada ou refogada",
-  "indice_glicemico": "muito baixo",
-  "tempo_digestao": "1-2 horas",
-  "melhor_horario": "Qualquer",
-  "combina_com": [
-    "Queijo",
-    "Tomate"
-  ],
-  "evitar_com": [],
-  "category_emoji": "🌱"
+  "contem_soja": false
 }

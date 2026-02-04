@@ -1,39 +1,45 @@
 {
   "slug": "Grelhado dos Pescadores",
-  "nome": "Grelhadodospescadores",
+  "nome": "Grelhado dos Pescadores",
   "categoria": "proteína animal",
-  "descricao": "Prato que aparenta ser preparado em uma panela grande, com os frutos do mar grelhados e dispostos com legumes. O peixe branco e o camarão parecem ter sido temperados com ervas finas antes de serem grelhados, proporcionando um sabor mais intenso. O brócolis e o tomate cereja oferecem um toque de frescor e complementam a refeição.",
+  "descricao": "Peixe, frutos do mar e legumes grelhados",
   "ingredientes": [
-    "Peixe branco (grelhado)",
-    "Camarão (grelhado)",
-    "Lula (grelhada)",
+    "Peixe branco ",
+    "Camarão ",
+    "Lula ",
+    "Polvo",
     "Brócolis",
+    "Batata",
+    "cebola",
     "Tomate cereja",
     "Limão em rodelas",
-    "Ervas (salsa/cebolinha)"
+    "Ervas (salsa/cebolinha)",
+    "Farinha de trigo"
   ],
   "beneficios": [
-    "Alto teor de proteínas, essencial para a construção e reparação muscular",
-    "Rico em ômega-3, que contribui para a saúde cardiovascular",
-    "Fonte de vitaminas e minerais, como selênio e vitamina D, importantes para a saúde óssea e imunidade"
+    "Rico em proteínas de alta qualidade, essenciais para a construção e reparação dos tecidos.",
+    "Fonte de ácidos graxos ômega-3, importantes para a saúde cardiovascular e cerebral.",
+    "Fornece vitaminas e minerais, como vitamina D, selênio e iodo, que auxiliam em diversas funções do organismo.",
+    "Opção de baixa caloria, ideal para quem busca uma alimentação equilibrada."
   ],
   "riscos": [
-    "Alérgeno: crustáceos e peixes",
-    "Alto teor de colesterol, dependendo da quantidade de frutos do mar consumida"
+    "Pode conter alto teor de sódio, dependendo da forma de preparo e temperos utilizados.",
+    "Pessoas com alergia a frutos do mar devem evitar o consumo."
   ],
   "nutricao": {
-    "calorias": "~180 kcal",
-    "proteinas": "~20g",
-    "carboidratos": "~5g",
-    "gorduras": "~8g"
+    "calorias": "160 kcal",
+    "proteinas": "20g",
+    "carboidratos": "10g",
+    "gorduras": "5g",
+    "fibras": "2g"
   },
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
   "contem_soja": false,
-  "category_emoji": "🍖",
+  "category_emoji": "🐟",
   "tecnica": "",
   "contem_peixe": true
 }

@@ -2,25 +2,29 @@
   "slug": "Goiabada",
   "nome": "Goiabada",
   "categoria": "vegano",
-  "descricao": "Molho de tomate caseiro.",
+  "descricao": "Goiabada",
   "ingredientes": [
-    "Tomate",
-    "Alho",
-    "Cebola",
-    "Azeite",
-    "Ervas"
+    "Goiaba",
+    "acucar"
   ],
   "tecnica": "",
-  "beneficios": [],
+  "beneficios": [
+    "Fonte de antioxidantes (licopeno da goiaba).",
+    "Rica em vitamina C (da goiaba).",
+    "Pode auxiliar na digestão devido às fibras.",
+    "Energia rápida proveniente dos açúcares."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter traços de ingredientes se for feito em cozinha compartilhada."
+    "Alto teor de açúcar, consumir com moderação.",
+    "Pode causar picos de glicemia em diabéticos."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "280 kcal",
+    "proteinas": "0g",
+    "carboidratos": "70g",
+    "gorduras": "0g",
+    "fibras": "3g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -31,7 +35,7 @@
   "beneficio_principal": "Goiaba contém quercetina (10-15 mg/100g), um flavonoide que estudos mostram ajudar na redução da pressão arterial e melhora na saúde cardiovascular. Um estudo da American Heart Association em 2020 descobriu que uma alta ingestão de flavonoides está associada a um risco 15% menor de eventos cardiovasculares.",
   "curiosidade_cientifica": "A pectina na goiaba, uma fibra solúvel, é eficaz na formação de um gel durante a digestão, ajudando a reduzir a absorção de glicose e a regular os níveis de açúcar no sangue. Isso é particularmente benéfico em um doce, como a goiabada, que já possui açúcar adicionado.",
   "referencia_pesquisa": "American Heart Association, Circulation Journal, 2020",
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
