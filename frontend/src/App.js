@@ -510,6 +510,13 @@ function App() {
         return;
       }
 
+      // Opções otimizadas para iOS/Safari
+      const geoOptions = {
+        enableHighAccuracy: true, // Melhor precisão no iOS
+        timeout: 30000, // 30s timeout (iOS pode ser lento)
+        maximumAge: 60000 // Cache de 1 minuto apenas
+      };
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -517,6 +524,7 @@ function App() {
           const isBrazil = latitude >= -34 && latitude <= 5 && 
                           longitude >= -74 && longitude <= -34;
           
+          console.log(`[Geo] Posição obtida: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
           setUserLocation({
             lat: latitude,
             lng: longitude,
@@ -526,15 +534,40 @@ function App() {
           console.log(`[Geo] País: ${isBrazil ? 'Brasil' : 'Internacional'}`);
         },
         (error) => {
-          console.log('[Geo] Erro:', error.message);
+          console.log('[Geo] Erro:', error.code, error.message);
           setLocationPermission('denied');
           setUserLocation({ country: 'BR' });
         },
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 86400000 } // Cache 24h
+        geoOptions
       );
+
+      // Watch contínuo para atualizar quando se move (importante para Cibi Sana)
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const isBrazil = latitude >= -34 && latitude <= 5 && 
+                          longitude >= -74 && longitude <= -34;
+          console.log(`[Geo Watch] Atualização: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
+          setUserLocation({
+            lat: latitude,
+            lng: longitude,
+            country: isBrazil ? 'BR' : 'OTHER'
+          });
+        },
+        (error) => {
+          console.log('[Geo Watch] Erro:', error.message);
+        },
+        { enableHighAccuracy: true, timeout: 30000, maximumAge: 10000 }
+      );
+
+      // Cleanup: parar watch quando componente desmonta
+      return () => {
+        if (watchId) navigator.geolocation.clearWatch(watchId);
+      };
     };
 
-    setTimeout(detectLocation, 2000);
+    const cleanup = detectLocation();
+    return cleanup;
   }, []);
 
   const checkStatus = async () => {
