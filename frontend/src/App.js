@@ -839,10 +839,9 @@ function App() {
     
     // Debug: Log do estado da localização
     console.log('[GPS DEBUG] userLocation:', userLocation);
-    console.log('[GPS DEBUG] isAtCibiSana():', isAtCibiSana());
+    console.log('[GPS DEBUG] atCibiSana:', atCibiSana);
     
     // Detecção automática: Se está no Cibi Sana (raio de 100m), usa CLIP (custo zero)
-    const atCibiSana = isAtCibiSana();
     if (atCibiSana) {
       fd.append("restaurant", "cibi_sana");
       console.log('[GPS] ✅ Detectado no Cibi Sana - enviando restaurant=cibi_sana');
