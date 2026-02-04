@@ -390,12 +390,14 @@ function App() {
     // 2. Solicitar permissão de localização
     try {
       await new Promise((resolve, reject) => {
+        console.log('[GPS] Solicitando localização...');
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             locationGranted = true;
             setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
             const userLat = pos.coords.latitude;
             const userLng = pos.coords.longitude;
+            console.log(`[GPS] ✅ Localização obtida: ${userLat.toFixed(6)}, ${userLng.toFixed(6)}`);
             setUserLocation({
               lat: userLat,
               lng: userLng,
@@ -412,7 +414,6 @@ function App() {
                       Math.sin(dLon/2) * Math.sin(dLon/2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             const distance = R * c;
-            console.log(`[GPS] Sua localização: ${userLat.toFixed(6)}, ${userLng.toFixed(6)}`);
             console.log(`[GPS] Cibi Sana: ${cibiLat}, ${cibiLng}`);
             console.log(`[GPS] Distância do Cibi Sana: ${distance.toFixed(0)} metros`);
             if (distance <= 100) {
@@ -425,13 +426,14 @@ function App() {
           (err) => {
             setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
             setUserLocation({ lat: null, lng: null, country: 'BR' });
-            console.log('[GPS] Localização negada ou erro:', err.message);
+            console.log('[GPS] ❌ Localização negada ou erro:', err.code, err.message);
             resolve(); // Não rejeita, apenas marca como negado
           },
-          { enableHighAccuracy: true, timeout: 10000 }
+          { enableHighAccuracy: true, timeout: 30000, maximumAge: 60000 }
         );
       });
     } catch (e) {
+      console.log('[GPS] ❌ Exceção ao obter localização:', e);
       setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
     }
     
