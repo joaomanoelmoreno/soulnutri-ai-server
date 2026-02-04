@@ -807,10 +807,25 @@ def buscar_dados_taco(ingrediente: str) -> dict:
         if termo in ingrediente_lower or ingrediente_lower in termo:
             return TACO_DATABASE.get(chave)
     
-    # 4. Busca parcial direta no TACO_DATABASE
+    # 4. Busca parcial direta no TACO_DATABASE (melhorada)
+    palavras = ingrediente_key.split('_')
     for taco_key in TACO_DATABASE.keys():
-        if ingrediente_key in taco_key or taco_key in ingrediente_key:
+        # Busca se todas as palavras do ingrediente estão na chave TACO
+        if all(p in taco_key for p in palavras if len(p) > 2):
             return TACO_DATABASE[taco_key]
+    
+    # 5. Busca por palavra principal (para carnes)
+    palavra_principal = max(palavras, key=len) if palavras else ''
+    if len(palavra_principal) >= 4:
+        for taco_key in TACO_DATABASE.keys():
+            if palavra_principal in taco_key:
+                # Preferir versão grelhada/cozida
+                if 'grelhad' in taco_key or 'cozid' in taco_key:
+                    return TACO_DATABASE[taco_key]
+        # Se não achou grelhada, pegar qualquer uma
+        for taco_key in TACO_DATABASE.keys():
+            if palavra_principal in taco_key:
+                return TACO_DATABASE[taco_key]
     
     return None
 
