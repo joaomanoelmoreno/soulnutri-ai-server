@@ -3264,7 +3264,7 @@ async def admin_batch_fix_dishes(request: dict):
 
 @api_router.delete("/admin/dish-image/{slug}")
 async def delete_dish_image(slug: str, img: str = Query(...)):
-    """Deleta uma imagem específica de um prato"""
+    """Deleta uma imagem específica de um prato e atualiza o índice"""
     try:
         import urllib.parse
         import unicodedata
@@ -3284,11 +3284,13 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
         # Encontrar a pasta do prato
         dataset_dir = "/app/datasets/organized"
         dish_folder = None
+        dish_name = None
         
         for folder in os.listdir(dataset_dir):
             folder_norm = normalize(folder)
             if folder_norm == slug_norm or slug_norm in folder_norm or folder_norm in slug_norm:
                 dish_folder = os.path.join(dataset_dir, folder)
+                dish_name = folder
                 break
         
         if not dish_folder or not os.path.isdir(dish_folder):
@@ -3308,7 +3310,18 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
         # Contar imagens restantes
         remaining = len([f for f in os.listdir(dish_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
         
-        return {"ok": True, "message": f"Imagem deletada", "remaining_images": remaining}
+        # Atualizar índice incrementalmente (remover embedding da imagem deletada)
+        try:
+            from ai.index import get_index
+            index = get_index()
+            if index.is_ready() and dish_name:
+                # Marcar que o índice precisa ser reconstruído
+                index._needs_rebuild = True
+                logger.info(f"[ADMIN] Índice marcado para reconstrução (foto removida de {dish_name})")
+        except Exception as idx_err:
+            logger.warning(f"[ADMIN] Não foi possível atualizar índice: {idx_err}")
+        
+        return {"ok": True, "message": f"Imagem deletada", "remaining_images": remaining, "index_needs_rebuild": True}
         
     except Exception as e:
         logger.error(f"Erro ao deletar imagem: {e}")
