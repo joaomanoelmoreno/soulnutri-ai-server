@@ -1,0 +1,26 @@
+{
+  "nome": "Frango Grelhado",
+  "slug": "Frango Grelhado",
+  "categoria": "proteína animal",
+  "descricao": "Frango marinado grelhado",
+  "ingredientes": [
+    "Peito de frango sem pele"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "159 kcal",
+    "proteinas": "32.0g",
+    "carboidratos": "0.0g",
+    "gorduras": "2.5g",
+    "fibras": "0.0g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🍗"
+}

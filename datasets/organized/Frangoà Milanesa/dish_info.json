@@ -1,5 +1,5 @@
 {
-  "nome": "Frango à Milanesa",
+  "nome": "Frango a Milanesa",
   "slug": "Frangoà Milanesa",
   "categoria": "proteína animal",
   "ingredientes": [
@@ -12,7 +12,7 @@
     "sal",
     "temperos"
   ],
-  "descricao": "Frango preparado de forma saudável.",
+  "descricao": "Frango empanado e assado em forno sem oleo",
   "beneficios": [
     "Fonte de proteína para construção e reparo muscular.",
     "Pode ser uma opção saborosa para incluir proteína na dieta.",
@@ -24,11 +24,11 @@
     "O consumo excessivo de frituras pode aumentar o risco de doenças cardiovasculares."
   ],
   "nutricao": {
-    "calorias": "280 kcal",
-    "proteinas": "18g",
-    "carboidratos": "20g",
-    "gorduras": "15g",
-    "fibras": "1g"
+    "calorias": "123 kcal",
+    "proteinas": "9.9g",
+    "carboidratos": "9.7g",
+    "gorduras": "4.7g",
+    "fibras": "0.6g"
   },
   "tecnica": "Grelhado ou assado",
   "contem_gluten": true,
@@ -44,7 +44,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖",
+  "category_emoji": "🍗",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

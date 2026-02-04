@@ -1,15 +1,12 @@
 {
   "slug": "Frango ao Molho Cremoso",
-  "nome": "Frango com Molho Cremoso",
+  "nome": "Maminha ao Molho de Mostarda",
   "categoria": "proteína animal",
-  "descricao": "Frango preparado de forma saudável.",
+  "descricao": "Maminha braseada com molho a base de mostarda",
   "ingredientes": [
-    "batata",
-    "farinha de trigo",
-    "ovo",
-    "sal",
-    "frango",
-    "temperos"
+    "maminha ",
+    "creme de leite",
+    "mostarda"
   ],
   "beneficios": [
     "Fonte de energia",
@@ -24,14 +21,15 @@
     "Verificar procedência"
   ],
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "3g",
-    "carboidratos": "25g",
-    "gorduras": "2g"
+    "calorias": "80 kcal",
+    "proteinas": "1.2g",
+    "carboidratos": "2.6g",
+    "gorduras": "7.6g",
+    "fibras": "0.6g"
   },
-  "contem_gluten": true,
-  "contem_lactose": false,
-  "contem_ovo": true,
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
@@ -46,5 +44,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩"
 }
