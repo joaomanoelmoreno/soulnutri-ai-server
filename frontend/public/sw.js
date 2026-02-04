@@ -1,19 +1,17 @@
-// SoulNutri Service Worker
-const CACHE_NAME = 'soulnutri-v1';
+// SoulNutri Service Worker - v2 (força atualização)
+const CACHE_NAME = 'soulnutri-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
   '/manifest.json',
   '/images/soulnutri-logo.png',
   '/images/soulnutri-logo-light.png'
 ];
 
-// Install Service Worker
+// Install Service Worker - limpar caches antigos
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('SoulNutri: Cache aberto');
+        console.log('SoulNutri: Cache v2 aberto');
         return cache.addAll(urlsToCache);
       })
       .catch((err) => {
@@ -21,6 +19,23 @@ self.addEventListener('install', (event) => {
       })
   );
   self.skipWaiting();
+});
+
+// Activate - limpar caches antigos
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('SoulNutri: Removendo cache antigo:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
 });
 
 // Fetch - Network first, fallback to cache
