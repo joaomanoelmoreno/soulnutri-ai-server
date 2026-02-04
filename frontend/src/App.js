@@ -320,16 +320,20 @@ function App() {
   
   // Atualizar estado de Cibi Sana quando localização mudar
   React.useEffect(() => {
+    console.log('[GPS useEffect] userLocation mudou:', userLocation);
     if (userLocation?.lat && userLocation?.lng) {
       const distance = calculateDistance(
         userLocation.lat, userLocation.lng,
         CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng
       );
       const isInside = distance <= CIBI_SANA_RADIUS_METERS;
+      console.log(`[GPS useEffect] Distância: ${distance.toFixed(0)}m, Dentro: ${isInside}`);
       setAtCibiSana(isInside);
-      console.log(`[GPS] Distância do Cibi Sana: ${distance.toFixed(0)}m, Dentro: ${isInside}`);
+    } else {
+      console.log('[GPS useEffect] userLocation inválido, setando atCibiSana=false');
+      setAtCibiSana(false);
     }
-  }, [userLocation]);
+  }, [userLocation, CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng, CIBI_SANA_RADIUS_METERS]);
   
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
