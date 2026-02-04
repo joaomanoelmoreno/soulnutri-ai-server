@@ -676,7 +676,7 @@ INGREDIENTE_PARA_TACO = {
     # Carnes bovinas
     "carne": "carne_bovina_alcatra_sem_gordura_grelhada", "carne bovina": "carne_bovina_alcatra_sem_gordura_grelhada",
     "alcatra": "carne_bovina_alcatra_sem_gordura_grelhada", "picanha": "carne_bovina_picanha_sem_gordura_grelhada",
-    "maminha": "carne_bovina_maminha_sem_gordura_grelhada", "costela": "carne_bovina_costela_crua",
+    "maminha": "carne_bovina_maminha_grelhada", "costela": "carne_bovina_costela_crua",
     "fígado": "carne_bovina_figado_grelhado", "figado": "carne_bovina_figado_grelhado",
     "carne moída": "carne_bovina_moida_refogada", "acém": "carne_bovina_acem_moido_cru",
     "patinho": "carne_bovina_patinho_sem_gordura_grelhado", "contra filé": "carne_bovina_contra_file_sem_gordura_grelhado",
