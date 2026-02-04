@@ -816,7 +816,7 @@ export default function Admin() {
             <span className="stat-label">Status</span>
           </div>
           <button className="reindex-btn" onClick={reindex} disabled={loading}>
-            🔄 Reindexar
+            {loading ? '⏳ Aguarde...' : '🔄 Aplicar Correções'}
           </button>
         </div>
       )}
