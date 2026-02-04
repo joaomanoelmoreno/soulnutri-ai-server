@@ -1,17 +1,15 @@
 {
   "slug": "Fígado Abolado",
-  "nome": "Fígado Abolado",
-  "categoria": "proteína animal",
-  "descricao": "Prato com carne e legumes, difícil de identificar com precisão.",
+  "nome": "Fígado Acebolado",
+  "categoria": "vegano",
+  "descricao": "Figado bovino grelhado com cebolas",
   "ingredientes": [
-    "Carne",
-    "Legumes",
-    "Tomate",
+    "",
     "fígado bovino fresco",
-    "cebola orgânica",
-    "alho orgânico",
+    "cebola ",
+    "alho ",
     "sal",
-    "azeite extravirgem"
+    ""
   ],
   "beneficios": [
     "Vitamina A: uma porção supre necessidade semanal",
@@ -23,10 +21,11 @@
     "Pode conter traços de glúten"
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "94 kcal",
+    "proteinas": "9.6g",
+    "carboidratos": "9.2g",
+    "gorduras": "2.3g",
+    "fibras": "1.6g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -34,5 +33,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🍖"
+  "category_emoji": "🥬",
+  "tecnica": ""
 }
