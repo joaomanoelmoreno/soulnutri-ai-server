@@ -1850,7 +1850,7 @@ function App() {
           zIndex: 9999,
           boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
         }}>
-          {isAtCibiSana() ? '📍 Cibi Sana' : '🌍 Externo'}
+          {atCibiSana ? '📍 Cibi Sana' : '🌍 Externo'}
         </div>
       )}
 
