@@ -2760,6 +2760,118 @@ async def get_daily_full_analysis(pin: str):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.get("/premium/dashboard")
+async def get_dashboard_premium(pin: str, periodo: str = "semana"):
+    """
+    Dashboard consolidado para usuários Premium.
+    Retorna: consumo de hoje, gráficos semanais/mensais, histórico, alertas.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timedelta
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Definir período
+        dias = 7 if periodo == "semana" else 30
+        data_inicio = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
+        hoje_str = datetime.now().strftime("%Y-%m-%d")
+        
+        # Buscar logs do período
+        cursor = db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1)
+        
+        logs = await cursor.to_list(length=100)
+        
+        # Consumo de hoje
+        log_hoje = next((l for l in logs if l.get("data") == hoje_str), None)
+        hoje = {
+            "calorias": log_hoje.get("calorias_total", 0) if log_hoje else 0,
+            "proteinas": log_hoje.get("proteinas_total", 0) if log_hoje else 0,
+            "carboidratos": log_hoje.get("carboidratos_total", 0) if log_hoje else 0,
+            "gorduras": log_hoje.get("gorduras_total", 0) if log_hoje else 0
+        }
+        
+        # Dados para gráficos (últimos 7 dias)
+        dias_grafico = []
+        for i in range(min(7, dias)):
+            data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            dia_nome = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"][(datetime.now() - timedelta(days=i)).weekday()]
+            log_dia = next((l for l in logs if l.get("data") == data), None)
+            dias_grafico.append({
+                "dia": dia_nome,
+                "data": data,
+                "calorias": log_dia.get("calorias_total", 0) if log_dia else 0,
+                "proteinas": log_dia.get("proteinas_total", 0) if log_dia else 0,
+                "carboidratos": log_dia.get("carboidratos_total", 0) if log_dia else 0,
+                "gorduras": log_dia.get("gorduras_total", 0) if log_dia else 0
+            })
+        
+        dias_grafico.reverse()  # Ordenar do mais antigo ao mais recente
+        
+        # Estatísticas
+        dias_com_log = len([l for l in logs if l.get("calorias_total", 0) > 0])
+        total_calorias = sum(l.get("calorias_total", 0) for l in logs)
+        total_pratos = sum(len(l.get("pratos", [])) for l in logs)
+        
+        # Calcular streak (dias seguidos)
+        streak = 0
+        for i in range(dias):
+            data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            if any(l.get("data") == data and l.get("calorias_total", 0) > 0 for l in logs):
+                streak += 1
+            else:
+                break
+        
+        # Alertas
+        alertas = []
+        metas = user.get("meta_calorica", {"calorias": 2000, "proteinas": 50, "carboidratos": 250, "gorduras": 65})
+        
+        if dias_com_log > 0:
+            media_calorias = total_calorias / dias_com_log
+            if media_calorias < metas.get("calorias", 2000) * 0.7:
+                alertas.append({"tipo": "warning", "msg": "Consumo calórico abaixo do recomendado"})
+            elif media_calorias > metas.get("calorias", 2000) * 1.2:
+                alertas.append({"tipo": "danger", "msg": "Consumo calórico acima do recomendado"})
+            else:
+                alertas.append({"tipo": "success", "msg": "Consumo calórico dentro da meta!"})
+        
+        # Histórico formatado
+        historico = []
+        for log in logs[:10]:  # Últimos 10 dias
+            historico.append({
+                "data": log.get("data", ""),
+                "pratos": log.get("pratos", []),
+                "calorias_total": log.get("calorias_total", 0),
+                "proteinas_total": log.get("proteinas_total", 0)
+            })
+        
+        return {
+            "ok": True,
+            "hoje": hoje,
+            "semana": dias_grafico,
+            "historico": historico,
+            "stats": {
+                "dias_registrados": dias_com_log,
+                "media_calorias": total_calorias / dias_com_log if dias_com_log > 0 else 0,
+                "total_pratos": total_pratos,
+                "streak": streak
+            },
+            "alertas": alertas,
+            "periodo": periodo
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no dashboard: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.get("/radar/alimentos/{nome_prato}")
 async def get_radar_alimentos(nome_prato: str, ingredientes: str = None):
     """
