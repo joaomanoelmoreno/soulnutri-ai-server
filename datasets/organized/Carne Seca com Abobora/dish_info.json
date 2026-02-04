@@ -3,26 +3,32 @@
   "categoria": "proteína animal",
   "ingredientes": [
     "carne bovina",
+    "abobora",
+    "cebola",
+    "alho",
+    "ervas frescas",
     "sal",
-    "temperos"
+    ""
   ],
-  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "descricao": "Carne seca bovina refogada com aboboras",
   "beneficios": [
-    "Proteína completa",
-    "Ferro heme",
-    "Vitamina B12",
-    "Zinco"
+    "Fonte de proteína, essencial para a construção e reparo dos tecidos.",
+    "Rica em ferro, importante para a saúde do sangue e transporte de oxigênio.",
+    "A abóbora fornece vitaminas e antioxidantes que auxiliam na saúde da pele e visão.",
+    "Baixo teor de carboidratos, adequado para dietas com restrição."
   ],
   "riscos": [
-    "Gordura saturada"
+    "A carne seca pode ter alto teor de sódio.",
+    "Consumir com moderação devido ao teor de gordura, dependendo do corte da carne."
   ],
   "curiosidade": "A carne seca, também conhecida como charque, é um método de conservação da carne muito utilizado no Brasil, especialmente nas regiões do nordeste.",
   "slug": "Carne Seca com Abobora",
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "26g",
-    "carboidratos": "0g",
-    "gorduras": "15g"
+    "calorias": "170 kcal",
+    "proteinas": "20g",
+    "carboidratos": "10g",
+    "gorduras": "6g",
+    "fibras": "2g"
   },
   "tecnica": "Grelhado ou assado",
   "contem_gluten": false,
@@ -38,5 +44,8 @@
   "evitar_com": [
     "Outras gorduras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

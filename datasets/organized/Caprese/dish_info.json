@@ -1,13 +1,10 @@
 {
   "slug": "Caprese",
-  "nome": "saladacaprese",
-  "categoria": "vegano",
+  "nome": "Salada Caprese",
+  "categoria": "vegetariano",
   "descricao": "Mini espetinhos com tomate cereja, mussarela de búfala e manjericão fresco, temperados com azeite de oliva.",
   "ingredientes": [
-    "alface",
-    "tomate",
-    "pepino",
-    "cenoura",
+    "",
     "Tomate cereja",
     "Mussarela de búfala",
     "Folhas de manjericão fresco",
@@ -49,5 +46,5 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥚"
 }
