@@ -821,10 +821,17 @@ function App() {
     fd.append("file", blob, "photo.jpg");
     fd.append("country", userLocation?.country || 'BR');
     
+    // Debug: Log do estado da localização
+    console.log('[GPS DEBUG] userLocation:', userLocation);
+    console.log('[GPS DEBUG] isAtCibiSana():', isAtCibiSana());
+    
     // Detecção automática: Se está no Cibi Sana (raio de 100m), usa CLIP (custo zero)
-    if (isAtCibiSana()) {
+    const atCibiSana = isAtCibiSana();
+    if (atCibiSana) {
       fd.append("restaurant", "cibi_sana");
-      console.log('[GPS] Detectado no Cibi Sana - usando CLIP local');
+      console.log('[GPS] ✅ Detectado no Cibi Sana - enviando restaurant=cibi_sana');
+    } else {
+      console.log('[GPS] ❌ Fora do Cibi Sana ou GPS não disponível');
     }
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
