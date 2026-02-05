@@ -3528,6 +3528,103 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.post("/admin/move-image")
+async def move_dish_image(request: Request):
+    """Move uma imagem de um prato para outro (reclassificar)"""
+    try:
+        import urllib.parse
+        import unicodedata
+        import shutil
+        
+        data = await request.json()
+        from_slug = data.get('from_slug', '')
+        to_slug = data.get('to_slug', '')
+        img_name = data.get('img_name', '')
+        
+        if not from_slug or not to_slug or not img_name:
+            return {"ok": False, "error": "Parâmetros obrigatórios: from_slug, to_slug, img_name"}
+        
+        # Normalizar slugs
+        def normalize(s):
+            s = unicodedata.normalize('NFD', s)
+            s = ''.join(c for c in s if not unicodedata.combining(c))
+            return s.lower().replace(" ", "").replace("-", "").replace("_", "")
+        
+        dataset_dir = "/app/datasets/organized"
+        
+        # Encontrar pasta de origem
+        from_folder = None
+        from_name = None
+        from_slug_norm = normalize(urllib.parse.unquote(from_slug))
+        
+        for folder in os.listdir(dataset_dir):
+            if normalize(folder) == from_slug_norm or from_slug_norm in normalize(folder):
+                from_folder = os.path.join(dataset_dir, folder)
+                from_name = folder
+                break
+        
+        if not from_folder or not os.path.isdir(from_folder):
+            return {"ok": False, "error": f"Prato de origem não encontrado: {from_slug}"}
+        
+        # Encontrar pasta de destino
+        to_folder = None
+        to_name = None
+        to_slug_norm = normalize(urllib.parse.unquote(to_slug))
+        
+        for folder in os.listdir(dataset_dir):
+            if normalize(folder) == to_slug_norm or to_slug_norm in normalize(folder):
+                to_folder = os.path.join(dataset_dir, folder)
+                to_name = folder
+                break
+        
+        if not to_folder:
+            # Criar pasta se não existir
+            to_name = urllib.parse.unquote(to_slug)
+            to_folder = os.path.join(dataset_dir, to_name)
+            os.makedirs(to_folder, exist_ok=True)
+            logger.info(f"[ADMIN] Criada nova pasta: {to_name}")
+        
+        # Caminho da imagem de origem
+        img_decoded = urllib.parse.unquote(img_name)
+        src_path = os.path.join(from_folder, img_decoded)
+        
+        if not os.path.exists(src_path):
+            return {"ok": False, "error": f"Imagem não encontrada: {img_decoded}"}
+        
+        # Gerar novo nome para a imagem no destino
+        to_slug_clean = normalize(to_name)
+        ext = os.path.splitext(img_decoded)[1].lower()
+        if ext == '.jpg':
+            ext = '.jpeg'
+        
+        # Contar imagens existentes no destino para numeração
+        existing = [f for f in os.listdir(to_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
+        next_num = len(existing) + 1
+        
+        new_name = f"{to_slug_clean}{next_num:02d}{ext}"
+        dst_path = os.path.join(to_folder, new_name)
+        
+        # Mover arquivo
+        shutil.move(src_path, dst_path)
+        logger.info(f"[ADMIN] Imagem movida: {src_path} → {dst_path}")
+        
+        # Contar imagens restantes na origem
+        remaining = len([f for f in os.listdir(from_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
+        
+        return {
+            "ok": True, 
+            "message": f"Imagem movida para {to_name}",
+            "new_path": dst_path,
+            "new_name": new_name,
+            "remaining_in_source": remaining,
+            "index_needs_rebuild": True
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao mover imagem: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.get("/admin/duplicates")
 async def get_duplicate_groups():
     """Retorna grupos de pratos duplicados para consolidação"""
