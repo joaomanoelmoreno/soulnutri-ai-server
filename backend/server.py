@@ -3552,30 +3552,55 @@ async def move_dish_image(request: Request):
         
         dataset_dir = "/app/datasets/organized"
         
-        # Encontrar pasta de origem
+        # Encontrar pasta de origem - busca exata primeiro, depois parcial
         from_folder = None
         from_name = None
-        from_slug_norm = normalize(urllib.parse.unquote(from_slug))
+        from_slug_decoded = urllib.parse.unquote(from_slug)
+        from_slug_norm = normalize(from_slug_decoded)
         
+        # Primeiro: busca exata pelo nome da pasta
         for folder in os.listdir(dataset_dir):
-            if normalize(folder) == from_slug_norm or from_slug_norm in normalize(folder):
+            if folder == from_slug_decoded or normalize(folder) == from_slug_norm:
                 from_folder = os.path.join(dataset_dir, folder)
                 from_name = folder
                 break
         
+        # Se não encontrou exata, busca parcial
+        if not from_folder:
+            for folder in os.listdir(dataset_dir):
+                folder_norm = normalize(folder)
+                # Buscar só se o slug estiver no início ou for igual
+                if folder_norm.startswith(from_slug_norm) or from_slug_norm.startswith(folder_norm):
+                    from_folder = os.path.join(dataset_dir, folder)
+                    from_name = folder
+                    break
+        
         if not from_folder or not os.path.isdir(from_folder):
             return {"ok": False, "error": f"Prato de origem não encontrado: {from_slug}"}
+        
+        logger.info(f"[MOVE] Pasta de origem encontrada: {from_name}")
         
         # Encontrar pasta de destino
         to_folder = None
         to_name = None
-        to_slug_norm = normalize(urllib.parse.unquote(to_slug))
+        to_slug_decoded = urllib.parse.unquote(to_slug)
+        to_slug_norm = normalize(to_slug_decoded)
         
+        # Primeiro: busca exata pelo nome da pasta
         for folder in os.listdir(dataset_dir):
-            if normalize(folder) == to_slug_norm or to_slug_norm in normalize(folder):
+            if folder == to_slug_decoded or normalize(folder) == to_slug_norm:
                 to_folder = os.path.join(dataset_dir, folder)
                 to_name = folder
                 break
+        
+        # Se não encontrou exata, busca parcial
+        if not to_folder:
+            for folder in os.listdir(dataset_dir):
+                folder_norm = normalize(folder)
+                if folder_norm.startswith(to_slug_norm) or to_slug_norm.startswith(folder_norm):
+                    to_folder = os.path.join(dataset_dir, folder)
+                    to_name = folder
+                    break
         
         if not to_folder:
             # Criar pasta se não existir
