@@ -1,0 +1,32 @@
+{
+  "slug": "saladadebeterrabacomlaranjaehortela",
+  "nome": "Salada de Beterraba com Laranja e Hortelã",
+  "categoria": "vegano",
+  "descricao": "Salada fresca e nutritiva.",
+  "ingredientes": [
+    "alface",
+    "tomate",
+    "pepino",
+    "cenoura"
+  ],
+  "beneficios": [
+    "Baixíssimas calorias",
+    "Rica em fibras",
+    "Vitaminas e minerais"
+  ],
+  "riscos": [
+    "Verificar higienização"
+  ],
+  "nutricao": {
+    "calorias": "20 kcal",
+    "proteinas": "1g",
+    "carboidratos": "4g",
+    "gorduras": "0.2g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

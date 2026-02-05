@@ -1,6 +1,6 @@
 {
-  "slug": "Rolinho Vietnamita",
-  "nome": "Rolinho Vietnamita ",
+  "slug": "rolinhovietnamita",
+  "nome": "rolinhovietnamita",
   "categoria": "vegano",
   "descricao": "Enroladinho de papel de arroz vietnamita com legumes e ervas frescas",
   "ingredientes": [
@@ -9,8 +9,7 @@
     "Hortelã",
     "Abobrinha",
     "alface",
-    "pepino",
-    ""
+    "pepino"
   ],
   "beneficios": [
     "Rico em vitaminas e minerais provenientes dos vegetais frescos.",
@@ -23,18 +22,15 @@
     "Alergia ao gergelim (se presente no papel de arroz)."
   ],
   "nutricao": {
-    "calorias": "60 kcal",
-    "proteinas": "2g",
-    "carboidratos": "12g",
-    "gorduras": "0.5g",
-    "fibras": "2g"
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false,
-  "category_emoji": "🌱",
-  "tecnica": ""
+  "contem_soja": false
 }

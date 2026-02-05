@@ -1,47 +1,38 @@
 {
   "slug": "Peixe a Milanesa",
-  "ativo": true,
+  "nome": "File de Peixe a milanesa",
+  "categoria": "proteína animal",
+  "descricao": "Peixe fresco, fonte de ômega-3.",
+  "ingredientes": [
+    "peixe",
+    "sal",
+    "limão",
+    "ervas"
+  ],
   "beneficios": [
     "Fonte de proteína de alto valor biológico",
     "Fornece energia",
-    "Auxilia na saciedade"
+    "Auxilia na saciedade",
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
   ],
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": true,
-  "created_at": "2026-01-22T14:36:18.259000",
-  "descricao": "Peitos de frango empanados e fritos, dispostos em uma travessa. Acompanha cheiro verde picado e farinha de rosca.",
-  "ingredientes": [
-    "frango",
-    "farinha de rosca",
-    "cheiro verde (salsa e cebolinha)",
-    "óleo vegetal"
+  "riscos": [
+    "Alto teor de sódio dependendo do tempero",
+    "Alto teor de gordura se frito",
+    "Contém GLÚTEN",
+    "Alérgeno: peixe"
   ],
-  "nome": "Peixe a milanesa",
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",
     "carboidratos": "~25g",
     "gorduras": "~8g"
   },
-  "origem": "user_created",
-  "riscos": [
-    "Alto teor de sódio dependendo do tempero",
-    "Alto teor de gordura se frito",
-    "Contém GLÚTEN"
-  ],
-  "tecnica": "Empanado e frito",
+  "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "indice_glicemico": "zero",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Limão",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ]
+  "contem_soja": false
 }

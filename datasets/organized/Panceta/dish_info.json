@@ -1,55 +1,32 @@
 {
   "slug": "Panceta",
-  "nome": "panceta Pururuca",
+  "nome": "Panceta Pururuca",
   "categoria": "proteína animal",
-  "descricao": "A pancetta é preparada por meio de cura e pode ser defumada. Neste prato, a pancetta é cortada e frita ou assada até ficar crocante, resultando em uma textura crocante por fora e macia por dentro. O prato é finalizado com tomates cereja frescos e cebolinha picada, possivelmente salpicado com temperos.",
+  "descricao": "pancetta pururuca assada em forno sem oleo",
   "ingredientes": [
-    "Panceta suína",
+    "Barriga suína",
     "Sal ",
-    "Arroz",
-    "Carne",
-    "Legumes",
-    "Massa",
-    "Pancetta (barriga de porco curada)",
-    "Tomates cereja",
-    "Cebolinha",
-    "Temperos (possivelmente sal, pimenta do reino, ervas)",
-    "panceta de porco fresca",
-    "sal grosso",
-    "alho orgânico",
-    "ervas orgânicas"
+    ""
   ],
   "beneficios": [
     "Fonte de proteína.",
-    "Sabor intenso e característico.",
-    "Pode ser consumida em pequenas porções como petisco.",
-    "A pancetta, sendo um tipo de carne suína, oferece proteínas de alta qualidade e uma boa quantidade de gordura, que fornece energia.",
-    "Os tomates cereja são ricos em vitamina C e antioxidantes, como o licopeno.",
-    "Colágeno: beneficia pele e articulações",
-    "Vitamina B1: metabolismo energético",
-    "Selênio: proteção antioxidante"
+    "Sabor intenso e característico."
   ],
   "riscos": [
-    "Alto teor de gordura saturada, devendo ser consumida com moderação.",
-    "Alto teor de sódio (devido ao sal).",
-    "Pode ser prejudicial para pessoas com problemas cardiovasculares.",
-    "Alérgeno: Pode conter glúten na massa.",
-    "Alérgeno: Pode conter soja no molho.",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alto teor de gordura saturada, que pode aumentar o colesterol LDL.",
-    "Alto teor de sódio, dependendo da quantidade de sal na cura.",
-    "Possível presença de nitratos e nitritos utilizados na cura, que podem ter riscos à saúde em excesso.",
-    "Pode conter traços de glúten"
+    "Alto teor de gordura saturada, aumentando o risco de doenças cardiovasculares.",
+    "Alto teor de sódio devido ao sal, podendo elevar a pressão arterial.",
+    "Rico em calorias, se consumido em excesso pode levar ao ganho de peso."
   ],
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~15g",
-    "gorduras": "~6g"
+    "calorias": "500 kcal",
+    "proteinas": "15g",
+    "carboidratos": "0g",
+    "gorduras": "50g",
+    "fibras": "0g"
   },
-  "contem_gluten": true,
+  "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": true,
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,

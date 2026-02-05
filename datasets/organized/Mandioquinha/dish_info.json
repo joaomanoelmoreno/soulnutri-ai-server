@@ -7,15 +7,12 @@
     "Fácil digestão"
   ],
   "categoria": "vegano",
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_gluten": false,
   "created_at": "2026-01-27T14:36:59.513000",
-  "descricao": "Abóbora assada com pimentão e temperos.",
+  "descricao": "Mandioquinha assada",
   "ingredientes": [
-    "Abóbora",
-    "Azeite",
-    "Pimentão",
-    "Temperos"
+    ""
   ],
   "nome": "Mandioquinha",
   "nutricao": {
@@ -38,5 +35,8 @@
     "Carnes",
     "Purê"
   ],
-  "evitar_com": []
+  "evitar_com": [],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

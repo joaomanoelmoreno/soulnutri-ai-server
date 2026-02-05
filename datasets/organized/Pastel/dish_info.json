@@ -1,33 +1,41 @@
 {
   "slug": "Pastel",
-  "ativo": true,
-  "beneficios": [],
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": true,
-  "created_at": "2026-01-24T17:33:35.923000",
-  "descricao": "Pastel de carne é uma opção saborosa e popular, geralmente recheado com carne moída temperada e outros ingredientes.",
+  "nome": "Pastel (carne/queijo/frango)",
+  "categoria": "outros",
+  "descricao": "Pastel  Assado sem oleo nos sabores - carne ou queijo ou frango com requeijao",
   "ingredientes": [
     "carne",
     "massa",
-    "temperos"
+    "queijo ",
+    "frango",
+    "requeijao",
+    "recheio"
   ],
-  "nome": "Pastel",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Fonte de proteína (carne/frango).",
+    "Pode ser uma opção para matar a fome rapidamente.",
+    "Variedade de sabores dependendo do recheio.",
+    "Proteína completa",
+    "Ferro heme",
+    "Vitamina B12",
+    "Zinco"
+  ],
   "riscos": [
-    "Alérgeno: Glúten (massa)",
-    "Alérgeno: Carne",
+    "Alto teor de gordura devido à fritura.",
+    "Pode ser rico em sódio dependendo do recheio e da massa.",
+    "O consumo excessivo pode levar ao ganho de peso.",
+    "Alérgeno: Glúten",
     "Alérgeno: GLÚTEN (massa)"
   ],
-  "tecnica": "",
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "nutricao": {
+    "calorias": "300 kcal",
+    "proteinas": "12g",
+    "carboidratos": "30g",
+    "gorduras": "15g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

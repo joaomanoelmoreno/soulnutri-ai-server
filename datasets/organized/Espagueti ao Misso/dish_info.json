@@ -6,14 +6,11 @@
   "category_emoji": "🍖",
   "contem_gluten": true,
   "created_at": "2026-01-24T12:28:26.456000",
-  "descricao": "Prato composto por macarrão, molho e almôndegas.",
+  "descricao": "",
   "ingredientes": [
-    "Macarrão",
-    "Almôndegas",
-    "Molho",
-    "Queijo"
+    ""
   ],
-  "nome": "espagueti ao misso",
+  "nome": "Espaguete ao Misso e Bacon",
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",

@@ -1,0 +1,39 @@
+{
+  "slug": "tabuledetrigo",
+  "nome": "tabuledetrigo",
+  "categoria": "vegano",
+  "descricao": "Salada refrescante do Oriente Médio, feita com trigo, tomate, pepino, cebola e ervas frescas.",
+  "ingredientes": [
+    "trigo para quibe",
+    "salsinha",
+    "tomate",
+    "cebola",
+    "limão",
+    "Trigo",
+    "Pepino",
+    "Salsa",
+    "Hortelã"
+  ],
+  "beneficios": [
+    "Rico em fibras",
+    "Vitaminas",
+    "Refrescante"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Alérgeno: Glúten",
+    "Alérgeno: GLÚTEN (trigo)"
+  ],
+  "nutricao": {
+    "calorias": "90 kcal",
+    "proteinas": "2g",
+    "carboidratos": "15g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
+}

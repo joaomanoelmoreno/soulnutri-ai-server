@@ -1,12 +1,15 @@
 {
-  "nome": "Ovospochecomcarnemoida",
+  "nome": "Carne Moida com Ovos Pochet",
   "categoria": "proteína animal",
   "ingredientes": [
     "carne bovina",
-    "sal",
-    "temperos"
+    "allho",
+    "cebola",
+    "tomates",
+    "ervas secas",
+    "ovo"
   ],
-  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "descricao": "Carne moida refogada com legumes. e ovo",
   "beneficios": [
     "Proteína completa",
     "Ferro heme",
@@ -38,5 +41,8 @@
   "evitar_com": [
     "Outras gorduras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

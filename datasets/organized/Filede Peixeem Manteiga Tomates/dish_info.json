@@ -1,45 +1,44 @@
 {
   "slug": "Filede Peixeem Manteiga Tomates",
-  "ativo": true,
-  "beneficios": [
-    "Ômega-3",
-    "Proteína de fácil digestão",
-    "Vitamina D"
-  ],
+  "nome": "File de Peixe em Manteiga de Tomates",
   "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": false,
-  "created_at": "2026-01-24T12:44:15.616000",
-  "descricao": "Prato com camarão e outros ingredientes.",
+  "descricao": "Peixe fresco ao molho de tomates e alho negro",
   "ingredientes": [
+    "file de peixe",
+    "tomates",
+    "manteiga",
+    "alho negro",
+    "cebola",
+    "alho",
     "camarão",
     "molho",
     "temperos"
   ],
-  "nome": "file de  peixe em manteiga de tomates",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Fonte de proteína de alta qualidade proveniente do peixe.",
+    "Rico em vitaminas e minerais essenciais dos tomates.",
+    "Aporte de gorduras saudáveis da manteiga.",
+    "O alho negro possui propriedades antioxidantes.",
+    "Ômega-3",
+    "Proteína de fácil digestão",
+    "Vitamina D"
+  ],
   "riscos": [
+    "Alto teor de gordura devido à manteiga.",
+    "Consumir com moderação devido ao teor de sódio.",
     "Alérgeno: crustáceos",
     "Alérgeno: CRUSTÁCEOS (camarão, camarao)"
   ],
-  "tecnica": "Grelhado ou assado",
-  "contem_lactose": false,
+  "nutricao": {
+    "calorias": "180 kcal",
+    "proteinas": "18g",
+    "carboidratos": "5g",
+    "gorduras": "10g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
   "contem_ovo": false,
+  "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "indice_glicemico": "zero",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço ou jantar",
-  "combina_com": [
-    "Limão",
-    "Legumes"
-  ],
-  "evitar_com": [
-    "Frituras"
-  ]
+  "contem_soja": false
 }

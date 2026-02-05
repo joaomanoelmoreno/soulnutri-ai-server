@@ -2,28 +2,28 @@
   "slug": "Entrecote Grelhado",
   "nome": "Entrecôte Grelhado",
   "categoria": "proteína animal",
-  "descricao": "Corte nobre de carne bovina fresca grelhado na grelha",
+  "descricao": "Corte nobre de carne bovina fresca grelhado ",
   "ingredientes": [
     "entrecôte bovino fresco",
-    "sal grosso",
-    "pimenta importada",
-    "alho orgânico"
+    ""
   ],
   "tecnica": "Grelhado na grelha",
   "beneficios": [
-    "Proteína completa: todos aminoácidos essenciais",
-    "Ferro heme: combate anemia eficientemente",
-    "Creatina natural: energia muscular"
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparação muscular.",
+    "Rico em ferro, importante para a prevenção da anemia.",
+    "Contém zinco, que fortalece o sistema imunológico."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Consumo excessivo de carne vermelha pode aumentar o risco de doenças cardiovasculares.",
+    "Pode ser rico em gorduras saturadas, dependendo do corte e da forma de preparo."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "200 kcal",
+    "proteinas": "26g",
+    "carboidratos": "0g",
+    "gorduras": "10g",
+    "fibras": "0g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -44,5 +44,8 @@
     "Salada"
   ],
   "evitar_com": [],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

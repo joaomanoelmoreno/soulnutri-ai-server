@@ -1,6 +1,6 @@
 {
   "slug": "Mandioquinhacom Camarao",
-  "nome": "Mandioquinha com Camarão",
+  "nome": "Camarao com Mandioquinha",
   "categoria": "proteína animal",
   "descricao": "Purê de mandioquinha artesanal com camarões frescos salteados em azeite",
   "ingredientes": [
@@ -47,5 +47,8 @@
     "Purê"
   ],
   "evitar_com": [],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
