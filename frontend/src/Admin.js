@@ -1859,10 +1859,65 @@ export default function Admin() {
                         <span style={{ position: 'absolute', bottom: '2px', right: '2px', background: 'rgba(0,0,0,0.6)', color: '#fff', fontSize: '10px', padding: '2px 4px', borderRadius: '4px' }}>
                           {idx + 1}
                         </span>
+                        {/* Botão MOVER */}
                         <button
                           onClick={async (e) => {
                             e.stopPropagation();
-                            if (window.confirm(`Deletar foto ${idx + 1}?`)) {
+                            const destino = window.prompt(
+                              `📦 Mover foto ${idx + 1} para qual prato?\n\nDigite o nome do prato de destino:\n(Ex: "Arroz Branco", "Feijão Preto")`
+                            );
+                            if (destino && destino.trim()) {
+                              try {
+                                const res = await fetch(`${API}/admin/move-image`, {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({
+                                    from_slug: editingDish.slug,
+                                    to_slug: destino.trim(),
+                                    img_name: img
+                                  })
+                                });
+                                const data = await res.json();
+                                if (data.ok) {
+                                  setEditingDish({
+                                    ...editingDish,
+                                    all_images: editingDish.all_images.filter((_, i) => i !== idx),
+                                    image_count: data.remaining_in_source
+                                  });
+                                  alert(`✅ Foto movida para "${destino}"!\n\nNovo nome: ${data.new_name}`);
+                                } else {
+                                  alert('❌ Erro: ' + data.error);
+                                }
+                              } catch (err) {
+                                alert('❌ Erro ao mover: ' + err.message);
+                              }
+                            }
+                          }}
+                          style={{
+                            position: 'absolute',
+                            top: '2px',
+                            left: '2px',
+                            background: 'rgba(59,130,246,0.9)',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '20px',
+                            height: '20px',
+                            fontSize: '10px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          title="Mover para outro prato"
+                        >
+                          ↗
+                        </button>
+                        {/* Botão DELETAR */}
+                        <button
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            if (window.confirm(`Deletar foto ${idx + 1}?\n\n⚠️ Dica: Use o botão azul (↗) para MOVER a foto para outro prato sem perder!`)) {
                               try {
                                 const res = await fetch(`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
                                 const data = await res.json();
