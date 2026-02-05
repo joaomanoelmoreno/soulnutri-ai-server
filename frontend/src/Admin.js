@@ -1969,6 +1969,10 @@ export default function Admin() {
                   )}
                 </div>
                 <p className="photo-info">📷 {editingDish.image_count} fotos - Clique para ampliar</p>
+                <p style={{ fontSize: '11px', color: '#888', margin: '4px 0' }}>
+                  <span style={{ color: '#3b82f6' }}>↗ Azul</span> = Mover para outro prato | 
+                  <span style={{ color: '#dc3545' }}> ✕ Vermelho</span> = Deletar
+                </p>
               </div>
               
               <div className="edit-fields">
