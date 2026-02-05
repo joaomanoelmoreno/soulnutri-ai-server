@@ -1,5 +1,5 @@
 {
-  "nome": "cocadacremosa",
+  "nome": "Cocada Cremosa",
   "slug": "cocadacremosa",
   "categoria": "vegano",
   "contem_gluten": false,
@@ -9,10 +9,27 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "300 kcal",
+    "proteinas": "2g",
+    "carboidratos": "40g",
+    "gorduras": "15g",
+    "fibras": "0g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "descricao": "Coco freso preparado com leite de coco e leite condensado\n",
+  "ingredientes": [
+    "leite de coco",
+    "acucar",
+    "leite condensado"
+  ],
+  "beneficios": [
+    "Fonte de energia devido aos carboidratos.",
+    "Contém gorduras saudáveis do coco.",
+    "Saborosa e apreciada como sobremesa."
+  ],
+  "riscos": [
+    "Alto teor de açúcar, consumir com moderação.",
+    "Pode ser calórica devido ao açúcar e gordura do coco."
+  ],
+  "tecnica": ""
 }

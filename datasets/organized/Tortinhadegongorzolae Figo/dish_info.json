@@ -1,7 +1,7 @@
 {
   "slug": "Tortinhadegongorzolae Figo",
   "nome": "Tortinha de Figo e Gorgonzola",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "descricao": "As tortinhas são preparadas com massa folhada, recheadas com figos assados e pedaços de queijo gorgonzola. A cobertura é de geleia de frutas vermelhas, e a cebolinha picada é utilizada para decorar. A massa folhada é assada até dourar, e o figo é caramelizado para realçar seu sabor adocicado.",
   "ingredientes": [
     "massa de tortilha",
@@ -41,5 +41,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "tecnica": ""
 }

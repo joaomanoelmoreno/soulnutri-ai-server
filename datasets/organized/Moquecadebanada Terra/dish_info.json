@@ -10,29 +10,27 @@
     "cebola",
     "tomates",
     "ervas frescas",
-    "batata",
-    "farinha de trigo",
-    "ovo",
-    "sal"
+    ""
   ],
   "beneficios": [
     "Rica em vitaminas e minerais provenientes dos vegetais.",
     "Fonte de fibras que auxiliam na saúde digestiva.",
-    "Baixo teor de gorduras saturadas, promovendo a saúde cardiovascular.",
     "A banana da terra fornece energia e potássio.",
+    "Opção leve e saborosa para uma refeição vegana.",
     "Fonte de energia",
     "Carboidratos"
   ],
   "riscos": [
-    "Pode conter sódio dependendo da quantidade de temperos utilizados.",
+    "Pode ser alta em carboidratos, dependendo da quantidade de banana da terra.",
+    "Alergia a algum dos ingredientes (raro).",
     "Contém glúten",
     "Contém ovo"
   ],
   "nutricao": {
     "calorias": "85 kcal",
     "proteinas": "1.5g",
-    "carboidratos": "12g",
-    "gorduras": "4g"
+    "carboidratos": "15g",
+    "gorduras": "3g"
   },
   "contem_gluten": true,
   "contem_lactose": false,
@@ -40,5 +38,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
+  "tecnica": "",
   "category_emoji": "🌱"
 }

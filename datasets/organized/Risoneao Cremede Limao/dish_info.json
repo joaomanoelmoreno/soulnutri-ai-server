@@ -1,41 +1,42 @@
 {
+  "slug": "Risoneao Cremede Limao",
   "nome": "Risone ao Creme de Limão",
-  "categoria": "vegetariano",
+  "categoria": "proteína animal",
+  "descricao": "Risone cremoso, cozido com bacon em um molho à base de creme e limão, ",
   "ingredientes": [
-    "Risone",
-    "Queijo (possivelmente Mussarela ou similar)",
-    "Creme (provavelmente creme de leite)",
-    "Cebolinha picada",
-    "Pimentão vermelho (em cubos)",
-    "Tempero (pimenta do reino)",
-    "Raspas de limão (no creme)",
-    "Azeite de oliva (para refogar)"
+    "Macarrao",
+    "Queijo",
+    "Creme ",
+    "limao",
+    "ervas frescas",
+    "",
+    "creme de leite",
+    "bacon",
+    ""
   ],
-  "descricao": "O prato parece ser um risone cremoso, cozido em um molho à base de creme e limão, com pedaços de pimentão vermelho e coberto com queijo derretido. A cebolinha picada é adicionada como finalização. O risone é provavelmente refogado com azeite antes de ser cozido no creme.",
   "beneficios": [
-    "O risone, feito de trigo, fornece energia através de carboidratos.",
-    "O queijo oferece cálcio e proteínas, importantes para a saúde óssea e muscular.",
-    "O pimentão vermelho é rico em vitamina C e antioxidantes."
+    "Fonte de cálcio do queijo.",
+    "Sabor refrescante do limão.",
+    "Prato cremoso e saboroso."
   ],
   "riscos": [
-    "Contém glúten devido ao risone.",
-    "Alto teor de gordura saturada, dependendo da quantidade de creme e queijo.",
-    "Pode conter lactose, se o queijo for derivado do leite de vaca."
+    "Alto teor de gordura devido ao creme de leite e bacon.",
+    "Potencialmente alto em sódio dependendo da quantidade de queijo e bacon.",
+    "Risco de intolerância à lactose."
   ],
-  "curiosidade": "O risone, também conhecido como orzo, é uma massa italiana que se assemelha a grãos de arroz. É versátil e pode ser usado em sopas, saladas e pratos cremosos como este.",
-  "slug": "Risoneao Cremede Limao",
   "nutricao": {
-    "calorias": "~180 kcal",
-    "proteinas": "~20g",
-    "carboidratos": "~5g",
-    "gorduras": "~8g"
+    "calorias": "280 kcal",
+    "proteinas": "10g",
+    "carboidratos": "25g",
+    "gorduras": "15g",
+    "fibras": "2g"
   },
-  "category_emoji": "🥚",
-  "contem_gluten": false,
+  "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "tecnica": "",
+  "category_emoji": "🍖"
 }

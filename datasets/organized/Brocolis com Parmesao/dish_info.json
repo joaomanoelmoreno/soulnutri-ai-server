@@ -1,18 +1,36 @@
 {
-  "nome": "Brocolis com Parmesao",
+  "nome": "Brocolis ao Parmesao",
   "slug": "Brocolis com Parmesao",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "160 kcal",
+    "proteinas": "8g",
+    "carboidratos": "7g",
+    "gorduras": "12g",
+    "fibras": "3g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥚",
+  "descricao": "Brocolis assado com alho e parmesao",
+  "ingredientes": [
+    "Brocolis",
+    "parmesao",
+    "alho",
+    ""
+  ],
+  "beneficios": [
+    "Fonte de vitaminas e minerais, especialmente vitamina C e K.",
+    "Rico em fibras, auxiliando na saúde digestiva.",
+    "O parmesão oferece cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Pode ser rico em sódio, dependendo da quantidade de parmesão.",
+    "O parmesão contém gorduras saturadas, consumir com moderação."
+  ],
+  "tecnica": ""
 }

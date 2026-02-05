@@ -1,15 +1,13 @@
 {
   "slug": "Fígado Abolado",
-  "nome": "Fígado Acebolado",
+  "nome": "Figado Acebolado",
   "categoria": "proteína animal",
   "descricao": "Figado bovino grelhado com cebolas",
   "ingredientes": [
-    "",
     "fígado bovino fresco",
     "cebola ",
     "alho ",
-    "sal",
-    ""
+    "sal"
   ],
   "beneficios": [
     "Vitamina A: uma porção supre necessidade semanal",
@@ -21,11 +19,10 @@
     "Pode conter traços de glúten"
   ],
   "nutricao": {
-    "calorias": "94 kcal",
-    "proteinas": "9.6g",
-    "carboidratos": "9.2g",
-    "gorduras": "2.3g",
-    "fibras": "1.6g"
+    "calorias": "~100 kcal",
+    "proteinas": "~4g",
+    "carboidratos": "~18g",
+    "gorduras": "~2g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -33,6 +30,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥩",
-  "tecnica": ""
+  "category_emoji": "🍖"
 }

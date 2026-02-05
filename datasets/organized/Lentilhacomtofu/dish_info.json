@@ -2,44 +2,45 @@
   "slug": "Lentilhacomtofu",
   "nome": "Lentilha com Tofu Defumado",
   "categoria": "vegano",
-  "descricao": "Lentilha cozida com cubos de tofu defumado",
+  "descricao": "Lentilha nutritiva, símbolo de prosperidade.",
   "ingredientes": [
     "lentilha",
     "tofu",
     "tomate sem pele",
     "cebola ",
     "curry indiano",
-    "sementes de coentro"
+    "sementes de coentro",
+    "água",
+    "sal",
+    "alho",
+    "cebola"
   ],
-  "tecnica": "Cozimento tradicional",
   "beneficios": [
     "Rico em proteínas vegetais e fibras, promovendo a saciedade.",
     "Fonte de ferro e outros minerais essenciais.",
     "Livre de colesterol e de fácil digestão.",
-    "O curry indiano e as sementes de coentro adicionam propriedades antioxidantes e anti-inflamatórias."
+    "O curry indiano e as sementes de coentro adicionam propriedades antioxidantes e anti-inflamatórias.",
+    "Alta proteína vegetal",
+    "Rico em ferro",
+    "Fibras"
   ],
   "riscos": [
-    "Pode conter sódio dependendo do preparo do tofu."
+    "Pode conter sódio dependendo do preparo do tofu.",
+    "Pode causar gases"
   ],
-  "contem_gluten": false,
   "nutricao": {
     "calorias": "110 kcal",
     "proteinas": "8g",
     "carboidratos": "15g",
-    "gorduras": "3g",
-    "fibras": "6g"
+    "gorduras": "3g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T15:13:08.325000",
-  "alerta_saude": null,
-  "beneficio_principal": "Maior teor de proteína entre as leguminosas (9g/100g cozida). Rica em ferro (3.3mg) - mais que a carne bovina!",
-  "curiosidade_cientifica": "A lentilha tem índice glicêmico muito baixo (29) - libera energia lentamente por até 4 horas",
-  "referencia_pesquisa": "Tabela TACO - UNICAMP",
+  "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true,
+  "tecnica": "Cozida",
   "indice_glicemico": "baixo",
   "tempo_digestao": "3 horas",
   "melhor_horario": "Almoço",
@@ -48,8 +49,5 @@
     "Legumes"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱",
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": true
+  "category_emoji": "🌱"
 }
