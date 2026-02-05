@@ -5,27 +5,31 @@
     "carne moída",
     "trigo para kibe",
     "cebola",
-    "hortelã"
+    "hortelã",
+    "mussarela"
   ],
-  "descricao": "Kibe árabe tradicional.",
+  "descricao": "Kibe árabe tradicional recheado com mussarela",
   "beneficios": [
-    "Rico em proteínas",
-    "Ferro"
+    "Fonte de proteína da carne, importante para a construção e reparo dos tecidos.",
+    "O trigo para kibe contribui com fibras, auxiliando na saúde intestinal.",
+    "A cebola e a hortelã adicionam nutrientes e antioxidantes."
   ],
   "riscos": [
-    "Contém glúten"
+    "Alto teor de gordura, dependendo da carne utilizada e da forma de preparo.",
+    "Pode ser calórico devido ao teor de gordura e ingredientes como a mussarela."
   ],
   "curiosidade": "O kibe é um prato de origem árabe, muito popular no Brasil, especialmente em festas e eventos.",
   "slug": "Kiberecheado",
   "nutricao": {
-    "calorias": "200 kcal",
-    "proteinas": "12g",
-    "carboidratos": "15g",
-    "gorduras": "10g"
+    "calorias": "280 kcal",
+    "proteinas": "15g",
+    "carboidratos": "20g",
+    "gorduras": "15g",
+    "fibras": "4g"
   },
   "category_emoji": "🍖",
   "contem_gluten": true,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

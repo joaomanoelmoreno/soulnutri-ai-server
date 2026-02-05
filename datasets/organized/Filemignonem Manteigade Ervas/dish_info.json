@@ -1,28 +1,32 @@
 {
-  "nome": "Filemignonemmanteigadeervas",
+  "nome": "File Mignon em Manteiga de Ervas",
   "slug": "Filemignonem Manteigade Ervas",
   "categoria": "proteína animal",
   "category_emoji": "🍖",
   "ingredientes": [
     "filé mignon",
-    "sal",
-    "pimenta",
-    "manteiga"
+    "manteiga",
+    "ervas secas"
   ],
   "beneficios": [
-    "Proteína nobre",
-    "Ferro",
-    "Macio"
+    "Fonte de proteína de alta qualidade, essencial para a construção e reparo dos tecidos do corpo.",
+    "Rico em ferro, importante para a prevenção da anemia.",
+    "Contém vitaminas do complexo B, que auxiliam no metabolismo energético e na saúde do sistema nervoso.",
+    "A manteiga de ervas adiciona sabor e pode fornecer antioxidantes das ervas."
   ],
-  "riscos": [],
+  "riscos": [
+    "Alto teor de gordura saturada proveniente da manteiga, que pode aumentar o colesterol LDL.",
+    "Consumo excessivo de carne vermelha pode estar associado a um maior risco de doenças cardiovasculares."
+  ],
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "26g",
+    "calorias": "280 kcal",
+    "proteinas": "28g",
     "carboidratos": "0g",
-    "gorduras": "8g"
+    "gorduras": "18g",
+    "fibras": "0g"
   },
   "tecnica": "Grelhado ou selado",
-  "descricao": "Filé mignon macio e suculento.",
+  "descricao": "Filé mignon macio e suculento grelhado ao molhode mateiga de ervas",
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,
@@ -33,5 +37,8 @@
     "Arroz",
     "Salada"
   ],
-  "evitar_com": []
+  "evitar_com": [],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

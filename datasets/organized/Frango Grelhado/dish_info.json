@@ -6,8 +6,14 @@
   "ingredientes": [
     "Peito de frango sem pele"
   ],
-  "beneficios": [],
-  "riscos": [],
+  "beneficios": [
+    "Proteína magra de alta qualidade",
+    "Rico em vitaminas B",
+    "Baixo teor de gordura"
+  ],
+  "riscos": [
+    "Verificar procedência"
+  ],
   "nutricao": {
     "calorias": "159 kcal",
     "proteinas": "32.0g",
@@ -21,6 +27,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🍗"
+  "tecnica": "Grelhado ou assado",
+  "category_emoji": "🍖",
+  "indice_glicemico": "zero",
+  "tempo_digestao": "3-4 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Saladas",
+    "Legumes"
+  ],
+  "evitar_com": [
+    "Frituras"
+  ]
 }

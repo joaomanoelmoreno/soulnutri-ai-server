@@ -1,7 +1,7 @@
 {
   "slug": "Fígado Abolado",
   "nome": "Fígado Acebolado",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "descricao": "Figado bovino grelhado com cebolas",
   "ingredientes": [
     "",
@@ -33,6 +33,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥬",
+  "category_emoji": "🥩",
   "tecnica": ""
 }

@@ -1,29 +1,33 @@
 {
-  "nome": "Ham Camarao com Carne Suina",
+  "nome": "Hamburger de Camarao e Pernil",
   "slug": "Ham Camarao com Carne Suina",
   "categoria": "proteína animal",
   "ingredientes": [
-    "carne bovina",
-    "sal",
-    "temperos"
+    "camarao",
+    "pernil suino",
+    "oleo de gergelim",
+    "gengibre",
+    "alho"
   ],
   "beneficios": [
-    "Proteína completa",
-    "Ferro heme",
-    "Vitamina B12",
-    "Zinco"
+    "Fonte de proteína de alta qualidade (camarão e pernil).",
+    "O camarão é rico em selênio e vitamina B12.",
+    "O gengibre e o alho possuem propriedades antioxidantes e anti-inflamatórias."
   ],
   "riscos": [
-    "Gordura saturada"
+    "Alto teor de sódio (principalmente se temperado com molhos prontos ou sal em excesso).",
+    "Pode ser rico em gorduras saturadas dependendo da forma de preparo do pernil.",
+    "Potenciais alergênicos (camarão)."
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "26g",
-    "carboidratos": "0g",
-    "gorduras": "15g"
+    "calorias": "220 kcal",
+    "proteinas": "15g",
+    "carboidratos": "10g",
+    "gorduras": "12g",
+    "fibras": "1g"
   },
   "tecnica": "Grelhado ou assado",
-  "descricao": "Carne bovina, fonte de proteína e ferro.",
+  "descricao": "Camarao e pernil suino temperados e grelhado",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -37,5 +41,8 @@
   "evitar_com": [
     "Outras gorduras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false
 }

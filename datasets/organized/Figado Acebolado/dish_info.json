@@ -1,7 +1,7 @@
 {
-  "nome": "Kafta",
-  "slug": "Kafta",
-  "categoria": "proteína animal",
+  "nome": "Figado Acebolado",
+  "slug": "Figado Acebolado",
+  "categoria": "vegano",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -14,14 +14,5 @@
     "carboidratos": "~18g",
     "gorduras": "~2g"
   },
-  "category_emoji": "🍖",
-  "descricao": "espetinho de carne moida bovina",
-  "ingredientes": [
-    "Carne moida bovina",
-    "hortela",
-    "alho"
-  ],
-  "beneficios": [],
-  "riscos": [],
-  "tecnica": ""
+  "category_emoji": "🌱"
 }

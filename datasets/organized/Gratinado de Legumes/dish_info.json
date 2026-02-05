@@ -1,36 +1,41 @@
 {
-  "nome": "Alho Poro Gratinado",
   "slug": "Gratinado de Legumes",
+  "nome": "Alho Poro Gratinado",
   "categoria": "vegano",
+  "descricao": " Alho poro ao creme vegano gratinado",
   "ingredientes": [
     "alho poro",
     "creme vegetal",
-    "queijo vegano"
+    "queijo vegano",
+    "couve-flor",
+    "sal"
   ],
-  "descricao": " Alho poro ao creme vegano gratinado",
   "beneficios": [
     "Fonte de fibras, que auxiliam na saúde intestinal.",
     "Rico em vitaminas e minerais provenientes do alho-poró.",
     "Opção vegana saborosa e nutritiva.",
-    "O alho-poró possui propriedades antioxidantes."
+    "O alho-poró possui propriedades antioxidantes.",
+    "Rica em vitaminas e minerais provenientes dos legumes.",
+    "Baixo teor calórico, auxiliando no controle de peso.",
+    "Boa fonte de fibras, que contribuem para a saúde digestiva.",
+    "Promove a saciedade."
   ],
   "riscos": [
     "Pode ser rico em gorduras, dependendo da quantidade de creme vegetal utilizada.",
-    "Verificar a quantidade de sódio no queijo vegano."
+    "Verificar a quantidade de sódio no queijo vegano.",
+    "Pode conter alto teor de sódio dependendo da quantidade de sal adicionada."
   ],
   "nutricao": {
     "calorias": "180 kcal",
     "proteinas": "4g",
     "carboidratos": "10g",
-    "gorduras": "14g",
-    "fibras": "2g"
+    "gorduras": "14g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🥬",
   "contem_ovo": false,
   "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "category_emoji": "🌱"
 }

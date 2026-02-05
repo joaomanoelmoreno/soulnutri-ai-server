@@ -1,32 +1,33 @@
 {
   "slug": "Lentilhacomtofu",
-  "nome": "Lentilha com Tofu",
+  "nome": "Lentilha com Tofu Defumado",
   "categoria": "vegano",
-  "descricao": "Lentilha cozida com cubos de tofu temperado com especiarias indianas importadas",
+  "descricao": "Lentilha cozida com cubos de tofu defumado",
   "ingredientes": [
     "lentilha",
     "tofu",
     "tomate sem pele",
-    "cebola orgânica",
-    "curry indiano importado",
-    "coentro orgânico"
+    "cebola ",
+    "curry indiano",
+    "sementes de coentro"
   ],
   "tecnica": "Cozimento tradicional",
   "beneficios": [
-    "Proteína completa: lentilha + tofu",
-    "Ferro: essencial para energia",
-    "Isoflavonas do tofu: equilíbrio hormonal"
+    "Rico em proteínas vegetais e fibras, promovendo a saciedade.",
+    "Fonte de ferro e outros minerais essenciais.",
+    "Livre de colesterol e de fácil digestão.",
+    "O curry indiano e as sementes de coentro adicionam propriedades antioxidantes e anti-inflamatórias."
   ],
   "riscos": [
-    "Pode conter traços de glúten",
-    "Alérgeno: soja"
+    "Pode conter sódio dependendo do preparo do tofu."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "77 kcal",
-    "proteinas": "5g",
-    "carboidratos": "14g",
-    "gorduras": "0.5g"
+    "calorias": "110 kcal",
+    "proteinas": "8g",
+    "carboidratos": "15g",
+    "gorduras": "3g",
+    "fibras": "6g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -47,5 +48,8 @@
     "Legumes"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": true
 }
