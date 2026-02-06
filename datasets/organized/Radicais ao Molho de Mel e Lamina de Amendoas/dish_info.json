@@ -1,36 +1,39 @@
 {
   "slug": "Radicais ao Molho de Mel e Lamina de Amendoas",
   "ativo": true,
-  "beneficios": [],
-  "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "contem_gluten": true,
-  "created_at": "2026-01-24T14:31:19.488000",
-  "descricao": "Barquetes de massa folhada com recheio de mel, rúcula e lâminas de amêndoas.",
-  "ingredientes": [
-    "Massa folhada",
-    "Mel",
-    "Amêndoas",
-    "Rúcula",
-    "Pimentão"
+  "beneficios": [
+    "Rico em antioxidantes, devido ao radicchio e ao balsâmico.",
+    "Fonte de fibras, que auxiliam na saúde digestiva.",
+    "As amêndoas fornecem gorduras saudáveis e vitamina E."
   ],
-  "nome": "Radicais ao molho de mel e lamina de amendoas",
+  "categoria": "vegano",
+  "category_emoji": "🌱",
+  "contem_gluten": false,
+  "created_at": "2026-01-24T14:31:19.488000",
+  "descricao": "sala de Radichio ao mel com amendos e balsamico",
+  "ingredientes": [
+    "Radichio",
+    "mel",
+    "amendoas",
+    "balsamico",
+    "temperos especiais"
+  ],
+  "nome": "Radichio ao mel e amendoas",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "180 kcal",
+    "proteinas": "4g",
+    "carboidratos": "20g",
+    "gorduras": "10g",
+    "fibras": "3g"
   },
   "origem": "user_created",
   "riscos": [
-    "Alérgeno: Amêndoas",
-    "Alérgeno: GLÚTEN (massa)",
-    "Alérgeno: NOZES (amêndoa, amendoa)"
+    "O mel, apesar de natural, é rico em açúcares e deve ser consumido com moderação."
   ],
   "tecnica": "",
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_castanhas": false,
+  "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false
 }

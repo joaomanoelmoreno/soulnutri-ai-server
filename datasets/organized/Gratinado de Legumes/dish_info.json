@@ -8,34 +8,34 @@
     "creme vegetal",
     "queijo vegano",
     "couve-flor",
-    "sal"
+    "sal",
+    "alho ",
+    "cebola",
+    "ervas secas"
   ],
   "beneficios": [
-    "Fonte de fibras, que auxiliam na saúde intestinal.",
-    "Rico em vitaminas e minerais provenientes do alho-poró.",
-    "Opção vegana saborosa e nutritiva.",
-    "O alho-poró possui propriedades antioxidantes.",
-    "Rica em vitaminas e minerais provenientes dos legumes.",
-    "Baixo teor calórico, auxiliando no controle de peso.",
-    "Boa fonte de fibras, que contribuem para a saúde digestiva.",
-    "Promove a saciedade."
+    "Rico em vitaminas e minerais provenientes dos vegetais.",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "Opção leve e saborosa, com baixo teor de colesterol.",
+    "Adequado para dietas veganas e vegetarianas."
   ],
   "riscos": [
-    "Pode ser rico em gorduras, dependendo da quantidade de creme vegetal utilizada.",
-    "Verificar a quantidade de sódio no queijo vegano.",
-    "Pode conter alto teor de sódio dependendo da quantidade de sal adicionada."
+    "Pode conter alto teor de sódio dependendo da quantidade de sal adicionada.",
+    "Verificar a qualidade do creme vegetal e queijo vegano quanto a ingredientes e aditivos."
   ],
   "nutricao": {
-    "calorias": "180 kcal",
+    "calorias": "160 kcal",
     "proteinas": "4g",
-    "carboidratos": "10g",
-    "gorduras": "14g"
+    "carboidratos": "12g",
+    "gorduras": "10g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_castanhas": true,
+  "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
+  "tecnica": "",
   "category_emoji": "🌱"
 }

@@ -1,30 +1,36 @@
 {
-  "nome": "Quiche de Alho Poro",
+  "nome": "Quiche (alho poro, loraine, tomate seco)",
   "slug": "Quiche de Alho Poro",
-  "categoria": "vegetariano",
+  "categoria": "proteína animal",
   "ingredientes": [
-    "massa folhada",
+    "farinha de trigo",
+    "manteiga",
     "ovos",
     "creme de leite",
-    "queijo"
+    "queijos sortidos",
+    "tomate",
+    "bacon"
   ],
   "beneficios": [
-    "Proteínas do ovo",
-    "Refeição completa"
+    "Fonte de cálcio (devido aos queijos).",
+    "Pode ser uma fonte de proteínas (do ovo e bacon).",
+    "Ovos e laticínios fornecem vitaminas do complexo B.",
+    "O tomate seco pode adicionar antioxidantes."
   ],
   "riscos": [
-    "Contém glúten",
-    "Contém lactose",
-    "Contém ovo"
+    "Alto teor de gordura saturada devido à manteiga, creme de leite e bacon.",
+    "Alto teor de sódio dependendo dos queijos e do bacon.",
+    "Contém glúten (da farinha de trigo)."
   ],
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "8g",
-    "carboidratos": "18g",
-    "gorduras": "16g"
+    "calorias": "320 kcal",
+    "proteinas": "12g",
+    "carboidratos": "20g",
+    "gorduras": "22g",
+    "fibras": "1g"
   },
   "tecnica": "Assada em forno",
-  "descricao": "Torta salgada francesa cremosa.",
+  "descricao": "Quiche com varios tipos de recehio",
   "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": true,
@@ -37,5 +43,8 @@
   "evitar_com": [
     "Outras massas"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,6 +1,8 @@
 {
+  "slug": "Purede Mandioquinha",
   "nome": "Pure de Mandioquinha",
   "categoria": "vegano",
+  "descricao": "Mandioquinha cremosa e nutritiva.",
   "ingredientes": [
     "mandioquinha",
     "sal",
@@ -9,7 +11,6 @@
     "cebola",
     "legumes"
   ],
-  "descricao": "Mandioquinha cremosa e nutritiva.",
   "beneficios": [
     "Fonte de energia devido aos carboidratos.",
     "Rico em fibras, auxiliando na saúde digestiva.",
@@ -20,20 +21,19 @@
     "Pode ser calórico dependendo da quantidade de leite de coco utilizada.",
     "O consumo excessivo pode levar ao ganho de peso."
   ],
-  "curiosidade": "A mandioquinha, também conhecida como batata baroa, é um tubérculo nativo da América do Sul, rico em vitaminas e minerais.",
-  "slug": "Purede Mandioquinha",
   "nutricao": {
     "calorias": "110 kcal",
     "proteinas": "1g",
     "carboidratos": "18g",
-    "gorduras": "4g",
-    "fibras": "2g"
+    "gorduras": "4g"
   },
-  "category_emoji": "🌱",
-  "tecnica": "Cozida ou como purê",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozida ou como purê",
   "indice_glicemico": "moderado",
   "tempo_digestao": "2 horas",
   "melhor_horario": "Almoço",
@@ -42,7 +42,5 @@
     "Purê"
   ],
   "evitar_com": [],
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🥬"
 }

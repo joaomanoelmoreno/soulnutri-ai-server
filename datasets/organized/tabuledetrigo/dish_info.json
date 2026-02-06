@@ -35,5 +35,15 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Crua",
+  "indice_glicemico": "baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Kibe",
+    "Carnes grelhadas"
+  ],
+  "evitar_com": [],
+  "category_emoji": "🌱"
 }

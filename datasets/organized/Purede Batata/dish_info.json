@@ -1,35 +1,33 @@
 {
   "slug": "Purede Batata",
-  "nome": "Pure de Batata",
-  "categoria": "vegetariano",
-  "descricao": "Batata preparada de forma saudável.",
+  "nome": "Pure de Batata Doce",
+  "categoria": "vegano",
+  "descricao": "Batata doce em pure",
   "ingredientes": [
-    "batata",
+    "batata doce",
+    "leite de coco",
     "sal",
-    "leite ",
     "alho"
   ],
   "beneficios": [
-    "Fonte de carboidratos para energia.",
-    "Contém potássio, importante para a saúde muscular e nervosa.",
-    "Pode auxiliar na saciedade devido ao teor de fibras.",
-    "Fonte de potássio",
-    "Energia sustentada",
-    "Vitamina C"
+    "Fonte de vitamina A, importante para a saúde da visão e da pele.",
+    "Rico em antioxidantes, que combatem os radicais livres.",
+    "Possui baixo índice glicêmico, auxiliando no controle da glicemia.",
+    "Fonte de fibras, que contribuem para a saciedade e a saúde intestinal."
   ],
   "riscos": [
-    "Pode ser calórico dependendo da quantidade de leite utilizada.",
-    "O consumo excessivo pode levar ao ganho de peso.",
-    "Alto índice glicêmico se consumida sozinha"
+    "Consumir com moderação em caso de diabetes, devido ao teor de carboidratos.",
+    "O consumo excessivo pode causar desconforto abdominal em pessoas com sensibilidade a fibras."
   ],
   "nutricao": {
-    "calorias": "90 kcal",
-    "proteinas": "2g",
-    "carboidratos": "15g",
-    "gorduras": "2g"
+    "calorias": "95 kcal",
+    "proteinas": "1.5g",
+    "carboidratos": "18g",
+    "gorduras": "2g",
+    "fibras": "3g"
   },
   "contem_gluten": false,
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
@@ -45,5 +43,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

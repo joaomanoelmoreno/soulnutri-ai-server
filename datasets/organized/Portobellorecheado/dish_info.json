@@ -1,29 +1,36 @@
 {
   "slug": "Portobellorecheado",
-  "nome": "Portobello Recheado",
+  "nome": "Portobello Recheado com Legumes",
   "categoria": "vegano",
   "descricao": "Cogumelo portobello, substituto de carne.",
   "ingredientes": [
     "cogumelo portobello",
     "azeite",
     "alho",
-    "ervas"
+    "ervas",
+    "cenoura",
+    "batatas",
+    "abobrinha",
+    "queijo vegano",
+    "cebola"
   ],
   "beneficios": [
-    "Fonte de antioxidantes e vitaminas do complexo B.",
-    "Rico em fibras, auxiliando na saúde digestiva.",
-    "Baixo em calorias e gorduras.",
-    "Promove a saciedade."
+    "Baixas calorias",
+    "Proteína vegetal",
+    "Rico em minerais",
+    "Rico em fibras, que auxiliam na saciedade e na saúde intestinal.",
+    "Fonte de vitaminas e minerais provenientes dos legumes.",
+    "Baixo teor de gordura saturada, contribuindo para a saúde cardiovascular.",
+    "Opção leve e nutritiva para uma refeição."
   ],
   "riscos": [
-    "Pode conter traços de outros alimentos se preparado em ambiente compartilhado."
+    "Pode conter sódio dependendo da quantidade de sal utilizada no preparo."
   ],
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "3g",
-    "carboidratos": "7g",
-    "gorduras": "5g",
-    "fibras": "3g"
+    "calorias": "22 kcal",
+    "proteinas": "2g",
+    "carboidratos": "4g",
+    "gorduras": "0.4g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -40,11 +47,5 @@
     "Ervas"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱",
-  "_calorias_suspeitas": true,
-  "_calorias_estimadas": {
-    "min": 150,
-    "max": 300,
-    "tipico": 220
-  }
+  "category_emoji": "🌱"
 }

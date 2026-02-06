@@ -2,30 +2,32 @@
   "slug": "Molhovinagrete",
   "nome": "Molho Vinagrete",
   "categoria": "vegano",
-  "descricao": "Molho fresco de tomate sem pele, cebola orgânica e pimentão picados",
+  "descricao": "Molho fresco de tomate e cebola ",
   "ingredientes": [
-    "tomate sem pele",
-    "cebola orgânica",
-    "pimentão orgânico",
+    "tomate",
+    "cebola ",
     "vinagre",
     "azeite extravirgem",
-    "coentro orgânico"
+    ""
   ],
   "tecnica": "Preparo a frio",
   "beneficios": [
-    "Vitamina C: fortalece a imunidade",
-    "Licopeno: protetor cardiovascular",
-    "Baixíssimas calorias"
+    "Rico em antioxidantes (licopeno do tomate).",
+    "Fonte de vitaminas e minerais.",
+    "Promove a saúde cardiovascular.",
+    "Pode auxiliar na digestão."
   ],
   "riscos": [
-    "Pode conter traços de glúten"
+    "Consumo excessivo pode causar desconforto gástrico em algumas pessoas.",
+    "O vinagre pode irritar a mucosa gástrica em excesso."
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "80 kcal",
+    "proteinas": "1g",
+    "carboidratos": "5g",
+    "gorduras": "6g",
+    "fibras": "2g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -46,5 +48,8 @@
     "Feijão"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

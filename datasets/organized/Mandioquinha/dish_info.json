@@ -1,33 +1,41 @@
 {
   "slug": "Mandioquinha",
-  "ativo": true,
-  "beneficios": [
-    "Fonte de energia",
-    "Rico em potássio",
-    "Fácil digestão"
-  ],
-  "categoria": "vegano",
-  "category_emoji": "🥬",
-  "contem_gluten": false,
-  "created_at": "2026-01-27T14:36:59.513000",
-  "descricao": "Mandioquinha assada",
+  "nome": "Mandioquinha Assada",
+  "categoria": "vegetariano",
+  "descricao": "Mandioquinha assada em forno combinado com ervas frescas orgânicas",
   "ingredientes": [
-    ""
+    "mandioquinha",
+    "azeite extravirgem",
+    "alecrim orgânico",
+    "sal",
+    "Mandiquinha"
   ],
-  "nome": "Mandioquinha",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Digestão fácil: ideal para estômagos sensíveis",
+    "Potássio: regula pressão arterial",
+    "Naturalmente sem glúten",
+    "Fonte de energia devido aos carboidratos.",
+    "Rica em vitaminas do complexo B, importantes para o metabolismo.",
+    "Boa fonte de potássio, que auxilia na saúde muscular e controle da pressão arterial.",
+    "Contém fibras, que auxiliam na saúde digestiva."
+  ],
   "riscos": [
-    "Alérgeno: Pode conter traços de outros alimentos."
+    "Pode conter traços de glúten",
+    "Pode causar desconforto em pessoas com sensibilidade a amidos em excesso."
   ],
-  "tecnica": "Cozida ou como purê",
+  "nutricao": {
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "10g",
+    "gorduras": "0.5g"
+  },
+  "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozida ou como purê",
   "indice_glicemico": "moderado",
   "tempo_digestao": "2 horas",
   "melhor_horario": "Almoço",
@@ -36,7 +44,5 @@
     "Purê"
   ],
   "evitar_com": [],
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🥚"
 }

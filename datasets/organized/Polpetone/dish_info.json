@@ -1,36 +1,60 @@
 {
   "slug": "Polpetone",
-  "ativo": true,
-  "beneficios": [],
-  "categoria": "vegetariano",
-  "category_emoji": "🥚",
-  "contem_gluten": true,
-  "created_at": "2026-01-28T11:24:23.536000",
-  "descricao": "Nhoque com molho e possivelmente queijo.",
+  "nome": "Mini Polpetone",
+  "categoria": "proteína animal",
+  "descricao": "Minipolpetones recheados com queijo, cobertos com molho de tomate e gratinados com queijo. Decorados com cebolinha picada. O modo de preparo parece ser assado, possivelmente no forno.",
   "ingredientes": [
-    "batata",
-    "farinha",
+    "carne moida",
+    "farinha de trigo",
+    "fraina de rosca",
     "ovo",
-    "queijo"
+    "queijo",
+    "ervas secas",
+    "carne moída fresca",
+    "queijo mussarela",
+    "farinha (uso controlado)",
+    "molho de tomate artesanal",
+    "Carne",
+    "Tomate",
+    "Carne moída",
+    "Queijo mussarela e parmesaao",
+    "Molho de tomate",
+    "farinha de rosca"
   ],
-  "nome": "Polpetone",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
+  "beneficios": [
+    "Fonte de proteína para construção e reparo muscular.",
+    "Contém nutrientes essenciais da carne, como ferro e zinco.",
+    "Pode ser uma opção saborosa para incluir carne na dieta.",
+    "Proteína completa: carne + queijo",
+    "Cálcio do queijo: saúde óssea",
+    "Licopeno do molho: antioxidante",
+    "Fonte de proteína da carne, essencial para a construção e reparação muscular.",
+    "O molho de tomate fornece licopeno, um antioxidante benéfico para a saúde.",
+    "O queijo oferece cálcio, importante para a saúde óssea."
+  ],
   "riscos": [
-    "Alérgeno: Glúten, ovo, lactose",
-    "Alérgeno: GLÚTEN (farinha)",
-    "Alérgeno: LACTOSE (queijo)",
-    "Alérgeno: OVO (ovo)"
+    "Alto teor de gordura, dependendo da carne utilizada.",
+    "Pode conter alto teor de sódio se temperado com ingredientes processados.",
+    "Fritura pode aumentar o valor calórico e a quantidade de gordura.",
+    "Contém glúten",
+    "Alérgeno: ovo",
+    "Contém lactose",
+    "Alto teor de gordura, especialmente se a carne for muito gorda e o prato for frito.",
+    "Pode ser rico em sódio devido ao queijo e ao molho de tomate.",
+    "Contém carboidratos refinados provenientes da farinha de trigo e farinha de rosca."
   ],
-  "tecnica": "",
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "nutricao": {
+    "calorias": "240 kcal",
+    "proteinas": "15g",
+    "carboidratos": "18g",
+    "gorduras": "12g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "category_emoji": "🥩",
+  "tecnica": ""
 }

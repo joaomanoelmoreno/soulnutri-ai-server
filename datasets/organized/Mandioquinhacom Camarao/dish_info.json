@@ -5,13 +5,16 @@
   "descricao": "Purê de mandioquinha artesanal com camarões frescos salteados em azeite",
   "ingredientes": [
     "mandioquinha",
+    "sal",
     "camarão fresco",
     "alho orgânico",
     "manteiga fresca",
     "salsinha orgânica"
   ],
-  "tecnica": "Purê artesanal + camarão salteado em azeite",
   "beneficios": [
+    "Fonte de energia",
+    "Rico em potássio",
+    "Fácil digestão",
     "Proteína do camarão: baixa caloria",
     "Selênio: antioxidante poderoso",
     "Iodo: saúde da tireoide"
@@ -21,24 +24,19 @@
     "Contém lactose",
     "Pode conter traços de glúten"
   ],
-  "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "90 kcal",
+    "proteinas": "1g",
+    "carboidratos": "21g",
+    "gorduras": "0.2g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T15:13:08.325000",
-  "alerta_saude": "Alérgeno: Contém CRUSTÁCEOS. Camarão de cativeiro pode conter antibióticos - prefira selvagem ou certificado",
-  "beneficio_principal": "Rico em astaxantina (pigmento rosa) - antioxidante 6000x mais potente que vitamina C, protege pele contra raios UV",
-  "curiosidade_cientifica": "O camarão tem mais proteína (24g/100g) e menos gordura (0.3g) que frango - excelente para dietas",
-  "referencia_pesquisa": "Marine Drugs Journal, 2020",
+  "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozida ou como purê",
   "indice_glicemico": "moderado",
   "tempo_digestao": "2 horas",
   "melhor_horario": "Almoço",
@@ -47,8 +45,5 @@
     "Purê"
   ],
   "evitar_com": [],
-  "category_emoji": "🥩",
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🍖"
 }

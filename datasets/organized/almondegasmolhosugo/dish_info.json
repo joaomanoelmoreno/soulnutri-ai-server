@@ -1,37 +1,37 @@
 {
   "slug": "almondegasmolhosugo",
-  "nome": "Almôndegas ao Molho Sugo",
+  "nome": "Almondegas ao Molho Sugo",
   "categoria": "proteína animal",
   "descricao": "Almôndegas de carne bovina fresca ao molho de tomate artesanal feito em nossa cozinha",
   "ingredientes": [
-    "carne bovina fresca",
-    "cebola orgânica",
-    "alho orgânico",
-    "ovo",
-    "farinha (uso controlado)",
-    "molho de tomate artesanal",
     "carne moída",
     "cebola",
     "alho",
-    "farinha de rosca"
+    "ovo",
+    "farinha de rosca",
+    "carne bovina fresca",
+    "cebola orgânica",
+    "alho orgânico",
+    "farinha (uso controlado)",
+    "molho de tomate artesanal"
   ],
   "beneficios": [
+    "Rica em proteínas",
+    "Fonte de ferro",
     "Proteína de alto valor biológico: construção muscular",
     "Ferro heme: absorção 3x maior que ferro vegetal",
-    "Vitaminas B12: essencial para sistema nervoso",
-    "Rica em proteínas",
-    "Fonte de ferro"
+    "Vitaminas B12: essencial para sistema nervoso"
   ],
   "riscos": [
     "Contém glúten",
-    "Alérgeno: ovo",
-    "Contém ovo"
+    "Contém ovo",
+    "Alérgeno: ovo"
   ],
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
+    "calorias": "220 kcal",
+    "proteinas": "15g",
     "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "gorduras": "14g"
   },
   "contem_gluten": true,
   "contem_lactose": false,

@@ -1,17 +1,15 @@
 {
   "slug": "Pernilde Cordeiro",
-  "nome": "Pernil de cordeiro",
+  "nome": "Pernil de Cordeiro",
   "categoria": "proteína animal",
-  "descricao": "Pernil de cordeiro fresco braseado com ervas frescas orgânicas",
+  "descricao": "Pernil de cordeiro braseado ao vinho com hortela",
   "ingredientes": [
-    "carne",
+    "carne de corderio",
     "temperos",
-    "óleo",
-    "pernil de cordeiro fresco",
-    "alecrim orgânico",
-    "alho orgânico",
+    "alho ",
+    "hortela",
     "vinho",
-    "azeite extravirgem"
+    ""
   ],
   "beneficios": [
     "Proteína de alta qualidade",

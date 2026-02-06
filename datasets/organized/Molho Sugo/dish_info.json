@@ -1,29 +1,30 @@
 {
-  "nome": "Molhosugo",
+  "nome": "Molho Sugo",
   "categoria": "vegano",
   "ingredientes": [
-    "Tomate (ingrediente principal, provavelmente processado em molho)",
-    "Possível adição de cebola e alho (ingredientes base em molhos)",
-    "Possível adição de azeite de oliva",
-    "Sal e especiarias (para temperar)"
+    "Tomate ",
+    "cebola",
+    "alho",
+    "louro"
   ],
-  "descricao": "Molho de tomate cozido, de textura homogênea e cor avermelhada, servido em recipiente próprio para buffet. O preparo envolve o cozimento dos tomates, podendo incluir outros ingredientes como cebola, alho e temperos, resultando em um molho saboroso e versátil.",
+  "descricao": "Molho de tomate cozido",
   "beneficios": [
-    "Fonte de licopeno, um antioxidante associado à saúde cardiovascular e proteção contra certos tipos de câncer.",
-    "Pode conter vitamina C e outros nutrientes, dependendo dos ingredientes adicionados."
+    "Rico em antioxidantes (licopeno do tomate).",
+    "Fonte de vitaminas e minerais (A e C).",
+    "Baixo em calorias e gorduras.",
+    "Pode auxiliar na saúde cardiovascular."
   ],
   "riscos": [
-    "Pode conter sódio em excesso, dependendo da quantidade de sal adicionada.",
-    "Pode conter açúcar adicionado, dependendo da receita.",
-    "Alérgeno: Pode conter traços de outros ingredientes utilizados na preparação."
+    "Pode causar azia em pessoas sensíveis a acidez do tomate."
   ],
   "curiosidade": "O licopeno, presente em abundância no tomate cozido, é melhor absorvido pelo organismo quando o tomate é cozido em óleo.",
   "slug": "Molho Sugo",
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "50 kcal",
+    "proteinas": "2g",
+    "carboidratos": "8g",
+    "gorduras": "1g",
+    "fibras": "2g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -31,5 +32,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

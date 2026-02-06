@@ -42,5 +42,16 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": true,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Frito",
+  "indice_glicemico": "alto",
+  "tempo_digestao": "3 horas",
+  "melhor_horario": "Entrada ou lanche",
+  "combina_com": [
+    "Molhos"
+  ],
+  "evitar_com": [
+    "Outras frituras"
+  ],
+  "category_emoji": "🍖"
 }

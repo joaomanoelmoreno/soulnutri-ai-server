@@ -47,7 +47,7 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "contem_castanhas": true,
+  "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false
 }

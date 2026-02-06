@@ -34,5 +34,17 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": "Crua",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "1-2 horas",
+  "melhor_horario": "Qualquer",
+  "combina_com": [
+    "Proteínas",
+    "Azeite"
+  ],
+  "evitar_com": [
+    "Molhos calóricos"
+  ],
+  "category_emoji": "🥚"
 }

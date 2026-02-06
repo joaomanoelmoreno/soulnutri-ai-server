@@ -1,37 +1,40 @@
 {
-  "nome": "Mousse de Limão",
   "slug": "moussedelimão",
+  "nome": "Mousse de Limão",
   "categoria": "vegetariano",
-  "contem_gluten": false,
-  "contem_lactose": true,
-  "contem_ovo": false,
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false,
-  "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "3g",
-    "carboidratos": "25g",
-    "gorduras": "12g",
-    "fibras": "0g"
-  },
-  "category_emoji": "🥚",
   "descricao": "mousse cremoso de sabor citrico",
   "ingredientes": [
     "leite",
     "gelatina",
     "creme de leite",
     "limao",
-    "acucar"
+    "acucar",
+    "leite condensado"
   ],
   "beneficios": [
     "Fonte de vitamina C do limão, que auxilia na imunidade.",
     "Pode ser uma sobremesa refrescante.",
-    "O limão possui antioxidantes que combatem radicais livres."
+    "O limão possui antioxidantes que combatem radicais livres.",
+    "Rico em cálcio proveniente do creme de leite, importante para a saúde óssea.",
+    "Sabor refrescante e agradável."
   ],
   "riscos": [
     "Alto teor de açúcar.",
-    "Rico em gorduras saturadas provenientes do creme de leite."
+    "Rico em gorduras saturadas provenientes do creme de leite.",
+    "Alto teor de açúcar devido ao leite condensado.",
+    "Consumir com moderação devido ao alto valor calórico."
   ],
-  "tecnica": ""
+  "nutricao": {
+    "calorias": "220 kcal",
+    "proteinas": "3g",
+    "carboidratos": "25g",
+    "gorduras": "12g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🥚"
 }

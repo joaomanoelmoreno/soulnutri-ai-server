@@ -1,25 +1,31 @@
 {
-  "nome": "Molhoparaorolinho",
+  "nome": "Molho para Rolinho",
   "categoria": "vegano",
   "ingredientes": [
-    "Palitos de molho",
-    "Recipiente de vidro"
+    "shoyu",
+    "vinagre de arroz",
+    "gengibre",
+    "alhos"
   ],
-  "descricao": "Conjunto de palitos individuais, provavelmente para degustação de molho. Os palitos estão dentro de um recipiente de vidro.",
+  "descricao": "Molho a base de shoyu",
   "beneficios": [
-    "Praticidade: ideal para consumo individual e evitar contaminação.",
-    "Higiene: embalados individualmente garantem segurança."
+    "Fonte de antioxidantes (gengibre).",
+    "Pode auxiliar na digestão (gengibre).",
+    "Baixo em calorias (em porções moderadas).",
+    "Sabor intenso, agregando sabor aos pratos."
   ],
   "riscos": [
-    "Desconhecidos: a composição do molho e dos palitos não são visíveis."
+    "Excesso de sódio (shoyu).",
+    "Pode conter açúcar adicionado (verificar rótulo)."
   ],
   "curiosidade": "Palitos individuais são uma solução prática para diversas preparações, como molhos, sobremesas e aperitivos.",
   "slug": "Molhoparao Rolinho",
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "70 kcal",
+    "proteinas": "2g",
+    "carboidratos": "12g",
+    "gorduras": "1g",
+    "fibras": "1g"
   },
   "category_emoji": "🌱",
   "contem_gluten": false,
@@ -27,5 +33,6 @@
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

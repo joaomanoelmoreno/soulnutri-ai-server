@@ -1,5 +1,5 @@
 {
-  "nome": "Ceviche de Bana da Terra",
+  "nome": "Ceviche de Banana da Terra",
   "slug": "Ceviche de Bana da Terra",
   "categoria": "vegano",
   "contem_gluten": false,
@@ -9,10 +9,29 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "80 kcal",
+    "proteinas": "1g",
+    "carboidratos": "18g",
+    "gorduras": "0g",
+    "fibras": "2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "descricao": "banana da terra em laminas marinadas e servidas com ervas",
+  "ingredientes": [
+    "banana da terra",
+    "cebola",
+    "limao",
+    "pimenta de do de moca",
+    "cebolniha"
+  ],
+  "beneficios": [
+    "Rico em potássio, importante para a saúde muscular e nervosa.",
+    "Fonte de fibras, que auxiliam na digestão e promovem a saciedade.",
+    "Contém vitamina C, que fortalece o sistema imunológico.",
+    "Baixo em gorduras, contribuindo para uma dieta equilibrada."
+  ],
+  "riscos": [
+    "Pode conter alto teor de sódio dependendo da quantidade de sal adicionada."
+  ],
+  "tecnica": ""
 }
