@@ -1,46 +1,57 @@
 {
-  "nome": "Feijoada",
+  "slug": "Feijoada",
+  "nome": "Feijao Carioca com Carne",
   "categoria": "proteína animal",
+  "descricao": "Feijão cozido, base da alimentação brasileira.",
   "ingredientes": [
-    "feijão preto",
+    "feijão",
+    "água",
+    "sal",
+    "alho",
+    "cebola",
+    "louro",
+    "feijão carioca",
     "carne seca",
     "linguiça",
     "costela",
     "bacon"
   ],
-  "descricao": "Feijoada tradicional brasileira.",
   "beneficios": [
+    "Rico em proteína vegetal",
+    "Alto teor de ferro",
+    "Fibras para saciedade",
     "Rica em proteínas",
     "Ferro",
     "Prato completo"
   ],
   "riscos": [
+    "Pode causar gases intestinais",
     "Alto teor de sódio",
     "Gordura elevada"
   ],
-  "curiosidade": "A feijoada é um prato tipicamente brasileiro, mas sua origem é controversa. Acredita-se que tenha surgido nos engenhos de cana-de-açúcar, onde os escravos aproveitavam as sobras do porco para preparar um cozido.",
-  "slug": "Feijoada",
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "15g",
-    "carboidratos": "18g",
-    "gorduras": "14g"
+    "calorias": "77 kcal",
+    "proteinas": "5g",
+    "carboidratos": "14g",
+    "gorduras": "0.5g"
   },
-  "category_emoji": "🍖",
-  "tecnica": "Cozimento lento",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozimento lento",
+  "category_emoji": "🍖",
   "indice_glicemico": "baixo",
-  "tempo_digestao": "4-5 horas",
+  "tempo_digestao": "3-4 horas",
   "melhor_horario": "Almoço",
   "combina_com": [
     "Arroz",
     "Couve",
-    "Farofa",
-    "Laranja"
+    "Farofa"
   ],
   "evitar_com": [
-    "Outras carnes gordurosas"
+    "Excesso de embutidos"
   ]
 }

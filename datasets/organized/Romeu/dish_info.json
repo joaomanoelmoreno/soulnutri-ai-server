@@ -1,34 +1,39 @@
 {
+  "slug": "Romeu",
   "nome": "Requeijao",
   "categoria": "vegetariano",
+  "descricao": "O requeijão é um queijo fresco cremoso, feito a partir do soro do leite (do processo de fabricação de outros queijos) ou do leite integral. O produto é cozido e depois coalhado com ácido cítrico ou vinagre, resultando em sua consistência cremosa.",
   "ingredientes": [
+    "Leite",
+    "Coalho",
+    "Cultura láctea",
+    "Sal",
     "queijos"
   ],
-  "descricao": "\nRequeijao de textura cremosa",
   "beneficios": [
+    "Fonte de proteínas, importantes para a construção e reparação dos tecidos do corpo.",
+    "Rico em cálcio, essencial para a saúde dos ossos e dentes.",
     "Fonte de cálcio, importante para a saúde óssea.",
     "Contém proteínas, que auxiliam na construção e reparação dos tecidos do corpo.",
     "Pode ser consumido como parte de uma dieta equilibrada para fornecer nutrientes essenciais."
   ],
   "riscos": [
+    "Alto teor de gordura saturada, que em excesso pode aumentar o colesterol.",
+    "Alérgeno: lactose e proteína do leite (caseína).",
     "Alto teor de gordura, especialmente gordura saturada, que pode aumentar o colesterol.",
     "Pode conter alto teor de sódio, dependendo da marca e do processo de fabricação."
   ],
-  "curiosidade": "O 'Romeu' tradicionalmente é servido com goiabada, criando um contraste de sabores e texturas.",
-  "slug": "Romeu",
   "nutricao": {
-    "calorias": "250 kcal",
-    "proteinas": "15g",
-    "carboidratos": "5g",
-    "gorduras": "18g",
-    "fibras": "0g"
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~15g",
+    "gorduras": "~6g"
   },
-  "category_emoji": "🥚",
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": ""
+  "category_emoji": "🥚"
 }

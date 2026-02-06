@@ -1,6 +1,6 @@
 {
   "slug": "Feijao Branco",
-  "nome": "Feijão Branco",
+  "nome": "Feijao Carioca",
   "categoria": "vegano",
   "descricao": "Feijão cozido, base da alimentação brasileira.",
   "ingredientes": [
@@ -14,10 +14,16 @@
   "beneficios": [
     "Rico em proteína vegetal",
     "Alto teor de ferro",
-    "Fibras para saciedade"
+    "Fibras para saciedade",
+    "Rico em fibras, auxiliando na saúde intestinal.",
+    "Fonte de proteínas vegetais.",
+    "Baixo teor de gordura.",
+    "Fornece energia de forma gradual."
   ],
   "riscos": [
-    "Pode causar gases intestinais"
+    "Pode causar gases intestinais",
+    "Pode causar gases em algumas pessoas devido à presença de oligossacarídeos.",
+    "Verificar a procedência do feijão para evitar contaminação."
   ],
   "nutricao": {
     "calorias": "77 kcal",

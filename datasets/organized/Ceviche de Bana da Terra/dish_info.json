@@ -1,37 +1,57 @@
 {
-  "nome": "Ceviche de Banana da Terra",
   "slug": "Ceviche de Bana da Terra",
+  "nome": "Muqueca de banana da terra",
   "categoria": "vegano",
-  "contem_gluten": false,
-  "contem_lactose": false,
-  "contem_ovo": false,
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false,
-  "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "1g",
-    "carboidratos": "18g",
-    "gorduras": "0g",
-    "fibras": "2g"
-  },
-  "category_emoji": "🌱",
-  "descricao": "banana da terra em laminas marinadas e servidas com ervas",
+  "descricao": "banana da terra cozida com legumes, leite de coco e ervas frescas",
   "ingredientes": [
     "banana da terra",
+    "pimentão",
+    "leite de coco",
     "cebola",
+    "tomates",
+    "ervas frescas",
+    "batata",
+    "banana da terra ",
+    "especiarias",
     "limao",
     "pimenta de do de moca",
     "cebolniha"
   ],
   "beneficios": [
+    "Rica em vitaminas e minerais provenientes dos vegetais.",
+    "Fonte de fibras que auxiliam na saúde digestiva.",
+    "A banana da terra fornece energia e potássio.",
+    "Opção leve e saborosa para uma refeição vegana.",
+    "Fonte de energia",
+    "Carboidratos",
+    "Fonte de energia devido aos carboidratos da banana e batata.",
+    "Potencialmente rico em potássio, importante para a saúde muscular e nervosa (dependendo da proporção de banana).",
+    "Pode ser uma opção com baixo teor de gordura, dependendo do preparo.",
+    "A banana da terra oferece fibras, auxiliando na saciedade e saúde digestiva.",
     "Rico em potássio, importante para a saúde muscular e nervosa.",
     "Fonte de fibras, que auxiliam na digestão e promovem a saciedade.",
     "Contém vitamina C, que fortalece o sistema imunológico.",
     "Baixo em gorduras, contribuindo para uma dieta equilibrada."
   ],
   "riscos": [
+    "Pode ser alta em carboidratos, dependendo da quantidade de banana da terra.",
+    "Alergia a algum dos ingredientes (raro).",
+    "Contém glúten",
+    "Contém ovo",
+    "Pode ter alto índice glicêmico dependendo da quantidade de batata e do tempo de cozimento.",
     "Pode conter alto teor de sódio dependendo da quantidade de sal adicionada."
   ],
-  "tecnica": ""
+  "nutricao": {
+    "calorias": "85 kcal",
+    "proteinas": "1.5g",
+    "carboidratos": "15g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
 }
