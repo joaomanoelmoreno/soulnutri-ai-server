@@ -642,7 +642,32 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
         >
           👤 Perfil
         </button>
+        <button 
+          className={`tab-btn ${activeView === 'dashboard' ? 'active' : ''}`}
+          onClick={() => setActiveView('dashboard')}
+          data-testid="btn-dashboard-premium"
+          style={{
+            padding: '8px 16px',
+            border: 'none',
+            borderRadius: '20px',
+            background: activeView === 'dashboard' ? '#8b5cf6' : '#333',
+            color: '#fff',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            fontSize: '13px'
+          }}
+        >
+          📈 Dashboard
+        </button>
       </div>
+
+      {/* Dashboard Premium Completo */}
+      {activeView === 'dashboard' && (
+        <DashboardPremium 
+          user={{ ...user, pin: localStorage.getItem('soulnutri_pin') }}
+          onClose={() => setActiveView('hoje')}
+        />
+      )}
 
       {activeView === 'hoje' && (
         <>
