@@ -766,13 +766,32 @@ function App() {
       }
       
       // Resolução reduzida para economizar memória em celulares
-      const s = await navigator.mediaDevices.getUserMedia({ 
-        video: { 
-          facingMode: 'environment', 
-          width: { ideal: 640, max: 1280 }, 
-          height: { ideal: 480, max: 720 } 
-        } 
-      });
+      // Safari/Mac: tentar primeiro com facingMode, depois sem
+      let s;
+      try {
+        s = await navigator.mediaDevices.getUserMedia({ 
+          video: { 
+            facingMode: 'environment', 
+            width: { ideal: 640, max: 1280 }, 
+            height: { ideal: 480, max: 720 } 
+          } 
+        });
+      } catch (firstError) {
+        console.warn('[Camera] Falhou com facingMode environment, tentando sem:', firstError);
+        // Fallback: tentar sem facingMode (para webcams de Mac/desktop)
+        try {
+          s = await navigator.mediaDevices.getUserMedia({ 
+            video: { 
+              width: { ideal: 640, max: 1280 }, 
+              height: { ideal: 480, max: 720 } 
+            } 
+          });
+        } catch (secondError) {
+          console.warn('[Camera] Falhou sem facingMode, tentando básico:', secondError);
+          // Último recurso: apenas video: true
+          s = await navigator.mediaDevices.getUserMedia({ video: true });
+        }
+      }
       
       // Verificar novamente se ainda está montado após await
       if (!mountedRef.current) {
