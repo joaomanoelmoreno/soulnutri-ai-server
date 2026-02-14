@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Premium.css';
+import DashboardPremium from './DashboardPremium';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
