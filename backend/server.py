@@ -2900,12 +2900,24 @@ async def get_dashboard_premium(pin: str, periodo: str = "semana"):
                 break
         
         # Metas do usuário
-        metas = user.get("metas", user.get("meta_calorica", {
+        metas_default = {
             "calorias": 2000, 
             "proteinas": 50, 
             "carboidratos": 250, 
             "gorduras": 65
-        }))
+        }
+        
+        # Prioridade: metas > meta_calorica (se tiver estrutura correta) > default
+        metas = user.get("metas")
+        if not metas or "calorias" not in metas:
+            meta_cal = user.get("meta_calorica", {})
+            if "calorias" in meta_cal:
+                metas = meta_cal
+            else:
+                # meta_calorica tem estrutura antiga, usar meta_sugerida
+                metas = metas_default.copy()
+                if "meta_sugerida" in meta_cal:
+                    metas["calorias"] = int(meta_cal["meta_sugerida"])
         
         # Alertas inteligentes
         alertas = []
