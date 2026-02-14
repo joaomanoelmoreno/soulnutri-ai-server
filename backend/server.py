@@ -2764,7 +2764,8 @@ async def get_daily_full_analysis(pin: str):
 async def get_dashboard_premium(pin: str, periodo: str = "semana"):
     """
     Dashboard consolidado para usuários Premium.
-    Retorna: consumo de hoje, gráficos semanais/mensais, histórico, alertas.
+    Períodos: dia, semana, mes, ano
+    Retorna: consumo de hoje, gráficos, histórico, alertas e estatísticas.
     """
     try:
         from services.profile_service import hash_pin
@@ -2776,18 +2777,21 @@ async def get_dashboard_premium(pin: str, periodo: str = "semana"):
         if not user:
             return {"ok": False, "error": "PIN incorreto"}
         
-        # Definir período
-        dias = 7 if periodo == "semana" else 30
+        # Definir período em dias
+        periodos_dias = {"dia": 1, "semana": 7, "mes": 30, "ano": 365}
+        dias = periodos_dias.get(periodo, 7)
+        
         data_inicio = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
         hoje_str = datetime.now().strftime("%Y-%m-%d")
         
-        # Buscar logs do período
+        # Buscar logs do período (limite maior para ano)
+        limite_logs = 400 if periodo == "ano" else 100
         cursor = db.daily_logs.find(
             {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
             {"_id": 0}
         ).sort("data", -1)
         
-        logs = await cursor.to_list(length=100)
+        logs = await cursor.to_list(length=limite_logs)
         
         # Consumo de hoje
         log_hoje = next((l for l in logs if l.get("data") == hoje_str), None)
@@ -2798,77 +2802,211 @@ async def get_dashboard_premium(pin: str, periodo: str = "semana"):
             "gorduras": log_hoje.get("gorduras_total", 0) if log_hoje else 0
         }
         
-        # Dados para gráficos (últimos 7 dias)
+        # Dados para gráficos baseados no período
         dias_grafico = []
-        for i in range(min(7, dias)):
-            data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
-            dia_nome = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"][(datetime.now() - timedelta(days=i)).weekday()]
-            log_dia = next((l for l in logs if l.get("data") == data), None)
-            dias_grafico.append({
-                "dia": dia_nome,
-                "data": data,
-                "calorias": log_dia.get("calorias_total", 0) if log_dia else 0,
-                "proteinas": log_dia.get("proteinas_total", 0) if log_dia else 0,
-                "carboidratos": log_dia.get("carboidratos_total", 0) if log_dia else 0,
-                "gorduras": log_dia.get("gorduras_total", 0) if log_dia else 0
-            })
         
-        dias_grafico.reverse()  # Ordenar do mais antigo ao mais recente
+        if periodo == "dia":
+            # Para dia, mostrar as refeições individuais
+            if log_hoje and log_hoje.get("pratos"):
+                for i, prato in enumerate(log_hoje.get("pratos", [])[:10]):
+                    dias_grafico.append({
+                        "dia": prato.get("nome", f"Item {i+1}")[:15],
+                        "data": hoje_str,
+                        "calorias": prato.get("calorias", 0),
+                        "proteinas": prato.get("proteinas", 0),
+                        "carboidratos": prato.get("carboidratos", 0),
+                        "gorduras": prato.get("gorduras", 0)
+                    })
+        elif periodo == "semana":
+            # Últimos 7 dias
+            dias_nomes = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
+            for i in range(7):
+                data = (datetime.now() - timedelta(days=6-i)).strftime("%Y-%m-%d")
+                dia_semana = (datetime.now() - timedelta(days=6-i)).weekday()
+                log_dia = next((l for l in logs if l.get("data") == data), None)
+                dias_grafico.append({
+                    "dia": dias_nomes[dia_semana],
+                    "data": data,
+                    "calorias": log_dia.get("calorias_total", 0) if log_dia else 0,
+                    "proteinas": log_dia.get("proteinas_total", 0) if log_dia else 0,
+                    "carboidratos": log_dia.get("carboidratos_total", 0) if log_dia else 0,
+                    "gorduras": log_dia.get("gorduras_total", 0) if log_dia else 0
+                })
+        elif periodo == "mes":
+            # Agrupar por semana (4 semanas)
+            for semana in range(4):
+                inicio_semana = 28 - (semana + 1) * 7
+                fim_semana = 28 - semana * 7
+                calorias_semana = 0
+                proteinas_semana = 0
+                carboidratos_semana = 0
+                gorduras_semana = 0
+                for i in range(inicio_semana, fim_semana):
+                    data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+                    log_dia = next((l for l in logs if l.get("data") == data), None)
+                    if log_dia:
+                        calorias_semana += log_dia.get("calorias_total", 0)
+                        proteinas_semana += log_dia.get("proteinas_total", 0)
+                        carboidratos_semana += log_dia.get("carboidratos_total", 0)
+                        gorduras_semana += log_dia.get("gorduras_total", 0)
+                dias_grafico.append({
+                    "dia": f"Sem {4-semana}",
+                    "calorias": calorias_semana / 7,  # Média diária da semana
+                    "proteinas": proteinas_semana / 7,
+                    "carboidratos": carboidratos_semana / 7,
+                    "gorduras": gorduras_semana / 7
+                })
+        elif periodo == "ano":
+            # Agrupar por mês (12 meses)
+            meses_nomes = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+            hoje = datetime.now()
+            for i in range(12):
+                mes_data = hoje - timedelta(days=30 * (11 - i))
+                mes_nome = meses_nomes[mes_data.month - 1]
+                mes_str = mes_data.strftime("%Y-%m")
+                
+                logs_mes = [l for l in logs if l.get("data", "").startswith(mes_str)]
+                dias_com_dados = len([l for l in logs_mes if l.get("calorias_total", 0) > 0])
+                
+                calorias_mes = sum(l.get("calorias_total", 0) for l in logs_mes)
+                proteinas_mes = sum(l.get("proteinas_total", 0) for l in logs_mes)
+                carboidratos_mes = sum(l.get("carboidratos_total", 0) for l in logs_mes)
+                gorduras_mes = sum(l.get("gorduras_total", 0) for l in logs_mes)
+                
+                dias_grafico.append({
+                    "dia": mes_nome,
+                    "calorias": calorias_mes / max(dias_com_dados, 1),  # Média diária
+                    "proteinas": proteinas_mes / max(dias_com_dados, 1),
+                    "carboidratos": carboidratos_mes / max(dias_com_dados, 1),
+                    "gorduras": gorduras_mes / max(dias_com_dados, 1),
+                    "dias_registrados": dias_com_dados
+                })
         
         # Estatísticas
         dias_com_log = len([l for l in logs if l.get("calorias_total", 0) > 0])
         total_calorias = sum(l.get("calorias_total", 0) for l in logs)
+        total_proteinas = sum(l.get("proteinas_total", 0) for l in logs)
+        total_carboidratos = sum(l.get("carboidratos_total", 0) for l in logs)
+        total_gorduras = sum(l.get("gorduras_total", 0) for l in logs)
         total_pratos = sum(len(l.get("pratos", [])) for l in logs)
         
         # Calcular streak (dias seguidos)
         streak = 0
-        for i in range(dias):
+        for i in range(min(dias, 365)):
             data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
             if any(l.get("data") == data and l.get("calorias_total", 0) > 0 for l in logs):
                 streak += 1
             else:
                 break
         
-        # Alertas
-        alertas = []
-        metas = user.get("meta_calorica", {"calorias": 2000, "proteinas": 50, "carboidratos": 250, "gorduras": 65})
+        # Metas do usuário
+        metas = user.get("metas", user.get("meta_calorica", {
+            "calorias": 2000, 
+            "proteinas": 50, 
+            "carboidratos": 250, 
+            "gorduras": 65
+        }))
         
+        # Alertas inteligentes
+        alertas = []
         if dias_com_log > 0:
             media_calorias = total_calorias / dias_com_log
+            media_proteinas = total_proteinas / dias_com_log
+            
+            # Alerta de calorias
             if media_calorias < metas.get("calorias", 2000) * 0.7:
-                alertas.append({"tipo": "warning", "msg": "Consumo calórico abaixo do recomendado"})
+                alertas.append({"tipo": "warning", "msg": f"Consumo calórico baixo: média de {media_calorias:.0f} kcal/dia"})
             elif media_calorias > metas.get("calorias", 2000) * 1.2:
-                alertas.append({"tipo": "danger", "msg": "Consumo calórico acima do recomendado"})
+                alertas.append({"tipo": "danger", "msg": f"Consumo calórico alto: média de {media_calorias:.0f} kcal/dia"})
             else:
                 alertas.append({"tipo": "success", "msg": "Consumo calórico dentro da meta!"})
+            
+            # Alerta de proteínas
+            if media_proteinas < metas.get("proteinas", 50) * 0.8:
+                alertas.append({"tipo": "warning", "msg": f"Proteínas abaixo da meta: {media_proteinas:.0f}g/dia"})
+            
+            # Alerta de streak
+            if streak >= 7:
+                alertas.append({"tipo": "success", "msg": f"Parabéns! {streak} dias seguidos registrando!"})
         
-        # Histórico formatado
+        # Histórico formatado (últimas 30 entradas para período longo)
+        limite_historico = 30 if periodo in ["mes", "ano"] else 10
         historico = []
-        for log in logs[:10]:  # Últimos 10 dias
+        for log in logs[:limite_historico]:
             historico.append({
                 "data": log.get("data", ""),
                 "pratos": log.get("pratos", []),
                 "calorias_total": log.get("calorias_total", 0),
-                "proteinas_total": log.get("proteinas_total", 0)
+                "proteinas_total": log.get("proteinas_total", 0),
+                "carboidratos_total": log.get("carboidratos_total", 0),
+                "gorduras_total": log.get("gorduras_total", 0)
             })
         
         return {
             "ok": True,
             "hoje": hoje,
-            "semana": dias_grafico,
+            "grafico": dias_grafico,
+            "semana": dias_grafico,  # Compatibilidade
             "historico": historico,
             "stats": {
                 "dias_registrados": dias_com_log,
                 "media_calorias": total_calorias / dias_com_log if dias_com_log > 0 else 0,
+                "media_proteinas": total_proteinas / dias_com_log if dias_com_log > 0 else 0,
+                "media_carboidratos": total_carboidratos / dias_com_log if dias_com_log > 0 else 0,
+                "media_gorduras": total_gorduras / dias_com_log if dias_com_log > 0 else 0,
+                "total_calorias": total_calorias,
                 "total_pratos": total_pratos,
                 "streak": streak
             },
+            "metas": metas,
             "alertas": alertas,
             "periodo": periodo
         }
         
     except Exception as e:
         logger.error(f"Erro no dashboard: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/metas")
+async def update_user_metas(pin: str, metas: dict):
+    """
+    Atualiza as metas nutricionais do usuário Premium.
+    metas: {calorias, proteinas, carboidratos, gorduras}
+    """
+    try:
+        from services.profile_service import hash_pin
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Validar metas
+        metas_validadas = {
+            "calorias": max(1000, min(5000, int(metas.get("calorias", 2000)))),
+            "proteinas": max(20, min(300, int(metas.get("proteinas", 50)))),
+            "carboidratos": max(50, min(500, int(metas.get("carboidratos", 250)))),
+            "gorduras": max(20, min(200, int(metas.get("gorduras", 65))))
+        }
+        
+        # Atualizar no banco
+        await db.users.update_one(
+            {"_id": user["_id"]},
+            {"$set": {"metas": metas_validadas}}
+        )
+        
+        logger.info(f"[METAS] Atualizadas para {user['nome']}: {metas_validadas}")
+        
+        return {
+            "ok": True,
+            "metas": metas_validadas,
+            "msg": "Metas atualizadas com sucesso!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar metas: {e}")
         return {"ok": False, "error": str(e)}
 
 
