@@ -543,7 +543,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
   const [fullAnalysis, setFullAnalysis] = useState(null);
   const [weeklyAnalysis, setWeeklyAnalysis] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeView, setActiveView] = useState('hoje'); // 'hoje', 'semana' ou 'perfil'
+  const [activeView, setActiveView] = useState('hoje'); // 'hoje', 'semana', 'perfil' ou 'dashboard'
   const [userProfile, setUserProfile] = useState(null);
 
   const loadData = async () => {
