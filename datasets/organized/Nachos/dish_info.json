@@ -1,13 +1,12 @@
 {
   "nome": "Nachos",
   "categoria": "vegano",
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "ingredientes": [
     "Tortilhas de milho",
-    "Sal",
-    "Óleo"
+    "temperos diversos"
   ],
-  "descricao": "Nachos são pedaços de tortilhas de milho fritos ou assados, geralmente temperados com sal.",
+  "descricao": " tortilhas de milho fritos ou assados",
   "beneficios": [
     "Fonte de carboidratos que fornecem energia",
     "Opção vegana e sem glúten"
@@ -19,15 +18,17 @@
   "curiosidade": "A origem dos nachos remonta a 1943, no México.",
   "slug": "Nachos",
   "nutricao": {
-    "calorias": "140 kcal",
-    "proteinas": "2g",
-    "carboidratos": "18g",
-    "gorduras": "7g"
+    "calorias": "49 kcal",
+    "proteinas": "1.6g",
+    "carboidratos": "8.6g",
+    "gorduras": "1.2g",
+    "fibras": "2.3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

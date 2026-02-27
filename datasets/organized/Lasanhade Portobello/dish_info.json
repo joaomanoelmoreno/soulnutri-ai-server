@@ -2,13 +2,14 @@
   "slug": "Lasanhade Portobello",
   "nome": "Lasanha de Portobello",
   "categoria": "vegetariano",
-  "descricao": "Lasanha com cogumelos portobello frescos e molho branco artesanal",
+  "descricao": "Lasanha com cogumelos portobello frescos e molho branco  gratinada com queijo",
   "ingredientes": [
     "massa",
     "cogumelo portobello fresco",
     "queijo",
-    "molho branco artesanal",
-    "cebola orgânica",
+    "molho branco ",
+    "cebola",
+    "alho",
     "creme de leite fresco"
   ],
   "tecnica": "Assado em forno combinado",
@@ -23,10 +24,11 @@
   ],
   "contem_gluten": true,
   "nutricao": {
-    "calorias": "131 kcal",
-    "proteinas": "5g",
-    "carboidratos": "25g",
-    "gorduras": "1g"
+    "calorias": "62 kcal",
+    "proteinas": "3.9g",
+    "carboidratos": "5.7g",
+    "gorduras": "2.9g",
+    "fibras": "1.2g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -37,7 +39,7 @@
   "beneficio_principal": "Combinação de proteína (carne/queijo), carboidrato (massa) e vegetais fornece refeição completa com liberação gradual de energia",
   "curiosidade_cientifica": "A lasanha à bolonhesa original de Bologna não leva tomate - foi adicionado só no século XIX",
   "referencia_pesquisa": "Tabela TACO - UNICAMP",
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "2 horas",
@@ -47,5 +49,8 @@
     "Ervas"
   ],
   "evitar_com": [],
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

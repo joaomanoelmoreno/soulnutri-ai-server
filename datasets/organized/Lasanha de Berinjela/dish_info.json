@@ -7,23 +7,24 @@
     "Antioxidantes (nasunina)",
     "Ajuda no controle do colesterol"
   ],
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": true,
+  "categoria": "vegetariano",
+  "category_emoji": "🥚",
+  "contem_gluten": false,
   "created_at": "2026-01-23T14:52:21.427000",
-  "descricao": "Prato de massa em camadas, com molho de tomate, queijo e recheio.",
+  "descricao": "Laminas de berinjela ao molho de tomates e creme branco gratinada ao queijo",
   "ingredientes": [
-    "Massa de lasanha",
+    "Berinjela",
     "Molho de tomate",
     "Queijo",
-    "Recheio (possivelmente ricota)"
+    "molho branco (leite e farinha de trigo)"
   ],
   "nome": "Lasanha de Berinjela",
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "75 kcal",
+    "proteinas": "4.9g",
+    "carboidratos": "2.7g",
+    "gorduras": "5.1g",
+    "fibras": "1.0g"
   },
   "origem": "user_created",
   "riscos": [
@@ -32,7 +33,7 @@
     "Alérgeno: LACTOSE (queijo)"
   ],
   "tecnica": "Grelhada ou assada",
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "2 horas",
@@ -42,5 +43,8 @@
     "Queijo",
     "Azeite"
   ],
-  "evitar_com": []
+  "evitar_com": [],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
