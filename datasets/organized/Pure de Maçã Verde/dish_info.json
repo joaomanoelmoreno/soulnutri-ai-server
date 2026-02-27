@@ -2,12 +2,10 @@
   "nome": "Pure de Maca Verde",
   "categoria": "vegano",
   "ingredientes": [
-    "alface",
-    "tomate",
-    "pepino",
-    "cenoura"
+    "maca",
+    "cravo"
   ],
-  "descricao": "Salada fresca e nutritiva.",
+  "descricao": "maca cozida\n",
   "beneficios": [
     "Rico em vitaminas e minerais provenientes dos vegetais.",
     "Promove a hidratação devido ao alto teor de água.",
@@ -18,13 +16,13 @@
     "Pode conter resíduos de agrotóxicos, dependendo da procedência dos vegetais. Lave bem os ingredientes antes do consumo."
   ],
   "curiosidade": "A maçã verde é rica em ácido málico, que contribui para o sabor azedo característico e também auxilia na limpeza dos dentes.",
-  "slug": "Puredemaca Verde",
+  "slug": "Pure de Maçã Verde",
   "nutricao": {
-    "calorias": "30 kcal",
-    "proteinas": "1g",
-    "carboidratos": "5g",
-    "gorduras": "0g",
-    "fibras": "2g"
+    "calorias": "7 kcal",
+    "proteinas": "0.1g",
+    "carboidratos": "2.6g",
+    "gorduras": "0.0g",
+    "fibras": "0.0g"
   },
   "tecnica": "Crua",
   "contem_gluten": false,
@@ -41,7 +39,7 @@
   "evitar_com": [
     "Molhos industrializados calóricos"
   ],
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false

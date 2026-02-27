@@ -2,16 +2,14 @@
   "slug": "Quinuacom Tahine",
   "nome": "Quinua com Tahine",
   "categoria": "vegano",
-  "descricao": "Quinoa com tahine - prato cadastrado pelo usuário",
+  "descricao": "Quinoa ao creme de tahine",
   "ingredientes": [
     "quinoa",
-    "água",
-    "sal",
     "tahine",
-    "pepino",
-    "tomate",
+    "limão",
+    "abobrinha",
     "hortelã",
-    "limão"
+    "alho"
   ],
   "beneficios": [
     "Fonte de proteína vegetal completa",
@@ -26,10 +24,11 @@
     "Pode conter traços de gergelim"
   ],
   "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "4g",
-    "carboidratos": "18g",
-    "gorduras": "4g"
+    "calorias": "78 kcal",
+    "proteinas": "3.4g",
+    "carboidratos": "16.9g",
+    "gorduras": "0.4g",
+    "fibras": "3.5g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -46,5 +45,5 @@
     "Saladas"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

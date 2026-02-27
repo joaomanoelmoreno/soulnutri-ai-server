@@ -8,10 +8,10 @@
     "cebola",
     "shoyu",
     "oleo de gergilim",
-    "ervar",
+    "ervas",
     "sal"
   ],
-  "descricao": "Quiabo, legume típico brasileiro.",
+  "descricao": "Quiabo cozido  ao molho tipo asiático comamendoins",
   "beneficios": [
     "Rico em fibras, auxiliando na saúde intestinal.",
     "Fonte de vitaminas e minerais provenientes do quiabo e amendoim.",
@@ -25,13 +25,13 @@
   "curiosidade": "O quiabo é um ingrediente versátil na culinária brasileira, sendo usado em diversas preparações, como o famoso quiabo com carne seca.",
   "slug": "Quiabocom Amendoim",
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "8g",
-    "carboidratos": "15g",
-    "gorduras": "10g",
-    "fibras": "5g"
+    "calorias": "106 kcal",
+    "proteinas": "4.5g",
+    "carboidratos": "8.7g",
+    "gorduras": "6.9g",
+    "fibras": "2.4g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "tecnica": "Refogado ou empanado",
   "contem_gluten": false,
   "contem_lactose": false,

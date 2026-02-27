@@ -2,10 +2,10 @@
   "slug": "Purêdeabóbora",
   "nome": "Purê de Abobora",
   "categoria": "vegano",
-  "descricao": "Abóbora nutritiva, versátil na cozinha.",
+  "descricao": "Abóbora  cozida",
   "ingredientes": [
     "abóbora",
-    "sal"
+    "caldo de legumes"
   ],
   "beneficios": [
     "Rica em betacaroteno",
@@ -14,10 +14,11 @@
   ],
   "riscos": [],
   "nutricao": {
-    "calorias": "26 kcal",
-    "proteinas": "1g",
-    "carboidratos": "6.5g",
-    "gorduras": "0.1g"
+    "calorias": "24 kcal",
+    "proteinas": "1.5g",
+    "carboidratos": "4.9g",
+    "gorduras": "0.2g",
+    "fibras": "2.1g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -34,5 +35,5 @@
     "Gengibre"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

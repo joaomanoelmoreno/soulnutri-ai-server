@@ -8,8 +8,14 @@
     "farinha",
     "ervas"
   ],
-  "beneficios": [],
-  "riscos": [],
+  "beneficios": [
+    "Fonte de energia",
+    "Carboidratos"
+  ],
+  "riscos": [
+    "Contém glúten",
+    "Contém ovo"
+  ],
   "nutricao": {
     "calorias": "164 kcal",
     "proteinas": "0.9g",
@@ -23,6 +29,16 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "tecnica": "",
-  "category_emoji": "🥬"
+  "tecnica": "Cozido em água",
+  "category_emoji": "🌱",
+  "indice_glicemico": "moderado",
+  "tempo_digestao": "2-3 horas",
+  "melhor_horario": "Almoço",
+  "combina_com": [
+    "Molho de tomate",
+    "Queijo"
+  ],
+  "evitar_com": [
+    "Molhos gordurosos"
+  ]
 }
