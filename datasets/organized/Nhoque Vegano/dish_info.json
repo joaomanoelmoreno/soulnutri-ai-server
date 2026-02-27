@@ -1,0 +1,28 @@
+{
+  "nome": "Nhoque Vegano",
+  "slug": "Nhoque Vegano",
+  "categoria": "vegano",
+  "descricao": "nhoque de banana da terra",
+  "ingredientes": [
+    "banan da terra",
+    "farinha",
+    "ervas"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "nutricao": {
+    "calorias": "164 kcal",
+    "proteinas": "0.9g",
+    "carboidratos": "39.7g",
+    "gorduras": "0.2g",
+    "fibras": "0.7g"
+  },
+  "contem_gluten": true,
+  "contem_lactose": false,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "",
+  "category_emoji": "🥬"
+}

@@ -1,19 +1,19 @@
 {
   "slug": "Pannacottacom Frutas Vermelhas",
-  "nome": "Pannacotta com frutas vermelhas",
+  "nome": "Pannacotta com Frutas Vermelhas",
   "categoria": "vegetariano",
-  "descricao": "Sobremesa cremosa feita à base de leite de coco, amido de milho, açúcar e coco ralado. A calda é preparada com frutas vermelhas cozidas com açúcar e água, resultando em uma geleia saborosa. O manjar é geralmente cozido em fogo baixo até engrossar e depois resfriado para firmar.",
+  "descricao": "Sobremesa cremosa feita à base de creme de leite, amido de milho, açúcar . A calda é preparada com frutas vermelhas cozidas com açúcar e água, resultando em uma geleia saborosa. ",
   "ingredientes": [
     "",
     "açúcar",
     "ovos",
-    "manteiga",
-    "leite",
+    "baunilha",
+    "gelatina",
     "creme de leite",
-    "Amido de milho",
+    "leite condensado",
     "Frutas vermelhas (morango, amora, framboesa, etc.)",
-    "Açúcar (na calda)",
-    "Água (na calda)"
+    "",
+    ""
   ],
   "beneficios": [
     "Fonte de energia",
@@ -28,10 +28,11 @@
     "Alergia ao coco."
   ],
   "nutricao": {
-    "calorias": "260 kcal",
-    "proteinas": "4g",
-    "carboidratos": "40g",
-    "gorduras": "10g"
+    "calorias": "134 kcal",
+    "proteinas": "2.1g",
+    "carboidratos": "22.4g",
+    "gorduras": "4.3g",
+    "fibras": "0.5g"
   },
   "contem_gluten": false,
   "contem_lactose": true,

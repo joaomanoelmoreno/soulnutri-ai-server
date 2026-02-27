@@ -4,11 +4,12 @@
   "categoria": "proteína animal",
   "descricao": "Pernil de cordeiro braseado ao vinho com hortela",
   "ingredientes": [
-    "carne de corderio",
+    "pernil de corderio",
+    "vinho",
     "temperos",
     "alho ",
     "hortela",
-    "vinho",
+    "",
     ""
   ],
   "beneficios": [
@@ -21,10 +22,11 @@
     "Pode conter traços de glúten"
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "23 kcal",
+    "proteinas": "1.4g",
+    "carboidratos": "4.8g",
+    "gorduras": "0.0g",
+    "fibras": "0.9g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -44,5 +46,5 @@
   "evitar_com": [
     "Outras carnes gordurosas"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩"
 }

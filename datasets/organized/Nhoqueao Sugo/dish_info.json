@@ -8,7 +8,7 @@
     "farinha (uso controlado)",
     "ovo",
     "molho de tomate artesanal",
-    "manjericão orgânico"
+    "ervas frescas"
   ],
   "tecnica": "Preparo artesanal",
   "beneficios": [
@@ -48,5 +48,8 @@
   "evitar_com": [
     "Molhos gordurosos"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

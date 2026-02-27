@@ -2,21 +2,16 @@
   "slug": "Proteina de Soja ao Sugo",
   "nome": "Proteina de Soja ao Sugo",
   "categoria": "vegano",
-  "descricao": "Prato feito com proteína de soja texturizada cozida em molho sugo, com pedaços de cenoura. O molho sugo provavelmente inclui tomate, cebola, alho, azeite de oliva e temperos.",
+  "descricao": "proteína de soja texturizada refogada em molho sugo, com pedaços de cenoura  com cebola, alho, azeite de oliva e temperos.",
   "ingredientes": [
-    "Proteína de soja texturizada",
-    "Tomate (ingrediente do molho sugo)",
-    "Cenoura (visível)",
-    "Cebola (provável ingrediente do molho sugo)",
-    "Alho (provável ingrediente do molho sugo)",
-    "Azeite de oliva (provável ingrediente do molho sugo)",
-    "Ervas e especiarias (provável ingrediente do molho sugo)",
-    "proteina de soja",
-    "limao",
-    "tomates",
-    "cebola",
-    "alho ",
-    "ervas"
+    "Proteína de soja ",
+    "Tomate ",
+    "Cenoura",
+    "Cebola ",
+    "Alho ",
+    "Azeite de oliva",
+    "Ervas e especiarias ",
+    ""
   ],
   "beneficios": [
     "Fonte de proteína vegetal, importante para a saúde muscular.",
@@ -35,10 +30,11 @@
     "Pode conter sódio, dependendo da quantidade de temperos e molhos utilizados."
   ],
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "155 kcal",
+    "proteinas": "1.6g",
+    "carboidratos": "6.2g",
+    "gorduras": "14.4g",
+    "fibras": "1.6g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -46,5 +42,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": true,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "tecnica": ""
 }
