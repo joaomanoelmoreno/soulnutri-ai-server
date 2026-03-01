@@ -3642,48 +3642,58 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
         
         # Normalizar slug para comparação
         def normalize(s):
-            # Remove acentos e converte para minúsculas
             s = unicodedata.normalize('NFD', s)
             s = ''.join(c for c in s if not unicodedata.combining(c))
             return s.lower().replace(" ", "").replace("-", "").replace("_", "")
         
-        slug_norm = normalize(slug_decoded)
-        
-        # Encontrar a pasta do prato
         dataset_dir = "/app/datasets/organized"
+        img_path = None
         dish_folder = None
         dish_name = None
         
+        # ESTRATÉGIA 1: Buscar a imagem DIRETAMENTE em todas as pastas
+        # Isso resolve o problema de slug incorreto
         for folder in os.listdir(dataset_dir):
-            folder_norm = normalize(folder)
-            if folder_norm == slug_norm or slug_norm in folder_norm or folder_norm in slug_norm:
-                dish_folder = os.path.join(dataset_dir, folder)
+            folder_path = os.path.join(dataset_dir, folder)
+            if not os.path.isdir(folder_path):
+                continue
+            
+            potential_path = os.path.join(folder_path, img_decoded)
+            if os.path.exists(potential_path):
+                img_path = potential_path
+                dish_folder = folder_path
                 dish_name = folder
-                logger.info(f"[DELETE] Pasta encontrada: {folder}")
+                logger.info(f"[DELETE] Imagem encontrada em: {folder}")
                 break
         
-        if not dish_folder or not os.path.isdir(dish_folder):
-            logger.error(f"[DELETE] Pasta não encontrada para slug: {slug_decoded} (norm: {slug_norm})")
-            return {"ok": False, "error": "Prato não encontrado"}
+        # ESTRATÉGIA 2: Se não encontrou diretamente, tentar pelo slug
+        if not img_path:
+            slug_norm = normalize(slug_decoded)
+            for folder in os.listdir(dataset_dir):
+                folder_norm = normalize(folder)
+                if folder_norm == slug_norm or slug_norm in folder_norm or folder_norm in slug_norm:
+                    folder_path = os.path.join(dataset_dir, folder)
+                    potential_path = os.path.join(folder_path, img_decoded)
+                    if os.path.exists(potential_path):
+                        img_path = potential_path
+                        dish_folder = folder_path
+                        dish_name = folder
+                        logger.info(f"[DELETE] Imagem encontrada por slug em: {folder}")
+                        break
+                    # Tentar match parcial do nome da imagem
+                    if os.path.isdir(folder_path):
+                        for f in os.listdir(folder_path):
+                            if normalize(f) == normalize(img_decoded) or img_decoded in f:
+                                img_path = os.path.join(folder_path, f)
+                                dish_folder = folder_path
+                                dish_name = folder
+                                logger.info(f"[DELETE] Imagem encontrada por match parcial: {f}")
+                                break
+                    if img_path:
+                        break
         
-        # Caminho completo da imagem - tentar várias formas
-        img_path = os.path.join(dish_folder, img_decoded)
-        
-        # Se não encontrar, tentar buscar por nome similar
-        if not os.path.exists(img_path):
-            logger.warning(f"[DELETE] Imagem não encontrada diretamente: {img_path}")
-            # Listar arquivos e tentar match parcial
-            files_in_folder = os.listdir(dish_folder)
-            img_norm = normalize(img_decoded)
-            for f in files_in_folder:
-                if normalize(f) == img_norm or img_decoded in f or f in img_decoded:
-                    img_path = os.path.join(dish_folder, f)
-                    logger.info(f"[DELETE] Encontrado por match parcial: {f}")
-                    break
-        
-        if not os.path.exists(img_path):
-            logger.error(f"[DELETE] Imagem não existe: {img_path}")
-            logger.error(f"[DELETE] Arquivos na pasta: {os.listdir(dish_folder)[:10]}")
+        if not img_path or not os.path.exists(img_path):
+            logger.error(f"[DELETE] Imagem não encontrada em nenhuma pasta: {img_decoded}")
             return {"ok": False, "error": f"Imagem não encontrada: {img_decoded}"}
         
         # Deletar a imagem
