@@ -11,10 +11,11 @@
     "Alho",
     "Azeite de oliva",
     "Ervas frescas (cebolinha)",
-    "Cranberries secas",
+    "uvas passas",
+    "vinho branco",
     "Tempero"
   ],
-  "descricao": "O Ratatouille é um ensopado de legumes originário da região da Provença, na França. Nesta versão, os legumes (abobrinha, tomate, berinjela, cenoura, cebola e pimentão) foram cozidos em azeite de oliva, com adição de ervas frescas e cranberries secas, que adicionam um toque agridoce. Os ingredientes parecem estar levemente refogados e cozidos em seus próprios sucos, resultando em um prato rico em sabores e texturas. O uso de cebolinha picada como finalização adiciona frescor.",
+  "descricao": "Mix de legumes originário da região da Provença.Nesta versão, os legumes (abobrinha, tomate, berinjela, cenoura, cebola e pimentão) foram cozidos em vinho branco, azeite de oliva, com adição de ervas frescas e uvas passas ",
   "beneficios": [
     "Rico em antioxidantes, devido aos vegetais coloridos, que combatem os radicais livres e protegem as células.",
     "Fonte de fibras, que auxiliam na saúde digestiva e promovem a saciedade.",
@@ -32,11 +33,12 @@
     "carboidratos": "~18g",
     "gorduras": "~2g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": false
+  "contem_soja": false,
+  "tecnica": ""
 }

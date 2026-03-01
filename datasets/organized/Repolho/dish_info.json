@@ -5,10 +5,9 @@
   "descricao": "Repolho cozido ao gergelim",
   "ingredientes": [
     "repolho",
-    "sementes de gergelim",
+    " gergelim",
     "oleo de gergelim",
-    "repolho orgânico",
-    "gergelim"
+    ""
   ],
   "beneficios": [
     "Rico em vitaminas e minerais provenientes do repolho.",
@@ -25,16 +24,18 @@
     "Pode causar gases e inchaço em algumas pessoas devido ao alto teor de fibras."
   ],
   "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "2g",
-    "carboidratos": "7g",
-    "gorduras": "9g"
+    "calorias": "389 kcal",
+    "proteinas": "14.1g",
+    "carboidratos": "14.4g",
+    "gorduras": "33.6g",
+    "fibras": "7.9g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
-  "contem_castanhas": true,
+  "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "tecnica": ""
 }

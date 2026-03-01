@@ -6,10 +6,9 @@
   "ingredientes": [
     "Macarrao",
     "Queijo",
-    "Creme ",
+    "manteiga",
     "limao",
     "ervas frescas",
-    "",
     "creme de leite",
     "bacon",
     ""
@@ -25,18 +24,18 @@
     "Risco de intolerância à lactose."
   ],
   "nutricao": {
-    "calorias": "280 kcal",
-    "proteinas": "10g",
-    "carboidratos": "25g",
-    "gorduras": "15g",
-    "fibras": "2g"
+    "calorias": "179 kcal",
+    "proteinas": "2.8g",
+    "carboidratos": "2.6g",
+    "gorduras": "17.9g",
+    "fibras": "0.0g"
   },
-  "contem_gluten": true,
+  "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "",
-  "category_emoji": "🍖"
+  "category_emoji": "🥩"
 }
