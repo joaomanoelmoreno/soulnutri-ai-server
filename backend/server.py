@@ -3802,11 +3802,35 @@ async def move_dish_image(request: Request):
             os.makedirs(to_folder, exist_ok=True)
             logger.info(f"[ADMIN] Criada nova pasta: {to_name}")
         
-        # Caminho da imagem de origem
+        # Caminho da imagem de origem - BUSCAR EM TODAS AS PASTAS PRIMEIRO
         img_decoded = urllib.parse.unquote(img_name)
-        src_path = os.path.join(from_folder, img_decoded)
+        src_path = None
+        actual_from_folder = None
+        actual_from_name = None
         
-        if not os.path.exists(src_path):
+        # Estratégia 1: Buscar a imagem em todas as pastas
+        for folder in os.listdir(dataset_dir):
+            folder_path = os.path.join(dataset_dir, folder)
+            if not os.path.isdir(folder_path):
+                continue
+            potential_path = os.path.join(folder_path, img_decoded)
+            if os.path.exists(potential_path):
+                src_path = potential_path
+                actual_from_folder = folder_path
+                actual_from_name = folder
+                logger.info(f"[MOVE] Imagem encontrada em: {folder}")
+                break
+        
+        # Estratégia 2: Usar a pasta de origem se a imagem não foi encontrada diretamente
+        if not src_path:
+            potential_path = os.path.join(from_folder, img_decoded)
+            if os.path.exists(potential_path):
+                src_path = potential_path
+                actual_from_folder = from_folder
+                actual_from_name = from_name
+        
+        if not src_path or not os.path.exists(src_path):
+            logger.error(f"[MOVE] Imagem não encontrada: {img_decoded}")
             return {"ok": False, "error": f"Imagem não encontrada: {img_decoded}"}
         
         # Gerar novo nome para a imagem no destino
