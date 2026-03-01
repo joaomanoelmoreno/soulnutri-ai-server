@@ -10,7 +10,7 @@
     "Pimentão vermelho",
     "Alho",
     "Azeite de oliva",
-    "Ervas frescas (cebolinha)",
+    "Ervas frescas",
     "uvas passas",
     "vinho branco",
     "Tempero"
@@ -28,10 +28,11 @@
   "curiosidade": "O nome \"Ratatouille\" vem do termo provençal \"ratatolha\", que significa \"misturar\" ou \"mexer\", referindo-se à maneira como os legumes são combinados no prato.",
   "slug": "Ratatouille",
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "103 kcal",
+    "proteinas": "1.6g",
+    "carboidratos": "6.4g",
+    "gorduras": "8.5g",
+    "fibras": "1.8g"
   },
   "category_emoji": "🥬",
   "contem_gluten": false,
