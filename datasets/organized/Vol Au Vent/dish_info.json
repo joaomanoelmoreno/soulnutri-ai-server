@@ -1,10 +1,12 @@
 {
   "slug": "Vol Au Vent",
-  "nome": "Vol Au Vent",
-  "categoria": "vegetariano",
-  "descricao": "O vol-au-vent (do francês \"vôo ao vento\") massinha folhada com recheio de creme a base de ricota fesca",
+  "nome": "Vol Au Vent (Pimentao ou Espinafre)",
+  "categoria": "vegano",
+  "descricao": "O vol-au-vent (do francês \"vôo ao vento\") massinha folhada com recheios sortidos",
   "ingredientes": [
     "massa folhada",
+    "pimentao",
+    "espinafre",
     "ricota",
     "tomate",
     "cheiro-verde",
@@ -23,18 +25,18 @@
     "A massa folhada pode conter gordura saturada"
   ],
   "nutricao": {
-    "calorias": "280 kcal",
-    "proteinas": "8g",
-    "carboidratos": "25g",
-    "gorduras": "16g",
-    "fibras": "2g"
+    "calorias": "32 kcal",
+    "proteinas": "2.7g",
+    "carboidratos": "2.9g",
+    "gorduras": "1.3g",
+    "fibras": "0.8g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚",
+  "category_emoji": "🥬",
   "tecnica": ""
 }
