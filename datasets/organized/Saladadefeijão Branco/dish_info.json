@@ -1,26 +1,21 @@
 {
   "slug": "Saladadefeijão Branco",
-  "nome": "Salada de Feijão Branco",
+  "nome": "Salada de Feijao Branco",
   "categoria": "vegano",
-  "descricao": "Salada fria de feijão branco demolhado com ervas frescas orgânicas",
+  "descricao": "Salada fria de feijão branco ",
   "ingredientes": [
-    "feijão",
-    "água",
-    "sal",
+    "feijão branco",
+    "tomates",
     "alho",
     "cebola",
     "louro",
-    "feijão branco demolhado",
+    "",
     "tomate sem pele",
-    "cebola orgânica",
-    "salsinha orgânica",
+    "",
+    "salsinha",
     "azeite extravirgem",
     "limão",
-    "feijão fradinho",
-    "tomate",
-    "pimentão",
-    "coentro",
-    "azeite"
+    ""
   ],
   "beneficios": [
     "Rico em fibras, auxiliando na saúde intestinal e controle glicêmico.",
@@ -43,10 +38,11 @@
     "Pode causar gases intestinais"
   ],
   "nutricao": {
-    "calorias": "77 kcal",
-    "proteinas": "5g",
-    "carboidratos": "13g",
-    "gorduras": "0.5g"
+    "calorias": "29 kcal",
+    "proteinas": "1.7g",
+    "carboidratos": "5.9g",
+    "gorduras": "0.1g",
+    "fibras": "1.9g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -66,5 +62,5 @@
   "evitar_com": [
     "Excesso de embutidos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

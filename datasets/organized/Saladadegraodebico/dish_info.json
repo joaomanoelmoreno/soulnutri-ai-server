@@ -2,12 +2,14 @@
   "nome": "Salada de Grão de Bico",
   "categoria": "vegano",
   "ingredientes": [
-    "alface",
+    "grao de bico",
     "tomate",
-    "pepino",
-    "cenoura"
+    "cebola",
+    "alho",
+    "azeite",
+    "vinagre"
   ],
-  "descricao": "Salada fresca e nutritiva.",
+  "descricao": "grao de bico com cebola e tomates picados",
   "beneficios": [
     "Baixíssimas calorias",
     "Rica em fibras",
@@ -19,10 +21,11 @@
   "curiosidade": "O grão de bico é um alimento versátil, usado em diversas culinárias ao redor do mundo, como no hummus e falafel, e é um ingrediente chave na dieta mediterrânea.",
   "slug": "Saladadegraodebico",
   "nutricao": {
-    "calorias": "20 kcal",
-    "proteinas": "1g",
-    "carboidratos": "4g",
-    "gorduras": "0.2g"
+    "calorias": "234 kcal",
+    "proteinas": "5.2g",
+    "carboidratos": "15.6g",
+    "gorduras": "17.7g",
+    "fibras": "3.4g"
   },
   "tecnica": "Crua",
   "contem_gluten": false,
@@ -38,5 +41,8 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

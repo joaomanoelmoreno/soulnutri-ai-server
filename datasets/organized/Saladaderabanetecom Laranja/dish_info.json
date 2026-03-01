@@ -1,13 +1,12 @@
 {
-  "nome": "Salada de Rabanete com Laranja",
+  "nome": "Rabanete",
   "categoria": "vegano",
   "ingredientes": [
-    "alface",
-    "tomate",
-    "pepino",
-    "cenoura"
+    "rabanete",
+    "laranja ",
+    "ervas frescas"
   ],
-  "descricao": "Salada fresca e nutritiva.",
+  "descricao": "rabanete com laranja",
   "beneficios": [
     "Baixíssimas calorias",
     "Rica em fibras",
@@ -19,10 +18,11 @@
   "curiosidade": "O rabanete era cultivado no Egito antigo e foi levado para a Europa pelos romanos. Existem diversas variedades, com diferentes formatos e cores.",
   "slug": "Saladaderabanetecom Laranja",
   "nutricao": {
-    "calorias": "20 kcal",
-    "proteinas": "1g",
-    "carboidratos": "4g",
-    "gorduras": "0.2g"
+    "calorias": "17 kcal",
+    "proteinas": "0.8g",
+    "carboidratos": "3.9g",
+    "gorduras": "0.1g",
+    "fibras": "1.0g"
   },
   "tecnica": "Crua",
   "contem_gluten": false,
@@ -38,5 +38,8 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

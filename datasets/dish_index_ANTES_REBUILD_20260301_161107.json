@@ -534,16 +534,16 @@
     "Espaguete",
     "Espaguete Parisiense",
     "Espaguete Parisiense",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
-    "Espagueti ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
+    "Espaguete ao Misso",
     "Espetinho de File Mignon",
     "Espetinho de File Mignon",
     "Espetinho de Legumes",
@@ -610,6 +610,16 @@
     "Feijao do Chef",
     "Feijoada",
     "Feijoada",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
+    "File a Parmegiana",
     "File de Peixe Molho Confit",
     "File de Peixe Molho Confit",
     "File de Peixe Molho Confit",
@@ -894,8 +904,8 @@
     "Lentilhacomtofu",
     "Linguica de Lombo",
     "Linguica de Lombo",
-    "Linguica de Lombo",
-    "Linguica de Lombo",
+    "Linguicaa Cebolada",
+    "Linguiçacomacompanhamentos",
     "Lula Grelhada",
     "Lula Grelhada",
     "Lula Grelhada",
@@ -1028,16 +1038,6 @@
     "Moussedemorango",
     "Nachos",
     "Nachos",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
-    "Nhoque Vegano",
     "Nhoqueao Sugo",
     "Nhoqueao Sugo",
     "Nhoqueao Sugo",
@@ -1146,14 +1146,6 @@
     "Pudim",
     "Pudim",
     "Pudim",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
-    "Pure de Maçã Verde",
     "Purede Batata",
     "Purede Batata",
     "Purede Batata",
@@ -1174,6 +1166,14 @@
     "Purede Mandioquinha",
     "Purede Mandioquinha",
     "Purede Mandioquinha",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
+    "Puredemaca Verde",
     "Purêdeabóbora",
     "Purêdeabóbora",
     "Queijo Parmesao Ralado",
@@ -2360,7 +2360,7 @@
       532,
       533
     ],
-    "Espagueti ao Misso": [
+    "Espaguete ao Misso": [
       534,
       535,
       536,
@@ -2458,7 +2458,7 @@
       608,
       609
     ],
-    "File de Peixe Molho Confit": [
+    "File a Parmegiana": [
       610,
       611,
       612,
@@ -2470,7 +2470,7 @@
       618,
       619
     ],
-    "File de Peixe ao Confit": [
+    "File de Peixe Molho Confit": [
       620,
       621,
       622,
@@ -2482,7 +2482,7 @@
       628,
       629
     ],
-    "Filede Peixe Molho Frutas Secas": [
+    "File de Peixe ao Confit": [
       630,
       631,
       632,
@@ -2494,7 +2494,7 @@
       638,
       639
     ],
-    "Filede Peixeaomisso": [
+    "Filede Peixe Molho Frutas Secas": [
       640,
       641,
       642,
@@ -2506,10 +2506,8 @@
       648,
       649
     ],
-    "Filede Peixeem Manteiga Tomates": [
-      650
-    ],
-    "Filemignonem Manteigade Ervas": [
+    "Filede Peixeaomisso": [
+      650,
       651,
       652,
       653,
@@ -2518,10 +2516,12 @@
       656,
       657,
       658,
-      659,
+      659
+    ],
+    "Filede Peixeem Manteiga Tomates": [
       660
     ],
-    "Filé a Parmegiana": [
+    "Filemignonem Manteigade Ervas": [
       661,
       662,
       663,
@@ -2533,10 +2533,8 @@
       669,
       670
     ],
-    "Filé de Peixe Grelhado": [
-      671
-    ],
-    "Filé de Peixe ao Molho de Limão": [
+    "Filé a Parmegiana": [
+      671,
       672,
       673,
       674,
@@ -2545,10 +2543,12 @@
       677,
       678,
       679,
-      680,
+      680
+    ],
+    "Filé de Peixe Grelhado": [
       681
     ],
-    "Frango Cremede Limaosal Negro": [
+    "Filé de Peixe ao Molho de Limão": [
       682,
       683,
       684,
@@ -2560,7 +2560,7 @@
       690,
       691
     ],
-    "Frango Grelhado": [
+    "Frango Cremede Limaosal Negro": [
       692,
       693,
       694,
@@ -2572,30 +2572,28 @@
       700,
       701
     ],
-    "Frango no Tacho": [
+    "Frango Grelhado": [
       702,
       703,
-      704
-    ],
-    "Frangoà Milanesa": [
-      705
-    ],
-    "Fígado Abolado": [
+      704,
+      705,
       706,
       707,
       708,
       709,
       710,
-      711,
+      711
+    ],
+    "Frango no Tacho": [
       712,
       713,
-      714,
+      714
+    ],
+    "Frangoà Milanesa": [
       715
     ],
-    "Gelatinadeabacaxi": [
-      716
-    ],
-    "Gelatinadecereja": [
+    "Fígado Abolado": [
+      716,
       717,
       718,
       719,
@@ -2604,35 +2602,37 @@
       722,
       723,
       724,
-      725,
+      725
+    ],
+    "Gelatinadeabacaxi": [
       726
     ],
-    "Gelatinademorango": [
-      727
-    ],
-    "Gelatinadeuva": [
+    "Gelatinadecereja": [
+      727,
       728,
       729,
-      730
-    ],
-    "Gnocchi ao Molho Branco": [
+      730,
       731,
       732,
-      733
-    ],
-    "Goiabada": [
+      733,
       734,
       735,
-      736,
-      737,
+      736
+    ],
+    "Gelatinademorango": [
+      737
+    ],
+    "Gelatinadeuva": [
       738,
       739,
-      740,
+      740
+    ],
+    "Gnocchi ao Molho Branco": [
       741,
       742,
       743
     ],
-    "Granola": [
+    "Goiabada": [
       744,
       745,
       746,
@@ -2644,7 +2644,7 @@
       752,
       753
     ],
-    "Grao de Bico com Espinafre e Tomate Seco": [
+    "Granola": [
       754,
       755,
       756,
@@ -2656,7 +2656,7 @@
       762,
       763
     ],
-    "Gratinado de Legumes": [
+    "Grao de Bico com Espinafre e Tomate Seco": [
       764,
       765,
       766,
@@ -2668,7 +2668,7 @@
       772,
       773
     ],
-    "Grelhado dos Pescadores": [
+    "Gratinado de Legumes": [
       774,
       775,
       776,
@@ -2680,7 +2680,7 @@
       782,
       783
     ],
-    "Guacamole": [
+    "Grelhado dos Pescadores": [
       784,
       785,
       786,
@@ -2692,26 +2692,26 @@
       792,
       793
     ],
-    "Guacamole com Manga": [
+    "Guacamole": [
       794,
       795,
       796,
       797,
-      798
-    ],
-    "Ham Camarao com Carne Suina": [
+      798,
       799,
       800,
       801,
       802,
-      803,
+      803
+    ],
+    "Guacamole com Manga": [
       804,
       805,
-      806
-    ],
-    "Hamburger Bovino": [
+      806,
       807,
-      808,
+      808
+    ],
+    "Ham Camarao com Carne Suina": [
       809,
       810,
       811,
@@ -2721,7 +2721,7 @@
       815,
       816
     ],
-    "Hamburguer Vegano": [
+    "Hamburger Bovino": [
       817,
       818,
       819,
@@ -2733,7 +2733,7 @@
       825,
       826
     ],
-    "Jiloempanado": [
+    "Hamburguer Vegano": [
       827,
       828,
       829,
@@ -2745,7 +2745,7 @@
       835,
       836
     ],
-    "Kafta": [
+    "Jiloempanado": [
       837,
       838,
       839,
@@ -2757,7 +2757,7 @@
       845,
       846
     ],
-    "Kibe": [
+    "Kafta": [
       847,
       848,
       849,
@@ -2765,34 +2765,34 @@
       851,
       852,
       853,
-      854
+      854,
+      855,
+      856
     ],
-    "Kiberecheado": [
-      855
-    ],
-    "Lasanha Vegana Beringela e Proteina de Soja": [
-      856,
+    "Kibe": [
       857,
-      858
-    ],
-    "Lasanha de Berinjela": [
+      858,
       859,
       860,
-      861
-    ],
-    "Lasanha de Espinafre": [
+      861,
       862,
       863,
-      864,
-      865,
+      864
+    ],
+    "Kiberecheado": [
+      865
+    ],
+    "Lasanha Vegana Beringela e Proteina de Soja": [
       866,
       867,
-      868,
+      868
+    ],
+    "Lasanha de Berinjela": [
       869,
       870,
       871
     ],
-    "Lasanhade Portobello": [
+    "Lasanha de Espinafre": [
       872,
       873,
       874,
@@ -2804,7 +2804,7 @@
       880,
       881
     ],
-    "Lentilhacomtofu": [
+    "Lasanhade Portobello": [
       882,
       883,
       884,
@@ -2816,43 +2816,47 @@
       890,
       891
     ],
-    "Linguica de Lombo": [
+    "Lentilhacomtofu": [
       892,
       893,
       894,
-      895
-    ],
-    "Lula Grelhada": [
+      895,
       896,
       897,
       898,
       899,
       900,
-      901,
+      901
+    ],
+    "Linguica de Lombo": [
       902,
-      903,
-      904,
+      903
+    ],
+    "Linguicaa Cebolada": [
+      904
+    ],
+    "Linguiçacomacompanhamentos": [
       905
     ],
-    "Mamao": [
+    "Lula Grelhada": [
       906,
       907,
       908,
-      909
-    ],
-    "Maminha Molho Madeira": [
+      909,
       910,
       911,
       912,
       913,
       914,
-      915,
+      915
+    ],
+    "Mamao": [
       916,
       917,
       918,
       919
     ],
-    "Maminha ao Molho Mongolia": [
+    "Maminha Molho Madeira": [
       920,
       921,
       922,
@@ -2864,7 +2868,7 @@
       928,
       929
     ],
-    "Maminhanacervejapreta": [
+    "Maminha ao Molho Mongolia": [
       930,
       931,
       932,
@@ -2876,7 +2880,7 @@
       938,
       939
     ],
-    "Mandioquinha": [
+    "Maminhanacervejapreta": [
       940,
       941,
       942,
@@ -2888,7 +2892,7 @@
       948,
       949
     ],
-    "Mandioquinhacom Camarao": [
+    "Mandioquinha": [
       950,
       951,
       952,
@@ -2900,11 +2904,9 @@
       958,
       959
     ],
-    "Manjardecococomcaldade Ameixa": [
+    "Mandioquinhacom Camarao": [
       960,
-      961
-    ],
-    "Massaladecamaroes": [
+      961,
       962,
       963,
       964,
@@ -2912,11 +2914,13 @@
       966,
       967,
       968,
-      969,
+      969
+    ],
+    "Manjardecococomcaldade Ameixa": [
       970,
       971
     ],
-    "Mechouiatunisia": [
+    "Massaladecamaroes": [
       972,
       973,
       974,
@@ -2928,34 +2932,34 @@
       980,
       981
     ],
-    "Melancia": [
+    "Mechouiatunisia": [
       982,
       983,
-      984
-    ],
-    "Mixde Graos": [
-      985
-    ],
-    "Molho Sugo": [
-      986
-    ],
-    "Molho Tartaro": [
+      984,
+      985,
+      986,
       987,
-      988
-    ],
-    "Molhoparao Rolinho": [
+      988,
       989,
       990,
-      991,
+      991
+    ],
+    "Melancia": [
       992,
       993,
-      994,
+      994
+    ],
+    "Mixde Graos": [
       995
     ],
-    "Molhovinagrete": [
-      996,
+    "Molho Sugo": [
+      996
+    ],
+    "Molho Tartaro": [
       997,
-      998,
+      998
+    ],
+    "Molhoparao Rolinho": [
       999,
       1000,
       1001,
@@ -2964,45 +2968,45 @@
       1004,
       1005
     ],
-    "Mousse de Chocolate Sem Açúcar": [
+    "Molhovinagrete": [
       1006,
       1007,
-      1008
-    ],
-    "Moussede Maracuja": [
+      1008,
       1009,
       1010,
       1011,
       1012,
       1013,
       1014,
-      1015,
+      1015
+    ],
+    "Mousse de Chocolate Sem Açúcar": [
       1016,
       1017,
       1018
     ],
-    "Moussedemorango": [
+    "Moussede Maracuja": [
       1019,
       1020,
       1021,
       1022,
       1023,
       1024,
-      1025
-    ],
-    "Nachos": [
+      1025,
       1026,
-      1027
+      1027,
+      1028
     ],
-    "Nhoque Vegano": [
-      1028,
+    "Moussedemorango": [
       1029,
       1030,
       1031,
       1032,
       1033,
       1034,
-      1035,
+      1035
+    ],
+    "Nachos": [
       1036,
       1037
     ],
@@ -3146,7 +3150,7 @@
       1144,
       1145
     ],
-    "Pure de Maçã Verde": [
+    "Purede Batata": [
       1146,
       1147,
       1148,
@@ -3154,11 +3158,11 @@
       1150,
       1151,
       1152,
-      1153
-    ],
-    "Purede Batata": [
+      1153,
       1154,
-      1155,
+      1155
+    ],
+    "Purede Mandioquinha": [
       1156,
       1157,
       1158,
@@ -3166,11 +3170,11 @@
       1160,
       1161,
       1162,
-      1163
-    ],
-    "Purede Mandioquinha": [
+      1163,
       1164,
-      1165,
+      1165
+    ],
+    "Puredemaca Verde": [
       1166,
       1167,
       1168,
@@ -5843,7 +5847,7 @@
       "folder": "/app/datasets/organized/Lentilhacomtofu"
     },
     "Linguica de Lombo": {
-      "image_count": 4,
+      "image_count": 2,
       "folder": "/app/datasets/organized/Linguica de Lombo"
     },
     "Linguicaa Cebolada": {
@@ -6733,21 +6737,9 @@
     "File a Parmegiana": {
       "image_count": 10,
       "folder": "/app/datasets/organized/File a Parmegiana"
-    },
-    "Espagueti ao Misso": {
-      "image_count": 10,
-      "folder": "/app/datasets/organized/Espagueti ao Misso"
-    },
-    "Nhoque Vegano": {
-      "image_count": 10,
-      "folder": "/app/datasets/organized/Nhoque Vegano"
-    },
-    "Pure de Maçã Verde": {
-      "image_count": 8,
-      "folder": "/app/datasets/organized/Pure de Maçã Verde"
     }
   },
   "version": "1.0",
   "total_items": 1686,
-  "total_dishes": 253
+  "total_dishes": 255
 }

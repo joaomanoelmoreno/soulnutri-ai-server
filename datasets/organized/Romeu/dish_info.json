@@ -2,13 +2,10 @@
   "slug": "Romeu",
   "nome": "Requeijao",
   "categoria": "vegetariano",
-  "descricao": "O requeijão é um queijo fresco cremoso, feito a partir do soro do leite (do processo de fabricação de outros queijos) ou do leite integral. O produto é cozido e depois coalhado com ácido cítrico ou vinagre, resultando em sua consistência cremosa.",
+  "descricao": "Requeijao e creme de leite",
   "ingredientes": [
-    "Leite",
-    "Coalho",
-    "Cultura láctea",
-    "Sal",
-    "queijos"
+    "requeijao",
+    "creme de leite"
   ],
   "beneficios": [
     "Fonte de proteínas, importantes para a construção e reparação dos tecidos do corpo.",
@@ -24,10 +21,11 @@
     "Pode conter alto teor de sódio, dependendo da marca e do processo de fabricação."
   ],
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~15g",
-    "gorduras": "~6g"
+    "calorias": "239 kcal",
+    "proteinas": "5.5g",
+    "carboidratos": "3.5g",
+    "gorduras": "22.9g",
+    "fibras": "0.0g"
   },
   "contem_gluten": false,
   "contem_lactose": true,
@@ -35,5 +33,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "tecnica": ""
 }

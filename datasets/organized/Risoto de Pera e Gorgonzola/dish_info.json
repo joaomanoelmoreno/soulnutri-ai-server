@@ -3,6 +3,8 @@
   "categoria": "vegetariano",
   "ingredientes": [
     "arroz arbóreo",
+    "pera",
+    "queijo gorgonzola",
     "caldo",
     "vinho branco",
     "manteiga",
@@ -20,10 +22,11 @@
   "curiosidade": "O risoto, tradicional da culinária italiana, é conhecido por sua cremosidade, que é obtida pela liberação do amido do arroz arbóreo durante o cozimento.",
   "slug": "Risoto de Pera e Gorgonzola",
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "5g",
-    "carboidratos": "30g",
-    "gorduras": "5g"
+    "calorias": "241 kcal",
+    "proteinas": "8.3g",
+    "carboidratos": "9.2g",
+    "gorduras": "19.5g",
+    "fibras": "0.6g"
   },
   "category_emoji": "🥚",
   "tecnica": "Cozimento lento com caldo",
@@ -39,5 +42,8 @@
   ],
   "evitar_com": [
     "Outras massas"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

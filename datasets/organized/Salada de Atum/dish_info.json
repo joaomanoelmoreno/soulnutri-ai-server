@@ -2,18 +2,14 @@
   "slug": "Salada de Atum",
   "nome": "Salada de atum",
   "categoria": "proteína animal",
-  "descricao": "Uma salada cremosa com cubos de carne, ervilha, cenoura, batata e maionese, decorada com rodelas de cenoura",
+  "descricao": "atum fresco em mainoese de legumes",
   "ingredientes": [
     "atum",
-    "alface",
-    "tomate",
+    "batatas",
+    "ervilhas",
     "cebola",
-    "azeitonas",
     "azeite",
-    "carne (possivelmente frango ou porco)",
-    "ervilha",
     "cenoura",
-    "batata",
     "maionese",
     "salsinha"
   ],
@@ -32,10 +28,11 @@
     "Alto teor de sódio (principalmente se a maionese for industrializada)"
   ],
   "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
+    "calorias": "141 kcal",
+    "proteinas": "3.7g",
+    "carboidratos": "3.6g",
+    "gorduras": "12.7g",
+    "fibras": "0.8g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -54,5 +51,5 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🐟"
 }

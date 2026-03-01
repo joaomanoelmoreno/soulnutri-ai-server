@@ -2,12 +2,14 @@
   "nome": "Rolinho Vietnamita de Camarao",
   "categoria": "proteína animal",
   "ingredientes": [
+    "Papel de arroz",
     "camarão",
-    "alho",
-    "azeite",
-    "sal"
+    "cenoura",
+    "alface",
+    "abobrinha",
+    ""
   ],
-  "descricao": "Camarão fresco, rico em proteínas.",
+  "descricao": "rolinho vietnamita recheado com legumes e camaroes",
   "beneficios": [
     "Proteína magra",
     "Selênio",
@@ -19,10 +21,11 @@
   "curiosidade": "Os rolinhos vietnamitas, também conhecidos como 'gỏi cuốn', são uma comida de rua popular no Vietnã, apreciados por sua leveza e frescor.",
   "slug": "Rolinho Vietnamita de Camarao",
   "nutricao": {
-    "calorias": "99 kcal",
-    "proteinas": "24g",
-    "carboidratos": "0.2g",
-    "gorduras": "0.3g"
+    "calorias": "38 kcal",
+    "proteinas": "1.1g",
+    "carboidratos": "8.4g",
+    "gorduras": "0.1g",
+    "fibras": "1.4g"
   },
   "tecnica": "Grelhado ou refogado",
   "contem_gluten": false,
@@ -39,5 +42,7 @@
   "evitar_com": [
     "Excesso de manteiga"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "contem_castanhas": false,
+  "contem_soja": false
 }

@@ -2,12 +2,12 @@
   "slug": "Salpicao de Frango",
   "nome": "Salpicão de Frango",
   "categoria": "proteína animal",
-  "descricao": "Salada de frango preparado sous vide, desfiado com maionese artesanal e legumes orgânicos",
+  "descricao": "frango desfiado com legumes e macao verde",
   "ingredientes": [
-    "frango sous vide desfiado",
-    "maionese artesanal",
-    "cenoura orgânica",
-    "batata palha",
+    "frango desfiado",
+    "maionese",
+    "cenoura",
+    "maca verde",
     "milho",
     "ervilha"
   ],
@@ -23,10 +23,11 @@
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "165 kcal",
-    "proteinas": "31g",
-    "carboidratos": "0g",
-    "gorduras": "3.6g"
+    "calorias": "49 kcal",
+    "proteinas": "6.1g",
+    "carboidratos": "4.1g",
+    "gorduras": "0.9g",
+    "fibras": "1.3g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -49,5 +50,8 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍗",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

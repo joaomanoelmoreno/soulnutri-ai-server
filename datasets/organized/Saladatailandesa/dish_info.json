@@ -2,12 +2,15 @@
   "nome": "Salada Tailandesa",
   "categoria": "vegano",
   "ingredientes": [
-    "alface",
-    "tomate",
-    "pepino",
-    "cenoura"
+    "mamao verde",
+    "camaroes",
+    "limao",
+    "alho",
+    "tomate cereja",
+    "vagem",
+    ""
   ],
-  "descricao": "Salada fresca e nutritiva.",
+  "descricao": "\nmamao verde com camaroes",
   "beneficios": [
     "Baixíssimas calorias",
     "Rica em fibras",
@@ -19,10 +22,11 @@
   "curiosidade": "A salada tailandesa é conhecida por seus sabores balanceados: doce, azedo, salgado e picante.",
   "slug": "Saladatailandesa",
   "nutricao": {
-    "calorias": "20 kcal",
-    "proteinas": "1g",
-    "carboidratos": "4g",
-    "gorduras": "0.2g"
+    "calorias": "39 kcal",
+    "proteinas": "1.7g",
+    "carboidratos": "8.8g",
+    "gorduras": "0.1g",
+    "fibras": "1.5g"
   },
   "tecnica": "Crua",
   "contem_gluten": false,
@@ -38,5 +42,8 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": true,
+  "contem_soja": false
 }

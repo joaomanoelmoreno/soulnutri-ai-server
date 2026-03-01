@@ -1,13 +1,15 @@
 {
   "slug": "Saladamichouia Tunísia",
-  "nome": "Salada Michouia Tunísia",
+  "nome": "Salada Mechouia Tunísia",
   "categoria": "vegano",
-  "descricao": "Salada fresca e nutritiva.",
+  "descricao": "salada tunisiana com pimentao vermelho e tomates",
   "ingredientes": [
-    "alface",
+    "pimentao",
     "tomate",
-    "pepino",
-    "cenoura"
+    "cebola",
+    "limao",
+    "alho",
+    ""
   ],
   "beneficios": [
     "Rica em vitaminas e minerais provenientes dos vegetais frescos.",
@@ -19,15 +21,15 @@
     "Potencialmente alto teor de sódio se temperada com molhos industrializados."
   ],
   "nutricao": {
-    "calorias": "35 kcal",
-    "proteinas": "1g",
-    "carboidratos": "7g",
-    "gorduras": "0g",
-    "fibras": "2g"
+    "calorias": "47 kcal",
+    "proteinas": "2.2g",
+    "carboidratos": "10.4g",
+    "gorduras": "0.2g",
+    "fibras": "1.9g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
@@ -42,5 +44,5 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

@@ -2,12 +2,11 @@
   "slug": "Salade Ovos",
   "nome": "Salada de Ovos",
   "categoria": "vegetariano",
-  "descricao": "Salada fresca e nutritiva.",
+  "descricao": "ovos em maionese de limao",
   "ingredientes": [
-    "alface",
-    "tomate",
-    "pepino",
-    "cenoura"
+    "ovos",
+    "maionese",
+    "limao"
   ],
   "beneficios": [
     "Baixíssimas calorias",
@@ -28,7 +27,7 @@
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
-  "contem_soja": true,
+  "contem_soja": false,
   "category_emoji": "🥚",
   "tecnica": "Crua",
   "indice_glicemico": "muito baixo",

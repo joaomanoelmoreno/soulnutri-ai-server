@@ -1,15 +1,16 @@
 {
-  "slug": "risoneaopesto",
+  "slug": "Risoneaopesto",
   "nome": "Risone ao Pesto",
   "categoria": "vegetariano",
-  "descricao": "Massa risone com molho pesto artesanal de manjericão orgânico",
+  "descricao": "Risone com molho pesto artesanal ",
   "ingredientes": [
-    "massa risone",
-    "manjericão orgânico",
+    "Risone",
+    "manjericão ",
     "parmesão",
-    "pinoli",
+    "nozes",
     "azeite extravirgem",
-    "alho orgânico"
+    "alho",
+    "tomate seco"
   ],
   "beneficios": [
     "Gorduras boas do azeite: protegem o coração",
@@ -29,7 +30,7 @@
   },
   "contem_gluten": true,
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,

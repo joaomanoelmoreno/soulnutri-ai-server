@@ -3,9 +3,14 @@
   "categoria": "vegetariano",
   "ingredientes": [
     "batata",
-    "sal"
+    "ovos",
+    "alcaparras",
+    "maionese",
+    "cebola",
+    "alho",
+    ""
   ],
-  "descricao": "Batata preparada de forma saudável.",
+  "descricao": "batata e ovos com alcaparras e maionese",
   "beneficios": [
     "Fonte de potássio",
     "Energia sustentada",
@@ -17,10 +22,11 @@
   "curiosidade": "Os ovos são classificados como um alimento completo, pois contêm quase todos os nutrientes essenciais que o corpo precisa.",
   "slug": "Saladade Ovoscom Batata",
   "nutricao": {
-    "calorias": "77 kcal",
-    "proteinas": "2g",
-    "carboidratos": "17g",
-    "gorduras": "0.1g"
+    "calorias": "34 kcal",
+    "proteinas": "1.7g",
+    "carboidratos": "7.5g",
+    "gorduras": "0.1g",
+    "fibras": "1.3g"
   },
   "tecnica": "Cozimento ou assado",
   "contem_gluten": false,
