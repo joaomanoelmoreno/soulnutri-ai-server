@@ -3268,9 +3268,25 @@ async def admin_update_dish(slug: str, dish_data: dict):
     """Atualiza TODAS as informações de um prato."""
     try:
         import json
-        dataset_dir = Path("/app/datasets/organized") / slug
+        import os
         
-        if not dataset_dir.exists():
+        # Buscar pasta de forma case-insensitive
+        base_dir = Path("/app/datasets/organized")
+        dataset_dir = None
+        
+        # Primeiro, tentar o slug direto
+        if (base_dir / slug).exists():
+            dataset_dir = base_dir / slug
+        else:
+            # Buscar pasta com nome similar (case-insensitive)
+            slug_lower = slug.lower().replace("-", "").replace(" ", "")
+            for folder in os.listdir(base_dir):
+                folder_lower = folder.lower().replace("-", "").replace(" ", "")
+                if folder_lower == slug_lower:
+                    dataset_dir = base_dir / folder
+                    break
+        
+        if not dataset_dir or not dataset_dir.exists():
             return {"ok": False, "error": "Prato não encontrado"}
         
         info_file = dataset_dir / "dish_info.json"
