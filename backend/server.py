@@ -3850,8 +3850,8 @@ async def move_dish_image(request: Request):
         shutil.move(src_path, dst_path)
         logger.info(f"[ADMIN] Imagem movida: {src_path} → {dst_path}")
         
-        # Contar imagens restantes na origem
-        remaining = len([f for f in os.listdir(from_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
+        # Contar imagens restantes na origem (usar pasta real onde a imagem estava)
+        remaining = len([f for f in os.listdir(actual_from_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
         
         return {
             "ok": True, 
