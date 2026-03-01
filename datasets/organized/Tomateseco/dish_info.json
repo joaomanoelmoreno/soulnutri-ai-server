@@ -1,17 +1,17 @@
 {
   "slug": "Tomateseco",
-  "nome": "Quiche de tomate seco",
-  "categoria": "vegetariano",
-  "descricao": "Tomates secos com ervas e especiarias. ",
+  "nome": "Quiche (varios sabores)",
+  "categoria": "outros",
+  "descricao": "quiche nos seguintes sabores: Loraine, alho poro, tomate seco, abobrinha",
   "ingredientes": [
-    "Tomate seco",
+    "Tomate seco, alho poro, bacon, abobrinha",
     "Alho",
-    "Ervas frescas",
+    "manteiga",
     "farinha de trigo",
     "ovos",
     "creme de leite",
     "queijo",
-    "massa folhada"
+    ""
   ],
   "beneficios": [
     "Fonte de licopeno (tomate seco), um antioxidante que combate radicais livres.",
@@ -29,10 +29,11 @@
     "Contém ovo"
   ],
   "nutricao": {
-    "calorias": "280 kcal",
-    "proteinas": "8g",
-    "carboidratos": "20g",
-    "gorduras": "18g"
+    "calorias": "241 kcal",
+    "proteinas": "5.2g",
+    "carboidratos": "15.3g",
+    "gorduras": "18.1g",
+    "fibras": "0.9g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -50,5 +51,5 @@
   "evitar_com": [
     "Outras massas"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🍽️"
 }

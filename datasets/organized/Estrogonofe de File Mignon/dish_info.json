@@ -1,14 +1,12 @@
 {
-  "nome": "Estrogonofe (File Mignon ou Frango)",
-  "slug": "Strogonoff de File Mignon",
+  "nome": "Estrogonofe de File Mignon",
+  "slug": "Estrogonofe de File Mignon",
   "categoria": "proteína animal",
   "ingredientes": [
-    "file mignon ou frango",
+    "carne ou frango",
     "creme de leite",
     "mostarda",
-    "ketchup",
-    "champignons",
-    "molho ingles"
+    "ketchup"
   ],
   "beneficios": [
     "Rico em proteínas",
@@ -19,11 +17,10 @@
     "Alto teor calórico"
   ],
   "nutricao": {
-    "calorias": "75 kcal",
-    "proteinas": "6.1g",
-    "carboidratos": "3.3g",
-    "gorduras": "4.2g",
-    "fibras": "0.5g"
+    "calorias": "220 kcal",
+    "proteinas": "18g",
+    "carboidratos": "8g",
+    "gorduras": "14g"
   },
   "tecnica": "Refogado com creme",
   "descricao": "Strogonoff cremoso e saboroso.",
@@ -40,8 +37,5 @@
   "evitar_com": [
     "Outras gorduras"
   ],
-  "category_emoji": "🍖",
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🍖"
 }

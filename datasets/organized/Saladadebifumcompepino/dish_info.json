@@ -1,30 +1,42 @@
 {
+  "slug": "Saladadebifumcompepino",
   "nome": "Salada Oriental",
   "categoria": "vegano",
+  "descricao": "Salada oriental ",
   "ingredientes": [
-    ""
+    "macarrão de arroz ",
+    "vinagre de arroz",
+    "shoyu",
+    "gergelim",
+    "gengibre"
   ],
-  "descricao": "",
   "beneficios": [
+    "Fonte de carboidratos para energia.",
+    "Rico em fibras provenientes dos legumes, auxiliando na saúde intestinal.",
+    "Opção leve e de fácil digestão.",
+    "O gergelim oferece gorduras saudáveis e minerais.",
     "Baixíssimas calorias",
     "Rica em fibras",
     "Vitaminas e minerais"
   ],
   "riscos": [
+    "O shoyu pode conter sódio em excesso, cuidado com a quantidade.",
+    "Verificar a procedência do macarrão de arroz para evitar contaminação por outros grãos.",
     "Verificar higienização"
   ],
-  "curiosidade": "O bifum é um tipo de macarrão fino feito de farinha de arroz, popular na culinária asiática, e é naturalmente livre de glúten.",
-  "slug": "Saladadebifumcompepino",
   "nutricao": {
-    "calorias": "20 kcal",
-    "proteinas": "1g",
-    "carboidratos": "4g",
-    "gorduras": "0.2g"
+    "calorias": "180 kcal",
+    "proteinas": "5.9g",
+    "carboidratos": "17.9g",
+    "gorduras": "10.2g"
   },
-  "tecnica": "Crua",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Crua",
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "1-2 horas",
   "melhor_horario": "Qualquer",
@@ -35,8 +47,5 @@
   "evitar_com": [
     "Molhos calóricos"
   ],
-  "category_emoji": "🥬",
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🌱"
 }

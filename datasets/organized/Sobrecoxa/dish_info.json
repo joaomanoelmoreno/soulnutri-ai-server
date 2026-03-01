@@ -4,20 +4,14 @@
   "categoria": "proteína animal",
   "descricao": "Sobrecoxa de frango fresco marinada em especiarias tandoori importadas da Índia",
   "ingredientes": [
-    "sobrecoxa de frango fresco",
-    "iogurte fresco",
-    "garam masala importado",
-    "cúrcuma importada",
-    "páprica importada",
-    "gengibre fresco",
     "sobrecoxa de frango",
-    "sal",
+    "garam masala",
     "temperos",
     "sobrecoxa",
     "masalas indianas",
     "frango",
-    "tomate",
-    "cebolinha",
+    "batatas",
+    "cenouras",
     "alho "
   ],
   "beneficios": [
@@ -38,10 +32,10 @@
     "Consumir com moderação devido ao teor de gordura, especialmente se a pele da sobrecoxa não for removida."
   ],
   "nutricao": {
-    "calorias": "165 kcal",
-    "proteinas": "31g",
-    "carboidratos": "0g",
-    "gorduras": "3.6g"
+    "calorias": "57 kcal",
+    "proteinas": "8.2g",
+    "carboidratos": "4.8g",
+    "gorduras": "0.6g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

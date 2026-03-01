@@ -17,7 +17,7 @@
     "Queijo",
     "Manteiga"
   ],
-  "nome": "Tortilha espanhola de Batata",
+  "nome": "Tortilha Espanhola de Batata",
   "nutricao": {
     "calorias": "~200 kcal",
     "proteinas": "~10g",
@@ -30,8 +30,8 @@
     "Alérgeno: LACTOSE (leite, manteiga)"
   ],
   "tecnica": "Cozimento ou assado",
-  "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_lactose": true,
+  "contem_ovo": true,
   "indice_glicemico": "alto",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço",
@@ -41,5 +41,8 @@
   ],
   "evitar_com": [
     "Frituras"
-  ]
+  ],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

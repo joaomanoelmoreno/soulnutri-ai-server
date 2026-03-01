@@ -2,7 +2,7 @@
   "slug": "Tiramisu",
   "nome": "Tiramisu Vegano",
   "categoria": "vegano",
-  "descricao": "Sobremesa italiana clássica feita com biscoitos champagne embebidos em café, creme de mascarpone e cacau em pó.",
+  "descricao": "Sobremesa italiana clássica feita com biscoitos champagne  veganod embebidos em café, creme vegano e cacau em pó.",
   "ingredientes": [
     "ingredientes 100% vegetais",
     "Biscoito tipo champagne vegano",
@@ -26,10 +26,11 @@
     "Alto teor de gordura"
   ],
   "nutricao": {
-    "calorias": "~120 kcal",
-    "proteinas": "~5g",
-    "carboidratos": "~20g",
-    "gorduras": "~3g"
+    "calorias": "154 kcal",
+    "proteinas": "2.5g",
+    "carboidratos": "25.9g",
+    "gorduras": "4.5g",
+    "fibras": "1.4g"
   },
   "contem_gluten": true,
   "contem_lactose": false,
@@ -37,5 +38,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": true,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "tecnica": ""
 }

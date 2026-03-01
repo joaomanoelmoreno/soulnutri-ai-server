@@ -2,12 +2,12 @@
   "nome": "Vinagrete de Lula",
   "slug": "Vinagrete de Lula",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Salsa brasileira refrescante.",
+  "category_emoji": "🥬",
+  "descricao": "",
   "ingredientes": [
     "tomate",
     "cebola",
-    "pimentão",
+    "lulas",
     "vinagre",
     "azeite"
   ],
@@ -19,10 +19,11 @@
   "riscos": [],
   "tecnica": "Crua",
   "nutricao": {
-    "calorias": "30 kcal",
-    "proteinas": "0.5g",
-    "carboidratos": "5g",
-    "gorduras": "1g"
+    "calorias": "188 kcal",
+    "proteinas": "0.6g",
+    "carboidratos": "2.4g",
+    "gorduras": "20.1g",
+    "fibras": "0.7g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

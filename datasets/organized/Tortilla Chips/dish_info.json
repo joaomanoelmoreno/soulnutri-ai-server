@@ -1,22 +1,25 @@
 {
-  "nome": "Tortilla Chips",
+  "nome": "Nachos",
   "slug": "Tortilla Chips",
   "categoria": "vegano",
   "ingredientes": [
-    "Apenas as Tortillas"
+    "milho",
+    "ervas",
+    ""
   ],
-  "descricao": "Tortillas Crocantes",
+  "descricao": "nachos de milho",
   "beneficios": [],
   "riscos": [],
   "nutricao": {
-    "calorias": "~100 kcal",
-    "proteinas": "~4g",
-    "carboidratos": "~18g",
-    "gorduras": "~2g"
+    "calorias": "49 kcal",
+    "proteinas": "1.6g",
+    "carboidratos": "8.6g",
+    "gorduras": "1.2g",
+    "fibras": "2.3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

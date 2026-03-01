@@ -1,17 +1,16 @@
 {
   "nome": "Sushi Vietnamita",
-  "categoria": "vegano",
+  "categoria": "vegetariano",
   "ingredientes": [
     "Arroz para sushi",
-    "Alga nori",
     "Gergelim preto e branco",
-    "",
-    "Legumes (cenoura e abacate)",
+    "papel de arroz",
+    "Legumes ",
     "Maionese",
     "Cebolinha picada",
-    "Molho para sushi (provavelmente à base de soja)"
+    "Molho para sushi "
   ],
-  "descricao": "Sushi vietnamita, provavelmente com camarão como proteína principal. O sushi é enrolado com alga nori, arroz temperado e recheado com camarão, legumes e maionese, finalizado com gergelim e cebolinha. O prato é servido com molho para sushi.",
+  "descricao": "Sushi vietnamita, com legumes e kewpie ",
   "beneficios": [
     "Fonte de carboidratos do arroz, fornecendo energia.",
     "O gergelim é fonte de cálcio, fibras e antioxidantes."
@@ -24,15 +23,16 @@
   "curiosidade": "O camarão, ingrediente comum no sushi, é uma excelente fonte de proteínas e selênio, um antioxidante importante para a saúde.",
   "slug": "Sushi Vietnamita",
   "nutricao": {
-    "calorias": "~150 kcal",
-    "proteinas": "~8g",
-    "carboidratos": "~15g",
-    "gorduras": "~6g"
+    "calorias": "167 kcal",
+    "proteinas": "7.3g",
+    "carboidratos": "9.7g",
+    "gorduras": "11.6g",
+    "fibras": "3.2g"
   },
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": true,
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": true,

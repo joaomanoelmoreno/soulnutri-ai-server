@@ -1,11 +1,11 @@
 {
-  "nome": "Steakdecouveflor",
+  "nome": "Steak de Couve Flor",
   "categoria": "vegano",
   "ingredientes": [
     "couve-flor",
-    "sal"
+    "ervas secas e de Provence"
   ],
-  "descricao": "Couve-flor versátil e nutritiva.",
+  "descricao": "Couve-flor com ervas assada com azeite",
   "beneficios": [
     "Baixíssimas calorias",
     "Rica em fibras",
@@ -17,10 +17,11 @@
   "curiosidade": "A couve-flor, apesar de ser um vegetal, pertence à mesma família do brócolis, da couve e da rúcula, conhecida como Brassicaceae.",
   "slug": "Steakde Couve Flor",
   "nutricao": {
-    "calorias": "25 kcal",
-    "proteinas": "2g",
-    "carboidratos": "5g",
-    "gorduras": "0.3g"
+    "calorias": "12 kcal",
+    "proteinas": "0.9g",
+    "carboidratos": "2.2g",
+    "gorduras": "0.1g",
+    "fibras": "1.2g"
   },
   "category_emoji": "🌱",
   "tecnica": "Gratinada ou cozida",
@@ -34,5 +35,8 @@
     "Queijo",
     "Molho branco"
   ],
-  "evitar_com": []
+  "evitar_com": [],
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

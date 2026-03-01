@@ -25,13 +25,13 @@
     "ketchup",
     "sal"
   ],
-  "nome": "Strogonoff vegano",
+  "nome": "Estrogonofe  Vegano",
   "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "3g",
-    "carboidratos": "15g",
-    "gorduras": "6g",
-    "fibras": "3g"
+    "calorias": "63 kcal",
+    "proteinas": "2.2g",
+    "carboidratos": "13.5g",
+    "gorduras": "0.2g",
+    "fibras": "1.8g"
   },
   "origem": "user_created",
   "riscos": [
@@ -51,7 +51,7 @@
   "evitar_com": [
     "Outras gorduras"
   ],
-  "contem_castanhas": true,
+  "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false
 }

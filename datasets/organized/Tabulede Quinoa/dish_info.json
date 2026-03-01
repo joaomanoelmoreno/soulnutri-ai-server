@@ -1,14 +1,16 @@
 {
   "slug": "Tabulede Quinoa",
-  "nome": "Tabule de Quinoa",
+  "nome": "Tabule  (Trigo ou Quinoa)",
   "categoria": "vegano",
-  "descricao": "Salada libanesa com quinoa, ervas frescas orgânicas e especiarias do Oriente Médio",
+  "descricao": "Salada libanesa com trigo ou quinoa, ervas frescas orgânicas e especiarias do Oriente Médio",
   "ingredientes": [
     "quinoa",
-    "tomate sem pele",
-    "pepino orgânico",
-    "hortelã orgânica",
-    "salsinha orgânica",
+    "trigo",
+    "cebola",
+    "tomate",
+    "pepino ",
+    "hortelã",
+    "salsinha",
     "limão",
     "azeite extravirgem"
   ],
@@ -21,12 +23,13 @@
   "riscos": [
     "Pode conter traços de glúten"
   ],
-  "contem_gluten": false,
+  "contem_gluten": true,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "87 kcal",
+    "proteinas": "2.8g",
+    "carboidratos": "18.8g",
+    "gorduras": "0.5g",
+    "fibras": "2.8g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -47,5 +50,8 @@
     "Saladas"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }
