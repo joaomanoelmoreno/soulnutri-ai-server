@@ -3638,6 +3638,8 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
         img_decoded = urllib.parse.unquote(img)
         slug_decoded = urllib.parse.unquote(slug)
         
+        logger.info(f"[DELETE] Tentando deletar: slug='{slug_decoded}', img='{img_decoded}'")
+        
         # Normalizar slug para comparação
         def normalize(s):
             # Remove acentos e converte para minúsculas
@@ -3657,16 +3659,31 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
             if folder_norm == slug_norm or slug_norm in folder_norm or folder_norm in slug_norm:
                 dish_folder = os.path.join(dataset_dir, folder)
                 dish_name = folder
+                logger.info(f"[DELETE] Pasta encontrada: {folder}")
                 break
         
         if not dish_folder or not os.path.isdir(dish_folder):
             logger.error(f"[DELETE] Pasta não encontrada para slug: {slug_decoded} (norm: {slug_norm})")
             return {"ok": False, "error": "Prato não encontrado"}
         
-        # Caminho completo da imagem
+        # Caminho completo da imagem - tentar várias formas
         img_path = os.path.join(dish_folder, img_decoded)
         
+        # Se não encontrar, tentar buscar por nome similar
         if not os.path.exists(img_path):
+            logger.warning(f"[DELETE] Imagem não encontrada diretamente: {img_path}")
+            # Listar arquivos e tentar match parcial
+            files_in_folder = os.listdir(dish_folder)
+            img_norm = normalize(img_decoded)
+            for f in files_in_folder:
+                if normalize(f) == img_norm or img_decoded in f or f in img_decoded:
+                    img_path = os.path.join(dish_folder, f)
+                    logger.info(f"[DELETE] Encontrado por match parcial: {f}")
+                    break
+        
+        if not os.path.exists(img_path):
+            logger.error(f"[DELETE] Imagem não existe: {img_path}")
+            logger.error(f"[DELETE] Arquivos na pasta: {os.listdir(dish_folder)[:10]}")
             return {"ok": False, "error": f"Imagem não encontrada: {img_decoded}"}
         
         # Deletar a imagem
