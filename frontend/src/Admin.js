@@ -482,7 +482,7 @@ export default function Admin() {
       // Remover campos que não devem ser enviados ao backend
       const { all_images, first_image, image_count, ...dishData } = dish;
       
-      const res = await fetch(`${API}/admin/dishes/${dish.slug}`, {
+      const res = await fetch(`${API}/admin/dishes/${encodeURIComponent(dish.slug)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dishData)
@@ -1024,7 +1024,7 @@ export default function Admin() {
               {/* Foto */}
               <div className="dish-photo">
                 {dish.first_image ? (
-                  <img src={`${API}/admin/dish-image/${dish.slug}`} alt={dish.nome} />
+                  <img src={`${API}/admin/dish-image/${encodeURIComponent(dish.slug)}`} alt={dish.nome} />
                 ) : (
                   <div className="no-photo">{dish.category_emoji || '🍽️'}</div>
                 )}
