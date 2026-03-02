@@ -190,7 +190,7 @@ export default function Admin() {
     }
     
     try {
-      const res = await fetch(`${API}/admin/dishes/${slug}`, { method: 'DELETE' });
+      const res = await fetch(`${API}/admin/dishes/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
         loadDishes();
