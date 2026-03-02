@@ -1919,7 +1919,7 @@ export default function Admin() {
                             e.stopPropagation();
                             if (window.confirm(`Deletar foto ${idx + 1}?\n\n⚠️ Dica: Use o botão azul (↗) para MOVER a foto para outro prato sem perder!`)) {
                               try {
-                                const res = await fetch(`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
+                                const res = await fetch(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
                                 const data = await res.json();
                                 if (data.ok) {
                                   setEditingDish({
