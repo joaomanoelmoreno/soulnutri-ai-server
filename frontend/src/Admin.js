@@ -1960,7 +1960,7 @@ export default function Admin() {
                     ))
                   ) : editingDish.first_image ? (
                     <img 
-                      src={`${API}/admin/dish-image/${editingDish.slug}`} 
+                      src={`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}`} 
                       alt={editingDish.nome}
                       style={{ maxWidth: '200px', borderRadius: '8px' }}
                     />
