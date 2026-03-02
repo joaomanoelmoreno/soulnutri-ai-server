@@ -167,7 +167,7 @@ export default function Admin() {
   const fixDishWithAI = async (slug) => {
     setFixingSlug(slug);
     try {
-      const res = await fetch(`${API}/admin/audit/fix-single/${slug}`, { method: 'POST' });
+      const res = await fetch(`${API}/admin/audit/fix-single/${encodeURIComponent(slug)}`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         alert(`✅ Prato "${slug}" corrigido com sucesso!`);
@@ -466,7 +466,7 @@ export default function Admin() {
   const deleteNovidade = async (slug) => {
     if (!window.confirm(`Remover novidade de "${slug}"?`)) return;
     try {
-      const res = await fetch(`${API}/admin/novidades/${slug}`, { method: 'DELETE' });
+      const res = await fetch(`${API}/admin/novidades/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
         alert('✅ Novidade removida!');
