@@ -1,35 +1,52 @@
 {
-  "nome": "Brocolis Gratinado",
   "slug": "Brocolis Gratinado",
+  "nome": "Brocolis e/ou Couve Flor Gratinado",
   "categoria": "vegetariano",
+  "descricao": "Brócolis e/ou couve-flor  ao creme e gratinados em forno",
+  "ingredientes": [
+    "Brocolis e ou Couve flor",
+    "creme de leite",
+    "queijo parmesao",
+    "brócolis",
+    "couve-flor ",
+    "queijo",
+    "creme de leite fresco",
+    "noz-moscada "
+  ],
+  "beneficios": [
+    "Fonte de vitaminas e minerais do brócolis.",
+    "O parmesão fornece cálcio.",
+    "O brócolis é rico em fibras, auxiliando na saciedade.",
+    "Rico em vitaminas e minerais provenientes dos vegetais (brócolis e couve-flor).",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "O queijo e o creme de leite fornecem cálcio e proteínas."
+  ],
+  "riscos": [
+    "Alto teor de gordura saturada devido ao creme de leite e queijo.",
+    "Pode ser rico em sódio, dependendo da quantidade de queijo.",
+    "Alto teor de gordura devido ao queijo e creme de leite.",
+    "Pode ser rico em sódio dependendo da quantidade de queijo."
+  ],
+  "nutricao": {
+    "calorias": "170 kcal",
+    "proteinas": "8g",
+    "carboidratos": "5g",
+    "gorduras": "13g"
+  },
   "contem_gluten": false,
   "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "nutricao": {
-    "calorias": "170 kcal",
-    "proteinas": "8g",
-    "carboidratos": "5g",
-    "gorduras": "13g",
-    "fibras": "3g"
-  },
-  "category_emoji": "🥚",
-  "descricao": "Breocolis ao creme gratinado",
-  "ingredientes": [
-    "Brocolis",
-    "creme de leite",
-    "queijo parmesao"
+  "tecnica": "Gratinada ou cozida",
+  "indice_glicemico": "muito baixo",
+  "tempo_digestao": "2 horas",
+  "melhor_horario": "Almoço ou jantar",
+  "combina_com": [
+    "Queijo",
+    "Molho branco"
   ],
-  "beneficios": [
-    "Fonte de vitaminas e minerais do brócolis.",
-    "O parmesão fornece cálcio.",
-    "O brócolis é rico em fibras, auxiliando na saciedade."
-  ],
-  "riscos": [
-    "Alto teor de gordura saturada devido ao creme de leite e queijo.",
-    "Pode ser rico em sódio, dependendo da quantidade de queijo."
-  ],
-  "tecnica": ""
+  "evitar_com": [],
+  "category_emoji": "🥚"
 }

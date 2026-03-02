@@ -1,0 +1,33 @@
+{
+  "slug": "brocolis_ao_alho",
+  "nome": "Brocolis ao Alho",
+  "categoria": "vegano",
+  "descricao": "Brocolis ao Alho - prato do Cibi Sana",
+  "ingredientes": [
+    "Brocolis",
+    "parmesao",
+    "alho"
+  ],
+  "beneficios": [
+    "Fonte de vitaminas e minerais, especialmente vitamina C e K.",
+    "Rico em fibras, auxiliando na saúde digestiva.",
+    "O parmesão oferece cálcio, importante para a saúde óssea."
+  ],
+  "riscos": [
+    "Pode ser rico em sódio, dependendo da quantidade de parmesão.",
+    "O parmesão contém gorduras saturadas, consumir com moderação."
+  ],
+  "nutricao": {
+    "calorias": "~150 kcal",
+    "proteinas": "~8g",
+    "carboidratos": "~20g",
+    "gorduras": "~5g"
+  },
+  "contem_gluten": false,
+  "contem_lactose": true,
+  "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "category_emoji": "🌱"
+}

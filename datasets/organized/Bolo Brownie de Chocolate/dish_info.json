@@ -1,6 +1,6 @@
 {
   "slug": "Bolo Brownie de Chocolate",
-  "nome": "Bolo Brownie",
+  "nome": "Bolo Brownie de Chocolate",
   "categoria": "vegetariano",
   "descricao": "Bolo de chocolate  tipo brownie, adoçado com acucar e maple",
   "ingredientes": [
@@ -24,11 +24,11 @@
   ],
   "contem_gluten": true,
   "nutricao": {
-    "calorias": "380 kcal",
-    "proteinas": "6g",
-    "carboidratos": "45g",
-    "gorduras": "20g",
-    "fibras": "3g"
+    "calorias": "323 kcal",
+    "proteinas": "2.1g",
+    "carboidratos": "40.8g",
+    "gorduras": "17.2g",
+    "fibras": "0.9g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -39,7 +39,7 @@
   "beneficio_principal": "Nozes são uma rica fonte de Ácido Alfa Linolênico (ALA), um tipo de ômega-3 vegetal. Consumo de 28g por dia pode reduzir o risco de doenças cardíacas em 50%, segundo estudo publicado no Journal of Nutrition, 2020.",
   "curiosidade_cientifica": "Maple syrup contém cerca de 24% das Necessidades Diárias de Manganês por porção de 60ml - mineral essencial que ajuda na formação de ossos e na ativação de enzimas.",
   "referencia_pesquisa": "Journal of Nutrition, 2020; Departamento de Agricultura dos EUA, 2021",
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
