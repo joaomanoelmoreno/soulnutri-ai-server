@@ -1,40 +1,48 @@
 {
   "slug": "Bacalhau a Bras",
-  "ativo": true,
+  "nome": "Bacalhau  (Bras ou Gomes de Sa)",
+  "categoria": "proteína animal",
+  "descricao": "Prato tradicional português com bacalhau, arroz, ovos cozidos, legumes e azeitonas.",
+  "ingredientes": [
+    "Bacalhau",
+    "batatas",
+    "Ovos",
+    "tomates",
+    "pimentao",
+    "cebola",
+    "alho",
+    "ervas frescas",
+    "Azeitonas"
+  ],
   "beneficios": [
+    "Ômega-3: reduz inflamação",
+    "Vitamina B12: energia e sistema nervoso",
+    "Fósforo: saúde dos ossos",
     "Ômega-3",
     "Proteína de fácil digestão",
     "Vitamina D"
   ],
-  "categoria": "proteína animal",
-  "category_emoji": "🍖",
-  "contem_gluten": false,
-  "created_at": "2026-01-26T20:35:13.370000",
-  "descricao": "Prato tradicional português com bacalhau, arroz, ovos cozidos, legumes e azeitonas.",
-  "ingredientes": [
-    "Bacalhau",
-    "Arroz",
-    "Ovos",
-    "Brócolis",
-    "Azeitonas"
-  ],
-  "nome": "Bacalhau a bras",
-  "nutricao": {
-    "calorias": "~200 kcal",
-    "proteinas": "~10g",
-    "carboidratos": "~25g",
-    "gorduras": "~8g"
-  },
-  "origem": "user_created",
   "riscos": [
+    "Alérgeno: peixe",
+    "Alérgeno: ovo",
+    "Pode conter traços de glúten",
     "Alérgeno: Peixe, Ovo",
     "Alérgeno: OVO (ovo, ovos)",
     "Alérgeno: PEIXE (bacalhau)"
   ],
-  "tecnica": "Grelhado ou assado",
+  "nutricao": {
+    "calorias": "120 kcal",
+    "proteinas": "22g",
+    "carboidratos": "0g",
+    "gorduras": "3g"
+  },
+  "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": false,
-  "contem_frutos_mar": true,
+  "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Grelhado ou assado",
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
@@ -44,5 +52,6 @@
   ],
   "evitar_com": [
     "Frituras"
-  ]
+  ],
+  "category_emoji": "🍖"
 }

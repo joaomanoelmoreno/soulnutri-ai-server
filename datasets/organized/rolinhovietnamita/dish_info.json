@@ -1,6 +1,6 @@
 {
   "slug": "rolinhovietnamita",
-  "nome": "rolinhovietnamita",
+  "nome": "Rolinho Vietnamita",
   "categoria": "vegano",
   "descricao": "Enroladinho de papel de arroz vietnamita com legumes e ervas frescas",
   "ingredientes": [
@@ -33,5 +33,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": ""
 }

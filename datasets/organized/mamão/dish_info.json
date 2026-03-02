@@ -1,28 +1,31 @@
 {
-  "nome": "Mamão",
   "slug": "mamão",
+  "nome": "Mamao",
   "categoria": "vegano",
-  "category_emoji": "🌱",
-  "descricao": "Mamão cortado em cubos",
+  "descricao": "O prato é composto por cubos de mamão. O mamão parece estar fresco e cortado em cubos de tamanho médio, mostrando a cor alaranjada vibrante característica da fruta madura.",
   "ingredientes": [
-    "mamao"
+    "mamao",
+    "Mamão"
   ],
   "beneficios": [
     "Rico em vitamina C, fortalecendo o sistema imunológico.",
     "Fonte de fibras, auxiliando na digestão e no controle do colesterol.",
     "Contém antioxidantes que combatem os radicais livres.",
-    "Pode auxiliar na saúde da pele."
+    "Pode auxiliar na saúde da pele.",
+    "Rico em vitamina C, um poderoso antioxidante.",
+    "Fonte de fibras, auxiliando na saúde digestiva.",
+    "Contém papaína, enzima que facilita a digestão de proteínas.",
+    "Fonte de fibras, auxiliando na digestão e prevenindo a constipação.",
+    "Baixo em calorias, ideal para quem busca emagrecer."
   ],
   "riscos": [
     "Pode causar reações alérgicas em pessoas sensíveis."
   ],
-  "tecnica": "",
   "nutricao": {
     "calorias": "39 kcal",
     "proteinas": "0.6g",
     "carboidratos": "9g",
-    "gorduras": "0.1g",
-    "fibras": "1.8g"
+    "gorduras": "0.1g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
@@ -30,10 +33,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "indice_glicemico": "moderado",
-  "tempo_digestao": "2-3 horas",
-  "melhor_horario": "Almoço",
-  "combina_com": [],
-  "evitar_com": [],
-  "origem": "user_created_local"
+  "category_emoji": "🌱"
 }

@@ -1,13 +1,12 @@
 {
-  "nome": "arrozcombrócolis",
+  "nome": "Arroz com Brocolis",
   "slug": "arrozcombrócolis",
   "categoria": "vegano",
   "ingredientes": [
     "arroz",
-    "água",
-    "sal",
-    "alho",
-    "óleo"
+    "cebola",
+    "brocolis",
+    "alho"
   ],
   "beneficios": [
     "Fonte de energia rápida",
@@ -18,13 +17,14 @@
     "Alto índice glicêmico"
   ],
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "2.7g",
-    "carboidratos": "28g",
-    "gorduras": "0.3g"
+    "calorias": "76 kcal",
+    "proteinas": "3.3g",
+    "carboidratos": "16.3g",
+    "gorduras": "0.2g",
+    "fibras": "2.9g"
   },
   "tecnica": "Cozimento em água",
-  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
+  "descricao": "Arroz cozido com brocolis",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -39,5 +39,8 @@
   "evitar_com": [
     "Outros carboidratos refinados"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

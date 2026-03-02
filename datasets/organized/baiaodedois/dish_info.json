@@ -2,12 +2,12 @@
   "slug": "baiaodedois",
   "nome": "Baião de Dois",
   "categoria": "proteína animal",
-  "descricao": "Prato típico nordestino com arroz e feijão-de-corda demolhado cozidos juntos",
+  "descricao": "Prato típico nordestino com arroz e feijão-de-corda  e queijo coalho",
   "ingredientes": [
     "arroz",
-    "feijão-de-corda demolhado",
-    "bacon artesanal",
+    "feijão-de-corda ",
     "queijo coalho",
+    "bacon artesanal",
     "manteiga fresca",
     "temperos"
   ],
@@ -21,16 +21,18 @@
     "Pode conter traços de glúten"
   ],
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "199 kcal",
+    "proteinas": "4.1g",
+    "carboidratos": "7.6g",
+    "gorduras": "17.2g",
+    "fibras": "1.7g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "tecnica": ""
 }

@@ -2,14 +2,15 @@
   "slug": "Bacalhaucomnatas",
   "nome": "Bacalhau com Natas",
   "categoria": "proteína animal",
-  "descricao": "Bacalhau fresco desfiado gratinado com creme de leite fresco artesanal",
+  "descricao": "Bacalhau fresco desfiado gratinado com  champignons e creme de leite fresco ",
   "ingredientes": [
-    "bacalhau fresco",
+    "bacalhau",
     "batata",
+    "champignon",
     "creme de leite fresco",
-    "cebola orgânica",
-    "alho orgânico",
-    "azeitonas"
+    "cebola ",
+    "alho",
+    "queijo"
   ],
   "tecnica": "Gratinado em forno combinado",
   "beneficios": [
@@ -24,10 +25,11 @@
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "120 kcal",
-    "proteinas": "22g",
-    "carboidratos": "0g",
-    "gorduras": "3g"
+    "calorias": "86 kcal",
+    "proteinas": "8.0g",
+    "carboidratos": "6.8g",
+    "gorduras": "3.1g",
+    "fibras": "1.1g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -38,9 +40,9 @@
   "beneficio_principal": "Proteína de altíssima qualidade (18g/100g) com baixíssima gordura. Rico em selênio - mineral antioxidante que protege a tireoide",
   "curiosidade_cientifica": "O bacalhau é curado em sal por até 6 meses - processo que preserva nutrientes mas aumenta sódio",
   "referencia_pesquisa": "Food Chemistry, 2019",
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
-  "contem_frutos_mar": true,
+  "contem_frutos_mar": false,
   "indice_glicemico": "zero",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço ou jantar",
@@ -51,5 +53,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍖",
+  "contem_castanhas": false,
+  "contem_soja": false
 }

@@ -1,8 +1,8 @@
 {
   "slug": "Arroz 7 Graos",
-  "nome": "Arroz 7 Grãos",
+  "nome": "Arroz 7 Grãos (c/ e s/ Legumes)",
   "categoria": "vegano",
-  "descricao": "Mistura artesanal de arroz com grãos integrais e sementes nutritivas",
+  "descricao": " arroz e outros grãos integrais e sementes nutritivas como ou sem legumes",
   "ingredientes": [
     "arroz integral",
     "quinoa",
@@ -10,7 +10,8 @@
     "aveia",
     "centeio",
     "cevada",
-    "trigo"
+    "trigo",
+    "legumes"
   ],
   "tecnica": "Cozimento tradicional",
   "beneficios": [
@@ -23,10 +24,11 @@
   ],
   "contem_gluten": true,
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "2.7g",
-    "carboidratos": "28g",
-    "gorduras": "0.3g"
+    "calorias": "318 kcal",
+    "proteinas": "9.3g",
+    "carboidratos": "56.8g",
+    "gorduras": "7.1g",
+    "fibras": "11.1g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -50,5 +52,8 @@
   "evitar_com": [
     "Outros carboidratos refinados"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,18 +1,13 @@
 {
   "slug": "aboboraaocurry",
-  "nome": "aboboraaocurry",
+  "nome": "Abobora ao Curry",
   "categoria": "vegano",
-  "descricao": "Abóbora orgânica cozida no vapor com especiarias indianas importadas em molho cremoso de leite de coco",
+  "descricao": "Abóbora assada com especiarias indianas i",
   "ingredientes": [
     "abóbora",
     "sal",
-    "abóbora orgânica",
-    "curry indiano importado",
-    "leite de coco",
-    "gengibre fresco",
-    "cúrcuma importada",
-    "cebola orgânica",
-    "alho orgânico"
+    "curry indiano",
+    ""
   ],
   "beneficios": [
     "Rica em betacaroteno",
@@ -26,10 +21,11 @@
     "Alérgeno: coco"
   ],
   "nutricao": {
-    "calorias": "26 kcal",
-    "proteinas": "1g",
-    "carboidratos": "6.5g",
-    "gorduras": "0.1g"
+    "calorias": "4 kcal",
+    "proteinas": "0.3g",
+    "carboidratos": "0.9g",
+    "gorduras": "0.0g",
+    "fibras": "0.6g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

@@ -1,43 +1,44 @@
 {
   "slug": "Nhoqueao Sugo",
   "nome": "Nhoque ao Sugo",
-  "categoria": "vegetariano",
+  "categoria": "vegano",
   "descricao": "Nhoque de batata artesanal com molho de tomate feito em nossa cozinha",
   "ingredientes": [
+    "banana da terra",
+    "farinha de trigo",
     "batata",
     "farinha (uso controlado)",
     "ovo",
     "molho de tomate artesanal",
     "ervas frescas"
   ],
-  "tecnica": "Preparo artesanal",
   "beneficios": [
+    "Fonte de carboidratos",
+    "Energia sustentada",
+    "Conforto",
     "Potássio da batata: saúde cardiovascular",
     "Licopeno do molho: antioxidante",
     "Energia de carboidratos"
   ],
   "riscos": [
     "Contém glúten",
+    "Contém ovo",
+    "Alto índice glicêmico",
     "Alérgeno: ovo"
   ],
-  "contem_gluten": true,
   "nutricao": {
-    "calorias": "131 kcal",
-    "proteinas": "5g",
-    "carboidratos": "25g",
-    "gorduras": "1g"
+    "calorias": "229 kcal",
+    "proteinas": "5.6g",
+    "carboidratos": "50.5g",
+    "gorduras": "0.8g"
   },
-  "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
-  "ativo": true,
-  "origem": "cibi_sana",
-  "created_at": "2026-01-21T15:13:08.325000",
-  "updated_at": "2026-01-21T15:13:08.325000",
-  "alerta_saude": "Contém glúten",
-  "beneficio_principal": "Batata do nhoque fornece amido resistente quando resfriada - funciona como fibra prebiótica alimentando bactérias boas do intestino",
-  "curiosidade_cientifica": "Resfriar e reaquecer o nhoque aumenta o amido resistente em 50% - melhor para diabéticos",
-  "referencia_pesquisa": "European Journal of Clinical Nutrition, 2019",
+  "contem_gluten": true,
   "contem_lactose": false,
   "contem_ovo": true,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozido em água",
   "indice_glicemico": "moderado",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço",
@@ -48,8 +49,5 @@
   "evitar_com": [
     "Molhos gordurosos"
   ],
-  "category_emoji": "🥚",
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🌱"
 }

@@ -1,21 +1,24 @@
 {
   "slug": "Carpaccio de Laranja",
-  "nome": "Carpaccio de Abobrinha",
+  "nome": "Carpaccio de Abobrinha ",
   "categoria": "vegano",
   "descricao": "Finas fatias de laranja com chocolate 70%  e flor de sal",
   "ingredientes": [
     "abobrinha",
-    "oregano",
     "azeite",
+    "sal",
+    "oregano",
     "vinagre",
     "queijo vegano",
-    "sal",
     "Laranja",
     "chocolate 70%",
     "flor de sal",
     "pimenta dedo de moca"
   ],
   "beneficios": [
+    "Muito baixa caloria",
+    "Rica em água",
+    "Vitaminas B",
     "Rico em vitaminas e minerais provenientes da abobrinha.",
     "Fonte de antioxidantes do orégano.",
     "Promove a saúde cardiovascular devido ao azeite.",
@@ -31,10 +34,10 @@
     "A pimenta pode não ser adequada para pessoas com sensibilidade."
   ],
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "2g",
-    "carboidratos": "4g",
-    "gorduras": "6g"
+    "calorias": "17 kcal",
+    "proteinas": "1.2g",
+    "carboidratos": "3g",
+    "gorduras": "0.3g"
   },
   "contem_gluten": false,
   "contem_lactose": false,

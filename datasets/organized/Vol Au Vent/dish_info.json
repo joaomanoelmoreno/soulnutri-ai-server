@@ -10,26 +10,31 @@
     "ricota",
     "tomate",
     "cheiro-verde",
-    "temperos",
-    ""
+    "temperos"
   ],
   "beneficios": [
     "Fonte de cálcio (ricota)",
     "Pode ser adaptado com diversos recheios nutritivos",
     "Prato versátil e saboroso",
-    "Permite o consumo de vegetais"
+    "Permite o consumo de vegetais",
+    "Fonte de vitaminas e minerais do espinafre.",
+    "Rico em cálcio e proteínas da ricota.",
+    "Pode ser uma opção para variar a alimentação.",
+    "Boa fonte de fibras."
   ],
   "riscos": [
     "Alto teor de gordura dependendo do recheio",
     "Pode ser rico em sódio devido aos temperos",
-    "A massa folhada pode conter gordura saturada"
+    "A massa folhada pode conter gordura saturada",
+    "Alto teor de gordura devido à manteiga.",
+    "Pode ser calórico dependendo da quantidade consumida.",
+    "O consumo em excesso pode levar ao ganho de peso."
   ],
   "nutricao": {
     "calorias": "32 kcal",
     "proteinas": "2.7g",
     "carboidratos": "2.9g",
-    "gorduras": "1.3g",
-    "fibras": "0.8g"
+    "gorduras": "1.3g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -37,6 +42,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚",
-  "tecnica": ""
+  "category_emoji": "🥚"
 }

@@ -1,28 +1,37 @@
 {
   "slug": "moussedelimão",
-  "nome": "Mousse de Limão",
+  "nome": "Mousse de Limao",
   "categoria": "vegetariano",
-  "descricao": "mousse cremoso de sabor citrico",
+  "descricao": "Mousse cremoso de morango fresco com creme de leite fresco, adoçado com maple",
   "ingredientes": [
     "leite",
     "gelatina",
     "creme de leite",
     "limao",
     "acucar",
-    "leite condensado"
+    "leite condensado",
+    "morango fresco",
+    "creme de leite fresco",
+    "leite condensado artesanal",
+    "maple light"
   ],
   "beneficios": [
     "Fonte de vitamina C do limão, que auxilia na imunidade.",
     "Pode ser uma sobremesa refrescante.",
     "O limão possui antioxidantes que combatem radicais livres.",
     "Rico em cálcio proveniente do creme de leite, importante para a saúde óssea.",
-    "Sabor refrescante e agradável."
+    "Sabor refrescante e agradável.",
+    "Antocianinas: protegem o coração",
+    "Vitamina C: fortalece a imunidade",
+    "Manganês: saúde dos ossos"
   ],
   "riscos": [
     "Alto teor de açúcar.",
     "Rico em gorduras saturadas provenientes do creme de leite.",
     "Alto teor de açúcar devido ao leite condensado.",
-    "Consumir com moderação devido ao alto valor calórico."
+    "Consumir com moderação devido ao alto valor calórico.",
+    "Contém lactose",
+    "Pode conter traços de glúten"
   ],
   "nutricao": {
     "calorias": "220 kcal",

@@ -2,10 +2,11 @@
   "slug": "Arroz Integral",
   "nome": "Arroz Integral",
   "categoria": "vegano",
-  "descricao": "Arroz integral rico em fibras e nutrientes, cozido no vapor",
+  "descricao": "Arroz integral rico em fibras e nutrientes",
   "ingredientes": [
     "arroz integral selecionado",
-    "sal"
+    "alho",
+    "cebola"
   ],
   "tecnica": "Cozimento no vapor",
   "beneficios": [
@@ -18,10 +19,11 @@
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "2.7g",
-    "carboidratos": "28g",
-    "gorduras": "0.3g"
+    "calorias": "93 kcal",
+    "proteinas": "3.7g",
+    "carboidratos": "20.3g",
+    "gorduras": "0.2g",
+    "fibras": "2.7g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -45,5 +47,8 @@
   "evitar_com": [
     "Outros carboidratos refinados"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

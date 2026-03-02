@@ -4,8 +4,10 @@
   "categoria": "vegano",
   "ingredientes": [
     "abobrinha",
+    "azeitonas",
+    "manjericao",
     "azeite",
-    "sal"
+    ""
   ],
   "beneficios": [
     "Muito baixa caloria",
@@ -14,13 +16,14 @@
   ],
   "riscos": [],
   "nutricao": {
-    "calorias": "17 kcal",
-    "proteinas": "1.2g",
-    "carboidratos": "3g",
-    "gorduras": "0.3g"
+    "calorias": "231 kcal",
+    "proteinas": "0.8g",
+    "carboidratos": "2.0g",
+    "gorduras": "25.1g",
+    "fibras": "1.2g"
   },
   "tecnica": "Grelhada ou refogada",
-  "descricao": "Abobrinha leve e nutritiva.",
+  "descricao": "Abobrinha grelhada com tapenade de azeitona e manjericao",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -32,5 +35,8 @@
     "Tomate"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

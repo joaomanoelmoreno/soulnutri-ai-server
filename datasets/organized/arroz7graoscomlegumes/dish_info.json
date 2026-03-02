@@ -1,18 +1,16 @@
 {
   "slug": "arroz7graoscomlegumes",
-  "nome": "arroz7graoscomlegumes",
+  "nome": "Arroz 7 Graos com Legumes",
   "categoria": "vegano",
   "descricao": "Arroz 7 grãos salteado com legumes orgânicos frescos",
   "ingredientes": [
-    "arroz",
-    "água",
-    "sal",
+    "",
+    "",
     "alho",
-    "óleo",
     "arroz 7 grãos",
-    "cenoura orgânica",
-    "ervilha",
-    "milho",
+    "cenoura ",
+    "",
+    "",
     "brócolis orgânico",
     "abobrinha orgânica"
   ],
@@ -29,12 +27,13 @@
     "Contém glúten"
   ],
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "2.7g",
-    "carboidratos": "28g",
-    "gorduras": "0.3g"
+    "calorias": "64 kcal",
+    "proteinas": "2.8g",
+    "carboidratos": "13.7g",
+    "gorduras": "0.2g",
+    "fibras": "2.8g"
   },
-  "contem_gluten": true,
+  "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,

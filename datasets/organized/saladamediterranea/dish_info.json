@@ -1,10 +1,10 @@
 {
   "slug": "saladamediterranea",
-  "nome": "Salada Mediterrânea",
+  "nome": "Salada Mediterranea",
   "categoria": "vegetariano",
   "descricao": "Salada fresca e nutritiva.",
   "ingredientes": [
-    "alface",
+    "cebola",
     "tomate",
     "pepino",
     "cenoura",
@@ -24,10 +24,11 @@
     "Verificar higienização"
   ],
   "nutricao": {
-    "calorias": "80 kcal",
-    "proteinas": "4g",
-    "carboidratos": "7g",
-    "gorduras": "4g"
+    "calorias": "72 kcal",
+    "proteinas": "4.5g",
+    "carboidratos": "5.0g",
+    "gorduras": "4.1g",
+    "fibras": "1.5g"
   },
   "contem_gluten": false,
   "contem_lactose": true,

@@ -1,8 +1,8 @@
 {
   "slug": "umamidetomates",
-  "nome": "umamidetomates",
+  "nome": "Umami de Tomates",
   "categoria": "vegano",
-  "descricao": "O tomate é a fruta mais rica em umami, o chamado \"quinto sabor\", devido à alta concentração de glutamato livre, que aumenta conforme o fruto amadurece.",
+  "descricao": "tomates marinados",
   "ingredientes": [
     "Azeite de Oliva",
     "Vinagre ",
@@ -11,7 +11,7 @@
     "azeite extravirgem",
     "alho orgânico",
     "ervas orgânicas",
-    "sal"
+    "cebola"
   ],
   "beneficios": [
     "Licopeno concentrado: poderoso antioxidante",
@@ -33,5 +33,6 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "tecnica": ""
 }

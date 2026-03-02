@@ -1,13 +1,13 @@
 {
   "slug": "frangoaocremedelimao",
-  "nome": "frangoaocremedelimao",
+  "nome": "Frango ao Creme de limao",
   "categoria": "proteína animal",
   "descricao": "Frango cozido em creme, geralmente com ervas frescas.",
   "ingredientes": [
     "frango",
     "sal",
     "temperos",
-    "Peito de frango",
+    "limao",
     "Creme de leite",
     "Salsa",
     "Alho",
@@ -25,13 +25,14 @@
     "Alérgeno: LACTOSE (creme, leite)"
   ],
   "nutricao": {
-    "calorias": "165 kcal",
-    "proteinas": "31g",
-    "carboidratos": "0g",
-    "gorduras": "3.6g"
+    "calorias": "76 kcal",
+    "proteinas": "5.7g",
+    "carboidratos": "6.7g",
+    "gorduras": "3.2g",
+    "fibras": "1.0g"
   },
   "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

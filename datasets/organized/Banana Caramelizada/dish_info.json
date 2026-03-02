@@ -1,13 +1,12 @@
 {
   "slug": "Banana Caramelizada",
   "nome": "Banana Caramelizada",
-  "categoria": "vegetariano",
-  "descricao": "Banana cozida com maple , manteiga e acucar",
+  "categoria": "vegano",
+  "descricao": "Banana cozida com maple  e acucar",
   "ingredientes": [
     "banana",
     "maple canadense",
-    "manteiga fresca",
-    "canela importada",
+    "canela",
     "acucar",
     "canela"
   ],
@@ -24,11 +23,11 @@
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "1g",
-    "carboidratos": "40g",
-    "gorduras": "6g",
-    "fibras": "2g"
+    "calorias": "95 kcal",
+    "proteinas": "1.2g",
+    "carboidratos": "23.0g",
+    "gorduras": "0.2g",
+    "fibras": "0.8g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -44,5 +43,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🥚"
+  "category_emoji": "🌱"
 }

@@ -6,9 +6,7 @@
   "ingredientes": [
     "arroz 7 grãos",
     "amêndoas tostadas",
-    "azeite extravirgem",
-    "sal",
-    "ervas frescas orgânicas"
+    "ervas frescas"
   ],
   "tecnica": "Cozimento tradicional",
   "beneficios": [
@@ -20,12 +18,13 @@
     "Contém glúten",
     "Alérgeno: amêndoas"
   ],
-  "contem_gluten": true,
+  "contem_gluten": false,
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "2.7g",
-    "carboidratos": "28g",
-    "gorduras": "0.3g"
+    "calorias": "236 kcal",
+    "proteinas": "7.0g",
+    "carboidratos": "19.2g",
+    "gorduras": "15.8g",
+    "fibras": "4.4g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -49,5 +48,8 @@
   "evitar_com": [
     "Outros carboidratos refinados"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🌱",
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

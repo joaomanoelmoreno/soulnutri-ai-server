@@ -1,6 +1,6 @@
 {
   "slug": "Batatas ao Molho",
-  "nome": "Nhoque",
+  "nome": "Nhoque ao Molho Branco",
   "categoria": "vegetariano",
   "descricao": "Nhoque de batata tradicional italiano.",
   "ingredientes": [
@@ -11,10 +11,9 @@
     "Creme de Leite",
     "Ervas",
     "farinha de trigo",
-    "sal",
-    "nhoque",
-    "batatas",
-    "manteiga"
+    "",
+    "",
+    ""
   ],
   "beneficios": [
     "Fonte de carboidratos para energia.",
@@ -43,10 +42,11 @@
     "A presença de farinha de trigo pode ser um problema para pessoas com sensibilidade ao glúten."
   ],
   "nutricao": {
-    "calorias": "180 kcal",
-    "proteinas": "6g",
-    "carboidratos": "25g",
-    "gorduras": "7g"
+    "calorias": "142 kcal",
+    "proteinas": "2.0g",
+    "carboidratos": "25.3g",
+    "gorduras": "3.5g",
+    "fibras": "0.6g"
   },
   "contem_gluten": true,
   "contem_lactose": true,

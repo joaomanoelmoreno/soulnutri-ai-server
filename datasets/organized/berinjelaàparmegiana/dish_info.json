@@ -2,15 +2,16 @@
   "slug": "berinjelaàparmegiana",
   "nome": "Berinjela a Parmegiana",
   "categoria": "vegetariano",
-  "descricao": "Berinjela versátil, base de muitos pratos mediterrâneos.",
+  "descricao": "Berinjela a parmegiana",
   "ingredientes": [
     "berinjela",
+    "farinha de rosca",
     "azeite",
     "alho",
-    "sal",
+    "mussarela",
     "molho de tomate",
     "queijo parmesão",
-    "manjericão"
+    ""
   ],
   "beneficios": [
     "Baixíssimas calorias",
@@ -24,13 +25,14 @@
     "Alérgeno: Contém LACTOSE"
   ],
   "nutricao": {
-    "calorias": "25 kcal",
-    "proteinas": "1g",
-    "carboidratos": "6g",
-    "gorduras": "0.2g"
+    "calorias": "265 kcal",
+    "proteinas": "8.0g",
+    "carboidratos": "15.6g",
+    "gorduras": "19.4g",
+    "fibras": "1.9g"
   },
-  "contem_gluten": false,
-  "contem_lactose": false,
+  "contem_gluten": true,
+  "contem_lactose": true,
   "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,

@@ -1,13 +1,15 @@
 {
   "nome": "Arroz Mar e Campo",
   "slug": "Arroz Mar e Campo",
-  "categoria": "vegano",
+  "categoria": "proteína animal",
   "ingredientes": [
     "arroz",
-    "água",
-    "sal",
+    "cebola",
+    "camaroes",
+    "bacon",
+    "carne seca",
     "alho",
-    "óleo"
+    "castanhas de cajuo"
   ],
   "beneficios": [
     "Fonte de energia rápida",
@@ -18,13 +20,14 @@
     "Alto índice glicêmico"
   ],
   "nutricao": {
-    "calorias": "130 kcal",
-    "proteinas": "2.7g",
-    "carboidratos": "28g",
-    "gorduras": "0.3g"
+    "calorias": "40 kcal",
+    "proteinas": "1.6g",
+    "carboidratos": "8.7g",
+    "gorduras": "0.1g",
+    "fibras": "1.2g"
   },
   "tecnica": "Cozimento em água",
-  "descricao": "Arroz cozido, acompanhamento clássico brasileiro.",
+  "descricao": "Arroz cozido com camaroes, bacon e carne seca",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -39,5 +42,8 @@
   "evitar_com": [
     "Outros carboidratos refinados"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🍖",
+  "contem_castanhas": true,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

@@ -1,33 +1,47 @@
 {
-  "nome": "Batata Frita (assada)",
   "slug": "Batata Frita",
+  "nome": "Batata Assada (Palito ou c/ Paprica)",
   "categoria": "vegano",
+  "descricao": "Batatas temperadas com páprica defumada assadas em forno combinado",
   "ingredientes": [
     "batata",
-    "sal",
-    "azeite"
+    "páprica defumada",
+    "paprica doce",
+    "paprica"
   ],
-  "descricao": "Batata preparada de forma saudável em forno",
   "beneficios": [
+    "Fonte de carboidratos complexos, que fornecem energia.",
+    "A páprica defumada é rica em antioxidantes.",
+    "O azeite de oliva é fonte de gorduras saudáveis.",
+    "Pode auxiliar na saciedade devido ao teor de fibras.",
+    "Fonte de carboidratos complexos para energia.",
+    "Rica em potássio, importante para a saúde cardiovascular.",
+    "Boa fonte de vitamina C e antioxidantes.",
+    "Opção versátil e fácil de preparar.",
     "Fonte de carboidratos para energia.",
     "Contém fibras, que auxiliam na saúde intestinal.",
     "Pode ser uma opção mais saudável quando assada em vez de frita."
   ],
   "riscos": [
+    "Consumir com moderação devido ao teor calórico, especialmente se for frita.",
+    "O consumo em excesso pode levar ao ganho de peso.",
+    "Pode conter alto teor de sódio dependendo da quantidade de sal utilizada.",
     "O consumo excessivo pode levar ao ganho de peso.",
     "O teor de gordura pode variar dependendo da quantidade de azeite utilizada."
   ],
   "nutricao": {
-    "calorias": "100 kcal",
-    "proteinas": "2g",
-    "carboidratos": "15g",
-    "gorduras": "4g",
-    "fibras": "2g"
+    "calorias": "26 kcal",
+    "proteinas": "0.6g",
+    "carboidratos": "6.0g",
+    "gorduras": "0.0g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "tecnica": "Cozimento ou assado",
   "contem_ovo": false,
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false,
+  "tecnica": "Cozimento ou assado",
   "indice_glicemico": "alto",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Almoço",
@@ -38,8 +52,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🌱",
-  "contem_castanhas": false,
-  "contem_frutos_mar": false,
-  "contem_soja": false
+  "category_emoji": "🌱"
 }

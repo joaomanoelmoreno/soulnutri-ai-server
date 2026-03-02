@@ -1,10 +1,10 @@
 {
   "slug": "Berinjela À Parmegiana",
-  "nome": "Filé de Frango à Parmegiana",
+  "nome": "Fila a Parmegiana (Frango, Peixe ou File Mignon)",
   "categoria": "proteína animal",
-  "descricao": "Filé de frango empanado artesanalmente e fassado em forno combinado ao molho de tomates e queijo mussarela",
+  "descricao": "Filé  empanado  e assado em forno ao molho de tomates e queijo mussarela",
   "ingredientes": [
-    "peito de frango fresco",
+    "frango/peixe/F mignon",
     "farinha de trigo",
     "farinha de rosca",
     "ovo",
@@ -25,11 +25,11 @@
     "Consumir com moderação devido ao teor de gordura da mussarela e da fritura."
   ],
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "18g",
-    "carboidratos": "15g",
-    "gorduras": "10g",
-    "fibras": "1g"
+    "calorias": "127 kcal",
+    "proteinas": "7.7g",
+    "carboidratos": "22.2g",
+    "gorduras": "0.7g",
+    "fibras": "1.6g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -48,5 +48,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🐟"
 }
