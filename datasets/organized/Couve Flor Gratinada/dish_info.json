@@ -1,11 +1,11 @@
 {
   "slug": "Couve Flor Gratinada",
-  "nome": "Couve-Flor Gratinada",
-  "categoria": "vegano",
-  "descricao": "Couve-flor versátil e nutritiva.",
+  "nome": "Brocolis e/ou Couve Flor Gratinado",
+  "categoria": "vegetariano",
+  "descricao": "Couve-flor e/ou brocolis",
   "ingredientes": [
-    "couve-flor",
-    "sal"
+    "",
+    ""
   ],
   "beneficios": [
     "Baixíssimas calorias",
@@ -27,7 +27,7 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱",
+  "category_emoji": "🥚",
   "tecnica": "Gratinada ou cozida",
   "indice_glicemico": "muito baixo",
   "tempo_digestao": "2 horas",

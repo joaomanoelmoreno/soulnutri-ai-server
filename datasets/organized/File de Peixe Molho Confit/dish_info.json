@@ -2,13 +2,14 @@
   "slug": "File de Peixe Molho Confit",
   "nome": "Filé de Peixe ao Molho Confit",
   "categoria": "proteína animal",
-  "descricao": "Filé de peixe fresco ao vapor com tomate sem pele confit",
+  "descricao": "Filé de peixe fresco ao vapor com tomate cereja",
   "ingredientes": [
     "peixe fresco",
-    "tomate sem pele",
+    "tomate cereja",
     "azeite extravirgem",
-    "alho orgânico",
-    "ervas orgânicas"
+    "alho ",
+    "ervas orgânicas",
+    "cebola"
   ],
   "tecnica": "Cozimento no vapor + tomate confit em azeite",
   "beneficios": [
@@ -49,5 +50,7 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🐟",
+  "contem_castanhas": false,
+  "contem_soja": false
 }

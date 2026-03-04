@@ -1,19 +1,19 @@
 {
-  "nome": "Conchiglione ao Creme de Avelas e Salvia Crocante",
+  "nome": "Conchiglione ao Creme de Avelas ",
   "slug": "Conchiglione ao Creme de Avelas e Salvia Crocante",
   "categoria": "vegetariano",
   "contem_gluten": true,
   "contem_lactose": true,
   "contem_ovo": false,
-  "contem_castanhas": true,
+  "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
   "nutricao": {
-    "calorias": "220 kcal",
-    "proteinas": "6g",
-    "carboidratos": "25g",
-    "gorduras": "12g",
-    "fibras": "3g"
+    "calorias": "87 kcal",
+    "proteinas": "3.4g",
+    "carboidratos": "2.8g",
+    "gorduras": "7.1g",
+    "fibras": "0.4g"
   },
   "category_emoji": "🥚",
   "descricao": "conchiglione com cebolas caramelizads em creme de avelas e folhas de salvia fresca",
@@ -22,7 +22,8 @@
     "cebola",
     "creme de leite",
     "avelas",
-    "salvia"
+    "salvia",
+    "queijo"
   ],
   "beneficios": [
     "Fonte de energia pelos carboidratos da massa.",

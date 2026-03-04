@@ -7,7 +7,8 @@
     "cenoura orgânica",
     "iogurte natural fresco",
     "maple light",
-    "gengibre fresco"
+    "gengibre fresco",
+    "laranja"
   ],
   "tecnica": "Preparo a frio",
   "beneficios": [
@@ -21,10 +22,11 @@
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "24 kcal",
+    "proteinas": "1.3g",
+    "carboidratos": "3.7g",
+    "gorduras": "0.7g",
+    "fibras": "0.8g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -45,5 +47,8 @@
     "Sopas"
   ],
   "evitar_com": [],
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

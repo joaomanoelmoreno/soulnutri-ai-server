@@ -2,9 +2,9 @@
   "slug": "Erva Docecom Laranja",
   "nome": "Erva Doce com Laranja",
   "categoria": "vegano",
-  "descricao": "Erva doce (funcho) orgânica salteada em azeite com suco de laranja fresco",
+  "descricao": "Erva doce (funcho)  salteada em azeite com suco de laranja fresco",
   "ingredientes": [
-    "erva doce orgânica",
+    "erva doce ",
     "suco de laranja fresco",
     "azeite extravirgem",
     "sal"
@@ -39,5 +39,5 @@
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

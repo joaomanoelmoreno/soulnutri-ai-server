@@ -1,13 +1,13 @@
 {
   "slug": "Filé de Peixe ao Molho de Limão",
-  "nome": "Filé de Peixe ao Molho de Limão",
+  "nome": "File de Peixe ao Molho de Limao",
   "nome_exibicao": "Filé de Peixe ao Molho de Limão",
   "categoria": "proteína animal",
   "descricao": "Filé de peixe grelhado com molho cítrico de limão, leve e saboroso.",
   "ingredientes": [
     "filé de peixe",
     "limão",
-    "manteiga",
+    "azeite",
     "alho",
     "salsinha",
     "sal"
@@ -28,10 +28,10 @@
     "gorduras": "7g"
   },
   "contem_gluten": false,
-  "contem_lactose": true,
+  "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": true,
+  "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "Grelhado com molho",
   "indice_glicemico": "zero",
@@ -45,6 +45,6 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖",
+  "category_emoji": "🐟",
   "contem_peixe": true
 }

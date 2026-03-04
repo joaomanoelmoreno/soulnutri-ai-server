@@ -5,9 +5,10 @@
   "descricao": "Cuscuz doce de tapioca artesanal com coco, adoçado com maple",
   "ingredientes": [
     "tapioca",
-    "leite de coco",
+    "leite",
     "maple canadense",
-    "coco ralado fresco"
+    "coco ralado fresco",
+    "leite condensado"
   ],
   "tecnica": "Vapor + banho maria",
   "beneficios": [
@@ -21,10 +22,11 @@
   ],
   "contem_gluten": false,
   "nutricao": {
-    "calorias": "50 kcal",
-    "proteinas": "2g",
-    "carboidratos": "10g",
-    "gorduras": "0.5g"
+    "calorias": "132 kcal",
+    "proteinas": "1.6g",
+    "carboidratos": "24.1g",
+    "gorduras": "3.5g",
+    "fibras": "0.0g"
   },
   "aviso_cibi_sana": "Sem aditivos químicos e/ou alimentos industrializados/processados",
   "ativo": true,
@@ -35,7 +37,7 @@
   "beneficio_principal": "O leite de coco é rico em ácido láurico, que compõe aproximadamente 50% dos ácidos graxos do coco. Estudos mostram que o ácido láurico pode aumentar o colesterol HDL 'bom' e melhorar a saúde cardiovascular (Journal of Nutrition, 2016).",
   "curiosidade_cientifica": "A adição de coco ralado fresco ao cuscuz de tapioca não só adiciona textura, mas também fornece fibra insolúvel que pode ajudar na digestão, uma vez que a tapioca por si só é baixa em fibras.",
   "referencia_pesquisa": "Journal of Nutrition, 2016 - Estudo sobre ácidos graxos de cadeia média no leite de coco.",
-  "contem_lactose": false,
+  "contem_lactose": true,
   "contem_ovo": false,
   "indice_glicemico": "moderado",
   "tempo_digestao": "2 horas",
@@ -45,5 +47,8 @@
     "Manteiga"
   ],
   "evitar_com": [],
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

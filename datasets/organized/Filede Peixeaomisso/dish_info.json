@@ -2,15 +2,16 @@
   "slug": "Filede Peixeaomisso",
   "nome": "Filé de Peixe ao Missô",
   "categoria": "proteína animal",
-  "descricao": "Filé de peixe fresco (recebido a cada 1-2 dias) assado com molho de missô ",
+  "descricao": "Filé de peixe fresco assado com molho de missô ",
   "ingredientes": [
     "peixe branco fresco",
     "missô ",
     "saquê",
     "gengibre fresco",
     "cebolinha orgânica",
-    "peixe fresco",
-    "gergelim importado"
+    "farinha de rosca",
+    "",
+    "gergelim "
   ],
   "beneficios": [
     "Ômega-3: protege coração e artérias",
@@ -49,5 +50,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🐟"
 }

@@ -2,13 +2,13 @@
   "slug": "Ceviche",
   "nome": "Ceviche",
   "categoria": "proteína animal",
-  "descricao": "Peixe fresco (recebido a cada 1-2 dias) marinado em limão com cebola roxa orgânica",
+  "descricao": "Peixe fresco marinado em limão com cebola roxa",
   "ingredientes": [
     "peixe",
-    "sal",
+    "",
     "limão",
-    "peixe branco fresco",
-    "cebola roxa orgânica",
+    "",
+    "cebola roxa ",
     "pimenta dedo de moca",
     "cebola roxa",
     ""
@@ -24,18 +24,18 @@
     "Pode conter sódio em excesso (devido ao sal)"
   ],
   "nutricao": {
-    "calorias": "110 kcal",
-    "proteinas": "20g",
-    "carboidratos": "5g",
-    "gorduras": "2g",
-    "fibras": "1g"
+    "calorias": "21 kcal",
+    "proteinas": "1.1g",
+    "carboidratos": "4.5g",
+    "gorduras": "0.1g",
+    "fibras": "0.9g"
   },
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
   "contem_castanhas": false,
-  "contem_frutos_mar": false,
+  "contem_frutos_mar": true,
   "contem_soja": false,
-  "category_emoji": "🍖",
+  "category_emoji": "🥩",
   "tecnica": ""
 }

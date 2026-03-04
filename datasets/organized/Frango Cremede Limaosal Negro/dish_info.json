@@ -1,8 +1,8 @@
 {
   "slug": "Frango Cremede Limaosal Negro",
-  "nome": "Frango ao Creme de Limão e Sal Negro",
+  "nome": "Frango ao Creme de Limao",
   "categoria": "proteína animal",
-  "descricao": "Frango preparado sous vide ao creme de limão com sal negro do Havaí importado",
+  "descricao": "Frango preparado ao creme de limão com sal negro do Havaí importado",
   "ingredientes": [
     "frango fresco",
     "creme de leite fresco",
@@ -48,5 +48,8 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍗",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

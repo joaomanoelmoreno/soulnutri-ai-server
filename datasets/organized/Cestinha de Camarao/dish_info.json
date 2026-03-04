@@ -2,21 +2,16 @@
   "slug": "Cestinha de Camarao",
   "nome": "Cestinha de Camarão",
   "categoria": "proteína animal",
-  "descricao": "Cestinhas assadas em forno combinado recheadas com camarão fresco",
+  "descricao": "Cestinhas assadas  recheadas com camarão fresco ao creme",
   "ingredientes": [
     "camarão",
     "creme de leite",
     "alho",
     "cebola",
     "limao",
-    "especiarias",
     "temperos orientais",
     "massa folhada",
     "manteiga",
-    "sal",
-    "camarão fresco",
-    "massa wonton",
-    "cream cheese artesanal",
     "cebolinha orgânica"
   ],
   "beneficios": [
@@ -37,10 +32,11 @@
     "Contém glúten"
   ],
   "nutricao": {
-    "calorias": "280 kcal",
-    "proteinas": "12g",
-    "carboidratos": "20g",
-    "gorduras": "18g"
+    "calorias": "129 kcal",
+    "proteinas": "1.4g",
+    "carboidratos": "5.7g",
+    "gorduras": "11.7g",
+    "fibras": "1.1g"
   },
   "contem_gluten": true,
   "contem_lactose": true,
@@ -59,5 +55,5 @@
   "evitar_com": [
     "Excesso de manteiga"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🐟"
 }

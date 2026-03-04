@@ -7,8 +7,7 @@
     "Farinha de mandioca",
     "Temperos",
     "bacon artesanal",
-    "cebola",
-    "ovos"
+    "cebola"
   ],
   "beneficios": [
     "Fonte de energia devido aos carboidratos da farinha de mandioca.",
@@ -29,7 +28,7 @@
   },
   "contem_gluten": false,
   "contem_lactose": false,
-  "contem_ovo": true,
+  "contem_ovo": false,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,
@@ -44,5 +43,5 @@
   "evitar_com": [
     "Outros carboidratos"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩"
 }

@@ -4,9 +4,9 @@
   "categoria": "proteína animal",
   "descricao": "Prato mineiro tradicional com feijão demolhado, bacon artesanal e couve orgânica",
   "ingredientes": [
-    "feijão demolhado",
-    "bacon artesanal",
-    "linguiça artesanal",
+    "feijão ",
+    "bacon ",
+    "linguiça ",
     "farinha de mandioca",
     "ovos",
     "couve orgânica"
@@ -38,7 +38,7 @@
   "curiosidade_cientifica": "Demolhar feijão por 12 horas pode reduzir o teor de fitato em até 60%, aumentando a biodisponibilidade do ferro e zinco presentes. Fonte: Journal of Food Science and Technology, 2020.",
   "referencia_pesquisa": "Tabela Brasileira de Composição de Alimentos - TACO, UNICAMP, 2011",
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "indice_glicemico": "baixo",
   "tempo_digestao": "3-4 horas",
   "melhor_horario": "Almoço",
@@ -50,5 +50,8 @@
   "evitar_com": [
     "Excesso de embutidos"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

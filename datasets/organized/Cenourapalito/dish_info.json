@@ -2,10 +2,10 @@
   "slug": "Cenourapalito",
   "nome": "Cenoura Palito",
   "categoria": "vegano",
-  "descricao": "Cenouras orgânicas cortadas em palito, cozidas no vapor",
+  "descricao": "Cenouras orgânicas cortadas em palito, assadas",
   "ingredientes": [
-    "cenoura orgânica",
-    "sal"
+    "cenoura",
+    ""
   ],
   "tecnica": "Cozimento no vapor",
   "beneficios": [
@@ -42,5 +42,8 @@
     "Sopas"
   ],
   "evitar_com": [],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

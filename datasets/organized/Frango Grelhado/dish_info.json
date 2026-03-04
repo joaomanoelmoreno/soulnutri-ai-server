@@ -2,12 +2,12 @@
   "slug": "Frango Grelhado",
   "nome": "Peito de Frango Grelhado",
   "categoria": "proteína animal",
-  "descricao": "Frango preparado de forma saudável.",
+  "descricao": "Frango grelhado",
   "ingredientes": [
-    "frango",
+    "peito de frango",
     "sal",
     "temperos",
-    "Peito de frango sem pele"
+    ""
   ],
   "beneficios": [
     "Proteína magra de alta qualidade",
@@ -40,5 +40,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🍗"
 }

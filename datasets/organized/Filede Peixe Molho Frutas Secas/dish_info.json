@@ -5,14 +5,12 @@
   "descricao": "Filé de peixe fresco ao vapor com molho artesanal de frutas secas",
   "ingredientes": [
     "peixe",
-    "sal",
     "limão",
     "ervas",
-    "peixe fresco",
     "uva passa",
     "damasco",
     "vinho branco",
-    "manteiga fresca"
+    ""
   ],
   "beneficios": [
     "Ômega-3",
@@ -50,5 +48,5 @@
   "evitar_com": [
     "Frituras"
   ],
-  "category_emoji": "🍖"
+  "category_emoji": "🐟"
 }

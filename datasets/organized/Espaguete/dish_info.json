@@ -2,13 +2,13 @@
   "slug": "Espaguete",
   "nome": "Espaguete",
   "categoria": "vegetariano",
-  "descricao": "Massa italiana artesanal servida com molho de tomate feito em nossa cozinha",
+  "descricao": "espagute al dente",
   "ingredientes": [
-    "massa de trigo",
-    "molho de tomate artesanal",
+    "trigo",
+    "ovos",
     "azeite extravirgem",
-    "alho orgânico",
-    "manjericão orgânico"
+    "alho ",
+    ""
   ],
   "tecnica": "Cozimento tradicional",
   "beneficios": [
@@ -36,7 +36,7 @@
   "curiosidade_cientifica": "O alho orgânico contém alicina, que auxilia na regulação da pressão arterial e melhora a saúde cardiovascular. A alicina é mais eficaz quando o alho é esmagado e deixado em repouso por 10 minutos antes de ser cozido, pois isso potencializa sua liberação.",
   "referencia_pesquisa": "Harvard T.H. Chan School of Public Health, 2016",
   "contem_lactose": false,
-  "contem_ovo": false,
+  "contem_ovo": true,
   "contem_castanhas": false,
   "contem_frutos_mar": false,
   "contem_soja": false,

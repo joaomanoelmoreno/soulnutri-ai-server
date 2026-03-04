@@ -4,9 +4,9 @@
   "categoria": "proteína animal",
   "ingredientes": [
     "filé mignon",
-    "sal",
-    "pimenta",
-    "manteiga"
+    "cebola",
+    "tomate",
+    "pimentao"
   ],
   "beneficios": [
     "Proteína nobre",
@@ -21,7 +21,7 @@
     "gorduras": "8g"
   },
   "tecnica": "Grelhado ou selado",
-  "descricao": "Filé mignon macio e suculento.",
+  "descricao": "Filé mignon com legumes grelhaods",
   "contem_gluten": false,
   "contem_lactose": false,
   "contem_ovo": false,
@@ -33,5 +33,8 @@
     "Salada"
   ],
   "evitar_com": [],
-  "category_emoji": "🍖"
+  "category_emoji": "🥩",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

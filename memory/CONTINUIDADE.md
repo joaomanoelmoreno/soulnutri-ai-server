@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://dish-radar.preview.emergentagent.com
+**URL**: https://vitals-test.preview.emergentagent.com
 
 ---
 

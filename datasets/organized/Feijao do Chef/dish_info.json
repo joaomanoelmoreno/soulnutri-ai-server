@@ -4,14 +4,12 @@
   "categoria": "vegano",
   "descricao": "Feijão preto demolhado e cozido em caldo com embutidos e temperado com cebola, alho e ervas secas",
   "ingredientes": [
-    "feijão",
-    "água",
-    "sal",
+    "",
     "alho",
     "cebola",
     "louro",
-    "feijão preto demolhado",
-    "cebola ",
+    "feijão preto ",
+    "",
     "embutidos defumados",
     "ervas"
   ],
@@ -53,5 +51,5 @@
   "evitar_com": [
     "Excesso de embutidos"
   ],
-  "category_emoji": "🌱"
+  "category_emoji": "🥬"
 }

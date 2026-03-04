@@ -753,7 +753,7 @@ autorestart=true
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://dish-radar.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://vitals-test.preview.emergentagent.com
 ```
 
 ### Backend (.env)

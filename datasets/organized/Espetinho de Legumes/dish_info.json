@@ -14,5 +14,12 @@
     "carboidratos": "~18g",
     "gorduras": "~2g"
   },
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "descricao": "espetinho de legumes",
+  "ingredientes": [
+    "beringela, abobrinha, tomate, pimentao, cebola"
+  ],
+  "beneficios": [],
+  "riscos": [],
+  "tecnica": ""
 }

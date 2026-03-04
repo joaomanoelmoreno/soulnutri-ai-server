@@ -2,7 +2,7 @@
   "slug": "Gelatinadecereja",
   "nome": "Gelatina de Cereja",
   "categoria": "vegetariano",
-  "descricao": "Sobremesa de gelatina artesanal sabor cereja",
+  "descricao": "Sobremesa de gelatina sabor cereja",
   "ingredientes": [
     "gelatina",
     "suco de cereja",
@@ -45,5 +45,8 @@
   "evitar_com": [
     "Outras sobremesas"
   ],
-  "category_emoji": "🥚"
+  "category_emoji": "🥚",
+  "contem_castanhas": false,
+  "contem_frutos_mar": false,
+  "contem_soja": false
 }

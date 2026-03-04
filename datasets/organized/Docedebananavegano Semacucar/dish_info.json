@@ -1,10 +1,12 @@
 {
-  "nome": "Doce de Banana Vegano Sem Açúcar",
+  "nome": "Doce de Banana ",
   "categoria": "vegano",
   "ingredientes": [
-    "ingredientes 100% vegetais"
+    "banana",
+    "sucralose",
+    "canela"
   ],
-  "descricao": "Prato 100% vegetal, sem ingredientes de origem animal.",
+  "descricao": "banana\n",
   "beneficios": [
     "Livre de produtos animais",
     "Rico em fibras",
@@ -28,7 +30,7 @@
   "contem_frutos_mar": false,
   "contem_soja": false,
   "tecnica": "Variada",
-  "category_emoji": "🌱",
+  "category_emoji": "🥬",
   "indice_glicemico": "variável",
   "tempo_digestao": "2-3 horas",
   "melhor_horario": "Qualquer refeição",

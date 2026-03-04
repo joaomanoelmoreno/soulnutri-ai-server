@@ -54,5 +54,6 @@
   "contem_castanhas": true,
   "contem_frutos_mar": false,
   "contem_soja": false,
-  "category_emoji": "🌱"
+  "category_emoji": "🥬",
+  "tecnica": ""
 }
