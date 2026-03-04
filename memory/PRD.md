@@ -1,84 +1,96 @@
 # SoulNutri - Product Requirements Document
 
-## Última Atualização: 2026-02-04
+## Ultima Atualizacao: 2026-03-04
 
-### Status do Projeto: ✅ OPERACIONAL
+### Status do Projeto: OPERACIONAL
 
 ---
 
-## Visão do Produto
-Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real via câmera, fornecendo informações nutricionais detalhadas e personalizadas.
+## Visao do Produto
+Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real via camera, fornecendo informacoes nutricionais detalhadas e personalizadas.
 
 ## Arquitetura Atual
 
 ### Reconhecimento de Imagem (Cascata)
-1. **CLIP Local** (custo zero) - Modelo ViT-B-32 com 299 pratos indexados
-2. **Gemini Flash** (backup) - Usado apenas fora do Cibi Sana quando CLIP não confiante
+1. **CLIP Local** (custo zero) - Modelo ViT-B-32 com 223 pratos indexados, 1605 embeddings
+2. **Gemini Flash** (backup) - Usado quando CLIP nao confiante e fora do Cibi Sana
 
-### Detecção de Localização
-- GPS com geofencing (raio 100m do Cibi Sana)
-- No Cibi Sana: usa APENAS CLIP (Gemini travado)
-- Fora: CLIP primeiro, Gemini como backup
-
-### Tabela TACO
-- 597 alimentos da Tabela Brasileira de Composição de Alimentos
-- Endpoint `/api/admin/revisar-prato-taco` - ZERO créditos
-- Cálculo automático de nutrição baseado em ingredientes
+### Stack
+- Frontend: React (src/App.js, src/Admin.js, src/Premium.jsx, src/DashboardPremium.jsx)
+- Backend: FastAPI (server.py)
+- DB: MongoDB Atlas
+- IA: OpenCLIP local + Gemini Flash fallback
 
 ---
 
-## O que foi implementado (04/02/2026)
+## O que foi implementado
 
-### Correções Críticas
-- ✅ Calibração do CLIP restaurada (scores altos = confiança alta)
-- ✅ Índice reconstruído: 299 pratos, 1778 imagens
-- ✅ 78 novas fotos adicionadas (7 pratos do Drive)
-- ✅ Botão "Usar IA" removido do App (só Admin tem acesso)
-- ✅ Lógica de conflito vegano melhorada (reconhece versões veganas)
+### Monitoramento de Tempo (2026-03-04)
+- Flag persistida `ENABLE_PROCESSING_METRICS` no MongoDB (collection `settings`)
+- Medicao com `time.perf_counter()` no endpoint `/api/ai/identify`
+- Log JSONL em `/app/logs/processing_metrics.log`
+- Endpoint `GET /api/admin/processing-metrics?date=YYYY-MM-DD`
+- Endpoints `GET/POST /api/admin/settings` para toggle
+- Tab "Metricas" no `/admin` com toggle ON/OFF, seletor de data, resumo e tabela
+- Zero impacto quando desativado (verificado)
 
-### Novos Recursos
-- ✅ Botão "📊 Nutrição TACO (grátis)" no Admin
-- ✅ Endpoint `/api/admin/revisar-prato-taco` - usa Tabela Brasileira sem IA
-- ✅ Service Worker atualizado para evitar cache no Safari
+### Correcoes Anteriores
+- Calibracao do CLIP restaurada
+- Indice reconstruido: 223 pratos, 1605 imagens
+- encodeURIComponent aplicado no Admin.js para pratos com espacos
+- Fallback de camera para Mac
+- Dashboard Premium V1 (frontend + backend)
+- Botao "Nutricao TACO (gratis)" no Admin
 
 ---
 
-## Fluxo de Economia de Créditos
+## Fluxo de Economia de Creditos
 
-| Ação | Custo |
+| Acao | Custo |
 |------|-------|
 | Reconhecimento no Cibi Sana | ZERO (CLIP) |
 | Reconhecimento fora | Pode usar Gemini |
-| Nutrição com TACO | ZERO |
-| Nutrição com IA | GASTA créditos |
-| "Revisar com IA" no Admin | GASTA créditos |
+| Nutricao com TACO | ZERO |
+| Nutricao com IA | GASTA creditos |
+| "Revisar com IA" no Admin | GASTA creditos |
 
 ---
 
 ## Tarefas Pendentes
 
-### P1 - Alta Prioridade
-- [ ] Limpeza de fotos incorretas no dataset (usuário fazendo pelo Admin)
-- [ ] Adicionar mais fotos aos pratos com poucas imagens (<3 fotos)
+### P0 - Critica
+- [ ] Verificar estabilidade do Admin (encodeURIComponent) com usuario
 
-### P2 - Média Prioridade
-- [ ] Implementar aprendizado contínuo (Gemini → CLIP)
-- [ ] Migração para Cloudflare R2 (disco 89% usado)
+### P1 - Alta Prioridade
+- [ ] Finalizar e testar Dashboard Premium (DashboardPremium.jsx)
+- [ ] Implementar Relatorios Premium (baseado em COMPARATIVO_CONCORRENTES.md)
+
+### P2 - Media Prioridade
+- [ ] Investigar Cloudflare R2 para armazenamento de imagens (disco 88%)
+- [ ] Refatorar App.js e server.py (arquivos monoliticos)
 
 ### P3 - Backlog
-- [ ] Refatorar App.js e server.py (arquivos monolíticos)
 - [ ] Implementar Stripe para assinaturas Premium
-- [ ] Integrar API de reconhecimento Nível 2 (LogMeal)
+- [ ] Integrar API de reconhecimento Nivel 2 (LogMeal)
 
 ---
 
 ## Credenciais de Teste
-- Usuário Premium: `Joao mc`, PIN: `1212`
+- Usuario Premium: `Joao mc`, PIN: `1234`
 
 ## Arquivos Principais
-- `/app/backend/server.py` - API principal
-- `/app/backend/ai/index.py` - Lógica CLIP e calibração
+- `/app/backend/server.py` - API principal (4590 linhas)
+- `/app/backend/ai/index.py` - Logica CLIP e calibracao
 - `/app/frontend/src/App.js` - Interface principal
-- `/app/frontend/src/Admin.js` - Painel administrativo
+- `/app/frontend/src/Admin.js` - Painel administrativo (com tab Metricas)
+- `/app/frontend/src/Admin.css` - Estilos do Admin
+- `/app/frontend/src/Premium.jsx` - Portal Premium
+- `/app/frontend/src/DashboardPremium.jsx` - Dashboard Premium
 - `/app/backend/data/taco_database.py` - Tabela TACO
 - `/app/datasets/organized/` - Fotos dos pratos
+- `/app/logs/processing_metrics.log` - Log de metricas de processamento
+
+## Integracoes de Terceiros
+- Google Gemini (EMERGENT_LLM_KEY)
+- Hugging Face (OpenCLIP)
+- MongoDB Atlas

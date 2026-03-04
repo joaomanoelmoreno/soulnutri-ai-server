@@ -19,6 +19,11 @@ export default function Admin() {
   const [auditData, setAuditData] = useState(null);
   const [auditLoading, setAuditLoading] = useState(false);
   const [fixingSlug, setFixingSlug] = useState(null);
+  // Métricas de Processamento
+  const [metricsEnabled, setMetricsEnabled] = useState(false);
+  const [metricsDate, setMetricsDate] = useState(new Date().toISOString().split('T')[0]);
+  const [metricsData, setMetricsData] = useState(null);
+  const [metricsLoading, setMetricsLoading] = useState(false);
   // Consolidação e Atualização em Massa
   const [consolidating, setConsolidating] = useState(false);
   const [updatingAll, setUpdatingAll] = useState(false);
@@ -49,7 +54,39 @@ export default function Admin() {
     loadStats();
     loadNovidades();
     loadPremiumUsers();
+    loadMetricsSetting();
   }, []);
+
+  const loadMetricsSetting = async () => {
+    try {
+      const res = await fetch(`${API}/admin/settings`);
+      const data = await res.json();
+      if (data.ok) setMetricsEnabled(!!data.ENABLE_PROCESSING_METRICS);
+    } catch (e) { console.error('Erro ao carregar settings:', e); }
+  };
+
+  const toggleMetrics = async () => {
+    try {
+      const newValue = !metricsEnabled;
+      const res = await fetch(`${API}/admin/settings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'ENABLE_PROCESSING_METRICS', value: newValue })
+      });
+      const data = await res.json();
+      if (data.ok) setMetricsEnabled(newValue);
+    } catch (e) { console.error('Erro ao alterar métrica:', e); }
+  };
+
+  const loadMetricsReport = async () => {
+    setMetricsLoading(true);
+    try {
+      const res = await fetch(`${API}/admin/processing-metrics?date=${metricsDate}`);
+      const data = await res.json();
+      if (data.ok) setMetricsData(data);
+    } catch (e) { console.error('Erro ao carregar métricas:', e); }
+    finally { setMetricsLoading(false); }
+  };
 
   const loadDishes = async () => {
     try {
@@ -795,7 +832,14 @@ export default function Admin() {
           className={`tab-btn ${activeTab === 'custos' ? 'active' : ''}`}
           onClick={() => { setActiveTab('custos'); loadApiUsage(); }}
         >
-          💰 Custos API
+          Custos API
+        </button>
+        <button 
+          className={`tab-btn ${activeTab === 'metricas' ? 'active' : ''}`}
+          onClick={() => setActiveTab('metricas')}
+          data-testid="tab-metricas"
+        >
+          Metricas
         </button>
       </div>
 
@@ -1730,6 +1774,107 @@ export default function Admin() {
               )}
             </>
           )}
+        </div>
+      )}
+
+      {/* Métricas de Processamento Tab */}
+      {activeTab === 'metricas' && (
+        <div className="metrics-section" data-testid="metrics-section">
+          <h2>Metricas de Processamento</h2>
+          
+          <div className="metrics-toggle" data-testid="metrics-toggle-container">
+            <label className="toggle-label">
+              <span>Ativar Metricas de Processamento</span>
+              <button 
+                className={`toggle-btn ${metricsEnabled ? 'active' : ''}`}
+                onClick={toggleMetrics}
+                data-testid="metrics-toggle-btn"
+              >
+                {metricsEnabled ? 'ON' : 'OFF'}
+              </button>
+            </label>
+            <p className="toggle-hint">
+              {metricsEnabled 
+                ? 'Metricas ativas. Cada identificacao sera registrada.' 
+                : 'Metricas desativadas. Zero impacto na performance.'}
+            </p>
+          </div>
+
+          <div className="metrics-report" data-testid="metrics-report">
+            <h3>Relatorio</h3>
+            <div className="metrics-controls">
+              <input 
+                type="date" 
+                value={metricsDate} 
+                onChange={e => setMetricsDate(e.target.value)}
+                data-testid="metrics-date-input"
+              />
+              <button 
+                className="save-btn" 
+                onClick={loadMetricsReport} 
+                disabled={metricsLoading}
+                data-testid="metrics-load-btn"
+              >
+                {metricsLoading ? 'Carregando...' : 'Carregar Relatorio'}
+              </button>
+            </div>
+
+            {metricsData && (
+              <>
+                <div className="metrics-summary" data-testid="metrics-summary">
+                  <div className="metric-card">
+                    <span className="metric-value">{metricsData.total}</span>
+                    <span className="metric-label">Total</span>
+                  </div>
+                  <div className="metric-card">
+                    <span className="metric-value">{metricsData.average_ms}</span>
+                    <span className="metric-label">Media (ms)</span>
+                  </div>
+                  <div className="metric-card">
+                    <span className="metric-value">{metricsData.min_ms}</span>
+                    <span className="metric-label">Minimo (ms)</span>
+                  </div>
+                  <div className="metric-card">
+                    <span className="metric-value">{metricsData.max_ms}</span>
+                    <span className="metric-label">Maximo (ms)</span>
+                  </div>
+                </div>
+
+                {metricsData.entries && metricsData.entries.length > 0 && (
+                  <table className="metrics-table" data-testid="metrics-table">
+                    <thead>
+                      <tr>
+                        <th>Horario</th>
+                        <th>Prato</th>
+                        <th>Score</th>
+                        <th>Tempo (ms)</th>
+                        <th>Engine</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {metricsData.entries.map((entry, idx) => (
+                        <tr key={idx}>
+                          <td>{new Date(entry.timestamp).toLocaleTimeString('pt-BR')}</td>
+                          <td>{entry.dish_name}</td>
+                          <td>{(entry.confidence_score * 100).toFixed(1)}%</td>
+                          <td>{entry.processing_time_ms}</td>
+                          <td>
+                            <span className={`engine-badge ${entry.engine_used.toLowerCase()}`}>
+                              {entry.engine_used}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+
+                {metricsData.total === 0 && (
+                  <p className="no-data">Nenhuma metrica registrada para esta data.</p>
+                )}
+              </>
+            )}
+          </div>
         </div>
       )}
 

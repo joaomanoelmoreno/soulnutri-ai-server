@@ -450,6 +450,7 @@ async def identify_image(
         IdentifyResponse com o prato identificado e nível de confiança
     """
     start_time = time.time()
+    perf_start = time.perf_counter()
     
     logger.info(f"[IDENTIFY] Iniciando identificação - restaurant={restaurant}, country={country}")
     
@@ -807,6 +808,20 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         if response_data.get('identified'):
             cache_result(content, response_data, ttl_seconds=3600)  # 1 hora de cache
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # MÉTRICAS DE PROCESSAMENTO (condicional)
+        # ═══════════════════════════════════════════════════════════════════════
+        if await get_setting("ENABLE_PROCESSING_METRICS"):
+            total_ms = (time.perf_counter() - perf_start) * 1000
+            engine = "GEMINI" if response_data.get('source') == 'gemini_flash' else "CLIP"
+            save_processing_metrics({
+                "timestamp": datetime.now().isoformat(),
+                "processing_time_ms": round(total_ms, 2),
+                "dish_name": response_data.get('dish_display', ''),
+                "confidence_score": response_data.get('score', 0),
+                "engine_used": engine
+            })
         
         return response_data
         
@@ -3994,9 +4009,6 @@ async def translate_text_endpoint(
 
 
 
-# Incluir router
-app.include_router(api_router)
-
 # Evento de shutdown
 @app.on_event("shutdown")
 async def shutdown_db_client():
@@ -4295,6 +4307,91 @@ async def admin_verificar_premium(nome: str):
         return {"ok": False, "error": str(e)}
 
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# MONITORAMENTO DE TEMPO DE PROCESSAMENTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+async def get_setting(key: str) -> bool:
+    """Lê uma configuração persistida do MongoDB."""
+    doc = await db.settings.find_one({"key": key}, {"_id": 0})
+    if doc:
+        return doc.get("value", False)
+    return False
+
+def save_processing_metrics(data: dict):
+    """Salva métricas de processamento em arquivo JSONL (append)."""
+    log_dir = Path("/app/logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_file = log_dir / "processing_metrics.log"
+    with open(log_file, "a") as f:
+        f.write(json.dumps(data, ensure_ascii=False) + "\n")
+
+@api_router.get("/admin/settings")
+async def get_admin_settings():
+    """Retorna todas as configurações do admin."""
+    try:
+        metrics_enabled = await get_setting("ENABLE_PROCESSING_METRICS")
+        return {"ok": True, "ENABLE_PROCESSING_METRICS": metrics_enabled}
+    except Exception as e:
+        logger.error(f"Erro ao ler settings: {e}")
+        return {"ok": False, "error": str(e)}
+
+@api_router.post("/admin/settings")
+async def update_admin_settings(request: Request):
+    """Atualiza uma configuração do admin."""
+    try:
+        body = await request.json()
+        key = body.get("key")
+        value = body.get("value")
+        if key not in ("ENABLE_PROCESSING_METRICS",):
+            return {"ok": False, "error": "Configuração não permitida"}
+        await db.settings.update_one(
+            {"key": key},
+            {"$set": {"key": key, "value": bool(value)}},
+            upsert=True
+        )
+        return {"ok": True, "key": key, "value": bool(value)}
+    except Exception as e:
+        logger.error(f"Erro ao salvar setting: {e}")
+        return {"ok": False, "error": str(e)}
+
+@api_router.get("/admin/processing-metrics")
+async def get_processing_metrics(date: str = Query(...)):
+    """Retorna relatório de métricas de processamento para uma data."""
+    try:
+        log_file = Path("/app/logs/processing_metrics.log")
+        if not log_file.exists():
+            return {"ok": True, "total": 0, "average_ms": 0, "min_ms": 0, "max_ms": 0, "entries": []}
+
+        entries = []
+        with open(log_file, "r") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                    if entry.get("timestamp", "").startswith(date):
+                        entries.append(entry)
+                except json.JSONDecodeError:
+                    continue
+
+        if not entries:
+            return {"ok": True, "total": 0, "average_ms": 0, "min_ms": 0, "max_ms": 0, "entries": []}
+
+        times = [e["processing_time_ms"] for e in entries]
+        return {
+            "ok": True,
+            "total": len(entries),
+            "average_ms": round(sum(times) / len(times), 2),
+            "min_ms": round(min(times), 2),
+            "max_ms": round(max(times), 2),
+            "entries": entries
+        }
+    except Exception as e:
+        logger.error(f"Erro ao ler métricas: {e}")
+        return {"ok": False, "error": str(e)}
+
 @api_router.get("/admin/api-usage")
 async def admin_api_usage():
     """Retorna estatísticas de uso das APIs externas (Google Vision, etc.)"""
@@ -4484,3 +4581,9 @@ async def premium_checkin(
     except Exception as e:
         logger.error(f"Erro no check-in: {e}")
         return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INCLUIR ROUTER (deve ser após TODAS as definições de rotas)
+# ═══════════════════════════════════════════════════════════════════════════════
+app.include_router(api_router)
