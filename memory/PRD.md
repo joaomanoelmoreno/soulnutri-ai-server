@@ -64,6 +64,7 @@ Construir o SoulNutri, um aplicativo de "agente de nutricao virtual" que identif
 
 ## Last Update: 2026-03-14
 - Admin Panel verificado e funcionando (188 pratos, 1627 imagens)
-- Fichas nutricionais dos 5 pratos sincronizadas do MongoDB para dish_info.json
-  - Problema: agente anterior salvou no nutrition_sheets mas nao atualizou os arquivos no disco
-  - Fix: script de sync aplicado para Tortinha, Umami, Uva, Vinagrete de Lula, Vol Au Vent
+- Fichas nutricionais dos 5 pratos anteriores sincronizadas do MongoDB para dish_info.json
+- 13 novos pratos processados: Tortilha Espanhola, Torradas, Torta de Legumes, Tabule, Tomate, Steak de Couve Flor, Strogonoff, Sushi Vietnamita, Salpicao de Frango, Sobrecoxa ao Tandoori, Sobrecoxa ao Limao + revisao de Vinagrete de Lula e Vol Au Vent
+- 4 pratos com valores irreais corrigidos manualmente (Strogonoff, Couve Flor, Torta, Vol Au Vent)
+- Total: 16 fichas nutricionais no MongoDB, todas sincronizadas com dish_info.json
