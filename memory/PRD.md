@@ -1,77 +1,66 @@
-# SoulNutri - PRD (Product Requirements Document)
+# SoulNutri - Product Requirements Document
 
-## Problema Original
-Aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens, com foco em precisão >90% e honestidade (rejeitar pratos desconhecidos).
+## Original Problem Statement
+Construir o SoulNutri, um aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens. Foco em precisao maxima (> 90%) e "honestidade" - evitando falsos positivos com alta confianca.
 
-## Versão Atual: v1.23
+## Core Requirements
+1. **Visao:** Radar do prato - seguranca alimentar e informacao nutricional em tempo real
+2. **Precisao:** Identificacao precisa, honesta e confiavel. Rejeitar pratos desconhecidos
+3. **Qualidade:** Informacoes corretas, educativas e cientificamente embasadas
+4. **UX/UI:** Minimo de cliques, fluida, estavel, mensagens claras de confianca
+5. **Evolucao Incremental:** Implementar e validar cada etapa isoladamente
 
-## Arquitetura
-- **Frontend**: React (CRA + Craco) em /app/frontend, porta 3000
-- **Backend**: FastAPI em /app/backend, porta 8001
-- **Database**: MongoDB Atlas (soulnutri)
-- **AI**: CLIP (openai/clip-vit-base-patch32) local + Gemini Flash (fallback)
-- **Nutrição**: Pipeline 3 fontes (TACO + USDA FNDDS + Open Food Facts)
+## Architecture
+- Frontend: React (Admin + App principal)
+- Backend: FastAPI (server.py)
+- Database: MongoDB (Atlas)
+- AI: CLIP local (Hugging Face) + Gemini Flash (fallback)
+- Nutrition: USDA API + Open Food Facts + TACO
 
-## O que foi implementado
+## What's Been Implemented
+- Sistema de reconhecimento de pratos com CLIP + Gemini Flash
+- Painel Admin completo com gestao de pratos, auditoria, novidades, premium
+- Pipeline de fichas nutricionais (USDA + Open Food Facts + TACO)
+- Sistema de cache para identificacoes
+- Funcionalidades Premium (alertas, mitos/verdades, dados cientificos)
+- Upload de fotos (individual, ZIP, pasta)
+- Sistema de metricas de processamento
+- 188 pratos no dataset com 1627 imagens
 
-### Reconhecimento de Pratos (v1.2 -> v1.23)
-- CLIP local para identificação (zero custo)
-- Gap Analysis em policy.py (rejeita se score1 - score2 < 0.02)
-- GPS fix no App.js (não força Cibi Sana)
-- Gemini fix em server.py (não restringe menu para locais externos)
-- Dataset: 188 pratos, 1627 embeddings
+## Prioritized Backlog
+### P0 (Critical)
+- [DONE] Bug do Admin Panel corrigido - pratos exibidos corretamente
 
-### Pipeline Nutricional 3 Fontes v2 (v1.23)
-- **TACO**: Tabela Brasileira, 597 alimentos, busca por ingredientes
-- **USDA FoodData Central FNDDS**: Busca por NOME DO PRATO (pratos compostos), chave real
-- **Open Food Facts**: Busca por categoria (apenas itens simples)
-- Método: busca pelo nome do prato (como apps de nutrição fazem), não decomposição de ingredientes
-- 5 pratos processados com resultados validados
+### P1 (High Priority)
+- Expandir fichas nutricionais para todos os ~200 pratos
+- Monitorar uso de disco e .gitignore para datasets
 
-### Git Corrigido
-- Repositório .git reinicializado (de 2.5GB corrompido para 39MB limpo)
-- datasets/ no .gitignore (previne crescimento do git)
+### P2 (Medium)
+- Refatorar server.py e Admin.js
+- Integracao Stripe para premium
+- Validacao da logica de reconhecimento em ambiente real
 
-### Backup v1.23
-- Salvo no MongoDB coleção `code_backups` (protegido na nuvem)
-- Disponível para push no GitHub (git limpo)
+## 3rd Party Integrations
+- USDA FoodData Central API (chave real configurada)
+- Open Food Facts API
+- TACO (Tabela Brasileira de Composicao de Alimentos)
+- Hugging Face (openai/clip-vit-base-patch32)
+- Google Gemini (via emergentintegrations)
+- MongoDB Atlas
 
-## Coleções MongoDB
-- `dishes`: 205 registros (campo `nutricao` atualizado para 5 pratos)
-- `nutrition_sheets`: 5 registros (fichas nutricionais 3 fontes v2)
-- `code_backups`: 1 registro (backup v1.23)
+## Key Endpoints
+- GET /api/admin/dishes-full - Lista pratos no Admin
+- GET /api/nutrition-sheet/{dish_name} - Ficha nutricional
+- POST /api/ai/identify - Identificacao de pratos
+- GET /api/ai/status - Status do indice
 
-## Endpoints Chave
-- POST /api/ai/identify — identificação de pratos
-- GET /api/ai/status — status do índice
-- GET /api/nutrition/list — listar fichas nutricionais
-- GET /api/nutrition/{dish_name} — buscar ficha por nome
-- POST /api/ai/reindex-background — reconstruir índice
+## DB Collections
+- dishes: dados dos pratos
+- nutrition_sheets: fichas nutricionais detalhadas
+- users: perfis de usuarios
+- novidades: noticias dos pratos
+- settings: configuracoes
+- processing_metrics: metricas
 
-## Backlog Priorizado
-
-### P0 - Crítico
-- [ ] Expandir fichas nutricionais para todos os ~200 pratos
-- [ ] Melhorar mapeamento DISH_USDA_QUERY para mais pratos
-- [ ] Validação de reconhecimento no buffet (teste real)
-
-### P1 - Importante
-- [ ] Refatorar server.py (4400 linhas)
-- [ ] Refatorar Admin para usar nutrition_sheets como fonte da verdade
-
-### P2 - Futuro
-- [ ] Integração Stripe
-- [ ] Migrar imagens para Object Storage externo
-- [ ] App mobile nativo
-
-## Chaves e Credenciais
-- USDA_API_KEY em /app/backend/.env (1000 req/hora)
-- GOOGLE_API_KEY em /app/backend/.env (Gemini)
-- MONGO_URL em /app/backend/.env
-
-## Arquivos de Referência
-- /app/backend/services/nutrition_3sources.py — pipeline 3 fontes v2
-- /app/backend/server.py — API principal (com lookup_nutrition_sheet)
-- /app/backend/ai/index.py — busca CLIP v1.2
-- /app/backend/ai/policy.py — gap analysis
-- /app/frontend/src/App.js — interface principal
+## Last Update: 2026-03-14
+- Admin Panel verificado e funcionando (188 pratos, 1627 imagens)
