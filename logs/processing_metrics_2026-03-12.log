@@ -1,0 +1,17 @@
+{"timestamp": "2026-03-12T19:58:43.044163", "processing_time_ms": 2355.98, "dish_name": "File de Peixe ao Molho Confit", "confidence_score": 0.9213, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T19:59:01.246234", "processing_time_ms": 788.57, "dish_name": "Quiche", "confidence_score": 0.9056, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:00:20.872942", "processing_time_ms": 1370.81, "dish_name": "Panceta Pururuca", "confidence_score": 0.9241, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:01:37.961424", "processing_time_ms": 848.74, "dish_name": "Torta de Legumes", "confidence_score": 0.905, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:02:30.658230", "processing_time_ms": 839.03, "dish_name": "Hamburger Bovino", "confidence_score": 0.8622, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:02:45.998920", "processing_time_ms": 1145.19, "dish_name": "Brocolis e/ou Couve Flor Gratinado", "confidence_score": 0.9063, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:03:01.650774", "processing_time_ms": 840.15, "dish_name": "Berinjela ao Curry", "confidence_score": 0.9067, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:03:27.925041", "processing_time_ms": 1108.24, "dish_name": "Brocolis ao Alho", "confidence_score": 0.9444, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:03:45.330410", "processing_time_ms": 809.77, "dish_name": "Cenoura ao Iogurte", "confidence_score": 0.8996, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:04:43.453839", "processing_time_ms": 978.95, "dish_name": "Umami de Tomates", "confidence_score": 0.8951, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:06:30.157603", "processing_time_ms": 881.89, "dish_name": "Umami de Tomates", "confidence_score": 0.9234, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:06:50.459313", "processing_time_ms": 823.31, "dish_name": "Arroz Branco", "confidence_score": 0.9302, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:07:13.410299", "processing_time_ms": 775.66, "dish_name": "Berinjela ao Limao", "confidence_score": 0.9249, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:07:56.303324", "processing_time_ms": 1490.82, "dish_name": "Cebola  com  Frutos Secos", "confidence_score": 0.9265, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:08:47.756125", "processing_time_ms": 823.84, "dish_name": "Espetinho de Legumes", "confidence_score": 0.9144, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:09:56.451520", "processing_time_ms": 778.4, "dish_name": "Cestinha de Camarao", "confidence_score": 0.9005, "engine_used": "CLIP"}
+{"timestamp": "2026-03-12T20:13:05.211283", "processing_time_ms": 985.51, "dish_name": "Carpaccio De Pera", "confidence_score": 0.9071, "engine_used": "CLIP"}

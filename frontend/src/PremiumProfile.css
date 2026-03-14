@@ -1,0 +1,239 @@
+/* Premium Profile Form Styles */
+
+.premium-profile-form {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.premium-profile-form h2 {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.profile-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.profile-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.profile-section h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.section-hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.profile-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-field {
+  flex: 1;
+}
+
+.profile-field label {
+  display: block;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.profile-field input,
+.profile-field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+}
+
+.profile-field input::placeholder {
+  color: #999;
+}
+
+.profile-field input:focus,
+.profile-field select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+/* Activity Options */
+.activity-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.activity-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.activity-btn:hover {
+  border-color: #4CAF50;
+}
+
+.activity-btn.active {
+  border-color: #4CAF50;
+  background: #e8f5e9;
+}
+
+.activity-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.activity-desc {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Restricoes Grid */
+.restricoes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.restricao-btn {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.restricao-btn:hover {
+  border-color: #ff9800;
+}
+
+.restricao-btn.active {
+  border-color: #ff9800;
+  background: #fff3e0;
+}
+
+/* Actions */
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.profile-skip-btn {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.profile-save-btn {
+  flex: 2;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-save-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.profile-error {
+  color: #d32f2f;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* Personalized Tips Display */
+.personalized-tips {
+  margin: 12px 0;
+  padding: 12px;
+  background: #f0f7ff;
+  border-radius: 10px;
+  border-left: 4px solid #2196F3;
+}
+
+.personalized-tips h4 {
+  font-size: 0.9rem;
+  color: #1565C0;
+  margin-bottom: 8px;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.tip-item.alerta {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.tip-item.atencao {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.tip-item.positivo {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.tip-item.info {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.tip-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.tip-text {
+  line-height: 1.4;
+}

@@ -1,0 +1,218 @@
+SOULNUTRI - Lista de Pratos no Índice
+==================================================
+
+Total de pratos: 201
+Total de embeddings: 1637
+
+==================================================
+Embeddings | Prato
+--------------------------------------------------
+  10    | Abobora ao Curry
+   9    | Abobrinha Grelhada
+   3    | Alface Frisee ⚠️
+  10    | Alho Poro Gratinado
+  10    | Aligot
+  10    | Almondegas ao Molho Sugo
+   2    | Almondegas com Especiarias Indiana ⚠️
+   1    | Arancini ⚠️
+  10    | Arroz 7 Graos
+  10    | Arroz Branco
+  10    | Arroz Integral
+  10    | Arroz Integral com Legumes
+   9    | Arroz Mar e Campo
+  10    | Arroz com Brocolis e Amendoas
+   1    | Atum ao Funghi ⚠️
+  10    | Atum ao Gergelim
+  10    | Azeitona Preta
+  10    | Babaganoush
+  10    | Bacalhau a Bras
+  10    | Bacalhau com Natas
+  10    | Baiao de Dois
+  10    | Banana Caramelizada
+  10    | Batata Doce
+  10    | Batata Frita
+  10    | Batatas ao Molho
+  10    | Berinjela a Parmegiana
+  10    | Berinjela ao Curry
+  10    | Berinjela ao Limao
+  10    | Beterraba ao Balsamico
+  10    | Bolinho de Bacalhau
+  10    | Bolo Brownie de Chocolate
+  10    | Bolo de Gengibre
+  10    | Brocolis Gratinado
+  10    | Brocolis com Parmesao
+  10    | Camarao com Mandioquinha
+  10    | Canelone 4 Queijos
+  10    | Canelone de Espinafre
+  10    | Caponata
+   3    | Carne Moida com Ovo Poche ⚠️
+   1    | Carne Seca com Abobora ⚠️
+  10    | Carpaccio de Abobrinha
+  10    | Carpaccio de Laranja
+  10    | Cebola Caramelizada
+   9    | Cebola Roxa com Ervas Frescas e Frutos Secos
+  10    | Cenoura Palito
+  10    | Cenoura ao Iogurte
+  10    | Cestinha de Camarao
+  10    | Ceviche
+  10    | Ceviche de Banana da Terra
+   2    | Ceviche de Manga ⚠️
+  10    | Cocada Cremosa
+  10    | Cogumelos Recheados
+  10    | Conchiglione ao Creme de Avelas
+  10    | Costela Assada
+  10    | Costela Cibi Sana
+   4    | Coxinha Saudavel de Frango ⚠️
+   4    | Creme de Banana ⚠️
+   1    | Creme de Milho ⚠️
+  10    | Cuscuz Marroquino
+  10    | Cuscuz de Tapioca
+  10    | Dadinho de Tapioca com Camarao
+   3    | Doce de Banana Vegano sem Acucar ⚠️
+  10    | Entrecote Grelhado
+  10    | Erva Doce com Laranja
+  10    | Escondidinho de Carne Seca
+  10    | Espaguete
+  10    | Espagueti ao Misso
+  10    | Espetinho de File Mignon
+  10    | Espetinho de Legumes
+  10    | Farofa de Bacon
+  10    | Farofa de Banana da Terra
+  10    | Feijao Branco
+  10    | Feijao Tropeiro
+  10    | Feijao do Chef
+   2    | Feijoada ⚠️
+  10    | Figado Acebolado
+  10    | File Mignon em Manteiga de Ervas
+  10    | File de Peixe ao Misso
+  10    | File de Peixe ao Molho Confit
+  10    | File de Peixe ao Molho de Frutas Secas
+  10    | File de Peixe ao Molho de Limao
+   2    | File de Peixe em Manteiga de Tomates ⚠️
+  10    | Frango Grelhado
+   1    | Frango a Milanesa ⚠️
+  10    | Frango ao Creme de Limao
+  10    | Frutas ao Ganache de Chocolate
+   1    | Gelatina de Abacaxi ⚠️
+  10    | Gelatina de Cereja
+   3    | Gelatina de Uva ⚠️
+  10    | Goiabada
+  10    | Granola
+  10    | Grao de Bico com Espinafre e Tomate Seco
+  10    | Grelhado dos Pescadores
+  10    | Guacamole
+  10    | Hamburger Bovino
+  10    | Hamburger de Camarao com Pernil Suino
+  10    | Hamburguer Vegano
+  10    | Jilo Empanado
+  10    | Kafta
+  10    | Kibe
+   2    | Kibe Recheado ⚠️
+  10    | Lasanha de Espinafre
+  10    | Lasanha de Portobello
+  10    | Lentilha com Tofu
+   4    | Linguica de Lombo ⚠️
+  10    | Lula Grelhada
+   8    | Mamao
+  10    | Maminha Molho Madeira
+  10    | Maminha ao Molho Mongolia
+  10    | Maminha ao Molho Mostarda
+  10    | Maminha na Cerveja Preta
+  10    | Mandioquinha
+   4    | Manjar de Coco ⚠️
+  10    | Massala de Camaroes
+   5    | Melancia
+   1    | Melao ⚠️
+   1    | Mix de Graos ⚠️
+   1    | Molho Sugo ⚠️
+  10    | Molho Tartaro
+  10    | Molho Vinagrete
+  10    | Molho para o Rolinho
+   3    | Mousse de Chocolate sem Acucar ⚠️
+  10    | Mousse de Limao
+  10    | Mousse de Maracuja
+  10    | Nachos
+  10    | Nhoque Vegano
+  10    | Nhoque ao Sugo
+   3    | Nhoque de Banana da Terra ⚠️
+  10    | Panceta Pururuca
+  10    | Pannacotta com Frutas Vermelhas
+  10    | Panqueca de Frango
+   4    | Pao de Alho Negro e Cumaru ⚠️
+  10    | Pastel
+   6    | Peixe a Milanesa
+  10    | Pepino com Iogurte
+  10    | Pernil ao Molho de Limao
+  10    | Pernil de Cordeiro
+   1    | Pimenta Biquinho ⚠️
+   1    | Polenta com Ragu ⚠️
+  10    | Polpetone
+  10    | Portobello Recheado
+   2    | Proteina de Soja ao Sugo ⚠️
+  10    | Pudim
+   2    | Pure de Abobora ⚠️
+  10    | Pure de Batata
+  10    | Pure de Batata Doce
+  10    | Pure de Maca Verde
+  10    | Pure de Mandioquinha
+   2    | Queijo Parmesao Ralado ⚠️
+  10    | Quiabo com Amendoim
+  10    | Quiche
+  10    | Quiche de Alho Poro
+  10    | Quiche de Mussarela de Bufala com Tomate Seco
+  10    | Quiche de Tomate
+   8    | Quinoa com Legumes
+  10    | Quinua com Tahine
+   4    | Radicchio ao Molho de Mel e Lamina de Amendoas ⚠️
+  10    | Ratatouille
+   4    | Ravioli ⚠️
+  10    | Repolho
+   5    | Risone ao Creme de Limao
+  10    | Risone ao Pesto
+   1    | Risoto de Alho Poro ⚠️
+   3    | Risoto de Pera e Gorgonzola ⚠️
+  10    | Rolinho Vietnamita
+   2    | Rolinho Vietnamita de Camarao ⚠️
+  10    | Romeu e Julieta
+  10    | Rucula
+   2    | Salada Caprese ⚠️
+  10    | Salada Mediterranea
+  10    | Salada Michouia Tunisia
+   5    | Salada Oriental
+  10    | Salada Tailandesa
+  10    | Salada de Atum
+  10    | Salada de Batatas e Ovos
+   2    | Salada de Beterraba ⚠️
+  10    | Salada de Feijao Branco
+  10    | Salada de Grao de Bico
+  10    | Salada de Lentilha
+  10    | Salada de Ovos
+   1    | Salada de Peixe ⚠️
+   1    | Salada de Rabanete com Laranja ⚠️
+  10    | Salpicao de Frango
+  10    | Sobrecoxa ao Limao
+  10    | Sobrecoxa ao Tandoori
+  10    | Sobrecoxa ao Tucupi
+  10    | Steak de Couve Flor
+   6    | Strogonoff Vegano
+  10    | Strogonoff de File Mignon
+  10    | Sushi Vietnamita
+  10    | Tabule
+   6    | Tiramisu
+   2    | Tomate ⚠️
+   5    | Torradas
+  10    | Torta de Legumes
+   2    | Tortilha Espanhola de Batata ⚠️
+  10    | Tortinha de Gorgonzola e Figo
+  10    | Umami de Tomates
+   6    | Uva
+   1    | Vinagrete de Lula ⚠️
+  10    | Vol Au Vent
+
+==================================================
+RESUMO:
+  1: 15 pratos
+  2: 13 pratos
+  3-4: 14 pratos
+  5-9: 13 pratos
+  10-19: 146 pratos

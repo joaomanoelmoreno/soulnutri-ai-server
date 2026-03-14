@@ -1,0 +1,4425 @@
+"""
+SoulNutri AI Server
+====================
+Sistema inteligente de identificacao de pratos.
+Analogia: Como o Waze para alimentacao - mostra o melhor caminho em 100ms.
+
+Endpoints:
+- GET  /health              - Health check para Kubernetes
+- GET  /api/health          - Status do servidor
+- GET  /api/ai/status       - Status do indice de IA
+- POST /api/ai/reindex      - Reconstroi o indice
+- POST /api/ai/identify     - Identifica um prato por imagem
+"""
+
+# IMPORTANTE: Forcar CPU ANTES de qualquer import que possa carregar PyTorch
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+os.environ["CUDA_HOME"] = ""
+os.environ["USE_CUDA"] = "0"
+os.environ["FORCE_CPU"] = "1"
+
+from datetime import datetime
+import json
+import asyncio
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query
+from fastapi.responses import JSONResponse
+from starlette.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+import time
+import logging
+from pathlib import Path
+from pydantic import BaseModel
+from typing import Optional, List
+
+# Carregar configuracoes
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+import re
+
+def format_dish_name(name: str) -> str:
+    """Formata nome do prato usando o mapeamento do policy.py.
+    Prioriza nomes definidos no DISH_NAMES (que refletem renomeacoes do Admin).
+    Se nao encontra, retorna o nome original formatado.
+    """
+    if not name:
+        return name
+    
+    # Tentar lookup no policy.py (tem os nomes corretos/renomeados)
+    try:
+        from ai.policy import DISH_NAMES
+        slug = re.sub(r'[^a-zA-Z0-9]', '', name.lower())
+        if slug in DISH_NAMES:
+            return DISH_NAMES[slug]
+    except Exception:
+        pass
+    
+    # Fallback: retornar o nome original (ja vem formatado do indice)
+    return name
+
+
+def get_confidence_level_message(score: float, confidence: str) -> str:
+    """
+    Gera mensagem descritiva para o nivel de confianca.
+    v1.3: Sistema de 3 niveis com honestidade radical.
+    - Alta (>= 90%): Identificacao precisa
+    - Media (50-89%): "Parece ser" com alternativas
+    - Baixa (< 50%): "Nao reconheco" sem alternativas
+    """
+    if score >= 0.90 or confidence == 'alta':
+        return "Alta confianca - Identificacao precisa"
+    elif score >= 0.50 or confidence == 'media':
+        return "Media confianca - Verifique se o prato esta correto"
+    else:
+        return "Baixa confianca - Prato nao reconhecido"
+
+
+# MongoDB connection
+mongo_url = os.environ.get('MONGO_URL')
+if not mongo_url:
+    mongo_url = 'mongodb://localhost:27017'
+    logger.warning("[MongoDB] MONGO_URL nao definido, usando localhost (apenas para dev)")
+client = AsyncIOMotorClient(mongo_url)
+db_name = os.environ.get('DB_NAME', 'soulnutri')
+db = client[db_name]
+logger.info(f"[MongoDB] Conectando a {mongo_url[:30]}... DB: {db_name}")
+
+# FastAPI app
+app = FastAPI(
+    title="SoulNutri AI Server",
+    description="Sistema inteligente de identificacao de pratos - Como o Waze para alimentacao",
+    version="1.0.0"
+)
+
+# Health check endpoint na RAIZ (para Kubernetes)
+@app.get("/health")
+async def health_check():
+    """Health check para Kubernetes - responde rapidamente"""
+    return {"status": "healthy", "service": "soulnutri-backend"}
+
+# Router com prefixo /api
+api_router = APIRouter(prefix="/api")
+
+# Função auxiliar de configuração
+async def get_setting(key: str):
+    """Retorna configuração do banco ou False como default"""
+    try:
+        doc = await db.settings.find_one({"key": key}, {"_id": 0})
+        return doc.get("value", False) if doc else False
+    except Exception:
+        return False
+
+def save_processing_metrics(data: dict):
+    """Salva métricas de processamento no banco"""
+    try:
+        import asyncio
+        loop = asyncio.get_event_loop()
+        loop.create_task(db.processing_metrics.insert_one(data))
+    except Exception:
+        pass
+
+# CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# =====================
+# MODELS
+# =====================
+
+class NutritionInfo(BaseModel):
+    calorias: Optional[str] = None
+    proteinas: Optional[str] = None
+    carboidratos: Optional[str] = None
+    gorduras: Optional[str] = None
+    fibras: Optional[str] = None
+    sodio: Optional[str] = None
+    # Campos precisos da nutrition_sheets (por 100g)
+    calorias_kcal: Optional[float] = None
+    proteinas_g: Optional[float] = None
+    carboidratos_g: Optional[float] = None
+    gorduras_g: Optional[float] = None
+    fibras_g: Optional[float] = None
+    sodio_mg: Optional[float] = None
+    calcio_mg: Optional[float] = None
+    ferro_mg: Optional[float] = None
+    potassio_mg: Optional[float] = None
+    zinco_mg: Optional[float] = None
+    fonte: Optional[str] = None
+
+class IdentifyResponse(BaseModel):
+    ok: bool
+    identified: bool
+    dish: Optional[str] = None
+    dish_display: Optional[str] = None
+    confidence: str  # 'alta', 'media', 'baixa'
+    confidence_level: Optional[str] = None  # Mensagem descritiva para o usuario
+    aviso_confianca: Optional[str] = None  # Aviso baseado no nivel de confianca
+    score: float
+    message: str
+    category: Optional[str] = None
+    category_emoji: Optional[str] = None
+    nutrition: Optional[NutritionInfo] = None
+    descricao: Optional[str] = None
+    ingredientes: Optional[List[str]] = None
+    tecnica: Optional[str] = None
+    beneficios: Optional[List[str]] = None
+    riscos: Optional[List[str]] = None
+    aviso_cibi_sana: Optional[str] = None
+    alternatives: List[str] = []
+    search_time_ms: Optional[float] = None
+    source: Optional[str] = "local_index"  # "local_index", "google_vision" ou "generic_ai"
+    # Novos campos cientificos
+    beneficio_principal: Optional[str] = None
+    curiosidade_cientifica: Optional[str] = None
+    referencia_pesquisa: Optional[str] = None
+    alerta_saude: Optional[str] = None
+
+class ReindexResponse(BaseModel):
+    ok: bool
+    total_dishes: int
+    total_images: int
+    elapsed_seconds: float
+
+class StatusResponse(BaseModel):
+    ok: bool
+    ready: bool
+    total_dishes: int
+    total_embeddings: int
+    message: str
+
+# =====================
+# ENDPOINTS
+# =====================
+
+@api_router.get("/")
+async def root():
+    return {
+        "message": "SoulNutri AI Server",
+        "version": "1.0.0",
+        "description": "Como o Waze para alimentacao - mostra o melhor caminho em tempo real"
+    }
+
+@api_router.get("/health")
+async def health():
+    """Health check do servidor"""
+    return {"ok": True, "service": "SoulNutri AI Server"}
+
+@api_router.get("/ai/status", response_model=StatusResponse)
+async def ai_status():
+    """Status do indice de IA"""
+    try:
+        from ai.index import get_index
+        index = get_index()
+        stats = index.get_stats()
+        
+        return StatusResponse(
+            ok=True,
+            ready=stats['ready'],
+            total_dishes=stats['total_dishes'],
+            total_embeddings=stats['total_embeddings'],
+            message="Índice pronto para buscas" if stats['ready'] else "Índice nao carregado. Execute /ai/reindex"
+        )
+    except Exception as e:
+        logger.error(f"Erro ao verificar status: {e}")
+        return StatusResponse(
+            ok=False,
+            ready=False,
+            total_dishes=0,
+            total_embeddings=0,
+            message=str(e)
+        )
+
+
+async def lookup_nutrition_sheet(dish_display: str) -> dict:
+    """
+    Busca ficha nutricional precisa na colecao nutrition_sheets.
+    Retorna dict com campos numericos ou {} se nao encontrar.
+    Busca por: nome exato, slug, nomes_alternativos e regex case-insensitive.
+    """
+    if not dish_display:
+        return {}
+    try:
+        sheet = await db.nutrition_sheets.find_one(
+            {"nome": dish_display},
+            {"_id": 0}
+        )
+        if not sheet:
+            sheet = await db.nutrition_sheets.find_one(
+                {"slug": dish_display},
+                {"_id": 0}
+            )
+        if not sheet:
+            sheet = await db.nutrition_sheets.find_one(
+                {"nomes_alternativos": dish_display},
+                {"_id": 0}
+            )
+        if not sheet:
+            sheet = await db.nutrition_sheets.find_one(
+                {"nome": {"$regex": f"^{dish_display}$", "$options": "i"}},
+                {"_id": 0}
+            )
+        if sheet:
+            return {
+                "calorias_kcal": sheet.get("calorias_kcal"),
+                "proteinas_g": sheet.get("proteinas_g"),
+                "carboidratos_g": sheet.get("carboidratos_g"),
+                "gorduras_g": sheet.get("gorduras_g"),
+                "fibras_g": sheet.get("fibras_g"),
+                "sodio_mg": sheet.get("sodio_mg"),
+                "calcio_mg": sheet.get("calcio_mg"),
+                "ferro_mg": sheet.get("ferro_mg"),
+                "potassio_mg": sheet.get("potassio_mg"),
+                "zinco_mg": sheet.get("zinco_mg"),
+                "fonte": sheet.get("fonte_principal", "Ficha Nutricional Cibi Sana"),
+            }
+    except Exception as e:
+        logger.error(f"[NUTRITION] Erro ao buscar ficha: {e}")
+    return {}
+
+
+@api_router.get("/nutrition/list")
+async def list_nutrition_sheets():
+    """Lista todas as fichas nutricionais (metodo media_3_fontes)."""
+    sheets = []
+    async for doc in db.nutrition_sheets.find({}, {"_id": 0}):
+        sheets.append(doc)
+    return {"ok": True, "count": len(sheets), "sheets": sheets}
+
+
+@api_router.get("/nutrition/{dish_name}")
+async def get_nutrition_sheet(dish_name: str):
+    """Busca ficha nutricional de um prato por nome."""
+    data = await lookup_nutrition_sheet(dish_name)
+    if data:
+        return {"ok": True, "data": data}
+    return {"ok": False, "message": f"Ficha nutricional nao encontrada para: {dish_name}"}
+
+
+
+@api_router.post("/ai/clear-cache")
+async def clear_ai_cache():
+    """
+    Limpa o cache de identificacoes.
+    Útil apos corrigir um prato para forcar re-identificacao.
+    """
+    try:
+        from services.cache_service import clear_cache, get_cache_stats
+        
+        stats_before = get_cache_stats()
+        clear_cache()
+        
+        return {
+            "ok": True,
+            "message": "Cache limpo com sucesso",
+            "items_cleared": stats_before.get("size", 0)
+        }
+    except Exception as e:
+        logger.error(f"Erro ao limpar cache: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/ai/reindex")
+async def reindex(max_per_dish: int = 10):
+    """Reconstroi o indice de embeddings."""
+    try:
+        from ai.index import get_index
+        logger.info("Iniciando reindexacao...")
+        index = get_index()
+        stats = index.build_index(max_per_dish=max_per_dish)
+        if 'error' in stats:
+            return JSONResponse(status_code=400, content={"ok": False, "error": stats['error']})
+        return {
+            "ok": True,
+            "total_dishes": stats['total_dishes'],
+            "total_images": stats['total_images'],
+            "elapsed_seconds": stats['elapsed_seconds'],
+            "message": f"Indice reconstruido com {stats['total_dishes']} pratos"
+        }
+    except Exception as e:
+        logger.error(f"Erro na reindexacao: {e}")
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+@api_router.post("/ai/reindex-background")
+async def reindex_background(max_per_dish: int = 10):
+    """Inicia reconstrucao do indice em BACKGROUND."""
+    import subprocess
+    try:
+        log_file = "/tmp/rebuild_index.log"
+        status_file = "/tmp/rebuild_index_status.json"
+        if os.path.exists(log_file):
+            os.remove(log_file)
+        if os.path.exists(status_file):
+            os.remove(status_file)
+        script_path = "/app/backend/rebuild_index.py"
+        cmd = f"cd /app/backend && /root/.venv/bin/python {script_path} {max_per_dish} &"
+        subprocess.Popen(cmd, shell=True)
+        logger.info(f"[REINDEX-BG] Iniciado em background com max_per_dish={max_per_dish}")
+        return {
+            "ok": True,
+            "message": "Reconstrucao iniciada em background",
+            "max_per_dish": max_per_dish
+        }
+    except Exception as e:
+        logger.error(f"Erro ao iniciar reindexacao em background: {e}")
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+@api_router.get("/ai/reindex-status")
+async def reindex_status():
+    """Verifica o status da reconstrucao do indice em background"""
+    import json
+    
+    log_file = "/tmp/rebuild_index.log"
+    status_file = "/tmp/rebuild_index_status.json"
+    
+    result = {
+        "in_progress": False,
+        "completed": False,
+        "log_file": log_file,
+        "status_file": status_file
+    }
+    
+    # Verificar se existe arquivo de status (conclusao)
+    if os.path.exists(status_file):
+        try:
+            with open(status_file, 'r') as f:
+                status = json.load(f)
+            result["completed"] = True
+            result["status"] = status
+        except:
+            pass
+    
+    # Verificar log para progresso
+    if os.path.exists(log_file):
+        try:
+            with open(log_file, 'r') as f:
+                log_content = f.read()
+            
+            # Verificar se esta em progresso
+            if "INICIANDO RECONSTRUÇÃO" in log_content and "CONCLUÍDA" not in log_content:
+                result["in_progress"] = True
+            
+            # Extrair ultimas linhas
+            lines = log_content.strip().split('\n')
+            result["last_lines"] = lines[-10:] if len(lines) > 10 else lines
+        except:
+            pass
+    
+    return result
+
+
+@api_router.post("/ai/add-to-index")
+async def add_to_index(
+    file: UploadFile = File(...),
+    dish_name: str = Form(...),
+    weight_grams: Optional[int] = Form(None)
+):
+    """
+    Adiciona uma nova foto ao indice local para reconhecimento rapido.
+    Use apos identificar um prato na balanca.
+    
+    Args:
+        file: Imagem do prato
+        dish_name: Nome do prato (ex: "Frango Grelhado")
+        weight_grams: Peso em gramas (opcional)
+    
+    Returns:
+        Confirmacao e tempo estimado de reconhecimento futuro
+    """
+    import hashlib
+    from datetime import datetime
+    
+    try:
+        content = await file.read()
+        
+        # Normalizar nome do prato para diretorio
+        dish_slug = dish_name.lower().strip()
+        dish_slug = dish_slug.replace(" ", "_").replace("-", "_")
+        dish_slug = ''.join(c for c in dish_slug if c.isalnum() or c == '_')
+        
+        # Criar diretorio se nao existe
+        dish_dir = Path(f"/app/datasets/organized/{dish_slug}")
+        dish_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Gerar nome unico para o arquivo
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        hash_suffix = hashlib.md5(content).hexdigest()[:8]
+        filename = f"{dish_slug}_{timestamp}_{hash_suffix}.jpg"
+        
+        # Salvar imagem
+        filepath = dish_dir / filename
+        with open(filepath, 'wb') as f:
+            f.write(content)
+        
+        # Contar quantas imagens esse prato ja tem
+        existing_images = len(list(dish_dir.glob("*.jpg")))
+        
+        logger.info(f"[ADD-INDEX] Foto adicionada: {dish_name} ({existing_images} fotos)")
+        
+        return {
+            "ok": True,
+            "dish_name": dish_name,
+            "dish_slug": dish_slug,
+            "filename": filename,
+            "total_images": existing_images,
+            "weight_grams": weight_grams,
+            "message": f"Foto adicionada! {dish_name} agora tem {existing_images} foto(s).",
+            "nota": "Execute /api/ai/reindex para atualizar o indice e ter reconhecimento em ~200ms"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao adicionar foto: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+@api_router.post("/ai/identify")
+async def identify_image(
+    file: UploadFile = File(...),
+    pin: Optional[str] = Form(None),
+    nome: Optional[str] = Form(None),
+    country: Optional[str] = Form("BR"),  # Pais do usuario: BR ou OTHER
+    restaurant: Optional[str] = Form(None)  # Restaurante: cibi_sana ou None/outro
+):
+    """
+    Identifica um prato a partir de uma imagem.
+    Se PIN e nome forem fornecidos, retorna dados Premium.
+    
+    LÓGICA DE RECONHECIMENTO:
+    - Cibi Sana (restaurant=cibi_sana): CLIP local APENAS (Gemini TRAVADO, custo zero)
+    - Brasil outros (country=BR, restaurant!=cibi_sana): Gemini primeiro
+    - Internacional (country!=BR): Gemini primeiro
+    
+    Returns:
+        IdentifyResponse com o prato identificado e nivel de confianca
+    """
+    start_time = time.time()
+    perf_start = time.perf_counter()
+    
+    logger.info(f"[IDENTIFY] Iniciando identificacao - restaurant={restaurant}, country={country}")
+    
+    try:
+        # Ler imagem
+        content = await file.read()
+        
+        if len(content) == 0:
+            return IdentifyResponse(
+                ok=False,
+                identified=False,
+                confidence="baixa",
+                score=0.0,
+                message="Arquivo de imagem vazio"
+            )
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # CACHE: Verificar se ja identificamos esta imagem antes
+        # ═══════════════════════════════════════════════════════════════════════
+        from services.cache_service import get_cached_result, cache_result
+        cached = get_cached_result(content)
+        if cached:
+            elapsed_ms = (time.time() - start_time) * 1000
+            cached['search_time_ms'] = round(elapsed_ms, 2)
+            logger.info(f"[CACHE] ⚡ Resposta do cache em {elapsed_ms:.0f}ms")
+            if await get_setting("ENABLE_PROCESSING_METRICS"):
+                total_ms = (time.perf_counter() - perf_start) * 1000
+                source = cached.get('source', '')
+                engine = "GEMINI" if source == 'gemini_flash' else "CLIP"
+                save_processing_metrics({
+                    "timestamp": datetime.now().isoformat(),
+                    "processing_time_ms": round(total_ms, 2),
+                    "dish_name": cached.get('dish_display', ''),
+                    "confidence_score": cached.get('score', 0),
+                    "engine_used": f"{engine} (cache)"
+                })
+            return cached
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # SISTEMA DE IDENTIFICAÇÃO - V1.2 RESTAURADA (logica limpa)
+        # ═══════════════════════════════════════════════════════════════════════
+        # CLIP score ≥ 90% -> aceito direto
+        # Cibi Sana -> CLIP sempre, Gemini TRAVADO
+        # Fora Cibi Sana -> Gemini como fallback
+        # ═══════════════════════════════════════════════════════════════════════
+        
+        decision = None
+        
+        from ai.index import get_index
+        from ai.policy import analyze_result
+        
+        index = get_index()
+        clip_score = 0.0
+        clip_decision = None
+        is_known_restaurant = restaurant and restaurant.lower() == "cibi_sana"
+        
+        if index.is_ready():
+            results = index.search(content, top_k=5)
+            clip_decision = analyze_result(results)
+            clip_score = clip_decision.get('score', 0.0)
+            
+            logger.info(f"[CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
+            
+            # Se CLIP tem confianca >= 90%, usar resultado direto
+            if clip_score >= 0.90 and clip_decision.get('identified'):
+                decision = clip_decision
+                decision['source'] = 'local_index'
+                logger.info(f"[CASCATA] ✅ CLIP confiante ({clip_score:.0%}) - aceito")
+            
+            # CIBI SANA: Usar CLIP APENAS (Gemini TRAVADO)
+            elif is_known_restaurant:
+                if clip_decision.get('identified') is False:
+                    # CLIP rejeitou → respeitar rejeição
+                    decision = clip_decision
+                    decision['source'] = 'local_index'
+                    logger.info(f"[CIBI SANA] CLIP rejeitou ({clip_score:.0%}) - prato nao reconhecido")
+                else:
+                    decision = clip_decision
+                    decision['source'] = 'local_index'
+                    logger.info(f"[CIBI SANA] CLIP apenas ({clip_score:.0%}) - Gemini TRAVADO")
+        
+        # ══════════════════════════════════════════════════════════════════════
+        # NÍVEL 2: Se CLIP nao confiante E NÃO e Cibi Sana, usar Gemini
+        # ══════════════════════════════════════════════════════════════════════
+        if decision is None:
+            logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
+            
+            from services.gemini_flash_service import (
+                identify_dish_gemini_flash,
+                is_gemini_flash_available
+            )
+            
+            if not is_gemini_flash_available():
+                # Gemini indisponivel, usar CLIP mesmo com baixa confianca
+                if index.is_ready():
+                    decision = clip_decision
+                    decision['source'] = 'local_index'
+                else:
+                    return IdentifyResponse(
+                        ok=False,
+                        identified=False,
+                        confidence="baixa",
+                        score=0.0,
+                        message="Servico de IA indisponivel."
+                    )
+            else:
+                # Buscar perfil do usuario se disponivel
+                flash_profile = None
+                if pin and nome:
+                    from services.profile_service import hash_pin
+                    pin_hash = hash_pin(pin)
+                    flash_profile = await db.users.find_one(
+                        {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                        {"_id": 0}
+                    )
+                
+                flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
+                
+                if flash_result.get('ok'):
+                    decision = {
+                        'identified': True,
+                        'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
+                        'dish_display': flash_result.get('nome'),
+                        'score': flash_result.get('score', 0.90),
+                        'source': 'gemini_flash',
+                        'category': flash_result.get('categoria'),
+                        'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteina animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
+                        'nutrition': flash_result.get('nutricao'),
+                        'alergenos': flash_result.get('alergenos', {}),
+                        'alertas_personalizados': flash_result.get('alertas_personalizados', []),
+                        'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
+                    }
+                    logger.info(f"[NÍVEL 2 - GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
+                else:
+                    # Gemini falhou, usar CLIP mesmo com baixa confianca
+                    if index.is_ready() and clip_decision:
+                        decision = clip_decision
+                        decision['source'] = 'local_index'
+                    else:
+                        return IdentifyResponse(
+                            ok=False,
+                            identified=False,
+                            confidence="baixa",
+                            score=0.0,
+                            message="Nao foi possivel identificar o prato."
+                        )
+        
+        # ══════════════════════════════════════════════════════════════════════
+        # APLICAR NÍVEIS DE CONFIANÇA - v1.3
+        # ══════════════════════════════════════════════════════════════════════
+        score = decision.get('score', 0.0)
+        
+        # Se ja foi rejeitado na cascata (identified=False), preservar a mensagem
+        if decision.get('identified') is False and decision.get('message'):
+            decision['aviso_confianca'] = decision.get('message')
+            decision['alternatives'] = []  # Baixa = 0 alternativas
+        elif score >= 0.90:
+            decision['confidence'] = 'alta'
+            decision['message'] = f"Identificado: {decision.get('dish_display', 'Prato')}"
+            decision['aviso_confianca'] = None
+            decision['alternatives'] = []  # Alta = 0 alternativas
+        elif score >= 0.50:
+            decision['confidence'] = 'media'
+            dish_name = decision.get('dish_display', 'Prato')
+            decision['message'] = f"Parece ser: {dish_name}"
+            decision['aviso_confianca'] = "Verifique se o prato esta correto"
+            # Media = maximo 2 alternativas (ja definido na decisao)
+            if 'alternatives' in decision:
+                decision['alternatives'] = decision['alternatives'][:2]
+        else:
+            decision['confidence'] = 'baixa'
+            decision['message'] = "Nao foi possivel identificar o prato"
+            decision['aviso_confianca'] = "Tente outra foto ou consulte o atendente"
+            decision['alternatives'] = []  # Baixa = 0 alternativas
+        
+        # ══════════════════════════════════════════════════════════════════════
+        # SINCRONIZAR NOMES DO ADMIN (MongoDB -> display)
+        # Se o proprietario renomeou um prato no Admin, usar o novo nome
+        # ══════════════════════════════════════════════════════════════════════
+        if decision.get('dish_display'):
+            try:
+                index_name = decision.get('dish_display', '')
+                # Gerar slug do nome do indice para matching
+                import re as _re
+                index_slug = _re.sub(r'[^a-z0-9]', '', index_name.lower())
+                
+                # Buscar por nome exato OU por slug similar
+                admin_dish = await db.dishes.find_one(
+                    {'$or': [
+                        {'name': index_name},
+                        {'nome': index_name},
+                        {'nome_original': index_name},
+                        {'nome_indice': index_name}
+                    ]},
+                    {'_id': 0, 'name': 1, 'nome': 1}
+                )
+                
+                if admin_dish:
+                    new_name = admin_dish.get('name') or admin_dish.get('nome')
+                    if new_name and new_name != index_name:
+                        decision['dish_display'] = new_name
+                        if 'Identificado:' in decision.get('message', ''):
+                            decision['message'] = f"Identificado: {new_name}"
+                        elif 'Parece ser:' in decision.get('message', ''):
+                            decision['message'] = f"Parece ser: {new_name}"
+                        logger.info(f"[ADMIN SYNC] Nome: {index_name} -> {new_name}")
+            except Exception as e:
+                logger.warning(f"[ADMIN SYNC] Erro: {e}")
+        
+        decision['ia_disponivel'] = False
+        decision['ok'] = True
+        
+        # Calcular tempo total
+        elapsed_ms = (time.time() - start_time) * 1000
+        
+        logger.info(f"Identificacao: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # VERIFICAR SE É USUÁRIO PREMIUM
+        # ═══════════════════════════════════════════════════════════════════════
+        is_premium = False
+        user_profile = None
+        premium_data = {}
+        
+        if pin and nome:
+            from services.profile_service import hash_pin
+            pin_hash = hash_pin(pin)
+            user_profile = await db.users.find_one(
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                {"_id": 0}
+            )
+            is_premium = user_profile is not None
+            
+            if is_premium:
+                logger.info(f"[PREMIUM] Usuario {nome} identificado")
+        
+        # Buscar dados cientificos - primeiro MongoDB, depois local
+        scientific_data = {}
+        mito_verdade = None
+        dish_slug = decision.get('dish')
+        categoria = decision.get('category', '')
+        
+        if dish_slug and decision.get('source') != 'generic_ai':
+            # Normalizar slug para busca
+            slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
+            mongo_dish = await db.dishes.find_one(
+                {'$or': [
+                    {'slug': slug_normalized},
+                    {'slug': dish_slug}
+                ]},
+                {'_id': 0, 'beneficio_principal': 1, 'curiosidade_cientifica': 1, 
+                 'referencia_pesquisa': 1, 'alerta_saude': 1}
+            )
+            if mongo_dish and is_premium:
+                scientific_data = mongo_dish
+                logger.info(f"[PREMIUM] Dados cientificos do MongoDB para {dish_slug}")
+            
+            # Se nao encontrou no MongoDB, buscar dados Premium LOCAIS (SEM CRÉDITOS)
+            if not scientific_data and is_premium:
+                try:
+                    from services.local_dish_updater import obter_conteudo_premium, encontrar_tipo_prato
+                    tipo_prato = encontrar_tipo_prato(dish_slug.replace('_', ' '))
+                    premium_local = obter_conteudo_premium(categoria, tipo_prato)
+                    scientific_data = {
+                        'beneficio_principal': premium_local.get('beneficio_principal'),
+                        'curiosidade_cientifica': premium_local.get('curiosidade_cientifica'),
+                        'referencia_pesquisa': premium_local.get('referencia_pesquisa'),
+                        'alerta_saude': premium_local.get('alerta_saude')
+                    }
+                    mito_verdade = premium_local.get('mito_verdade')
+                    logger.info(f"[PREMIUM] Dados cientificos LOCAIS para {dish_slug} (categoria: {categoria})")
+                except Exception as e:
+                    logger.warning(f"[PREMIUM] Erro ao buscar dados locais: {e}")
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # ALERTAS PREMIUM EM TEMPO REAL
+        # ═══════════════════════════════════════════════════════════════════════
+        if is_premium and user_profile:
+            try:
+                from services.alerts_service import (
+                    gerar_alertas_tempo_real,
+                    gerar_combinacoes_sugeridas,
+                    gerar_substituicoes,
+                    verificar_alergenos_perfil
+                )
+                
+                ingredientes = decision.get('ingredientes', [])
+                
+                # Alertas de alergenos baseados no perfil
+                alertas_alergenos = verificar_alergenos_perfil(user_profile, ingredientes)
+                
+                # Alertas baseados no historico semanal
+                alertas_historico = await gerar_alertas_tempo_real(
+                    db, nome, decision, ingredientes
+                )
+                
+                # Combinacoes inteligentes
+                combinacoes = gerar_combinacoes_sugeridas(ingredientes)
+                
+                # Substituicoes saudaveis
+                substituicoes = gerar_substituicoes(ingredientes)
+                
+                # ═══════════════════════════════════════════════════════════════════
+                # NOVIDADES/NOTÍCIAS DO PRATO (PREMIUM)
+                # ═══════════════════════════════════════════════════════════════════
+                novidade = None
+                dish_slug = decision.get('dish')
+                if dish_slug:
+                    novidade_doc = await db.novidades.find_one(
+                        {"dish_slug": dish_slug, "ativa": True},
+                        {"_id": 0}
+                    )
+                    if novidade_doc:
+                        novidade = novidade_doc
+                        logger.info(f"[PREMIUM] Novidade encontrada para {dish_slug}: {novidade_doc.get('tipo')}")
+                
+                premium_data = {
+                    "alertas_alergenos": alertas_alergenos,
+                    "alertas_historico": alertas_historico,
+                    "combinacoes_sugeridas": combinacoes,
+                    "substituicoes": substituicoes,
+                    "novidade": novidade,
+                    "is_premium": True
+                }
+                
+                logger.info(f"[PREMIUM] {len(alertas_alergenos)} alertas de alergenos, {len(alertas_historico)} alertas de historico")
+                
+            except Exception as e:
+                logger.error(f"[PREMIUM] Erro ao gerar alertas: {e}")
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # VERDADE OU MITO - EDUCAÇÃO NUTRICIONAL (PREMIUM)
+        # ═══════════════════════════════════════════════════════════════════════
+        # mito_verdade pode ja ter sido definido pelo local_dish_updater
+        if is_premium and not mito_verdade:
+            try:
+                from services.mitos_verdades import get_mito_verdade
+                
+                ingredientes = decision.get('ingredientes', [])
+                categoria = decision.get('category', '')
+                
+                mito_verdade = get_mito_verdade(
+                    ingredientes=ingredientes,
+                    categoria=categoria
+                )
+                
+                if mito_verdade:
+                    logger.info(f"[PREMIUM] Verdade/Mito: {mito_verdade.get('resposta')}")
+                    
+            except Exception as e:
+                logger.error(f"[PREMIUM] Erro ao buscar mito/verdade: {e}")
+        
+        # Preparar nutrition como objeto - enriquecer com nutrition_sheets
+        nutrition_data = decision.get('nutrition') or {}
+        dish_display_name = format_dish_name(decision.get('dish_display', ''))
+        
+        # Buscar dados precisos da nutrition_sheets
+        if decision.get('identified') and dish_display_name:
+            # Tentar com display name E com nome original do index (sem acento)
+            sheet_data = await lookup_nutrition_sheet(dish_display_name)
+            if not sheet_data and decision.get('dish'):
+                sheet_data = await lookup_nutrition_sheet(decision['dish'])
+            if sheet_data:
+                nutrition_data = {**nutrition_data, **sheet_data}
+                # Sobrescrever strings com valores precisos formatados
+                if sheet_data.get('calorias_kcal') is not None:
+                    nutrition_data['calorias'] = f"{sheet_data['calorias_kcal']:.0f} kcal"
+                if sheet_data.get('proteinas_g') is not None:
+                    nutrition_data['proteinas'] = f"{sheet_data['proteinas_g']:.1f}g"
+                if sheet_data.get('carboidratos_g') is not None:
+                    nutrition_data['carboidratos'] = f"{sheet_data['carboidratos_g']:.1f}g"
+                if sheet_data.get('gorduras_g') is not None:
+                    nutrition_data['gorduras'] = f"{sheet_data['gorduras_g']:.1f}g"
+                if sheet_data.get('fibras_g') is not None:
+                    nutrition_data['fibras'] = f"{sheet_data['fibras_g']:.1f}g"
+                if sheet_data.get('sodio_mg') is not None:
+                    nutrition_data['sodio'] = f"{sheet_data['sodio_mg']:.0f}mg"
+        
+        nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
+        
+        # Gerar mensagem de confianca em 3 niveis
+        confidence_level_msg = get_confidence_level_message(
+            decision['score'], 
+            decision['confidence']
+        )
+        
+        # Montar resposta base
+        response_data = {
+            "ok": True,
+            "identified": decision['identified'],
+            "dish": decision.get('dish'),
+            "dish_display": dish_display_name,
+            "confidence": decision['confidence'],
+            "confidence_level": confidence_level_msg,  # NOVO: Mensagem descritiva
+            "score": decision['score'],
+            "message": decision['message'],
+            "category": decision.get('category'),
+            "category_emoji": decision.get('category_emoji'),
+            "nutrition": nutrition_obj,
+            "descricao": decision.get('descricao'),
+            "ingredientes": decision.get('ingredientes'),
+            "tecnica": decision.get('tecnica'),
+            "beneficios": decision.get('beneficios'),
+            "riscos": decision.get('riscos'),
+            "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
+            "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
+            "search_time_ms": round(elapsed_ms, 2),
+            "source": decision.get('source', 'local_index'),
+            # Dados cientificos - SÓ PREMIUM
+            "beneficio_principal": scientific_data.get('beneficio_principal') if is_premium else None,
+            "curiosidade_cientifica": scientific_data.get('curiosidade_cientifica') if is_premium else None,
+            "referencia_pesquisa": scientific_data.get('referencia_pesquisa') if is_premium else None,
+            "alerta_saude": scientific_data.get('alerta_saude') if is_premium else None,
+            # Novos campos Premium
+            "voce_sabia": scientific_data.get('voce_sabia') if is_premium else None,
+            "dica_chef": scientific_data.get('dica_chef') if is_premium else None,
+            # Verdade ou Mito - PREMIUM
+            "mito_verdade": mito_verdade if is_premium else None,
+            # Dados Premium extras
+            "premium": premium_data if is_premium else None,
+            "is_premium": is_premium,
+            # Flag para indicar se IA poderia melhorar o resultado (sem gastar creditos automaticamente)
+            "ia_disponivel": decision.get('ia_disponivel', False),
+            # Novos campos do Gemini Flash
+            "alergenos": decision.get('alergenos', {}),
+            "dica_nutricional": decision.get('dica_nutricional'),
+            "alertas_personalizados": decision.get('alertas_personalizados', []),
+            "tempo_ia_ms": decision.get('tempo_ia_ms'),
+            # Familias de Pratos - honestidade
+            "family_name": decision.get('family_name'),
+            "family_candidates": decision.get('family_candidates', []),
+            "family_candidates_detail": decision.get('family_candidates_detail', []),
+        }
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # CACHE: Salvar resultado para futuras consultas
+        # ═══════════════════════════════════════════════════════════════════════
+        if response_data.get('identified'):
+            cache_result(content, response_data, ttl_seconds=3600)  # 1 hora de cache
+        
+        # ═══════════════════════════════════════════════════════════════════════
+        # MÉTRICAS DE PROCESSAMENTO (condicional)
+        # ═══════════════════════════════════════════════════════════════════════
+        if await get_setting("ENABLE_PROCESSING_METRICS"):
+            total_ms = (time.perf_counter() - perf_start) * 1000
+            source = response_data.get('source', '')
+            engine = "GEMINI" if source == 'gemini_flash' else "CLIP"
+            save_processing_metrics({
+                "timestamp": datetime.now().isoformat(),
+                "processing_time_ms": round(total_ms, 2),
+                "dish_name": response_data.get('dish_display', ''),
+                "confidence_score": response_data.get('score', 0),
+                "engine_used": engine
+            })
+        
+        return response_data
+        
+    except Exception as e:
+        logger.error(f"Erro na identificacao: {e}")
+        elapsed_ms = (time.time() - start_time) * 1000
+        
+        return IdentifyResponse(
+            ok=False,
+            identified=False,
+            confidence="baixa",
+            score=0.0,
+            message=f"Erro ao processar imagem: {str(e)}",
+            search_time_ms=round(elapsed_ms, 2)
+        )
+
+
+@api_router.post("/ai/identify-with-ai")
+async def identify_with_ai(
+    file: UploadFile = File(...),
+    pin: str = Form(""),
+    nome: str = Form("")
+):
+    """
+    Identificacao usando Gemini Vision - CONSOME CRÉDITOS!
+    Usar apenas quando o usuario explicitamente solicitar.
+    """
+    start_time = time.time()
+    try:
+        content = await file.read()
+        
+        # Restaurar temporariamente o generic_ai original
+        import importlib
+        import sys
+        
+        # Carregar o backup com IA
+        backup_path = "/app/backend/services/generic_ai.py.BACKUP_COM_IA"
+        
+        import os
+        if not os.path.exists(backup_path):
+            return {
+                "ok": False,
+                "error": "Servico de IA nao disponivel no momento",
+                "message": "Use o reconhecimento local ou corrija manualmente"
+            }
+        
+        # Ler e executar o codigo do backup
+        with open(backup_path, 'r') as f:
+            backup_code = f.read()
+        
+        # Criar modulo temporario
+        import types
+        temp_module = types.ModuleType("generic_ai_temp")
+        exec(compile(backup_code, backup_path, 'exec'), temp_module.__dict__)
+        
+        # Chamar a funcao de identificacao
+        result = await temp_module.identify_unknown_dish(content)
+        
+        if result.get('ok'):
+            logger.info(f"[IA SOLICITADA] Gemini identificou: {result.get('nome')} (creditos usados)")
+            response = {
+                "ok": True,
+                "identified": True,
+                "dish_display": result.get('nome'),
+                "category": result.get('categoria'),
+                "category_emoji": result.get('category_emoji', '🍽️'),
+                "confidence": result.get('confianca', 'media'),
+                "score": result.get('score', 0.7),
+                "ingredientes": result.get('ingredientes_provaveis', []),
+                "beneficios": result.get('beneficios', []),
+                "descricao": result.get('descricao', ''),
+                "source": "gemini_ai",
+                "creditos_usados": True,
+                "message": "Identificado com IA (creditos consumidos)"
+            }
+            if await get_setting("ENABLE_PROCESSING_METRICS"):
+                total_ms = (time.time() - start_time) * 1000
+                save_processing_metrics({
+                    "timestamp": datetime.now().isoformat(),
+                    "processing_time_ms": round(total_ms, 2),
+                    "dish_name": response.get('dish_display', ''),
+                    "confidence_score": response.get('score', 0),
+                    "engine_used": "GEMINI"
+                })
+            return response
+        else:
+            return {
+                "ok": False,
+                "error": result.get('error', 'Erro na identificacao'),
+                "creditos_usados": False
+            }
+            
+    except Exception as e:
+        logger.error(f"[IA SOLICITADA] Erro: {e}")
+        return {
+            "ok": False,
+            "error": str(e),
+            "creditos_usados": False
+        }
+
+
+@api_router.post("/admin/revisar-prato-taco")
+async def revisar_prato_com_taco(request: Request):
+    """
+    Busca informacoes nutricionais usando a Tabela TACO.
+    ZERO CRÉDITOS - 100% LOCAL
+    """
+    try:
+        from data.taco_database import buscar_dados_taco, calcular_nutricao_prato, search_taco
+        
+        data = await request.json()
+        nome = data.get('nome', '')
+        ingredientes = data.get('ingredientes', [])
+        
+        if not ingredientes:
+            return {"ok": False, "error": "Ingredientes sao obrigatorios"}
+        
+        # Calcular nutricao baseada nos ingredientes
+        nutricao = calcular_nutricao_prato(ingredientes, 100)  # por 100g
+        
+        # Detectar categoria baseada nos ingredientes
+        ing_texto = ' '.join(ingredientes).lower()
+        
+        # Ingredientes de origem animal
+        animais = ['frango', 'carne', 'boi', 'porco', 'bacon', 'peixe', 'camarao', 
+                   'atum', 'salmao', 'bacalhau', 'costela', 'linguica', 'presunto']
+        vegetarianos = ['ovo', 'leite', 'queijo', 'manteiga', 'creme de leite', 'iogurte']
+        
+        # Excluir versoes veganas
+        veganos_ok = ['leite de coco', 'leite de soja', 'queijo vegano', 'manteiga vegetal']
+        
+        categoria = 'vegano'  # assume vegano
+        for ing in animais:
+            if ing in ing_texto:
+                categoria = 'proteina animal'
+                break
+        
+        if categoria == 'vegano':
+            for ing in vegetarianos:
+                if ing in ing_texto:
+                    # Verificar se nao e versao vegana
+                    is_vegano = False
+                    for v in veganos_ok:
+                        if v in ing_texto:
+                            is_vegano = True
+                            break
+                    if not is_vegano:
+                        categoria = 'vegetariano'
+                        break
+        
+        # Detectar alergenos
+        alergenos = {
+            "gluten": any(x in ing_texto for x in ['farinha', 'pao', 'massa', 'trigo']),
+            "lactose": any(x in ing_texto for x in ['leite', 'queijo', 'creme']) and 'coco' not in ing_texto,
+            "ovo": 'ovo' in ing_texto,
+            "frutos_do_mar": any(x in ing_texto for x in ['camarao', 'peixe', 'atum', 'salmao', 'lula']),
+            "oleaginosas": any(x in ing_texto for x in ['castanha', 'nozes', 'amendoim', 'amendoa'])
+        }
+        
+        # Formatar resultado
+        resultado = {
+            "ok": True,
+            "fonte": "TACO (zero creditos)",
+            "categoria": categoria,
+            "nutricao": {
+                "calorias": f"{nutricao.get('calorias', 0):.0f} kcal",
+                "proteinas": f"{nutricao.get('proteinas', 0):.1f}g",
+                "carboidratos": f"{nutricao.get('carboidratos', 0):.1f}g",
+                "gorduras": f"{nutricao.get('gorduras', 0):.1f}g",
+                "fibras": f"{nutricao.get('fibras', 0):.1f}g",
+                "sodio": f"{nutricao.get('sodio', 0):.0f}mg",
+                "calcio": f"{nutricao.get('calcio', 0):.0f}mg"
+            },
+            "alergenos": alergenos,
+            "contem_gluten": alergenos["gluten"],
+            "contem_lactose": alergenos["lactose"],
+            "contem_ovo": alergenos["ovo"],
+            "contem_frutos_mar": alergenos["frutos_do_mar"],
+            "contem_castanhas": alergenos["oleaginosas"]
+        }
+        
+        logger.info(f"[TACO] {nome}: {categoria} - {nutricao.get('calorias', 0):.0f} kcal (ZERO CRÉDITOS)")
+        return resultado
+        
+    except Exception as e:
+        logger.error(f"[TACO] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/revisar-prato-ia")
+async def revisar_prato_com_ia(request: Request):
+    """
+    Usa Gemini Flash para analisar ingredientes e sugerir:
+    - Categoria (vegano/vegetariano/proteina animal)
+    - Ficha nutricional (por 100g)
+    - Beneficios nutricionais
+    - Riscos e alergenos
+    
+    Custo: 1 chamada Gemini (~R$0.001)
+    """
+    try:
+        from services.gemini_flash_service import is_gemini_flash_available
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        import os
+        
+        data = await request.json()
+        nome = data.get('nome', '')
+        ingredientes = data.get('ingredientes', [])
+        
+        if not nome or not ingredientes:
+            return {"ok": False, "error": "Nome e ingredientes sao obrigatorios"}
+        
+        if not is_gemini_flash_available():
+            return {"ok": False, "error": "Gemini Flash nao disponivel"}
+        
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        
+        # Prompt otimizado para analise nutricional COMPLETA
+        prompt_sistema = """Voce e um nutricionista especialista em alimentacao brasileira.
+Analise os ingredientes do prato e retorne APENAS JSON valido com:
+
+1. categoria: "vegano", "vegetariano" ou "proteina animal"
+2. nutricao: valores por 100 GRAMAS do prato pronto (nao por porcao!)
+   - calorias: numero em kcal (ex: "280 kcal")
+   - proteinas: em gramas (ex: "18g")
+   - carboidratos: em gramas (ex: "12g")
+   - gorduras: em gramas (ex: "15g")
+   - fibras: em gramas (ex: "2g")
+3. beneficios: lista de 3-4 beneficios reais
+4. riscos: lista de alertas (alergenos, alto teor de algo, etc)
+5. alergenos: {gluten, lactose, ovo, frutos_do_mar, oleaginosas} true/false
+
+REGRAS DE CATEGORIA:
+- Carne, peixe, frango, bacon, camarao = "proteina animal"
+- Ovo, leite, queijo (sem carne) = "vegetariano"
+- 100% vegetal = "vegano" (leite de coco e vegano)
+
+REGRAS NUTRICIONAIS (por 100g):
+- Bacalhau com natas: ~180-220 kcal (tem creme)
+- Bacalhau a bras: ~250-300 kcal (batata palha + ovos)
+- Arroz branco: ~130 kcal
+- Feijao: ~77 kcal
+- Carnes grelhadas: ~150-200 kcal
+- Frituras/empanados: +50-100 kcal extra
+- Pratos com creme/queijo: adicionar ~50 kcal
+
+Responda APENAS JSON valido."""
+        
+        ingredientes_texto = ", ".join(ingredientes) if isinstance(ingredientes, list) else ingredientes
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"revisar-{int(time.time())}",
+            system_message=prompt_sistema
+        ).with_model("gemini", "gemini-2.0-flash-lite")
+        
+        response = await chat.send_message(UserMessage(
+            text=f"Prato: {nome}\nIngredientes: {ingredientes_texto}\n\nRetorne a ficha nutricional POR 100 GRAMAS."
+        ))
+        
+        # Parse JSON
+        response_clean = response.strip()
+        if response_clean.startswith("```"):
+            response_clean = response_clean.split("```")[1]
+            if response_clean.startswith("json"):
+                response_clean = response_clean[4:]
+        if response_clean.endswith("```"):
+            response_clean = response_clean[:-3]
+        
+        import json
+        resultado = json.loads(response_clean.strip())
+        
+        logger.info(f"[REVISAR-IA] {nome}: {resultado.get('categoria')} - {resultado.get('nutricao', {}).get('calorias', 'N/A')}")
+        
+        return {
+            "ok": True,
+            "nome": nome,
+            "sugestoes": resultado
+        }
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"[REVISAR-IA] Erro JSON: {e}")
+        return {"ok": False, "error": "Erro ao processar resposta da IA"}
+    except Exception as e:
+        logger.error(f"[REVISAR-IA] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/revisar-lote-ia")
+async def revisar_pratos_em_lote(request: Request):
+    """
+    Revisa multiplos pratos com IA Gemini Flash em lote.
+    Ideal para corrigir fichas nutricionais de uma vez.
+    
+    Body:
+    {
+        "slugs": ["slug1", "slug2", ...],  // Lista de slugs para revisar
+        "max_pratos": 10  // Limite por chamada (para nao travar)
+    }
+    
+    Retorno:
+    {
+        "ok": true,
+        "revisados": 8,
+        "falhas": 2,
+        "resultados": [...]
+    }
+    """
+    try:
+        from services.gemini_flash_service import is_gemini_flash_available
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        import os
+        import json
+        
+        data = await request.json()
+        slugs = data.get('slugs', [])
+        max_pratos = min(data.get('max_pratos', 10), 20)  # Maximo 20 por vez
+        
+        if not slugs:
+            return {"ok": False, "error": "Nenhum slug fornecido"}
+        
+        if not is_gemini_flash_available():
+            return {"ok": False, "error": "Gemini Flash nao disponivel"}
+        
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        resultados = []
+        revisados = 0
+        falhas = 0
+        
+        # Processar cada prato
+        for slug in slugs[:max_pratos]:
+            try:
+                # Carregar info do prato
+                info_file = Path(f"/app/datasets/organized/{slug}/dish_info.json")
+                if not info_file.exists():
+                    resultados.append({"slug": slug, "status": "erro", "msg": "Prato nao encontrado"})
+                    falhas += 1
+                    continue
+                
+                with open(info_file, 'r', encoding='utf-8') as f:
+                    dish_info = json.load(f)
+                
+                nome = dish_info.get('nome', slug)
+                ingredientes = dish_info.get('ingredientes', [])
+                
+                if not ingredientes or len(ingredientes) == 0:
+                    resultados.append({"slug": slug, "status": "pulado", "msg": "Sem ingredientes"})
+                    continue
+                
+                # Prompt para revisao
+                prompt_sistema = """Voce e um nutricionista especialista em alimentacao brasileira.
+Analise os ingredientes do prato e retorne APENAS JSON valido com:
+
+1. categoria: "vegano", "vegetariano" ou "proteina animal"
+2. nutricao: valores por 100 GRAMAS do prato pronto (nao por porcao!)
+   - calorias: numero em kcal (ex: "280 kcal")
+   - proteinas: em gramas (ex: "18g")
+   - carboidratos: em gramas (ex: "12g")
+   - gorduras: em gramas (ex: "15g")
+   - fibras: em gramas (ex: "2g")
+3. beneficios: lista de 3-4 beneficios reais
+4. riscos: lista de alertas (alergenos, alto teor de algo, etc)
+5. alergenos: {gluten, lactose, ovo, frutos_do_mar, oleaginosas} true/false
+
+REGRAS:
+- Carne/peixe/frango = "proteina animal"
+- Ovo/leite/queijo (sem carne) = "vegetariano"
+- 100% vegetal = "vegano"
+
+Responda APENAS JSON valido."""
+                
+                ingredientes_texto = ", ".join(ingredientes) if isinstance(ingredientes, list) else ingredientes
+                
+                chat = LlmChat(
+                    api_key=api_key,
+                    session_id=f"lote-{slug}-{int(time.time())}",
+                    system_message=prompt_sistema
+                ).with_model("gemini", "gemini-2.0-flash-lite")
+                
+                response = await chat.send_message(UserMessage(
+                    text=f"Prato: {nome}\nIngredientes: {ingredientes_texto}\n\nRetorne a ficha nutricional POR 100 GRAMAS."
+                ))
+                
+                # Parse JSON
+                response_clean = response.strip()
+                if response_clean.startswith("```"):
+                    response_clean = response_clean.split("```")[1]
+                    if response_clean.startswith("json"):
+                        response_clean = response_clean[4:]
+                if response_clean.endswith("```"):
+                    response_clean = response_clean[:-3]
+                
+                sugestoes = json.loads(response_clean.strip())
+                
+                # Atualizar dish_info
+                dish_info['categoria'] = sugestoes.get('categoria', dish_info.get('categoria'))
+                dish_info['nutricao'] = sugestoes.get('nutricao', dish_info.get('nutricao'))
+                dish_info['beneficios'] = sugestoes.get('beneficios', dish_info.get('beneficios'))
+                dish_info['riscos'] = sugestoes.get('riscos', dish_info.get('riscos'))
+                
+                # Alergenos
+                alergenos = sugestoes.get('alergenos', {})
+                dish_info['contem_gluten'] = alergenos.get('gluten', False)
+                dish_info['contem_lactose'] = alergenos.get('lactose', False)
+                dish_info['contem_ovo'] = alergenos.get('ovo', False)
+                dish_info['contem_frutos_mar'] = alergenos.get('frutos_do_mar', False)
+                dish_info['contem_castanhas'] = alergenos.get('oleaginosas', False)
+                
+                # Salvar
+                with open(info_file, 'w', encoding='utf-8') as f:
+                    json.dump(dish_info, f, ensure_ascii=False, indent=2)
+                
+                resultados.append({
+                    "slug": slug, 
+                    "status": "ok", 
+                    "categoria": dish_info['categoria'],
+                    "calorias": dish_info.get('nutricao', {}).get('calorias', 'N/A')
+                })
+                revisados += 1
+                
+                logger.info(f"[LOTE-IA] ✅ {slug}: {dish_info.get('nutricao', {}).get('calorias', 'N/A')}")
+                
+                # Pequena pausa para nao sobrecarregar
+                await asyncio.sleep(0.3)
+                
+            except Exception as e:
+                logger.error(f"[LOTE-IA] Erro em {slug}: {e}")
+                resultados.append({"slug": slug, "status": "erro", "msg": str(e)})
+                falhas += 1
+        
+        return {
+            "ok": True,
+            "revisados": revisados,
+            "falhas": falhas,
+            "total_solicitados": len(slugs),
+            "processados": len(resultados),
+            "resultados": resultados
+        }
+        
+    except Exception as e:
+        logger.error(f"[LOTE-IA] Erro geral: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/ai/dishes")
+async def list_dishes():
+    """Lista todos os pratos no indice"""
+    try:
+        from ai.index import get_index
+        from ai.policy import get_dish_name, get_category, get_category_emoji
+        
+        index = get_index()
+        
+        dishes = []
+        for dish_slug, data in index.metadata.items():
+            dishes.append({
+                'slug': dish_slug,
+                'name': get_dish_name(dish_slug),
+                'category': get_category(dish_slug),
+                'category_emoji': get_category_emoji(get_category(dish_slug)),
+                'image_count': data.get('image_count', 0)
+            })
+        
+        # Ordenar por nome
+        dishes.sort(key=lambda x: x['name'])
+        
+        return {
+            "ok": True,
+            "total": len(dishes),
+            "dishes": dishes
+        }
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/learn")
+async def learn_new_dish(
+    dish_name: str,
+    file: UploadFile = File(...)
+):
+    """
+    Cadastra foto de um novo prato para aprendizado.
+    
+    O prato sera adicionado a pasta de datasets e podera ser
+    incorporado ao indice no proximo reindex.
+    
+    Args:
+        dish_name: Nome do prato (sera convertido em slug)
+        file: Imagem do prato
+    """
+    import re
+    import shutil
+    
+    try:
+        # Converter nome para slug
+        slug = dish_name.lower().strip()
+        slug = re.sub(r'[^a-z0-9]+', '', slug)
+        
+        if not slug:
+            return JSONResponse(
+                status_code=400,
+                content={"ok": False, "error": "Nome do prato invalido"}
+            )
+        
+        # Criar diretorio se nao existir
+        dish_dir = f"/app/datasets/organized/{slug}"
+        os.makedirs(dish_dir, exist_ok=True)
+        
+        # Contar imagens existentes
+        existing = len([f for f in os.listdir(dish_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
+        
+        # Salvar nova imagem
+        ext = file.filename.split('.')[-1] if '.' in file.filename else 'jpg'
+        new_filename = f"{slug}{existing + 1:02d}.{ext}"
+        file_path = os.path.join(dish_dir, new_filename)
+        
+        content = await file.read()
+        with open(file_path, 'wb') as f:
+            f.write(content)
+        
+        logger.info(f"Nova imagem salva: {file_path}")
+        
+        return {
+            "ok": True,
+            "message": f"Imagem do prato '{dish_name}' salva com sucesso!",
+            "dish_slug": slug,
+            "file_saved": new_filename,
+            "total_images": existing + 1,
+            "note": "Execute /api/ai/reindex para incorporar ao indice"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao salvar prato: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/upload/photos")
+async def upload_photos(
+    dish_name: str = Form(...),
+    files: List[UploadFile] = File(...)
+):
+    """Upload de fotos para um prato existente. Apenas ADICIONA, nunca modifica ou deleta."""
+    import re
+    try:
+        dish_name = dish_name.strip()
+        dataset_dir = "/app/datasets/organized"
+        
+        # Buscar pasta existente pelo nome
+        target_folder = None
+        for folder in os.listdir(dataset_dir):
+            if folder == dish_name:
+                target_folder = os.path.join(dataset_dir, folder)
+                break
+        
+        if not target_folder:
+            return JSONResponse(status_code=400, content={"ok": False, "error": f"Prato nao encontrado: {dish_name}"})
+        
+        saved = 0
+        errors = []
+        
+        for file in files:
+            try:
+                ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
+                if ext not in ('jpg', 'jpeg', 'png', 'webp'):
+                    errors.append(f"{file.filename}: formato nao suportado")
+                    continue
+                
+                content = await file.read()
+                if len(content) < 1000:
+                    errors.append(f"{file.filename}: arquivo muito pequeno")
+                    continue
+                
+                # Salvar com nome original para rastreabilidade
+                safe_name = re.sub(r'[^\w\.\-]', '_', file.filename)
+                file_path = os.path.join(target_folder, safe_name)
+                
+                # Nao sobrescrever se ja existe
+                if os.path.exists(file_path):
+                    base, ext_part = os.path.splitext(safe_name)
+                    file_path = os.path.join(target_folder, f"{base}_new{ext_part}")
+                
+                with open(file_path, 'wb') as f:
+                    f.write(content)
+                saved += 1
+            except Exception as e:
+                errors.append(f"{file.filename}: {str(e)}")
+        
+        total = len([f for f in os.listdir(target_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
+        logger.info(f"[UPLOAD] {dish_name}: +{saved} fotos (total: {total})")
+        
+        return {"ok": True, "dish": dish_name, "saved": saved, "total_images": total, "errors": errors}
+    except Exception as e:
+        logger.error(f"Erro no upload: {e}")
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+@api_router.post("/upload/zip")
+async def upload_zip(file: UploadFile = File(...)):
+    """TRAVADO - Fotos protegidas."""
+    return {"ok": False, "error": "Upload de fotos esta travado para preservar integridade do dataset."}
+
+
+@api_router.get("/upload/status")
+async def upload_status():
+    """Retorna estatisticas do dataset atual."""
+    organized_dir = "/app/datasets/organized"
+    stats = {}
+    total_images = 0
+    
+    if os.path.exists(organized_dir):
+        for dish_dir in sorted(os.listdir(organized_dir)):
+            full_path = os.path.join(organized_dir, dish_dir)
+            if os.path.isdir(full_path):
+                count = len([f for f in os.listdir(full_path) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
+                stats[dish_dir] = count
+                total_images += count
+    
+    return {
+        "ok": True,
+        "total_dishes": len(stats),
+        "total_images": total_images,
+        "dishes": stats
+    }
+
+
+@api_router.get("/ai/unknown")
+async def check_unknown(file: UploadFile = File(...)):
+    """
+    Verifica se um prato e desconhecido (nao esta no indice).
+    Útil para identificar pratos que precisam ser cadastrados.
+    """
+    try:
+        from ai.index import get_index
+        
+        index = get_index()
+        if not index.is_ready():
+            return {"ok": False, "message": "Índice nao carregado"}
+        
+        content = await file.read()
+        results = index.search(content, top_k=1)
+        
+        if results and results[0].get('score', 0) < 0.50:
+            return {
+                "ok": True,
+                "is_unknown": True,
+                "best_match": results[0].get('dish'),
+                "score": results[0].get('score'),
+                "message": "Prato nao reconhecido. Considere cadastra-lo via /api/ai/learn"
+            }
+        else:
+            return {
+                "ok": True,
+                "is_unknown": False,
+                "best_match": results[0].get('dish') if results else None,
+                "score": results[0].get('score') if results else 0,
+                "message": "Prato reconhecido no indice"
+            }
+            
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/identify-flash")
+async def identify_with_gemini_flash(
+    file: UploadFile = File(...),
+    pin: Optional[str] = Form(None),
+    nome: Optional[str] = Form(None)
+):
+    """
+    Identificacao DIRETA usando Gemini Flash.
+    """
+    start_time = time.time()
+    
+    try:
+        from services.gemini_flash_service import (
+            identify_dish_gemini_flash,
+            is_gemini_flash_available,
+            get_gemini_flash_status
+        )
+        
+        if not is_gemini_flash_available():
+            return JSONResponse(
+                status_code=503,
+                content={"ok": False, "error": "Gemini Flash nao configurado"}
+            )
+        
+        content = await file.read()
+        
+        if len(content) == 0:
+            return JSONResponse(
+                status_code=400,
+                content={"ok": False, "error": "Arquivo de imagem vazio"}
+            )
+        
+        # Buscar perfil do usuario para alertas personalizados
+        user_profile = None
+        if pin and nome:
+            from services.profile_service import hash_pin
+            pin_hash = hash_pin(pin)
+            user_profile = await db.users.find_one(
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                {"_id": 0}
+            )
+        
+        # Chamar Gemini Flash
+        result = await identify_dish_gemini_flash(content, user_profile)
+        
+        elapsed_ms = (time.time() - start_time) * 1000
+        result["total_time_ms"] = round(elapsed_ms, 2)
+        
+        if result.get("ok"):
+            logger.info(f"[Gemini Flash] ✅ {result.get('nome')} em {elapsed_ms:.0f}ms")
+            if await get_setting("ENABLE_PROCESSING_METRICS"):
+                save_processing_metrics({
+                    "timestamp": datetime.now().isoformat(),
+                    "processing_time_ms": round(elapsed_ms, 2),
+                    "dish_name": result.get('nome', ''),
+                    "confidence_score": result.get('score', 0),
+                    "engine_used": "GEMINI"
+                })
+        else:
+            logger.warning(f"[Gemini Flash] ❌ Erro: {result.get('error')}")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"[Gemini Flash] Erro: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.get("/ai/flash-status")
+async def gemini_flash_status():
+    """Status do servico Gemini Flash"""
+    from services.gemini_flash_service import get_gemini_flash_status
+    return get_gemini_flash_status()
+
+
+@api_router.get("/ai/google-quota-status")
+async def google_quota_status():
+    """
+    Verifica se a cota do Google API esta disponivel.
+    Faz um teste rapido com texto simples (custo minimo).
+    Útil para saber quando a cota gratuita foi renovada.
+    """
+    import time
+    from google import genai
+    
+    google_key = os.environ.get('GOOGLE_API_KEY')
+    
+    if not google_key:
+        return {
+            "ok": False,
+            "google_api_available": False,
+            "message": "GOOGLE_API_KEY nao configurada",
+            "recommendation": "Configure a chave em backend/.env"
+        }
+    
+    try:
+        client = genai.Client(api_key=google_key)
+        
+        start = time.time()
+        response = client.models.generate_content(
+            model='gemini-2.0-flash-lite',
+            contents='Diga apenas: OK'
+        )
+        elapsed_ms = (time.time() - start) * 1000
+        
+        return {
+            "ok": True,
+            "google_api_available": True,
+            "message": "✅ Cota do Google disponivel! API funcionando.",
+            "response_time_ms": round(elapsed_ms, 2),
+            "model": "gemini-2.0-flash-lite",
+            "recommendation": "Sistema usando Google API (mais rapido e barato)"
+        }
+        
+    except Exception as e:
+        error_str = str(e)
+        
+        if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
+            return {
+                "ok": True,
+                "google_api_available": False,
+                "message": "❌ Cota do Google esgotada (429)",
+                "error": "RESOURCE_EXHAUSTED",
+                "recommendation": "Aguarde renovacao (~24h) ou use Emergent Key como fallback",
+                "check_quota_url": "https://aistudio.google.com/"
+            }
+        else:
+            return {
+                "ok": False,
+                "google_api_available": False,
+                "message": f"Erro na API: {error_str[:100]}",
+                "error": error_str[:200],
+                "recommendation": "Verifique a configuracao da GOOGLE_API_KEY"
+            }
+
+
+@api_router.get("/ai/dishes")
+async def list_dishes():
+    """
+    Lista todos os pratos disponiveis para selecao no feedback.
+    """
+    try:
+        from ai.policy import DISH_NAMES, DISH_CATEGORIES, get_category_emoji
+        
+        dishes = []
+        for slug, name in sorted(DISH_NAMES.items(), key=lambda x: x[1]):
+            category = DISH_CATEGORIES.get(slug, 'outros')
+            dishes.append({
+                "slug": slug,
+                "name": name,
+                "category": category,
+                "category_emoji": get_category_emoji(category)
+            })
+        
+        return {
+            "ok": True,
+            "total": len(dishes),
+            "dishes": dishes
+        }
+    except Exception as e:
+        logger.error(f"Erro ao listar pratos: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/create-dish")
+async def create_new_dish(
+    file: UploadFile = File(...),
+    dish_name: str = Form("")
+):
+    """
+    Cria um novo prato usando IA para gerar todas as informacoes.
+    Salva a foto e adiciona ao banco de dados.
+    REGRA: Se ja existe prato similar no banco, adiciona foto ao existente ao inves de criar novo.
+    """
+    try:
+        import uuid
+        from datetime import datetime
+        from pathlib import Path
+        from difflib import SequenceMatcher
+        from services.generic_ai import identify_unknown_dish
+        
+        if not dish_name.strip():
+            return {"ok": False, "error": "Nome do prato e obrigatorio"}
+        
+        content = await file.read()
+        
+        # Gerar slug do nome fornecido
+        slug = dish_name.lower().strip()
+        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
+        slug = slug.replace(' ', '_')
+        
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
+        dataset_dir = Path("/app/datasets/organized")
+        existing_match = None
+        
+        for dish_dir in dataset_dir.iterdir():
+            if not dish_dir.is_dir():
+                continue
+            info_path = dish_dir / "dish_info.json"
+            if info_path.exists():
+                try:
+                    import json
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        info = json.load(f)
+                        existing_name = info.get('nome', '').lower()
+                        # Verificar similaridade > 85%
+                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+                        if similarity > 0.85 or dish_dir.name == slug:
+                            existing_match = dish_dir.name
+                            logger.info(f"[CREATE] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                            break
+                except:
+                    pass
+        
+        # Se encontrou match, adiciona foto ao prato existente E atualiza informacoes com IA
+        if existing_match:
+            target_dir = dataset_dir / existing_match
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            unique_id = str(uuid.uuid4())[:8]
+            filename = f"{existing_match}_{timestamp}_{unique_id}.jpg"
+            file_path = target_dir / filename
+            
+            with open(file_path, "wb") as f:
+                f.write(content)
+            
+            # CHAMAR IA para atualizar informacoes do prato
+            try:
+                from services.generic_ai import fix_dish_data_with_ai
+                
+                # Carregar info atual
+                info_path = target_dir / "dish_info.json"
+                current_info = {}
+                if info_path.exists():
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        current_info = json.load(f)
+                
+                # Atualizar nome se o usuario digitou diferente (correcao)
+                if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
+                    current_info['nome'] = dish_name.strip()
+                    logger.info(f"[CREATE] Nome atualizado: {current_info.get('nome')} -> {dish_name.strip()}")
+                
+                # Chamar IA para completar informacoes faltantes
+                ai_result = await fix_dish_data_with_ai(content, current_info)
+                
+                if ai_result.get('ok'):
+                    # Mesclar informacoes (IA complementa o que esta faltando)
+                    updated_info = {**current_info}
+                    for key, value in ai_result.items():
+                        if key == 'ok':
+                            continue
+                        # So atualiza se estava vazio ou e nutricao vazia
+                        if key == 'nutricao':
+                            nut = updated_info.get('nutricao', {})
+                            ai_nut = value or {}
+                            for nk, nv in ai_nut.items():
+                                if not nut.get(nk) and nv:
+                                    nut[nk] = nv
+                            updated_info['nutricao'] = nut
+                        elif not updated_info.get(key) and value:
+                            updated_info[key] = value
+                    
+                    # Garantir nome corrigido pelo usuario
+                    if dish_name.strip():
+                        updated_info['nome'] = dish_name.strip()
+                    
+                    updated_info['slug'] = existing_match
+                    
+                    with open(info_path, 'w', encoding='utf-8') as f:
+                        json.dump(updated_info, f, ensure_ascii=False, indent=2, default=str)
+                    
+                    logger.info(f"[CREATE] Informacoes atualizadas com IA para: {existing_match}")
+            except Exception as e:
+                logger.error(f"[CREATE] Erro ao atualizar com IA: {e}")
+            
+            return {
+                "ok": True,
+                "message": f"✅ Prato '{dish_name}' salvo! Foto e informacoes atualizadas.",
+                "slug": existing_match,
+                "action": "updated_existing"
+            }
+        
+        # Usar IA para gerar informacoes do prato
+        logger.info(f"Gerando informacoes para novo prato: {dish_name}")
+        ai_result = await identify_unknown_dish(content)
+        
+        # Preparar informacoes do prato
+        dish_info = {
+            "nome": dish_name.strip(),
+            "slug": slug,
+            "categoria": ai_result.get("categoria", "outros"),
+            "category_emoji": ai_result.get("category_emoji", "🍽️"),
+            "descricao": ai_result.get("descricao", f"{dish_name} - prato cadastrado pelo usuario"),
+            "ingredientes": ai_result.get("ingredientes_provaveis", []),
+            "beneficios": ai_result.get("beneficios", []),
+            "riscos": ai_result.get("riscos", []),
+            "tecnica": ai_result.get("tecnica_preparo", ""),
+            "nutricao": {
+                "calorias": "~200 kcal",
+                "proteinas": "~10g",
+                "carboidratos": "~25g",
+                "gorduras": "~8g"
+            },
+            "contem_gluten": any("gluten" in r.lower() for r in ai_result.get("riscos", [])),
+            "ativo": True,
+            "origem": "user_created",
+            "created_at": datetime.utcnow()
+        }
+        
+        # Salvar no MongoDB
+        await db.dishes.update_one(
+            {"slug": slug},
+            {"$set": dish_info},
+            upsert=True
+        )
+        
+        # Criar diretorio e salvar imagem
+        dataset_dir = Path("/app/datasets/organized") / slug
+        dataset_dir.mkdir(parents=True, exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{slug}_{timestamp}_{unique_id}.jpg"
+        file_path = dataset_dir / filename
+        
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        # Salvar dish_info.json na pasta
+        import json
+        dish_info_for_file = {
+            "nome": dish_info["nome"],
+            "slug": dish_info["slug"],
+            "categoria": dish_info["categoria"],
+            "category_emoji": dish_info["category_emoji"],
+            "descricao": dish_info["descricao"],
+            "ingredientes": dish_info["ingredientes"],
+            "beneficios": dish_info["beneficios"],
+            "riscos": dish_info["riscos"],
+            "tecnica": dish_info["tecnica"],
+            "nutricao": dish_info["nutricao"],
+            "contem_gluten": dish_info["contem_gluten"]
+        }
+        dish_info_path = dataset_dir / "dish_info.json"
+        with open(dish_info_path, "w", encoding="utf-8") as f:
+            json.dump(dish_info_for_file, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"Novo prato criado: {dish_name} -> {slug}")
+        
+        return {
+            "ok": True,
+            "message": f"Prato '{dish_name}' criado com sucesso!",
+            "dish_slug": slug,
+            "dish_name": dish_name,
+            "dish_info": dish_info,
+            "file_saved": filename,
+            "note": "Execute /api/ai/reindex para incorporar ao indice de busca"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar prato: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.post("/ai/create-dish-local")
+async def create_dish_local(
+    file: UploadFile = File(...),
+    dish_name: str = Form("")
+):
+    """
+    Cria/corrige um prato usando APENAS dados LOCAIS, SEM chamar IA, SEM gastar creditos.
+    Usa o local_dish_updater para preencher os dados baseado no nome.
+    """
+    try:
+        import uuid
+        import json
+        from datetime import datetime
+        from pathlib import Path
+        from difflib import SequenceMatcher
+        from services.local_dish_updater import atualizar_prato_local, encontrar_tipo_prato, PRATOS_COMPLETOS
+        from services.local_dish_updater import detectar_categoria_basica, detectar_alergenos_por_nome
+        
+        if not dish_name.strip():
+            return {"ok": False, "error": "Nome do prato e obrigatorio"}
+        
+        content = await file.read()
+        
+        # Gerar slug do nome fornecido
+        slug = dish_name.lower().strip()
+        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
+        slug = slug.replace(' ', '_')
+        
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
+        dataset_dir = Path("/app/datasets/organized")
+        existing_match = None
+        
+        for dish_dir in dataset_dir.iterdir():
+            if not dish_dir.is_dir():
+                continue
+            info_path = dish_dir / "dish_info.json"
+            if info_path.exists():
+                try:
+                    with open(info_path, 'r', encoding='utf-8') as f:
+                        info = json.load(f)
+                        existing_name = info.get('nome', '').lower()
+                        # Verificar similaridade > 85%
+                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+                        if similarity > 0.85 or dish_dir.name == slug:
+                            existing_match = dish_dir.name
+                            logger.info(f"[CREATE-LOCAL] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                            break
+                except:
+                    pass
+        
+        # Se encontrou match, adiciona foto ao prato existente E atualiza com dados locais
+        if existing_match:
+            target_dir = dataset_dir / existing_match
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            unique_id = str(uuid.uuid4())[:8]
+            filename = f"{existing_match}_correct_{timestamp}_{unique_id}.jpg"
+            file_path = target_dir / filename
+            
+            with open(file_path, "wb") as f:
+                f.write(content)
+            
+            # Usar dados LOCAIS para atualizar informacoes
+            info_path = target_dir / "dish_info.json"
+            current_info = {}
+            if info_path.exists():
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    current_info = json.load(f)
+            
+            # Atualizar nome se diferente
+            if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
+                current_info['nome'] = dish_name.strip()
+                logger.info(f"[CREATE-LOCAL] Nome corrigido para: {dish_name.strip()}")
+            
+            # Usar local_dish_updater para preencher dados faltantes
+            result = atualizar_prato_local(existing_match, novo_nome=dish_name.strip())
+            
+            return {
+                "ok": True,
+                "message": f"✅ Correcao salva! '{dish_name}' atualizado SEM usar creditos.",
+                "slug": existing_match,
+                "action": "updated_existing_local",
+                "credits_used": 0
+            }
+        
+        # CRIAR NOVO PRATO com dados LOCAIS
+        target_dir = dataset_dir / slug
+        target_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Salvar imagem
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{slug}_{timestamp}_{unique_id}.jpg"
+        file_path = target_dir / filename
+        
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        # Gerar dados usando regras LOCAIS
+        tipo = encontrar_tipo_prato(dish_name)
+        categoria = detectar_categoria_basica(dish_name)
+        alergenos = detectar_alergenos_por_nome(dish_name)
+        
+        # Pegar template se existir
+        dados_template = PRATOS_COMPLETOS.get(tipo, {})
+        
+        # Emoji baseado na categoria
+        emoji_map = {"vegano": "🌱", "vegetariano": "🥚", "proteina animal": "🍖"}
+        
+        dish_info = {
+            "nome": dish_name.strip(),
+            "slug": slug,
+            "categoria": categoria,
+            "category_emoji": emoji_map.get(categoria, "🍽️"),
+            "descricao": dados_template.get('descricao', f"{dish_name} - prato do Cibi Sana"),
+            "ingredientes": dados_template.get('ingredientes', []),
+            "beneficios": dados_template.get('beneficios', []),
+            "riscos": dados_template.get('riscos', []),
+            "tecnica": dados_template.get('tecnica', ''),
+            "nutricao": dados_template.get('nutricao', {"calorias": "~150 kcal", "proteinas": "~8g", "carboidratos": "~20g", "gorduras": "~5g"}),
+            "contem_gluten": alergenos.get('contem_gluten', False),
+            "contem_lactose": alergenos.get('contem_lactose', False),
+            "contem_ovo": alergenos.get('contem_ovo', False),
+            "contem_castanhas": alergenos.get('contem_castanhas', False),
+            "contem_frutos_mar": alergenos.get('contem_frutos_mar', False),
+            "contem_soja": alergenos.get('contem_soja', False),
+            "indice_glicemico": dados_template.get('indice_glicemico', 'moderado'),
+            "tempo_digestao": dados_template.get('tempo_digestao', '2-3 horas'),
+            "melhor_horario": dados_template.get('melhor_horario', 'Almoco'),
+            "combina_com": dados_template.get('combina_com', []),
+            "evitar_com": dados_template.get('evitar_com', []),
+            "origem": "user_created_local"
+        }
+        
+        # Salvar dish_info.json
+        dish_info_path = target_dir / "dish_info.json"
+        with open(dish_info_path, "w", encoding="utf-8") as f:
+            json.dump(dish_info, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"[CREATE-LOCAL] Novo prato criado SEM IA: {dish_name} -> {slug}")
+        
+        return {
+            "ok": True,
+            "message": f"✅ Prato '{dish_name}' criado com sucesso SEM usar creditos!",
+            "dish_slug": slug,
+            "dish_name": dish_name,
+            "dish_info": dish_info,
+            "file_saved": filename,
+            "credits_used": 0,
+            "note": "Dados gerados localmente. Execute Atualizar na auditoria para completar."
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar prato local: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.get("/ai/ingredient-research/{ingredient}")
+async def get_ingredient_research(ingredient: str):
+    """
+    Busca pesquisas cientificas recentes sobre um ingrediente.
+    Retorna informacoes da OMS, ANVISA, estudos cientificos, etc.
+    """
+    try:
+        from services.generic_ai import search_ingredient_news
+        
+        logger.info(f"Buscando pesquisas sobre: {ingredient}")
+        result = await search_ingredient_news(ingredient)
+        
+        if "error" in result:
+            return {"ok": False, "error": result["error"]}
+        
+        return {
+            "ok": True,
+            "ingredient": ingredient,
+            **result
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar pesquisa: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/ai/feedback")
+async def submit_feedback(
+    file: UploadFile = File(...),
+    dish_slug: str = Form(""),
+    is_correct: str = Form("true"),
+    original_dish: str = Form("")
+):
+    """
+    Recebe feedback sobre reconhecimento de prato.
+    - Se correto: salva a foto no dataset do prato
+    - Se incorreto: salva no prato correto informado pelo usuario
+    
+    Isso ajuda a melhorar o modelo com o tempo.
+    """
+    try:
+        import uuid
+        from datetime import datetime
+        
+        content = await file.read()
+        is_correct_bool = is_correct.lower() == "true"
+        
+        if not dish_slug:
+            return {"ok": False, "message": "dish_slug e obrigatorio"}
+        
+        # Diretorio do dataset
+        dataset_dir = Path("/app/datasets/organized")
+        
+        # Normalizar slug
+        slug = dish_slug.lower().replace(' ', '').replace('-', '').replace('_', '')
+        
+        # Encontrar a pasta correta
+        target_dir = None
+        for folder in dataset_dir.iterdir():
+            if folder.is_dir():
+                folder_slug = folder.name.lower().replace('_', '').replace('-', '')
+                if folder_slug == slug or slug in folder_slug:
+                    target_dir = folder
+                    break
+        
+        if not target_dir:
+            # Criar pasta se nao existir
+            target_dir = dataset_dir / slug
+            target_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Gerar nome unico para o arquivo
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        feedback_type = "correct" if is_correct_bool else "corrected"
+        filename = f"{slug}_{feedback_type}_{timestamp}_{unique_id}.jpg"
+        
+        # Salvar imagem
+        file_path = target_dir / filename
+        with open(file_path, "wb") as f:
+            f.write(content)
+        
+        # Log no MongoDB para analise posterior
+        feedback_doc = {
+            "dish_slug": dish_slug,
+            "original_dish": original_dish if not is_correct_bool else dish_slug,
+            "is_correct": is_correct_bool,
+            "file_path": str(file_path),
+            "created_at": datetime.utcnow()
+        }
+        await db.feedback.insert_one(feedback_doc)
+        
+        # LIMPAR CACHE para forcar re-identificacao
+        from services.cache_service import clear_cache
+        clear_cache()
+        
+        logger.info(f"Feedback salvo: {feedback_type} para {dish_slug} -> {filename}")
+        
+        return {
+            "ok": True,
+            "message": f"Feedback registrado! Foto salva em {target_dir.name}",
+            "file_saved": filename,
+            "is_correct": is_correct_bool,
+            "note": "Execute /api/ai/reindex para incorporar ao indice"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao processar feedback: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": str(e)}
+        )
+
+
+@api_router.get("/ai/feedback/stats")
+async def get_feedback_stats():
+    """
+    Retorna estatisticas dos feedbacks recebidos.
+    """
+    try:
+        total = await db.feedback.count_documents({})
+        correct = await db.feedback.count_documents({"is_correct": True})
+        incorrect = await db.feedback.count_documents({"is_correct": False})
+        
+        # Pratos mais corrigidos
+        pipeline = [
+            {"$match": {"is_correct": False}},
+            {"$group": {"_id": "$original_dish", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 10}
+        ]
+        most_corrected = await db.feedback.aggregate(pipeline).to_list(10)
+        
+        return {
+            "ok": True,
+            "total_feedbacks": total,
+            "correct": correct,
+            "incorrect": incorrect,
+            "accuracy_rate": (correct / total * 100) if total > 0 else 0,
+            "most_corrected": most_corrected
+        }
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/ai/identify-multi")
+async def identify_multiple_items(file: UploadFile = File(...)):
+    """
+    Identifica MÚLTIPLOS itens em uma imagem de refeicao.
+    
+    ESTRATÉGIA HÍBRIDA:
+    1. Zoom central (50%) -> Identifica item PRINCIPAL no indice local
+    2. Analise por regioes -> Busca ACOMPANHAMENTOS por similaridade nos pratos do buffet
+    3. Fallback Gemini -> Para itens nao reconhecidos
+    
+    Returns:
+        Item principal + acompanhamentos reconhecidos do buffet do Cibi Sana
+    """
+    start_time = time.time()
+    
+    try:
+        from services.hybrid_identify_v5 import identify_multi_v5
+        
+        content = await file.read()
+        
+        if len(content) == 0:
+            return {"ok": False, "error": "Arquivo de imagem vazio"}
+        
+        logger.info("[v5] Identificacao com busca ampla e filtragem inteligente...")
+        result = await identify_multi_v5(content)
+        
+        elapsed_ms = (time.time() - start_time) * 1000
+        result['search_time_ms'] = round(elapsed_ms, 2)
+        
+        if result.get('ok'):
+            principal = result.get('principal', {})
+            acomp_count = len(result.get('acompanhamentos', []))
+            local_count = result.get('itens_do_buffet', 0)
+            logger.info(f"[MULTI-HÍBRIDO] {principal.get('nome', 'N/A')} + {acomp_count} acomp. ({local_count} do buffet) em {elapsed_ms:.0f}ms")
+        else:
+            logger.warning(f"[MULTI-HÍBRIDO] Erro: {result.get('error')}")
+        
+        # Formatar para compatibilidade com frontend
+        if result.get('ok'):
+            # Converter para formato esperado pelo frontend
+            itens = []
+            if result.get('principal'):
+                itens.append({
+                    'nome': result['principal']['nome'],
+                    'categoria': result['principal'].get('categoria', 'proteina animal'),
+                    'score': result['principal'].get('score', 0.7),
+                    'source': result['principal'].get('source', 'local')
+                })
+            
+            for acomp in result.get('acompanhamentos', []):
+                itens.append({
+                    'nome': acomp['nome'],
+                    'categoria': acomp.get('categoria', 'vegano'),
+                    'score': acomp.get('score', 0.6),
+                    'source': acomp.get('source', 'local')
+                })
+            
+            result['itens'] = itens
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro na identificacao multipla hibrida: {e}")
+        return {
+            "ok": False,
+            "error": str(e),
+            "search_time_ms": round((time.time() - start_time) * 1000, 2)
+        }
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# PREMIUM - PERFIL DO USUÁRIO E CONTADOR NUTRICIONAL
+# ═══════════════════════════════════════════════════════════════════════
+
+@api_router.post("/premium/register")
+async def register_user(
+    pin: str = Form(...),
+    nome: str = Form(...),
+    peso: float = Form(...),
+    altura: float = Form(...),
+    idade: int = Form(...),
+    sexo: str = Form(...),
+    nivel_atividade: str = Form("moderado"),
+    objetivo: str = Form("manter"),
+    alergias: str = Form(""),
+    restricoes: str = Form("")
+):
+    """
+    Registra um novo usuario Premium com PIN local.
+    Calcula automaticamente a meta calorica sugerida.
+    """
+    try:
+        from services.profile_service import hash_pin, calcular_tmb, calcular_meta_calorica
+        from datetime import datetime, timezone
+        
+        # Validacoes
+        if len(pin) < 4 or len(pin) > 6:
+            return {"ok": False, "error": "PIN deve ter entre 4 e 6 digitos"}
+        
+        if not pin.isdigit():
+            return {"ok": False, "error": "PIN deve conter apenas numeros"}
+        
+        # Calcular meta calorica
+        tmb = calcular_tmb(peso, altura, idade, sexo)
+        meta_info = calcular_meta_calorica(tmb, nivel_atividade, objetivo)
+        
+        # Criar perfil
+        perfil = {
+            "pin_hash": hash_pin(pin),
+            "nome": nome,
+            "peso": peso,
+            "altura": altura,
+            "idade": idade,
+            "sexo": sexo,
+            "nivel_atividade": nivel_atividade,
+            "objetivo": objetivo,
+            "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
+            "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
+            "meta_calorica": meta_info,
+            "premium_ativo": True,  # Ativar Premium automaticamente no registro
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc)
+        }
+        
+        # Salvar no MongoDB
+        result = await db.users.insert_one(perfil)
+        user_id = str(result.inserted_id)
+        
+        logger.info(f"[PREMIUM] Novo usuario registrado: {nome}")
+        
+        return {
+            "ok": True,
+            "user_id": user_id,
+            "nome": nome,
+            "meta_calorica": meta_info,
+            "message": f"Bem-vindo ao SoulNutri Premium, {nome}!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao registrar usuario: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/login")
+async def login_user(pin: str = Form(...), nome: str = Form(...)):
+    """
+    Login com Nome + PIN.
+    Verifica tambem se o Premium esta liberado pelo admin.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime
+        
+        pin_hash = hash_pin(pin)
+        # Buscar por nome E pin_hash
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"_id": 0, "pin_hash": 0}
+        )
+        
+        if not user:
+            return {"ok": False, "error": "Nome ou PIN incorreto"}
+        
+        # Verificar se Premium esta ativo e nao expirou
+        # Se o campo nao existir, assume True para usuarios ja registrados
+        premium_ativo = user.get("premium_ativo", True)  # Default True para manter compatibilidade
+        premium_expira_em = user.get("premium_expira_em")
+        
+        if premium_expira_em:
+            try:
+                expiracao = datetime.fromisoformat(premium_expira_em)
+                if datetime.now() > expiracao:
+                    premium_ativo = False
+                    # Atualizar no banco
+                    await db.users.update_one(
+                        {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                        {"$set": {"premium_ativo": False, "premium_expirado": True}}
+                    )
+            except:
+                pass
+        
+        # Adicionar status Premium a resposta
+        user["premium_ativo"] = premium_ativo
+        
+        # Se Premium nao esta ativo, retornar mensagem informativa
+        if not premium_ativo:
+            return {
+                "ok": True,
+                "user": user,
+                "premium_bloqueado": True,
+                "message": f"Ola, {user['nome']}! Seu acesso Premium ainda nao foi liberado. Entre em contato para ativacao."
+            }
+        
+        # Buscar consumo do dia
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        return {
+            "ok": True,
+            "user": user,
+            "daily_log": daily_log,
+            "message": f"Ola, {user['nome']}!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no login: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+class PerfilUsuario(BaseModel):
+    peso: Optional[float] = None
+    altura: Optional[float] = None
+    idade: Optional[int] = None
+    sexo: Optional[str] = None
+    nivel_atividade: Optional[str] = None
+    restricoes: List[str] = []
+
+
+class ProfileRequest(BaseModel):
+    nome: str
+    pin: str
+    perfil: PerfilUsuario
+
+
+@api_router.get("/premium/get-profile")
+async def get_user_profile(pin: str, nome: str):
+    """
+    Obtem o perfil completo do usuario Premium para edicao.
+    """
+    try:
+        from services.profile_service import hash_pin
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"_id": 0, "pin_hash": 0}
+        )
+        
+        if not user:
+            return {"ok": False, "error": "Usuario nao encontrado"}
+        
+        return {
+            "ok": True,
+            "profile": {
+                "nome": user.get("nome"),
+                "peso": user.get("peso"),
+                "altura": user.get("altura"),
+                "idade": user.get("idade"),
+                "sexo": user.get("sexo"),
+                "nivel_atividade": user.get("nivel_atividade"),
+                "objetivo": user.get("objetivo"),
+                "restricoes": user.get("restricoes", []),
+                "alergias": user.get("alergias", []),
+                "meta_calorica": user.get("meta_calorica")
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao obter perfil: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/update-profile")
+async def update_user_profile(
+    pin: str = Form(...),
+    nome: str = Form(...),
+    peso: float = Form(...),
+    altura: float = Form(...),
+    idade: int = Form(...),
+    sexo: str = Form(...),
+    nivel_atividade: str = Form("moderado"),
+    objetivo: str = Form("manter"),
+    restricoes: str = Form("")
+):
+    """
+    Atualiza o perfil do usuario Premium existente.
+    Recalcula a meta calorica com os novos dados.
+    """
+    try:
+        from services.profile_service import hash_pin, calcular_tmb, calcular_meta_calorica
+        from datetime import datetime, timezone
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}}
+        )
+        
+        if not user:
+            return {"ok": False, "error": "Usuario nao encontrado"}
+        
+        # Recalcular meta calorica
+        tmb = calcular_tmb(peso, altura, idade, sexo)
+        meta_info = calcular_meta_calorica(tmb, nivel_atividade, objetivo)
+        
+        # Preparar dados de atualizacao
+        update_data = {
+            "peso": peso,
+            "altura": altura,
+            "idade": idade,
+            "sexo": sexo,
+            "nivel_atividade": nivel_atividade,
+            "objetivo": objetivo,
+            "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
+            "meta_calorica": meta_info,
+            "updated_at": datetime.now(timezone.utc)
+        }
+        
+        # Atualizar no MongoDB
+        await db.users.update_one(
+            {"_id": user["_id"]},
+            {"$set": update_data}
+        )
+        
+        logger.info(f"[PREMIUM] Perfil atualizado: {nome}")
+        
+        return {
+            "ok": True,
+            "nome": nome,
+            "meta_calorica": meta_info,
+            "message": f"Perfil atualizado com sucesso, {nome}!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar perfil: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/profile")
+async def save_premium_profile(request: ProfileRequest):
+    """
+    Salva o perfil do usuario Premium para personalizacao das dicas.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timezone
+        
+        pin_hash = hash_pin(request.pin)
+        user = await db.users.find_one(
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{request.nome}$", "$options": "i"}}
+        )
+        
+        if not user:
+            return {"ok": False, "error": "Usuario nao encontrado"}
+        
+        # Converter para dict e adicionar timestamp
+        perfil_dict = request.perfil.dict()
+        perfil_dict['atualizado_em'] = datetime.now(timezone.utc)
+        
+        # Calcular TMB (Taxa Metabolica Basal) se tiver dados suficientes
+        if perfil_dict.get('peso') and perfil_dict.get('altura') and perfil_dict.get('idade') and perfil_dict.get('sexo'):
+            peso = perfil_dict['peso']
+            altura = perfil_dict['altura']
+            idade = perfil_dict['idade']
+            sexo = perfil_dict['sexo']
+            
+            if sexo == 'masculino':
+                tmb = 88.36 + (13.4 * peso) + (4.8 * altura) - (5.7 * idade)
+            else:
+                tmb = 447.6 + (9.2 * peso) + (3.1 * altura) - (4.3 * idade)
+            
+            # Ajustar por nivel de atividade
+            fatores = {'sedentario': 1.2, 'leve': 1.375, 'moderado': 1.55, 'intenso': 1.725}
+            fator = fatores.get(perfil_dict.get('nivel_atividade', 'sedentario'), 1.2)
+            
+            perfil_dict['tmb'] = round(tmb, 0)
+            perfil_dict['calorias_diarias'] = round(tmb * fator, 0)
+        
+        # Atualizar perfil no banco
+        await db.users.update_one(
+            {"_id": user["_id"]},
+            {"$set": {"perfil": perfil_dict}}
+        )
+        
+        logger.info(f"[PREMIUM] Perfil atualizado: {request.nome}")
+        
+        return {
+            "ok": True,
+            "message": "Perfil salvo com sucesso",
+            "perfil": perfil_dict
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao salvar perfil: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/log-meal")
+async def log_meal(
+    pin: str = Form(...),
+    prato_nome: str = Form(...),
+    calorias: float = Form(...),
+    proteinas: float = Form(0),
+    carboidratos: float = Form(0),
+    gorduras: float = Form(0),
+    porcao: str = Form("1 porcao")
+):
+    """
+    Registra uma refeicao no contador diario.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timezone
+        
+        # Verificar usuario
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        agora = datetime.now(timezone.utc)
+        
+        # Criar entrada do prato
+        prato_entry = {
+            "nome": prato_nome,
+            "calorias": calorias,
+            "proteinas": proteinas,
+            "carboidratos": carboidratos,
+            "gorduras": gorduras,
+            "porcao": porcao,
+            "hora": agora.strftime("%H:%M")
+        }
+        
+        # Atualizar ou criar log diario
+        result = await db.daily_logs.update_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {
+                "$push": {"pratos": prato_entry},
+                "$inc": {
+                    "calorias_total": calorias,
+                    "proteinas_total": proteinas,
+                    "carboidratos_total": carboidratos,
+                    "gorduras_total": gorduras
+                },
+                "$setOnInsert": {"created_at": agora}
+            },
+            upsert=True
+        )
+        
+        # Buscar totais atualizados
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        meta = user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        consumido = daily_log.get("calorias_total", 0)
+        restante = meta - consumido
+        percentual = (consumido / meta) * 100 if meta > 0 else 0
+        
+        # Gerar alerta se necessario
+        alerta = None
+        if percentual >= 100:
+            alerta = {"tipo": "limite", "mensagem": "🚨 Voce atingiu sua meta calorica diaria!"}
+        elif percentual >= 90:
+            alerta = {"tipo": "aviso", "mensagem": f"⚠️ Voce esta a {restante:.0f} kcal da sua meta!"}
+        elif percentual >= 75:
+            alerta = {"tipo": "info", "mensagem": f"📊 75% da meta. Restam {restante:.0f} kcal"}
+        
+        logger.info(f"[PREMIUM] {user['nome']} registrou: {prato_nome} ({calorias} kcal)")
+        
+        return {
+            "ok": True,
+            "daily_log": daily_log,
+            "meta": meta,
+            "consumido": consumido,
+            "restante": restante,
+            "percentual": round(percentual, 1),
+            "alerta": alerta
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao registrar refeicao: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/daily-summary")
+async def get_daily_summary(pin: str):
+    """
+    Retorna resumo do consumo diario.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        meta = user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        consumido = daily_log.get("calorias_total", 0) if daily_log else 0
+        
+        return {
+            "ok": True,
+            "nome": user["nome"],
+            "data": hoje,
+            "meta": meta,
+            "consumido": consumido,
+            "restante": meta - consumido,
+            "percentual": round((consumido / meta) * 100, 1) if meta > 0 else 0,
+            "pratos": daily_log.get("pratos", []) if daily_log else [],
+            "totais": {
+                "calorias": consumido,
+                "proteinas": daily_log.get("proteinas_total", 0) if daily_log else 0,
+                "carboidratos": daily_log.get("carboidratos_total", 0) if daily_log else 0,
+                "gorduras": daily_log.get("gorduras_total", 0) if daily_log else 0
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar resumo: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/history")
+async def get_history(pin: str, dias: int = 7):
+    """
+    Retorna historico de consumo dos ultimos X dias.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timedelta
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Buscar logs dos ultimos dias
+        data_inicio = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
+        
+        cursor = db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1)
+        
+        historico = await cursor.to_list(length=dias)
+        
+        # Calcular media
+        if historico:
+            media_calorias = sum(d.get("calorias_total", 0) for d in historico) / len(historico)
+        else:
+            media_calorias = 0
+        
+        return {
+            "ok": True,
+            "nome": user["nome"],
+            "dias": dias,
+            "historico": historico,
+            "media_calorias": round(media_calorias, 0),
+            "meta": user.get("meta_calorica", {}).get("meta_sugerida", 2000)
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar historico: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/weekly-analysis")
+async def get_weekly_analysis(pin: str):
+    """
+    Retorna analise semanal completa com vitaminas, minerais e tendencias.
+    NOVO: Contador Premium expandido.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from services.nutrition_premium_service import analisar_consumo_semanal, analisar_consumo_diario
+        from datetime import datetime, timedelta
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Buscar logs dos ultimos 7 dias
+        data_inicio = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
+        
+        cursor = db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        )
+        
+        logs_semana = await cursor.to_list(length=100)
+        
+        # Converter logs para o formato esperado
+        refeicoes_semana = []
+        for log in logs_semana:
+            for prato in log.get("pratos", []):
+                refeicoes_semana.append({
+                    "nome": prato.get("nome", ""),
+                    "data": log.get("data", ""),
+                    "hora": prato.get("hora", "12:00"),
+                    "nutricao": {
+                        "calorias": prato.get("calorias", 0),
+                        "proteinas": prato.get("proteinas", 0),
+                        "carboidratos": prato.get("carboidratos", 0),
+                        "gorduras": prato.get("gorduras", 0)
+                    },
+                    "ingredientes": prato.get("ingredientes", [])
+                })
+        
+        # Perfil do usuario
+        perfil = user.get("perfil", {})
+        if not perfil:
+            perfil = {
+                "peso": 70,
+                "altura": 170,
+                "idade": 30,
+                "sexo": "M",
+                "nivel_atividade": "moderado",
+                "objetivo": "manter",
+                "restricoes": []
+            }
+        
+        # Analise semanal
+        analise = analisar_consumo_semanal(refeicoes_semana, perfil)
+        
+        return {
+            "ok": True,
+            "nome": user["nome"],
+            "periodo": f"{data_inicio} a {datetime.now().strftime('%Y-%m-%d')}",
+            "analise": analise
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao analisar semana: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/daily-full")
+async def get_daily_full_analysis(pin: str):
+    """
+    Retorna analise diaria COMPLETA com vitaminas, minerais e alertas.
+    NOVO: Contador Premium expandido.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from services.nutrition_premium_service import analisar_consumo_diario
+        from datetime import datetime
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        hoje = datetime.now().strftime("%Y-%m-%d")
+        daily_log = await db.daily_logs.find_one(
+            {"user_nome": user["nome"], "data": hoje},
+            {"_id": 0}
+        )
+        
+        # Converter log para lista de refeicoes
+        refeicoes = []
+        if daily_log:
+            for prato in daily_log.get("pratos", []):
+                refeicoes.append({
+                    "nome": prato.get("nome", ""),
+                    "hora": prato.get("hora", "12:00"),
+                    "nutricao": {
+                        "calorias": prato.get("calorias", 0),
+                        "proteinas": prato.get("proteinas", 0),
+                        "carboidratos": prato.get("carboidratos", 0),
+                        "gorduras": prato.get("gorduras", 0)
+                    },
+                    "ingredientes": prato.get("ingredientes", [])
+                })
+        
+        # Perfil do usuario
+        perfil = user.get("perfil", {})
+        if not perfil:
+            perfil = {
+                "peso": 70,
+                "altura": 170,
+                "idade": 30,
+                "sexo": "M",
+                "nivel_atividade": "moderado",
+                "objetivo": "manter",
+                "restricoes": []
+            }
+        
+        # Analise completa
+        analise = analisar_consumo_diario(refeicoes, perfil)
+        
+        return {
+            "ok": True,
+            "nome": user["nome"],
+            "data": hoje,
+            "analise": analise
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao analisar dia: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/dashboard")
+async def get_dashboard_premium(pin: str, periodo: str = "semana"):
+    """
+    Dashboard consolidado para usuarios Premium.
+    Periodos: dia, semana, mes, ano
+    Retorna: consumo de hoje, graficos, historico, alertas e estatisticas.
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timedelta
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Definir periodo em dias
+        periodos_dias = {"dia": 1, "semana": 7, "mes": 30, "ano": 365}
+        dias = periodos_dias.get(periodo, 7)
+        
+        data_inicio = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
+        hoje_str = datetime.now().strftime("%Y-%m-%d")
+        
+        # Buscar logs do periodo (limite maior para ano)
+        limite_logs = 400 if periodo == "ano" else 100
+        cursor = db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1)
+        
+        logs = await cursor.to_list(length=limite_logs)
+        
+        # Consumo de hoje
+        log_hoje = next((l for l in logs if l.get("data") == hoje_str), None)
+        hoje = {
+            "calorias": log_hoje.get("calorias_total", 0) if log_hoje else 0,
+            "proteinas": log_hoje.get("proteinas_total", 0) if log_hoje else 0,
+            "carboidratos": log_hoje.get("carboidratos_total", 0) if log_hoje else 0,
+            "gorduras": log_hoje.get("gorduras_total", 0) if log_hoje else 0
+        }
+        
+        # Dados para graficos baseados no periodo
+        dias_grafico = []
+        
+        if periodo == "dia":
+            # Para dia, mostrar as refeicoes individuais
+            if log_hoje and log_hoje.get("pratos"):
+                for i, prato in enumerate(log_hoje.get("pratos", [])[:10]):
+                    dias_grafico.append({
+                        "dia": prato.get("nome", f"Item {i+1}")[:15],
+                        "data": hoje_str,
+                        "calorias": prato.get("calorias", 0),
+                        "proteinas": prato.get("proteinas", 0),
+                        "carboidratos": prato.get("carboidratos", 0),
+                        "gorduras": prato.get("gorduras", 0)
+                    })
+        elif periodo == "semana":
+            # Últimos 7 dias
+            dias_nomes = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]
+            for i in range(7):
+                data = (datetime.now() - timedelta(days=6-i)).strftime("%Y-%m-%d")
+                dia_semana = (datetime.now() - timedelta(days=6-i)).weekday()
+                log_dia = next((l for l in logs if l.get("data") == data), None)
+                dias_grafico.append({
+                    "dia": dias_nomes[dia_semana],
+                    "data": data,
+                    "calorias": log_dia.get("calorias_total", 0) if log_dia else 0,
+                    "proteinas": log_dia.get("proteinas_total", 0) if log_dia else 0,
+                    "carboidratos": log_dia.get("carboidratos_total", 0) if log_dia else 0,
+                    "gorduras": log_dia.get("gorduras_total", 0) if log_dia else 0
+                })
+        elif periodo == "mes":
+            # Agrupar por semana (4 semanas)
+            for semana in range(4):
+                inicio_semana = 28 - (semana + 1) * 7
+                fim_semana = 28 - semana * 7
+                calorias_semana = 0
+                proteinas_semana = 0
+                carboidratos_semana = 0
+                gorduras_semana = 0
+                for i in range(inicio_semana, fim_semana):
+                    data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+                    log_dia = next((l for l in logs if l.get("data") == data), None)
+                    if log_dia:
+                        calorias_semana += log_dia.get("calorias_total", 0)
+                        proteinas_semana += log_dia.get("proteinas_total", 0)
+                        carboidratos_semana += log_dia.get("carboidratos_total", 0)
+                        gorduras_semana += log_dia.get("gorduras_total", 0)
+                dias_grafico.append({
+                    "dia": f"Sem {4-semana}",
+                    "calorias": calorias_semana / 7,  # Media diaria da semana
+                    "proteinas": proteinas_semana / 7,
+                    "carboidratos": carboidratos_semana / 7,
+                    "gorduras": gorduras_semana / 7
+                })
+        elif periodo == "ano":
+            # Agrupar por mes (12 meses)
+            meses_nomes = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+            hoje = datetime.now()
+            for i in range(12):
+                mes_data = hoje - timedelta(days=30 * (11 - i))
+                mes_nome = meses_nomes[mes_data.month - 1]
+                mes_str = mes_data.strftime("%Y-%m")
+                
+                logs_mes = [l for l in logs if l.get("data", "").startswith(mes_str)]
+                dias_com_dados = len([l for l in logs_mes if l.get("calorias_total", 0) > 0])
+                
+                calorias_mes = sum(l.get("calorias_total", 0) for l in logs_mes)
+                proteinas_mes = sum(l.get("proteinas_total", 0) for l in logs_mes)
+                carboidratos_mes = sum(l.get("carboidratos_total", 0) for l in logs_mes)
+                gorduras_mes = sum(l.get("gorduras_total", 0) for l in logs_mes)
+                
+                dias_grafico.append({
+                    "dia": mes_nome,
+                    "calorias": calorias_mes / max(dias_com_dados, 1),  # Media diaria
+                    "proteinas": proteinas_mes / max(dias_com_dados, 1),
+                    "carboidratos": carboidratos_mes / max(dias_com_dados, 1),
+                    "gorduras": gorduras_mes / max(dias_com_dados, 1),
+                    "dias_registrados": dias_com_dados
+                })
+        
+        # Estatisticas
+        dias_com_log = len([l for l in logs if l.get("calorias_total", 0) > 0])
+        total_calorias = sum(l.get("calorias_total", 0) for l in logs)
+        total_proteinas = sum(l.get("proteinas_total", 0) for l in logs)
+        total_carboidratos = sum(l.get("carboidratos_total", 0) for l in logs)
+        total_gorduras = sum(l.get("gorduras_total", 0) for l in logs)
+        total_pratos = sum(len(l.get("pratos", [])) for l in logs)
+        
+        # Calcular streak (dias seguidos)
+        streak = 0
+        for i in range(min(dias, 365)):
+            data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            if any(l.get("data") == data and l.get("calorias_total", 0) > 0 for l in logs):
+                streak += 1
+            else:
+                break
+        
+        # Metas do usuario
+        metas_default = {
+            "calorias": 2000, 
+            "proteinas": 50, 
+            "carboidratos": 250, 
+            "gorduras": 65
+        }
+        
+        # Prioridade: metas > meta_calorica (se tiver estrutura correta) > default
+        metas = user.get("metas")
+        if not metas or "calorias" not in metas:
+            meta_cal = user.get("meta_calorica", {})
+            if "calorias" in meta_cal:
+                metas = meta_cal
+            else:
+                # meta_calorica tem estrutura antiga, usar meta_sugerida
+                metas = metas_default.copy()
+                if "meta_sugerida" in meta_cal:
+                    metas["calorias"] = int(meta_cal["meta_sugerida"])
+        
+        # Alertas inteligentes
+        alertas = []
+        if dias_com_log > 0:
+            media_calorias = total_calorias / dias_com_log
+            media_proteinas = total_proteinas / dias_com_log
+            
+            # Alerta de calorias
+            if media_calorias < metas.get("calorias", 2000) * 0.7:
+                alertas.append({"tipo": "warning", "msg": f"Consumo calorico baixo: media de {media_calorias:.0f} kcal/dia"})
+            elif media_calorias > metas.get("calorias", 2000) * 1.2:
+                alertas.append({"tipo": "danger", "msg": f"Consumo calorico alto: media de {media_calorias:.0f} kcal/dia"})
+            else:
+                alertas.append({"tipo": "success", "msg": "Consumo calorico dentro da meta!"})
+            
+            # Alerta de proteinas
+            if media_proteinas < metas.get("proteinas", 50) * 0.8:
+                alertas.append({"tipo": "warning", "msg": f"Proteinas abaixo da meta: {media_proteinas:.0f}g/dia"})
+            
+            # Alerta de streak
+            if streak >= 7:
+                alertas.append({"tipo": "success", "msg": f"Parabens! {streak} dias seguidos registrando!"})
+        
+        # Historico formatado (ultimas 30 entradas para periodo longo)
+        limite_historico = 30 if periodo in ["mes", "ano"] else 10
+        historico = []
+        for log in logs[:limite_historico]:
+            historico.append({
+                "data": log.get("data", ""),
+                "pratos": log.get("pratos", []),
+                "calorias_total": log.get("calorias_total", 0),
+                "proteinas_total": log.get("proteinas_total", 0),
+                "carboidratos_total": log.get("carboidratos_total", 0),
+                "gorduras_total": log.get("gorduras_total", 0)
+            })
+        
+        return {
+            "ok": True,
+            "hoje": hoje,
+            "grafico": dias_grafico,
+            "semana": dias_grafico,  # Compatibilidade
+            "historico": historico,
+            "stats": {
+                "dias_registrados": dias_com_log,
+                "media_calorias": total_calorias / dias_com_log if dias_com_log > 0 else 0,
+                "media_proteinas": total_proteinas / dias_com_log if dias_com_log > 0 else 0,
+                "media_carboidratos": total_carboidratos / dias_com_log if dias_com_log > 0 else 0,
+                "media_gorduras": total_gorduras / dias_com_log if dias_com_log > 0 else 0,
+                "total_calorias": total_calorias,
+                "total_pratos": total_pratos,
+                "streak": streak
+            },
+            "metas": metas,
+            "alertas": alertas,
+            "periodo": periodo
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no dashboard: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/premium/metas")
+async def update_user_metas(pin: str, request: Request):
+    """
+    Atualiza as metas nutricionais do usuario Premium.
+    Body: {metas: {calorias, proteinas, carboidratos, gorduras}}
+    """
+    try:
+        from services.profile_service import hash_pin
+        
+        body = await request.json()
+        metas = body.get("metas", body)
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Validar metas
+        metas_validadas = {
+            "calorias": max(1000, min(5000, int(metas.get("calorias", 2000)))),
+            "proteinas": max(20, min(300, int(metas.get("proteinas", 50)))),
+            "carboidratos": max(50, min(500, int(metas.get("carboidratos", 250)))),
+            "gorduras": max(20, min(200, int(metas.get("gorduras", 65))))
+        }
+        
+        # Atualizar no banco
+        await db.users.update_one(
+            {"_id": user["_id"]},
+            {"$set": {"metas": metas_validadas}}
+        )
+        
+        logger.info(f"[METAS] Atualizadas para {user['nome']}: {metas_validadas}")
+        
+        return {
+            "ok": True,
+            "metas": metas_validadas,
+            "msg": "Metas atualizadas com sucesso!"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar metas: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+
+@api_router.get("/premium/report")
+async def get_premium_report(pin: str, periodo: str = "semana"):
+    """
+    Relatorio Premium com Score de Dieta (0-100).
+    Calcula qualidade da alimentacao baseado em:
+    - Aderencia as metas de macros (40 pts)
+    - Consistencia/streak (20 pts)
+    - Variedade de pratos (20 pts)
+    - Equilibrio macro (20 pts)
+    """
+    try:
+        from services.profile_service import hash_pin
+        from datetime import datetime, timedelta
+
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+
+        periodos_dias = {"dia": 1, "semana": 7, "mes": 30, "ano": 365}
+        dias = periodos_dias.get(periodo, 7)
+        data_inicio = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
+
+        logs = await db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1).to_list(length=400)
+
+        # Metas
+        metas = user.get("metas")
+        if not metas or "calorias" not in metas:
+            meta_cal = user.get("meta_calorica", {})
+            metas = {"calorias": 2000, "proteinas": 50, "carboidratos": 250, "gorduras": 65}
+            if "meta_sugerida" in meta_cal:
+                metas["calorias"] = int(meta_cal["meta_sugerida"])
+
+        dias_com_log = [l for l in logs if l.get("calorias_total", 0) > 0]
+        n_dias = len(dias_com_log)
+
+        if n_dias == 0:
+            return {
+                "ok": True,
+                "score": 0,
+                "classificacao": {"texto": "Sem dados", "emoji": "--", "cor": "#718096"},
+                "componentes": {"aderencia": 0, "consistencia": 0, "variedade": 0, "equilibrio": 0},
+                "resumo": {"dias_registrados": 0, "total_pratos": 0},
+                "periodo": periodo,
+                "detalhes": []
+            }
+
+        # === COMPONENTE 1: Aderencia as metas (0-40 pts) ===
+        media_cal = sum(l.get("calorias_total", 0) for l in dias_com_log) / n_dias
+        media_prot = sum(l.get("proteinas_total", 0) for l in dias_com_log) / n_dias
+        media_carb = sum(l.get("carboidratos_total", 0) for l in dias_com_log) / n_dias
+        media_gord = sum(l.get("gorduras_total", 0) for l in dias_com_log) / n_dias
+
+        def aderencia_macro(atual, meta):
+            if meta == 0:
+                return 1.0
+            ratio = atual / meta
+            if 0.85 <= ratio <= 1.15:
+                return 1.0
+            elif 0.7 <= ratio <= 1.3:
+                return 0.7
+            elif 0.5 <= ratio <= 1.5:
+                return 0.4
+            return 0.1
+
+        ad_cal = aderencia_macro(media_cal, metas["calorias"])
+        ad_prot = aderencia_macro(media_prot, metas["proteinas"])
+        ad_carb = aderencia_macro(media_carb, metas["carboidratos"])
+        ad_gord = aderencia_macro(media_gord, metas["gorduras"])
+        pts_aderencia = ((ad_cal * 0.4 + ad_prot * 0.3 + ad_carb * 0.15 + ad_gord * 0.15) * 40)
+
+        # === COMPONENTE 2: Consistencia (0-20 pts) ===
+        streak = 0
+        for i in range(min(dias, 365)):
+            data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            if any(l.get("data") == data and l.get("calorias_total", 0) > 0 for l in logs):
+                streak += 1
+            else:
+                break
+        taxa_registro = n_dias / max(dias, 1)
+        pts_consistencia = min(taxa_registro * 15 + min(streak / 7, 1) * 5, 20)
+
+        # === COMPONENTE 3: Variedade (0-20 pts) ===
+        todos_pratos = set()
+        for l in dias_com_log:
+            for p in l.get("pratos", []):
+                todos_pratos.add(p.get("nome", "").lower())
+        n_pratos_unicos = len(todos_pratos)
+        pts_variedade = min(n_pratos_unicos / max(dias * 0.5, 1) * 20, 20)
+
+        # === COMPONENTE 4: Equilibrio macro (0-20 pts) ===
+        total_macro = media_prot * 4 + media_carb * 4 + media_gord * 9
+        if total_macro > 0:
+            pct_prot = (media_prot * 4) / total_macro
+            pct_carb = (media_carb * 4) / total_macro
+            pct_gord = (media_gord * 9) / total_macro
+            # Ideal: 15-25% prot, 45-65% carb, 20-35% gord
+            eq_prot = 1.0 if 0.15 <= pct_prot <= 0.25 else 0.5
+            eq_carb = 1.0 if 0.45 <= pct_carb <= 0.65 else 0.5
+            eq_gord = 1.0 if 0.20 <= pct_gord <= 0.35 else 0.5
+            pts_equilibrio = ((eq_prot + eq_carb + eq_gord) / 3) * 20
+        else:
+            pts_equilibrio = 0
+            pct_prot = pct_carb = pct_gord = 0
+
+        score = round(pts_aderencia + pts_consistencia + pts_variedade + pts_equilibrio)
+        score = max(0, min(100, score))
+
+        # Classificacao
+        if score >= 85:
+            classif = {"texto": "Excelente", "emoji": "A+", "cor": "#10b981"}
+        elif score >= 70:
+            classif = {"texto": "Muito Bom", "emoji": "A", "cor": "#22c55e"}
+        elif score >= 55:
+            classif = {"texto": "Bom", "emoji": "B", "cor": "#f59e0b"}
+        elif score >= 40:
+            classif = {"texto": "Regular", "emoji": "C", "cor": "#f97316"}
+        else:
+            classif = {"texto": "Precisa Melhorar", "emoji": "D", "cor": "#ef4444"}
+
+        # Detalhes dia a dia
+        detalhes = []
+        for l in dias_com_log[:15]:
+            detalhes.append({
+                "data": l.get("data", ""),
+                "calorias": round(l.get("calorias_total", 0)),
+                "proteinas": round(l.get("proteinas_total", 0)),
+                "carboidratos": round(l.get("carboidratos_total", 0)),
+                "gorduras": round(l.get("gorduras_total", 0)),
+                "pratos": len(l.get("pratos", []))
+            })
+
+        return {
+            "ok": True,
+            "score": score,
+            "classificacao": classif,
+            "componentes": {
+                "aderencia": round(pts_aderencia, 1),
+                "consistencia": round(pts_consistencia, 1),
+                "variedade": round(pts_variedade, 1),
+                "equilibrio": round(pts_equilibrio, 1)
+            },
+            "resumo": {
+                "dias_registrados": n_dias,
+                "streak": streak,
+                "total_pratos": sum(len(l.get("pratos", [])) for l in dias_com_log),
+                "pratos_unicos": n_pratos_unicos,
+                "media_calorias": round(media_cal),
+                "media_proteinas": round(media_prot),
+                "media_carboidratos": round(media_carb),
+                "media_gorduras": round(media_gord),
+                "distribuicao": {
+                    "proteinas_pct": round(pct_prot * 100, 1),
+                    "carboidratos_pct": round(pct_carb * 100, 1),
+                    "gorduras_pct": round(pct_gord * 100, 1)
+                }
+            },
+            "metas": metas,
+            "detalhes": detalhes,
+            "periodo": periodo,
+            "nome": user.get("nome", ""),
+            "data_relatorio": datetime.now().isoformat()
+        }
+
+    except Exception as e:
+        logger.error(f"Erro no relatorio: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/radar/alimentos/{nome_prato}")
+async def get_radar_alimentos(nome_prato: str, ingredientes: str = None):
+    """
+    Retorna alertas do Radar sobre um alimento/prato.
+    Informacoes em tempo real sobre nutricao.
+    
+    ZERO CRÉDITOS - 100% LOCAL
+    """
+    try:
+        from data.radar_noticias import gerar_alerta_radar, buscar_fatos_prato
+        
+        # Parse de ingredientes se fornecidos
+        lista_ingredientes = []
+        if ingredientes:
+            lista_ingredientes = [i.strip() for i in ingredientes.split(",")]
+        
+        # Buscar alertas do radar
+        alerta = gerar_alerta_radar(nome_prato, lista_ingredientes)
+        
+        # Buscar fatos detalhados
+        fatos = buscar_fatos_prato(nome_prato, lista_ingredientes)
+        
+        return {
+            "ok": True,
+            "prato": nome_prato,
+            "radar": alerta,
+            "fatos_detalhados": fatos
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no radar: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/nutricao/taco/{ingrediente}")
+async def get_nutricao_taco(ingrediente: str):
+    """
+    Retorna dados nutricionais de um ingrediente da Tabela TACO.
+    
+    ZERO CRÉDITOS - 100% LOCAL
+    """
+    try:
+        from data.taco_database import buscar_dados_taco, calcular_percentual_vdr, VDR
+        
+        dados = buscar_dados_taco(ingrediente)
+        
+        if not dados:
+            return {
+                "ok": False,
+                "error": f"Ingrediente '{ingrediente}' nao encontrado na Tabela TACO",
+                "sugestao": "Tente um termo mais generico (ex: 'frango' em vez de 'peito de frango grelhado')"
+            }
+        
+        # Calcular percentuais do VDR
+        percentuais = {}
+        for nutriente in ["calorias", "proteinas", "carboidratos", "gorduras", "fibras", "sodio", "calcio", "ferro", "vitamina_a", "vitamina_c", "vitamina_b12", "potassio", "zinco"]:
+            valor = dados.get(nutriente, 0)
+            percentuais[nutriente] = round(calcular_percentual_vdr(nutriente, valor), 1)
+        
+        return {
+            "ok": True,
+            "ingrediente": ingrediente,
+            "dados": dados,
+            "percentuais_vdr": percentuais,
+            "fonte": "Tabela TACO - UNICAMP/NEPA"
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar TACO: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADMIN - Endpoints de administracao do banco de dados
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/dishes")
+async def admin_list_dishes():
+    """Lista todos os pratos com informacoes detalhadas para admin."""
+    try:
+        import json
+        dataset_dir = Path("/app/datasets/organized")
+        dishes = []
+        
+        for dish_dir in sorted(dataset_dir.iterdir()):
+            if not dish_dir.is_dir():
+                continue
+            
+            slug = dish_dir.name
+            info_file = dish_dir / "dish_info.json"
+            
+            # Contar imagens
+            image_count = len(list(dish_dir.glob("*.jpg"))) + len(list(dish_dir.glob("*.jpeg")))
+            
+            dish_data = {
+                "slug": slug,
+                "nome": slug.replace("_", " ").title(),
+                "categoria": "",
+                "category_emoji": "🍽️",
+                "ingredientes": [],
+                "descricao": "",
+                "image_count": image_count
+            }
+            
+            # Carregar info se existir
+            if info_file.exists():
+                try:
+                    with open(info_file, "r", encoding="utf-8") as f:
+                        info = json.load(f)
+                        dish_data.update({
+                            "nome": info.get("nome", dish_data["nome"]),
+                            "categoria": info.get("categoria", ""),
+                            "category_emoji": info.get("category_emoji", "🍽️"),
+                            "ingredientes": info.get("ingredientes", []),
+                            "descricao": info.get("descricao", "")
+                        })
+                except:
+                    pass
+            
+            dishes.append(dish_data)
+        
+        return {"ok": True, "dishes": dishes, "total": len(dishes)}
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar pratos admin: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/dishes-full")
+async def admin_list_dishes_full():
+    """Lista todos os pratos com TODAS as informacoes para admin."""
+    try:
+        import json
+        dataset_dir = Path("/app/datasets/organized")
+        dishes = []
+        
+        for dish_dir in sorted(dataset_dir.iterdir()):
+            if not dish_dir.is_dir():
+                continue
+            
+            slug = dish_dir.name
+            info_file = dish_dir / "dish_info.json"
+            
+            # Contar e listar imagens
+            images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg")) + list(dish_dir.glob("*.png"))
+            image_count = len(images)
+            first_image = images[0].name if images else None
+            all_images = [img.name for img in images]  # Lista de todos os nomes de imagem
+            
+            dish_data = {
+                "slug": slug,
+                "nome": slug.replace("_", " ").title(),
+                "categoria": "",
+                "category_emoji": "🍽️",
+                "ingredientes": [],
+                "descricao": "",
+                "beneficios": [],
+                "riscos": [],
+                "nutricao": {},
+                "contem_gluten": False,
+                "contem_lactose": False,
+                "contem_ovo": False,
+                "contem_castanhas": False,
+                "contem_frutos_mar": False,
+                "contem_soja": False,
+                "contem_peixe": False,
+                "tecnica": "",
+                "image_count": image_count,
+                "first_image": first_image,
+                "all_images": all_images  # Nova lista com todas as imagens
+            }
+            
+            # Carregar info completa se existir
+            if info_file.exists():
+                try:
+                    with open(info_file, "r", encoding="utf-8") as f:
+                        info = json.load(f)
+                        dish_data.update({
+                            "nome": info.get("nome", dish_data["nome"]),
+                            "categoria": info.get("categoria", ""),
+                            "category_emoji": info.get("category_emoji", "🍽️"),
+                            "ingredientes": info.get("ingredientes", []),
+                            "descricao": info.get("descricao", ""),
+                            "beneficios": info.get("beneficios", []),
+                            "riscos": info.get("riscos", []),
+                            "nutricao": info.get("nutricao", {}),
+                            "contem_gluten": info.get("contem_gluten", False),
+                            "contem_lactose": info.get("contem_lactose", False),
+                            "contem_ovo": info.get("contem_ovo", False),
+                            "contem_castanhas": info.get("contem_castanhas", False),
+                            "contem_frutos_mar": info.get("contem_frutos_mar", False),
+                            "contem_soja": info.get("contem_soja", False),
+                            "contem_peixe": info.get("contem_peixe", False),
+                            "tecnica": info.get("tecnica", "")
+                        })
+                except:
+                    pass
+            
+            dishes.append(dish_data)
+        
+        return {"ok": True, "dishes": dishes, "total": len(dishes)}
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar pratos admin full: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/dish-image/{slug}")
+async def admin_get_dish_image(slug: str, img: str = None):
+    """Retorna uma imagem de um prato. Se img for especificado, retorna essa imagem especifica."""
+    from fastapi.responses import FileResponse
+    
+    try:
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            raise HTTPException(status_code=404, detail="Prato nao encontrado")
+        
+        # Se uma imagem especifica foi solicitada
+        if img:
+            img_path = dataset_dir / img
+            if img_path.exists():
+                return FileResponse(img_path, media_type="image/jpeg")
+            else:
+                raise HTTPException(status_code=404, detail="Imagem nao encontrada")
+        
+        # Senao, retorna a primeira imagem
+        images = list(dataset_dir.glob("*.jpg")) + list(dataset_dir.glob("*.jpeg")) + list(dataset_dir.glob("*.png"))
+        
+        if not images:
+            raise HTTPException(status_code=404, detail="Sem imagens")
+        
+        return FileResponse(images[0], media_type="image/jpeg")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao buscar imagem: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@api_router.put("/admin/dishes/{slug}")
+async def admin_update_dish(slug: str, dish_data: dict):
+    """Atualiza TODAS as informacoes de um prato."""
+    try:
+        import json
+        import os
+        
+        # Buscar pasta de forma case-insensitive
+        base_dir = Path("/app/datasets/organized")
+        dataset_dir = None
+        
+        # Primeiro, tentar o slug direto
+        if (base_dir / slug).exists():
+            dataset_dir = base_dir / slug
+        else:
+            # Buscar pasta com nome similar (case-insensitive)
+            slug_lower = slug.lower().replace("-", "").replace(" ", "")
+            for folder in os.listdir(base_dir):
+                folder_lower = folder.lower().replace("-", "").replace(" ", "")
+                if folder_lower == slug_lower:
+                    dataset_dir = base_dir / folder
+                    break
+        
+        if not dataset_dir or not dataset_dir.exists():
+            return {"ok": False, "error": "Prato nao encontrado"}
+        
+        info_file = dataset_dir / "dish_info.json"
+        
+        # Carregar info existente ou criar nova
+        existing_info = {}
+        if info_file.exists():
+            try:
+                with open(info_file, "r", encoding="utf-8") as f:
+                    existing_info = json.load(f)
+            except:
+                pass
+        
+        # Atualizar TODOS os campos
+        existing_info.update({
+            "nome": dish_data.get("nome", existing_info.get("nome", slug)),
+            "slug": slug,
+            "categoria": dish_data.get("categoria", existing_info.get("categoria", "")),
+            "descricao": dish_data.get("descricao", existing_info.get("descricao", "")),
+            "ingredientes": dish_data.get("ingredientes", existing_info.get("ingredientes", [])),
+            "beneficios": dish_data.get("beneficios", existing_info.get("beneficios", [])),
+            "riscos": dish_data.get("riscos", existing_info.get("riscos", [])),
+            "nutricao": dish_data.get("nutricao", existing_info.get("nutricao", {})),
+            "contem_gluten": dish_data.get("contem_gluten", existing_info.get("contem_gluten", False)),
+            "contem_lactose": dish_data.get("contem_lactose", existing_info.get("contem_lactose", False)),
+            "contem_ovo": dish_data.get("contem_ovo", existing_info.get("contem_ovo", False)),
+            "contem_castanhas": dish_data.get("contem_castanhas", existing_info.get("contem_castanhas", False)),
+            "contem_frutos_mar": dish_data.get("contem_frutos_mar", existing_info.get("contem_frutos_mar", False)),
+            "contem_soja": dish_data.get("contem_soja", existing_info.get("contem_soja", False)),
+            "tecnica": dish_data.get("tecnica", existing_info.get("tecnica", ""))
+        })
+        
+        # Definir emoji baseado na categoria
+        cat = existing_info.get("categoria", "").lower()
+        nome_lower = existing_info.get("nome", "").lower()
+        
+        if "proteina" in cat:
+            if any(p in nome_lower for p in ["peixe", "camarao", "bacalhau", "salmao", "atum", "tilapia", "pescador"]):
+                existing_info["category_emoji"] = "🐟"
+            elif any(p in nome_lower for p in ["frango", "galinha", "sobrecoxa", "peito"]):
+                existing_info["category_emoji"] = "🍗"
+            else:
+                existing_info["category_emoji"] = "🥩"
+        elif "vegetariano" in cat:
+            existing_info["category_emoji"] = "🥚"
+        elif "vegano" in cat:
+            existing_info["category_emoji"] = "🥬"
+        elif "sobremesa" in cat:
+            existing_info["category_emoji"] = "🍰"
+        else:
+            existing_info["category_emoji"] = "🍽️"
+        
+        # Salvar
+        with open(info_file, "w", encoding="utf-8") as f:
+            json.dump(existing_info, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"[ADMIN] Prato atualizado: {slug}")
+        return {"ok": True, "message": "Prato atualizado"}
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar prato: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/dishes/{slug}/regenerate")
+async def admin_regenerate_dish_info(slug: str, data: dict = None):
+    """
+    Regenera TODAS as informacoes de um prato baseado no nome.
+    Útil quando o usuario corrige o nome e quer atualizar toda a ficha.
+    
+    Body opcional:
+    {
+        "new_name": "Novo Nome do Prato"  // se nao fornecido, usa o nome atual
+    }
+    """
+    try:
+        from services.generic_ai import regenerate_dish_info_from_name
+        
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            return {"ok": False, "error": "Prato nao encontrado"}
+        
+        info_file = dataset_dir / "dish_info.json"
+        
+        # Carregar info atual
+        current_info = {}
+        if info_file.exists():
+            try:
+                with open(info_file, "r", encoding="utf-8") as f:
+                    current_info = json.load(f)
+            except:
+                pass
+        
+        # Determinar o nome a usar
+        new_name = None
+        if data and data.get("new_name"):
+            new_name = data["new_name"]
+        else:
+            new_name = current_info.get("nome", slug)
+        
+        logger.info(f"[ADMIN] Regenerando ficha do prato '{slug}' com nome: {new_name}")
+        
+        # Chamar IA para regenerar
+        result = await regenerate_dish_info_from_name(new_name, current_info)
+        
+        if result.get("ok"):
+            # Mesclar com dados existentes (manter slug)
+            new_info = {**current_info}
+            
+            # Atualizar todos os campos regenerados
+            for key in ["nome", "categoria", "descricao", "ingredientes", 
+                       "beneficios", "riscos", "nutricao", "contem_gluten",
+                       "contem_lactose", "contem_ovo", "contem_castanhas",
+                       "contem_frutos_mar", "contem_soja", "tecnica"]:
+                if key in result:
+                    new_info[key] = result[key]
+            
+            new_info["slug"] = slug
+            new_info["regenerated_at"] = datetime.utcnow().isoformat()
+            
+            # Definir emoji baseado na categoria
+            cat = new_info.get("categoria", "").lower()
+            nome_lower = new_info.get("nome", "").lower()
+            
+            if "proteina" in cat:
+                if any(p in nome_lower for p in ["peixe", "camarao", "bacalhau", "salmao", "atum"]):
+                    new_info["category_emoji"] = "🐟"
+                elif any(p in nome_lower for p in ["frango", "galinha", "sobrecoxa"]):
+                    new_info["category_emoji"] = "🍗"
+                else:
+                    new_info["category_emoji"] = "🥩"
+            elif "vegetariano" in cat:
+                new_info["category_emoji"] = "🥚"
+            elif "vegano" in cat:
+                new_info["category_emoji"] = "🥬"
+            else:
+                new_info["category_emoji"] = "🍽️"
+            
+            # Salvar
+            with open(info_file, "w", encoding="utf-8") as f:
+                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            
+            logger.info(f"[ADMIN] Ficha regenerada com sucesso: {slug}")
+            return {
+                "ok": True, 
+                "message": f"Ficha de '{new_name}' regenerada com sucesso",
+                "new_info": new_info
+            }
+        else:
+            return {"ok": False, "error": result.get("error", "Erro desconhecido")}
+        
+    except Exception as e:
+        logger.error(f"Erro ao regenerar ficha: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/dishes/{slug}")
+async def admin_delete_dish(slug: str):
+    """Exclui um prato e todas suas fotos."""
+    try:
+        import shutil
+        dataset_dir = Path("/app/datasets/organized") / slug
+        
+        if not dataset_dir.exists():
+            return {"ok": False, "error": "Prato nao encontrado"}
+        
+        # Remover pasta e todos os arquivos
+        shutil.rmtree(dataset_dir)
+        
+        logger.info(f"[ADMIN] Prato excluido: {slug}")
+        return {"ok": True, "message": f"Prato {slug} excluido"}
+        
+    except Exception as e:
+        logger.error(f"Erro ao excluir prato: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATUALIZAÇÃO LOCAL (SEM IA, SEM CRÉDITOS)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/admin/dishes/{slug}/update-local")
+async def admin_update_dish_local(slug: str, data: dict = None):
+    """
+    Atualiza prato LOCALMENTE baseado em regras.
+    NÃO USA IA, NÃO CONSOME CRÉDITOS!
+    
+    Body opcional:
+    {
+        "new_name": "Novo Nome do Prato"
+    }
+    """
+    try:
+        from services.local_dish_updater import atualizar_prato_local
+        
+        novo_nome = data.get("new_name") if data else None
+        result = atualizar_prato_local(slug, novo_nome)
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao atualizar prato localmente: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/update-all-local")
+async def admin_update_all_local():
+    """
+    Atualiza TODOS os pratos baseado no nome.
+    NÃO USA IA, NÃO CONSOME CRÉDITOS!
+    Processa instantaneamente.
+    """
+    try:
+        from services.local_dish_updater import atualizar_todos_por_nome
+        
+        result = atualizar_todos_por_nome()
+        logger.info(f"[ADMIN] Atualizacao local em massa: {result['atualizados']}/{result['total']}")
+        
+        return {"ok": True, **result}
+        
+    except Exception as e:
+        logger.error(f"Erro na atualizacao em massa: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# AUDITORIA - Analise de qualidade dos dados dos pratos
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/audit")
+async def admin_audit_dishes():
+    """Audita todos os pratos e retorna relatorio de problemas de qualidade"""
+    try:
+        from services.audit_service import audit_all_dishes
+        
+        result = audit_all_dishes()
+        return {"ok": True, **result}
+        
+    except Exception as e:
+        logger.error(f"Erro na auditoria: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/fix/{slug}")
+async def admin_fix_dish_with_ai(slug: str):
+    """Usa IA para sugerir correcoes para um prato especifico"""
+    try:
+        from services.audit_service import fix_dish_with_ai
+        
+        result = await fix_dish_with_ai(slug)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao corrigir prato {slug}: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/apply/{slug}")
+async def admin_apply_ai_suggestions(slug: str, suggestions: dict):
+    """Aplica as sugestoes da IA ao prato"""
+    try:
+        from services.audit_service import apply_ai_suggestions
+        
+        result = apply_ai_suggestions(slug, suggestions)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao aplicar sugestoes para {slug}: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/fix-single/{slug}")
+async def admin_fix_single_dish(slug: str):
+    """Usa IA para corrigir dados de um unico prato"""
+    try:
+        from services.generic_ai import fix_dish_data_with_ai
+        from pathlib import Path
+        import json
+        
+        dataset_dir = Path("/app/datasets/organized")
+        dish_dir = dataset_dir / slug
+        info_path = dish_dir / "dish_info.json"
+        
+        # Carregar info atual
+        current_info = {}
+        if info_path.exists():
+            with open(info_path, 'r', encoding='utf-8') as f:
+                current_info = json.load(f)
+        
+        # Buscar imagem
+        images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg"))
+        if not images:
+            return {"ok": False, "error": "Nenhuma imagem encontrada"}
+        
+        # Ler imagem
+        with open(images[0], 'rb') as f:
+            image_bytes = f.read()
+        
+        # Chamar IA
+        result = await fix_dish_data_with_ai(image_bytes, current_info)
+        
+        if result.get("ok"):
+            # Mesclar e salvar
+            new_info = {**current_info, **result}
+            new_info.pop("ok", None)
+            new_info["slug"] = slug
+            
+            with open(info_path, 'w', encoding='utf-8') as f:
+                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            
+            return {"ok": True, "message": f"Prato {slug} corrigido", "data": new_info}
+        else:
+            return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao corrigir prato {slug}: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/audit/batch-fix")
+async def admin_batch_fix_dishes(request: dict):
+    """Corrige multiplos pratos em lote usando IA"""
+    try:
+        from services.generic_ai import batch_fix_dishes
+        
+        slugs = request.get("slugs", [])
+        if not slugs:
+            return {"ok": False, "error": "Nenhum slug fornecido"}
+        
+        # Limitar a 10 por vez para nao sobrecarregar
+        slugs = slugs[:10]
+        
+        result = await batch_fix_dishes(slugs, max_concurrent=2)
+        return {"ok": True, **result}
+        
+    except Exception as e:
+        logger.error(f"Erro no batch fix: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/dish-image/{slug}")
+async def delete_dish_image(slug: str, img: str = Query(...)):
+    """Deleta uma imagem de um prato"""
+    try:
+        dataset_dir = "/app/datasets/organized"
+        # Encontrar pasta do prato pelo slug
+        target = None
+        for folder in os.listdir(dataset_dir):
+            if folder.lower().replace(" ", "_") == slug.lower().replace(" ", "_") or folder == slug:
+                target = os.path.join(dataset_dir, folder)
+                break
+        if not target:
+            return JSONResponse(status_code=404, content={"ok": False, "error": "Prato nao encontrado"})
+        img_path = os.path.join(target, img)
+        if not os.path.exists(img_path):
+            return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
+        os.remove(img_path)
+        return {"ok": True, "message": f"Imagem {img} removida"}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+@api_router.post("/admin/move-image")
+async def move_dish_image(request: Request):
+    """Move uma imagem de um prato para outro"""
+    try:
+        import shutil
+        data = await request.json()
+        source_dish = data.get("source_dish")
+        target_dish = data.get("target_dish")
+        image_name = data.get("image_name")
+        dataset_dir = "/app/datasets/organized"
+        src_path = os.path.join(dataset_dir, source_dish, image_name)
+        dst_dir = os.path.join(dataset_dir, target_dish)
+        if not os.path.exists(src_path):
+            return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
+        if not os.path.exists(dst_dir):
+            return JSONResponse(status_code=404, content={"ok": False, "error": "Prato destino nao encontrado"})
+        dst_path = os.path.join(dst_dir, image_name)
+        if os.path.exists(dst_path):
+            base, ext = os.path.splitext(image_name)
+            dst_path = os.path.join(dst_dir, f"{base}_moved{ext}")
+        shutil.move(src_path, dst_path)
+        return {"ok": True, "message": f"Imagem movida para {target_dish}"}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+@api_router.get("/admin/duplicates")
+async def get_duplicate_groups():
+    """Retorna grupos de pratos duplicados para consolidacao"""
+    try:
+        from services.audit_service import find_duplicate_groups
+        
+        grupos = find_duplicate_groups()
+        return {"ok": True, "groups": grupos, "total_groups": len(grupos)}
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar duplicados: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/consolidate")
+async def consolidate_dishes(request: dict):
+    """Consolida um grupo de pratos duplicados"""
+    try:
+        from services.audit_service import consolidate_duplicate_dishes
+        
+        group = request.get("group", [])
+        if len(group) < 2:
+            return {"ok": False, "error": "Grupo precisa ter pelo menos 2 slugs"}
+        
+        result = await consolidate_duplicate_dishes(group)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao consolidar: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/consolidate-all")
+async def consolidate_all_duplicates():
+    """Consolida todos os grupos de duplicados automaticamente"""
+    try:
+        from services.audit_service import find_duplicate_groups, consolidate_duplicate_dishes
+        
+        grupos = find_duplicate_groups()
+        results = {"consolidated": [], "failed": []}
+        
+        for group in grupos[:20]:  # Limitar a 20 grupos por vez
+            try:
+                result = await consolidate_duplicate_dishes(group)
+                if result.get("ok"):
+                    results["consolidated"].append(result["main_slug"])
+                else:
+                    results["failed"].append({"group": group, "error": result.get("error")})
+            except Exception as e:
+                results["failed"].append({"group": group, "error": str(e)})
+        
+        return {
+            "ok": True,
+            "consolidated_count": len(results["consolidated"]),
+            "failed_count": len(results["failed"]),
+            "results": results
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro na consolidacao em massa: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTERNACIONALIZAÇÃO - Suporte a multiplos idiomas (GRATUITO com LibreTranslate)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/i18n/languages")
+async def get_languages():
+    """Lista todos os idiomas suportados"""
+    try:
+        from services.translation_service import get_supported_languages
+        languages = get_supported_languages()
+        return {
+            "ok": True,
+            "languages": languages,
+            "default": "pt"
+        }
+    except Exception as e:
+        logger.error(f"Erro ao listar idiomas: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/i18n/ui/{lang}")
+async def get_ui_translations(lang: str = "pt"):
+    """Retorna traducoes da interface para o idioma especificado"""
+    try:
+        from services.translation_service import get_ui_translations, SUPPORTED_LANGUAGES
+        
+        if lang not in SUPPORTED_LANGUAGES:
+            lang = "pt"
+        
+        translations = get_ui_translations(lang)
+        return {
+            "ok": True,
+            "lang": lang,
+            "translations": translations
+        }
+    except Exception as e:
+        logger.error(f"Erro ao buscar traducoes: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/i18n/translate")
+async def translate_text_endpoint(
+    text: str = Form(...),
+    source: str = Form("pt"),
+    target: str = Form("en")
+):
+    """Traduz texto de um idioma para outro"""
+    try:
+        from services.translation_service import translate_text
+        
+        translated = await translate_text(text, source, target)
+        return {
+            "ok": True,
+            "original": text,
+            "translated": translated,
+            "source": source,
+            "target": target
+        }
+    except Exception as e:
+        logger.error(f"Erro na traducao: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+
+# Evento de shutdown
+@app.on_event("shutdown")
+async def shutdown_db_client():
+    client.close()
+
+# Evento de startup - pre-carregar modelo
+@app.on_event("startup")
+async def startup_event():
+    logger.info("SoulNutri AI Server iniciando...")
+    
+    # Pre-carregar o modelo CLIP (importante para performance!)
+    try:
+        from ai.embedder import preload_model
+        preload_model()
+        logger.info("Modelo CLIP pre-carregado!")
+    except Exception as e:
+        logger.warning(f"Nao foi possivel pre-carregar modelo: {e}")
+    
+    # Tentar pre-carregar o indice (se existir)
+    try:
+        from ai.index import get_index
+        index = get_index()
+        if index.is_ready():
+            logger.info(f"Índice carregado: {index.get_stats()}")
+        else:
+            logger.info("Índice nao encontrado. Execute /api/ai/reindex para criar.")
+    except Exception as e:
+        logger.warning(f"Nao foi possivel carregar indice: {e}")
+    
+    logger.info("SoulNutri AI Server pronto!")
+
+@api_router.get("/download/marketing")
+async def download_marketing_doc():
+    """Download do documento de marketing Premium"""
+    from fastapi.responses import FileResponse
+    file_path = "/app/backend/SoulNutri_Premium_Marketing.docx"
+    return FileResponse(
+        path=file_path,
+        filename="SoulNutri_Premium_Marketing.docx",
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
+
+@api_router.get("/download/upload-script")
+async def download_upload_script():
+    """Download do script de upload de fotos para rodar no computador do usuario"""
+    from fastapi.responses import FileResponse
+    file_path = "/app/scripts/upload_fotos.py"
+    return FileResponse(
+        path=file_path,
+        filename="upload_fotos_soulnutri.py",
+        media_type="text/x-python"
+    )
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NOVIDADES/NOTÍCIAS PREMIUM - Sistema de alertas em tempo real para o buffet
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/novidades/{dish_slug}")
+async def get_dish_novidade(dish_slug: str):
+    """
+    Retorna novidade/noticia de um prato especifico (se houver).
+    Usado na versao Premium para mostrar alertas ao escanear um item.
+    """
+    try:
+        # Buscar novidade do MongoDB
+        novidade = await db.novidades.find_one(
+            {"dish_slug": dish_slug, "ativa": True},
+            {"_id": 0}
+        )
+        
+        if novidade:
+            return {
+                "ok": True,
+                "tem_novidade": True,
+                "novidade": novidade
+            }
+        
+        return {
+            "ok": True,
+            "tem_novidade": False,
+            "novidade": None
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar novidade: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/novidades")
+async def list_novidades():
+    """Lista todas as novidades ativas."""
+    try:
+        novidades = await db.novidades.find(
+            {"ativa": True},
+            {"_id": 0}
+        ).sort("data_criacao", -1).to_list(100)
+        
+        return {
+            "ok": True,
+            "total": len(novidades),
+            "novidades": novidades
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar novidades: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/novidades")
+async def admin_create_novidade(
+    dish_slug: str = Form(...),
+    tipo: str = Form(...),  # "info", "alerta", "dica", "estudo"
+    titulo: str = Form(...),
+    mensagem: str = Form(...),
+    emoji: str = Form("📢"),
+    severidade: str = Form("info"),  # "info", "warning", "danger"
+    ativa: bool = Form(True)
+):
+    """
+    Cria/atualiza uma novidade para um prato.
+    Tipos:
+    - info: Informacao positiva (ex: "Novo estudo confirma beneficios")
+    - alerta: Alerta importante (ex: "Lote com problema")
+    - dica: Dica de combinacao ou consumo
+    - estudo: Estudo cientifico recente
+    """
+    from datetime import datetime
+    
+    try:
+        novidade = {
+            "dish_slug": dish_slug,
+            "tipo": tipo,
+            "titulo": titulo,
+            "mensagem": mensagem,
+            "emoji": emoji,
+            "severidade": severidade,
+            "ativa": ativa,
+            "data_criacao": datetime.now().isoformat(),
+            "data_atualizacao": datetime.now().isoformat()
+        }
+        
+        # Upsert - atualiza se existir, insere se nao
+        await db.novidades.update_one(
+            {"dish_slug": dish_slug},
+            {"$set": novidade},
+            upsert=True
+        )
+        
+        logger.info(f"[ADMIN] Novidade criada/atualizada: {dish_slug} - {tipo}")
+        
+        return {
+            "ok": True,
+            "message": f"Novidade salva para {dish_slug}",
+            "novidade": novidade
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro ao criar novidade: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/novidades/{dish_slug}")
+async def admin_delete_novidade(dish_slug: str):
+    """Remove uma novidade."""
+    try:
+        result = await db.novidades.delete_one({"dish_slug": dish_slug})
+        
+        if result.deleted_count > 0:
+            return {"ok": True, "message": f"Novidade de {dish_slug} removida"}
+        else:
+            return {"ok": False, "error": "Novidade nao encontrada"}
+            
+    except Exception as e:
+        logger.error(f"Erro ao remover novidade: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ═════════════════════════════
+
+app.include_router(api_router)

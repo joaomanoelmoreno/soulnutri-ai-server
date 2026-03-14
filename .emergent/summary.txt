@@ -1,0 +1,167 @@
+<analysis>**original_problem_statement:**
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta precisão (> 90%). A prioridade do usuário é a **precisão máxima** e a honestidade, evitando falsos positivos com alta confiança. O projeto evoluiu para incluir um plano estratégico de várias fases para substituir o modelo de reconhecimento genérico por um modelo especializado, além de funcionalidades premium e, mais recentemente, a adição de fichas nutricionais detalhadas.
+
+**PRODUCT REQUIREMENTS:**
+1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
+2.  **Performance e Precisão:** A identificação deve ser precisa, honesta e confiável, sem apresentar resultados errados com alta confiança. Deve rejeitar pratos que não conhece.
+3.  **Qualidade da Informação:** As informações (ingredientes, ficha nutricional, etc.) devem ser corretas, educativas e cientificamente embasadas, seguindo fontes de dados específicas.
+4.  **UX/UI:** Interface com o mínimo de cliques, fluida e estável, com mensagens claras sobre a confiança do reconhecimento.
+5.  **Evolução Incremental:** Implementar e validar cada etapa de forma isolada, garantindo que novas funcionalidades não contaminem o que já funciona.
+
+**User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
+
+**what currently exists?**
+Um aplicativo full-stack (React + FastAPI + MongoDB). A sessão foi dominada por uma cascata de bugs críticos, originados por um problema crônico de falta de espaço em disco que corrompia arquivos de código (, ) repetidamente.
+
+O agente conseguiu, entre as falhas, implementar uma série de correções importantes na lógica de reconhecimento:
+1.  **Correção do GPS:** O frontend () agora detecta corretamente se o usuário está no restaurante Cibi Sana e envia o parâmetro correto para o backend.
+2.  **Correção do Gemini:** O prompt do Gemini foi corrigido em  para não forçar a escolha de pratos do cardápio do Cibi Sana quando o usuário está em um local externo.
+3.  **Implementação de Honestidade (Gap Analysis):** Uma nova lógica foi adicionada em  para rejeitar uma identificação se a diferença de score entre o 1º e o 2º prato mais provável for muito pequena (gap < 0.02), evitando que o modelo chute com alta confiança.
+4.  **Limpeza de Dados:** Fotos misturadas de Carpaccio de Laranja e Carpaccio de Pera foram separadas em pastas corretas.
+5.  **Enriquecimento do Dataset:** O agente processou e integrou com sucesso cerca de 453 novas fotos para 22 pratos, enviadas pelo usuário, e reconstruiu o índice.
+
+Apesar das correções, o ambiente de desenvolvimento é altamente instável devido ao problema de espaço em disco. O usuário agora mudou o foco para a implementação de fichas nutricionais.
+
+**Last working item**:
+-   **Last item agent was working**: O usuário solicitou a implementação das fichas nutricionais para 5 pratos específicos: , , ,  e . O plano é usar uma fonte de dados previamente definida, implementar para este pequeno lote, e verificar se o sistema não foi contaminado antes de prosseguir.
+-   **Status**: NOT STARTED
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: backend testing agent. O agente deve verificar se as fichas nutricionais são criadas e salvas corretamente na coleção  do MongoDB. Após a implementação, é crucial verificar se o endpoint  continua funcionando e não foi afetado.
+-   **User Testing Done**: N
+
+**All Pending/In progress Issue list**:
+-   Issue 1: (P0) Instabilidade Crítica do Ambiente por Falta de Espaço em Disco
+-   Issue 2: (P1) Validação da Lógica de Reconhecimento
+-   Issue 3: (P2) Implementação das Fichas Nutricionais (agora é o )
+
+**Issues Detail**:
+-   **Issue 1: Instabilidade Crítica do Ambiente por Falta de Espaço em Disco**
+    -   **Attempted fixes**: O agente limpou o repositório () e criou um git hook () para automatizar a limpeza. No entanto, o problema recorreu várias vezes durante a sessão, causando corrupção de arquivos de código em momentos críticos.
+    -   **Next debug checklist**:
+        1.  Antes de qualquer edição de arquivo, verificar o espaço em disco com Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n4    9.8G  9.8G  4.0K 100% /app.
+        2.  Se o uso estiver acima de 85%, executar  para liberar espaço.
+        3.  Investigar uma solução mais permanente, pois o hook não se mostrou 100% eficaz. A raiz do problema é o repositório git () que cresce para múltiplos GBs devido ao grande volume de imagens versionadas.
+    -   **Why fix this issue and what will be achieved with the fix?**: É a causa raiz de quase todos os bugs da sessão. Sem um ambiente estável, qualquer desenvolvimento é arriscado e ineficiente.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Both. A estabilidade afeta todo o sistema.
+    -   **Blocked on other issue**: Não, este é o bloqueador principal.
+
+-   **Issue 2: Validação da Lógica de Reconhecimento**
+    -   **Attempted fixes**: Uma série de correções cirúrgicas foram aplicadas (Gap Analysis, correção de GPS, correção do prompt do Gemini).
+    -   **Next debug checklist**:
+        1.  Após a implementação das fichas nutricionais, o usuário precisa realizar um teste completo no buffet.
+        2.  Analisar os resultados do teste para ver se os falsos positivos (ex: Bife Ancho) são rejeitados e se os pratos externos são identificados corretamente pelo Gemini.
+    -   **Why fix this issue and what will be achieved with the fix?**: Para confirmar que as múltiplas correções da sessão anterior finalmente resolveram o problema de honestidade do modelo.
+    -   **Status**: USER VERIFICATION PENDING
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: User must test in a real-world scenario.
+    -   **Blocked on other issue**: Issue 1 (instabilidade pode gerar novos bugs) e a tarefa de fichas nutricionais, que o usuário priorizou.
+
+**In progress Task List**:
+-   **Task 1: Implementar Fichas Nutricionais para 5 Pratos**
+    -   **Where to resume**:
+        1.  Identificar a fonte de dados para as fichas nutricionais que foi definida anteriormente com o usuário (provavelmente em um chat ou documento anterior não visível, pode ser necessário perguntar).
+        2.  Criar a lógica no backend (provavelmente em  ou um novo arquivo de serviço) para buscar/processar e salvar os dados na coleção  do MongoDB.
+        3.  Criar um endpoint (ou usar um existente no painel Admin) para acionar essa funcionalidade apenas para os 5 pratos listados.
+        4.  Garantir que a operação não interfere no dataset de imagens () ou no índice FAISS.
+    -   **What will be achieved with this?**: Primeira etapa da implementação de uma funcionalidade chave do produto, validando o processo de forma segura.
+    -   **Status**: NOT STARTED
+    -   **Should Test frontend/backend/both after fix?**: Backend
+    -   **Blocked on something**: Issue 1 (Instabilidade do ambiente).
+
+**Upcoming and Future Tasks**
+-   **Upcoming Tasks:**
+    -   (P0) Concluir e validar a implementação das fichas nutricionais para os 5 pratos.
+    -   (P1) Realizar um teste completo de reconhecimento no buffet para validar todos os fixes da sessão anterior.
+-   **Future Tasks:**
+    -   Expandir a implementação das fichas nutricionais para todos os pratos.
+    -   Refatorar  e .
+    -   Investigar a integração com Stripe.
+
+**Completed work in this session**
+-   **Correção de Bugs Críticos na Lógica de Reconhecimento:**
+    -   **Corrigido GPS:** O App não força mais  e usa a localização real do usuário ().
+    -   **Corrigido Gemini:** O prompt do Gemini não é mais restrito ao menu Cibi Sana para locais externos ().
+    -   **Adicionado Gap Analysis:** O sistema agora rejeita predições ambíguas, melhorando a honestidade ().
+    -   **Restaurada Lógica v1.2 Real:** Removida uma calibração de score incorreta que inflava artificialmente a confiança de todos os resultados ().
+-   **Recuperação de Corrupção de Arquivos:** Múltiplos arquivos (, ) foram restaurados diversas vezes após serem truncados por falta de espaço em disco.
+-   **Gestão do Dataset:**
+    -   Adicionadas ~453 novas fotos para 22 pratos.
+    -   Separadas as fotos de Carpaccio de Pera e Carpaccio de Laranja em pastas distintas.
+    -   Reconstruído o índice FAISS para refletir as mudanças.
+-   **Desbloqueio de Funcionalidades:** Os endpoints de edição de fotos no Admin foram desbloqueados a pedido do usuário.
+
+**Earlier issues found/mentioned but not fixed**
+-   Refatoração completa do painel Admin para usar  como fonte da verdade.
+-   Implementação do Stripe.
+
+**Known issue recurrence from previous fork**
+-   **Issue recurrence in previous fork**: Corrupção de Dados e Instabilidade do Reconhecimento.
+-   **Recurrence count**: 5+ (constante durante toda a sessão).
+-   **Status**: IN PROGRESS. A causa raiz (espaço em disco devido ao ) foi identificada, mas as tentativas de mitigação (git hook) não foram suficientes para impedir a recorrência. Este é o problema mais crítico da aplicação.
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **File Corruption & Disk Space:** O conceito mais crítico. O disco de 9.8GB enche repetidamente, principalmente devido ao diretório  que atinge >2.6GB. Isso causa  e trunca arquivos de código no meio de operações de escrita, levando a erros de sintaxe e funções ausentes.
+-   **Gap Analysis:** Uma nova técnica de rejeição implementada em . Se , o resultado é considerado incerto e rejeitado, mesmo que o score do top1 seja alto.
+-   **Cascading Logic (CLIP -> Gemini):** O fluxo para locais externos agora funciona como pretendido. O  não força , o  chama o CLIP, que se tiver score baixo ou gap pequeno, passa para o Gemini, que por sua vez não tem mais o prompt restritivo.
+
+**key DB schema**
+-   : 
+-   :  (será populado na próxima tarefa)
+
+**All files of reference**
+-   : Contém a lógica de cascata, prompt do Gemini e endpoints. Foi corrompido e restaurado várias vezes.
+-   : Contém a nova lógica de .
+-   : Restaurado para a versão v1.2 real, sem calibração de score.
+-   : Contém a correção do bug do GPS.
+
+**Areas that need refactoring**:
+-   A estratégia de versionamento do dataset de imagens via Git é insustentável e a causa raiz da instabilidade do ambiente. Uma solução de armazenamento de objetos (como S3 ou R2) ou, no mínimo, adicionar o diretório de datasets ao  seria uma refatoração arquitetural necessária.
+
+**key api endpoints**
+-   : Endpoint central, alvo de toda a depuração.
+-   : Usado pelo usuário para reconstruir o índice.
+-   : Desbloqueado.
+-   : Desbloqueado.
+
+**Critical Info for New Agent**
+-   **O ESPAÇO EM DISCO É O INIMIGO Nº 1:** O ambiente é extremamente instável. Antes de qualquer operação de escrita, verifique o espaço com Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n4    9.8G  9.8G  4.0K 100% /app. Se estiver cheio, execute  e . A corrupção de arquivos é frequente e a causa de muitos erros aparentemente aleatórios. Sempre verifique se os arquivos não foram truncados após uma falha.
+-   **FOCO ATUAL É FICHAS NUTRICIONAIS:** O usuário mudou a prioridade. A tarefa imediata é implementar a funcionalidade de fichas nutricionais para 5 pratos, de forma isolada e segura.
+-   **O USUÁRIO ESTÁ MUITO DESCONFIADO:** Devido à longa e frustrante sessão de depuração, o usuário tem pouca confiança em alterações de código. Proponha planos claros, explique os riscos e peça aprovação para cada passo.
+-   **A LÓGICA DE RECONHECIMENTO FOI ALTERADA:** Apesar do congelamento, foram feitas alterações críticas para corrigir bugs (gap analysis, GPS, prompt do Gemini). A eficácia dessas mudanças ainda precisa ser validada pelo usuário em um teste real no buffet.
+
+**Last 10 User Messages**
+1.  **Usuário:** Relata que a edição no admin não funciona (fotos protegidas).
+2.  **Agente:** Diagnostica endpoints travados e os desbloqueia.
+3.  **Usuário:** Pede para iniciar a implementação de fichas nutricionais para 5 pratos, com muito cuidado para não contaminar o resto do sistema.
+4.  **Agente:** Começa a investigar a solicitação.
+5.  **Usuário:** Pergunta por que os pratos de carpaccio já aparecem separados no Admin.
+6.  **Agente:** Explica que o Admin lê as pastas do disco (que já foram separadas), mas o índice de reconhecimento ainda está desatualizado.
+7.  **Usuário:** Pede para fazer o rebuild pelo Admin e a interface trava.
+8.  **Agente:** Diagnostica disco cheio novamente, corrige o script de rebuild e libera espaço.
+9.  **Usuário:** Confirma que o rebuild foi feito, mas o preview mostra um erro .
+10. **Agente:** Diagnostica que o arquivo  foi corrompido de novo, restaura a função e corrige mais 3 erros em cascata (, erro de , e GPS) causados pela mesma instabilidade.
+
+**Project Health Check:**
+-   **Broken**: O ambiente de desenvolvimento é fundamentalmente instável. O problema crônico de falta de espaço em disco causa corrupção de arquivos de forma recorrente, tornando qualquer progresso lento e arriscado. A lógica de reconhecimento, apesar de ter recebido vários patches, ainda não foi validada pelo usuário no mundo real.
+-   **Mocked**: N/A
+
+**3rd Party Integrations**
+-   Hugging Face (para o modelo )
+-   Google Gemini (usado como fallback para locais externos)
+-   MongoDB Atlas
+
+**Testing status**
+-   **Testing agent used after significant changes**: NO
+-   **Troubleshoot agent used after agent stuck in loop**: YES (implicitamente, a sessão inteira foi de troubleshooting)
+-   **Test files created**: []
+-   **Known regressions**: A instabilidade do ambiente é uma regressão constante. Cada fix corre o risco de ser corrompido pela falta de espaço em disco.
+
+**What agent forgot to execute**
+- O agente estava prestes a iniciar a nova tarefa do usuário (implementar fichas nutricionais) quando a sessão terminou. Esta é a tarefa pendente mais importante.</analysis>
