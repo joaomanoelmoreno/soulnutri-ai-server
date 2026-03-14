@@ -51,3 +51,7 @@ backups/
 
 # ML model files
 ml/dataset.zip
+-e 
+# Environment files
+*.env
+*.env.*
