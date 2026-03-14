@@ -1,0 +1,54 @@
+{
+  "short_name": "SoulNutri",
+  "name": "SoulNutri - Seu Agente de Nutrição Virtual",
+  "description": "Identifique pratos em tempo real e receba informações nutricionais personalizadas, alérgenos e dicas de saúde.",
+  "icons": [
+    {
+      "src": "/images/soulnutri-logo-cores.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/soulnutri-logo-cores.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#10b981",
+  "background_color": "#0a0a0a",
+  "categories": ["health", "food", "lifestyle"],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "/images/soulnutri-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tela inicial do SoulNutri"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Identificar Prato",
+      "short_name": "Identificar",
+      "description": "Abrir câmera para identificar prato",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/images/soulnutri-logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "iarc_rating_id": ""
+}

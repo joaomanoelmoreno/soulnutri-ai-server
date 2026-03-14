@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Testing
+/coverage
+
+# Production builds
+/build
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System files
+.DS_Store
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Archives
+**/*.zip
+**/*.tar.gz
+*.pack
+*.deb
+
+# Build caches
+.cache/
+
+# Dataset images - too large for git
+datasets/
+*.faiss
+*.index
+backups/
+
+# Environment files
+*.env
+*.env.*
+
+# ML model files
+ml/dataset.zip
+-e 
+# Environment files
+*.env
+*.env.*
