@@ -10,7 +10,7 @@ Aplicativo de agente de nutrição virtual que identifica pratos em tempo real a
 - **Backend**: FastAPI em /app/backend, porta 8001
 - **Database**: MongoDB Atlas (soulnutri)
 - **AI**: CLIP (openai/clip-vit-base-patch32) local + Gemini Flash (fallback)
-- **Nutrição**: Pipeline 3 fontes (TACO + USDA + Open Food Facts)
+- **Nutrição**: Pipeline 3 fontes (TACO + USDA FNDDS + Open Food Facts)
 
 ## O que foi implementado
 
@@ -21,27 +21,25 @@ Aplicativo de agente de nutrição virtual que identifica pratos em tempo real a
 - Gemini fix em server.py (não restringe menu para locais externos)
 - Dataset: 188 pratos, 1627 embeddings
 
-### Pipeline Nutricional 3 Fontes (v1.23 - NOVO)
-- **TACO**: Tabela Brasileira, 597 alimentos, local
-- **USDA FoodData Central**: API gov EUA, 300K+ alimentos, chave real
-- **Open Food Facts**: API global, 4M+ produtos, busca por categorias
-- Método: média simples das fontes que retornam dados
-- Transparência: valores individuais de cada fonte salvos
-- 5 pratos processados: Tortinha, Umami, Uva, Vinagrete Lula, Vol Au Vent
+### Pipeline Nutricional 3 Fontes v2 (v1.23)
+- **TACO**: Tabela Brasileira, 597 alimentos, busca por ingredientes
+- **USDA FoodData Central FNDDS**: Busca por NOME DO PRATO (pratos compostos), chave real
+- **Open Food Facts**: Busca por categoria (apenas itens simples)
+- Método: busca pelo nome do prato (como apps de nutrição fazem), não decomposição de ingredientes
+- 5 pratos processados com resultados validados
+
+### Git Corrigido
+- Repositório .git reinicializado (de 2.5GB corrompido para 39MB limpo)
+- datasets/ no .gitignore (previne crescimento do git)
 
 ### Backup v1.23
-- Salvo em /app/backups/v1.23/ (disco local)
-- Salvo no MongoDB coleção `code_backups` (nuvem, protegido)
-
-### Proteção do Disco
-- datasets/ adicionado ao .gitignore
-- Script de limpeza: git gc + rm build + cache
+- Salvo no MongoDB coleção `code_backups` (protegido na nuvem)
+- Disponível para push no GitHub (git limpo)
 
 ## Coleções MongoDB
-- `dishes`: 205 registros (pratos do cardápio)
-- `nutrition_sheets`: 5 registros (fichas nutricionais 3 fontes)
+- `dishes`: 205 registros (campo `nutricao` atualizado para 5 pratos)
+- `nutrition_sheets`: 5 registros (fichas nutricionais 3 fontes v2)
 - `code_backups`: 1 registro (backup v1.23)
-- `users`, `settings`, `processing_metrics`, `daily_logs`, `feedback`, `api_usage`
 
 ## Endpoints Chave
 - POST /api/ai/identify — identificação de pratos
@@ -54,10 +52,11 @@ Aplicativo de agente de nutrição virtual que identifica pratos em tempo real a
 
 ### P0 - Crítico
 - [ ] Expandir fichas nutricionais para todos os ~200 pratos
-- [ ] Validação da lógica de reconhecimento (teste real no buffet)
+- [ ] Melhorar mapeamento DISH_USDA_QUERY para mais pratos
+- [ ] Validação de reconhecimento no buffet (teste real)
 
 ### P1 - Importante
-- [ ] Refatorar server.py (4400 linhas — muito grande)
+- [ ] Refatorar server.py (4400 linhas)
 - [ ] Refatorar Admin para usar nutrition_sheets como fonte da verdade
 
 ### P2 - Futuro
@@ -66,15 +65,13 @@ Aplicativo de agente de nutrição virtual que identifica pratos em tempo real a
 - [ ] App mobile nativo
 
 ## Chaves e Credenciais
-- USDA_API_KEY: Em /app/backend/.env (1000 req/hora)
-- GOOGLE_API_KEY: Em /app/backend/.env (Gemini)
-- MONGO_URL: Em /app/backend/.env
+- USDA_API_KEY em /app/backend/.env (1000 req/hora)
+- GOOGLE_API_KEY em /app/backend/.env (Gemini)
+- MONGO_URL em /app/backend/.env
 
 ## Arquivos de Referência
-- /app/backend/server.py — API principal
+- /app/backend/services/nutrition_3sources.py — pipeline 3 fontes v2
+- /app/backend/server.py — API principal (com lookup_nutrition_sheet)
 - /app/backend/ai/index.py — busca CLIP v1.2
 - /app/backend/ai/policy.py — gap analysis
-- /app/backend/services/nutrition_3sources.py — pipeline 3 fontes
-- /app/backend/scripts/enrich_usda.py — enriquecimento USDA
-- /app/backend/scripts/generate_5_dishes.py — geração batch
 - /app/frontend/src/App.js — interface principal
