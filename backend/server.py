@@ -1519,12 +1519,36 @@ async def upload_photos(
         dish_name = dish_name.strip()
         dataset_dir = "/app/datasets/organized"
         
-        # Buscar pasta existente pelo nome
+        # Buscar pasta existente pelo nome (exato, parcial ou case-insensitive)
         target_folder = None
+        dish_lower = dish_name.lower().replace('_', ' ')
+        best_match = None
+        best_score = 0
+        
         for folder in os.listdir(dataset_dir):
+            folder_path = os.path.join(dataset_dir, folder)
+            if not os.path.isdir(folder_path):
+                continue
+            folder_lower = folder.lower()
+            
+            # Match exato
             if folder == dish_name:
-                target_folder = os.path.join(dataset_dir, folder)
+                target_folder = folder_path
                 break
+            # Match case-insensitive
+            if folder_lower == dish_lower:
+                target_folder = folder_path
+                break
+            # Match parcial - nome enviado contido no nome da pasta ou vice-versa
+            if dish_lower in folder_lower or folder_lower in dish_lower:
+                score = len(dish_lower) / max(len(folder_lower), 1)
+                if score > best_score:
+                    best_score = score
+                    best_match = folder_path
+        
+        if not target_folder and best_match:
+            target_folder = best_match
+            logger.info(f"[UPLOAD] Match parcial: '{dish_name}' -> '{os.path.basename(best_match)}'")
         
         if not target_folder:
             return JSONResponse(status_code=400, content={"ok": False, "error": f"Prato nao encontrado: {dish_name}"})
