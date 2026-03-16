@@ -1,0 +1,205 @@
+RELATÓRIO DE DIFICULDADES TÉCNICAS - PROJETO SOULNUTRI
+======================================================
+Data: 15/03/2026
+Projeto: SoulNutri - Agente de Nutrição Virtual
+URL Preview: https://foodid-staging.preview.emergentagent.com
+
+
+1. CORRUPÇÃO E INSTABILIDADE DO AMBIENTE (RECORRENTE - 5+ VEZES)
+================================================================
+
+1.1. Disco cheio por versionamento de imagens via Git
+- O repositório .git cresceu para 2.5GB porque o dataset de imagens 
+  (pasta /app/datasets/organized/) era versionado junto com o código.
+- Isso causava corrupção de arquivos em cascata: arquivos Python truncados,
+  JSONs corrompidos, servidor incapaz de iniciar.
+- O ambiente ficava instável sem aviso prévio, corrompendo trabalho em andamento.
+- Comandos que falhavam silenciosamente por falta de espaço:
+    git add .
+    git commit
+    pip install (escrevia pacotes corrompidos)
+
+1.2. Corrupção de arquivos dish_info.json
+- Scripts de batch (geração de fichas nutricionais, renomeação em massa) 
+  corrompiam arquivos JSON quando o disco estava cheio.
+- Resultado: pratos com dados incompletos, campos faltando, JSONs inválidos.
+- Problema agravado porque não havia backup automático antes de alterações em massa.
+
+1.3. Perda de trabalho entre sessões
+- Alterações feitas pelo usuário no Admin não persistiam entre forks/sessões.
+- O agente recriava arquivos do zero sem verificar o estado atual.
+- Versões anteriores do trabalho eram difíceis de recuperar (sem tags Git, 
+  sem versionamento no MongoDB).
+
+
+2. RECONHECIMENTO DE IMAGENS - PRECISÃO MUITO BAIXA
+====================================================
+
+2.1. CLIP com scores inconsistentes
+- O modelo CLIP (openai/clip-vit-base-patch32) retornava scores brutos 
+  entre 0.85-0.95, mas a calibração derrubava para 50%.
+- Código problemático em /app/backend/ai/index.py (linhas 240-250):
+    if gap < 0.02:
+        calibrated_score = min(top1_score * 0.6, 0.50)
+  Isso derrubava scores legítimos de 88.8% para 50%.
+
+2.2. Confusão entre pratos similares visualmente
+- Espaguete reconhecido como "arroz com frutas"
+- Bolinho de bacalhau reconhecido como "molho sugo"
+- Cocada confundida com camarão
+- Taxa de acerto real: ~30% em produção (meta: >90%)
+
+2.3. Falsos positivos com alta confiança
+- O sistema detectava comida em qualquer objeto (carro, chão, caixa)
+  e retornava score alto.
+- Threshold de 25% para "não é comida" era insuficiente.
+- Citação do usuário: "Não posso trabalhar com uma ferramenta que diz 
+  'é comida'. Como assim? O app é exatamente um identificador de comidas."
+
+2.4. Índice de embeddings desatualizado e inconsistente
+- Embeddings gerados com slugs antigos (prefixo "unknown_"). Ao renomear
+  pastas, o mapeamento em dish_index.json quebrou.
+- Tentativa de reconstruir o índice causava erro:
+    "list index out of range" - os índices não correspondem aos embeddings
+- 7 slugs "unknown" permaneciam no índice mesmo após limpeza.
+- Arquivo: /app/datasets/dish_index.json com mapeamentos incorretos.
+
+2.5. Gemini como fallback era caro e lento
+- Cada chamada ao Gemini custava créditos do usuário.
+- Tempo de resposta: 3-13 segundos (meta: <1 segundo).
+- Gemini não conhecia pratos específicos do buffet brasileiro.
+- Google Vision (tentado como alternativa) retornava apenas labels genéricos
+  como "Food", "Rice" - inútil para o caso de uso.
+
+
+3. BANCO DE DADOS E PERSISTÊNCIA
+=================================
+
+3.1. Dados não sincronizados entre disco e MongoDB
+- Fichas nutricionais foram salvas no MongoDB (collection nutrition_sheets)
+  mas NUNCA foram sincronizadas com os arquivos dish_info.json no disco.
+- O Admin lê do disco, então mostrava valores antigos ("~100 kcal") enquanto
+  o MongoDB tinha os valores calculados (ex: 171.4 kcal).
+- O agente anterior gastou 20+ minutos e 100+ créditos gerando fichas que
+  não apareciam em lugar nenhum visível para o usuário.
+
+3.2. Valores nutricionais irreais
+- O pipeline de nutrição dividia 100g igualmente entre TODOS os ingredientes,
+  incluindo sal e temperos, diluindo o valor calórico real.
+- Exemplos de valores absurdos gerados:
+    Strogonoff de carne: 40 kcal (real: ~150 kcal)
+    Vol Au Vent (massa folhada): 32 kcal (real: ~230 kcal)
+    Steak de Couve Flor: 12 kcal (real: ~55 kcal)
+    Arroz Branco: 32 kcal (real: ~130 kcal)
+- A estratégia inicial de decompor ingredientes era imprecisa. Apps comerciais
+  buscam pelo nome do prato composto (ex: "beef stroganoff"), não somam 
+  ingredientes individuais.
+
+3.3. Contaminação de dados em operações de massa
+- Scripts que atualizavam todos os pratos de uma vez corrompiam dados
+  de pratos que já estavam corretos.
+- Não havia mecanismo de "apenas estes pratos" - era tudo ou nada.
+- Resultado: 3 dias de trabalho manual para corrigir contaminações anteriores.
+
+3.4. ObjectId do MongoDB não serializável
+- Erro "body stream already read" no frontend ao tentar ler respostas da API
+  que continham ObjectId do MongoDB (não é JSON serializável).
+- O painel Admin ficava completamente vazio, bloqueando todo o trabalho.
+
+3.5. Correções do Admin não persistiam
+- Usuário fazia correções no painel /admin mas elas não apareciam no app.
+- Campos de alérgenos não eram incluídos no endpoint de salvamento.
+
+
+4. PROBLEMAS DE UPLOAD E GESTÃO DE FOTOS
+==========================================
+
+4.1. Upload exigia nome EXATO da pasta
+- O endpoint POST /api/upload/photos fazia match exato:
+    if folder == dish_name  (linha 1525 do server.py)
+- Se o usuário enviava "Rabanete com Laranja", não encontrava a pasta
+  "Salada de Rabanete com Laranja" e retornava 400 Bad Request.
+- Resultado: múltiplas tentativas de upload falhavam silenciosamente.
+
+4.2. Sistema redirecionava fotos para pratos errados
+- Ao criar "Gelatina de Limão", o sistema encontrava "Gelatina de Uva" 
+  como similar (100% match) e colocava as fotos lá.
+- Log: "[CREATE-LOCAL] Prato similar encontrado: Gelatina de Uva (100%)"
+- Fotos de um prato acabavam na pasta de outro.
+
+4.3. Pratos duplicados no dataset
+- 60 grupos de pratos duplicados (ex: "saladeovos" e "saladadeovos").
+- 97 pratos com prefixo "unknown_" em vez do nome correto.
+- Scripts de consolidação às vezes criavam mais problemas.
+
+
+5. PROBLEMAS DE CÓDIGO E ARQUITETURA
+======================================
+
+5.1. Arquivos monolíticos
+- server.py: 4400+ linhas em um único arquivo
+- App.js: 2800+ linhas em um único componente React  
+- Admin.js: 2700+ linhas
+- Difícil depurar, fácil introduzir bugs, impossível testar isoladamente.
+
+5.2. Stale closure no React
+- O estado atCibiSana não era enviado corretamente nas chamadas de API.
+- O useEffect capturava valor antigo da variável de estado.
+- Necessitou useRef (atCibiSanaRef) como workaround.
+
+5.3. SDK Google desatualizado
+- A biblioteca google-generativeai estava desatualizada.
+- Migração forçada para google-genai causou incompatibilidades.
+- Cota do Google esgotada sem aviso, billing precisou ser ativado manualmente.
+
+5.4. Câmera instável
+- A câmera travava frequentemente, exigindo fechar e reabrir o navegador.
+- Problema de gerenciamento de estado e cleanup de streams de mídia.
+
+
+6. PROBLEMAS DE PROCESSO E CUSTOS
+===================================
+
+6.1. Créditos gastos em correções que não funcionavam
+- Múltiplas tentativas de correção consumiam créditos sem resolver o problema.
+- A geração de 5 fichas nutricionais levou 20+ minutos e 100+ créditos
+  porque usava a chave DEMO do USDA (rate limited: 1 request/segundo).
+- Soluções implementadas sem pesquisa prévia adequada.
+
+6.2. Agentes anteriores não verificavam estado atual
+- Novos agentes não liam os relatórios de status existentes.
+- Retrabalho constante: refazendo correções que já tinham sido aplicadas.
+- Cada fork/sessão perdia contexto do trabalho anterior.
+
+6.3. Tempos excessivos de processamento
+- Rebuild do índice CLIP: >15 minutos (nunca concluído com sucesso em sessão).
+- Geração de fichas nutricionais com chave DEMO: 20+ minutos para 5 pratos.
+- Timeouts de comandos (120s) interrompiam processos longos.
+
+
+7. DADOS DE PRATOS COM ERROS
+==============================
+
+7.1. Nomes sem formatação
+- "Cestinhadecamarao" em vez de "Cestinha de Camarão"
+- Nomes em minúsculo, sem espaços, sem acentos
+
+7.2. Categorias incorretas
+- Salada com queijo marcada como "vegano"
+- Pratos com camarão, peixe ou carne classificados incorretamente
+
+7.3. Alérgenos não detectados
+- Prato com camarão, queijo, leite, peixe e trigo mostrava 
+  "Nenhum alérgeno detectado"
+- Flags de alérgenos não calculadas corretamente
+
+7.4. Calorias inconsistentes
+- Cestinha de camarão (com massa folhada, creme de leite): mostrava 99 kcal
+- Valores genéricos ("~100 kcal") para pratos complexos
+- Sem fonte ou referência dos valores apresentados
+
+
+======================================================
+FIM DO RELATÓRIO
+Preparado para apoio de engenharia ao projeto SoulNutri
+======================================================
