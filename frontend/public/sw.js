@@ -1,5 +1,5 @@
-// SoulNutri Service Worker - v2 (força atualização)
-const CACHE_NAME = 'soulnutri-v2';
+// SoulNutri Service Worker - v3 (fix postMessage clone error)
+const CACHE_NAME = 'soulnutri-v3';
 const urlsToCache = [
   '/manifest.json',
   '/images/soulnutri-logo.png',
@@ -40,8 +40,12 @@ self.addEventListener('activate', (event) => {
 
 // Fetch - Network first para HTML/JS, cache only para imagens
 self.addEventListener('fetch', (event) => {
-  // Ignorar requisições de API (sempre online)
-  if (event.request.url.includes('/api/')) {
+  // Ignorar requisições de API, blob URLs e media streams
+  if (event.request.url.includes('/api/') ||
+      event.request.url.startsWith('blob:') ||
+      event.request.url.startsWith('data:') ||
+      event.request.url.includes('mediastream') ||
+      event.request.method !== 'GET') {
     return;
   }
   
@@ -62,10 +66,14 @@ self.addEventListener('fetch', (event) => {
     fetch(event.request)
       .then((response) => {
         if (response.status === 200) {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
+          try {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone).catch(() => {});
+            });
+          } catch (e) {
+            // Request nao pode ser clonado (blob, media, etc) - ignorar
+          }
         }
         return response;
       })
