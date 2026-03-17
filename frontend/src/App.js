@@ -291,7 +291,7 @@ function App() {
   // Endereço: Av Independência 1222, Centro, Vinhedo SP, 13280-162
   // ══════════════════════════════════════════════════════════════════════════
   const CIBI_SANA_COORDS = { lat: -23.0373642, lng: -46.9767934 };
-  const CIBI_SANA_RADIUS_METERS = 100; // Raio de 100 metros
+  const CIBI_SANA_RADIUS_METERS = 200; // Raio de 200 metros (GPS pode ter imprecisão)
   
   // Ref para garantir valor atual (evita stale closure)
   const atCibiSanaRef = React.useRef(false);
@@ -429,7 +429,7 @@ function App() {
             console.log('[GPS] ❌ Localização negada ou erro:', err.code, err.message);
             resolve(); // Não rejeita, apenas marca como negado
           },
-          { enableHighAccuracy: true, timeout: 30000, maximumAge: 60000 }
+          { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
         );
       });
     } catch (e) {
@@ -530,10 +530,10 @@ function App() {
         if (resolved) return;
         resolved = true;
         clearTimeout(safetyTimeout);
-        const { latitude, longitude } = position.coords;
+        const { latitude, longitude, accuracy } = position.coords;
         const isBrazil = latitude >= -34 && latitude <= 5 && 
                         longitude >= -74 && longitude <= -34;
-        console.log(`[Geo] Posição obtida: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
+        console.log(`[Geo] Posição obtida: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (precisão: ${accuracy?.toFixed(0)}m)`);
         setUserLocation({ lat: latitude, lng: longitude, country: isBrazil ? 'BR' : 'OTHER' });
         setLocationPermission('granted');
       },
@@ -542,7 +542,7 @@ function App() {
         console.log('[Geo] Erro:', error.code, error.message);
         setFallback();
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
 
     // Watch contínuo para atualizar quando se move

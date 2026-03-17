@@ -5,16 +5,13 @@ import "@/index.css";
 import App from "@/App";
 import Admin from "@/Admin";
 
-// Registrar Service Worker para PWA
+// Desregistrar Service Worker (causava erro postMessage)
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('SoulNutri SW registrado:', registration.scope);
-      })
-      .catch((err) => {
-        console.log('SoulNutri SW erro:', err);
-      });
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    registrations.forEach(registration => {
+      registration.unregister();
+      console.log('SoulNutri: SW removido');
+    });
   });
 }
 
