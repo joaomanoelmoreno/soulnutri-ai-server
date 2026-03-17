@@ -291,7 +291,7 @@ function App() {
   // Endereço: Av Independência 1222, Centro, Vinhedo SP, 13280-162
   // ══════════════════════════════════════════════════════════════════════════
   const CIBI_SANA_COORDS = { lat: -23.0373642, lng: -46.9767934 };
-  const CIBI_SANA_RADIUS_METERS = 200; // Raio de 200 metros (GPS pode ter imprecisão)
+  const CIBI_SANA_RADIUS_METERS = 100; // Raio de 100 metros
   
   // Ref para garantir valor atual (evita stale closure)
   const atCibiSanaRef = React.useRef(false);
@@ -988,22 +988,8 @@ function App() {
       if (e.name === 'AbortError') {
         setError('Tempo limite excedido. Tente novamente.');
       } else if (e.message && e.message.includes('postMessage')) {
-        // Erro do debug-monitor do Emergent (preview iframe) - retry sem signal
-        console.warn('[IDENTIFY] Erro postMessage (preview) - retentando...');
-        try {
-          const retryFd = new FormData();
-          retryFd.append("file", blob, "photo.jpg");
-          retryFd.append("country", userLocation?.country || 'BR');
-          if (atCibiSanaRef.current) retryFd.append("restaurant", "cibi_sana");
-          const retryRes = await fetch(`${API}/ai/identify`, { method: "POST", body: retryFd });
-          const retryData = await retryRes.json();
-          if (retryData.ok && mountedRef.current) {
-            setResult(retryData);
-            return;
-          }
-        } catch (retryErr) {
-          setError('Erro de conexão. Tente novamente.');
-        }
+        // Erro do preview iframe - ignorar silenciosamente
+        console.warn('[IDENTIFY] Erro postMessage ignorado (preview iframe)');
       } else {
         setError(e.message || 'Erro de conexão');
       }
