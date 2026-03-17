@@ -987,6 +987,23 @@ function App() {
       
       if (e.name === 'AbortError') {
         setError('Tempo limite excedido. Tente novamente.');
+      } else if (e.message && e.message.includes('postMessage')) {
+        // Erro do debug-monitor do Emergent (preview iframe) - retry sem signal
+        console.warn('[IDENTIFY] Erro postMessage (preview) - retentando...');
+        try {
+          const retryFd = new FormData();
+          retryFd.append("file", blob, "photo.jpg");
+          retryFd.append("country", userLocation?.country || 'BR');
+          if (atCibiSanaRef.current) retryFd.append("restaurant", "cibi_sana");
+          const retryRes = await fetch(`${API}/ai/identify`, { method: "POST", body: retryFd });
+          const retryData = await retryRes.json();
+          if (retryData.ok && mountedRef.current) {
+            setResult(retryData);
+            return;
+          }
+        } catch (retryErr) {
+          setError('Erro de conexão. Tente novamente.');
+        }
       } else {
         setError(e.message || 'Erro de conexão');
       }
