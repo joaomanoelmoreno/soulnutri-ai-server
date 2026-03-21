@@ -75,19 +75,7 @@ function WelcomePopup({ onClose }) {
   
   const handleSelectLanguage = (langCode) => {
     changeLanguage(langCode);
-    // Solicitar permissão de localização após selecionar idioma
-    requestLocationPermission();
     onClose();
-  };
-  
-  const requestLocationPermission = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        () => console.log('[Geo] Permissão concedida'),
-        () => console.log('[Geo] Permissão negada'),
-        { enableHighAccuracy: false, timeout: 10000 }
-      );
-    }
   };
   
   return (
@@ -133,7 +121,7 @@ function WelcomePopup({ onClose }) {
           color: '#ccc',
           textAlign: 'center'
         }}>
-          📍 Permitir localização melhora a precisão do reconhecimento conforme a gastronomia local
+          📷 Aponte a câmera para o prato e o SoulNutri identifica automaticamente
         </div>
         
         <button className="welcome-start-btn" onClick={onClose} data-testid="welcome-start">
@@ -282,64 +270,6 @@ function App() {
   const [radarInfo, setRadarInfo] = useState(null); // {has_alert, message, facts}
   const [showRadarDetails, setShowRadarDetails] = useState(false); // Modal com fatos detalhados
   
-  // Geolocalização para regionalização (Brasil vs Internacional)
-  const [userLocation, setUserLocation] = useState(null); // {lat, lng, country: 'BR' | 'OTHER'}
-  const [locationPermission, setLocationPermission] = useState('pending'); // 'pending', 'granted', 'denied'
-  
-  // ══════════════════════════════════════════════════════════════════════════
-  // CIBI SANA - Detecção automática por GPS
-  // Endereço: Av Independência 1222, Centro, Vinhedo SP, 13280-162
-  // ══════════════════════════════════════════════════════════════════════════
-  const CIBI_SANA_COORDS = { lat: -23.0373642, lng: -46.9767934 };
-  const CIBI_SANA_RADIUS_METERS = 100; // Raio de 100 metros
-  
-  // Ref para garantir valor atual (evita stale closure)
-  const atCibiSanaRef = React.useRef(false);
-  
-  // Função para calcular distância entre duas coordenadas (fórmula de Haversine)
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371000; // Raio da Terra em metros
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c; // Distância em metros
-  };
-  
-  // Verifica se está no Cibi Sana baseado nas coordenadas
-  const isAtCibiSana = () => {
-    if (!userLocation?.lat || !userLocation?.lng) return false;
-    const distance = calculateDistance(
-      userLocation.lat, userLocation.lng,
-      CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng
-    );
-    return distance <= CIBI_SANA_RADIUS_METERS;
-  };
-  
-  // Estado dedicado para Cibi Sana (atualizado quando localização muda)
-  const [atCibiSana, setAtCibiSana] = useState(false);
-  
-  // Atualizar estado de Cibi Sana quando localização mudar
-  React.useEffect(() => {
-    console.log('[GPS useEffect] userLocation mudou:', userLocation);
-    if (userLocation?.lat && userLocation?.lng) {
-      const distance = calculateDistance(
-        userLocation.lat, userLocation.lng,
-        CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng
-      );
-      const isInside = distance <= CIBI_SANA_RADIUS_METERS;
-      console.log(`[GPS useEffect] Distância: ${distance.toFixed(0)}m, Dentro: ${isInside}`);
-      setAtCibiSana(isInside);
-      atCibiSanaRef.current = isInside; // Atualiza ref também
-    } else {
-      console.log('[GPS useEffect] userLocation inválido, setando atCibiSana=false');
-      setAtCibiSana(false);
-      atCibiSanaRef.current = false;
-    }
-  }, [userLocation, CIBI_SANA_COORDS.lat, CIBI_SANA_COORDS.lng, CIBI_SANA_RADIUS_METERS]);
-  
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
@@ -385,56 +315,6 @@ function App() {
       setPermissionsStatus(prev => ({ ...prev, camera: 'granted' }));
     } catch (e) {
       setPermissionsStatus(prev => ({ ...prev, camera: 'denied' }));
-    }
-    
-    // 2. Solicitar permissão de localização
-    try {
-      await new Promise((resolve, reject) => {
-        console.log('[GPS] Solicitando localização...');
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            locationGranted = true;
-            setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
-            const userLat = pos.coords.latitude;
-            const userLng = pos.coords.longitude;
-            console.log(`[GPS] ✅ Localização obtida: ${userLat.toFixed(6)}, ${userLng.toFixed(6)}`);
-            setUserLocation({
-              lat: userLat,
-              lng: userLng,
-              country: 'BR'
-            });
-            // Log para debug - mostrar coordenadas e distância do Cibi Sana
-            const cibiLat = -23.0373642;
-            const cibiLng = -46.9767934;
-            const R = 6371000;
-            const dLat = (cibiLat - userLat) * Math.PI / 180;
-            const dLon = (cibiLng - userLng) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(userLat * Math.PI / 180) * Math.cos(cibiLat * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            const distance = R * c;
-            console.log(`[GPS] Cibi Sana: ${cibiLat}, ${cibiLng}`);
-            console.log(`[GPS] Distância do Cibi Sana: ${distance.toFixed(0)} metros`);
-            if (distance <= 100) {
-              console.log('[GPS] ✅ Você está no Cibi Sana! Usando CLIP (custo zero)');
-            } else {
-              console.log('[GPS] Você está fora do Cibi Sana. Gemini pode ser usado.');
-            }
-            resolve();
-          },
-          (err) => {
-            setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
-            setUserLocation({ lat: null, lng: null, country: 'BR' });
-            console.log('[GPS] ❌ Localização negada ou erro:', err.code, err.message);
-            resolve(); // Não rejeita, apenas marca como negado
-          },
-          { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
-        );
-      });
-    } catch (e) {
-      console.log('[GPS] ❌ Exceção ao obter localização:', e);
-      setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
     }
     
     // Marcar permissões como solicitadas
@@ -498,69 +378,6 @@ function App() {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
-    };
-  }, []);
-
-  // Detectar localização do usuário para regionalização (Brasil vs Internacional)
-  // Se GPS falhar ou não resolver em 8s, assume Brasil como padrão
-  useEffect(() => {
-    let resolved = false;
-    let watchId = null;
-
-    const setFallback = () => {
-      if (!resolved) {
-        resolved = true;
-        console.log('[Geo] Timeout/falha - usando Brasil como padrão');
-        setLocationPermission('unavailable');
-        setUserLocation({ lat: null, lng: null, country: 'BR' });
-      }
-    };
-
-    // Timeout de segurança: não ficar em "Localizando..." para sempre
-    const safetyTimeout = setTimeout(setFallback, 8000);
-
-    if (!navigator.geolocation) {
-      clearTimeout(safetyTimeout);
-      setFallback();
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        if (resolved) return;
-        resolved = true;
-        clearTimeout(safetyTimeout);
-        const { latitude, longitude, accuracy } = position.coords;
-        const isBrazil = latitude >= -34 && latitude <= 5 && 
-                        longitude >= -74 && longitude <= -34;
-        console.log(`[Geo] Posição obtida: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (precisão: ${accuracy?.toFixed(0)}m)`);
-        setUserLocation({ lat: latitude, lng: longitude, country: isBrazil ? 'BR' : 'OTHER' });
-        setLocationPermission('granted');
-      },
-      (error) => {
-        clearTimeout(safetyTimeout);
-        console.log('[Geo] Erro:', error.code, error.message);
-        setFallback();
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-    );
-
-    // Watch contínuo para atualizar quando se move
-    watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const isBrazil = latitude >= -34 && latitude <= 5 && 
-                        longitude >= -74 && longitude <= -34;
-        setUserLocation({ lat: latitude, lng: longitude, country: isBrazil ? 'BR' : 'OTHER' });
-        setLocationPermission('granted');
-      },
-      () => {},
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 }
-    );
-
-    return () => {
-      clearTimeout(safetyTimeout);
-      if (watchId) navigator.geolocation.clearWatch(watchId);
     };
   }, []);
 
@@ -890,23 +707,7 @@ function App() {
     
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
-    fd.append("country", userLocation?.country || 'BR');
-    
-    // Debug: Log do estado da localização
-    console.log('[GPS DEBUG] userLocation:', userLocation);
-    console.log('[GPS DEBUG] atCibiSana (state):', atCibiSana);
-    console.log('[GPS DEBUG] atCibiSanaRef.current:', atCibiSanaRef.current);
-    
-    // Usar REF para garantir valor atual (evita stale closure)
-    const isAtCibi = atCibiSanaRef.current;
-    
-    // Enviar restaurant=cibi_sana APENAS quando GPS confirma estar no restaurante
-    if (isAtCibi) {
-      fd.append("restaurant", "cibi_sana");
-      console.log('[GPS] Detectado no Cibi Sana via GPS - usando CLIP local');
-    } else {
-      console.log('[GPS] Fora do Cibi Sana - usando Gemini');
-    }
+    fd.append("country", "BR");
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
@@ -1226,11 +1027,7 @@ function App() {
         try {
           const fd = new FormData();
           fd.append("file", blob, "scan.jpg");
-          
-          // Detecção automática: Se está no Cibi Sana, usa CLIP
-          if (atCibiSanaRef.current) {
-            fd.append("restaurant", "cibi_sana");
-          }
+          fd.append("country", "BR");
           
           const res = await fetch(`${API}/ai/identify`, {
             method: "POST",
@@ -1619,12 +1416,6 @@ function App() {
       return;
     }
     
-    // BLOQUEAR no Cibi Sana para não gastar créditos
-    if (atCibiSanaRef.current) {
-      alert('🚫 No Cibi Sana, use apenas o reconhecimento local (CLIP).\n\nSe o prato não foi reconhecido corretamente, corrija pelo Admin.');
-      return;
-    }
-    
     // Confirmar com usuário
     const confirmar = window.confirm(
       '🤖 Usar IA para melhorar identificação?\n\n' +
@@ -1811,7 +1602,7 @@ function App() {
             Bem-vindo ao SoulNutri
           </h2>
           <p style={{ color: '#aaa', textAlign: 'center', marginBottom: '32px', maxWidth: '300px' }}>
-            Para identificar seus pratos, precisamos de acesso à câmera e localização.
+            Para identificar seus pratos, precisamos de acesso à câmera.
           </p>
           
           <div style={{ 
@@ -1828,15 +1619,6 @@ function App() {
                 <div style={{ fontSize: '13px', color: '#aaa' }}>Para fotografar os pratos</div>
               </div>
               {permissionsStatus.camera === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
-            </div>
-            
-            <div style={{ display: 'flex', alignItems: 'center', color: '#fff' }}>
-              <span style={{ fontSize: '28px', marginRight: '16px' }}>📍</span>
-              <div>
-                <div style={{ fontWeight: 'bold' }}>Localização</div>
-                <div style={{ fontSize: '13px', color: '#aaa' }}>Para personalizar o serviço</div>
-              </div>
-              {permissionsStatus.location === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
             </div>
           </div>
           
@@ -1897,27 +1679,6 @@ function App() {
           </button>
         </div>
       </header>
-
-      {/* Indicador de localização Cibi Sana */}
-      <div style={{
-        position: 'fixed',
-        bottom: '80px',
-        left: '10px',
-        background: userLocation?.lat 
-          ? (atCibiSana ? 'rgba(34, 197, 94, 0.9)' : 'rgba(255, 150, 0, 0.9)')
-          : (locationPermission === 'pending' ? 'rgba(100, 100, 100, 0.9)' : 'rgba(34, 197, 94, 0.7)'),
-        color: '#fff',
-        padding: '4px 10px',
-        borderRadius: '12px',
-        fontSize: '11px',
-        fontWeight: 'bold',
-        zIndex: 9999,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
-      }}>
-        {userLocation?.lat 
-          ? (atCibiSana ? '📍 Cibi Sana' : '🌍 Externo')
-          : (locationPermission === 'pending' ? '📡 Localizando...' : '📍 Cibi Sana (padrão)')}
-      </div>
 
       {/* Toast de confirmação - Refeição registrada */}
       {mealRegistered && (

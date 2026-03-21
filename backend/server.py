@@ -565,7 +565,7 @@ async def identify_image(
         index = get_index()
         clip_score = 0.0
         clip_decision = None
-        is_known_restaurant = restaurant and restaurant.lower() == "cibi_sana"
+        is_known_restaurant = False  # Fluxo unificado: CLIP + Gemini para todos
         
         if index.is_ready():
             results = index.search(content, top_k=5)
@@ -578,22 +578,10 @@ async def identify_image(
             if clip_score >= 0.90 and clip_decision.get('identified'):
                 decision = clip_decision
                 decision['source'] = 'local_index'
-                logger.info(f"[CASCATA] ✅ CLIP confiante ({clip_score:.0%}) - aceito")
-            
-            # CIBI SANA: Usar CLIP APENAS (Gemini TRAVADO)
-            elif is_known_restaurant:
-                if clip_decision.get('identified') is False:
-                    # CLIP rejeitou → respeitar rejeição
-                    decision = clip_decision
-                    decision['source'] = 'local_index'
-                    logger.info(f"[CIBI SANA] CLIP rejeitou ({clip_score:.0%}) - prato nao reconhecido")
-                else:
-                    decision = clip_decision
-                    decision['source'] = 'local_index'
-                    logger.info(f"[CIBI SANA] CLIP apenas ({clip_score:.0%}) - Gemini TRAVADO")
+                logger.info(f"[CASCATA] CLIP confiante ({clip_score:.0%}) - aceito")
         
         # ══════════════════════════════════════════════════════════════════════
-        # NÍVEL 2: Se CLIP nao confiante E NÃO e Cibi Sana, usar Gemini
+        # NÍVEL 2: Se CLIP nao confiante, usar Gemini como fallback
         # ══════════════════════════════════════════════════════════════════════
         if decision is None:
             logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
