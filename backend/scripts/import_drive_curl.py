@@ -70,6 +70,14 @@ def download_file(file_id, output_path):
         ["curl", "-L", "-s", "-o", str(output_path), url, "--max-time", "30"],
         capture_output=True, timeout=60
     )
+    if output_path.exists() and output_path.stat().st_size > 1000:
+        return True
+    # Retry once after delay
+    time.sleep(2)
+    result = subprocess.run(
+        ["curl", "-L", "-s", "-o", str(output_path), url, "--max-time", "30"],
+        capture_output=True, timeout=60
+    )
     return output_path.exists() and output_path.stat().st_size > 1000
 
 def convert_heic_to_jpeg(heic_path, jpeg_path):
@@ -95,7 +103,7 @@ try:
 except:
     pass
 """],
-        capture_output=True, text=True, timeout=120
+        capture_output=True, text=True, timeout=300
     )
     
     output = result.stdout + result.stderr
@@ -188,6 +196,8 @@ def process_drive_folder(folder_url):
             if not download_file(fid, tmp_file):
                 stats["failed"] += 1
                 continue
+            
+            time.sleep(0.5)  # Rate limit
             
             # Convert HEIC to JPEG
             if ext == ".heic":
