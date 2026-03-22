@@ -452,22 +452,16 @@ async def add_to_index(
         dish_slug = dish_slug.replace(" ", "_").replace("-", "_")
         dish_slug = ''.join(c for c in dish_slug if c.isalnum() or c == '_')
         
-        # Criar diretorio se nao existe
-        dish_dir = Path(f"/app/datasets/organized/{dish_slug}")
-        dish_dir.mkdir(parents=True, exist_ok=True)
-        
         # Gerar nome unico para o arquivo
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         hash_suffix = hashlib.md5(content).hexdigest()[:8]
         filename = f"{dish_slug}_{timestamp}_{hash_suffix}.jpg"
         
-        # Salvar imagem
-        filepath = dish_dir / filename
-        with open(filepath, 'wb') as f:
-            f.write(content)
+        # Salvar imagem no S3 + MongoDB + local
+        from services.image_service import save_dish_image, get_dish_image_count
+        save_dish_image(dish_slug, filename, content)
         
-        # Contar quantas imagens esse prato ja tem
-        existing_images = len(list(dish_dir.glob("*.jpg")))
+        existing_images = get_dish_image_count(dish_slug)
         
         logger.info(f"[ADD-INDEX] Foto adicionada: {dish_name} ({existing_images} fotos)")
         
@@ -1285,15 +1279,17 @@ async def revisar_pratos_em_lote(request: Request):
         # Processar cada prato
         for slug in slugs[:max_pratos]:
             try:
-                # Carregar info do prato
-                info_file = Path(f"/app/datasets/organized/{slug}/dish_info.json")
-                if not info_file.exists():
+                # Carregar info do prato do MongoDB
+                dish_info = await db.dishes.find_one({"slug": slug}, {"_id": 0})
+                if not dish_info:
+                    # Tentar com slug normalizado
+                    norm_slug = slug.lower().replace(' ', '_')
+                    dish_info = await db.dishes.find_one({"slug": norm_slug}, {"_id": 0})
+                
+                if not dish_info:
                     resultados.append({"slug": slug, "status": "erro", "msg": "Prato nao encontrado"})
                     falhas += 1
                     continue
-                
-                with open(info_file, 'r', encoding='utf-8') as f:
-                    dish_info = json.load(f)
                 
                 nome = dish_info.get('nome', slug)
                 ingredientes = dish_info.get('ingredientes', [])
@@ -1361,9 +1357,13 @@ Responda APENAS JSON valido."""
                 dish_info['contem_frutos_mar'] = alergenos.get('frutos_do_mar', False)
                 dish_info['contem_castanhas'] = alergenos.get('oleaginosas', False)
                 
-                # Salvar
-                with open(info_file, 'w', encoding='utf-8') as f:
-                    json.dump(dish_info, f, ensure_ascii=False, indent=2)
+                # Salvar no MongoDB
+                dish_info['slug'] = slug
+                await db.dishes.update_one(
+                    {"slug": slug},
+                    {"$set": dish_info},
+                    upsert=True
+                )
                 
                 resultados.append({
                     "slug": slug, 
@@ -1461,23 +1461,18 @@ async def learn_new_dish(
                 content={"ok": False, "error": "Nome do prato invalido"}
             )
         
-        # Criar diretorio se nao existir
-        dish_dir = f"/app/datasets/organized/{slug}"
-        os.makedirs(dish_dir, exist_ok=True)
+        content = await file.read()
         
-        # Contar imagens existentes
-        existing = len([f for f in os.listdir(dish_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
-        
-        # Salvar nova imagem
+        # Gerar nome do arquivo
+        from services.image_service import save_dish_image, get_dish_image_count
+        existing = get_dish_image_count(slug)
         ext = file.filename.split('.')[-1] if '.' in file.filename else 'jpg'
         new_filename = f"{slug}{existing + 1:02d}.{ext}"
-        file_path = os.path.join(dish_dir, new_filename)
         
-        content = await file.read()
-        with open(file_path, 'wb') as f:
-            f.write(content)
+        # Salvar no S3 + MongoDB + local
+        save_dish_image(slug, new_filename, content)
         
-        logger.info(f"Nova imagem salva: {file_path}")
+        logger.info(f"Nova imagem salva: {slug}/{new_filename}")
         
         return {
             "ok": True,
@@ -1504,42 +1499,17 @@ async def upload_photos(
     """Upload de fotos para um prato existente. Apenas ADICIONA, nunca modifica ou deleta."""
     import re
     try:
+        from services.image_service import save_dish_image, find_dish_slug_match, get_dish_image_count
+        
         dish_name = dish_name.strip()
-        dataset_dir = "/app/datasets/organized"
         
-        # Buscar pasta existente pelo nome (exato, parcial ou case-insensitive)
-        target_folder = None
-        dish_lower = dish_name.lower().replace('_', ' ')
-        best_match = None
-        best_score = 0
+        # Buscar prato existente no MongoDB
+        target_slug = find_dish_slug_match(dish_name)
         
-        for folder in os.listdir(dataset_dir):
-            folder_path = os.path.join(dataset_dir, folder)
-            if not os.path.isdir(folder_path):
-                continue
-            folder_lower = folder.lower()
-            
-            # Match exato
-            if folder == dish_name:
-                target_folder = folder_path
-                break
-            # Match case-insensitive
-            if folder_lower == dish_lower:
-                target_folder = folder_path
-                break
-            # Match parcial - nome enviado contido no nome da pasta ou vice-versa
-            if dish_lower in folder_lower or folder_lower in dish_lower:
-                score = len(dish_lower) / max(len(folder_lower), 1)
-                if score > best_score:
-                    best_score = score
-                    best_match = folder_path
-        
-        if not target_folder and best_match:
-            target_folder = best_match
-            logger.info(f"[UPLOAD] Match parcial: '{dish_name}' -> '{os.path.basename(best_match)}'")
-        
-        if not target_folder:
+        if not target_slug:
             return JSONResponse(status_code=400, content={"ok": False, "error": f"Prato nao encontrado: {dish_name}"})
+        
+        logger.info(f"[UPLOAD] Match: '{dish_name}' -> '{target_slug}'")
         
         saved = 0
         errors = []
@@ -1556,22 +1526,16 @@ async def upload_photos(
                     errors.append(f"{file.filename}: arquivo muito pequeno")
                     continue
                 
-                # Salvar com nome original para rastreabilidade
+                # Gerar nome seguro
                 safe_name = re.sub(r'[^\w\.\-]', '_', file.filename)
-                file_path = os.path.join(target_folder, safe_name)
                 
-                # Nao sobrescrever se ja existe
-                if os.path.exists(file_path):
-                    base, ext_part = os.path.splitext(safe_name)
-                    file_path = os.path.join(target_folder, f"{base}_new{ext_part}")
-                
-                with open(file_path, 'wb') as f:
-                    f.write(content)
+                # Salvar no S3 + MongoDB + local
+                save_dish_image(target_slug, safe_name, content)
                 saved += 1
             except Exception as e:
                 errors.append(f"{file.filename}: {str(e)}")
         
-        total = len([f for f in os.listdir(target_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))])
+        total = get_dish_image_count(target_slug)
         logger.info(f"[UPLOAD] {dish_name}: +{saved} fotos (total: {total})")
         
         return {"ok": True, "dish": dish_name, "saved": saved, "total_images": total, "errors": errors}
@@ -1588,25 +1552,9 @@ async def upload_zip(file: UploadFile = File(...)):
 
 @api_router.get("/upload/status")
 async def upload_status():
-    """Retorna estatisticas do dataset atual."""
-    organized_dir = "/app/datasets/organized"
-    stats = {}
-    total_images = 0
-    
-    if os.path.exists(organized_dir):
-        for dish_dir in sorted(os.listdir(organized_dir)):
-            full_path = os.path.join(organized_dir, dish_dir)
-            if os.path.isdir(full_path):
-                count = len([f for f in os.listdir(full_path) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
-                stats[dish_dir] = count
-                total_images += count
-    
-    return {
-        "ok": True,
-        "total_dishes": len(stats),
-        "total_images": total_images,
-        "dishes": stats
-    }
+    """Retorna estatisticas do dataset atual usando MongoDB dish_storage."""
+    from services.image_service import get_all_dishes_stats
+    return get_all_dishes_stats()
 
 
 @api_router.get("/ai/unknown")
@@ -1846,50 +1794,34 @@ async def create_new_dish(
         slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
         slug = slug.replace(' ', '_')
         
-        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
-        dataset_dir = Path("/app/datasets/organized")
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO (MongoDB)
         existing_match = None
         
-        for dish_dir in dataset_dir.iterdir():
-            if not dish_dir.is_dir():
-                continue
-            info_path = dish_dir / "dish_info.json"
-            if info_path.exists():
-                try:
-                    import json
-                    with open(info_path, 'r', encoding='utf-8') as f:
-                        info = json.load(f)
-                        existing_name = info.get('nome', '').lower()
-                        # Verificar similaridade > 85%
-                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
-                        if similarity > 0.85 or dish_dir.name == slug:
-                            existing_match = dish_dir.name
-                            logger.info(f"[CREATE] Prato similar encontrado: {existing_match} ({similarity:.0%})")
-                            break
-                except:
-                    pass
+        async for dish_doc in db.dishes.find({}, {"_id": 0, "slug": 1, "nome": 1}):
+            existing_name = dish_doc.get('nome', '').lower()
+            existing_slug = dish_doc.get('slug', '')
+            similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+            if similarity > 0.85 or existing_slug == slug:
+                existing_match = existing_slug
+                logger.info(f"[CREATE] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                break
         
         # Se encontrou match, adiciona foto ao prato existente E atualiza informacoes com IA
         if existing_match:
-            target_dir = dataset_dir / existing_match
+            from services.image_service import save_dish_image
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             unique_id = str(uuid.uuid4())[:8]
             filename = f"{existing_match}_{timestamp}_{unique_id}.jpg"
-            file_path = target_dir / filename
             
-            with open(file_path, "wb") as f:
-                f.write(content)
+            # Salvar no S3 + MongoDB + local
+            save_dish_image(existing_match, filename, content)
             
             # CHAMAR IA para atualizar informacoes do prato
             try:
                 from services.generic_ai import fix_dish_data_with_ai
                 
-                # Carregar info atual
-                info_path = target_dir / "dish_info.json"
-                current_info = {}
-                if info_path.exists():
-                    with open(info_path, 'r', encoding='utf-8') as f:
-                        current_info = json.load(f)
+                # Carregar info atual do MongoDB
+                current_info = await db.dishes.find_one({"slug": existing_match}, {"_id": 0}) or {}
                 
                 # Atualizar nome se o usuario digitou diferente (correcao)
                 if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
@@ -1905,7 +1837,6 @@ async def create_new_dish(
                     for key, value in ai_result.items():
                         if key == 'ok':
                             continue
-                        # So atualiza se estava vazio ou e nutricao vazia
                         if key == 'nutricao':
                             nut = updated_info.get('nutricao', {})
                             ai_nut = value or {}
@@ -1916,14 +1847,17 @@ async def create_new_dish(
                         elif not updated_info.get(key) and value:
                             updated_info[key] = value
                     
-                    # Garantir nome corrigido pelo usuario
                     if dish_name.strip():
                         updated_info['nome'] = dish_name.strip()
                     
                     updated_info['slug'] = existing_match
                     
-                    with open(info_path, 'w', encoding='utf-8') as f:
-                        json.dump(updated_info, f, ensure_ascii=False, indent=2, default=str)
+                    # Salvar no MongoDB
+                    await db.dishes.update_one(
+                        {"slug": existing_match},
+                        {"$set": updated_info},
+                        upsert=True
+                    )
                     
                     logger.info(f"[CREATE] Informacoes atualizadas com IA para: {existing_match}")
             except Exception as e:
@@ -1970,36 +1904,14 @@ async def create_new_dish(
             upsert=True
         )
         
-        # Criar diretorio e salvar imagem
-        dataset_dir = Path("/app/datasets/organized") / slug
-        dataset_dir.mkdir(parents=True, exist_ok=True)
+        # Criar diretorio e salvar imagem no S3 + MongoDB + local
+        from services.image_service import save_dish_image
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
         filename = f"{slug}_{timestamp}_{unique_id}.jpg"
-        file_path = dataset_dir / filename
         
-        with open(file_path, "wb") as f:
-            f.write(content)
-        
-        # Salvar dish_info.json na pasta
-        import json
-        dish_info_for_file = {
-            "nome": dish_info["nome"],
-            "slug": dish_info["slug"],
-            "categoria": dish_info["categoria"],
-            "category_emoji": dish_info["category_emoji"],
-            "descricao": dish_info["descricao"],
-            "ingredientes": dish_info["ingredientes"],
-            "beneficios": dish_info["beneficios"],
-            "riscos": dish_info["riscos"],
-            "tecnica": dish_info["tecnica"],
-            "nutricao": dish_info["nutricao"],
-            "contem_gluten": dish_info["contem_gluten"]
-        }
-        dish_info_path = dataset_dir / "dish_info.json"
-        with open(dish_info_path, "w", encoding="utf-8") as f:
-            json.dump(dish_info_for_file, f, ensure_ascii=False, indent=2)
+        save_dish_image(slug, filename, content)
         
         logger.info(f"Novo prato criado: {dish_name} -> {slug}")
         
@@ -2049,74 +1961,48 @@ async def create_dish_local(
         slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
         slug = slug.replace(' ', '_')
         
-        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO
-        dataset_dir = Path("/app/datasets/organized")
+        # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO (MongoDB)
         existing_match = None
         
-        for dish_dir in dataset_dir.iterdir():
-            if not dish_dir.is_dir():
-                continue
-            info_path = dish_dir / "dish_info.json"
-            if info_path.exists():
-                try:
-                    with open(info_path, 'r', encoding='utf-8') as f:
-                        info = json.load(f)
-                        existing_name = info.get('nome', '').lower()
-                        # Verificar similaridade > 85%
-                        similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
-                        if similarity > 0.85 or dish_dir.name == slug:
-                            existing_match = dish_dir.name
-                            logger.info(f"[CREATE-LOCAL] Prato similar encontrado: {existing_match} ({similarity:.0%})")
-                            break
-                except:
-                    pass
+        async for dish_doc in db.dishes.find({}, {"_id": 0, "slug": 1, "nome": 1}):
+            existing_name = dish_doc.get('nome', '').lower()
+            existing_slug = dish_doc.get('slug', '')
+            similarity = SequenceMatcher(None, dish_name.lower(), existing_name).ratio()
+            if similarity > 0.85 or existing_slug == slug:
+                existing_match = existing_slug
+                logger.info(f"[CREATE-LOCAL] Prato similar encontrado: {existing_match} ({similarity:.0%})")
+                break
         
         # Se encontrou match, adiciona foto ao prato existente E atualiza com dados locais
         if existing_match:
-            target_dir = dataset_dir / existing_match
+            from services.image_service import save_dish_image
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             unique_id = str(uuid.uuid4())[:8]
             filename = f"{existing_match}_correct_{timestamp}_{unique_id}.jpg"
-            file_path = target_dir / filename
             
-            with open(file_path, "wb") as f:
-                f.write(content)
-            
-            # Usar dados LOCAIS para atualizar informacoes
-            info_path = target_dir / "dish_info.json"
-            current_info = {}
-            if info_path.exists():
-                with open(info_path, 'r', encoding='utf-8') as f:
-                    current_info = json.load(f)
-            
-            # Atualizar nome se diferente
-            if dish_name.strip() and dish_name.strip().lower() != current_info.get('nome', '').lower():
-                current_info['nome'] = dish_name.strip()
-                logger.info(f"[CREATE-LOCAL] Nome corrigido para: {dish_name.strip()}")
+            # Salvar no S3 + MongoDB + local
+            save_dish_image(existing_match, filename, content)
             
             # Usar local_dish_updater para preencher dados faltantes
             result = atualizar_prato_local(existing_match, novo_nome=dish_name.strip())
             
             return {
                 "ok": True,
-                "message": f"✅ Correcao salva! '{dish_name}' atualizado SEM usar creditos.",
+                "message": f"Correcao salva! '{dish_name}' atualizado SEM usar creditos.",
                 "slug": existing_match,
                 "action": "updated_existing_local",
                 "credits_used": 0
             }
         
         # CRIAR NOVO PRATO com dados LOCAIS
-        target_dir = dataset_dir / slug
-        target_dir.mkdir(parents=True, exist_ok=True)
+        from services.image_service import save_dish_image
         
-        # Salvar imagem
+        # Salvar imagem no S3 + MongoDB + local
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
         filename = f"{slug}_{timestamp}_{unique_id}.jpg"
-        file_path = target_dir / filename
         
-        with open(file_path, "wb") as f:
-            f.write(content)
+        save_dish_image(slug, filename, content)
         
         # Gerar dados usando regras LOCAIS
         tipo = encontrar_tipo_prato(dish_name)
@@ -2154,10 +2040,12 @@ async def create_dish_local(
             "origem": "user_created_local"
         }
         
-        # Salvar dish_info.json
-        dish_info_path = target_dir / "dish_info.json"
-        with open(dish_info_path, "w", encoding="utf-8") as f:
-            json.dump(dish_info, f, ensure_ascii=False, indent=2)
+        # Salvar no MongoDB em vez de dish_info.json local
+        await db.dishes.update_one(
+            {"slug": slug},
+            {"$set": dish_info},
+            upsert=True
+        )
         
         logger.info(f"[CREATE-LOCAL] Novo prato criado SEM IA: {dish_name} -> {slug}")
         
@@ -2230,43 +2118,27 @@ async def submit_feedback(
         if not dish_slug:
             return {"ok": False, "message": "dish_slug e obrigatorio"}
         
-        # Diretorio do dataset
-        dataset_dir = Path("/app/datasets/organized")
+        # Salvar imagem no S3 + MongoDB + local via image_service
+        from services.image_service import save_dish_image, find_dish_slug_match
         
-        # Normalizar slug
-        slug = dish_slug.lower().replace(' ', '').replace('-', '').replace('_', '')
-        
-        # Encontrar a pasta correta
-        target_dir = None
-        for folder in dataset_dir.iterdir():
-            if folder.is_dir():
-                folder_slug = folder.name.lower().replace('_', '').replace('-', '')
-                if folder_slug == slug or slug in folder_slug:
-                    target_dir = folder
-                    break
-        
-        if not target_dir:
-            # Criar pasta se nao existir
-            target_dir = dataset_dir / slug
-            target_dir.mkdir(parents=True, exist_ok=True)
+        # Encontrar slug real do prato
+        target_slug = find_dish_slug_match(dish_slug) or dish_slug
         
         # Gerar nome unico para o arquivo
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
         feedback_type = "correct" if is_correct_bool else "corrected"
-        filename = f"{slug}_{feedback_type}_{timestamp}_{unique_id}.jpg"
+        filename = f"{target_slug}_{feedback_type}_{timestamp}_{unique_id}.jpg"
         
-        # Salvar imagem
-        file_path = target_dir / filename
-        with open(file_path, "wb") as f:
-            f.write(content)
+        # Salvar imagem no S3 + MongoDB + local
+        save_dish_image(target_slug, filename, content)
         
         # Log no MongoDB para analise posterior
         feedback_doc = {
             "dish_slug": dish_slug,
             "original_dish": original_dish if not is_correct_bool else dish_slug,
             "is_correct": is_correct_bool,
-            "file_path": str(file_path),
+            "file_path": f"s3://soulnutri/dishes/{target_slug}/{filename}",
             "created_at": datetime.utcnow()
         }
         await db.feedback.insert_one(feedback_doc)
@@ -2279,7 +2151,7 @@ async def submit_feedback(
         
         return {
             "ok": True,
-            "message": f"Feedback registrado! Foto salva em {target_dir.name}",
+            "message": f"Feedback registrado! Foto salva para {target_slug}",
             "file_saved": filename,
             "is_correct": is_correct_bool,
             "note": "Execute /api/ai/reindex para incorporar ao indice"
@@ -3552,47 +3424,62 @@ async def get_nutricao_taco(ingrediente: str):
 async def admin_list_dishes():
     """Lista todos os pratos com informacoes detalhadas para admin."""
     try:
-        import json
-        dataset_dir = Path("/app/datasets/organized")
         dishes = []
         
-        for dish_dir in sorted(dataset_dir.iterdir()):
-            if not dish_dir.is_dir():
+        # Helper to normalize slugs for matching
+        def norm(s): return s.lower().replace(' ', '_').replace('-', '_')
+        
+        # Pre-fetch all image counts from dish_storage in one query
+        image_counts = {}  # normalized_slug -> count
+        storage_slug_map = {}  # normalized_slug -> original slug
+        async for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "count": 1}):
+            slug = doc.get("slug", "")
+            n = norm(slug)
+            image_counts[n] = doc.get("count", 0)
+            storage_slug_map[n] = slug
+        
+        # Buscar pratos do MongoDB dishes collection
+        seen_normalized = set()
+        async for dish_doc in db.dishes.find({}, {"_id": 0}):
+            slug = dish_doc.get("slug", dish_doc.get("index_name", ""))
+            if not slug:
                 continue
             
-            slug = dish_dir.name
-            info_file = dish_dir / "dish_info.json"
+            n = norm(slug)
+            if n in seen_normalized:
+                continue
+            seen_normalized.add(n)
             
-            # Contar imagens
-            image_count = len(list(dish_dir.glob("*.jpg"))) + len(list(dish_dir.glob("*.jpeg")))
+            # Use storage slug for image endpoint compatibility
+            display_slug = storage_slug_map.get(n, slug)
             
             dish_data = {
-                "slug": slug,
-                "nome": slug.replace("_", " ").title(),
-                "categoria": "",
-                "category_emoji": "🍽️",
-                "ingredientes": [],
-                "descricao": "",
-                "image_count": image_count
+                "slug": display_slug,
+                "nome": dish_doc.get("nome", dish_doc.get("name", slug.replace("_", " ").title())),
+                "categoria": dish_doc.get("categoria", ""),
+                "category_emoji": dish_doc.get("category_emoji", "🍽️"),
+                "ingredientes": dish_doc.get("ingredientes", []),
+                "descricao": dish_doc.get("descricao", ""),
+                "image_count": image_counts.get(n, 0)
             }
-            
-            # Carregar info se existir
-            if info_file.exists():
-                try:
-                    with open(info_file, "r", encoding="utf-8") as f:
-                        info = json.load(f)
-                        dish_data.update({
-                            "nome": info.get("nome", dish_data["nome"]),
-                            "categoria": info.get("categoria", ""),
-                            "category_emoji": info.get("category_emoji", "🍽️"),
-                            "ingredientes": info.get("ingredientes", []),
-                            "descricao": info.get("descricao", "")
-                        })
-                except:
-                    pass
-            
             dishes.append(dish_data)
         
+        # Adicionar pratos do dish_storage que não estejam em dishes
+        for n, orig_slug in storage_slug_map.items():
+            if n not in seen_normalized:
+                seen_normalized.add(n)
+                dish_data = {
+                    "slug": orig_slug,
+                    "nome": orig_slug.replace("_", " ").title(),
+                    "categoria": "",
+                    "category_emoji": "🍽️",
+                    "ingredientes": [],
+                    "descricao": "",
+                    "image_count": image_counts.get(n, 0)
+                }
+                dishes.append(dish_data)
+        
+        dishes.sort(key=lambda d: d["nome"])
         return {"ok": True, "dishes": dishes, "total": len(dishes)}
         
     except Exception as e:
@@ -3604,74 +3491,89 @@ async def admin_list_dishes():
 async def admin_list_dishes_full():
     """Lista todos os pratos com TODAS as informacoes para admin."""
     try:
-        import json
-        dataset_dir = Path("/app/datasets/organized")
         dishes = []
         
-        for dish_dir in sorted(dataset_dir.iterdir()):
-            if not dish_dir.is_dir():
+        # Helper to normalize slugs for matching
+        def norm(s): return s.lower().replace(' ', '_').replace('-', '_')
+        
+        # Pre-fetch all image data from dish_storage in one query
+        storage_data = {}  # normalized_slug -> data
+        storage_slug_map = {}  # normalized_slug -> original slug
+        async for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "count": 1, "images": 1}):
+            slug = doc.get("slug", "")
+            n = norm(slug)
+            imgs = doc.get("images", [])
+            storage_data[n] = {
+                "count": doc.get("count", len(imgs)),
+                "image_names": [img["filename"] for img in imgs]
+            }
+            storage_slug_map[n] = slug
+        
+        # Buscar do MongoDB dishes collection
+        seen_normalized = set()
+        async for dish_doc in db.dishes.find({}, {"_id": 0}):
+            slug = dish_doc.get("slug", dish_doc.get("index_name", ""))
+            if not slug:
                 continue
             
-            slug = dish_dir.name
-            info_file = dish_dir / "dish_info.json"
+            n = norm(slug)
+            if n in seen_normalized:
+                continue
+            seen_normalized.add(n)
             
-            # Contar e listar imagens
-            images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg")) + list(dish_dir.glob("*.png"))
-            image_count = len(images)
-            first_image = images[0].name if images else None
-            all_images = [img.name for img in images]  # Lista de todos os nomes de imagem
+            sd = storage_data.get(n, {"count": 0, "image_names": []})
+            image_names = sd["image_names"]
+            display_slug = storage_slug_map.get(n, slug)
             
             dish_data = {
-                "slug": slug,
-                "nome": slug.replace("_", " ").title(),
-                "categoria": "",
-                "category_emoji": "🍽️",
-                "ingredientes": [],
-                "descricao": "",
-                "beneficios": [],
-                "riscos": [],
-                "nutricao": {},
-                "contem_gluten": False,
-                "contem_lactose": False,
-                "contem_ovo": False,
-                "contem_castanhas": False,
-                "contem_frutos_mar": False,
-                "contem_soja": False,
-                "contem_peixe": False,
-                "tecnica": "",
-                "image_count": image_count,
-                "first_image": first_image,
-                "all_images": all_images  # Nova lista com todas as imagens
+                "slug": display_slug,
+                "nome": dish_doc.get("nome", dish_doc.get("name", slug.replace("_", " ").title())),
+                "categoria": dish_doc.get("categoria", ""),
+                "category_emoji": dish_doc.get("category_emoji", "🍽️"),
+                "ingredientes": dish_doc.get("ingredientes", []),
+                "descricao": dish_doc.get("descricao", ""),
+                "beneficios": dish_doc.get("beneficios", []),
+                "riscos": dish_doc.get("riscos", []),
+                "nutricao": dish_doc.get("nutricao", {}),
+                "contem_gluten": dish_doc.get("contem_gluten", False),
+                "contem_lactose": dish_doc.get("contem_lactose", False),
+                "contem_ovo": dish_doc.get("contem_ovo", False),
+                "contem_castanhas": dish_doc.get("contem_castanhas", False),
+                "contem_frutos_mar": dish_doc.get("contem_frutos_mar", False),
+                "contem_soja": dish_doc.get("contem_soja", False),
+                "contem_peixe": dish_doc.get("contem_peixe", False),
+                "tecnica": dish_doc.get("tecnica", ""),
+                "image_count": len(image_names),
+                "first_image": image_names[0] if image_names else None,
+                "all_images": image_names
             }
-            
-            # Carregar info completa se existir
-            if info_file.exists():
-                try:
-                    with open(info_file, "r", encoding="utf-8") as f:
-                        info = json.load(f)
-                        dish_data.update({
-                            "nome": info.get("nome", dish_data["nome"]),
-                            "categoria": info.get("categoria", ""),
-                            "category_emoji": info.get("category_emoji", "🍽️"),
-                            "ingredientes": info.get("ingredientes", []),
-                            "descricao": info.get("descricao", ""),
-                            "beneficios": info.get("beneficios", []),
-                            "riscos": info.get("riscos", []),
-                            "nutricao": info.get("nutricao", {}),
-                            "contem_gluten": info.get("contem_gluten", False),
-                            "contem_lactose": info.get("contem_lactose", False),
-                            "contem_ovo": info.get("contem_ovo", False),
-                            "contem_castanhas": info.get("contem_castanhas", False),
-                            "contem_frutos_mar": info.get("contem_frutos_mar", False),
-                            "contem_soja": info.get("contem_soja", False),
-                            "contem_peixe": info.get("contem_peixe", False),
-                            "tecnica": info.get("tecnica", "")
-                        })
-                except:
-                    pass
             
             dishes.append(dish_data)
         
+        # Adicionar pratos do dish_storage que não estejam em dishes
+        for n, orig_slug in storage_slug_map.items():
+            if n not in seen_normalized:
+                seen_normalized.add(n)
+                sd = storage_data.get(n, {"count": 0, "image_names": []})
+                image_names = sd["image_names"]
+                dish_data = {
+                    "slug": orig_slug,
+                    "nome": orig_slug.replace("_", " ").title(),
+                    "categoria": "", "category_emoji": "🍽️",
+                    "ingredientes": [], "descricao": "",
+                    "beneficios": [], "riscos": [],
+                    "nutricao": {},
+                    "contem_gluten": False, "contem_lactose": False,
+                    "contem_ovo": False, "contem_castanhas": False,
+                    "contem_frutos_mar": False, "contem_soja": False,
+                    "contem_peixe": False, "tecnica": "",
+                    "image_count": len(image_names),
+                    "first_image": image_names[0] if image_names else None,
+                    "all_images": image_names
+                }
+                dishes.append(dish_data)
+        
+        dishes.sort(key=lambda d: d["nome"])
         return {"ok": True, "dishes": dishes, "total": len(dishes)}
         
     except Exception as e:
@@ -3681,30 +3583,17 @@ async def admin_list_dishes_full():
 
 @api_router.get("/admin/dish-image/{slug}")
 async def admin_get_dish_image(slug: str, img: str = None):
-    """Retorna uma imagem de um prato. Se img for especificado, retorna essa imagem especifica."""
-    from fastapi.responses import FileResponse
+    """Retorna uma imagem de um prato do Object Storage (S3) com fallback local."""
+    from fastapi.responses import Response
+    from services.image_service import get_dish_image_bytes
     
     try:
-        dataset_dir = Path("/app/datasets/organized") / slug
+        data, content_type = get_dish_image_bytes(slug, img)
         
-        if not dataset_dir.exists():
-            raise HTTPException(status_code=404, detail="Prato nao encontrado")
+        if data is None:
+            raise HTTPException(status_code=404, detail="Imagem nao encontrada")
         
-        # Se uma imagem especifica foi solicitada
-        if img:
-            img_path = dataset_dir / img
-            if img_path.exists():
-                return FileResponse(img_path, media_type="image/jpeg")
-            else:
-                raise HTTPException(status_code=404, detail="Imagem nao encontrada")
-        
-        # Senao, retorna a primeira imagem
-        images = list(dataset_dir.glob("*.jpg")) + list(dataset_dir.glob("*.jpeg")) + list(dataset_dir.glob("*.png"))
-        
-        if not images:
-            raise HTTPException(status_code=404, detail="Sem imagens")
-        
-        return FileResponse(images[0], media_type="image/jpeg")
+        return Response(content=data, media_type=content_type or "image/jpeg")
         
     except HTTPException:
         raise
@@ -3715,40 +3604,10 @@ async def admin_get_dish_image(slug: str, img: str = None):
 
 @api_router.put("/admin/dishes/{slug}")
 async def admin_update_dish(slug: str, dish_data: dict):
-    """Atualiza TODAS as informacoes de um prato."""
+    """Atualiza TODAS as informacoes de um prato no MongoDB."""
     try:
-        import json
-        import os
-        
-        # Buscar pasta de forma case-insensitive
-        base_dir = Path("/app/datasets/organized")
-        dataset_dir = None
-        
-        # Primeiro, tentar o slug direto
-        if (base_dir / slug).exists():
-            dataset_dir = base_dir / slug
-        else:
-            # Buscar pasta com nome similar (case-insensitive)
-            slug_lower = slug.lower().replace("-", "").replace(" ", "")
-            for folder in os.listdir(base_dir):
-                folder_lower = folder.lower().replace("-", "").replace(" ", "")
-                if folder_lower == slug_lower:
-                    dataset_dir = base_dir / folder
-                    break
-        
-        if not dataset_dir or not dataset_dir.exists():
-            return {"ok": False, "error": "Prato nao encontrado"}
-        
-        info_file = dataset_dir / "dish_info.json"
-        
-        # Carregar info existente ou criar nova
-        existing_info = {}
-        if info_file.exists():
-            try:
-                with open(info_file, "r", encoding="utf-8") as f:
-                    existing_info = json.load(f)
-            except:
-                pass
+        # Buscar dados existentes do MongoDB
+        existing_info = await db.dishes.find_one({"slug": slug}, {"_id": 0}) or {}
         
         # Atualizar TODOS os campos
         existing_info.update({
@@ -3789,9 +3648,12 @@ async def admin_update_dish(slug: str, dish_data: dict):
         else:
             existing_info["category_emoji"] = "🍽️"
         
-        # Salvar
-        with open(info_file, "w", encoding="utf-8") as f:
-            json.dump(existing_info, f, ensure_ascii=False, indent=2)
+        # Salvar no MongoDB
+        await db.dishes.update_one(
+            {"slug": slug},
+            {"$set": existing_info},
+            upsert=True
+        )
         
         logger.info(f"[ADMIN] Prato atualizado: {slug}")
         return {"ok": True, "message": "Prato atualizado"}
@@ -3805,31 +3667,12 @@ async def admin_update_dish(slug: str, dish_data: dict):
 async def admin_regenerate_dish_info(slug: str, data: dict = None):
     """
     Regenera TODAS as informacoes de um prato baseado no nome.
-    Útil quando o usuario corrige o nome e quer atualizar toda a ficha.
-    
-    Body opcional:
-    {
-        "new_name": "Novo Nome do Prato"  // se nao fornecido, usa o nome atual
-    }
     """
     try:
         from services.generic_ai import regenerate_dish_info_from_name
         
-        dataset_dir = Path("/app/datasets/organized") / slug
-        
-        if not dataset_dir.exists():
-            return {"ok": False, "error": "Prato nao encontrado"}
-        
-        info_file = dataset_dir / "dish_info.json"
-        
-        # Carregar info atual
-        current_info = {}
-        if info_file.exists():
-            try:
-                with open(info_file, "r", encoding="utf-8") as f:
-                    current_info = json.load(f)
-            except:
-                pass
+        # Carregar info atual do MongoDB
+        current_info = await db.dishes.find_one({"slug": slug}, {"_id": 0}) or {}
         
         # Determinar o nome a usar
         new_name = None
@@ -3844,10 +3687,8 @@ async def admin_regenerate_dish_info(slug: str, data: dict = None):
         result = await regenerate_dish_info_from_name(new_name, current_info)
         
         if result.get("ok"):
-            # Mesclar com dados existentes (manter slug)
             new_info = {**current_info}
             
-            # Atualizar todos os campos regenerados
             for key in ["nome", "categoria", "descricao", "ingredientes", 
                        "beneficios", "riscos", "nutricao", "contem_gluten",
                        "contem_lactose", "contem_ovo", "contem_castanhas",
@@ -3876,9 +3717,12 @@ async def admin_regenerate_dish_info(slug: str, data: dict = None):
             else:
                 new_info["category_emoji"] = "🍽️"
             
-            # Salvar
-            with open(info_file, "w", encoding="utf-8") as f:
-                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            # Salvar no MongoDB
+            await db.dishes.update_one(
+                {"slug": slug},
+                {"$set": new_info},
+                upsert=True
+            )
             
             logger.info(f"[ADMIN] Ficha regenerada com sucesso: {slug}")
             return {
@@ -3896,16 +3740,20 @@ async def admin_regenerate_dish_info(slug: str, data: dict = None):
 
 @api_router.delete("/admin/dishes/{slug}")
 async def admin_delete_dish(slug: str):
-    """Exclui um prato e todas suas fotos."""
+    """Exclui um prato e todas suas fotos do S3, MongoDB e disco local."""
     try:
         import shutil
+        
+        # Remover do dish_storage no MongoDB
+        await db.dish_storage.delete_one({"slug": slug})
+        
+        # Remover do dishes no MongoDB
+        await db.dishes.delete_one({"slug": slug})
+        
+        # Remover pasta local (cache)
         dataset_dir = Path("/app/datasets/organized") / slug
-        
-        if not dataset_dir.exists():
-            return {"ok": False, "error": "Prato nao encontrado"}
-        
-        # Remover pasta e todos os arquivos
-        shutil.rmtree(dataset_dir)
+        if dataset_dir.exists():
+            shutil.rmtree(dataset_dir)
         
         logger.info(f"[ADMIN] Prato excluido: {slug}")
         return {"ok": True, "message": f"Prato {slug} excluido"}
@@ -4014,39 +3862,34 @@ async def admin_fix_single_dish(slug: str):
     """Usa IA para corrigir dados de um unico prato"""
     try:
         from services.generic_ai import fix_dish_data_with_ai
-        from pathlib import Path
+        from services.image_service import get_dish_image_bytes
         import json
         
-        dataset_dir = Path("/app/datasets/organized")
-        dish_dir = dataset_dir / slug
-        info_path = dish_dir / "dish_info.json"
-        
-        # Carregar info atual
+        # Carregar info atual do MongoDB
         current_info = {}
-        if info_path.exists():
-            with open(info_path, 'r', encoding='utf-8') as f:
-                current_info = json.load(f)
+        dish_doc = await db.dishes.find_one({"slug": slug}, {"_id": 0})
+        if dish_doc:
+            current_info = dish_doc
         
-        # Buscar imagem
-        images = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg"))
-        if not images:
+        # Buscar imagem do S3
+        image_bytes, _ = get_dish_image_bytes(slug)
+        if not image_bytes:
             return {"ok": False, "error": "Nenhuma imagem encontrada"}
-        
-        # Ler imagem
-        with open(images[0], 'rb') as f:
-            image_bytes = f.read()
         
         # Chamar IA
         result = await fix_dish_data_with_ai(image_bytes, current_info)
         
         if result.get("ok"):
-            # Mesclar e salvar
+            # Mesclar e salvar no MongoDB
             new_info = {**current_info, **result}
             new_info.pop("ok", None)
             new_info["slug"] = slug
             
-            with open(info_path, 'w', encoding='utf-8') as f:
-                json.dump(new_info, f, ensure_ascii=False, indent=2)
+            await db.dishes.update_one(
+                {"slug": slug},
+                {"$set": new_info},
+                upsert=True
+            )
             
             return {"ok": True, "message": f"Prato {slug} corrigido", "data": new_info}
         else:
@@ -4080,47 +3923,39 @@ async def admin_batch_fix_dishes(request: dict):
 
 @api_router.delete("/admin/dish-image/{slug}")
 async def delete_dish_image(slug: str, img: str = Query(...)):
-    """Deleta uma imagem de um prato"""
+    """Deleta uma imagem de um prato do S3 e disco local"""
     try:
-        dataset_dir = "/app/datasets/organized"
-        # Encontrar pasta do prato pelo slug
-        target = None
-        for folder in os.listdir(dataset_dir):
-            if folder.lower().replace(" ", "_") == slug.lower().replace(" ", "_") or folder == slug:
-                target = os.path.join(dataset_dir, folder)
-                break
-        if not target:
-            return JSONResponse(status_code=404, content={"ok": False, "error": "Prato nao encontrado"})
-        img_path = os.path.join(target, img)
-        if not os.path.exists(img_path):
-            return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
-        os.remove(img_path)
-        return {"ok": True, "message": f"Imagem {img} removida"}
+        from services.image_service import delete_dish_image_from_storage
+        result = delete_dish_image_from_storage(slug, img)
+        if result.get("ok"):
+            return {"ok": True, "message": f"Imagem {img} removida"}
+        return JSONResponse(status_code=404, content={"ok": False, "error": result.get("error", "Erro ao remover")})
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 
 @api_router.post("/admin/move-image")
 async def move_dish_image(request: Request):
-    """Move uma imagem de um prato para outro"""
+    """Move uma imagem de um prato para outro (S3 + MongoDB + local)"""
     try:
-        import shutil
+        from services.image_service import get_dish_image_bytes, save_dish_image, delete_dish_image_from_storage
+        
         data = await request.json()
         source_dish = data.get("source_dish")
         target_dish = data.get("target_dish")
         image_name = data.get("image_name")
-        dataset_dir = "/app/datasets/organized"
-        src_path = os.path.join(dataset_dir, source_dish, image_name)
-        dst_dir = os.path.join(dataset_dir, target_dish)
-        if not os.path.exists(src_path):
+        
+        # Ler imagem do prato origem
+        image_bytes, content_type = get_dish_image_bytes(source_dish, image_name)
+        if not image_bytes:
             return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
-        if not os.path.exists(dst_dir):
-            return JSONResponse(status_code=404, content={"ok": False, "error": "Prato destino nao encontrado"})
-        dst_path = os.path.join(dst_dir, image_name)
-        if os.path.exists(dst_path):
-            base, ext = os.path.splitext(image_name)
-            dst_path = os.path.join(dst_dir, f"{base}_moved{ext}")
-        shutil.move(src_path, dst_path)
+        
+        # Salvar no prato destino
+        save_dish_image(target_dish, image_name, image_bytes)
+        
+        # Remover do prato origem
+        delete_dish_image_from_storage(source_dish, image_name)
+        
         return {"ok": True, "message": f"Imagem movida para {target_dish}"}
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
