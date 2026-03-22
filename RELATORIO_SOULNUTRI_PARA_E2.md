@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://foodid-staging.preview.emergentagent.com
-- Admin: https://foodid-staging.preview.emergentagent.com/admin
-- Lista de Pratos: https://foodid-staging.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://foodscan-beta.preview.emergentagent.com
+- Admin: https://foodscan-beta.preview.emergentagent.com/admin
+- Lista de Pratos: https://foodscan-beta.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

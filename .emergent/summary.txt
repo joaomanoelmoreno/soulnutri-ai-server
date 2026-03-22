@@ -1,172 +1,152 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta precisão (> 90%). A prioridade do usuário é a **precisão máxima** e a honestidade, evitando falsos positivos com alta confiança. O projeto evoluiu para incluir um plano estratégico de várias fases para substituir o modelo de reconhecimento genérico por um modelo especializado, além de funcionalidades premium e, mais recentemente, a adição de fichas nutricionais detalhadas.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. O objetivo é fornecer informações detalhadas e personalizadas com alta precisão (> 90%). A prioridade do usuário é a **precisão máxima** e a honestidade, evitando falsos positivos com alta confiança. O projeto evoluiu para incluir um plano estratégico de várias fases, funcionalidades premium e a adição de fichas nutricionais detalhadas. Recentemente, o foco mudou para a estabilização da arquitetura, removendo a dependência de GPS e migrando o armazenamento de imagens para a nuvem.
 
 **PRODUCT REQUIREMENTS:**
 1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
-2.  **Performance e Precisão:** A identificação deve ser precisa, honesta e confiável, sem apresentar resultados errados com alta confiança. Deve rejeitar pratos que não conhece.
-3.  **Qualidade da Informação:** As informações (ingredientes, ficha nutricional, etc.) devem ser corretas, educativas e cientificamente embasadas.
-4.  **UX/UI:** Interface com o mínimo de cliques, fluida e estável, com mensagens claras sobre a confiança do reconhecimento.
-5.  **Evolução Incremental:** Implementar e validar cada etapa de forma isolada.
+2.  **Performance e Precisão:** A identificação deve ser precisa, honesta e confiável, rejeitando pratos que não conhece.
+3.  **Qualidade da Informação:** As informações (ingredientes, ficha nutricional, etc.) devem ser corretas e cientificamente embasadas.
+4.  **UX/UI:** Interface com o mínimo de cliques, fluida e estável.
+5.  **Evolução Incremental:** Implementar e validar cada etapa de forma isolada, com foco em estabilidade e escalabilidade.
 
 **User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
 
 **what currently exists?**
-Um aplicativo full-stack (React + FastAPI + MongoDB). A sessão foi focada na implementação das fichas nutricionais. Foi desenvolvido um pipeline robusto () que busca dados de três fontes (USDA, Open Food Facts, TACO), aplicando lógicas complexas para obter valores calóricos realistas. A estratégia inicial de decompor ingredientes foi abandonada em favor de uma abordagem mais eficaz, que busca pratos compostos diretamente nas bases de dados, similar ao funcionamento de apps comerciais de nutrição.
-
-O problema crônico de falta de espaço em disco, que causava corrupção de arquivos, foi resolvido com a reinicialização do repositório , reduzindo seu tamanho de 2.5GB para 39MB e estabilizando o ambiente.
-
-As fichas para os 5 pratos solicitados foram geradas com sucesso e os valores foram persistidos no MongoDB, tanto na coleção  quanto atualizados na coleção . No entanto, a implementação resultou em um bug no frontend que impede a visualização dos pratos no painel Admin.
+Um aplicativo full-stack (React + FastAPI + MongoDB) que passou por uma reestruturação significativa. A dependência de GPS para diferenciar locais foi completamente removida, unificando o fluxo de reconhecimento de imagem para todos os usuários (CLIP primeiro, Gemini como fallback). O maior avanço foi a migração bem-sucedida de todo o dataset de ~4700 imagens do disco local do servidor para o Object Storage (S3-compatível) da Emergent. O agente também implementou um script robusto para importar novas fotos de arquivos ZIP fornecidos pelo usuário, processando com sucesso ~90 novas imagens. No entanto, o aplicativo está em um estado de transição: as imagens estão na nuvem, mas o código do backend ainda tenta lê-las do disco local, tornando o reconhecimento de imagem não funcional no momento.
 
 **Last working item**:
--   **Last item agent was working**: O agente estava diagnosticando um bug no painel Admin (). O usuário relatou que a página de pratos estava vazia. O agente identificou um erro body stream already read nos logs do navegador, indicando que a resposta da API está sendo processada incorretamente no lado do cliente.
--   **Status**: IN PROGRESS
--   **Agent Testing Done**: N (O agente confirmou via  que o endpoint do backend  está funcionando corretamente, isolando o problema no frontend).
--   **Which testing method agent to use?**: screenshot tool. Após a correção, use a ferramenta de screenshot para verificar visualmente se a lista de pratos é carregada corretamente na página do Admin.
--   **User Testing Done**: N
+-   **Last item agent was working**: Reconstrução do índice de reconhecimento do CLIP () para incorporar as 90 novas fotos importadas dos arquivos ZIP. Isso é necessário para que o sistema possa reconhecer os pratos recém-adicionados.
+-   **Status**: NONE (COMPLETED). Os logs confirmam que o índice foi reconstruído com sucesso ().
+-   **Agent Testing Done**: Y (verificou os logs para confirmar a conclusão bem-sucedida da reindexação).
+-   **Which testing method agent to use?**: O próximo passo é uma modificação no backend. Após a correção, o agente de backend deve usar  com um arquivo de imagem para testar o endpoint  e garantir que ele não falhe mais e retorne uma identificação.
+-   **User Testing Done**: N (O usuário está aguardando as correções para poder testar no buffet).
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) Painel de administração não exibe pratos devido a um erro de frontend.
--   Issue 2: (P1) Instabilidade do ambiente por falta de espaço em disco.
--   Issue 3: (P2) Validação da lógica de reconhecimento pelo usuário.
+-   Issue 1: (P0) Aplicação não funcional devido à dessincronização entre armazenamento de imagens e código.
+-   Issue 2: (P1) Revisão de dados nutricionais potencialmente contaminados.
 
 **Issues Detail**:
--   **Issue 1: Painel de administração não exibe pratos**
-    -   **Attempted fixes**: O agente confirmou que o backend está enviando os dados corretamente. A investigação apontou para um erro body stream already read no frontend, sugerindo uma dupla leitura da resposta da API. A análise do arquivo  foi iniciada.
+-   **Issue 1: Aplicação não funcional devido à dessincronização entre armazenamento de imagens e código.**
+    -   **Attempted fixes**: A migração para o Object Storage foi concluída com sucesso. No entanto, o agente não atualizou o código do backend para ler as imagens da nova localização (S3).
     -   **Next debug checklist**:
-        1.  Inspecionar o código em , especificamente dentro do  que faz a chamada para .
-        2.  Procurar por padrões que possam causar a leitura dupla do corpo da resposta, como chamar  mais de uma vez ou manipulação incorreta de promessas.
-        3.  Corrigir o código para garantir que o stream da resposta seja lido apenas uma vez antes de atualizar o estado do React.
-    -   **Why fix this issue and what will be achieved with the fix?**: O painel Admin é crucial para o usuário gerenciar os pratos e validar a exatidão das fichas nutricionais recém-criadas. Sem ele, o progresso na tarefa principal está bloqueado.
-    -   **Status**: IN PROGRESS
+        1.  Modificar o serviço de embedding e o endpoint de identificação em  para usar o  e buscar as imagens do Object Storage em vez do diretório local .
+        2.  Fazer o mesmo para o endpoint que serve as imagens para o painel Admin ().
+    -   **Why fix this issue and what will be achieved with the fix?**: Esta é a principal funcionalidade do aplicativo. Sem isso, o reconhecimento de imagem está quebrado, e o usuário não pode realizar os testes no buffet.
+    -   **Status**: NOT STARTED
     -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Frontend
+    -   **Should Test frontend/backend/both after fix?**: Backend
     -   **Blocked on other issue**: Não. Este é o bloqueador atual.
 
--   **Issue 2: Instabilidade do ambiente por falta de espaço em disco**
-    -   **Attempted fixes**: O agente executou uma correção drástica e eficaz:  seguido de Initialized empty Git repository in /app/.git/ e reconfiguração do remote. Isso reduziu o tamanho do repositório de 2.5GB para 39MB, resolvendo a causa imediata da instabilidade.
-    -   **Next debug checklist**: A solução é permanente para o repositório atual, mas a causa raiz (versionamento do dataset de imagens) pode ressurgir. O próximo agente deve monitorar o uso do disco com Filesystem      Size  Used Avail Use% Mounted on
-overlay          95G   18G   77G  19% /
-tmpfs            64M     0   64M   0% /dev
-/dev/nvme0n2    9.8G  7.2G  2.6G  74% /app
-/dev/nvme0n1p1   95G   18G   77G  19% /etc/hosts
-shm              64M     0   64M   0% /dev/shm
-tmpfs           7.9G     0  7.9G   0% /proc/acpi
-tmpfs           7.9G     0  7.9G   0% /proc/scsi
-tmpfs           7.9G     0  7.9G   0% /sys/firmware e reforçar ao usuário a importância de usar a funcionalidade Save to Github e considerar adicionar  ao .
-    -   **Why fix this issue and what will be achieved with the fix?**: Garante um ambiente de desenvolvimento estável, prevenindo a corrupção de arquivos que assolou sessões anteriores.
-    -   **Status**: RESOLVED (com necessidade de monitoramento)
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Both (indiretamente, a estabilidade do sistema depende disso).
-    -   **Blocked on other issue**: Não.
-
--   **Issue 3: Validação da lógica de reconhecimento pelo usuário**
-    -   **Attempted fixes**: Nenhuma nesta sessão. As correções na lógica (Gap Analysis, GPS, prompt do Gemini) foram feitas em uma sessão anterior.
-    -   **Next debug checklist**: Aguardar o usuário realizar um teste completo no ambiente de buffet para validar se o sistema rejeita pratos ambíguos e identifica corretamente os pratos conhecidos.
-    -   **Why fix this issue and what will be achieved with the fix?**: Para confirmar que o requisito principal de honestidade do modelo foi atendido.
+-   **Issue 2: Revisão de dados nutricionais potencialmente contaminados.**
+    -   **Attempted fixes**: Nenhuma. O agente está aguardando uma revisão completa do usuário. O usuário mencionou que carpaccio de laranja e carpaccio de abobrinha foram contaminados e Bolo vegano de chocolate e polenta com ragu tem ingredientes sim.
+    -   **Next debug checklist**:
+        1.  Aguardar a lista final do usuário com os pratos que precisam de correção.
+        2.  Executar o pipeline de nutrição () especificamente para esses pratos, ajustando as buscas ou aplicando correções manuais se necessário.
+    -   **Why fix this issue and what will be achieved with the fix?**: Garante a precisão dos dados, um requisito central do produto.
     -   **Status**: USER VERIFICATION PENDING
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: User must test.
-    -   **Blocked on other issue**: Não.
+    -   **Is recurring issue?**: Y (A precisão dos dados é um tema contínuo).
+    -   **Should Test frontend/backend/both after fix?**: Backend (dados) e Frontend (verificação no Admin).
+    -   **Blocked on other issue**: Issue 1. O usuário não pode revisar eficientemente sem um app funcional.
 
 **In progress Task List**:
-- Nenhuma. A tarefa de implementação das fichas nutricionais foi concluída, mas resultou no Issue 1, que agora tem prioridade.
+-   Nenhuma.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   (P0) Expandir a implementação das fichas nutricionais para todos os ~200 pratos do dataset, utilizando o script  e a chave de API do USDA fornecida pelo usuário.
+    -   (P0) Refatorar o backend para ler imagens do Object Storage (resolvendo o Issue 1).
+    -   (P1) Após a validação do usuário, salvar a versão atual do sistema como .
 -   **Future Tasks:**
-    -   Refatorar  e  para melhor organização do código.
-    -   Investigar e implementar a integração com Stripe para funcionalidades premium.
+    -   (P1) Refatorar  e  para melhor organização do código.
+    -   (P2) Investigar e implementar a integração com Stripe para funcionalidades premium.
+    -   (P2) Gerar uma nova lista de pratos com poucas fotos após as novas adições do usuário.
 
 **Completed work in this session**
--   **Pipeline de Fichas Nutricionais (Completo):**
-    -   Desenvolvido um pipeline em  que agrega dados de USDA, Open Food Facts e TACO.
-    -   Implementada uma estratégia avançada que busca por pratos compostos, em vez de decompor ingredientes, resultando em valores calóricos muito mais precisos.
-    -   Adicionada lógica para remover outliers, usar termos de busca mais precisos e calcular médias ponderadas.
-    -   As fichas para os 5 pratos solicitados foram geradas com sucesso usando 3 fontes de dados.
--   **Resolução Definitiva do Problema de Espaço em Disco:**
-    -   O repositório , causa da instabilidade, foi recriado do zero, reduzindo seu tamanho de 2.5GB para 39MB e estabilizando o ambiente.
--   **Atualização do Banco de Dados:**
-    -   As fichas nutricionais foram salvas na coleção .
-    -   A coleção  foi atualizada com um resumo dos dados nutricionais, para serem exibidos no painel Admin.
--   **Melhorias no Backend:**
-    -   Criado script  para automatizar a geração de fichas.
-    -   Adicionado novo endpoint  para consulta direta das fichas.
-    -   A função de busca de fichas em  foi aprimorada para pesquisar por nome e .
-
-**Earlier issues found/mentioned but not fixed**
--   Integração com Stripe para pagamentos.
-
-**Known issue recurrence from previous fork**
--   **Issue recurrence in previous fork**: Corrupção de Dados e Instabilidade do Reconhecimento devido à falta de espaço em disco.
--   **Recurrence count**: 5+
--   **Status**: RESOLVED. A reinicialização do repositório  corrigiu o problema de forma eficaz, embora a causa raiz (versionamento de grandes datasets) precise ser gerenciada a longo prazo.
+-   **Remoção completa do GPS:**
+    -   Removeu toda a lógica de geolocalização do frontend () e backend ().
+    -   Unificou o fluxo de reconhecimento: CLIP sempre é usado primeiro, com Gemini como fallback para todos, eliminando a distinção Cibi Sana vs Externo.
+-   **Migração para Object Storage:**
+    -   Implementou um serviço de armazenamento () usando a integração .
+    -   Migrou com sucesso mais de 4.600 imagens de pratos do disco local para o Object Storage (S3-compatível).
+    -   Reenviou com sucesso 18 imagens que falharam na migração inicial.
+-   **Importação de Novas Imagens:**
+    -   Corrigiu o nome do prato Feijoada para Feijão do Chef em todo o sistema.
+    -   Implementou um script robusto para importar fotos de arquivos ZIP, lidando com subpastas, nomes de arquivos e evitando duplicatas.
+    -   Importou com sucesso **90 fotos novas** de 3 arquivos ZIP fornecidos pelo usuário.
+-   **Manutenção do Índice de Reconhecimento:**
+    -   Reconstruiu o índice CLIP () para incluir as 90 novas fotos, tornando-as reconhecíveis pelo sistema.
+-   **Relatórios e Suporte ao Usuário:**
+    -   Gerou um relatório em  listando os pratos com poucas fotos.
+    -   Gerou um relatório em  sobre as dificuldades técnicas enfrentadas no projeto.
+    -   Auxiliou o usuário a encontrar seu Job ID.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Agregação de APIs de Nutrição:** O processo de consultar múltiplas fontes de dados (USDA, Open Food Facts, TACO), normalizar suas respostas e calcular uma média confiável, descartando outliers.
--   **Busca por Pratos Compostos:** A mudança de estratégia crucial de buscar pelo nome do prato (ex: Lasanha à Bolonhesa) em vez de seus ingredientes, usando a base de dados FNDDS do USDA para obter resultados mais realistas.
--   **Corrupção de Repositório Git:** A causa raiz da instabilidade crônica do ambiente, causada pelo versionamento de um grande volume de imagens. Resolvido com a reinicialização do repositório.
--   **Erro de Body Stream Already Read:** Um erro comum no desenvolvimento web que ocorre quando o corpo de uma resposta de API (um stream) é lido mais de uma vez no código do cliente, geralmente por manipulação incorreta de Promises.
+-   **Object Storage (S3):** Migração do dataset de imagens do disco do servidor para uma solução de armazenamento em nuvem escalável, usando a biblioteca .
+-   **Unified Recognition Flow:** Remoção completa da lógica de GPS. O sistema agora usa um único fluxo de reconhecimento (CLIP local rápido, seguido por Gemini API como fallback) para todos, simplificando o código e melhorando a consistência.
+-   **Batch Data Import:** Processamento de arquivos ZIP para extrair, validar e copiar centenas de novas imagens para o dataset, evitando duplicatas.
+-   **CLIP Indexing:** Reconstrução do índice de embeddings de imagem, um passo crucial após adicionar novas fotos para que o modelo de IA possa reconhecê-las.
 
 **key DB schema**
--   **dishes**:  (campo  foi adicionado).
--   **nutrition_sheets**:  (coleção agora populada).
+-   **dishes**: 
+-   **nutrition_sheets**: 
+-   **versions**: 
+-   **dish_storage**:  (Tabela que rastreia imagens no S3).
 
 **All files of reference**
--   : Arquivo que precisa ser corrigido para resolver o bug do painel Admin.
--   : Script utilizado para gerar os dados nutricionais.
--   : Contém toda a lógica complexa de busca e cálculo dos dados nutricionais.
--   : Modificado para integrar a funcionalidade de nutrição.
--   : Contém a nova chave da API do USDA.
+-   : Precisa ser modificado para ler imagens do S3 em vez do disco local.
+-   : Contém a lógica para interagir com o Object Storage (S3).
+-   : Onde a lógica de GPS foi removida.
+-   : Script que realizou a migração.
 
 **Areas that need refactoring**:
--   A estratégia de versionamento do dataset de imagens via Git é insustentável. O usuário deve ser fortemente aconselhado a usar a função Save to Github e adicionar o diretório  ao arquivo  para evitar que o problema de espaço em disco retorne.
+-   **URGENTE:** O backend ( e serviços relacionados) precisa ser refatorado para buscar imagens do S3 via  em vez do sistema de arquivos local (). Isso afeta tanto o reconhecimento de imagem quanto a exibição de imagens no Admin.
+-    (4400+ linhas) e  (3200+ linhas) continuam sendo arquivos monolíticos que se beneficiariam de uma decomposição em módulos menores.
 
 **key api endpoints**
--   : Endpoint consumido pelo painel Admin. O backend funciona, mas o frontend não consegue processar a resposta.
--   : Novo endpoint para buscar uma ficha nutricional específica por nome ou slug.
--   : O endpoint principal de reconhecimento, que agora enriquece a resposta com os dados nutricionais encontrados.
+-   : Endpoint principal de reconhecimento. Está quebrado até que a leitura de imagens do S3 seja implementada.
+-   : Inicia a reconstrução do índice CLIP em segundo plano.
+-    (proposto): Um endpoint para o usuário enviar ZIPs de fotos diretamente, automatizando o processo de importação.
 
 **Critical Info for New Agent**
--   **Prioridade Máxima:** A prioridade número um é consertar o painel Admin (). O usuário não pode validar o trabalho feito nas fichas nutricionais enquanto a página de pratos estiver vazia. O erro é body stream already read.
--   **Estabilidade do Ambiente:** O problema crítico de espaço em disco foi resolvido reinicializando o repositório Git. O ambiente deve estar estável, mas monitore o uso do disco.
--   **Pipeline de Nutrição está Pronto:** O pipeline para gerar as fichas nutricionais é robusto e está pronto para ser executado para os ~200 pratos restantes, assim que o bug do Admin for resolvido e o usuário der o aval.
+-   **PRIORIDADE MÁXIMA:** A aplicação está **quebrada**. O reconhecimento de imagem não funciona porque o backend tenta ler imagens do disco local, mas elas foram migradas para o Object Storage (S3). Sua primeira e mais importante tarefa é refatorar  para usar o  e buscar as imagens do S3. Sem isso, o usuário não pode realizar os testes no buffet.
+-   **Foco no Teste do Buffet:** O usuário quer testar o sistema no buffet em breve. Todas as ações devem priorizar a re-funcionalização do reconhecimento de imagem.
+-   **GPS foi Removido:** Não tente reintroduzir ou depurar qualquer coisa relacionada à geolocalização. Essa decisão foi final e o código foi removido.
+-   **Imagens Estão no S3:** Todas as imagens de referência agora vivem no Object Storage. A fonte da verdade para as imagens é o serviço de armazenamento, não mais o diretório .
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **Usuário (378):** Reclama do alto custo e tempo para gerar 5 fichas, do problema recorrente de disco cheio e pergunta como salvar a versão  de forma segura.
-2.  **Agente (379):** Concorda com o usuário, explica que o problema é a chave DEMO do USDA e propõe as soluções: obter uma chave real, limpar o  e salvar no MongoDB.
-3.  **Usuário (381):** Fornece a chave da API do USDA e concorda com as soluções propostas, perguntando se as 5 fichas foram feitas.
-4.  **Agente (382):** Confirma que as 5 fichas foram feitas (parcialmente) e inicia a execução das correções em paralelo.
-5.  **Agente (390):** Confirma que com a chave real, os 5 pratos foram processados com 3 fontes de dados em segundos e apresenta os resultados.
-6.  **Usuário (396):** Aponta um erro ao tentar salvar no GitHub, questiona como identificar a v1.23, e o mais importante: considera os valores nutricionais de umami de tomates e vinagrete de lula irreais. Também pergunta por que as fichas não aparecem no admin.
-7.  **Agente (399):** Identifica a causa do erro de calorias (divisão igual de peso entre ingredientes com densidades calóricas muito diferentes) e promete corrigir implementando pesos proporcionais.
-8.  **Usuário (481):** Mostra um erro do GitHub e questiona a complexidade da análise de ingredientes, argumentando que apps comerciais não fazem isso prato a prato.
-9.  **Agente (482):** Concorda totalmente com o usuário, corrige o problema do Git e pivota a estratégia de nutrição para buscar pratos compostos, que é como os apps comerciais funcionam.
-10. **Usuário (510):** Após as correções finais, informa que o painel Admin está vazio (Nao tem pratos no admin) e envia um screenshot.
+1.  **Usuário (556):** Autoriza o agente a reconstruir o índice CLIP (ok).
+2.  **Usuário (557):** Questiona a diferença entre índice CLIP e S2 ou S3.
+3.  **Usuário (558):** Dá o ok para reconstruir o índice CLIP após a explicação.
+4.  **Usuário (560):** Reage ao comando do agente.
+5.  **Usuário (562):** Reage ao comando do agente.
+6.  **Usuário (564):** Reage ao comando do agente.
+7.  **Usuário (566):** Reage ao comando do agente.
+8.  **Usuário (528):** Envia o primeiro de três ZIPs, menciona que precisa testar no buffet em uma hora e pede um plano de ação.
+9.  **Usuário (531):** Envia o segundo ZIP.
+10. **Usuário (535):** Envia o terceiro ZIP.
 
 **Project Health Check:**
--   **Broken**: O painel de administração () está quebrado e não exibe os pratos, bloqueando a validação do trabalho pelo usuário.
+-   **Broken**: A principal funcionalidade do aplicativo (reconhecimento de imagem) está quebrada porque o backend não foi atualizado para ler as imagens da nova localização no Object Storage.
 -   **Mocked**: N/A
 
 **3rd Party Integrations**
--   **USDA FoodData Central API**: Utilizada para obter dados nutricionais. Uma chave de API real fornecida pelo usuário está configurada em .
--   **Open Food Facts API**: Fonte secundária de dados nutricionais.
--   **TACO (Tabela Brasileira de Composição de Alimentos)**: Fonte terciária, utilizada a partir de um arquivo local.
--   Hugging Face ()
--   Google Gemini
--   MongoDB Atlas
+-   **Emergent Object Storage (S3-compatible)**: Armazena todas as ~4700 imagens de referência. O app precisa ser modificado para ler dele. Utiliza a .
+-   **USDA FoodData Central API**: Para dados nutricionais.
+-   **Open Food Facts API**: Para dados nutricionais.
+-   **TACO (Tabela Brasileira de Composição de Alimentos)**: Usada via arquivo local.
+-   **Google Gemini**: Usado como fallback para reconhecimento de imagem.
+-   **Hugging Face ()**: Modelo principal para reconhecimento de imagem.
+-   **MongoDB Atlas**: Banco de dados principal.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: []
--   **Known regressions**: A página Admin, que funcionava anteriormente, agora está quebrada.
+-   **Known regressions**: A funcionalidade de reconhecimento de imagem, que funcionava antes da migração para S3, está quebrada.
 
 **Credentials to test flow:**
-- A chave da API do USDA está no arquivo . Não há outras credenciais necessárias para depurar o problema atual.
+-   A chave  está no ambiente e é usada para acessar o Object Storage.
 
 **What agent forgot to execute**
-- O agente não chegou a implementar a correção para o erro body stream already read no arquivo  antes do final da sessão. A depuração foi iniciada, mas o código não foi alterado.</analysis>
+-   O agente anterior migrou com sucesso todas as imagens para o Object Storage, mas **esqueceu de modificar o código do backend () para ler as imagens da nova localização (S3)**. Atualmente, o código ainda tenta ler do disco local (), o que causa a falha no reconhecimento de imagem. Este é o bug crítico que precisa ser corrigido.</analysis>
