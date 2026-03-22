@@ -1,72 +1,70 @@
 # SoulNutri - Product Requirements Document
 
-## Original Problem Statement
-Construir o SoulNutri, um aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens. Foco em precisao maxima (> 90%) e "honestidade" - evitando falsos positivos com alta confianca.
+## Visao do Produto
+Aplicativo de agente de nutricao virtual que identifica pratos em tempo real a partir de imagens, fornecendo informacoes nutricionais detalhadas e personalizadas com alta precisao (> 90%).
 
-## Core Requirements
-1. **Visao:** Radar do prato - seguranca alimentar e informacao nutricional em tempo real
-2. **Precisao:** Identificacao precisa, honesta e confiavel. Rejeitar pratos desconhecidos
-3. **Qualidade:** Informacoes corretas, educativas e cientificamente embasadas
-4. **UX/UI:** Minimo de cliques, fluida, estavel, mensagens claras de confianca
-5. **Evolucao Incremental:** Implementar e validar cada etapa isoladamente
+## Requisitos Principais
+1. **Precisao**: Identificacao precisa, honesta e confiavel (rejeita pratos que nao conhece)
+2. **Qualidade**: Informacoes nutricionais corretas e cientificamente embasadas
+3. **UX/UI**: Interface fluida com minimo de cliques
+4. **Evolucao**: Implementacao incremental com foco em estabilidade
 
-## Architecture
-- Frontend: React (Admin + App principal)
-- Backend: FastAPI (server.py)
-- Database: MongoDB (Atlas)
-- AI: CLIP local (Hugging Face) + Gemini Flash (fallback)
-- Nutrition: USDA API + Open Food Facts + TACO
+## Arquitetura
+- **Frontend**: React (App.js + Admin.js)
+- **Backend**: FastAPI (server.py)
+- **Database**: MongoDB Atlas
+- **Storage**: Emergent Object Storage (S3-compativel) para imagens
+- **AI**: CLIP (openai/clip-vit-base-patch32) + Gemini (fallback)
 
-## What's Been Implemented
-- Sistema de reconhecimento de pratos com CLIP + Gemini Flash
-- Painel Admin completo com gestao de pratos, auditoria, novidades, premium
-- Pipeline de fichas nutricionais (USDA + Open Food Facts + TACO)
-- Sistema de cache para identificacoes
-- Funcionalidades Premium (alertas, mitos/verdades, dados cientificos)
-- Upload de fotos (individual, ZIP, pasta)
-- Sistema de metricas de processamento
-- 188 pratos no dataset com 1627 imagens
+## O que foi implementado
 
-## Prioritized Backlog
-### P0 (Critical)
-- [DONE] Bug do Admin Panel corrigido - pratos exibidos corretamente
+### V1.0 - Base
+- Reconhecimento de imagem com CLIP local + Gemini fallback
+- Painel Admin para gerenciamento de pratos
+- Fichas nutricionais com dados de 3 fontes (USDA, Open Food Facts, TACO)
+- ~188 pratos cadastrados com fichas nutricionais
 
-### P1 (High Priority)
-- Expandir fichas nutricionais para todos os ~200 pratos
-- Monitorar uso de disco e .gitignore para datasets
+### V1.1 - Migracao GPS Removido
+- Remocao completa de logica de geolocalizacao
+- Fluxo unificado de reconhecimento para todos os usuarios
 
-### P2 (Medium)
-- Refatorar server.py e Admin.js
-- Integracao Stripe para premium
-- Validacao da logica de reconhecimento em ambiente real
+### V1.2 - Migracao S3 (22/Mar/2026)
+- Migracao de ~4700 imagens para Object Storage (S3)
+- Importacao de 90 novas fotos de 3 arquivos ZIP
+- Reconstrucao do indice CLIP (189 pratos, 1632 embeddings)
+- **Refatoracao do backend para usar S3 como fonte primaria de imagens**:
+  - `/api/admin/dish-image/{slug}` - Serve imagens do S3 com fallback local
+  - `/api/admin/dishes` e `/api/admin/dishes-full` - Lista pratos do MongoDB
+  - `/api/upload/status` - Estatisticas do MongoDB dish_storage
+  - Upload endpoints - Salvam no S3 + MongoDB + disco local (cache)
+  - Create/feedback endpoints - Salvam no S3 + MongoDB
+  - Review endpoints - Leem/salvam no MongoDB ao inves de dish_info.json
+  - Normalizacao de slugs entre collections (dishes usa snake_case, dish_storage usa Title Case)
+- Novo servico `image_service.py` para abstracacao de operacoes com imagens
 
-## 3rd Party Integrations
-- USDA FoodData Central API (chave real configurada)
-- Open Food Facts API
-- TACO (Tabela Brasileira de Composicao de Alimentos)
-- Hugging Face (openai/clip-vit-base-patch32)
-- Google Gemini (via emergentintegrations)
-- MongoDB Atlas
+## Status Atual
+- **Funcional**: Reconhecimento de imagem, Admin, Upload, Fichas nutricionais
+- **Indice CLIP**: 189 pratos, 1632 embeddings, pronto para buscas
+- **Imagens**: 4660+ no S3, fallback local disponivel
 
-## Key Endpoints
-- GET /api/admin/dishes-full - Lista pratos no Admin
-- GET /api/nutrition-sheet/{dish_name} - Ficha nutricional
-- POST /api/ai/identify - Identificacao de pratos
-- GET /api/ai/status - Status do indice
+## Backlog
 
-## DB Collections
-- dishes: dados dos pratos
-- nutrition_sheets: fichas nutricionais detalhadas
-- users: perfis de usuarios
-- novidades: noticias dos pratos
-- settings: configuracoes
-- processing_metrics: metricas
+### P1 - Proximo
+- Revisao de dados nutricionais contaminados (carpaccio de laranja, carpaccio de abobrinha, bolo vegano de chocolate, polenta com ragu)
+- Salvar versao V1.25 apos validacao do usuario
+- Implementar endpoints faltantes no Admin (api-usage, premium-users, settings)
 
-## Last Update: 2026-03-21
-- GPS removido completamente do frontend
-- Fluxo CLIP/Gemini unificado (sem bloqueio por restaurante)
-- 4642 imagens migradas para Emergent Object Storage (188 pratos)
-- Popup de permissões atualizado (só câmera)
-- Service Worker desregistrado (causava erro postMessage)
-- 5 pratos revisados pelo usuario salvos no MongoDB
-- 13 + 170 pratos com fichas nutricionais (188/188 total)
+### P2 - Futuro
+- Refatorar server.py (~4400 linhas) e App.js (~3200 linhas) em modulos
+- Integracao Stripe para funcionalidades premium
+- Gerar lista atualizada de pratos com poucas fotos
+- Endpoint para upload direto de ZIPs pelo usuario
+
+## Integracoes
+- Emergent Object Storage (S3) - imagens
+- USDA FoodData Central API - nutricao
+- Open Food Facts API - nutricao
+- TACO (local) - nutricao brasileira
+- Google Gemini - fallback reconhecimento
+- HuggingFace CLIP - reconhecimento primario
+- MongoDB Atlas - banco de dados
