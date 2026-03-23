@@ -58,6 +58,13 @@ export default function Admin() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [folderUploadStatus, setFolderUploadStatus] = useState(null);
   const [folderUploading, setFolderUploading] = useState(false);
+  // Moderação
+  const [moderationItems, setModerationItems] = useState([]);
+  const [moderationLoading, setModerationLoading] = useState(false);
+  const [moderationFilter, setModerationFilter] = useState('pending');
+  const [correctingItemId, setCorrectingItemId] = useState(null);
+  const [correctionName, setCorrectionName] = useState('');
+  const [moderationPendingCount, setModerationPendingCount] = useState(0);
 
   useEffect(() => {
     loadDishes();
@@ -65,6 +72,7 @@ export default function Admin() {
     loadNovidades();
     loadPremiumUsers();
     loadMetricsSetting();
+    loadModerationQueue();
   }, []);
 
   const loadUploadStatus = async () => {
@@ -215,6 +223,78 @@ export default function Admin() {
       const data = await res.json();
       if (data.ok) setMetricsEnabled(!!data.ENABLE_PROCESSING_METRICS);
     } catch (e) { console.error('Erro ao carregar settings:', e); }
+  };
+
+  // ═══ MODERAÇÃO ═══
+  const loadModerationQueue = async (filter) => {
+    const statusFilter = filter || moderationFilter;
+    setModerationLoading(true);
+    try {
+      const res = await fetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
+      const data = await res.json();
+      if (data.ok) {
+        setModerationItems(data.items || []);
+        setModerationPendingCount(data.pending_count || 0);
+      }
+    } catch (e) {
+      console.error('Erro ao carregar fila de moderação:', e);
+    } finally {
+      setModerationLoading(false);
+    }
+  };
+
+  const approveModerationItem = async (itemId) => {
+    if (!window.confirm('Aprovar este reconhecimento e salvar a foto no dataset?')) return;
+    try {
+      const res = await fetch(`${API}/admin/moderation/${itemId}/approve`, { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        loadModerationQueue();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    }
+  };
+
+  const rejectModerationItem = async (itemId) => {
+    if (!window.confirm('Rejeitar e descartar este item?')) return;
+    try {
+      const res = await fetch(`${API}/admin/moderation/${itemId}/reject`, { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        loadModerationQueue();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    }
+  };
+
+  const correctModerationItem = async (itemId) => {
+    if (!correctionName.trim()) {
+      alert('Digite o nome correto do prato');
+      return;
+    }
+    try {
+      const res = await fetch(`${API}/admin/moderation/${itemId}/correct`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correct_dish_name: correctionName.trim() })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setCorrectingItemId(null);
+        setCorrectionName('');
+        loadModerationQueue();
+      } else {
+        alert('Erro: ' + data.error);
+      }
+    } catch (e) {
+      alert('Erro: ' + e.message);
+    }
   };
 
   const toggleMetrics = async () => {
@@ -999,6 +1079,31 @@ export default function Admin() {
           data-testid="tab-upload"
         >
           Upload Fotos
+        </button>
+        <button 
+          className={`tab-btn ${activeTab === 'moderation' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('moderation'); loadModerationQueue(); }}
+          data-testid="tab-moderation"
+          style={moderationPendingCount > 0 ? { position: 'relative' } : {}}
+        >
+          Moderação
+          {moderationPendingCount > 0 && (
+            <span style={{
+              position: 'absolute',
+              top: '-4px',
+              right: '-4px',
+              background: '#ef4444',
+              color: '#fff',
+              borderRadius: '50%',
+              width: '20px',
+              height: '20px',
+              fontSize: '11px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold'
+            }}>{moderationPendingCount}</span>
+          )}
         </button>
       </div>
 
@@ -2323,6 +2428,242 @@ export default function Admin() {
           )}
         </div>
       )}
+
+      {/* Moderação Tab */}
+      {activeTab === 'moderation' && (
+        <div className="moderation-section" data-testid="moderation-panel">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h2 style={{ margin: 0, color: '#f8fafc' }}>Fila de Moderação</h2>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <select
+                value={moderationFilter}
+                onChange={e => { setModerationFilter(e.target.value); loadModerationQueue(e.target.value); }}
+                style={{ background: '#1e293b', color: '#e2e8f0', border: '1px solid #334155', borderRadius: '8px', padding: '8px 12px' }}
+                data-testid="moderation-filter"
+              >
+                <option value="pending">Pendentes</option>
+                <option value="approved">Aprovados</option>
+                <option value="rejected">Rejeitados</option>
+                <option value="corrected">Corrigidos</option>
+                <option value="all">Todos</option>
+              </select>
+              <button
+                onClick={() => loadModerationQueue()}
+                style={{ background: '#334155', color: '#e2e8f0', border: 'none', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer' }}
+              >
+                Atualizar
+              </button>
+            </div>
+          </div>
+
+          {moderationLoading && (
+            <div style={{ textAlign: 'center', color: '#94a3b8', padding: '40px' }}>Carregando...</div>
+          )}
+
+          {!moderationLoading && moderationItems.length === 0 && (
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              background: 'rgba(30, 41, 59, 0.7)',
+              borderRadius: '16px',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>✅</div>
+              <h3 style={{ color: '#f8fafc', marginBottom: '8px' }}>Fila vazia</h3>
+              <p style={{ color: '#94a3b8' }}>Nenhum item {moderationFilter !== 'all' ? `com status "${moderationFilter}"` : ''} na fila.</p>
+            </div>
+          )}
+
+          {!moderationLoading && moderationItems.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {moderationItems.map(item => (
+                <div
+                  key={item.id}
+                  data-testid={`moderation-item-${item.id}`}
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.7)',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0'
+                  }}
+                >
+                  {/* Imagem */}
+                  <div style={{ width: '200px', minHeight: '150px', background: '#0f172a', flexShrink: 0 }}>
+                    <img
+                      src={`${API}/admin/moderation-image/${item.id}`}
+                      alt="Foto reportada"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      onError={e => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+
+                  {/* Info */}
+                  <div style={{ flex: 1, padding: '16px', minWidth: '250px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                      <div>
+                        <h3 style={{ color: '#f8fafc', margin: '0 0 4px', fontSize: '18px' }}>
+                          {item.original_dish_display || 'Prato não identificado'}
+                        </h3>
+                        <span style={{
+                          display: 'inline-block',
+                          padding: '2px 10px',
+                          borderRadius: '12px',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          background: item.status === 'pending' ? 'rgba(245,158,11,0.2)' :
+                                     item.status === 'approved' ? 'rgba(16,185,129,0.2)' :
+                                     item.status === 'rejected' ? 'rgba(239,68,68,0.2)' :
+                                     'rgba(139,92,246,0.2)',
+                          color: item.status === 'pending' ? '#f59e0b' :
+                                 item.status === 'approved' ? '#10b981' :
+                                 item.status === 'rejected' ? '#ef4444' :
+                                 '#8b5cf6',
+                          border: `1px solid ${item.status === 'pending' ? 'rgba(245,158,11,0.3)' :
+                                   item.status === 'approved' ? 'rgba(16,185,129,0.3)' :
+                                   item.status === 'rejected' ? 'rgba(239,68,68,0.3)' :
+                                   'rgba(139,92,246,0.3)'}`
+                        }}>
+                          {item.status === 'pending' ? 'Pendente' :
+                           item.status === 'approved' ? 'Aprovado' :
+                           item.status === 'rejected' ? 'Rejeitado' :
+                           'Corrigido'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '16px', color: '#94a3b8', fontSize: '13px', marginBottom: '8px', flexWrap: 'wrap' }}>
+                      <span>Score: <strong style={{ color: item.score >= 0.7 ? '#10b981' : item.score >= 0.5 ? '#f59e0b' : '#ef4444' }}>
+                        {(item.score * 100).toFixed(0)}%
+                      </strong></span>
+                      <span>Confiança: <strong>{item.confidence || '-'}</strong></span>
+                      <span>Fonte: <strong>{item.source || '-'}</strong></span>
+                    </div>
+
+                    <div style={{ color: '#64748b', fontSize: '12px', marginBottom: '12px' }}>
+                      {item.created_at ? new Date(item.created_at).toLocaleString('pt-BR') : '-'}
+                    </div>
+
+                    {item.correction && (
+                      <div style={{ padding: '8px 12px', background: 'rgba(139,92,246,0.15)', borderRadius: '8px', marginBottom: '12px', fontSize: '13px', color: '#c4b5fd' }}>
+                        Corrigido para: <strong>{item.correction}</strong>
+                      </div>
+                    )}
+
+                    {/* Ações - apenas para pendentes */}
+                    {item.status === 'pending' && (
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        <button
+                          onClick={() => approveModerationItem(item.id)}
+                          data-testid={`moderation-approve-${item.id}`}
+                          style={{
+                            background: 'linear-gradient(135deg, #10b981, #059669)',
+                            color: '#fff',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '13px'
+                          }}
+                        >
+                          ✅ Aprovar
+                        </button>
+                        <button
+                          onClick={() => rejectModerationItem(item.id)}
+                          data-testid={`moderation-reject-${item.id}`}
+                          style={{
+                            background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                            color: '#fff',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '13px'
+                          }}
+                        >
+                          ❌ Rejeitar
+                        </button>
+                        {correctingItemId === item.id ? (
+                          <div style={{ display: 'flex', gap: '8px', flex: 1, minWidth: '200px' }}>
+                            <input
+                              type="text"
+                              value={correctionName}
+                              onChange={e => setCorrectionName(e.target.value)}
+                              placeholder="Nome correto do prato..."
+                              data-testid={`moderation-correction-input-${item.id}`}
+                              style={{
+                                flex: 1,
+                                background: '#0f172a',
+                                color: '#e2e8f0',
+                                border: '1px solid #334155',
+                                borderRadius: '8px',
+                                padding: '8px 12px',
+                                fontSize: '13px'
+                              }}
+                            />
+                            <button
+                              onClick={() => correctModerationItem(item.id)}
+                              data-testid={`moderation-save-correction-${item.id}`}
+                              style={{
+                                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                                color: '#fff',
+                                border: 'none',
+                                padding: '8px 16px',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                fontWeight: 'bold',
+                                fontSize: '13px'
+                              }}
+                            >
+                              Salvar
+                            </button>
+                            <button
+                              onClick={() => { setCorrectingItemId(null); setCorrectionName(''); }}
+                              style={{
+                                background: '#334155',
+                                color: '#e2e8f0',
+                                border: 'none',
+                                padding: '8px 12px',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                fontSize: '13px'
+                              }}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => { setCorrectingItemId(item.id); setCorrectionName(''); }}
+                            data-testid={`moderation-correct-${item.id}`}
+                            style={{
+                              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                              color: '#fff',
+                              border: 'none',
+                              padding: '8px 16px',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              fontWeight: 'bold',
+                              fontSize: '13px'
+                            }}
+                          >
+                            ✏️ Corrigir
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {editingDish && (
         <div className="modal-overlay" onClick={() => setEditingDish(null)}>
           <div className="edit-modal-full" onClick={e => e.stopPropagation()}>

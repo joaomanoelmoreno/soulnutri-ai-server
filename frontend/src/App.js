@@ -1260,20 +1260,22 @@ function App() {
     }
   };
 
-  // Enviar feedback - INCORRETO (com correção) - VERSÃO LOCAL (SEM CRÉDITOS)
-  const sendFeedbackIncorrect = async (correctSlug) => {
-    if (!lastImageBlob) return;
+  // Enviar para fila de moderação - Usuário reporta que está incorreto
+  const sendToModerationQueue = async () => {
+    if (!lastImageBlob || !result) return;
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
-    fd.append("dish_slug", correctSlug);
-    fd.append("is_correct", "false");
     fd.append("original_dish", result?.dish || "");
+    fd.append("original_dish_display", result?.dish_display || "");
+    fd.append("confidence", result?.confidence || "");
+    fd.append("score", result?.score || 0);
+    fd.append("source", result?.source || "");
     
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const res = await fetch(`${API}/ai/feedback`, { 
+      const res = await fetch(`${API}/feedback/moderation-queue`, { 
         method: "POST", 
         body: fd,
         signal: controller.signal
@@ -1286,11 +1288,11 @@ function App() {
       if (data.ok) {
         setFeedbackSent(true);
         setShowFeedback(false);
-        // Mostrar confirmação
-        alert(`✅ Correção salva!\n\nA foto foi adicionada ao prato correto.\n💰 Créditos usados: 0`);
+        // Limpar e voltar para câmera
+        clearResult();
       }
     } catch (e) {
-      console.error('Erro ao enviar feedback:', e);
+      console.error('Erro ao enviar para moderação:', e);
     }
   };
 
@@ -2547,16 +2549,19 @@ function App() {
             </button>
           </div>
 
-          {/* BOTÕES DE FEEDBACK */}
+          {/* BOTÕES DE FEEDBACK - FLUXO SEGURO */}
           {!feedbackSent && r.source !== 'new_dish' && (
-            <div className="feedback-section">
+            <div className="feedback-section" data-testid="feedback-section">
               <p className="feedback-question">Este reconhecimento está correto?</p>
               <div className="feedback-btns">
-                <button className="fb-btn correct" onClick={sendFeedbackCorrect}>
-                  ✅ Sim
+                <button className="fb-btn correct" onClick={sendFeedbackCorrect} data-testid="feedback-correct-btn">
+                  ✅ Sim, está correto
                 </button>
-                <button className="fb-btn incorrect" onClick={() => setShowFeedback(true)}>
-                  ❌ Corrigir
+                <button className="fb-btn incorrect" onClick={sendToModerationQueue} data-testid="feedback-incorrect-btn">
+                  ❌ Não, tentar novamente
+                </button>
+                <button className="fb-btn back" onClick={clearResult} data-testid="feedback-back-btn">
+                  ← Voltar
                 </button>
               </div>
             </div>
@@ -3012,74 +3017,7 @@ function App() {
         </div>
       )}
 
-      {/* MODAL DE CORREÇÃO */}
-      {showFeedback && (
-        <div className="modal-overlay" onClick={() => setShowFeedback(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            {/* BOTÃO VOLTAR */}
-            <button 
-              className="modal-back-btn"
-              onClick={() => setShowFeedback(false)}
-            >
-              ← Voltar
-            </button>
-            
-            <h3>Corrigir identificação</h3>
-            
-            {/* Campo para NOVO PRATO */}
-            <div className="new-dish-section">
-              <p className="section-label">📝 Cadastrar prato novo:</p>
-              <div className="new-dish-input">
-                <input 
-                  type="text"
-                  placeholder="Digite o nome do prato..."
-                  value={newDishName}
-                  onChange={e => setNewDishName(e.target.value)}
-                />
-                <button 
-                  onClick={createNewDish} 
-                  disabled={!newDishName.trim() || creatingDish}
-                  className="create-btn"
-                >
-                  {creatingDish ? '⏳' : '➕'} {creatingDish ? 'Criando...' : 'Criar'}
-                </button>
-              </div>
-              <small>A IA vai gerar automaticamente: categoria, ingredientes, benefícios, riscos e alérgenos</small>
-            </div>
-
-            <div className="divider">ou selecione um prato existente:</div>
-
-            {/* Busca */}
-            <input 
-              type="text"
-              className="search-input"
-              placeholder="🔍 Buscar prato..."
-              value={searchFilter}
-              onChange={e => setSearchFilter(e.target.value)}
-            />
-
-            {/* Lista de pratos */}
-            <div className="dishes-list">
-              {filteredDishes.map(d => (
-                <button 
-                  key={d.slug} 
-                  className="dish-option"
-                  onClick={() => sendFeedbackIncorrect(d.slug)}
-                >
-                  {d.category_emoji} {d.name}
-                </button>
-              ))}
-            </div>
-            
-            {/* Ações do modal - FIXAS NO FINAL */}
-            <div className="modal-actions-fixed">
-              <button className="discard-btn" onClick={discardPhoto}>
-                🗑️ Descartar foto (inutilizável)
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* MODAL DE CORREÇÃO REMOVIDO - Agora a correção vai para a fila de moderação do admin */}
 
       {r && !r.ok && (
         <div className="err" data-testid="error-message">❌ {r.message}</div>

@@ -4549,6 +4549,265 @@ async def admin_delete_novidade(dish_slug: str):
         return {"ok": False, "error": str(e)}
 
 
+# ═══════════════════════════════════════════════════════════════
+# MODERAÇÃO - Fila de moderação para feedback de usuários
+# ═══════════════════════════════════════════════════════════════
+
+@api_router.post("/feedback/moderation-queue")
+async def submit_to_moderation_queue(
+    file: UploadFile = File(...),
+    original_dish: str = Form(""),
+    original_dish_display: str = Form(""),
+    confidence: str = Form(""),
+    score: float = Form(0.0),
+    source: str = Form("")
+):
+    """
+    Envia uma foto para a fila de moderação do admin.
+    O usuário reporta que o reconhecimento está incorreto,
+    mas NÃO pode corrigir diretamente - apenas o admin pode.
+    """
+    try:
+        import uuid
+        import base64
+
+        content = await file.read()
+        if len(content) == 0:
+            return {"ok": False, "error": "Arquivo vazio"}
+
+        # Salvar imagem no S3 na pasta de moderação
+        from services.storage_service import put_object
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"moderation_{timestamp}_{unique_id}.jpg"
+        storage_path = f"soulnutri/moderation/{filename}"
+        put_object(storage_path, content, "image/jpeg")
+
+        # Salvar na coleção moderation_queue do MongoDB
+        doc = {
+            "original_dish": original_dish,
+            "original_dish_display": original_dish_display,
+            "confidence": confidence,
+            "score": score,
+            "source": source,
+            "image_path": storage_path,
+            "status": "pending",
+            "created_at": datetime.now().isoformat(),
+            "resolved_at": None,
+            "resolved_by": None,
+            "correction": None
+        }
+        result = await db.moderation_queue.insert_one(doc)
+
+        logger.info(f"[MODERATION] Item adicionado à fila: {original_dish_display} (score: {score:.2f})")
+
+        return {
+            "ok": True,
+            "message": "Reportado com sucesso! O administrador irá revisar.",
+            "queue_id": str(result.inserted_id)
+        }
+
+    except Exception as e:
+        logger.error(f"[MODERATION] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/moderation-queue")
+async def get_moderation_queue(status: str = "pending"):
+    """Lista os itens na fila de moderação."""
+    try:
+        query = {}
+        if status != "all":
+            query["status"] = status
+
+        items = []
+        async for doc in db.moderation_queue.find(query).sort("created_at", -1).limit(100):
+            items.append({
+                "id": str(doc["_id"]),
+                "original_dish": doc.get("original_dish", ""),
+                "original_dish_display": doc.get("original_dish_display", ""),
+                "confidence": doc.get("confidence", ""),
+                "score": doc.get("score", 0),
+                "source": doc.get("source", ""),
+                "image_path": doc.get("image_path", ""),
+                "status": doc.get("status", "pending"),
+                "created_at": doc.get("created_at", ""),
+                "resolved_at": doc.get("resolved_at"),
+                "correction": doc.get("correction")
+            })
+
+        pending_count = await db.moderation_queue.count_documents({"status": "pending"})
+
+        return {
+            "ok": True,
+            "items": items,
+            "total": len(items),
+            "pending_count": pending_count
+        }
+
+    except Exception as e:
+        logger.error(f"[MODERATION] Erro ao listar fila: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/moderation-image/{item_id}")
+async def get_moderation_image(item_id: str):
+    """Retorna a imagem de um item da fila de moderação."""
+    from bson import ObjectId
+    from fastapi.responses import Response
+
+    try:
+        doc = await db.moderation_queue.find_one({"_id": ObjectId(item_id)})
+        if not doc or not doc.get("image_path"):
+            return Response(content=b"", media_type="image/jpeg", status_code=404)
+
+        from services.storage_service import get_object
+        image_data, content_type = get_object(doc["image_path"])
+        return Response(content=image_data, media_type=content_type)
+
+    except Exception as e:
+        logger.error(f"[MODERATION] Erro ao buscar imagem: {e}")
+        return Response(content=b"", media_type="image/jpeg", status_code=500)
+
+
+@api_router.post("/admin/moderation/{item_id}/approve")
+async def approve_moderation_item(item_id: str):
+    """Admin aprova o reconhecimento original como correto e salva a foto no dataset."""
+    from bson import ObjectId
+
+    try:
+        doc = await db.moderation_queue.find_one({"_id": ObjectId(item_id)})
+        if not doc:
+            return {"ok": False, "error": "Item não encontrado"}
+
+        if doc["status"] != "pending":
+            return {"ok": False, "error": "Item já foi processado"}
+
+        # Se tem prato original, salvar imagem no dataset
+        if doc.get("original_dish") and doc.get("image_path"):
+            from services.storage_service import get_object
+            from services.image_service import save_dish_image
+            import uuid
+
+            image_data, _ = get_object(doc["image_path"])
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            uid = str(uuid.uuid4())[:8]
+            filename = f"{doc['original_dish']}_approved_{timestamp}_{uid}.jpg"
+            save_dish_image(doc["original_dish"], filename, image_data)
+
+        # Atualizar status
+        await db.moderation_queue.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": {
+                "status": "approved",
+                "resolved_at": datetime.now().isoformat(),
+                "resolved_by": "admin"
+            }}
+        )
+
+        logger.info(f"[MODERATION] Aprovado: {doc.get('original_dish_display')}")
+        return {"ok": True, "message": "Item aprovado e foto salva no dataset"}
+
+    except Exception as e:
+        logger.error(f"[MODERATION] Erro ao aprovar: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/moderation/{item_id}/reject")
+async def reject_moderation_item(item_id: str):
+    """Admin rejeita o item (descarta)."""
+    from bson import ObjectId
+
+    try:
+        doc = await db.moderation_queue.find_one({"_id": ObjectId(item_id)})
+        if not doc:
+            return {"ok": False, "error": "Item não encontrado"}
+
+        if doc["status"] != "pending":
+            return {"ok": False, "error": "Item já foi processado"}
+
+        await db.moderation_queue.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": {
+                "status": "rejected",
+                "resolved_at": datetime.now().isoformat(),
+                "resolved_by": "admin"
+            }}
+        )
+
+        logger.info(f"[MODERATION] Rejeitado: {doc.get('original_dish_display')}")
+        return {"ok": True, "message": "Item rejeitado"}
+
+    except Exception as e:
+        logger.error(f"[MODERATION] Erro ao rejeitar: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/moderation/{item_id}/correct")
+async def correct_moderation_item(item_id: str, request: Request):
+    """
+    Admin corrige o nome do prato e salva a foto no dataset correto.
+    Body: { "correct_dish_name": "Nome Correto Do Prato" }
+    """
+    from bson import ObjectId
+
+    try:
+        data = await request.json()
+        correct_name = data.get("correct_dish_name", "").strip()
+
+        if not correct_name:
+            return {"ok": False, "error": "Nome correto é obrigatório"}
+
+        doc = await db.moderation_queue.find_one({"_id": ObjectId(item_id)})
+        if not doc:
+            return {"ok": False, "error": "Item não encontrado"}
+
+        if doc["status"] != "pending":
+            return {"ok": False, "error": "Item já foi processado"}
+
+        # Gerar slug do nome correto
+        import re as _re
+        correct_slug = correct_name.lower().strip()
+        correct_slug = correct_slug.replace(" ", "_").replace("-", "_")
+        correct_slug = ''.join(c for c in correct_slug if c.isalnum() or c == '_')
+
+        # Salvar imagem no dataset do prato correto
+        if doc.get("image_path"):
+            from services.storage_service import get_object
+            from services.image_service import save_dish_image
+            import uuid
+
+            image_data, _ = get_object(doc["image_path"])
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            uid = str(uuid.uuid4())[:8]
+            filename = f"{correct_slug}_corrected_{timestamp}_{uid}.jpg"
+            save_dish_image(correct_slug, filename, image_data)
+
+        # Atualizar status
+        await db.moderation_queue.update_one(
+            {"_id": ObjectId(item_id)},
+            {"$set": {
+                "status": "corrected",
+                "resolved_at": datetime.now().isoformat(),
+                "resolved_by": "admin",
+                "correction": correct_name,
+                "correction_slug": correct_slug
+            }}
+        )
+
+        logger.info(f"[MODERATION] Corrigido: {doc.get('original_dish_display')} -> {correct_name}")
+        return {
+            "ok": True,
+            "message": f"Corrigido para '{correct_name}' e foto salva no dataset",
+            "correction": correct_name,
+            "correction_slug": correct_slug
+        }
+
+    except Exception as e:
+        logger.error(f"[MODERATION] Erro ao corrigir: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 # ═════════════════════════════
 
 app.include_router(api_router)
