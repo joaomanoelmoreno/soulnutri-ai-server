@@ -5,7 +5,7 @@
 .wr-container {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: #0d0d1a;
+  background: #0f172a;
   z-index: 5000;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -14,15 +14,15 @@
 .wr-header {
   position: sticky;
   top: 0;
-  background: linear-gradient(180deg, #0d0d1a 85%, transparent);
+  background: linear-gradient(180deg, #0f172a 85%, transparent);
   padding: 16px 16px 20px;
   z-index: 10;
 }
 
 .wr-back {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #ccc;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #94a3b8;
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 13px;
@@ -31,6 +31,7 @@
 }
 
 .wr-title {
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 26px;
   font-weight: 800;
   background: linear-gradient(135deg, #f59e0b, #ec4899);
@@ -41,7 +42,7 @@
 }
 
 .wr-subtitle {
-  color: #666;
+  color: #64748b;
   font-size: 13px;
   margin: 2px 0 0;
 }

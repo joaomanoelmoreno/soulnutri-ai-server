@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #0d0d1a;
+  background: #0f172a;
   z-index: 5000;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -18,26 +18,26 @@
 .nf-header {
   position: sticky;
   top: 0;
-  background: linear-gradient(180deg, #0d0d1a 80%, transparent);
+  background: linear-gradient(180deg, #0f172a 80%, transparent);
   padding: 16px 16px 24px;
   z-index: 10;
 }
 
 .nf-back {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #ccc;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #94a3b8;
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s;
   margin-bottom: 12px;
 }
 
 .nf-back:hover {
-  background: rgba(255,255,255,0.15);
-  color: #fff;
+  background: rgba(255,255,255,0.12);
+  color: #f8fafc;
 }
 
 .nf-title-area {
@@ -45,9 +45,10 @@
 }
 
 .nf-title {
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 28px;
   font-weight: 800;
-  background: linear-gradient(135deg, #22c55e, #06b6d4);
+  background: linear-gradient(135deg, #10b981, #06b6d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -56,9 +57,10 @@
 }
 
 .nf-subtitle {
-  color: #666;
+  color: #64748b;
   font-size: 13px;
   margin: 4px 0 0;
+  letter-spacing: 0.2px;
 }
 
 /* Stats Bar */
