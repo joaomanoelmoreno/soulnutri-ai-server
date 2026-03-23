@@ -19,7 +19,7 @@ os.environ["CUDA_HOME"] = ""
 os.environ["USE_CUDA"] = "0"
 os.environ["FORCE_CPU"] = "1"
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import asyncio
 from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query
@@ -2267,6 +2267,79 @@ async def identify_multiple_items(file: UploadFile = File(...)):
 
 
 # ═══════════════════════════════════════════════════════════════════════
+# FEED DE NOTICIAS E CURIOSIDADES NUTRICIONAIS
+# ═══════════════════════════════════════════════════════════════════════
+
+@api_router.get("/news/feed")
+async def get_news_feed_endpoint(limit: int = 20, categoria: str = None, skip: int = 0):
+    """Retorna feed de noticias/curiosidades nutricionais verificadas."""
+    try:
+        from services.news_service import get_news_feed, get_news_stats
+        
+        items = get_news_feed(limit=limit, categoria=categoria, skip=skip)
+        stats = get_news_stats()
+        
+        return {
+            "ok": True,
+            "items": items,
+            "total": stats["total"],
+            "categories": stats["categories"],
+            "stats": stats
+        }
+    except Exception as e:
+        logger.error(f"Erro ao buscar feed: {e}")
+        return {"ok": False, "error": str(e), "items": []}
+
+
+@api_router.post("/news/generate")
+async def generate_news_endpoint(count: int = 6):
+    """Gera novas noticias/curiosidades com IA (verificadas). Admin only."""
+    try:
+        from services.news_service import generate_news_batch
+        
+        items = await generate_news_batch(count=count)
+        
+        return {
+            "ok": True,
+            "generated": len(items),
+            "items": items,
+            "message": f"{len(items)} noticias geradas e verificadas"
+        }
+    except Exception as e:
+        logger.error(f"Erro ao gerar noticias: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/news/like/{content_hash}")
+async def like_news_endpoint(content_hash: str):
+    """Incrementa like de uma noticia."""
+    try:
+        from services.news_service import toggle_news_like
+        likes = toggle_news_like(content_hash)
+        return {"ok": True, "likes": likes}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/news/view/{content_hash}")
+async def view_news_endpoint(content_hash: str):
+    """Registra visualizacao de uma noticia."""
+    try:
+        from services.news_service import increment_news_view
+        increment_news_view(content_hash)
+        return {"ok": True}
+    except Exception as e:
+        return {"ok": False}
+
+
+@api_router.get("/news/categories")
+async def get_news_categories():
+    """Retorna categorias disponiveis de noticias."""
+    from services.news_service import CATEGORIES
+    return {"ok": True, "categories": CATEGORIES}
+
+
+# ═══════════════════════════════════════════════════════════════════════
 # PREMIUM - PERFIL DO USUÁRIO E CONTADOR NUTRICIONAL
 # ═══════════════════════════════════════════════════════════════════════
 
@@ -3344,7 +3417,216 @@ async def get_premium_report(pin: str, periodo: str = "semana"):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/radar/alimentos/{nome_prato}")
+@api_router.get("/premium/achievements")
+async def get_achievements(pin: str):
+    """Retorna badges, streak, nivel e mensagens motivacionais do usuario."""
+    try:
+        from services.profile_service import hash_pin
+        from services.motivational_service import calculate_achievements
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Buscar dados dos ultimos 30 dias
+        data_inicio = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+        logs = await db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1).to_list(length=100)
+        
+        # Calcular streak
+        streak = 0
+        for i in range(365):
+            data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            if any(l.get("data") == data and l.get("calorias_total", 0) > 0 for l in logs):
+                streak += 1
+            else:
+                break
+        
+        # Calcular dados para achievements
+        total_refeicoes = sum(len(l.get("pratos", [])) for l in logs)
+        
+        pratos_set = set()
+        veggie_count = 0
+        balanced_days = 0
+        
+        for l in logs:
+            for p in l.get("pratos", []):
+                nome = p.get("nome", "").lower()
+                pratos_set.add(nome)
+                cat = p.get("categoria", "").lower()
+                if "vegan" in cat or "vegetarian" in cat:
+                    veggie_count += 1
+            
+            # Verificar equilibrio macro do dia
+            cal = l.get("calorias_total", 0)
+            if cal > 0:
+                prot = l.get("proteinas_total", 0) * 4
+                carb = l.get("carboidratos_total", 0) * 4
+                gord = l.get("gorduras_total", 0) * 9
+                total = prot + carb + gord
+                if total > 0:
+                    pct_p = prot / total
+                    pct_c = carb / total
+                    pct_g = gord / total
+                    if 0.15 <= pct_p <= 0.30 and 0.40 <= pct_c <= 0.65 and 0.20 <= pct_g <= 0.40:
+                        balanced_days += 1
+        
+        # Score atual (simplificado)
+        metas = user.get("metas", {"calorias": 2000})
+        dias_com_log = [l for l in logs if l.get("calorias_total", 0) > 0]
+        score = 0
+        if dias_com_log:
+            media_cal = sum(l.get("calorias_total", 0) for l in dias_com_log) / len(dias_com_log)
+            meta_cal = metas.get("calorias", 2000)
+            ratio = media_cal / meta_cal if meta_cal > 0 else 0
+            score = max(0, min(100, int(100 - abs(1 - ratio) * 100)))
+        
+        user_data = {
+            "streak": streak,
+            "total_refeicoes": total_refeicoes,
+            "pratos_unicos": len(pratos_set),
+            "score": score,
+            "veggie_count": veggie_count,
+            "balanced_days": balanced_days,
+            "prev_score": 0
+        }
+        
+        result = calculate_achievements(user_data)
+        result["ok"] = True
+        result["nome"] = user.get("nome", "")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Erro ao buscar achievements: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/weekly-report-ai")
+async def get_weekly_report_ai(pin: str):
+    """Gera relatorio semanal educativo com IA incluindo excessos, faltas e recomendacoes."""
+    try:
+        from services.profile_service import hash_pin
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one({"pin_hash": pin_hash})
+        if not user:
+            return {"ok": False, "error": "PIN incorreto"}
+        
+        # Buscar logs da semana
+        data_inicio = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
+        logs = await db.daily_logs.find(
+            {"user_nome": user["nome"], "data": {"$gte": data_inicio}},
+            {"_id": 0}
+        ).sort("data", -1).to_list(length=50)
+        
+        dias_com_log = [l for l in logs if l.get("calorias_total", 0) > 0]
+        
+        if not dias_com_log:
+            return {
+                "ok": True,
+                "has_data": False,
+                "message": "Sem dados suficientes esta semana. Registre suas refeicoes!"
+            }
+        
+        # Compilar resumo
+        total_cal = sum(l.get("calorias_total", 0) for l in dias_com_log)
+        total_prot = sum(l.get("proteinas_total", 0) for l in dias_com_log)
+        total_carb = sum(l.get("carboidratos_total", 0) for l in dias_com_log)
+        total_gord = sum(l.get("gorduras_total", 0) for l in dias_com_log)
+        n_dias = len(dias_com_log)
+        
+        pratos_list = []
+        for l in dias_com_log:
+            for p in l.get("pratos", []):
+                pratos_list.append(p.get("nome", "Desconhecido"))
+        
+        perfil = user.get("perfil", {})
+        metas = user.get("metas", {"calorias": 2000, "proteinas": 50, "carboidratos": 250, "gorduras": 65})
+        
+        resumo = f"""
+Perfil: {perfil.get('sexo','M')}, {perfil.get('idade',30)} anos, {perfil.get('peso',70)}kg, objetivo: {perfil.get('objetivo','manter')}
+Dias registrados: {n_dias}/7
+Medias diarias: {total_cal/n_dias:.0f} kcal, {total_prot/n_dias:.0f}g prot, {total_carb/n_dias:.0f}g carb, {total_gord/n_dias:.0f}g gord
+Metas: {metas.get('calorias',2000)} kcal, {metas.get('proteinas',50)}g prot, {metas.get('carboidratos',250)}g carb, {metas.get('gorduras',65)}g gord
+Pratos consumidos: {', '.join(set(pratos_list))}
+"""
+        
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        
+        prompt = f"""Voce e um nutricionista educativo do app SoulNutri. Gere um relatorio semanal PERSONALIZADO e MOTIVADOR.
+
+DADOS DO USUARIO:
+{resumo}
+
+REGRAS:
+1. Seja POSITIVO primeiro, depois aponte melhorias
+2. Use linguagem SIMPLES e ACESSIVEL
+3. Nao use termos tecnicos sem explicar
+4. Inclua 1-2 curiosidades nutricionais relevantes
+5. Termine com uma mensagem motivacional
+
+Retorne um JSON:
+{{
+  "titulo": "Resumo semanal personalizado (ex: Semana equilibrada!)",
+  "nota_geral": "A/B/C/D",
+  "pontos_positivos": ["Lista de 2-3 pontos positivos"],
+  "alertas": ["Lista de 1-2 alertas sobre excessos ou faltas"],
+  "dicas": ["Lista de 2-3 dicas praticas para melhorar"],
+  "curiosidade": "Uma curiosidade nutricional relacionada ao consumo do usuario",
+  "mensagem_motivacional": "Frase motivacional personalizada",
+  "analise_macros": {{
+    "calorias": {{"status": "ok/excesso/deficit", "detalhe": "Explicacao breve"}},
+    "proteinas": {{"status": "ok/excesso/deficit", "detalhe": "Explicacao breve"}},
+    "carboidratos": {{"status": "ok/excesso/deficit", "detalhe": "Explicacao breve"}},
+    "gorduras": {{"status": "ok/excesso/deficit", "detalhe": "Explicacao breve"}}
+  }}
+}}"""
+
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"weekly-report-{int(datetime.now().timestamp())}",
+            system_message="Voce e um nutricionista educativo. Retorne APENAS JSON valido."
+        ).with_model("gemini", "gemini-2.0-flash")
+        
+        response = await chat.send_message(UserMessage(text=prompt))
+        
+        clean = response.strip()
+        if clean.startswith("```"):
+            clean = clean.split("```")[1]
+            if clean.startswith("json"):
+                clean = clean[4:]
+        if clean.endswith("```"):
+            clean = clean[:-3]
+        
+        import json
+        ai_report = json.loads(clean.strip())
+        
+        return {
+            "ok": True,
+            "has_data": True,
+            "nome": user.get("nome", ""),
+            "periodo": f"{data_inicio} a {datetime.now().strftime('%Y-%m-%d')}",
+            "dias_registrados": n_dias,
+            "medias": {
+                "calorias": round(total_cal / n_dias),
+                "proteinas": round(total_prot / n_dias),
+                "carboidratos": round(total_carb / n_dias),
+                "gorduras": round(total_gord / n_dias)
+            },
+            "metas": metas,
+            "pratos_unicos": len(set(pratos_list)),
+            "total_pratos": len(pratos_list),
+            "ai_report": ai_report
+        }
+        
+    except Exception as e:
+        logger.error(f"Erro no relatorio semanal AI: {e}")
+        return {"ok": False, "error": str(e)}
 async def get_radar_alimentos(nome_prato: str, ingredientes: str = None):
     """
     Retorna alertas do Radar sobre um alimento/prato.

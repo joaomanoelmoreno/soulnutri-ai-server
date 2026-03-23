@@ -7,6 +7,10 @@ import { PremiumProfileForm, generatePersonalizedTip } from "./PremiumProfile";
 import CheckinRefeicao from "./CheckinRefeicao";
 import "./CheckinRefeicao.css";
 import { I18nProvider, useI18n, LanguageSelector } from "./I18nContext";
+import NutritionFeed from "./NutritionFeed";
+import "./NutritionFeed.css";
+import WeeklyReport from "./WeeklyReport";
+import "./WeeklyReport.css";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -293,6 +297,8 @@ function App() {
   });
   // Tutorial do Scanner Contínuo
   const [showScannerTutorial, setShowScannerTutorial] = useState(false);
+  const [showNutriFeed, setShowNutriFeed] = useState(false);
+  const [showWeeklyReport, setShowWeeklyReport] = useState(false);
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -1728,6 +1734,12 @@ function App() {
           )}
           <button className="menu-item" onClick={() => { setShowMenu(false); setShowScannerTutorial(true); }} data-testid="menu-tutorial">
             📸 {t('how_scanner_works', 'Como usar o SoulNutri')}
+          </button>
+          <button className="menu-item" onClick={() => { setShowMenu(false); setShowNutriFeed(true); }} data-testid="menu-nutri-feed">
+            📰 Nutri News
+          </button>
+          <button className="menu-item" onClick={() => { setShowMenu(false); setShowWeeklyReport(true); }} data-testid="menu-weekly-report">
+            📊 Relatorio Semanal
           </button>
           <button className="menu-item" onClick={() => { setShowMenu(false); checkStatus(); loadDishes(); }}>
             🔄 Atualizar pratos
@@ -3200,6 +3212,19 @@ function App() {
       {/* Tutorial do Scanner Contínuo */}
       {showScannerTutorial && (
         <ScannerTutorial onClose={() => setShowScannerTutorial(false)} />
+      )}
+
+      {/* Nutri News Feed */}
+      {showNutriFeed && (
+        <NutritionFeed onClose={() => setShowNutriFeed(false)} />
+      )}
+
+      {/* Weekly Report & Achievements */}
+      {showWeeklyReport && (
+        <WeeklyReport 
+          pin={localStorage.getItem('soulnutri_pin') || ''} 
+          onClose={() => setShowWeeklyReport(false)} 
+        />
       )}
 
       {/* Rodapé */}

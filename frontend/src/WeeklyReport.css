@@ -1,0 +1,502 @@
+/* ═══════════════════════════════════════════════════════════════════
+   WEEKLY REPORT & ACHIEVEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+
+.wr-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0d0d1a;
+  z-index: 5000;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wr-header {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, #0d0d1a 85%, transparent);
+  padding: 16px 16px 20px;
+  z-index: 10;
+}
+
+.wr-back {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.wr-title {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f59e0b, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.wr-subtitle {
+  color: #666;
+  font-size: 13px;
+  margin: 2px 0 0;
+}
+
+/* Tabs */
+.wr-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.wr-tab {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: #888;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wr-tab.active {
+  background: rgba(245,158,11,0.12);
+  border-color: rgba(245,158,11,0.3);
+  color: #f59e0b;
+}
+
+.wr-content {
+  padding: 0 16px 100px;
+}
+
+/* Loading */
+.wr-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  color: #666;
+}
+
+.wr-spinner {
+  width: 36px; height: 36px;
+  border: 3px solid rgba(245,158,11,0.15);
+  border-top-color: #f59e0b;
+  border-radius: 50%;
+  animation: wr-spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes wr-spin { to { transform: rotate(360deg); } }
+
+/* Empty */
+.wr-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.wr-empty-icon { font-size: 48px; margin-bottom: 16px; }
+.wr-empty h3 { color: #ccc; font-size: 18px; margin: 0 0 8px; }
+.wr-empty p { color: #666; font-size: 14px; }
+
+/* Grade Card */
+.wr-grade-card {
+  text-align: center;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(236,72,153,0.08));
+  border: 1px solid rgba(245,158,11,0.15);
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.wr-grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #ec4899);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.wr-grade-title {
+  color: #e8e8e8;
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.wr-grade-period {
+  color: #888;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Sections */
+.wr-section {
+  margin-bottom: 16px;
+}
+
+.wr-section-title {
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px;
+}
+
+/* Macros Grid */
+.wr-macros-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.wr-macro-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.wr-macro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.wr-macro-name {
+  color: #ccc;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wr-macro-status {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.wr-macro-values {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.wr-macro-current {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.wr-macro-meta {
+  color: #555;
+  font-size: 11px;
+  align-self: flex-end;
+}
+
+.wr-macro-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.wr-macro-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.wr-macro-detail {
+  color: #888;
+  font-size: 11px;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+/* Lists */
+.wr-list-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.wr-list-item.positive {
+  background: rgba(34,197,94,0.08);
+  border-left: 3px solid #22c55e;
+  color: #a7f3d0;
+}
+
+.wr-list-item.alert {
+  background: rgba(245,158,11,0.08);
+  border-left: 3px solid #f59e0b;
+  color: #fde68a;
+}
+
+.wr-list-item.tip {
+  background: rgba(99,102,241,0.08);
+  border-left: 3px solid #6366f1;
+  color: #c7d2fe;
+}
+
+/* Curiosity */
+.wr-curiosity {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.15);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.wr-curiosity-icon { font-size: 20px; flex-shrink: 0; }
+.wr-curiosity p { color: #fde68a; font-size: 13px; line-height: 1.5; margin: 0; }
+
+/* Motivational */
+.wr-motivational {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(6,182,212,0.08));
+  border: 1px solid rgba(34,197,94,0.15);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.wr-motivational p {
+  color: #a7f3d0;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Footer Stats */
+.wr-footer-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px;
+  color: #555;
+  font-size: 12px;
+}
+
+/* === ACHIEVEMENTS TAB === */
+
+/* Level Card */
+.wr-level-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.wr-level-badge {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 3px solid #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wr-level-num {
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+}
+
+.wr-level-info { flex: 1; }
+.wr-level-info h3 { margin: 0; font-size: 18px; font-weight: 800; }
+.wr-level-info p { margin: 2px 0 6px; color: #888; font-size: 12px; }
+
+.wr-level-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.wr-level-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.wr-level-next {
+  color: #555;
+  font-size: 11px;
+}
+
+/* Streak */
+.wr-streak {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(239,68,68,0.06);
+  border: 1px solid rgba(239,68,68,0.12);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.wr-streak-fire { font-size: 28px; }
+.wr-streak-count { font-size: 32px; font-weight: 900; color: #fff; }
+.wr-streak-label { color: #888; font-size: 14px; }
+
+/* Motivation Card */
+.wr-motivation-card {
+  padding: 14px;
+  background: rgba(34,197,94,0.06);
+  border: 1px solid rgba(34,197,94,0.12);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.wr-motivation-card p {
+  color: #a7f3d0;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 4px;
+  font-style: italic;
+}
+
+/* Next Badge */
+.wr-next-badge {
+  margin-bottom: 16px;
+}
+
+.wr-next-label {
+  color: #888;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.wr-badge-preview {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  background: rgba(245,158,11,0.06);
+  border: 1px dashed rgba(245,158,11,0.2);
+  border-radius: 10px;
+}
+
+.wr-badge-icon-locked { font-size: 24px; }
+.wr-badge-preview strong { color: #fde68a; font-size: 14px; }
+.wr-badge-preview p { color: #888; font-size: 12px; margin: 2px 0 6px; }
+
+.wr-badge-progress-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  width: 100px;
+  display: inline-block;
+}
+
+.wr-badge-progress-fill {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 2px;
+}
+
+.wr-badge-progress-text {
+  color: #f59e0b;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+/* Badges Grid */
+.wr-badges-section {
+  margin-bottom: 16px;
+}
+
+.wr-badges-section h4 {
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.wr-badges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.wr-badge {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.wr-badge.unlocked {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid;
+}
+
+.wr-badge.locked {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  opacity: 0.5;
+}
+
+.wr-badge-icon {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.wr-badge-name {
+  color: #ccc;
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+}
+
+.wr-badge-desc {
+  color: #666;
+  font-size: 10px;
+  display: block;
+  margin-top: 2px;
+}
+
+.wr-badge-mini-bar {
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 1px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.wr-badge-mini-bar div {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 1px;
+}
