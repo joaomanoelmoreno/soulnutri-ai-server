@@ -1,0 +1,157 @@
+{
+  "project_name": "SoulNutri - Cibi Sana Redesign",
+  "design_philosophy": {
+    "identity": "E1 - The Anti-AI Designer",
+    "core_concept": "Gourmet Tech",
+    "vibe": "Sophisticated, Organic, Fresh, Appetizing",
+    "archetype": "The Performance Pro (Nutritional Precision) mixed with Organic & Earthy (Fresh Ingredients)",
+    "visual_direction": "Dark Mode Gourmet - High contrast, slate backgrounds, vibrant food colors, glassmorphism."
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Playfair Display, serif",
+      "body": "Inter, sans-serif",
+      "accent": "DM Sans, sans-serif"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h2": "text-3xl md:text-4xl font-semibold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body_lg": "text-lg leading-relaxed",
+      "body_base": "text-base leading-relaxed",
+      "caption": "text-sm text-muted-foreground uppercase tracking-widest"
+    },
+    "weights": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "bold": 700
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": "#0f172a",
+      "foreground": "#f8fafc",
+      "card": "rgba(30, 41, 59, 0.7)",
+      "card_foreground": "#f8fafc",
+      "popover": "#1e293b",
+      "popover_foreground": "#f8fafc",
+      "primary": "#10b981",
+      "primary_foreground": "#ffffff",
+      "secondary": "#f97316",
+      "secondary_foreground": "#ffffff",
+      "muted": "#334155",
+      "muted_foreground": "#94a3b8",
+      "accent": "#7c3aed",
+      "accent_foreground": "#ffffff",
+      "destructive": "#ef4444",
+      "destructive_foreground": "#ffffff",
+      "border": "rgba(255, 255, 255, 0.1)",
+      "input": "rgba(255, 255, 255, 0.1)",
+      "ring": "#10b981"
+    },
+    "gradients": {
+      "primary": "bg-gradient-to-r from-emerald-500 to-teal-500",
+      "secondary": "bg-gradient-to-r from-orange-500 to-amber-500",
+      "dark_overlay": "bg-gradient-to-t from-slate-900 to-transparent"
+    },
+    "semantic": {
+      "success": "#10b981",
+      "warning": "#f59e0b",
+      "error": "#ef4444",
+      "info": "#3b82f6"
+    }
+  },
+  "layout_strategies": {
+    "container": "max-w-md mx-auto min-h-screen bg-slate-950 text-slate-50 relative overflow-hidden",
+    "spacing": {
+      "section_gap": "gap-8",
+      "item_gap": "gap-4",
+      "padding_base": "p-6",
+      "padding_lg": "p-8"
+    },
+    "grid_system": {
+      "bento": "grid grid-cols-2 gap-4",
+      "list": "flex flex-col gap-4"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-emerald-500 hover:bg-emerald-600 text-white rounded-full px-6 py-3 font-medium transition-all shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] active:scale-95",
+      "secondary": "bg-slate-800 hover:bg-slate-700 text-white rounded-full px-6 py-3 font-medium border border-slate-700 transition-all active:scale-95",
+      "ghost": "hover:bg-white/10 text-slate-300 hover:text-white rounded-lg px-4 py-2 transition-colors",
+      "icon": "p-2 rounded-full hover:bg-white/10 transition-colors"
+    },
+    "cards": {
+      "glass": "backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl shadow-xl overflow-hidden",
+      "solid": "bg-slate-900 border border-slate-800 rounded-2xl shadow-lg",
+      "interactive": "backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl shadow-lg hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer active:scale-[0.98]"
+    },
+    "inputs": {
+      "base": "bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+    },
+    "badges": {
+      "base": "px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase",
+      "success": "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+      "warning": "bg-amber-500/20 text-amber-400 border border-amber-500/30",
+      "neutral": "bg-slate-700/50 text-slate-300 border border-slate-600"
+    }
+  },
+  "motion": {
+    "transitions": "transition-all duration-300 ease-out",
+    "hover": "hover:-translate-y-1 hover:shadow-lg",
+    "active": "active:scale-95",
+    "entrance": "animate-in fade-in slide-in-from-bottom-4 duration-500",
+    "micro_interactions": "active:scale-95 transition-transform"
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "hero_background",
+        "url": "https://images.unsplash.com/photo-1612949060306-4c298ad7f34c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwYnJhemlsaWFuJTIwYnVmZmV0JTIwZnJlc2glMjBzYWxhZCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NDI2Njc3NXww&ixlib=rb-4.1.0&q=85",
+        "alt": "Fresh gourmet salad on dark background"
+      },
+      {
+        "category": "fresh_ingredients",
+        "url": "https://images.pexels.com/photos/9399991/pexels-photo-9399991.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Vibrant salad bar close up"
+      },
+       {
+        "category": "plated_dish",
+        "url": "https://images.unsplash.com/photo-1761315600943-d8a5bb0c499f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHw0fHxnb3VybWV0JTIwYnJhemlsaWFuJTIwYnVmZmV0JTIwZnJlc2glMjBzYWxhZCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NDI2Njc3NXww&ixlib=rb-4.1.0&q=85",
+        "alt": "Grilled chicken gourmet salad"
+      },
+      {
+        "category": "texture_overlay",
+        "url": "https://www.transparenttextures.com/patterns/stardust.png",
+        "alt": "Subtle noise texture for background"
+      }
+    ],
+    "icons": "Lucide React (already installed)"
+  },
+  "specific_instructions": [
+    "Refactor App.js to use Tailwind utility classes instead of inline styles where possible.",
+    "Implement 'Glassmorphism' for the main camera overlay and result cards.",
+    "Use the 'Emerald' green as the primary action color (Shutter button, CTA) to signify 'Fresh/Healthy'.",
+    "Replace the solid dark background with a deep Slate (#0f172a) and add a subtle noise texture or gradient blob to create depth.",
+    "Use Playfair Display for the 'SoulNutri' logo and section headings (Nutri News, Weekly Report).",
+    "Ensure the camera view has a premium 'Frame' - maybe a thin glowing border or corner brackets.",
+    "Weekly Report should look like a 'Gourmet Menu' or 'Sommelier List' - elegant list items.",
+    "Nutri News should use a Bento Grid layout for visual interest.",
+    "Add a 'Freshness' indicator visual - maybe a leaf icon or a water droplet effect.",
+    "Maintain the existing 'Dark Mode' constraint but elevate it to 'Luxury Dining' (Slate/Stone) rather than 'Matrix Black'.",
+    "For the 'Camera Error' state, use a friendly, helpful illustration or icon, not just text.",
+    "Optimize for mobile: Touch targets must be at least 44px (p-4 or h-12).",
+    "Data-testid attributes are mandatory for all interactive elements."
+  ],
+  "universal_guidelines": [
+    "Do not use generic centered layouts. Use asymmetry where appropriate.",
+    "Use 2-3x more spacing than typical (p-6, p-8) for a luxury feel.",
+    "Micro-animations are required for all interactions (hover, click, load).",
+    "Never use pure black (#000000) or pure white (#ffffff) for large backgrounds. Use tinted neutrals.",
+    "Ensure all text has sufficient contrast (APCA/WCAG AA).",
+    "Use 'sonner' for toasts (already installed).",
+    "Components must use named exports.",
+    "Pages must use default exports."
+  ]
+}

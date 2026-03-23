@@ -200,14 +200,31 @@ export default function NutritionFeed({ onClose }) {
                       <div className="nf-card-expanded">
                         <p className="nf-card-content">{item.conteudo}</p>
                         
-                        {/* Source */}
+                        {/* Source with clickable link */}
                         <div className="nf-card-source">
                           <span className="nf-source-verified">
                             {item.verificado ? '✓ Verificado' : '? Nao verificado'}
                           </span>
-                          <span className="nf-source-name">
-                            📚 {item.fonte_nome} {item.fonte_ano ? `(${item.fonte_ano})` : ''}
-                          </span>
+                          <div className="nf-source-detail">
+                            <span className="nf-source-name">
+                              📚 {item.fonte_nome} {item.fonte_ano ? `(${item.fonte_ano})` : ''}
+                            </span>
+                            {item.fonte_descricao && (
+                              <span className="nf-source-desc">{item.fonte_descricao}</span>
+                            )}
+                            {item.fonte_url && item.fonte_url.startsWith('http') && (
+                              <a 
+                                href={item.fonte_url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="nf-source-link"
+                                onClick={(e) => e.stopPropagation()}
+                                data-testid={`feed-link-${idx}`}
+                              >
+                                🔗 Ver fonte original
+                              </a>
+                            )}
+                          </div>
                         </div>
 
                         {/* Tags */}
