@@ -298,12 +298,14 @@ export default function Admin() {
     setModerationLoading(false);
   };
 
+  const [confirmAction, setConfirmAction] = useState(null); // {type: 'approve'|'reject', itemId: string}
+
   const approveModerationItem = async (itemId) => {
-    if (!window.confirm('Aprovar este reconhecimento e salvar a foto no dataset?')) return;
     try {
       const res = await fetch(`${API}/admin/moderation/${itemId}/approve`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
+        setConfirmAction(null);
         loadModerationQueue();
       } else {
         alert('Erro: ' + data.error);
@@ -314,11 +316,11 @@ export default function Admin() {
   };
 
   const rejectModerationItem = async (itemId) => {
-    if (!window.confirm('Rejeitar e descartar este item?')) return;
     try {
       const res = await fetch(`${API}/admin/moderation/${itemId}/reject`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
+        setConfirmAction(null);
         loadModerationQueue();
       } else {
         alert('Erro: ' + data.error);
@@ -2613,38 +2615,42 @@ export default function Admin() {
                     {/* Ações - apenas para pendentes */}
                     {item.status === 'pending' && (
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <button
-                          onClick={() => approveModerationItem(item.id)}
-                          data-testid={`moderation-approve-${item.id}`}
-                          style={{
-                            background: 'linear-gradient(135deg, #10b981, #059669)',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            fontSize: '13px'
-                          }}
-                        >
-                          ✅ Aprovar
-                        </button>
-                        <button
-                          onClick={() => rejectModerationItem(item.id)}
-                          data-testid={`moderation-reject-${item.id}`}
-                          style={{
-                            background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            fontSize: '13px'
-                          }}
-                        >
-                          ❌ Rejeitar
-                        </button>
+                        {confirmAction?.itemId === item.id && confirmAction?.type === 'approve' ? (
+                          <div style={{ display: 'flex', gap: '6px' }}>
+                            <button onClick={() => approveModerationItem(item.id)} data-testid={`moderation-confirm-approve-${item.id}`}
+                              style={{ background: '#10b981', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}>
+                              Confirmar Aprovar
+                            </button>
+                            <button onClick={() => setConfirmAction(null)} style={{ background: '#475569', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>
+                              Cancelar
+                            </button>
+                          </div>
+                        ) : confirmAction?.itemId === item.id && confirmAction?.type === 'reject' ? (
+                          <div style={{ display: 'flex', gap: '6px' }}>
+                            <button onClick={() => rejectModerationItem(item.id)} data-testid={`moderation-confirm-reject-${item.id}`}
+                              style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}>
+                              Confirmar Rejeitar
+                            </button>
+                            <button onClick={() => setConfirmAction(null)} style={{ background: '#475569', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>
+                              Cancelar
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => setConfirmAction({ type: 'approve', itemId: item.id })}
+                              data-testid={`moderation-approve-${item.id}`}
+                              style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}>
+                              Aprovar
+                            </button>
+                            <button
+                              onClick={() => setConfirmAction({ type: 'reject', itemId: item.id })}
+                              data-testid={`moderation-reject-${item.id}`}
+                              style={{ background: 'linear-gradient(135deg, #ef4444, #dc2626)', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}>
+                              Rejeitar
+                            </button>
+                          </>
+                        )}
                         {correctingItemId === item.id ? (
                           <div style={{ display: 'flex', gap: '8px', flex: 1, minWidth: '200px' }}>
                             <input
