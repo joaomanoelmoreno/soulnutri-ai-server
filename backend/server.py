@@ -4550,6 +4550,243 @@ async def admin_delete_novidade(dish_slug: str):
 
 
 # ═══════════════════════════════════════════════════════════════
+# NOTIFICACOES PUSH PERSONALIZADAS
+# ═══════════════════════════════════════════════════════════════
+
+@api_router.post("/notifications/generate")
+async def generate_notification(request: Request):
+    """
+    Gera uma notificacao push personalizada para o usuario.
+    Max 1 por dia. Baseada no consumo real.
+    """
+    from services.notification_service import generate_personalized_notification
+    try:
+        data = await request.json()
+        user_pin = data.get("user_pin", "")
+        user_name = data.get("user_name", "")
+        if not user_pin:
+            return {"ok": False, "error": "user_pin obrigatorio"}
+        result = await generate_personalized_notification(db, user_pin, user_name)
+        return result
+    except Exception as e:
+        logger.error(f"[NOTIFICATION] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/notifications/{user_pin}")
+async def get_notifications(user_pin: str, limit: int = 20):
+    """Retorna as notificacoes do usuario."""
+    from services.notification_service import get_user_notifications
+    try:
+        notifications = await get_user_notifications(db, user_pin, limit)
+        unread = sum(1 for n in notifications if not n.get("read"))
+        return {"ok": True, "notifications": notifications, "unread": unread}
+    except Exception as e:
+        logger.error(f"[NOTIFICATION] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/notifications/{user_pin}/read")
+async def mark_read(user_pin: str, request: Request):
+    """Marca uma notificacao como lida."""
+    from services.notification_service import mark_notification_read
+    try:
+        data = await request.json()
+        date = data.get("date", "")
+        if not date:
+            return {"ok": False, "error": "date obrigatorio"}
+        success = await mark_notification_read(db, user_pin, date)
+        return {"ok": True, "marked": success}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════
+# ADMIN SETTINGS & PREMIUM USERS (stubs para o painel admin)
+# ═══════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/settings")
+async def get_admin_settings():
+    """Retorna configurações do admin."""
+    try:
+        settings = await db.admin_settings.find_one({}, {"_id": 0})
+        if not settings:
+            settings = {"ENABLE_PROCESSING_METRICS": False}
+        return {"ok": True, **settings}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/settings")
+async def save_admin_settings(request: Request):
+    """Salva configurações do admin."""
+    try:
+        data = await request.json()
+        await db.admin_settings.update_one({}, {"$set": data}, upsert=True)
+        return {"ok": True}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/premium/users")
+async def get_premium_users():
+    """Lista usuários premium."""
+    try:
+        users = []
+        async for u in db.premium_users.find({}, {"_id": 0}).sort("created_at", -1).limit(100):
+            users.append(u)
+        return {"ok": True, "users": users}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "users": []}
+
+
+@api_router.post("/admin/premium/liberar")
+async def liberar_premium(request: Request):
+    """Libera acesso premium para um usuário."""
+    try:
+        data = await request.json()
+        nome = data.get("nome", "").strip()
+        if not nome:
+            return {"ok": False, "error": "Nome é obrigatório"}
+        await db.premium_users.update_one(
+            {"user_name": nome},
+            {"$set": {"user_name": nome, "premium": True, "updated_at": datetime.now().isoformat()}},
+            upsert=True
+        )
+        return {"ok": True, "message": f"Premium liberado para {nome}"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/premium/bloquear")
+async def bloquear_premium(request: Request):
+    """Bloqueia acesso premium de um usuário."""
+    try:
+        data = await request.json()
+        nome = data.get("nome", "").strip()
+        if not nome:
+            return {"ok": False, "error": "Nome é obrigatório"}
+        await db.premium_users.update_one(
+            {"user_name": nome},
+            {"$set": {"premium": False, "updated_at": datetime.now().isoformat()}}
+        )
+        return {"ok": True, "message": f"Premium bloqueado para {nome}"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/api-usage")
+async def get_api_usage():
+    """Retorna estatísticas de uso de APIs."""
+    try:
+        # Buscar logs de uso
+        usage = await db.api_usage.find_one({"type": "summary"}, {"_id": 0})
+        if not usage:
+            usage = {
+                "total_calls": 0,
+                "gemini_calls": 0,
+                "clip_calls": 0,
+                "s3_calls": 0,
+                "costs": {"total": 0.0}
+            }
+        return {"ok": True, **usage}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/processing-metrics")
+async def get_processing_metrics(date: str = ""):
+    """Retorna métricas de processamento."""
+    try:
+        query = {}
+        if date:
+            query["date"] = date
+        metrics = []
+        async for m in db.processing_metrics.find(query, {"_id": 0}).sort("created_at", -1).limit(50):
+            metrics.append(m)
+        return {"ok": True, "metrics": metrics}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "metrics": []}
+
+
+# ═══════════════════════════════════════════════════════════════
+# ATUALIZAÇÃO NUTRICIONAL SEGURA
+# ═══════════════════════════════════════════════════════════════
+
+@api_router.post("/admin/nutrition/preview")
+async def preview_nutrition_changes(request: Request):
+    """
+    DRY RUN: Mostra o que mudaria sem alterar nada.
+    Body: { "dish_slugs": ["arroz_branco", "feijao"] } ou vazio para 10 primeiros.
+    """
+    from services.safe_nutrition_updater import preview_nutrition_update
+    try:
+        data = await request.json()
+        slugs = data.get("dish_slugs", None)
+        limit = data.get("limit", 5)
+        result = await preview_nutrition_update(db, slugs, limit)
+        return result
+    except Exception as e:
+        logger.error(f"[NUTRITION_PREVIEW] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/nutrition/update-single")
+async def update_single_nutrition(request: Request):
+    """
+    Atualiza dados nutricionais de UM prato.
+    Body: { "dish_slug": "arroz_branco", "nutrition": {...}, "source": "TACO+USDA" }
+    """
+    from services.safe_nutrition_updater import safe_update_nutrition
+    try:
+        data = await request.json()
+        slug = data.get("dish_slug", "")
+        nutrition = data.get("nutrition", {})
+        source = data.get("source", "manual")
+        if not slug or not nutrition:
+            return {"ok": False, "error": "dish_slug e nutrition obrigatorios"}
+        result = await safe_update_nutrition(db, slug, nutrition, source)
+        return result
+    except Exception as e:
+        logger.error(f"[NUTRITION_UPDATE] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/nutrition/rollback")
+async def rollback_nutrition_endpoint(request: Request):
+    """
+    Reverte a última atualização nutricional de um prato.
+    Body: { "dish_slug": "arroz_branco" }
+    """
+    from services.safe_nutrition_updater import rollback_nutrition
+    try:
+        data = await request.json()
+        slug = data.get("dish_slug", "")
+        if not slug:
+            return {"ok": False, "error": "dish_slug obrigatorio"}
+        result = await rollback_nutrition(db, slug)
+        return result
+    except Exception as e:
+        logger.error(f"[NUTRITION_ROLLBACK] Erro: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/admin/nutrition/audit-log")
+async def get_nutrition_audit_log(slug: str = "", limit: int = 50):
+    """Retorna o log de auditoria de alterações nutricionais."""
+    try:
+        query = {}
+        if slug:
+            query["dish_slug"] = slug
+        logs = []
+        async for log in db.nutrition_audit_log.find(query, {"_id": 0}).sort("timestamp", -1).limit(limit):
+            logs.append(log)
+        return {"ok": True, "logs": logs, "total": len(logs)}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+# ═══════════════════════════════════════════════════════════════
 # MODERAÇÃO - Fila de moderação para feedback de usuários
 # ═══════════════════════════════════════════════════════════════
 

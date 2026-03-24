@@ -11,6 +11,7 @@ import NutritionFeed from "./NutritionFeed";
 import "./NutritionFeed.css";
 import WeeklyReport from "./WeeklyReport";
 import "./WeeklyReport.css";
+import NotificationPanel from "./NotificationPanel";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -280,6 +281,8 @@ function App() {
   const [personalizedTips, setPersonalizedTips] = useState(null); // Dicas personalizadas
   // Menu e PWA
   const [showMenu, setShowMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifUnread, setNotifUnread] = useState(0);
   const [mealRegistered, setMealRegistered] = useState(false); // Confirmação de registro
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
@@ -431,11 +434,23 @@ function App() {
         if (data.ok && mountedRef.current) {
           setPremiumUser(data.user);
           loadDailySummary();
+          loadNotifCount(data.user.pin);
         }
       }
     } catch (e) {
       console.error('Erro ao verificar sessão:', e);
     }
+  };
+
+  // Carregar contagem de notificações não lidas
+  const loadNotifCount = async (pin) => {
+    try {
+      if (!pin) return;
+      const res = await fetch(`${API}/notifications/${pin}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.ok) setNotifUnread(data.unread || 0);
+    } catch (e) { /* silent */ }
   };
 
   // Carregar resumo diário
@@ -1678,6 +1693,40 @@ function App() {
         <div className="header-right">
           <LanguageSelector />
           {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
+          {premiumUser && (
+            <button
+              className="notif-btn"
+              onClick={() => { setShowNotifications(!showNotifications); setShowMenu(false); }}
+              data-testid="notification-bell"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                position: 'relative',
+                padding: '6px',
+                fontSize: '18px'
+              }}
+            >
+              🔔
+              {notifUnread > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  background: '#ef4444',
+                  color: '#fff',
+                  borderRadius: '50%',
+                  width: '16px',
+                  height: '16px',
+                  fontSize: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold'
+                }}>{notifUnread}</span>
+              )}
+            </button>
+          )}
           <button 
             className="menu-btn" 
             onClick={() => setShowMenu(!showMenu)}
@@ -2470,6 +2519,39 @@ function App() {
             </div>
           )}
 
+          {/* Referências e Fontes */}
+          {r.confidence !== 'baixa' && (
+            <div className="info-box" data-testid="nutrition-references" style={{
+              background: 'rgba(124, 58, 237, 0.08)',
+              border: '1px solid rgba(124, 58, 237, 0.2)',
+              borderRadius: '12px',
+              padding: '12px 16px',
+              marginTop: '8px'
+            }}>
+              <h4 style={{ color: '#c4b5fd', fontSize: '13px', marginBottom: '8px' }}>Fontes Nutricionais</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <a href="https://www.cfn.org.br/wp-content/uploads/2017/03/taco_4_edicao_ampliada_e_revisada.pdf"
+                   target="_blank" rel="noopener noreferrer"
+                   data-testid="ref-taco"
+                   style={{ color: '#94a3b8', fontSize: '12px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: '#10b981' }}>↗</span> TACO - Tabela Brasileira (UNICAMP)
+                </a>
+                <a href="https://fdc.nal.usda.gov/food-search"
+                   target="_blank" rel="noopener noreferrer"
+                   data-testid="ref-usda"
+                   style={{ color: '#94a3b8', fontSize: '12px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: '#10b981' }}>↗</span> USDA FoodData Central
+                </a>
+                <a href="https://world.openfoodfacts.org/"
+                   target="_blank" rel="noopener noreferrer"
+                   data-testid="ref-off"
+                   style={{ color: '#94a3b8', fontSize: '12px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: '#10b981' }}>↗</span> Open Food Facts
+                </a>
+              </div>
+            </div>
+          )}
+
           {/* ALERTA PERSONALIZADO - Baseado nas restrições do perfil Premium */}
           {premiumUser && (() => {
             const restricoes = premiumUser.restricoes || [];
@@ -3164,6 +3246,14 @@ function App() {
           onClose={() => setShowWeeklyReport(false)} 
         />
       )}
+
+      {/* Notification Panel */}
+      <NotificationPanel
+        userPin={premiumUser?.pin || ''}
+        userName={premiumUser?.nome || ''}
+        isVisible={showNotifications}
+        onClose={() => setShowNotifications(false)}
+      />
 
       {/* Rodapé */}
       <footer className="footer">

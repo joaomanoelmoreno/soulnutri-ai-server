@@ -4,6 +4,35 @@ import './Admin.css';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Safe fetch wrapper - handles body stream already read issues
+const safeFetch = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) return null;
+    try {
+      return await res.json();
+    } catch {
+      // If body stream was already read, try XMLHttpRequest as fallback
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(options?.method || 'GET', url, true);
+        if (options?.headers) {
+          Object.entries(options.headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
+        }
+        xhr.onload = () => {
+          try { resolve(JSON.parse(xhr.responseText)); } catch { resolve(null); }
+        };
+        xhr.onerror = () => resolve(null);
+        xhr.timeout = 10000;
+        xhr.ontimeout = () => resolve(null);
+        if (options?.body) { xhr.send(options.body); } else { xhr.send(); }
+      });
+    }
+  } catch {
+    return null;
+  }
+};
+
 export default function Admin() {
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,6 +107,7 @@ export default function Admin() {
   const loadUploadStatus = async () => {
     try {
       const res = await fetch(`${API}/upload/status`);
+      if (!res.ok) return;
       const data = await res.json();
       setUploadStatus(data);
     } catch (e) {
@@ -219,9 +249,8 @@ export default function Admin() {
 
   const loadMetricsSetting = async () => {
     try {
-      const res = await fetch(`${API}/admin/settings`);
-      const data = await res.json();
-      if (data.ok) setMetricsEnabled(!!data.ENABLE_PROCESSING_METRICS);
+      const data = await safeFetch(`${API}/admin/settings`);
+      if (data && data.ok) setMetricsEnabled(!!data.ENABLE_PROCESSING_METRICS);
     } catch (e) { console.error('Erro ao carregar settings:', e); }
   };
 
@@ -230,17 +259,15 @@ export default function Admin() {
     const statusFilter = filter || moderationFilter;
     setModerationLoading(true);
     try {
-      const res = await fetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
-      const data = await res.json();
-      if (data.ok) {
+      const data = await safeFetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
+      if (data && data.ok) {
         setModerationItems(data.items || []);
         setModerationPendingCount(data.pending_count || 0);
       }
     } catch (e) {
       console.error('Erro ao carregar fila de moderação:', e);
-    } finally {
-      setModerationLoading(false);
     }
+    setModerationLoading(false);
   };
 
   const approveModerationItem = async (itemId) => {
@@ -314,6 +341,7 @@ export default function Admin() {
     setMetricsLoading(true);
     try {
       const res = await fetch(`${API}/admin/processing-metrics?date=${metricsDate}`);
+      if (!res.ok) return;
       const data = await res.json();
       if (data.ok) setMetricsData(data);
     } catch (e) { console.error('Erro ao carregar métricas:', e); }
@@ -322,9 +350,8 @@ export default function Admin() {
 
   const loadDishes = async () => {
     try {
-      const res = await fetch(`${API}/admin/dishes-full`);
-      const data = await res.json();
-      if (data.ok) {
+      const data = await safeFetch(`${API}/admin/dishes-full`);
+      if (data && data.ok) {
         setDishes(data.dishes || []);
       }
     } catch (e) {
@@ -336,9 +363,8 @@ export default function Admin() {
 
   const loadPremiumUsers = async () => {
     try {
-      const res = await fetch(`${API}/admin/premium/users`);
-      const data = await res.json();
-      if (data.ok) {
+      const data = await safeFetch(`${API}/admin/premium/users`);
+      if (data && data.ok) {
         setPremiumUsers(data.users || []);
       }
     } catch (e) {
@@ -351,9 +377,8 @@ export default function Admin() {
 
   const loadApiUsage = async () => {
     try {
-      const res = await fetch(`${API}/admin/api-usage`);
-      const data = await res.json();
-      if (data.ok) {
+      const data = await safeFetch(`${API}/admin/api-usage`);
+      if (data && data.ok) {
         setApiUsage(data);
       }
     } catch (e) {
@@ -676,9 +701,8 @@ export default function Admin() {
 
   const loadStats = async () => {
     try {
-      const res = await fetch(`${API}/ai/status`);
-      const data = await res.json();
-      setStats(data);
+      const data = await safeFetch(`${API}/ai/status`);
+      if (data) setStats(data);
     } catch (e) {
       console.error('Erro ao carregar status:', e);
     }
@@ -686,9 +710,8 @@ export default function Admin() {
 
   const loadNovidades = async () => {
     try {
-      const res = await fetch(`${API}/novidades`);
-      const data = await res.json();
-      if (data.ok) {
+      const data = await safeFetch(`${API}/novidades`);
+      if (data && data.ok) {
         setNovidades(data.novidades || []);
       }
     } catch (e) {
@@ -1082,7 +1105,7 @@ export default function Admin() {
         </button>
         <button 
           className={`tab-btn ${activeTab === 'moderation' ? 'active' : ''}`}
-          onClick={() => { setActiveTab('moderation'); loadModerationQueue(); }}
+          onClick={() => { setActiveTab('moderation'); if (moderationItems.length === 0) loadModerationQueue(); }}
           data-testid="tab-moderation"
           style={moderationPendingCount > 0 ? { position: 'relative' } : {}}
         >
