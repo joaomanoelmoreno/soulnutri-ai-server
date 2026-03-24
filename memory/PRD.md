@@ -1,64 +1,51 @@
 # SoulNutri - Product Requirements Document
 
-## Original Problem Statement
-Construir o **SoulNutri**, um app de nutrição virtual que identifica pratos por imagem com alta precisão.
+## Visão
+Aplicativo de "agente de nutrição virtual" que identifica pratos em tempo real a partir de imagens com alta precisão, atuando como um "radar do prato".
 
-## Architecture
-- **Frontend**: React (porta 3000)
-- **Backend**: FastAPI + Python (porta 8001)
-- **Database**: MongoDB Atlas
-- **Storage**: Emergent Object Storage (S3)
-- **AI**: HuggingFace CLIP + Gemini
+## Credenciais
+- Admin: joaomanoelmoreno / Pqlamz0192
 
-## What's Been Implemented
+## Arquitetura
+- Frontend: React (CRA) + CSS Custom
+- Backend: FastAPI + Motor (MongoDB async)
+- AI: OpenCLIP local (ViT-B-32) para embedding de imagens
+- Storage: Object Storage (S3) via Emergent integrations
+- DB: MongoDB Atlas
 
-### Core Features
-- Reconhecimento de imagem CLIP + Gemini fallback
-- Nutri News (feed IA com fontes verificáveis)
-- Sistema Premium (conquistas, XP, streaks, relatórios semanais)
-- Redesign visual "Gourmet Dark Mode"
-- Migração para Object Storage (S3)
+## Funcionalidades Implementadas
+- Identificação de pratos via câmera/foto
+- Ficha nutricional detalhada com dados TACO
+- Sistema premium com pin de acesso
+- Nutri News (feed de notícias IA)
+- Sistema de engajamento (gamificação)
+- Painel admin completo com moderação
+- Fluxo de feedback com fila de moderação
+- Notificações push personalizadas
+- Design "Gourmet Dark Mode"
 
-### Fluxo Feedback Seguro (2026-03-23)
-- Botões: "Sim, está correto", "Não, tentar novamente", "Voltar"
-- Fila moderação no Admin (aprovar/rejeitar/corrigir)
+## Correções Realizadas (2026-03-24/25)
 
-### Correção Admin (2026-03-24)
-- Criados endpoints faltantes: settings, premium/users, api-usage, processing-metrics
+### Correção Definitiva Admin - 3 Problemas Raiz
+1. **URL absoluta → relativa:** `Admin.js` usava `process.env.REACT_APP_BACKEND_URL/api` que era interferida pelo script Emergent → Corrigido para `const API = '/api'`
+2. **React.StrictMode + Emergent script:** O double-mount do StrictMode combinado com o wrapper `window.fetch` do `emergent-main.js` causava corrupção de estado. Solução: Removido StrictMode + migrado data loading para XMLHttpRequest via `xhrGet()` que contorna o wrapper.
+3. **Chamadas síncronas bloqueando event loop:** `storage_service.py` e `image_service.py` usavam `requests` (síncrono) e `pymongo` (síncrono) que bloqueavam o event loop do asyncio. Solução: envolvido todas as chamadas com `asyncio.to_thread()`.
 
-### Correção Definitiva Admin (2026-03-25)
-- Causa raiz: `Admin.js` usava URL absoluta (`process.env.REACT_APP_BACKEND_URL/api/...`) que era interceptada por scripts da plataforma Emergent
-- Fix: `const API = '/api'` (URL relativa) — o `setupProxy.js` redireciona corretamente para o backend
-- Sem wrappers, sem XMLHttpRequest, sem hacks — apenas fetch padrão com URL relativa
-
-### Notificações Push (2026-03-24)
-- Max 1/dia, baseadas no consumo real
-- Referências e links verificáveis (WHO, TACO, Harvard, Mayo Clinic)
-- Botão sino no header, painel lateral slide-in
-
-### Referências na Identificação (2026-03-24)
-- Links TACO, USDA, Open Food Facts na tela de resultado
-
-### Pipeline Seguro de Nutrição (2026-03-24)
-- Preview/dry-run, update individual com backup, rollback, audit log
-- NUNCA toca em imagens, slugs ou estrutura
-
-## Key DB Collections
-- dishes, dish_storage, news_items, achievements, daily_logs
-- moderation_queue, notifications, nutrition_audit_log
-- admin_settings, premium_users
+### Melhorias de Resiliência
+- Retry automático em respostas não-OK (502, 503)
+- Lazy loading por aba (carrega dados apenas da aba ativa)
+- XHR timeout de 20 segundos por request
 
 ## Pending Issues
 - (P1) Resultados insatisfatórios nos testes do buffet (aguardando análise)
 - (P2) Revisão de dados nutricionais contaminados (aguardando lista)
 
 ## Upcoming Tasks
-- (P1) Refatorar server.py e App.js em módulos menores
+- (P0) Validar notificações push
+- (P1) Validar referências/links na tela de resultado
+- (P1) Atualização segura de dados nutricionais (pipeline em safe_nutrition_updater.py)
 
-## Backlog
+## Future Tasks
+- (P1) Refatorar server.py e App.js em módulos menores
 - (P2) Integração Stripe para premium
 - (P2) Upload ZIP pelo admin
-- (P2) Não salvar nova versão até autorização
-
-## Credentials
-- Admin: joaomanoelmoreno / Pqlamz0192

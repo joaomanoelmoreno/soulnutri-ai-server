@@ -3868,9 +3868,10 @@ async def admin_get_dish_image(slug: str, img: str = None):
     """Retorna uma imagem de um prato do Object Storage (S3) com fallback local."""
     from fastapi.responses import Response
     from services.image_service import get_dish_image_bytes
+    import asyncio
     
     try:
-        data, content_type = get_dish_image_bytes(slug, img)
+        data, content_type = await asyncio.to_thread(get_dish_image_bytes, slug, img)
         
         if data is None:
             raise HTTPException(status_code=404, detail="Imagem nao encontrada")
@@ -4154,7 +4155,8 @@ async def admin_fix_single_dish(slug: str):
             current_info = dish_doc
         
         # Buscar imagem do S3
-        image_bytes, _ = get_dish_image_bytes(slug)
+        import asyncio
+        image_bytes, _ = await asyncio.to_thread(get_dish_image_bytes, slug)
         if not image_bytes:
             return {"ok": False, "error": "Nenhuma imagem encontrada"}
         
@@ -4228,7 +4230,8 @@ async def move_dish_image(request: Request):
         image_name = data.get("image_name")
         
         # Ler imagem do prato origem
-        image_bytes, content_type = get_dish_image_bytes(source_dish, image_name)
+        import asyncio
+        image_bytes, content_type = await asyncio.to_thread(get_dish_image_bytes, source_dish, image_name)
         if not image_bytes:
             return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
         
@@ -4814,11 +4817,12 @@ async def submit_to_moderation_queue(
 
         # Salvar imagem no S3 na pasta de moderação
         from services.storage_service import put_object
+        import asyncio as _asyncio
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
         filename = f"moderation_{timestamp}_{unique_id}.jpg"
         storage_path = f"soulnutri/moderation/{filename}"
-        put_object(storage_path, content, "image/jpeg")
+        await _asyncio.to_thread(put_object, storage_path, content, "image/jpeg")
 
         # Salvar na coleção moderation_queue do MongoDB
         doc = {
@@ -4892,6 +4896,7 @@ async def get_moderation_image(item_id: str):
     """Retorna a imagem de um item da fila de moderação."""
     from bson import ObjectId
     from fastapi.responses import Response
+    import asyncio
 
     try:
         doc = await db.moderation_queue.find_one({"_id": ObjectId(item_id)})
@@ -4899,7 +4904,7 @@ async def get_moderation_image(item_id: str):
             return Response(content=b"", media_type="image/jpeg", status_code=404)
 
         from services.storage_service import get_object
-        image_data, content_type = get_object(doc["image_path"])
+        image_data, content_type = await asyncio.to_thread(get_object, doc["image_path"])
         return Response(content=image_data, media_type=content_type)
 
     except Exception as e:
@@ -4925,12 +4930,13 @@ async def approve_moderation_item(item_id: str):
             from services.storage_service import get_object
             from services.image_service import save_dish_image
             import uuid
+            import asyncio as _asyncio
 
-            image_data, _ = get_object(doc["image_path"])
+            image_data, _ = await _asyncio.to_thread(get_object, doc["image_path"])
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             uid = str(uuid.uuid4())[:8]
             filename = f"{doc['original_dish']}_approved_{timestamp}_{uid}.jpg"
-            save_dish_image(doc["original_dish"], filename, image_data)
+            await _asyncio.to_thread(save_dish_image, doc["original_dish"], filename, image_data)
 
         # Atualizar status
         await db.moderation_queue.update_one(
@@ -5013,12 +5019,13 @@ async def correct_moderation_item(item_id: str, request: Request):
             from services.storage_service import get_object
             from services.image_service import save_dish_image
             import uuid
+            import asyncio as _asyncio
 
-            image_data, _ = get_object(doc["image_path"])
+            image_data, _ = await _asyncio.to_thread(get_object, doc["image_path"])
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             uid = str(uuid.uuid4())[:8]
             filename = f"{correct_slug}_corrected_{timestamp}_{uid}.jpg"
-            save_dish_image(correct_slug, filename, image_data)
+            await _asyncio.to_thread(save_dish_image, correct_slug, filename, image_data)
 
         # Atualizar status
         await db.moderation_queue.update_one(

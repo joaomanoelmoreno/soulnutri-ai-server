@@ -3,15 +3,34 @@ import './Admin.css';
 
 const API = '/api';
 
-// Fetch com retry simples
+// XHR direto - contorna o wrapper fetch da plataforma Emergent
+function xhrGet(url) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.timeout = 20000;
+    xhr.onload = () => resolve({
+      ok: xhr.status >= 200 && xhr.status < 300,
+      status: xhr.status,
+      json: () => Promise.resolve(JSON.parse(xhr.responseText)),
+      text: () => Promise.resolve(xhr.responseText)
+    });
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.ontimeout = () => reject(new Error('Timeout'));
+    xhr.send();
+  });
+}
+
+// Retry com XHR para GET requests
 async function retryFetch(url, options, retries = 2) {
   for (let i = 0; i <= retries; i++) {
     try {
-      const res = await fetch(url, options);
-      return res;
+      const res = await xhrGet(url);
+      if (res.ok || i === retries) return res;
+      await new Promise(r => setTimeout(r, 1000));
     } catch (err) {
       if (i === retries) throw err;
-      await new Promise(r => setTimeout(r, 1500));
+      await new Promise(r => setTimeout(r, 1000));
     }
   }
 }
@@ -81,22 +100,16 @@ export default function Admin() {
   // Estado de erro global
   const [loadError, setLoadError] = useState(null);
 
-  // Carregar apenas dados essenciais na montagem (sequencial)
+  // Carregar dados essenciais na montagem
   useEffect(() => {
-    const loadInitial = async () => {
-      try {
-        await loadDishes();
-        await loadStats();
-        loadModerationCount();
-      } catch (e) {
-        setLoadError('Erro ao carregar dados iniciais. Tente recarregar a página.');
-      }
-    };
-    loadInitial();
+    loadDishes();
+    loadStats();
+    loadModerationCount();
   }, []);
 
   // Carregar dados ao trocar de aba
   useEffect(() => {
+    if (activeTab === 'dishes') return;
     if (activeTab === 'novidades' && novidades.length === 0) loadNovidades();
     if (activeTab === 'premium' && premiumUsers.length === 0) loadPremiumUsers();
     if (activeTab === 'metricas') loadMetricsSetting();
