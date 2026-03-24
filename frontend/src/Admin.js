@@ -2,39 +2,36 @@ import React, { useState, useEffect } from 'react';
 import './Admin.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Use relative URLs to bypass Emergent platform proxy
+const API = '/api';
 
-// Override fetch for this module - uses XMLHttpRequest to bypass Emergent script interception
-const xhrFetch = (url, options = {}) => {
+// XMLHttpRequest wrapper - immune to Emergent script fetch() interception
+const apiFetch = (url, options = {}) => {
   return new Promise((resolve) => {
     const xhr = new XMLHttpRequest();
     xhr.open(options.method || 'GET', url, true);
     
-    // Set headers
     const headers = options.headers || {};
     if (options.body && typeof options.body === 'string' && !headers['Content-Type']) {
       xhr.setRequestHeader('Content-Type', 'application/json');
     }
     Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
     
-    const nullRes = { ok: false, status: 0, json: () => Promise.resolve(null), text: () => Promise.resolve('') };
+    const emptyRes = { ok: false, status: 0, json: async () => null, text: async () => '' };
     
     xhr.onload = () => {
-      const responseBody = xhr.responseText;
+      const body = xhr.responseText;
+      const ok = xhr.status >= 200 && xhr.status < 300;
       resolve({
-        ok: xhr.status >= 200 && xhr.status < 300,
+        ok,
         status: xhr.status,
-        statusText: xhr.statusText,
-        json: () => {
-          try { return Promise.resolve(JSON.parse(responseBody)); }
-          catch (e) { return Promise.resolve(null); }
-        },
-        text: () => Promise.resolve(responseBody),
+        json: async () => { try { return JSON.parse(body); } catch { return null; } },
+        text: async () => body,
       });
     };
-    xhr.onerror = () => resolve(nullRes);
-    xhr.timeout = 30000;
-    xhr.ontimeout = () => resolve(nullRes);
+    xhr.onerror = () => resolve(emptyRes);
+    xhr.timeout = 60000;
+    xhr.ontimeout = () => resolve(emptyRes);
     
     if (options.body instanceof FormData) {
       xhr.send(options.body);
@@ -110,29 +107,25 @@ export default function Admin() {
 
   // Carregar dados sequencialmente - apenas essenciais primeiro
   useEffect(() => {
-    const loadInitialData = async () => {
-      // Carregar pratos primeiro (aba padrão ativa)
-      await loadDishes();
-      // Carregar contagem de moderação (para o badge)
-      loadModerationCount();
-    };
-    loadInitialData();
+    loadDishes();
+    loadModerationCount();
   }, []);
 
   // Carregar dados da aba quando ela é ativada
   useEffect(() => {
-    if (activeTab === 'novidades') loadNovidades();
-    if (activeTab === 'premium') loadPremiumUsers();
-    if (activeTab === 'custos') loadApiUsage();
-    if (activeTab === 'metricas') loadMetricsSetting();
-    if (activeTab === 'moderation') loadModerationQueue();
-    if (activeTab === 'upload') loadUploadStatus();
+    const tab = activeTab;
+    if (tab === 'novidades' && novidades.length === 0) loadNovidades();
+    if (tab === 'premium' && premiumUsers.length === 0) loadPremiumUsers();
+    if (tab === 'custos') loadApiUsage();
+    if (tab === 'metricas') loadMetricsSetting();
+    if (tab === 'moderation' && moderationItems.length === 0) loadModerationQueue();
+    if (tab === 'upload') loadUploadStatus();
   }, [activeTab]);
 
   // Apenas contagem de moderação (leve)
   const loadModerationCount = async () => {
     try {
-      const res = await xhrFetch(`${API}/admin/moderation-queue?status=pending`);
+      const res = await apiFetch(`${API}/admin/moderation-queue?status=pending`);
       if (res && res.ok) {
         const data = await res.json();
         if (data && data.ok) setModerationPendingCount(data.pending_count || 0);
@@ -142,7 +135,7 @@ export default function Admin() {
 
   const loadUploadStatus = async () => {
     try {
-      const res = await xhrFetch(`${API}/upload/status`);
+      const res = await apiFetch(`${API}/upload/status`);
       if (!res.ok) return;
       const data = await res.json();
       setUploadStatus(data);
@@ -164,7 +157,7 @@ export default function Admin() {
         formData.append('files', f);
       }
       
-      const res = await xhrFetch(`${API}/upload/photos`, {
+      const res = await apiFetch(`${API}/upload/photos`, {
         method: 'POST',
         body: formData
       });
@@ -192,7 +185,7 @@ export default function Admin() {
       const formData = new FormData();
       formData.append('file', uploadZipFile);
       
-      const res = await xhrFetch(`${API}/upload/zip`, {
+      const res = await apiFetch(`${API}/upload/zip`, {
         method: 'POST',
         body: formData
       });
@@ -252,7 +245,7 @@ export default function Admin() {
         for (const f of batch) formData.append('files', f);
         
         try {
-          const res = await xhrFetch(`${API}/upload/photos`, { method: 'POST', body: formData });
+          const res = await apiFetch(`${API}/upload/photos`, { method: 'POST', body: formData });
           const data = await res.json();
           if (data.ok) {
             totalSaved += data.saved || 0;
@@ -285,7 +278,7 @@ export default function Admin() {
 
   const loadMetricsSetting = async () => {
     try {
-      const res = await xhrFetch(`${API}/admin/settings`);
+      const res = await apiFetch(`${API}/admin/settings`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) setMetricsEnabled(!!data.ENABLE_PROCESSING_METRICS);
@@ -297,7 +290,7 @@ export default function Admin() {
     const statusFilter = filter || moderationFilter;
     setModerationLoading(true);
     try {
-      const res = await xhrFetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
+      const res = await apiFetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
       if (!res.ok) { setModerationLoading(false); return; }
       const data = await res.json();
       if (data && data.ok) {
@@ -313,7 +306,7 @@ export default function Admin() {
   const approveModerationItem = async (itemId) => {
     if (!window.confirm('Aprovar este reconhecimento e salvar a foto no dataset?')) return;
     try {
-      const res = await xhrFetch(`${API}/admin/moderation/${itemId}/approve`, { method: 'POST' });
+      const res = await apiFetch(`${API}/admin/moderation/${itemId}/approve`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         loadModerationQueue();
@@ -328,7 +321,7 @@ export default function Admin() {
   const rejectModerationItem = async (itemId) => {
     if (!window.confirm('Rejeitar e descartar este item?')) return;
     try {
-      const res = await xhrFetch(`${API}/admin/moderation/${itemId}/reject`, { method: 'POST' });
+      const res = await apiFetch(`${API}/admin/moderation/${itemId}/reject`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         loadModerationQueue();
@@ -346,7 +339,7 @@ export default function Admin() {
       return;
     }
     try {
-      const res = await xhrFetch(`${API}/admin/moderation/${itemId}/correct`, {
+      const res = await apiFetch(`${API}/admin/moderation/${itemId}/correct`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correct_dish_name: correctionName.trim() })
@@ -367,7 +360,7 @@ export default function Admin() {
   const toggleMetrics = async () => {
     try {
       const newValue = !metricsEnabled;
-      const res = await xhrFetch(`${API}/admin/settings`, {
+      const res = await apiFetch(`${API}/admin/settings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key: 'ENABLE_PROCESSING_METRICS', value: newValue })
@@ -380,7 +373,7 @@ export default function Admin() {
   const loadMetricsReport = async () => {
     setMetricsLoading(true);
     try {
-      const res = await xhrFetch(`${API}/admin/processing-metrics?date=${metricsDate}`);
+      const res = await apiFetch(`${API}/admin/processing-metrics?date=${metricsDate}`);
       if (!res.ok) return;
       const data = await res.json();
       if (data.ok) setMetricsData(data);
@@ -391,7 +384,7 @@ export default function Admin() {
   const loadDishes = async () => {
     setLoading(true);
     try {
-      const res = await xhrFetch(`${API}/admin/dishes-full`);
+      const res = await apiFetch(`${API}/admin/dishes-full`);
       if (!res || !res.ok) {
         console.warn('loadDishes: resposta não ok');
         setLoading(false);
@@ -409,7 +402,7 @@ export default function Admin() {
 
   const loadPremiumUsers = async () => {
     try {
-      const res = await xhrFetch(`${API}/admin/premium/users`);
+      const res = await apiFetch(`${API}/admin/premium/users`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) {
@@ -425,7 +418,7 @@ export default function Admin() {
 
   const loadApiUsage = async () => {
     try {
-      const res = await xhrFetch(`${API}/admin/api-usage`);
+      const res = await apiFetch(`${API}/admin/api-usage`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) {
@@ -450,7 +443,7 @@ export default function Admin() {
       formData.append('nome', premiumNome);
       formData.append('dias', premiumDias);
       
-      const res = await xhrFetch(`${API}/admin/premium/liberar`, {
+      const res = await apiFetch(`${API}/admin/premium/liberar`, {
         method: 'POST',
         body: formData
       });
@@ -473,7 +466,7 @@ export default function Admin() {
       const formData = new FormData();
       formData.append('nome', nome);
       
-      const res = await xhrFetch(`${API}/admin/premium/bloquear`, {
+      const res = await apiFetch(`${API}/admin/premium/bloquear`, {
         method: 'POST',
         body: formData
       });
@@ -493,7 +486,7 @@ export default function Admin() {
   const runAudit = async () => {
     setAuditLoading(true);
     try {
-      const res = await xhrFetch(`${API}/admin/audit`);
+      const res = await apiFetch(`${API}/admin/audit`);
       const data = await res.json();
       if (data.ok) {
         setAuditData(data);
@@ -511,7 +504,7 @@ export default function Admin() {
   const fixDishWithAI = async (slug) => {
     setFixingSlug(slug);
     try {
-      const res = await xhrFetch(`${API}/admin/audit/fix-single/${encodeURIComponent(slug)}`, { method: 'POST' });
+      const res = await apiFetch(`${API}/admin/audit/fix-single/${encodeURIComponent(slug)}`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         alert(`✅ Prato "${slug}" corrigido com sucesso!`);
@@ -534,7 +527,7 @@ export default function Admin() {
     }
     
     try {
-      const res = await xhrFetch(`${API}/admin/dishes/${encodeURIComponent(slug)}`, { method: 'DELETE' });
+      const res = await apiFetch(`${API}/admin/dishes/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
         loadDishes();
@@ -556,7 +549,7 @@ export default function Admin() {
     setConsolidating(true);
     setMassActionResult(null);
     try {
-      const res = await xhrFetch(`${API}/admin/consolidate-all`, { method: 'POST' });
+      const res = await apiFetch(`${API}/admin/consolidate-all`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         setMassActionResult({
@@ -593,7 +586,7 @@ export default function Admin() {
     setUpdatingAll(true);
     setMassActionResult(null);
     try {
-      const res = await xhrFetch(`${API}/admin/update-all-local`, { method: 'POST' });
+      const res = await apiFetch(`${API}/admin/update-all-local`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         setMassActionResult({
@@ -668,7 +661,7 @@ export default function Admin() {
         
         setLoteProgress(prev => ({ ...prev, atual: i }));
         
-        const res = await xhrFetch(`${API}/admin/revisar-lote-ia`, {
+        const res = await apiFetch(`${API}/admin/revisar-lote-ia`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ slugs: lote, max_pratos: loteSize })
@@ -729,7 +722,7 @@ export default function Admin() {
     
     setAuditLoading(true);
     try {
-      const res = await xhrFetch(`${API}/admin/audit/batch-fix`, {
+      const res = await apiFetch(`${API}/admin/audit/batch-fix`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slugs })
@@ -751,7 +744,7 @@ export default function Admin() {
 
   const loadStats = async () => {
     try {
-      const res = await xhrFetch(`${API}/ai/status`);
+      const res = await apiFetch(`${API}/ai/status`);
       if (!res.ok) return;
       const data = await res.json();
       if (data) setStats(data);
@@ -762,7 +755,7 @@ export default function Admin() {
 
   const loadNovidades = async () => {
     try {
-      const res = await xhrFetch(`${API}/novidades`);
+      const res = await apiFetch(`${API}/novidades`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) {
@@ -783,7 +776,7 @@ export default function Admin() {
       const formData = new FormData();
       Object.entries(novidadeForm).forEach(([k, v]) => formData.append(k, v));
       
-      const res = await xhrFetch(`${API}/admin/novidades`, {
+      const res = await apiFetch(`${API}/admin/novidades`, {
         method: 'POST',
         body: formData
       });
@@ -812,7 +805,7 @@ export default function Admin() {
   const deleteNovidade = async (slug) => {
     if (!window.confirm(`Remover novidade de "${slug}"?`)) return;
     try {
-      const res = await xhrFetch(`${API}/admin/novidades/${encodeURIComponent(slug)}`, { method: 'DELETE' });
+      const res = await apiFetch(`${API}/admin/novidades/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
         alert('✅ Novidade removida!');
@@ -828,7 +821,7 @@ export default function Admin() {
       // Remover campos que não devem ser enviados ao backend
       const { all_images, first_image, image_count, ...dishData } = dish;
       
-      const res = await xhrFetch(`${API}/admin/dishes/${encodeURIComponent(dish.slug)}`, {
+      const res = await apiFetch(`${API}/admin/dishes/${encodeURIComponent(dish.slug)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dishData)
@@ -875,7 +868,7 @@ export default function Admin() {
       fd.append('file', newDishFile);
       fd.append('dish_name', newDishName.trim());
       
-      const res = await xhrFetch(`${API}/ai/create-dish-local`, {
+      const res = await apiFetch(`${API}/ai/create-dish-local`, {
         method: 'POST',
         body: fd
       });
@@ -911,7 +904,7 @@ export default function Admin() {
     
     setRevisandoIA(true);
     try {
-      const res = await xhrFetch(`${API}/admin/revisar-prato-taco`, {
+      const res = await apiFetch(`${API}/admin/revisar-prato-taco`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -978,7 +971,7 @@ export default function Admin() {
     
     setRevisandoIA(true);
     try {
-      const res = await xhrFetch(`${API}/admin/revisar-prato-ia`, {
+      const res = await apiFetch(`${API}/admin/revisar-prato-ia`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1045,7 +1038,7 @@ export default function Admin() {
     setLoading(true);
     try {
       // Iniciar reconstrução em background
-      const res = await xhrFetch(`${API}/ai/reindex-background?max_per_dish=10`, { method: 'POST' });
+      const res = await apiFetch(`${API}/ai/reindex-background?max_per_dish=10`, { method: 'POST' });
       const data = await res.json();
       
       if (!data.ok) {
@@ -1057,7 +1050,7 @@ export default function Admin() {
       // Polling para verificar status
       const checkStatus = async () => {
         try {
-          const statusRes = await xhrFetch(`${API}/ai/reindex-status`);
+          const statusRes = await apiFetch(`${API}/ai/reindex-status`);
           const statusData = await statusRes.json();
           
           if (statusData.completed) {
@@ -2804,7 +2797,7 @@ export default function Admin() {
                             );
                             if (destino && destino.trim()) {
                               try {
-                                const res = await xhrFetch(`${API}/admin/move-image`, {
+                                const res = await apiFetch(`${API}/admin/move-image`, {
                                   method: 'POST',
                                   headers: { 'Content-Type': 'application/json' },
                                   body: JSON.stringify({
@@ -2855,7 +2848,7 @@ export default function Admin() {
                             e.stopPropagation();
                             if (window.confirm(`Deletar foto ${idx + 1}?\n\n⚠️ Dica: Use o botão azul (↗) para MOVER a foto para outro prato sem perder!`)) {
                               try {
-                                const res = await xhrFetch(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
+                                const res = await apiFetch(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
                                 const data = await res.json();
                                 if (data.ok) {
                                   setEditingDish({
