@@ -24,12 +24,12 @@ Construir o **SoulNutri**, um app de nutrição virtual que identifica pratos po
 - Fila moderação no Admin (aprovar/rejeitar/corrigir)
 
 ### Correção Admin (2026-03-24)
-- Admin usava fetch() interceptado pelo script Emergent → migrado para XMLHttpRequest (apiFetch)
-- URLs relativas (/api/...) para bypass do proxy
-- Lazy loading por aba (carrega dados apenas da aba ativa)
-- Timeout aumentado para 60s
-- Botões "Tentar Novamente" para retry manual
 - Criados endpoints faltantes: settings, premium/users, api-usage, processing-metrics
+
+### Correção Definitiva Admin (2026-03-25)
+- Causa raiz: `Admin.js` usava URL absoluta (`process.env.REACT_APP_BACKEND_URL/api/...`) que era interceptada por scripts da plataforma Emergent
+- Fix: `const API = '/api'` (URL relativa) — o `setupProxy.js` redireciona corretamente para o backend
+- Sem wrappers, sem XMLHttpRequest, sem hacks — apenas fetch padrão com URL relativa
 
 ### Notificações Push (2026-03-24)
 - Max 1/dia, baseadas no consumo real
@@ -51,7 +51,6 @@ Construir o **SoulNutri**, um app de nutrição virtual que identifica pratos po
 ## Pending Issues
 - (P1) Resultados insatisfatórios nos testes do buffet (aguardando análise)
 - (P2) Revisão de dados nutricionais contaminados (aguardando lista)
-- (P1) Moderação no Admin: dados carregam mas proxy do preview causa latência (~12s por request). Em produção será mais rápido.
 
 ## Upcoming Tasks
 - (P1) Refatorar server.py e App.js em módulos menores

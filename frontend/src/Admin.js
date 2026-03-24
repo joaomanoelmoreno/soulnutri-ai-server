@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Admin.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const API = '/api';
 
 export default function Admin() {
   const [dishes, setDishes] = useState([]);
