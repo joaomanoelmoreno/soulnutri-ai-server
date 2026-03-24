@@ -1,7 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Admin.css';
 
 const API = '/api';
+
+// Fetch com retry simples
+async function retryFetch(url, options, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const res = await fetch(url, options);
+      return res;
+    } catch (err) {
+      if (i === retries) throw err;
+      await new Promise(r => setTimeout(r, 1500));
+    }
+  }
+}
 
 export default function Admin() {
   const [dishes, setDishes] = useState([]);
@@ -65,20 +78,38 @@ export default function Admin() {
   const [correctionName, setCorrectionName] = useState('');
   const [moderationPendingCount, setModerationPendingCount] = useState(0);
 
-  // Carregar todos os dados na inicialização
+  // Estado de erro global
+  const [loadError, setLoadError] = useState(null);
+
+  // Carregar apenas dados essenciais na montagem (sequencial)
   useEffect(() => {
-    loadDishes();
-    loadStats();
-    loadNovidades();
-    loadPremiumUsers();
-    loadMetricsSetting();
-    loadModerationCount();
+    const loadInitial = async () => {
+      try {
+        await loadDishes();
+        await loadStats();
+        loadModerationCount();
+      } catch (e) {
+        setLoadError('Erro ao carregar dados iniciais. Tente recarregar a página.');
+      }
+    };
+    loadInitial();
   }, []);
+
+  // Carregar dados ao trocar de aba
+  useEffect(() => {
+    if (activeTab === 'novidades' && novidades.length === 0) loadNovidades();
+    if (activeTab === 'premium' && premiumUsers.length === 0) loadPremiumUsers();
+    if (activeTab === 'metricas') loadMetricsSetting();
+    if (activeTab === 'custos' && !apiUsage) loadApiUsage();
+    if (activeTab === 'upload') loadUploadStatus();
+    if (activeTab === 'moderation') loadModerationQueue();
+    if (activeTab === 'audit' && !auditData) runAudit();
+  }, [activeTab]);
 
   // Apenas contagem de moderação (leve)
   const loadModerationCount = async () => {
     try {
-      const res = await fetch(`${API}/admin/moderation-queue?status=pending`);
+      const res = await retryFetch(`${API}/admin/moderation-queue?status=pending`);
       if (res && res.ok) {
         const data = await res.json();
         if (data && data.ok) setModerationPendingCount(data.pending_count || 0);
@@ -88,7 +119,7 @@ export default function Admin() {
 
   const loadUploadStatus = async () => {
     try {
-      const res = await fetch(`${API}/upload/status`);
+      const res = await retryFetch(`${API}/upload/status`);
       if (!res.ok) return;
       const data = await res.json();
       setUploadStatus(data);
@@ -231,7 +262,7 @@ export default function Admin() {
 
   const loadMetricsSetting = async () => {
     try {
-      const res = await fetch(`${API}/admin/settings`);
+      const res = await retryFetch(`${API}/admin/settings`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) setMetricsEnabled(!!data.ENABLE_PROCESSING_METRICS);
@@ -243,7 +274,7 @@ export default function Admin() {
     const statusFilter = filter || moderationFilter;
     setModerationLoading(true);
     try {
-      const res = await fetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
+      const res = await retryFetch(`${API}/admin/moderation-queue?status=${statusFilter}`);
       if (!res.ok) { setModerationLoading(false); return; }
       const data = await res.json();
       if (data && data.ok) {
@@ -324,7 +355,7 @@ export default function Admin() {
   const loadMetricsReport = async () => {
     setMetricsLoading(true);
     try {
-      const res = await fetch(`${API}/admin/processing-metrics?date=${metricsDate}`);
+      const res = await retryFetch(`${API}/admin/processing-metrics?date=${metricsDate}`);
       if (!res.ok) return;
       const data = await res.json();
       if (data.ok) setMetricsData(data);
@@ -334,7 +365,7 @@ export default function Admin() {
 
   const loadDishes = async () => {
     try {
-      const res = await fetch(`${API}/admin/dishes-full`);
+      const res = await retryFetch(`${API}/admin/dishes-full`);
       if (!res.ok) { setLoading(false); return; }
       const data = await res.json();
       if (data.ok) setDishes(data.dishes || []);
@@ -346,7 +377,7 @@ export default function Admin() {
 
   const loadPremiumUsers = async () => {
     try {
-      const res = await fetch(`${API}/admin/premium/users`);
+      const res = await retryFetch(`${API}/admin/premium/users`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) setPremiumUsers(data.users || []);
@@ -358,16 +389,12 @@ export default function Admin() {
 
   const loadApiUsage = async () => {
     try {
-      const res = await fetch(`${API}/admin/api-usage`);
+      const res = await retryFetch(`${API}/admin/api-usage`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) setApiUsage(data);
     } catch (e) { /* silent */ }
   };
-
-  useEffect(() => {
-    loadApiUsage();
-  }, []);
 
   const liberarPremium = async () => {
     if (!premiumNome.trim()) {
@@ -422,7 +449,7 @@ export default function Admin() {
   const runAudit = async () => {
     setAuditLoading(true);
     try {
-      const res = await fetch(`${API}/admin/audit`);
+      const res = await retryFetch(`${API}/admin/audit`);
       const data = await res.json();
       if (data.ok) {
         setAuditData(data);
@@ -680,7 +707,7 @@ export default function Admin() {
 
   const loadStats = async () => {
     try {
-      const res = await fetch(`${API}/ai/status`);
+      const res = await retryFetch(`${API}/ai/status`);
       if (!res.ok) return;
       const data = await res.json();
       if (data) setStats(data);
@@ -689,7 +716,7 @@ export default function Admin() {
 
   const loadNovidades = async () => {
     try {
-      const res = await fetch(`${API}/novidades`);
+      const res = await retryFetch(`${API}/novidades`);
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.ok) setNovidades(data.novidades || []);
@@ -1044,7 +1071,7 @@ export default function Admin() {
         </button>
         <button 
           className={`tab-btn ${activeTab === 'audit' ? 'active' : ''}`}
-          onClick={() => { setActiveTab('audit'); if (!auditData) runAudit(); }}
+          onClick={() => { setActiveTab('audit'); }}
         >
           🔍 Auditoria
         </button>
@@ -1062,7 +1089,7 @@ export default function Admin() {
         </button>
         <button 
           className={`tab-btn ${activeTab === 'custos' ? 'active' : ''}`}
-          onClick={() => { setActiveTab('custos'); loadApiUsage(); }}
+          onClick={() => { setActiveTab('custos'); }}
         >
           Custos API
         </button>
@@ -1075,14 +1102,14 @@ export default function Admin() {
         </button>
         <button 
           className={`tab-btn ${activeTab === 'upload' ? 'active' : ''}`}
-          onClick={() => { setActiveTab('upload'); loadUploadStatus(); }}
+          onClick={() => { setActiveTab('upload'); }}
           data-testid="tab-upload"
         >
           Upload Fotos
         </button>
         <button 
           className={`tab-btn ${activeTab === 'moderation' ? 'active' : ''}`}
-          onClick={() => { setActiveTab('moderation'); loadModerationQueue(); }}
+          onClick={() => { setActiveTab('moderation'); }}
           data-testid="tab-moderation"
           style={moderationPendingCount > 0 ? { position: 'relative' } : {}}
         >
