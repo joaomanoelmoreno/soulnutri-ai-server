@@ -2,7 +2,7 @@ RELATÓRIO DE DIFICULDADES TÉCNICAS - PROJETO SOULNUTRI
 ======================================================
 Data: 15/03/2026
 Projeto: SoulNutri - Agente de Nutrição Virtual
-URL Preview: https://nutriai-moderation.preview.emergentagent.com
+URL Preview: https://nutri-admin-fix.preview.emergentagent.com
 
 
 1. CORRUPÇÃO E INSTABILIDADE DO AMBIENTE (RECORRENTE - 5+ VEZES)

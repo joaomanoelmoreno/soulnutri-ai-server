@@ -13,7 +13,7 @@ import os
 import time
 import uuid
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://nutriai-moderation.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://nutri-admin-fix.preview.emergentagent.com').rstrip('/')
 
 class TestHealthCheck:
     """Basic health check to ensure API is running"""
