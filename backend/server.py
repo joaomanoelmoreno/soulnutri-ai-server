@@ -3771,135 +3771,105 @@ async def admin_list_dishes():
 
 @api_router.get("/admin/dishes-full")
 async def admin_list_dishes_full():
-    """Lista todos os pratos com TODAS as informacoes para admin."""
+    """Lista todos os pratos com informacoes para admin.
+    Fonte de verdade: dish_storage (imagens) + dishes (metadados).
+    Apos migracao para Object Storage, nao depende mais do disco local.
+    """
     try:
         dishes = []
-        
-        # Helper to normalize slugs for matching
-        def norm(s): return s.lower().replace(' ', '_').replace('-', '_')
-        
-        # Pre-fetch local filesystem image counts
-        import glob as _glob
-        local_images = {}  # normalized_slug -> {count, first_image, folder_name}
-        datasets_dir = '/app/datasets/organized'
-        if os.path.exists(datasets_dir):
-            for folder in os.listdir(datasets_dir):
-                folder_path = os.path.join(datasets_dir, folder)
-                if os.path.isdir(folder_path):
-                    imgs = sorted([f for f in os.listdir(folder_path) if f.lower().endswith(('.jpeg', '.jpg', '.png'))])
-                    n = norm(folder)
-                    local_images[n] = {
-                        "count": len(imgs),
-                        "first_image": imgs[0] if imgs else None,
-                        "all_images": imgs,
-                        "folder_name": folder
-                    }
-        
-        # Pre-fetch all image data from dish_storage in one query
-        storage_data = {}  # normalized_slug -> data
-        storage_slug_map = {}  # normalized_slug -> original slug
-        async for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "count": 1, "images": 1}):
+
+        # 1. Carregar metadados de imagens do dish_storage (fonte de verdade)
+        storage_by_slug = {}
+        async for doc in db.dish_storage.find({}, {"_id": 0}):
             slug = doc.get("slug", "")
-            n = norm(slug)
             imgs = doc.get("images", [])
-            storage_data[n] = {
+            # Choose first representative image (prefer larger files over tiny thumbnails)
+            image_names = [img.get("filename", "") for img in imgs]
+            first_img = None
+            for img in imgs:
+                if img.get("size", 0) > 5000:
+                    first_img = img.get("filename", "")
+                    break
+            if not first_img and image_names:
+                first_img = image_names[0]
+            
+            storage_by_slug[slug] = {
+                "name": doc.get("name", ""),
                 "count": doc.get("count", len(imgs)),
-                "image_names": [img["filename"] for img in imgs]
+                "image_names": image_names,
+                "first_image": first_img,
             }
-            storage_slug_map[n] = slug
-        
-        # Buscar do MongoDB dishes collection
-        seen_normalized = set()
-        async for dish_doc in db.dishes.find({}, {"_id": 0}):
-            slug = dish_doc.get("slug", dish_doc.get("index_name", ""))
-            if not slug:
-                continue
-            
-            n = norm(slug)
-            if n in seen_normalized:
-                continue
-            seen_normalized.add(n)
-            
-            # Prioridade: imagens locais (referência) + S3
-            local = local_images.get(n, {"count": 0, "first_image": None, "all_images": [], "folder_name": slug})
-            sd = storage_data.get(n, {"count": 0, "image_names": []})
-            
-            total_images = local["count"] + sd["count"]
-            first_image = local["first_image"] or (sd["image_names"][0] if sd["image_names"] else None)
-            display_slug = local.get("folder_name", storage_slug_map.get(n, slug))
-            
+
+        # 2. Carregar metadados dos pratos do dishes collection
+        dishes_by_slug = {}
+        async for doc in db.dishes.find({}, {"_id": 0}):
+            slug = doc.get("slug", "")
+            if slug:
+                dishes_by_slug[slug] = doc
+
+        # 3. Unir os dados - dish_storage como base (tem os slugs limpos)
+        seen = set()
+        for slug, img_data in storage_by_slug.items():
+            seen.add(slug)
+            meta = dishes_by_slug.get(slug, {})
+
+            # Ler campos com nomes em ingles (schema real) + fallback portugues (compatibilidade)
+            nome = meta.get("name", meta.get("nome", img_data["name"] or slug.replace("-", " ").title()))
+            categoria = meta.get("category", meta.get("categoria", []))
+            if isinstance(categoria, list):
+                categoria = ", ".join(categoria) if categoria else ""
+            ingredientes = meta.get("ingredients", meta.get("ingredientes", []))
+            nutricao = meta.get("nutrition", meta.get("nutricao", {})) or {}
+
             dish_data = {
-                "slug": display_slug,
-                "nome": dish_doc.get("nome", dish_doc.get("name", slug.replace("_", " ").title())),
-                "categoria": dish_doc.get("categoria", ""),
-                "category_emoji": dish_doc.get("category_emoji", ""),
-                "ingredientes": dish_doc.get("ingredientes", []),
-                "descricao": dish_doc.get("descricao", ""),
-                "beneficios": dish_doc.get("beneficios", []),
-                "riscos": dish_doc.get("riscos", []),
-                "nutricao": dish_doc.get("nutricao", {}),
-                "contem_gluten": dish_doc.get("contem_gluten", False),
-                "contem_lactose": dish_doc.get("contem_lactose", False),
-                "contem_ovo": dish_doc.get("contem_ovo", False),
-                "contem_castanhas": dish_doc.get("contem_castanhas", False),
-                "contem_frutos_mar": dish_doc.get("contem_frutos_mar", False),
-                "contem_soja": dish_doc.get("contem_soja", False),
-                "contem_peixe": dish_doc.get("contem_peixe", False),
-                "tecnica": dish_doc.get("tecnica", ""),
-                "image_count": total_images,
-                "first_image": first_image,
-                "all_images": local["all_images"] + sd["image_names"]
+                "slug": slug,
+                "nome": nome,
+                "categoria": categoria,
+                "category_emoji": meta.get("category_emoji", ""),
+                "ingredientes": ingredientes,
+                "descricao": meta.get("descricao", meta.get("description", "")),
+                "beneficios": meta.get("beneficios", []),
+                "riscos": meta.get("riscos", []),
+                "nutricao": nutricao,
+                "contem_gluten": meta.get("has_gluten", meta.get("contem_gluten", None)),
+                "contem_lactose": meta.get("contem_lactose", None),
+                "contem_ovo": meta.get("contem_ovo", None),
+                "contem_castanhas": meta.get("contem_castanhas", None),
+                "contem_frutos_mar": meta.get("contem_frutos_mar", None),
+                "contem_soja": meta.get("contem_soja", None),
+                "contem_peixe": meta.get("contem_peixe", None),
+                "is_vegan": meta.get("is_vegan", None),
+                "tecnica": meta.get("tecnica", ""),
+                "image_count": img_data["count"],
+                "first_image": img_data["first_image"],
+                "all_images": img_data["image_names"],
             }
-            
             dishes.append(dish_data)
-        
-        # Adicionar pratos do disco que não estejam em dishes
-        for n, local_data in local_images.items():
-            if n not in seen_normalized:
-                seen_normalized.add(n)
-                sd = storage_data.get(n, {"count": 0, "image_names": []})
-                total_images = local_data["count"] + sd["count"]
-                dish_data = {
-                    "slug": local_data["folder_name"],
-                    "nome": local_data["folder_name"],
-                    "categoria": "", "category_emoji": "",
-                    "ingredientes": [], "descricao": "",
-                    "beneficios": [], "riscos": [],
-                    "nutricao": {},
-                    "contem_gluten": False, "contem_lactose": False,
-                    "contem_ovo": False, "contem_castanhas": False,
-                    "contem_frutos_mar": False, "contem_soja": False,
-                    "contem_peixe": False, "tecnica": "",
-                    "image_count": total_images,
-                    "first_image": local_data["first_image"],
-                    "all_images": local_data["all_images"] + sd.get("image_names", [])
-                }
-                dishes.append(dish_data)
-        
-        # Adicionar pratos do dish_storage que não estejam em dishes nem no disco
-        for n, orig_slug in storage_slug_map.items():
-            if n not in seen_normalized:
-                seen_normalized.add(n)
-                sd = storage_data.get(n, {"count": 0, "image_names": []})
-                image_names = sd["image_names"]
-                dish_data = {
-                    "slug": orig_slug,
-                    "nome": orig_slug.replace("_", " ").title(),
-                    "categoria": "", "category_emoji": "",
-                    "ingredientes": [], "descricao": "",
-                    "beneficios": [], "riscos": [],
-                    "nutricao": {},
-                    "contem_gluten": False, "contem_lactose": False,
-                    "contem_ovo": False, "contem_castanhas": False,
-                    "contem_frutos_mar": False, "contem_soja": False,
-                    "contem_peixe": False, "tecnica": "",
-                    "image_count": len(image_names),
-                    "first_image": image_names[0] if image_names else None,
-                    "all_images": image_names
-                }
-                dishes.append(dish_data)
-        
-        dishes.sort(key=lambda d: d["nome"])
+
+        # 4. Adicionar pratos do dishes que nao tem imagens no storage
+        for slug, meta in dishes_by_slug.items():
+            if slug not in seen:
+                seen.add(slug)
+                nome = meta.get("name", meta.get("nome", slug.replace("-", " ").title()))
+                categoria = meta.get("category", meta.get("categoria", []))
+                if isinstance(categoria, list):
+                    categoria = ", ".join(categoria) if categoria else ""
+                dishes.append({
+                    "slug": slug,
+                    "nome": nome,
+                    "categoria": categoria,
+                    "category_emoji": meta.get("category_emoji", ""),
+                    "ingredientes": meta.get("ingredients", meta.get("ingredientes", [])),
+                    "descricao": meta.get("descricao", ""),
+                    "nutricao": meta.get("nutrition", meta.get("nutricao", {})) or {},
+                    "contem_gluten": meta.get("has_gluten", None),
+                    "is_vegan": meta.get("is_vegan", None),
+                    "image_count": 0,
+                    "first_image": None,
+                    "all_images": [],
+                })
+
+        dishes.sort(key=lambda d: d.get("nome", ""))
         return {"ok": True, "dishes": dishes, "total": len(dishes)}
         
     except Exception as e:
