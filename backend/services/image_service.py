@@ -33,21 +33,24 @@ def _get_async_db():
 
 def get_dish_images_from_db(slug: str) -> list:
     """Retorna lista de imagens de um prato a partir do MongoDB dish_storage."""
-    db = _get_db()
-    # Try exact match first
-    doc = db.dish_storage.find_one(
-        {"slug": slug},
-        {"_id": 0, "images": 1}
-    )
-    if doc and doc.get("images"):
-        return doc["images"]
-    
-    # Try normalized match
-    norm = slug.lower().replace(' ', '_').replace('-', '_')
-    for d in db.dish_storage.find({}, {"_id": 0, "slug": 1, "images": 1}):
-        s = d.get("slug", "")
-        if s.lower().replace(' ', '_').replace('-', '_') == norm:
-            return d.get("images", [])
+    try:
+        db = _get_db()
+        # Try exact match first
+        doc = db.dish_storage.find_one(
+            {"slug": slug},
+            {"_id": 0, "images": 1}
+        )
+        if doc and doc.get("images"):
+            return doc["images"]
+        
+        # Try normalized match
+        norm = slug.lower().replace(' ', '_').replace('-', '_')
+        for d in db.dish_storage.find({}, {"_id": 0, "slug": 1, "images": 1}):
+            s = d.get("slug", "")
+            if s.lower().replace(' ', '_').replace('-', '_') == norm:
+                return d.get("images", [])
+    except Exception as e:
+        logger.warning(f"[IMG] MongoDB indisponivel para {slug}: {e}")
     
     return []
 

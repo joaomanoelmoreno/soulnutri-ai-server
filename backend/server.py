@@ -3908,15 +3908,15 @@ async def admin_update_dish(slug: str, dish_data: dict):
         
         # Atualizar TODOS os campos
         existing_info.update({
-            "nome": dish_data.get("nome", existing_info.get("nome", slug)),
+            "name": dish_data.get("nome", existing_info.get("name", existing_info.get("nome", slug))),
             "slug": slug,
-            "categoria": dish_data.get("categoria", existing_info.get("categoria", "")),
-            "descricao": dish_data.get("descricao", existing_info.get("descricao", "")),
-            "ingredientes": dish_data.get("ingredientes", existing_info.get("ingredientes", [])),
+            "category": dish_data.get("categoria", existing_info.get("category", existing_info.get("categoria", ""))),
+            "description": dish_data.get("descricao", existing_info.get("description", existing_info.get("descricao", ""))),
+            "ingredients": dish_data.get("ingredientes", existing_info.get("ingredients", existing_info.get("ingredientes", []))),
             "beneficios": dish_data.get("beneficios", existing_info.get("beneficios", [])),
             "riscos": dish_data.get("riscos", existing_info.get("riscos", [])),
-            "nutricao": dish_data.get("nutricao", existing_info.get("nutricao", {})),
-            "contem_gluten": dish_data.get("contem_gluten", existing_info.get("contem_gluten", False)),
+            "nutrition": dish_data.get("nutricao", existing_info.get("nutrition", existing_info.get("nutricao", {}))),
+            "has_gluten": dish_data.get("contem_gluten", existing_info.get("has_gluten", existing_info.get("contem_gluten", False))),
             "contem_lactose": dish_data.get("contem_lactose", existing_info.get("contem_lactose", False)),
             "contem_ovo": dish_data.get("contem_ovo", existing_info.get("contem_ovo", False)),
             "contem_castanhas": dish_data.get("contem_castanhas", existing_info.get("contem_castanhas", False)),
@@ -4040,6 +4040,7 @@ async def admin_delete_dish(slug: str):
     """Exclui um prato e todas suas fotos do S3, MongoDB e disco local."""
     try:
         import shutil
+        from services.image_service import _find_local_folder
         
         # Remover do dish_storage no MongoDB
         await db.dish_storage.delete_one({"slug": slug})
@@ -4047,10 +4048,11 @@ async def admin_delete_dish(slug: str):
         # Remover do dishes no MongoDB
         await db.dishes.delete_one({"slug": slug})
         
-        # Remover pasta local (cache)
-        dataset_dir = Path("/app/datasets/organized") / slug
-        if dataset_dir.exists():
-            shutil.rmtree(dataset_dir)
+        # Remover pasta local (resolve slug vs nome real da pasta)
+        import asyncio
+        local_folder = await asyncio.to_thread(_find_local_folder, slug)
+        if local_folder and local_folder.exists():
+            shutil.rmtree(local_folder)
         
         logger.info(f"[ADMIN] Prato excluido: {slug}")
         return {"ok": True, "message": f"Prato {slug} excluido"}
