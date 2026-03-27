@@ -58,21 +58,33 @@ def get_dish_images_from_db(slug: str) -> list:
 def _find_local_folder(slug: str) -> Optional[Path]:
     """Encontra a pasta local correspondente ao slug, testando variações."""
     import unicodedata
-    # Try direct match
+    
+    def _normalize(name):
+        n = name.lower().replace('-', '').replace('_', '').replace(' ', '').replace('(', '').replace(')', '')
+        nfkd = unicodedata.normalize('NFKD', n)
+        return ''.join(c for c in nfkd if not unicodedata.combining(c))
+    
+    def _has_images(folder):
+        for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
+            if list(folder.glob(ext)):
+                return True
+        return False
+    
+    # Try direct match first (only if it has images)
     direct = LOCAL_DATASET_DIR / slug
+    if direct.exists() and _has_images(direct):
+        return direct
+    
+    # Try all folders and match by normalized comparison
+    slug_norm = _normalize(slug)
+    for folder in LOCAL_DATASET_DIR.iterdir():
+        if folder.is_dir() and _has_images(folder):
+            if _normalize(folder.name) == slug_norm:
+                return folder
+    
+    # Last resort: return direct match even if empty (for write operations)
     if direct.exists():
         return direct
-    # Try all folders and match by normalized comparison
-    slug_norm = slug.lower().replace('-', '').replace('_', '').replace(' ', '')
-    nfkd = unicodedata.normalize('NFKD', slug_norm)
-    slug_norm = ''.join(c for c in nfkd if not unicodedata.combining(c))
-    for folder in LOCAL_DATASET_DIR.iterdir():
-        if folder.is_dir():
-            folder_norm = folder.name.lower().replace('-', '').replace('_', '').replace(' ', '')
-            nfkd = unicodedata.normalize('NFKD', folder_norm)
-            folder_norm = ''.join(c for c in nfkd if not unicodedata.combining(c))
-            if folder_norm == slug_norm:
-                return folder
     return None
 
 
