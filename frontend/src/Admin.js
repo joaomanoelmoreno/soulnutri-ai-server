@@ -96,6 +96,22 @@ export default function Admin() {
   const [correctingItemId, setCorrectingItemId] = useState(null);
   const [correctionName, setCorrectionName] = useState('');
   const [moderationPendingCount, setModerationPendingCount] = useState(0);
+  // Mover/Deletar imagens (substitui window.confirm/prompt bloqueados no iframe)
+  const [moveImageState, setMoveImageState] = useState(null); // { idx, img, slug }
+  const [moveDestination, setMoveDestination] = useState('');
+  const [deleteImageState, setDeleteImageState] = useState(null); // { idx, img, slug }
+  // Confirmação inline (substitui window.confirm bloqueado no iframe)
+  const [pendingConfirm, setPendingConfirm] = useState(null); // { id, action, label }
+  
+  // Retorna true se a ação está pendente de confirmação, false se já confirmada
+  const needsConfirm = (actionId) => {
+    if (pendingConfirm && pendingConfirm.id === actionId) {
+      return false; // Já confirmado, pode executar
+    }
+    setPendingConfirm({ id: actionId });
+    setTimeout(() => setPendingConfirm(prev => prev?.id === actionId ? null : prev), 5000);
+    return true; // Precisa confirmar
+  };
 
   // Estado de erro global
   const [loadError, setLoadError] = useState(null);
@@ -439,7 +455,8 @@ export default function Admin() {
   };
 
   const bloquearPremium = async (nome) => {
-    if (!window.confirm(`Bloquear Premium de "${nome}"?`)) return;
+    if (needsConfirm(`block-premium-${nome}`)) return;
+    setPendingConfirm(null);
     try {
       const formData = new FormData();
       formData.append('nome', nome);
@@ -500,9 +517,8 @@ export default function Admin() {
 
   // EXCLUIR PRATO
   const deleteDish = async (slug, nome) => {
-    if (!window.confirm(`🗑️ Excluir "${nome || slug}"?\n\nIsso removerá:\n• Todas as fotos\n• Informações do prato\n\n⚠️ Esta ação não pode ser desfeita!`)) {
-      return;
-    }
+    if (needsConfirm(`delete-dish-${slug}`)) return;
+    setPendingConfirm(null);
     
     try {
       const res = await fetch(`${API}/admin/dishes/${encodeURIComponent(slug)}`, { method: 'DELETE' });
@@ -510,19 +526,16 @@ export default function Admin() {
       if (data.ok) {
         loadDishes();
         runAudit();
-      } else {
-        alert('Erro ao excluir: ' + data.error);
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      console.error('Erro ao excluir:', e);
     }
   };
 
   // CONSOLIDAR DUPLICADOS (sem créditos)
   const consolidateDuplicates = async () => {
-    if (!window.confirm('🔗 Consolidar pratos duplicados?\n\nIsso vai:\n• Mesclar pratos com nomes similares\n• Unir todas as imagens\n• Preservar a informação mais completa\n\n✅ NÃO CONSOME CRÉDITOS')) {
-      return;
-    }
+    if (needsConfirm('consolidate')) return;
+    setPendingConfirm(null);
     
     setConsolidating(true);
     setMassActionResult(null);
@@ -557,9 +570,8 @@ export default function Admin() {
 
   // ATUALIZAR TODOS OS PRATOS LOCALMENTE (sem créditos)
   const updateAllLocal = async () => {
-    if (!window.confirm('🔄 Atualizar TODOS os pratos?\n\nIsso vai preencher:\n• Categoria\n• Ingredientes\n• Benefícios e Riscos\n• Informação Nutricional\n• Alérgenos\n• Campos Premium\n\n✅ NÃO CONSOME CRÉDITOS\n⚡ Processo instantâneo')) {
-      return;
-    }
+    if (needsConfirm('update-all')) return;
+    setPendingConfirm(null);
     
     setUpdatingAll(true);
     setMassActionResult(null);
@@ -609,19 +621,8 @@ export default function Admin() {
     }
     
     const qtd = Math.min(pratosComIngredientes.length, 50);
-    if (!window.confirm(
-      `🤖 Revisar fichas nutricionais com IA?\n\n` +
-      `📋 ${qtd} pratos serão revisados\n` +
-      `⚠️ CONSOME CRÉDITOS DE IA\n\n` +
-      `Isso vai corrigir:\n` +
-      `• Categoria (vegano/vegetariano/proteína)\n` +
-      `• Calorias e macronutrientes\n` +
-      `• Benefícios e riscos\n` +
-      `• Alérgenos\n\n` +
-      `Continuar?`
-    )) {
-      return;
-    }
+    if (needsConfirm('review-ia')) return;
+    setPendingConfirm(null);
     
     setRevisandoLote(true);
     setLoteProgress({ total: qtd, atual: 0, revisados: 0, falhas: 0 });
@@ -694,9 +695,8 @@ export default function Admin() {
       return;
     }
     
-    if (!window.confirm(`Corrigir ${slugs.length} pratos com IA? Isso pode levar alguns minutos.`)) {
-      return;
-    }
+    if (needsConfirm('batch-fix-ia')) return;
+    setPendingConfirm(null);
     
     setAuditLoading(true);
     try {
@@ -775,7 +775,8 @@ export default function Admin() {
   };
 
   const deleteNovidade = async (slug) => {
-    if (!window.confirm(`Remover novidade de "${slug}"?`)) return;
+    if (needsConfirm(`delete-novidade-${slug}`)) return;
+    setPendingConfirm(null);
     try {
       const res = await fetch(`${API}/admin/novidades/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
@@ -901,7 +902,8 @@ export default function Admin() {
           `  🥬 Fibras: ${n.fibras || 'N/A'}\n\n` +
           `Deseja aplicar estes dados?`;
         
-        if (window.confirm(msg)) {
+        // Auto-aplicar dados TACO (usuario confirma clicando Salvar)
+        {
           setEditingDish({
             ...editingDish,
             categoria: data.categoria,
@@ -918,7 +920,6 @@ export default function Admin() {
             contem_frutos_mar: data.contem_frutos_mar || false,
             contem_castanhas: data.contem_castanhas || false
           });
-          alert('✅ Dados aplicados! Clique em "Salvar" para confirmar.');
         }
       } else {
         alert('❌ Erro: ' + (data.error || 'Não foi possível calcular'));
@@ -971,8 +972,8 @@ export default function Admin() {
           `⚠️ Riscos:\n${(s.riscos || []).map(r => '  • ' + r).join('\n')}\n\n` +
           `Deseja aplicar estas sugestões?`;
         
-        if (window.confirm(msg)) {
-          // Aplicar sugestões incluindo nutrição
+        // Auto-aplicar sugestões da IA (usuario confirma clicando Salvar)
+        {
           const alergenos = s.alergenos || {};
           setEditingDish({
             ...editingDish,
@@ -992,7 +993,6 @@ export default function Admin() {
             contem_frutos_mar: alergenos.frutos_do_mar || false,
             contem_castanhas: alergenos.oleaginosas || false
           });
-          alert('✅ Sugestões aplicadas! Clique em "Salvar" para confirmar.');
         }
       } else {
         alert('❌ Erro: ' + (data.error || 'Não foi possível analisar'));
@@ -1006,7 +1006,8 @@ export default function Admin() {
   };
 
   const reindex = async () => {
-    if (!window.confirm('Reconstruir índice com as correções? Isso leva 2-3 minutos.')) return;
+    if (needsConfirm('reindex')) return;
+    setPendingConfirm(null);
     setLoading(true);
     try {
       // Iniciar reconstrução em background
@@ -1224,7 +1225,15 @@ export default function Admin() {
           </div>
           <div className="stat">
             <span className="stat-value">{stats.total_embeddings}</span>
-            <span className="stat-label">Imagens</span>
+            <span className="stat-label">Imagens IA</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{dishes.length}</span>
+            <span className="stat-label">Total Pratos</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{dishes.reduce((sum, d) => sum + (d.image_count || 0), 0)}</span>
+            <span className="stat-label">Total Fotos</span>
           </div>
           <div className="stat">
             <span className={`stat-value ${stats.ready ? 'ready' : 'not-ready'}`}>
@@ -1456,8 +1465,12 @@ export default function Admin() {
                 <button onClick={(e) => { e.stopPropagation(); setEditingDish({...dish}); }}>
                   ✏️ Editar
                 </button>
-                <button className="delete-btn" onClick={(e) => { e.stopPropagation(); deleteDish(dish.slug); }}>
-                  🗑️
+                <button 
+                  className="delete-btn" 
+                  onClick={(e) => { e.stopPropagation(); deleteDish(dish.slug); }}
+                  style={pendingConfirm?.id === `delete-dish-${dish.slug}` ? { background: '#ff0000', color: '#fff', fontWeight: 'bold', borderRadius: '4px', padding: '2px 8px' } : {}}
+                >
+                  {pendingConfirm?.id === `delete-dish-${dish.slug}` ? 'CONFIRMAR?' : '🗑️'}
                 </button>
               </div>
             </div>
@@ -2766,37 +2779,10 @@ export default function Admin() {
                         </span>
                         {/* Botão MOVER */}
                         <button
-                          onClick={async (e) => {
+                          onClick={(e) => {
                             e.stopPropagation();
-                            const destino = window.prompt(
-                              `📦 Mover foto ${idx + 1} para qual prato?\n\nDigite o nome do prato de destino:\n(Ex: "Arroz Branco", "Feijão Preto")`
-                            );
-                            if (destino && destino.trim()) {
-                              try {
-                                const res = await fetch(`${API}/admin/move-image`, {
-                                  method: 'POST',
-                                  headers: { 'Content-Type': 'application/json' },
-                                  body: JSON.stringify({
-                                    from_slug: editingDish.slug,
-                                    to_slug: destino.trim(),
-                                    img_name: img
-                                  })
-                                });
-                                const data = await res.json();
-                                if (data.ok) {
-                                  setEditingDish({
-                                    ...editingDish,
-                                    all_images: editingDish.all_images.filter((_, i) => i !== idx),
-                                    image_count: data.remaining_in_source
-                                  });
-                                  alert(`✅ Foto movida para "${destino}"!\n\nNovo nome: ${data.new_name}`);
-                                } else {
-                                  alert('❌ Erro: ' + data.error);
-                                }
-                              } catch (err) {
-                                alert('❌ Erro ao mover: ' + err.message);
-                              }
-                            }
+                            setMoveImageState({ idx, img, slug: editingDish.slug });
+                            setMoveDestination('');
                           }}
                           style={{
                             position: 'absolute',
@@ -2820,46 +2806,61 @@ export default function Admin() {
                         </button>
                         {/* Botão DELETAR */}
                         <button
-                          onClick={async (e) => {
+                          onClick={(e) => {
                             e.stopPropagation();
-                            if (window.confirm(`Deletar foto ${idx + 1}?\n\n⚠️ Dica: Use o botão azul (↗) para MOVER a foto para outro prato sem perder!`)) {
-                              try {
-                                const res = await fetch(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
-                                const data = await res.json();
-                                if (data.ok) {
-                                  setEditingDish({
-                                    ...editingDish,
-                                    all_images: editingDish.all_images.filter((_, i) => i !== idx),
-                                    image_count: data.remaining_images
-                                  });
-                                  alert('✅ Foto deletada!');
-                                } else {
-                                  alert('❌ Erro: ' + data.error);
+                            if (deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug) {
+                              // Second click = confirm delete
+                              (async () => {
+                                try {
+                                  const res = await fetch(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
+                                  const data = await res.json();
+                                  if (data.ok) {
+                                    setEditingDish({
+                                      ...editingDish,
+                                      all_images: editingDish.all_images.filter((_, i) => i !== idx),
+                                      image_count: data.remaining_images
+                                    });
+                                  }
+                                } catch (err) {
+                                  console.error('Erro ao deletar:', err);
                                 }
-                              } catch (err) {
-                                alert('❌ Erro ao deletar');
-                              }
+                                setDeleteImageState(null);
+                              })();
+                            } else {
+                              // First click = show confirmation
+                              setDeleteImageState({ idx, img, slug: editingDish.slug });
+                              setMoveImageState(null);
+                              setTimeout(() => setDeleteImageState(null), 5000);
                             }
                           }}
                           style={{
                             position: 'absolute',
                             top: '2px',
                             right: '2px',
-                            background: 'rgba(220,53,69,0.9)',
+                            background: deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                              ? 'rgba(255,0,0,1)' : 'rgba(220,53,69,0.9)',
                             color: '#fff',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '20px',
+                            border: deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                              ? '2px solid #fff' : 'none',
+                            borderRadius: deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                              ? '4px' : '50%',
+                            width: deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                              ? 'auto' : '20px',
                             height: '20px',
-                            fontSize: '12px',
+                            fontSize: deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                              ? '9px' : '12px',
+                            padding: deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                              ? '0 6px' : '0',
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            zIndex: 2
                           }}
-                          title="Deletar foto"
+                          title={deleteImageState && deleteImageState.idx === idx ? 'Clique de novo para CONFIRMAR' : 'Deletar foto'}
                         >
-                          ✕
+                          {deleteImageState && deleteImageState.idx === idx && deleteImageState.slug === editingDish.slug
+                            ? 'DELETAR?' : '✕'}
                         </button>
                       </div>
                     ))
@@ -2878,6 +2879,88 @@ export default function Admin() {
                   <span style={{ color: '#3b82f6' }}>↗ Azul</span> = Mover para outro prato | 
                   <span style={{ color: '#dc3545' }}> ✕ Vermelho</span> = Deletar
                 </p>
+                {/* Modal inline para MOVER imagem */}
+                {moveImageState && moveImageState.slug === editingDish.slug && (
+                  <div style={{ background: '#1a2744', border: '2px solid #3b82f6', borderRadius: '8px', padding: '12px', marginTop: '8px' }}>
+                    <p style={{ color: '#fff', margin: '0 0 8px', fontSize: '13px' }}>
+                      Mover foto {moveImageState.idx + 1} para qual prato?
+                    </p>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input
+                        type="text"
+                        value={moveDestination}
+                        onChange={e => setMoveDestination(e.target.value)}
+                        placeholder='Ex: "Arroz Branco", "Feijão Preto"'
+                        style={{ flex: 1, padding: '6px 10px', borderRadius: '4px', border: '1px solid #4a5568', background: '#0f172a', color: '#fff', fontSize: '13px' }}
+                        autoFocus
+                        onKeyDown={async (e) => {
+                          if (e.key === 'Enter' && moveDestination.trim()) {
+                            try {
+                              const res = await fetch(`${API}/admin/move-image`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  source_dish: moveImageState.slug,
+                                  target_dish: moveDestination.trim(),
+                                  image_name: moveImageState.img
+                                })
+                              });
+                              const data = await res.json();
+                              if (data.ok) {
+                                setEditingDish({
+                                  ...editingDish,
+                                  all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
+                                  image_count: data.remaining_in_source
+                                });
+                              }
+                            } catch (err) {
+                              console.error('Erro ao mover:', err);
+                            }
+                            setMoveImageState(null);
+                            setMoveDestination('');
+                          }
+                        }}
+                      />
+                      <button
+                        onClick={async () => {
+                          if (!moveDestination.trim()) return;
+                          try {
+                            const res = await fetch(`${API}/admin/move-image`, {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                from_slug: moveImageState.slug,
+                                to_slug: moveDestination.trim(),
+                                img_name: moveImageState.img
+                              })
+                            });
+                            const data = await res.json();
+                            if (data.ok) {
+                              setEditingDish({
+                                ...editingDish,
+                                all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
+                                image_count: data.remaining_in_source
+                              });
+                            }
+                          } catch (err) {
+                            console.error('Erro ao mover:', err);
+                          }
+                          setMoveImageState(null);
+                          setMoveDestination('');
+                        }}
+                        style={{ padding: '6px 14px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
+                      >
+                        Mover
+                      </button>
+                      <button
+                        onClick={() => { setMoveImageState(null); setMoveDestination(''); }}
+                        style={{ padding: '6px 10px', background: '#4a5568', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
               
               <div className="edit-fields">

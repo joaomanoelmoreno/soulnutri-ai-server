@@ -193,7 +193,7 @@ def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
 
 
 def delete_dish_image_from_storage(slug: str, filename: str) -> dict:
-    """Remove imagem do MongoDB dish_storage (S3 delete não implementado, mas removemos a referência)."""
+    """Remove imagem do MongoDB dish_storage e do disco local."""
     try:
         db = _get_db()
         db.dish_storage.update_one(
@@ -203,10 +203,12 @@ def delete_dish_image_from_storage(slug: str, filename: str) -> dict:
                 "$inc": {"count": -1}
             }
         )
-        # Remover localmente também
-        local_path = LOCAL_DATASET_DIR / slug / filename
-        if local_path.exists():
-            local_path.unlink()
+        # Remover localmente usando _find_local_folder (resolve slug vs nome real da pasta)
+        local_folder = _find_local_folder(slug)
+        if local_folder:
+            local_path = local_folder / filename
+            if local_path.exists():
+                local_path.unlink()
         return {"ok": True}
     except Exception as e:
         logger.error(f"[IMG] Erro ao deletar {slug}/{filename}: {e}")

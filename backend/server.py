@@ -4223,10 +4223,12 @@ async def admin_batch_fix_dishes(request: dict):
 async def delete_dish_image(slug: str, img: str = Query(...)):
     """Deleta uma imagem de um prato do S3 e disco local"""
     try:
-        from services.image_service import delete_dish_image_from_storage
-        result = delete_dish_image_from_storage(slug, img)
+        from services.image_service import delete_dish_image_from_storage, get_dish_image_count
+        import asyncio
+        result = await asyncio.to_thread(delete_dish_image_from_storage, slug, img)
         if result.get("ok"):
-            return {"ok": True, "message": f"Imagem {img} removida"}
+            remaining = await asyncio.to_thread(get_dish_image_count, slug)
+            return {"ok": True, "message": f"Imagem {img} removida", "remaining_images": remaining}
         return JSONResponse(status_code=404, content={"ok": False, "error": result.get("error", "Erro ao remover")})
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
@@ -4236,7 +4238,7 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
 async def move_dish_image(request: Request):
     """Move uma imagem de um prato para outro (S3 + MongoDB + local)"""
     try:
-        from services.image_service import get_dish_image_bytes, save_dish_image, delete_dish_image_from_storage
+        from services.image_service import get_dish_image_bytes, save_dish_image, delete_dish_image_from_storage, get_dish_image_count
         
         data = await request.json()
         source_dish = data.get("source_dish")
@@ -4250,12 +4252,13 @@ async def move_dish_image(request: Request):
             return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
         
         # Salvar no prato destino
-        save_dish_image(target_dish, image_name, image_bytes)
+        await asyncio.to_thread(save_dish_image, target_dish, image_name, image_bytes)
         
         # Remover do prato origem
-        delete_dish_image_from_storage(source_dish, image_name)
+        await asyncio.to_thread(delete_dish_image_from_storage, source_dish, image_name)
         
-        return {"ok": True, "message": f"Imagem movida para {target_dish}"}
+        remaining = await asyncio.to_thread(get_dish_image_count, source_dish)
+        return {"ok": True, "message": f"Imagem movida para {target_dish}", "remaining_in_source": remaining}
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
