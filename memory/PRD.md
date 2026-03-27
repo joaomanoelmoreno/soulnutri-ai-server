@@ -40,7 +40,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 
 ### Relatorio Gerado
 - Arquivo: /app/RELATORIO_AUDITORIA_SOULNUTRI.docx
-- URL: https://nutriradar-staging.preview.emergentagent.com/RELATORIO_AUDITORIA_SOULNUTRI.docx
+- URL: https://hybrid-storage-dev.preview.emergentagent.com/RELATORIO_AUDITORIA_SOULNUTRI.docx
 
 ### 8 Problemas Identificados
 1. (CRITICO) 148 slugs corrompidos no MongoDB (ex: aboboraaocurry em vez de abobora-ao-curry)

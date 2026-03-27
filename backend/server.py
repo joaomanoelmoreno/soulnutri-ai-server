@@ -3778,25 +3778,23 @@ async def admin_list_dishes_full():
     try:
         dishes = []
 
-        # 1. Carregar metadados de imagens do dish_storage (fonte de verdade)
+        # 1. Carregar metadados de imagens do dish_storage (somente contagem e first_image)
         storage_by_slug = {}
-        async for doc in db.dish_storage.find({}, {"_id": 0}):
+        async for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "name": 1, "count": 1, "images": {"$slice": 5}}):
             slug = doc.get("slug", "")
             imgs = doc.get("images", [])
             # Choose first representative image (prefer larger files over tiny thumbnails)
-            image_names = [img.get("filename", "") for img in imgs]
             first_img = None
             for img in imgs:
                 if img.get("size", 0) > 5000:
                     first_img = img.get("filename", "")
                     break
-            if not first_img and image_names:
-                first_img = image_names[0]
+            if not first_img and imgs:
+                first_img = imgs[0].get("filename", "")
             
             storage_by_slug[slug] = {
                 "name": doc.get("name", ""),
                 "count": doc.get("count", len(imgs)),
-                "image_names": image_names,
                 "first_image": first_img,
             }
 
@@ -3842,7 +3840,6 @@ async def admin_list_dishes_full():
                 "tecnica": meta.get("tecnica", ""),
                 "image_count": img_data["count"],
                 "first_image": img_data["first_image"],
-                "all_images": img_data["image_names"],
             }
             dishes.append(dish_data)
 
@@ -3866,7 +3863,6 @@ async def admin_list_dishes_full():
                     "is_vegan": meta.get("is_vegan", None),
                     "image_count": 0,
                     "first_image": None,
-                    "all_images": [],
                 })
 
         dishes.sort(key=lambda d: d.get("nome", ""))
@@ -3877,20 +3873,92 @@ async def admin_list_dishes_full():
         return {"ok": False, "error": str(e)}
 
 
+@api_router.get("/admin/dish-images-list/{slug}")
+async def admin_dish_images_list(slug: str):
+    """Retorna a lista de nomes de imagens de um prato. Usado ao abrir Editar."""
+    try:
+        doc = await db.dish_storage.find_one({"slug": slug}, {"_id": 0, "images": 1, "count": 1})
+        if doc:
+            names = [img.get("filename", "") for img in doc.get("images", [])]
+            return {"ok": True, "images": names, "count": doc.get("count", len(names))}
+        return {"ok": True, "images": [], "count": 0}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+
 @api_router.get("/admin/dish-image/{slug}")
-async def admin_get_dish_image(slug: str, img: str = None):
-    """Retorna uma imagem de um prato do Object Storage (S3) com fallback local."""
-    from fastapi.responses import Response
-    from services.image_service import get_dish_image_bytes
+async def admin_get_dish_image(slug: str, img: str = None, thumb: int = 0):
+    """Retorna uma imagem de um prato. thumb=1 para thumbnail comprimido (rápido)."""
+    from fastapi.responses import Response, FileResponse
+    from services.image_service import _find_local_folder
     import asyncio
     
     try:
+        # Fast path: serve directly from local disk (no MongoDB needed)
+        local_folder = await asyncio.to_thread(_find_local_folder, slug)
+        target_file = None
+        
+        if local_folder:
+            if img:
+                target = local_folder / img
+                if target.exists():
+                    target_file = target
+            else:
+                # Find first image > 5KB (skip tiny thumbnails)
+                for ext in ("*.jpg", "*.jpeg", "*.png"):
+                    for f in sorted(local_folder.glob(ext)):
+                        if f.stat().st_size > 5000:
+                            target_file = f
+                            break
+                    if target_file:
+                        break
+                # Fallback to any image
+                if not target_file:
+                    for ext in ("*.jpg", "*.jpeg", "*.png"):
+                        found = sorted(local_folder.glob(ext))
+                        if found:
+                            target_file = found[0]
+                            break
+        
+        if target_file:
+            # Thumbnail mode: compress and resize for fast loading
+            if thumb:
+                from PIL import Image
+                import io
+                def make_thumb():
+                    with Image.open(target_file) as pil_img:
+                        pil_img.thumbnail((300, 300))
+                        buf = io.BytesIO()
+                        pil_img.save(buf, format='JPEG', quality=60)
+                        return buf.getvalue()
+                data = await asyncio.to_thread(make_thumb)
+                return Response(content=data, media_type="image/jpeg",
+                               headers={"Cache-Control": "public, max-age=3600"})
+            else:
+                return FileResponse(str(target_file), media_type="image/jpeg",
+                                   headers={"Cache-Control": "public, max-age=3600"})
+        
+        # Slow path: try cloud storage (only if not found locally)
+        from services.image_service import get_dish_image_bytes
         data, content_type = await asyncio.to_thread(get_dish_image_bytes, slug, img)
         
         if data is None:
             raise HTTPException(status_code=404, detail="Imagem nao encontrada")
         
-        return Response(content=data, media_type=content_type or "image/jpeg")
+        if thumb and data:
+            from PIL import Image
+            import io
+            def make_thumb_from_bytes():
+                with Image.open(io.BytesIO(data)) as pil_img:
+                    pil_img.thumbnail((300, 300))
+                    buf = io.BytesIO()
+                    pil_img.save(buf, format='JPEG', quality=60)
+                    return buf.getvalue()
+            data = await asyncio.to_thread(make_thumb_from_bytes)
+        
+        return Response(content=data, media_type=content_type or "image/jpeg",
+                       headers={"Cache-Control": "public, max-age=3600"})
         
     except HTTPException:
         raise
@@ -3926,8 +3994,8 @@ async def admin_update_dish(slug: str, dish_data: dict):
         })
         
         # Definir emoji baseado na categoria
-        cat = existing_info.get("categoria", "").lower()
-        nome_lower = existing_info.get("nome", "").lower()
+        cat = (existing_info.get("category", "") or "").lower()
+        nome_lower = (existing_info.get("name", "") or "").lower()
         
         if "proteina" in cat:
             if any(p in nome_lower for p in ["peixe", "camarao", "bacalhau", "salmao", "atum", "tilapia", "pescador"]):
@@ -4247,21 +4315,31 @@ async def move_dish_image(request: Request):
         target_dish = data.get("target_dish")
         image_name = data.get("image_name")
         
+        if not source_dish or not target_dish or not image_name:
+            return JSONResponse(status_code=400, content={"ok": False, "error": "source_dish, target_dish e image_name sao obrigatorios"})
+        
+        # Verificar se o prato destino existe no dish_storage
+        target_exists = await db.dish_storage.find_one({"slug": target_dish}, {"_id": 0, "slug": 1})
+        if not target_exists:
+            return JSONResponse(status_code=404, content={"ok": False, "error": f"Prato destino '{target_dish}' nao encontrado"})
+        
         # Ler imagem do prato origem
         import asyncio
         image_bytes, content_type = await asyncio.to_thread(get_dish_image_bytes, source_dish, image_name)
         if not image_bytes:
-            return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada"})
+            return JSONResponse(status_code=404, content={"ok": False, "error": "Imagem nao encontrada no prato origem"})
         
-        # Salvar no prato destino
+        # Salvar no prato destino (local + MongoDB)
         await asyncio.to_thread(save_dish_image, target_dish, image_name, image_bytes)
         
-        # Remover do prato origem
+        # Remover do prato origem SOMENTE depois de salvar com sucesso
         await asyncio.to_thread(delete_dish_image_from_storage, source_dish, image_name)
         
         remaining = await asyncio.to_thread(get_dish_image_count, source_dish)
+        logger.info(f"[MOVE] Imagem '{image_name}' movida de '{source_dish}' para '{target_dish}'")
         return {"ok": True, "message": f"Imagem movida para {target_dish}", "remaining_in_source": remaining}
     except Exception as e:
+        logger.error(f"[MOVE] Erro ao mover imagem: {e}")
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 

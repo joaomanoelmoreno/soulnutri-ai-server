@@ -102,6 +102,15 @@ export default function Admin() {
   const [deleteImageState, setDeleteImageState] = useState(null); // { idx, img, slug }
   // Confirmação inline (substitui window.confirm bloqueado no iframe)
   const [pendingConfirm, setPendingConfirm] = useState(null); // { id, action, label }
+  // Paginação
+  const [dishesPage, setDishesPage] = useState(1);
+  const DISHES_PER_PAGE = 30;
+  // Notificação inline (substitui alert() bloqueado no iframe)
+  const [notification, setNotification] = useState(null); // { message, type: 'success'|'error'|'info' }
+  const notify = useCallback((message, type = 'info') => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 5000);
+  }, []);
   
   // Retorna true se a ação está pendente de confirmação, false se já confirmada
   const needsConfirm = (actionId) => {
@@ -324,10 +333,10 @@ export default function Admin() {
         setConfirmAction(null);
         loadModerationQueue();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     }
   };
 
@@ -339,16 +348,16 @@ export default function Admin() {
         setConfirmAction(null);
         loadModerationQueue();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     }
   };
 
   const correctModerationItem = async (itemId) => {
     if (!correctionName.trim()) {
-      alert('Digite o nome correto do prato');
+      notify('Digite o nome correto do prato', 'error');
       return;
     }
     try {
@@ -363,10 +372,10 @@ export default function Admin() {
         setCorrectionName('');
         loadModerationQueue();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     }
   };
 
@@ -429,7 +438,7 @@ export default function Admin() {
 
   const liberarPremium = async () => {
     if (!premiumNome.trim()) {
-      alert('Digite o nome do usuário');
+      notify('Digite o nome do usuário', 'error');
       return;
     }
     try {
@@ -443,14 +452,14 @@ export default function Admin() {
       });
       const data = await res.json();
       if (data.ok) {
-        alert(`✅ Premium liberado para ${premiumNome} por ${premiumDias} dias!`);
+        notify(`✅ Premium liberado para ${premiumNome} por ${premiumDias} dias!`, 'success');
         setPremiumNome('');
         loadPremiumUsers();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     }
   };
 
@@ -467,13 +476,13 @@ export default function Admin() {
       });
       const data = await res.json();
       if (data.ok) {
-        alert(`✅ Premium bloqueado para ${nome}`);
+        notify(`✅ Premium bloqueado para ${nome}`, 'success');
         loadPremiumUsers();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     }
   };
 
@@ -486,10 +495,10 @@ export default function Admin() {
       if (data.ok) {
         setAuditData(data);
       } else {
-        alert('Erro na auditoria: ' + data.error);
+        notify('Erro na auditoria: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     } finally {
       setAuditLoading(false);
     }
@@ -502,14 +511,14 @@ export default function Admin() {
       const res = await fetch(`${API}/admin/audit/fix-single/${encodeURIComponent(slug)}`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
-        alert(`✅ Prato "${slug}" corrigido com sucesso!`);
+        notify(`✅ Prato "${slug}" corrigido com sucesso!`, 'success');
         runAudit(); // Atualizar auditoria
         loadDishes(); // Atualizar lista
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     } finally {
       setFixingSlug(null);
     }
@@ -616,7 +625,7 @@ export default function Admin() {
     );
     
     if (pratosComIngredientes.length === 0) {
-      alert('Nenhum prato com ingredientes para revisar');
+      notify('Nenhum prato com ingredientes para revisar', 'info');
       return;
     }
     
@@ -691,7 +700,7 @@ export default function Admin() {
     const slugs = problems.slice(0, 10).map(p => p.slug);
     
     if (slugs.length === 0) {
-      alert('Nenhum prato para corrigir');
+      notify('Nenhum prato para corrigir', 'info');
       return;
     }
     
@@ -707,14 +716,14 @@ export default function Admin() {
       });
       const data = await res.json();
       if (data.ok) {
-        alert(`✅ Corrigidos: ${data.fixed?.length || 0}\n❌ Falhas: ${data.failed?.length || 0}\n⏭️ Pulados: ${data.skipped?.length || 0}`);
+        notify(`✅ Corrigidos: ${data.fixed?.length || 0}\n❌ Falhas: ${data.failed?.length || 0}\n⏭️ Pulados: ${data.skipped?.length || 0}`, 'success');
         runAudit();
         loadDishes();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
     } finally {
       setAuditLoading(false);
     }
@@ -740,7 +749,7 @@ export default function Admin() {
 
   const saveNovidade = async () => {
     if (!novidadeForm.dish_slug || !novidadeForm.titulo || !novidadeForm.mensagem) {
-      alert('Preencha todos os campos obrigatórios');
+      notify('Preencha todos os campos obrigatórios', 'error');
       return;
     }
     
@@ -754,7 +763,7 @@ export default function Admin() {
       });
       const data = await res.json();
       if (data.ok) {
-        alert('✅ Novidade salva!');
+        notify('✅ Novidade salva!', 'success');
         setNovidadeForm({
           dish_slug: '',
           tipo: 'info',
@@ -767,10 +776,10 @@ export default function Admin() {
         setEditingNovidade(null);
         loadNovidades();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro ao salvar: ' + e.message);
+      notify('Erro ao salvar: ' + e.message, 'error');
     }
   };
 
@@ -781,11 +790,11 @@ export default function Admin() {
       const res = await fetch(`${API}/admin/novidades/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
-        alert('✅ Novidade removida!');
+        notify('✅ Novidade removida!', 'success');
         loadNovidades();
       }
     } catch (e) {
-      alert('Erro ao remover: ' + e.message);
+      notify('Erro ao remover: ' + e.message, 'error');
     }
   };
 
@@ -807,31 +816,31 @@ export default function Admin() {
         data = JSON.parse(text);
       } catch (parseError) {
         console.error('Erro ao parsear resposta:', text);
-        alert('Erro ao processar resposta do servidor');
+        notify('Erro ao processar resposta do servidor', 'error');
         return;
       }
       
       if (data.ok) {
-        alert('✅ Prato salvo!');
+        notify('✅ Prato salvo!', 'success');
         setEditingDish(null);
         loadDishes();
       } else {
-        alert('Erro: ' + (data.error || 'Erro desconhecido'));
+        notify('Erro: ' + (data.error || 'Erro desconhecido'), 'error');
       }
     } catch (e) {
       console.error('Erro ao salvar:', e);
-      alert('Erro ao salvar: ' + e.message);
+      notify('Erro ao salvar: ' + e.message, 'error');
     }
   };
 
   // Criar novo prato com upload de foto
   const createNewDishAdmin = async () => {
     if (!newDishName.trim()) {
-      alert('Digite o nome do prato');
+      notify('Digite o nome do prato', 'error');
       return;
     }
     if (!newDishFile) {
-      alert('Selecione uma foto do prato');
+      notify('Selecione uma foto do prato', 'error');
       return;
     }
     
@@ -849,17 +858,17 @@ export default function Admin() {
       const data = await res.json();
       
       if (data.ok) {
-        alert(`✅ Prato "${newDishName}" criado com sucesso!\n\n💰 Créditos usados: 0\n\n📝 Edite os detalhes na lista de pratos.`);
+        notify(`✅ Prato "${newDishName}" criado com sucesso!\n\n💰 Créditos usados: 0\n\n📝 Edite os detalhes na lista de pratos.`, 'success');
         setShowNewDishModal(false);
         setNewDishName('');
         setNewDishFile(null);
         loadDishes();
         loadStats();
       } else {
-        alert('Erro: ' + data.error);
+        notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
-      alert('Erro ao criar: ' + e.message);
+      notify('Erro ao criar: ' + e.message, 'error');
     } finally {
       setCreatingDish(false);
     }
@@ -871,7 +880,7 @@ export default function Admin() {
     
     const ingredientes = editingDish.ingredientes || [];
     if (ingredientes.length === 0 || (ingredientes.length === 1 && !ingredientes[0].trim())) {
-      alert('⚠️ Adicione os ingredientes primeiro!');
+      notify('⚠️ Adicione os ingredientes primeiro!', 'error');
       return;
     }
     
@@ -922,11 +931,11 @@ export default function Admin() {
           });
         }
       } else {
-        alert('❌ Erro: ' + (data.error || 'Não foi possível calcular'));
+        notify('❌ Erro: ' + (data.error || 'Não foi possível calcular'), 'error');
       }
     } catch (e) {
       console.error('Erro ao buscar TACO:', e);
-      alert('❌ Erro: ' + e.message);
+      notify('❌ Erro: ' + e.message, 'error');
     } finally {
       setRevisandoIA(false);
     }
@@ -938,7 +947,7 @@ export default function Admin() {
     
     const ingredientes = editingDish.ingredientes || [];
     if (ingredientes.length === 0 || (ingredientes.length === 1 && !ingredientes[0].trim())) {
-      alert('⚠️ Adicione os ingredientes primeiro para a IA analisar!');
+      notify('⚠️ Adicione os ingredientes primeiro para a IA analisar!', 'error');
       return;
     }
     
@@ -995,11 +1004,11 @@ export default function Admin() {
           });
         }
       } else {
-        alert('❌ Erro: ' + (data.error || 'Não foi possível analisar'));
+        notify('❌ Erro: ' + (data.error || 'Não foi possível analisar'), 'error');
       }
     } catch (e) {
       console.error('Erro ao revisar com IA:', e);
-      alert('❌ Erro ao conectar com IA: ' + e.message);
+      notify('❌ Erro ao conectar com IA: ' + e.message, 'error');
     } finally {
       setRevisandoIA(false);
     }
@@ -1018,7 +1027,7 @@ export default function Admin() {
         throw new Error(data.error || 'Erro ao iniciar');
       }
       
-      alert('⏳ Reconstrução iniciada em background!\n\nAguarde 2-3 minutos e clique em "Verificar Status".');
+      notify('⏳ Reconstrução iniciada em background!\n\nAguarde 2-3 minutos e clique em "Verificar Status".', 'info');
       
       // Polling para verificar status
       const checkStatus = async () => {
@@ -1027,7 +1036,7 @@ export default function Admin() {
           const statusData = await statusRes.json();
           
           if (statusData.completed) {
-            alert(`✅ Reindexação concluída!\n\n${statusData.stats?.total_dishes || '?'} pratos\n${statusData.stats?.total_images || '?'} imagens`);
+            notify(`✅ Reindexação concluída!\n\n${statusData.stats?.total_dishes || '?'} pratos\n${statusData.stats?.total_images || '?'} imagens`, 'success');
             loadStats();
             loadDishes();
             setLoading(false);
@@ -1046,7 +1055,7 @@ export default function Admin() {
       setTimeout(checkStatus, 10000);
       
     } catch (e) {
-      alert('Erro: ' + e.message);
+      notify('Erro: ' + e.message, 'error');
       setLoading(false);
     }
   };
@@ -1072,6 +1081,24 @@ export default function Admin() {
 
   return (
     <div className="admin-container">
+      {/* Notificação inline (substitui alert bloqueado no iframe) */}
+      {notification && (
+        <div 
+          data-testid="admin-notification"
+          onClick={() => setNotification(null)}
+          style={{
+            position: 'fixed', top: '16px', right: '16px', zIndex: 10000,
+            padding: '12px 20px', borderRadius: '8px', maxWidth: '400px',
+            color: '#fff', cursor: 'pointer', fontSize: '14px', lineHeight: '1.4',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+            background: notification.type === 'success' ? '#16a34a' : 
+                       notification.type === 'error' ? '#dc2626' : '#2563eb',
+            animation: 'slideIn 0.3s ease-out'
+          }}
+        >
+          {notification.message}
+        </div>
+      )}
       <header className="admin-header">
         <h1>🍽️ SoulNutri Admin</h1>
         <a href="/" className="back-link">← Voltar ao App</a>
@@ -1254,12 +1281,12 @@ export default function Admin() {
             type="text"
             placeholder="🔍 Buscar pratos..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => { setSearch(e.target.value); setDishesPage(1); }}
             className="search-input"
           />
           <select 
             value={filterCategory} 
-            onChange={e => setFilterCategory(e.target.value)}
+            onChange={e => { setFilterCategory(e.target.value); setDishesPage(1); }}
             className="filter-select"
           >
             <option value="">Todas categorias</option>
@@ -1386,17 +1413,29 @@ export default function Admin() {
           </button>
         </div>
       ) : (
+        <>
         <div className={`dishes-container ${viewMode}`}>
-          {filteredDishes.map(dish => (
-            <div key={dish.slug} className="dish-card-full" onClick={() => setEditingDish({...dish})}>
+          {filteredDishes.slice(0, dishesPage * DISHES_PER_PAGE).map(dish => (
+            <div key={dish.slug} className="dish-card-full" onClick={async () => {
+              setEditingDish({...dish, all_images: null, _loading_images: true});
+              try {
+                const res = await retryFetch(`${API}/admin/dish-images-list/${encodeURIComponent(dish.slug)}`);
+                const data = await res.json();
+                if (data.ok) {
+                  setEditingDish(prev => prev && prev.slug === dish.slug ? {...prev, all_images: data.images, image_count: data.count, _loading_images: false} : prev);
+                }
+              } catch(e) {
+                setEditingDish(prev => prev ? {...prev, _loading_images: false, all_images: []} : prev);
+              }
+            }}>
               {/* Foto */}
               <div className="dish-photo">
                 {dish.first_image ? (
-                  <img src={`${API}/admin/dish-image/${encodeURIComponent(dish.slug)}`} alt={dish.nome} />
+                  <img loading="lazy" src={`${API}/admin/dish-image/${encodeURIComponent(dish.slug)}?thumb=1`} alt={dish.nome} />
                 ) : (
                   <div className="no-photo">{dish.category_emoji || '🍽️'}</div>
                 )}
-                <span className="photo-count">📷 {dish.image_count}</span>
+                <span className="photo-count">{dish.image_count}</span>
               </div>
               
               {/* Info */}
@@ -1462,7 +1501,19 @@ export default function Admin() {
               
               {/* Actions */}
               <div className="dish-actions-bar">
-                <button onClick={(e) => { e.stopPropagation(); setEditingDish({...dish}); }}>
+                <button onClick={async (e) => {
+                  e.stopPropagation();
+                  setEditingDish({...dish, all_images: null, _loading_images: true});
+                  try {
+                    const res = await retryFetch(`${API}/admin/dish-images-list/${encodeURIComponent(dish.slug)}`);
+                    const data = await res.json();
+                    if (data.ok) {
+                      setEditingDish(prev => prev && prev.slug === dish.slug ? {...prev, all_images: data.images, image_count: data.count, _loading_images: false} : prev);
+                    }
+                  } catch(err) {
+                    setEditingDish(prev => prev ? {...prev, _loading_images: false, all_images: []} : prev);
+                  }
+                }}>
                   ✏️ Editar
                 </button>
                 <button 
@@ -1476,6 +1527,19 @@ export default function Admin() {
             </div>
           ))}
         </div>
+        {/* Botão Carregar Mais */}
+        {dishesPage * DISHES_PER_PAGE < filteredDishes.length && (
+          <div style={{ textAlign: 'center', padding: '20px' }}>
+            <button
+              onClick={() => setDishesPage(p => p + 1)}
+              data-testid="load-more-dishes"
+              style={{ padding: '10px 30px', background: '#1e3a5f', color: '#fff', border: '1px solid #3b82f6', borderRadius: '8px', cursor: 'pointer', fontSize: '14px' }}
+            >
+              Carregar Mais ({filteredDishes.length - dishesPage * DISHES_PER_PAGE} restantes)
+            </button>
+          </div>
+        )}
+        </>
       ))}
 
       {/* Novidades Tab */}
@@ -2765,11 +2829,13 @@ export default function Admin() {
               {/* Galeria de fotos do prato */}
               <div className="edit-photo-section">
                 <div className="photo-gallery" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
-                  {editingDish.all_images && editingDish.all_images.length > 0 ? (
+                  {editingDish._loading_images ? (
+                    <p style={{ color: '#94a3b8', textAlign: 'center' }}>Carregando fotos...</p>
+                  ) : editingDish.all_images && editingDish.all_images.length > 0 ? (
                     editingDish.all_images.map((img, idx) => (
                       <div key={idx} style={{ position: 'relative' }}>
                         <img 
-                          src={`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`} 
+                          src={`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}&thumb=1`} 
                           alt={`${editingDish.nome} ${idx + 1}`}
                           style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer' }}
                           onClick={() => window.open(`${API}/admin/dish-image/${editingDish.slug}?img=${encodeURIComponent(img)}`, '_blank')}
@@ -2866,7 +2932,7 @@ export default function Admin() {
                     ))
                   ) : editingDish.first_image ? (
                     <img 
-                      src={`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}`} 
+                      src={`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?thumb=1`} 
                       alt={editingDish.nome}
                       style={{ maxWidth: '200px', borderRadius: '8px' }}
                     />
@@ -2886,42 +2952,20 @@ export default function Admin() {
                       Mover foto {moveImageState.idx + 1} para qual prato?
                     </p>
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <input
-                        type="text"
+                      <select
+                        data-testid="move-destination-select"
                         value={moveDestination}
                         onChange={e => setMoveDestination(e.target.value)}
-                        placeholder='Ex: "Arroz Branco", "Feijão Preto"'
                         style={{ flex: 1, padding: '6px 10px', borderRadius: '4px', border: '1px solid #4a5568', background: '#0f172a', color: '#fff', fontSize: '13px' }}
                         autoFocus
-                        onKeyDown={async (e) => {
-                          if (e.key === 'Enter' && moveDestination.trim()) {
-                            try {
-                              const res = await fetch(`${API}/admin/move-image`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                  source_dish: moveImageState.slug,
-                                  target_dish: moveDestination.trim(),
-                                  image_name: moveImageState.img
-                                })
-                              });
-                              const data = await res.json();
-                              if (data.ok) {
-                                setEditingDish({
-                                  ...editingDish,
-                                  all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
-                                  image_count: data.remaining_in_source
-                                });
-                              }
-                            } catch (err) {
-                              console.error('Erro ao mover:', err);
-                            }
-                            setMoveImageState(null);
-                            setMoveDestination('');
-                          }
-                        }}
-                      />
+                      >
+                        <option value="">-- Selecione o prato destino --</option>
+                        {dishes.filter(d => d.slug !== editingDish.slug).sort((a,b) => (a.nome||'').localeCompare(b.nome||'')).map(d => (
+                          <option key={d.slug} value={d.slug}>{d.nome || d.slug} ({d.image_count} fotos)</option>
+                        ))}
+                      </select>
                       <button
+                        data-testid="move-image-confirm-btn"
                         onClick={async () => {
                           if (!moveDestination.trim()) return;
                           try {
@@ -2929,9 +2973,9 @@ export default function Admin() {
                               method: 'POST',
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({
-                                from_slug: moveImageState.slug,
-                                to_slug: moveDestination.trim(),
-                                img_name: moveImageState.img
+                                source_dish: moveImageState.slug,
+                                target_dish: moveDestination.trim(),
+                                image_name: moveImageState.img
                               })
                             });
                             const data = await res.json();
@@ -2941,6 +2985,14 @@ export default function Admin() {
                                 all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
                                 image_count: data.remaining_in_source
                               });
+                              // Atualizar contagem na lista principal
+                              setDishes(prev => prev.map(d => {
+                                if (d.slug === moveImageState.slug) return {...d, image_count: data.remaining_in_source};
+                                if (d.slug === moveDestination.trim()) return {...d, image_count: (d.image_count || 0) + 1};
+                                return d;
+                              }));
+                            } else {
+                              console.error('Erro ao mover:', data.error);
                             }
                           } catch (err) {
                             console.error('Erro ao mover:', err);

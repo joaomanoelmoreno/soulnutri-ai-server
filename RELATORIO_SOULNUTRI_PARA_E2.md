@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://nutriradar-staging.preview.emergentagent.com
-- Admin: https://nutriradar-staging.preview.emergentagent.com/admin
-- Lista de Pratos: https://nutriradar-staging.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://hybrid-storage-dev.preview.emergentagent.com
+- Admin: https://hybrid-storage-dev.preview.emergentagent.com/admin
+- Lista de Pratos: https://hybrid-storage-dev.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

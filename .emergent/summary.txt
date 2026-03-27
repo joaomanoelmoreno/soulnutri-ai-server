@@ -1,139 +1,138 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens com alta precisão. O projeto evoluiu para incluir um feed de notícias gerado por IA com fontes confiáveis, um sistema de gamificação para usuários premium e um redesign visual completo. Recentemente, o usuário relatou que os testes em ambiente real (buffet) não foram satisfatórios e solicitou uma mudança no fluxo de feedback para evitar a contaminação do dataset, exigindo um sistema de moderação pelo admin. O problema mais recente e crítico é que o painel de administração estava completamente quebrado, e após a correção, surgiram problemas de integridade de dados que abalaram a confiança do usuário.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. Recentemente, a aplicação apresentou problemas críticos no painel de administração (), onde os dados pareciam ter sido deletados (contagem de imagens igual a 0). O usuário solicitou a correção imediata sem a perda de dados. A engenharia recomendou a migração das imagens do disco local para o Object Storage (nuvem) da Emergent para evitar corrupção futura. Durante a migração e ajustes, o usuário notou lentidão severa, perda temporária de dados nutricionais e falhas nos botões de Mover e Deletar.
 
-**PRODUCT REQUIREMENTS:**
-1.  **Visão:** Atuar como um radar do prato, focando em segurança alimentar e informação de valor em tempo real.
-2.  **Performance e Precisão:** A identificação deve ser precisa, honesta e confiável.
-3.  **Qualidade da Informação:** As informações (ingredientes, ficha nutricional, notícias) devem ser corretas e cientificamente embasadas.
-4.  **UX/UI:** Interface com o mínimo de cliques, fluida, estável e com um design gourmet.
-5.  **Segurança e Estabilidade:** O painel de administração deve ser funcional e estável para permitir a gestão da qualidade dos dados do aplicativo.
-
-**User's preferred language**: Português (Brasil). O próximo agente DEVE se comunicar em Português.
+**User's preferred language**: Português (Brasil). (INSTRUCT: The next agent MUST respond in Português).
 
 **what currently exists?**
-Uma aplicação full-stack (React + FastAPI + MongoDB). As funcionalidades de reconhecimento de imagem, Nutri News, sistema premium e o novo fluxo de moderação estão implementados. O problema crítico de travamento do backend foi resolvido ao identificar e corrigir chamadas de I/O síncronas (, ) que bloqueavam o event loop do FastAPI, envolvendo-as em . O painel de administração (), que estava completamente quebrado, agora carrega os dados. No entanto, a correção revelou um novo problema crítico: inconsistências de dados. O painel mostra uma contagem de imagens incorreta (ex: 0 imagens para Arroz Branco), levando o usuário a acreditar que seus dados foram perdidos, embora uma investigação tenha confirmado que os arquivos originais estão intactos no disco.
+Uma aplicação full-stack (React + FastAPI + MongoDB). O problema de zero imagens foi resolvido limpando slugs duplicados e inconsistentes. O dataset de imagens agora está rodando em um sistema HÍBRIDO (99 pratos migrados para o Object Storage S3-compatível da Emergent e 107 pratos rodando no disco local  devido a instabilidades de timeout no upload do storage). Os dados nutricionais que haviam sumido foram 100% restaurados a partir de um backup (). O painel Admin foi fortemente otimizado com paginação, lazy loading nas fotos e compressão de thumbnails on-the-fly no backend usando  para evitar crashs no navegador.
 
 **Last working item**:
--   **Last item agent was working**: Corrigir a lógica do endpoint  no arquivo . O endpoint não estava contabilizando corretamente as imagens do dataset original armazenado no sistema de arquivos local (), mostrando apenas as imagens referenciadas no banco de dados (), o que resultava em uma contagem de imagens incorreta no painel de administração.
--   **Status**: IN PROGRESS
--   **Agent Testing Done**: Y (O agente usou  para testar o endpoint e confirmou que a lógica estava falhando em unificar as fontes de dados do disco e do banco de dados, especialmente devido a inconsistências nos slugs, como Arroz Branco vs arroz_branco).
--   **Which testing method agent to use?**: backend testing agent. Testar o endpoint  com  e  para validar se a resposta JSON para pratos como Arroz Branco contém a contagem correta de imagens (>25) e a lista completa de arquivos.
--   **User Testing Done**: Y (O usuário identificou a discrepância de dados e está extremamente preocupado com a perda de dados).
+- **Last item agent was working**: Implementação de compressão de imagens via  no endpoint  e testes de performance/funcionalidade do botão Mover no frontend após a refatoração.
+- **Status**: IN PROGRESS
+- **Agent Testing Done**: N (O código de compressão foi inserido no , mas a validação final da UI com screenshot/testing agent ainda não foi executada).
+- **Which testing method agent to use?**: screenshot tool ou manual testing by curl. É necessário validar se as imagens carregam rapidamente no painel Admin e se o fluxo de Mover foto entre pratos funciona visualmente sem erros.
+- **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) Dados inconsistentes no Admin: contagem de imagens errada e fotos sumindo.
--   Issue 2: (P1) Fotos não carregam ou demoram para carregar no admin.
--   Issue 3: (P2) Categorias não podem ser editadas na aba Auditoria.
--   Issue 4: (P3) Implementar a busca por fontes de dados nutricionais de forma segura.
--   Issue 5: (P3) Resultados insatisfatórios do reconhecimento de imagem nos testes do buffet.
-
-**Issues Detail**:
--   **Issue 1: Dados inconsistentes no Admin: contagem de imagens errada e fotos sumindo.**
-    -   **Attempted fixes**: O agente anterior diagnosticou que o endpoint  apenas lia do banco de dados () e ignorava o dataset original em disco (). Tentou-se adicionar a lógica para ler do disco, mas falhou por dois motivos: 1) o caminho para a pasta de datasets estava incorreto e 2) a lógica não lidava com as diferenças entre os nomes das pastas no disco (ex: Arroz Branco) e os slugs no banco (ex: arroz_branco).
-    -   **Next debug checklist**:
-        1.  Abrir  e focar na função .
-        2.  Garantir que o caminho base para o dataset seja fixo: .
-        3.  Implementar uma lógica robusta que, para cada prato do banco, verifique a existência de uma pasta correspondente no , testando múltiplas variações do slug (ex: , , ).
-        4.  Unificar a lista de imagens do banco de dados () com a lista de arquivos encontrados na pasta local correspondente.
-        5.  Retornar a contagem total e a lista de imagens unificada.
-    -   **Why fix this issue and what will be achieved with the fix?**: É um bloqueador de confiança CRÍTICO. O usuário acredita que seus dados foram destruídos. Corrigir a contagem de imagens restaurará a confiança e provará que os dados estão seguros, desbloqueando o uso do admin.
-    -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: N (É um novo bug que surgiu após a correção de um problema maior).
-    -   **Should Test frontend/backend/both after fix?**: Backend
-    -   **Blocked on other issue**: Não.
-
--   **Issue 2: Fotos não carregam ou demoram para carregar no admin.**
-    -   **Status**: NOT STARTED (Provavelmente relacionado ao travamento do backend, que foi corrigido. Precisa ser revalidado após o Issue 1 ser resolvido).
-
--   **Issue 3: Categorias não podem ser editadas na aba Auditoria.**
-    -   **Status**: NOT STARTED (Mencionado pelo usuário, mas não investigado).
+- Issue 1: (P0) Testar a estabilidade do painel Admin (carregamento de thumbnails compactados) e o fluxo de Mover imagens após as recentes otimizações.
+   - Attempted fixes: Endpoint reescrito para usar Pillow, endpoint de mover ajustado ( corrigido para ).
+   - Next debug checklist: Usar screenshot no . Clicar em Editar um prato e verificar se as fotos carregam rápido. Simular mover uma imagem de um prato para outro.
+   - Why fix this issue and what will be achieved with the fix?: Garante que as reclamações finais do usuário sobre lentidão e botões quebrados estão resolvidas.
+   - Status: TESTING PENDING
+   - Is recurring issue? N
+   - Should Test frontend/backend/both after fix?: Both
+- Issue 2: (P1) Retomar migração dos 107 pratos restantes para o Object Storage.
+   - Attempted fixes: Script de migração () falhou no meio devido a erros 500 (Rate Limit/Instabilidade) do S3 da plataforma.
+   - Next debug checklist: Executar script de status do storage. Se o endpoint  da Emergent estiver aceitando uploads novamente sem dar 500, continuar a subida dos arquivos restantes.
+   - Why fix this issue: Manter todas as imagens no disco local apresenta risco de perda e corrupção (recomendação da engenharia).
+   - Status: BLOCKED (Aguardando estabilidade da API de Object Storage da plataforma).
+   - Is recurring issue? Y
+   - Should Test frontend/backend/both after fix?: Backend
+- Issue 3: (P2) Saldo de créditos da Emergent invisível na UI da plataforma.
+   - Status: BLOCKED. O usuário reclamou que o saldo não aparece na barra superior da plataforma Emergent (fora do app). O agente de suporte informou que isso é uma falha visual da plataforma, necessitando refresh de cache ou contato com o suporte da Emergent. O agente não pode consertar o frame da plataforma.
 
 **In progress Task List**:
--   Nenhuma. O foco total está na correção de bugs críticos.
+- Task 1: Otimização de Performance do Admin
+   - Where to resume: O código base está pronto (lazy loading, paginação, pillow compress). Validar se está renderizando corretamente via Screenshot tool.
+   - What will be achieved with this?: O admin deixará de travar o navegador do usuário ao carregar fotos de 3MB.
+   - Status: TESTING PENDING
+   - Should Test frontend/backend/both after fix?: Frontend
 
 **Upcoming and Future Tasks**
--   **Upcoming Tasks:**
-    -   (P1) Validar o funcionamento do sistema de notificações push.
-    -   (P1) Planejar e executar a atualização segura dos dados nutricionais usando .
-    -   (P1) Validar a funcionalidade de adicionar referências e links na tela de resultado.
--   **Future Tasks:**
-    -   (P1) Refatorar  e  em módulos menores.
-    -   (P2) Investigar e implementar a integração com Stripe.
-    -   (P2) Criar endpoint de upload de ZIP no admin.
+- **Upcoming Tasks:**
+  - (P1) Validar o funcionamento do sistema de notificações push.
+  - (P1) Planejar e executar a atualização segura dos dados nutricionais usando .
+  - (P1) Validar a funcionalidade de adicionar referências e links na tela de resultado.
+  - (P2) Investigar lentidão intermitente no MongoDB (Shard 02 Timeout) que afeta endpoints de imagem.
+- **Future Tasks:**
+  - (P1) Refatorar  (>5000 linhas) e  (>3000 linhas) em módulos menores.
+  - (P2) Investigar e implementar a integração com Stripe.
+  - (P2) Criar endpoint de upload de ZIP no admin.
 
 **Completed work in this session**
--   **CORREÇÃO DEFINITIVA DO TRAVAMENTO DO BACKEND:** Identificou-se que chamadas de I/O síncronas (, ) em  e  estavam bloqueando o event loop do FastAPI. O problema foi resolvido envolvendo essas chamadas em  em , tornando o backend estável e responsivo.
--   **PAINEL DE ADMIN RECUPERADO:** O painel, antes totalmente quebrado, agora carrega os dados das abas Pratos, Moderação e Auditoria.
--   **CORREÇÃO DOS BOTÕES DE MODERAÇÃO:** Substituído o  (que era bloqueado no iframe da plataforma) por uma UI de confirmação em duas etapas, tornando os botões Aprovar e Rejeitar funcionais.
--   **LIMPEZA DE DADOS:** Um script foi executado para remover 7 entradas de imagem corrompidas do banco de dados, que foram criadas durante operações de teste anteriores.
--   **IDENTIFICAÇÃO DE PROBLEMAS DE :** Diagnosticado que o  causava chamadas duplicadas e corrupção de estado, sendo removido para estabilizar o comportamento no ambiente de desenvolvimento.
+- Geração de relatório de Auditoria completo cruzando filesystem e MongoDB () (DONE)
+- Backup do banco de dados antigo antes da higienização (DONE)
+- Reconstrução da coleção  com slugs normatizados e consolidação de pastas duplicadas (DONE)
+- Migração parcial (99 pratos) para Emergent Object Storage S3 (DONE)
+- Restauração de dados nutricionais perdidos e ingredientes a partir da coleção de backup  - 190 pratos restaurados (DONE)
+- Substituição de TODOS os ,  e  no  por UI inline de duas etapas, pois o iframe da Emergent bloqueia pop-ups nativos do navegador (DONE)
+- Otimização do Admin com Paginação, Lazy Loading e Thumbnails comprimidas usando Pillow (DONE)
+- Separação do payload de  (117KB agora) e  para diminuir peso do request inicial (DONE)
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1: Categorias não editáveis na aba Auditoria.** O usuário mencionou Na aba auditoria tem categorias que nao da para editar/corrigir. Isso foi notado mas não foi investigado.
+- Issue 1: Categorias não podem ser editadas na aba Auditoria.
+   - Debug checklist: Verificar em  o render da tab de auditoria e entender se os inputs de categoria estão desabilitados ou falhando no PUT.
+   - Why to solve this issue and what will be achieved with this?: Relatado pelo usuário há duas sessões, não resolvido devido a prioridades críticas de corrupção de dados.
+   - Should Test frontend/backend/both after fix: Frontend
+   - Is recurring issue? N
 
 **Known issue recurrence from previous fork**
--   O sintoma do painel de administração quebrado foi recorrente, mas a causa raiz descoberta nesta sessão (bloqueio do event loop do backend) era completamente nova e muito mais profunda do que os problemas de URL investigados anteriormente. A correção foi fundamental para a estabilidade de toda a aplicação.
+- Issue recurrence in previous fork: O sistema é suscetível a sobrecargas se muitos arquivos grandes são processados. Além disso, o Storage S3 da plataforma costuma dar timeout/500 se não houver delays entre os uploads.
+- Recurrence count: 3 (Nesta sessão a API de S3 caiu múltiplas vezes).
+- Status: IN PROGRESS (Tratado com abordagem híbrida de storage).
 
 **Code Architecture**
-dishes-full
+
 
 **Key Technical Concepts**
--   ** Event Loop Blocking:** A descoberta mais crítica da sessão. Chamadas síncronas (como ) em um servidor assíncrono como FastAPI/Uvicorn congelam todo o processo, impedindo que novas requisições sejam atendidas.
--   **:** A solução canônica para o problema acima. Executa código síncrono bloqueante em um thread separado, liberando o event loop principal para continuar trabalhando.
--   **Data Source Unification:** O desafio atual é unificar dados de duas fontes distintas (banco de dados MongoDB e sistema de arquivos local) em uma única resposta de API consistente.
--   **Iframe Limitations:**  é bloqueado em ambientes de iframe como o da plataforma, exigindo UIs de confirmação alternativas.
+- **Hybrid Storage Model**: Como o S3 caiu durante o upload, a API lê de onde estiver disponível. O banco  não está mais apontando só para um lugar.
+- **Iframe Blocking**: O aplicativo roda em um iframe na plataforma. Funções nativas como  e  NÃO FUNCIONAM e congelam as ações do usuário silenciosamente. Foram substituídas por modais/buttons inline.
+- **Pillow Compression**: Implementado on-the-fly no  para devolver imagens max 300x300, senão o frontend trava com milhares de imagens de 3MB+.
 
 **key DB schema**
--   **dish_storage**: 
--   **moderation_queue**: 
--   **notifications**: 
+- **dishes**: 
+- **dish_storage**:  (Count representa total real unificando nuvem e local).
+- **nutrition_sheets**: Contém fichas ricas exportadas anteriormente (foi usado como backup para os dados).
 
 **All files of reference**
--   : O arquivo central. Contém a função  que precisa de correção imediata e as chamadas  que corrigiram o travamento.
--   : A interface do painel de administração que reflete as inconsistências de dados.
--   : A localização no disco das imagens de pratos originais que não estão sendo contadas.
+- : Modificado endpoints  e .
+- : Refatorado pesadamente. Removidos alertas nativos, implementada paginação e novo endpoint estrito para buscar fotos apenas ao editar.
+- : Protegido contra timeouts do MongoDB com fallbacks para ler arquivos do disco.
+- : Relatório que o usuário pediu para a engenharia.
 
 **Areas that need refactoring**:
--   As funções  e  em  ainda usam . Uma refatoração ideal substituiria a biblioteca  pela biblioteca  para fazer chamadas de API de forma nativamente assíncrona, eliminando a necessidade de .
+-  e  estão gigantescos e difíceis de manter.
+- Timouts intermitentes no MongoDB (Shard 02) precisam de retry ou tratativas mais flexíveis nas rotas do admin.
 
 **key api endpoints**
--   : **PONTO CRÍTICO**. Este é o endpoint que está retornando a contagem de imagens incorreta e precisa ser corrigido com urgência.
--   : Funcional.
--   : Funcional (após remoção do ).
--   : Funcional (após remoção do ).
+- : Agora retorna *apenas* os metadados dos pratos (sem array massivo de imagens).
+- : Novo endpoint usado quando o usuário clica em Editar, para puxar os nomes das fotos.
+- : Alterado para retornar imagem redimensionada (thumbnail) com o  para melhor performance.
 
 **Critical Info for New Agent**
--   **A CONFIANÇA DO USUÁRIO ESTÁ MUITO BAIXA.** Sua primeira e única prioridade é resolver o problema de integridade dos dados () para provar que os dados não foram perdidos. Comunique-se de forma clara e tranquilizadora.
--   **O TRAVAMENTO DO BACKEND FOI RESOLVIDO.** A causa raiz (I/O síncrono) foi encontrada e corrigida com . Não revisite este problema. O servidor está estável.
--   **O PROBLEMA ATUAL É DE LÓGICA, NÃO DE ESTABILIDADE.** O endpoint  precisa de uma lógica aprimorada para unificar os dados do banco com os arquivos do disco local, lidando com as inconsistências nos nomes ( vs. ).
--   As imagens originais estão seguras em . A bagunça que o usuário vê é um problema de apresentação, não de perda de dados.
+- **NÃO USE ,  OU .** O app roda num Iframe e eles não disparam as janelas de diálogo, fazendo os botões pararem de funcionar.
+- **A TENSÃO ESTÁ ALTA**. O usuário achou que tinha perdido os dados de ingredientes e descrições construídos por semanas. Os dados já foram restaurados (), mas a sensação de fragilidade é grande. NÃO FAÇA ALTERAÇÕES GLOBAIS NO MONGODB SEM TESTAR/FAZER BACKUP ANTES.
+- Imagens são enormes (2 a 4 MB por foto). Carregar 50 pratos com 20 fotos cada trava a página inteira. Mantenha a paginação e a compressão ativa.
+- **Saldo da Plataforma**: O usuário perguntou sobre o saldo da Emergent sumindo no cabeçalho. Explique que isso é da plataforma Emergent, e oriente-o a atualizar o cache ou chamar suporte (como instruído pelo support_agent).
 
 **documents and test reports created in this job**
--    (foi atualizado na sessão)
+- 
+- 
+-  (Resultado do último teste completo do backend/frontend)
 
 **Last 10 User Messages and any pending HUMAN messages**
--   As últimas mensagens mostram a transição da frustração do usuário do admin não funciona para o pânico de meus dados foram destruídos!.
--   Mensagem recente: ainda tem algo errado com uma imagem mostrando a fila de moderação vazia apesar do badge mostrar 61 itens.
--   Mensagem seguinte: agora abriu mas falta a correcao (provavelmente referindo-se a alguma outra parte do admin).
--   Outra mensagem: Os botoes rejeitar e aprovar nao estao ativos.
--   Mensagem de pânico: já começou a bagunçar as fotos : sumiram as fotos do Arroz Branco!!! ... Que BAGUNCA no meu admin!!! Estou chocado que vou perder dias de novo corrigindo dezenas de erros!!!!
--   Nenhuma mensagem humana pendente de resposta. A bola está com o agente para corrigir a bagunça dos dados.
+- (User) Questionou por que o saldo de créditos da UI sumiu, e apontou que os botões de Mover e Deletar ainda não funcionavam. Informou com desespero que ingredientes e descrições tinham sumido (trabalho de semanas).
+- (Agent) Analisou e encontrou os dados no , recuperou tudo para 190 pratos sem tocar nas fotos.
+- (User) Mencionou que os dados haviam voltado, mas o botão Mover continuava falhando (apenas o deletar funcionava), e reclamou severamente da LENTIDÃO EXTREMA do admin para carregar.
+- (Agent) Corrigiu payload desajustado no endpoint Mover, modificou a resposta da listagem inicial (retirou arrays gigantescos) e aplicou Paginação e compressão (Pillow) para thumbnails das imagens no  e . (Aguardando validação desta otimização extrema).
+- **Pending Human Message:** O usuário está esperando a confirmação final de que o painel está rápido de novo e que consegue mover fotos com facilidade.
 
 **Project Health Check:**
--   **Broken**: Crítico. Embora o app não esteja mais travando, a inconsistência de dados apresentada ao usuário no painel de administração é tão severa que impede o uso e quebrou a confiança do usuário no sistema.
+- Broken: Object storage upload endpoint  throws 500 error currently. App running nicely with Hybrid Local/Cloud solution.
 
 **3rd Party Integrations**
--   Object Storage (S3-compatible via proxy Emergent).
+- Emergent Object Storage (S3 API) — uses Emergent LLM Key (Currently facing rate-limits/instabilidade).
+- Gemini Flash (Visão Computacional no Admin) — uses Emergent LLM Key.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES
--   **Troubleshoot agent used after agent stuck in loop**: NO (o agente principal conseguiu debugar o problema de travamento do backend).
--   **Test files created**: []
--   **Known regressions**: A contagem de imagens no admin regrediu para um estado incorreto após as correções de estabilidade.
+- Testing agent used after significant changes: YES ().
+- Troubleshoot agent used after agent stuck in loop: NO.
+- Test files created: None.
+- Known regressions: Nenhuma conhecida, mas a validação das últimas implementações de compressão (Pillow) ainda precisa ocorrer.
 
 **Credentials to test flow:**
--   **Admin User**: 
--   **Admin Password**: 
+- Admin User: 
+- Admin Password: 
 
 **What agent forgot to execute**
--   O agente anterior diagnosticou corretamente que o endpoint  precisava ler do disco, mas não conseguiu implementar a lógica final para lidar com as inconsistências de nomenclatura entre o slug do banco de dados e o nome da pasta no sistema de arquivos (ex:  vs ), o que resultou na contagem incorreta persistir.</analysis>
+- O Agente implementou as compressões de thumbnails (Pillow) na última mensagem, mas a rotina de encerramento, o teste dessa rota e a notificação da resolução das lentidões ao usuário não foram efetuadas. A confirmação visual da funcionalidade de Mover imagens atualizada no Front não foi concluída.</analysis>
