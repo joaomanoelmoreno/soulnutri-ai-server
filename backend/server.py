@@ -3880,7 +3880,7 @@ async def admin_dish_images_list(slug: str):
         doc = await db.dish_storage.find_one({"slug": slug}, {"_id": 0, "images": 1, "count": 1})
         if doc:
             names = [img.get("filename", "") for img in doc.get("images", [])]
-            return {"ok": True, "images": names, "count": doc.get("count", len(names))}
+            return {"ok": True, "images": names, "count": len(names)}
         return {"ok": True, "images": [], "count": 0}
     except Exception as e:
         return {"ok": False, "error": str(e)}
@@ -4293,8 +4293,17 @@ async def admin_batch_fix_dishes(request: dict):
 async def delete_dish_image(slug: str, img: str = Query(...)):
     """Deleta uma imagem de um prato do S3 e disco local"""
     try:
-        from services.image_service import delete_dish_image_from_storage, get_dish_image_count
+        from services.image_service import delete_dish_image_from_storage, get_dish_image_count, get_dish_images_from_db
         import asyncio
+        # Verificar se a imagem existe antes de deletar
+        images = await asyncio.to_thread(get_dish_images_from_db, slug)
+        img_exists = any(i.get("filename") == img for i in images)
+        if not img_exists:
+            # Verificar no disco local também
+            from services.image_service import _find_local_folder
+            local_folder = await asyncio.to_thread(_find_local_folder, slug)
+            if not local_folder or not (local_folder / img).exists():
+                return JSONResponse(status_code=404, content={"ok": False, "error": f"Imagem '{img}' nao encontrada no prato '{slug}'"})
         result = await asyncio.to_thread(delete_dish_image_from_storage, slug, img)
         if result.get("ok"):
             remaining = await asyncio.to_thread(get_dish_image_count, slug)

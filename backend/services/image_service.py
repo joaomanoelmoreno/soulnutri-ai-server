@@ -128,19 +128,21 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
                 ct = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "webp": "image/webp"}.get(ext.lstrip('.'), "image/jpeg")
                 return local_path.read_bytes(), ct
 
-    # Final fallback: find any image in local folder
+    # Final fallback: find image in local folder
     local_folder = _find_local_folder(slug)
     if local_folder:
+        if filename:
+            # Se um filename específico foi pedido, buscar APENAS ele
+            local_path = local_folder / filename
+            if local_path.exists():
+                return local_path.read_bytes(), "image/jpeg"
+            # Não encontrou o arquivo específico
+            return None, None
+        # Sem filename específico: retornar qualquer imagem
         for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
             found = sorted(local_folder.glob(ext))
             if found:
-                target = found[0]
-                if filename:
-                    for f in found:
-                        if f.name == filename:
-                            target = f
-                            break
-                return target.read_bytes(), "image/jpeg"
+                return found[0].read_bytes(), "image/jpeg"
 
     return None, None
 

@@ -10,7 +10,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Frontend: React (CRA) + CSS Custom
 - Backend: FastAPI + Motor (MongoDB async)
 - AI: OpenCLIP local (ViT-B-32) para embedding de imagens
-- Storage: Object Storage (S3) via Emergent integrations
+- Storage: Hibrido - Object Storage (S3) via Emergent + disco local
 - DB: MongoDB Atlas
 
 ## Funcionalidades Implementadas
@@ -24,60 +24,67 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Notificacoes push personalizadas
 - Design "Gourmet Dark Mode"
 
-## Correcoes Realizadas (2026-03-24/25)
+## Correcoes Realizadas (2026-03-27)
 
-### Correcao Definitiva Admin - 3 Problemas Raiz
-1. **URL absoluta -> relativa:** Admin.js usava process.env.REACT_APP_BACKEND_URL/api -> Corrigido para const API = '/api'
-2. **React.StrictMode + Emergent script:** Double-mount + wrapper window.fetch causava corrupcao. Removido StrictMode + migrado para XMLHttpRequest
-3. **Chamadas sincronas bloqueando event loop:** storage_service.py e image_service.py usavam requests (sincrono). Corrigido com asyncio.to_thread()
+### Performance Admin
+- Thumbnails via Pillow (300x300, JPEG 60%) - reducao de 207x no tamanho (3MB -> 14KB)
+- Todos os endpoints de imagem agora usam ?thumb=1 no grid e galeria de edicao
+- Paginacao com 30 pratos por pagina + lazy loading
 
-### Melhorias de Resiliencia
-- Retry automatico em respostas nao-OK (502, 503)
-- Lazy loading por aba
-- XHR timeout de 20 segundos
+### Botao Mover Imagens
+- Substituido input de texto por dropdown/select com todos os pratos existentes
+- Backend valida se prato destino existe antes de mover
+- Contagens atualizadas no frontend apos mover
 
-## Auditoria Completa (2026-03-25)
+### Sistema de Notificacao Inline
+- 48 chamadas alert() substituidas por notify() com toast inline
+- Notificacoes aparecem no canto superior direito com cores por tipo (sucesso/erro/info)
+- Resolve problema de alert() bloqueado no iframe da Emergent
 
-### Relatorio Gerado
-- Arquivo: /app/RELATORIO_AUDITORIA_SOULNUTRI.docx
-- URL: https://hybrid-storage-dev.preview.emergentagent.com/RELATORIO_AUDITORIA_SOULNUTRI.docx
+### Validacoes de Backend
+- DELETE retorna 404 para imagens inexistentes (antes retornava 200)
+- MOVE retorna 404 para imagens fonte inexistentes
+- Contagem de imagens (dish-images-list) agora usa len(images) real em vez de campo count potencialmente desatualizado
+- get_dish_image_bytes nao retorna imagem aleatoria quando filename especifico nao existe
 
-### 8 Problemas Identificados
-1. (CRITICO) 148 slugs corrompidos no MongoDB (ex: aboboraaocurry em vez de abobora-ao-curry)
-2. (ALTO) 10 pastas duplicadas no disco (normalizam para o mesmo slug)
-3. (CRITICO) 250/250 pratos sem dados nutricionais, ingredientes ou categoria
-4. (ALTO) dish_storage completamente vazio (0 documentos)
-5. (ALTO) Codigo usa campos em portugues (nome, categoria) mas MongoDB usa ingles (name, category)
-6. (MEDIO-ALTO) 113 pastas de imagens sem entrada no MongoDB
-7. (MEDIO) 148 pratos fantasmas no MongoDB sem pasta no disco
-8. (BAIXO) Pastas de teste/lixo no disco
+### Restauracao de Dados
+- 2 pratos restaurados do nutrition_sheets (abobora-ao-curry, tabule-de-trigo)
+- Total: 192/206 pratos COM ingredientes, 14 SEM (sem dados disponiveis no backup)
+- 0/206 pratos com descricao (nunca foram populados em nenhuma fonte)
 
-### Dados Intactos
-- 4.903 imagens em 225 pastas no disco - NENHUMA imagem perdida
-- Problemas sao de apresentacao/mapeamento, nao de perda de dados
-
-### Status
-- AGUARDANDO orientacoes da engenharia do usuario
-- NENHUMA alteracao foi feita no codigo ou dados
-
-## Plano de Correcao Proposto (aguardando aprovacao)
-- Fase 1: Backup + scripts de validacao (sem risco)
-- Fase 2: Correcoes no codigo sem mexer dados (nomes de campos, logica de leitura)
-- Fase 3: Correcoes nos dados com aprovacao explicita (slugs, pastas duplicadas, fantasmas)
+## Estado Atual do Storage
+- Cloud (S3): 99 pratos migrados
+- Local (disco): 107 pratos
+- Object Storage S3 da Emergent: INDISPONIVEL (retorna 500 em uploads)
+- Sistema hibrido funcionando: busca na nuvem primeiro, fallback para disco
 
 ## Pending Issues
-- (P0) Todos os 8 problemas da auditoria - AGUARDANDO orientacoes
-- (P1) Resultados insatisfatorios nos testes do buffet
-- (P2) Categorias nao editaveis na aba Auditoria
+- (P0) BLOQUEADO: Migracao dos 107 pratos restantes (S3 da Emergent dando 500)
+- (P1) 14 pratos sem ingredientes - precisam ser preenchidos manualmente ou via IA
+- (P1) 206 pratos sem descricao - nunca populado de nenhuma fonte
+- (P2) Categorias nao editaveis na aba "Auditoria"
+- (P2) Saldo de creditos invisivel na UI da plataforma (problema da Emergent, nao do app)
 
-## Upcoming Tasks (pos-aprovacao)
-- Corrigir incompatibilidade de campos no codigo
-- Corrigir logica de pastas duplicadas
-- Corrigir slugs corrompidos no MongoDB
-- Validar notificacoes push
-- Atualizacao segura de dados nutricionais
+## Upcoming Tasks
+- Validar sistema de notificacoes push
+- Atualizar dados nutricionais com safe_nutrition_updater.py
+- Validar funcionalidade de adicionar referencias/links na tela de resultado
+- Investigar lentidao intermitente no MongoDB (Shard 02 Timeout)
 
 ## Future Tasks
-- Refatorar server.py e App.js em modulos menores
+- Refatorar server.py (>5000 linhas) e Admin.js (>3000 linhas) em modulos menores
 - Integracao Stripe para premium
 - Upload ZIP pelo admin
+
+## Key API Endpoints
+- GET /api/admin/dishes-full: Lista metadados dos pratos (sem imagens)
+- GET /api/admin/dishes/{slug}/images: Lista imagens ao abrir edicao
+- GET /api/admin/dish-image/{slug}?thumb=1: Thumbnail comprimido (14KB)
+- POST /api/admin/move-image: Move imagem entre pratos (com validacao)
+- DELETE /api/admin/dish-image/{slug}?img=X: Deleta imagem (com validacao 404)
+- PUT /api/admin/dishes/{slug}: Salva dados do prato
+
+## Restricoes Tecnicas
+- NAO usar window.alert/confirm/prompt (iframe da Emergent bloqueia)
+- Imagens sao enormes (2-4MB) - sempre usar thumbnails no admin
+- Object Storage pode ficar instavel - manter fallback local
