@@ -2967,7 +2967,10 @@ export default function Admin() {
                       <button
                         data-testid="move-image-confirm-btn"
                         onClick={async () => {
-                          if (!moveDestination.trim()) return;
+                          if (!moveDestination.trim()) {
+                            notify('Selecione um prato destino', 'error');
+                            return;
+                          }
                           try {
                             const res = await fetch(`${API}/admin/move-image`, {
                               method: 'POST',
@@ -2980,6 +2983,7 @@ export default function Admin() {
                             });
                             const data = await res.json();
                             if (data.ok) {
+                              notify(`Foto movida com sucesso para ${moveDestination}`, 'success');
                               setEditingDish({
                                 ...editingDish,
                                 all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
@@ -2992,10 +2996,10 @@ export default function Admin() {
                                 return d;
                               }));
                             } else {
-                              console.error('Erro ao mover:', data.error);
+                              notify(`Erro ao mover: ${data.error || 'Erro desconhecido'}`, 'error');
                             }
                           } catch (err) {
-                            console.error('Erro ao mover:', err);
+                            notify(`Erro ao mover: ${err.message}`, 'error');
                           }
                           setMoveImageState(null);
                           setMoveDestination('');

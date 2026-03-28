@@ -253,11 +253,11 @@ def get_all_dishes_stats() -> dict:
 
 
 def get_dish_image_count(slug: str) -> int:
-    """Retorna o número de imagens de um prato."""
+    """Retorna o número de imagens de um prato (contagem real da lista)."""
     db = _get_db()
-    doc = db.dish_storage.find_one({"slug": slug}, {"_id": 0, "count": 1})
+    doc = db.dish_storage.find_one({"slug": slug}, {"_id": 0, "images": 1})
     if doc:
-        return doc.get("count", 0)
+        return len(doc.get("images", []))
     return 0
 
 

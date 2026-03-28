@@ -3928,6 +3928,8 @@ async def admin_get_dish_image(slug: str, img: str = None, thumb: int = 0):
                 import io
                 def make_thumb():
                     with Image.open(target_file) as pil_img:
+                        if pil_img.mode in ('RGBA', 'P', 'LA'):
+                            pil_img = pil_img.convert('RGB')
                         pil_img.thumbnail((300, 300))
                         buf = io.BytesIO()
                         pil_img.save(buf, format='JPEG', quality=60)
@@ -3951,6 +3953,8 @@ async def admin_get_dish_image(slug: str, img: str = None, thumb: int = 0):
             import io
             def make_thumb_from_bytes():
                 with Image.open(io.BytesIO(data)) as pil_img:
+                    if pil_img.mode in ('RGBA', 'P', 'LA'):
+                        pil_img = pil_img.convert('RGB')
                     pil_img.thumbnail((300, 300))
                     buf = io.BytesIO()
                     pil_img.save(buf, format='JPEG', quality=60)
