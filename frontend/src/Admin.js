@@ -21,6 +21,41 @@ function xhrGet(url) {
   });
 }
 
+function xhrPost(url, body) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.timeout = 30000;
+    xhr.onload = () => resolve({
+      ok: xhr.status >= 200 && xhr.status < 300,
+      status: xhr.status,
+      json: () => Promise.resolve(JSON.parse(xhr.responseText)),
+      text: () => Promise.resolve(xhr.responseText)
+    });
+    xhr.onerror = () => reject(new Error('Erro de rede ao mover'));
+    xhr.ontimeout = () => reject(new Error('Timeout ao mover'));
+    xhr.send(JSON.stringify(body));
+  });
+}
+
+function xhrDelete(url) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('DELETE', url);
+    xhr.timeout = 20000;
+    xhr.onload = () => resolve({
+      ok: xhr.status >= 200 && xhr.status < 300,
+      status: xhr.status,
+      json: () => Promise.resolve(JSON.parse(xhr.responseText)),
+      text: () => Promise.resolve(xhr.responseText)
+    });
+    xhr.onerror = () => reject(new Error('Erro de rede'));
+    xhr.ontimeout = () => reject(new Error('Timeout'));
+    xhr.send();
+  });
+}
+
 // Retry com XHR para GET requests
 async function retryFetch(url, options, retries = 2) {
   for (let i = 0; i <= retries; i++) {
@@ -2878,17 +2913,20 @@ export default function Admin() {
                               // Second click = confirm delete
                               (async () => {
                                 try {
-                                  const res = await fetch(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`, { method: 'DELETE' });
+                                  const res = await xhrDelete(`${API}/admin/dish-image/${encodeURIComponent(editingDish.slug)}?img=${encodeURIComponent(img)}`);
                                   const data = await res.json();
                                   if (data.ok) {
+                                    notify('Foto removida!', 'success');
                                     setEditingDish({
                                       ...editingDish,
                                       all_images: editingDish.all_images.filter((_, i) => i !== idx),
                                       image_count: data.remaining_images
                                     });
+                                  } else {
+                                    notify(`Erro ao deletar: ${data.error || 'Falha'}`, 'error');
                                   }
                                 } catch (err) {
-                                  console.error('Erro ao deletar:', err);
+                                  notify(`Erro ao deletar: ${err.message}`, 'error');
                                 }
                                 setDeleteImageState(null);
                               })();
@@ -2971,35 +3009,31 @@ export default function Admin() {
                             notify('Selecione um prato destino', 'error');
                             return;
                           }
+                          notify('Movendo foto...', 'info');
                           try {
-                            const res = await fetch(`${API}/admin/move-image`, {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({
-                                source_dish: moveImageState.slug,
-                                target_dish: moveDestination.trim(),
-                                image_name: moveImageState.img
-                              })
+                            const res = await xhrPost(`${API}/admin/move-image`, {
+                              source_dish: moveImageState.slug,
+                              target_dish: moveDestination.trim(),
+                              image_name: moveImageState.img
                             });
                             const data = await res.json();
                             if (data.ok) {
-                              notify(`Foto movida com sucesso para ${moveDestination}`, 'success');
+                              notify(`Foto movida para ${moveDestination}!`, 'success');
                               setEditingDish({
                                 ...editingDish,
                                 all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
                                 image_count: data.remaining_in_source
                               });
-                              // Atualizar contagem na lista principal
                               setDishes(prev => prev.map(d => {
                                 if (d.slug === moveImageState.slug) return {...d, image_count: data.remaining_in_source};
                                 if (d.slug === moveDestination.trim()) return {...d, image_count: (d.image_count || 0) + 1};
                                 return d;
                               }));
                             } else {
-                              notify(`Erro ao mover: ${data.error || 'Erro desconhecido'}`, 'error');
+                              notify(`Erro: ${data.error || 'Falha ao mover'}`, 'error');
                             }
                           } catch (err) {
-                            notify(`Erro ao mover: ${err.message}`, 'error');
+                            notify(`Erro: ${err.message}`, 'error');
                           }
                           setMoveImageState(null);
                           setMoveDestination('');
