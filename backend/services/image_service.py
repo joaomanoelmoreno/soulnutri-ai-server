@@ -56,7 +56,8 @@ def get_dish_images_from_db(slug: str) -> list:
 
 
 def _find_local_folder(slug: str) -> Optional[Path]:
-    """Encontra a pasta local correspondente ao slug, testando variações."""
+    """Encontra a pasta local correspondente ao slug, testando variações.
+    Retorna a pasta com MAIS imagens quando há múltiplas correspondências."""
     import unicodedata
     
     def _normalize(name):
@@ -64,25 +65,29 @@ def _find_local_folder(slug: str) -> Optional[Path]:
         nfkd = unicodedata.normalize('NFKD', n)
         return ''.join(c for c in nfkd if not unicodedata.combining(c))
     
-    def _has_images(folder):
+    def _count_images(folder):
+        count = 0
         for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
-            if list(folder.glob(ext)):
-                return True
-        return False
+            count += len(list(folder.glob(ext)))
+        return count
     
-    # Try direct match first (only if it has images)
-    direct = LOCAL_DATASET_DIR / slug
-    if direct.exists() and _has_images(direct):
-        return direct
-    
-    # Try all folders and match by normalized comparison
     slug_norm = _normalize(slug)
-    for folder in LOCAL_DATASET_DIR.iterdir():
-        if folder.is_dir() and _has_images(folder):
-            if _normalize(folder.name) == slug_norm:
-                return folder
+    best_folder = None
+    best_count = 0
     
-    # Last resort: return direct match even if empty (for write operations)
+    # Check ALL matching folders and pick the one with most images
+    for folder in LOCAL_DATASET_DIR.iterdir():
+        if folder.is_dir() and _normalize(folder.name) == slug_norm:
+            count = _count_images(folder)
+            if count > best_count:
+                best_count = count
+                best_folder = folder
+    
+    if best_folder:
+        return best_folder
+    
+    # Direct match as last resort (for write operations)
+    direct = LOCAL_DATASET_DIR / slug
     if direct.exists():
         return direct
     return None
@@ -91,20 +96,28 @@ def _find_local_folder(slug: str) -> Optional[Path]:
 def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
     """
     Retorna (bytes, content_type) de uma imagem.
-    Verifica source (cloud vs local) no dish_storage.
-    Cloud: busca do Object Storage.
-    Local: busca do disco.
+    LOCAL PRIMEIRO (rapido), cloud so se nao existir localmente.
     """
-    from services.storage_service import get_dish_image as s3_get_image
+    # 1. Tentar local PRIMEIRO (instantaneo)
+    local_folder = _find_local_folder(slug)
+    if local_folder:
+        if filename:
+            local_path = local_folder / filename
+            if local_path.exists():
+                ext = local_path.suffix.lower()
+                ct = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}.get(ext, "image/jpeg")
+                return local_path.read_bytes(), ct
+        else:
+            # Sem filename: retornar qualquer imagem (preferir maiores)
+            for pattern in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
+                found = sorted(local_folder.glob(pattern), key=lambda f: f.stat().st_size, reverse=True)
+                if found:
+                    ext = found[0].suffix.lower()
+                    ct = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}.get(ext, "image/jpeg")
+                    return found[0].read_bytes(), ct
 
+    # 2. Se nao encontrou local, tentar cloud
     images = get_dish_images_from_db(slug)
-    source = "cloud"  # default
-    # Detect source from first image entry
-    if images and images[0].get("source") == "local":
-        source = "local"
-    elif images and images[0].get("storage_path", "").startswith("local:"):
-        source = "local"
-
     target_img = None
     if filename:
         for img in images:
@@ -112,7 +125,6 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
                 target_img = img
                 break
     elif images:
-        # Prefer larger images over tiny thumbnails
         for img in images:
             if img.get("size", 0) > 5000:
                 target_img = img
@@ -122,69 +134,46 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
 
     if target_img:
         storage_path = target_img.get("storage_path", "")
-        fname = target_img.get("filename", "")
-
-        if source == "cloud" and not storage_path.startswith("local:"):
+        if storage_path and not storage_path.startswith("local:"):
             try:
+                from services.storage_service import get_dish_image as s3_get_image
                 data, ct = s3_get_image(storage_path)
                 return data, ct
             except Exception as e:
-                logger.warning(f"[IMG] Cloud falhou para {fname}: {e}, tentando local")
-
-        # Local fallback
-        local_folder = _find_local_folder(slug)
-        if local_folder:
-            local_path = local_folder / fname
-            if local_path.exists():
-                ext = local_path.suffix.lower()
-                ct = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "webp": "image/webp"}.get(ext.lstrip('.'), "image/jpeg")
-                return local_path.read_bytes(), ct
-
-    # Final fallback: find image in local folder
-    local_folder = _find_local_folder(slug)
-    if local_folder:
-        if filename:
-            # Se um filename específico foi pedido, buscar APENAS ele
-            local_path = local_folder / filename
-            if local_path.exists():
-                return local_path.read_bytes(), "image/jpeg"
-            # Não encontrou o arquivo específico
-            return None, None
-        # Sem filename específico: retornar qualquer imagem
-        for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
-            found = sorted(local_folder.glob(ext))
-            if found:
-                return found[0].read_bytes(), "image/jpeg"
+                logger.warning(f"[IMG] Cloud falhou para {slug}/{filename}: {e}")
 
     return None, None
 
 
 def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
     """
-    Salva imagem no S3 e atualiza MongoDB dish_storage.
-    Também salva localmente como cache.
+    Salva imagem localmente e atualiza MongoDB dish_storage.
+    S3 upload desativado temporariamente (plataforma retornando 500).
     """
-    from services.storage_service import upload_dish_image
-
     result = {"ok": False}
 
-    # 1. Upload para S3
+    # 1. Salvar localmente PRIMEIRO (instantâneo)
     try:
-        storage_path = upload_dish_image(slug, filename, content)
-        result["storage_path"] = storage_path
+        # Usar a pasta existente (com mais imagens) em vez de criar nova com hífens
+        local_folder = _find_local_folder(slug)
+        if local_folder:
+            local_dir = local_folder
+        else:
+            local_dir = LOCAL_DATASET_DIR / slug
+        local_dir.mkdir(parents=True, exist_ok=True)
+        (local_dir / filename).write_bytes(content)
         result["ok"] = True
-        logger.info(f"[IMG] Upload S3 OK: {storage_path}")
     except Exception as e:
-        logger.error(f"[IMG] Erro S3 upload {slug}/{filename}: {e}")
-        result["error"] = str(e)
+        logger.error(f"[IMG] Erro ao salvar local {slug}/{filename}: {e}")
 
     # 2. Atualizar MongoDB dish_storage
     try:
         db = _get_db()
         image_entry = {
             "filename": filename,
-            "storage_path": result.get("storage_path", f"soulnutri/dishes/{slug}/{filename}"),
-            "size": len(content)
+            "storage_path": f"local:{LOCAL_DATASET_DIR / slug / filename}",
+            "size": len(content),
+            "source": "local"
         }
         db.dish_storage.update_one(
             {"slug": slug},
@@ -197,14 +186,6 @@ def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
         )
     except Exception as e:
         logger.error(f"[IMG] Erro MongoDB update {slug}: {e}")
-
-    # 3. Salvar localmente como cache (para CLIP index)
-    try:
-        local_dir = LOCAL_DATASET_DIR / slug
-        local_dir.mkdir(parents=True, exist_ok=True)
-        (local_dir / filename).write_bytes(content)
-    except Exception as e:
-        logger.warning(f"[IMG] Erro ao salvar local {slug}/{filename}: {e}")
 
     return result
 
