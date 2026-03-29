@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './Admin.css';
 
 const API = '/api';
+const BUILD_VERSION = 'v3.28-' + Date.now();
 
 // XHR direto - contorna o wrapper fetch da plataforma Emergent
 function xhrGet(url) {
@@ -1116,6 +1117,8 @@ export default function Admin() {
 
   return (
     <div className="admin-container">
+      {/* Versao visivel para debug */}
+      <div data-testid="build-version" style={{position:'fixed',bottom:'4px',right:'8px',zIndex:9999,fontSize:'10px',color:'#666',opacity:0.6}}>{BUILD_VERSION}</div>
       {/* Notificação inline (substitui alert bloqueado no iframe) */}
       {notification && (
         <div 
@@ -3004,43 +3007,70 @@ export default function Admin() {
                       </select>
                       <button
                         data-testid="move-image-confirm-btn"
-                        onClick={async () => {
+                        onClick={() => {
                           if (!moveDestination.trim()) {
-                            notify('Selecione um prato destino', 'error');
+                            setNotification({ message: 'Selecione um prato destino!', type: 'error' });
+                            setTimeout(() => setNotification(null), 4000);
                             return;
                           }
-                          notify('Movendo foto...', 'info');
-                          try {
-                            const res = await xhrPost(`${API}/admin/move-image`, {
-                              source_dish: moveImageState.slug,
-                              target_dish: moveDestination.trim(),
-                              image_name: moveImageState.img
-                            });
-                            const data = await res.json();
-                            if (data.ok) {
-                              notify(`Foto movida para ${moveDestination}!`, 'success');
-                              setEditingDish({
-                                ...editingDish,
-                                all_images: editingDish.all_images.filter((_, i) => i !== moveImageState.idx),
-                                image_count: data.remaining_in_source
-                              });
-                              setDishes(prev => prev.map(d => {
-                                if (d.slug === moveImageState.slug) return {...d, image_count: data.remaining_in_source};
-                                if (d.slug === moveDestination.trim()) return {...d, image_count: (d.image_count || 0) + 1};
-                                return d;
-                              }));
-                            } else {
-                              notify(`Erro: ${data.error || 'Falha ao mover'}`, 'error');
+                          // Mostrar loading
+                          setNotification({ message: 'Movendo foto, aguarde...', type: 'info' });
+                          
+                          // XHR INLINE - sem dependencias externas
+                          const xhr = new XMLHttpRequest();
+                          xhr.open('POST', '/api/admin/move-image');
+                          xhr.setRequestHeader('Content-Type', 'application/json');
+                          xhr.timeout = 30000;
+                          
+                          const moveSlug = moveImageState.slug;
+                          const moveIdx = moveImageState.idx;
+                          const moveImg = moveImageState.img;
+                          const dest = moveDestination.trim();
+                          
+                          xhr.onload = () => {
+                            try {
+                              const data = JSON.parse(xhr.responseText);
+                              if (data.ok) {
+                                setNotification({ message: 'Foto movida com sucesso!', type: 'success' });
+                                setEditingDish(prev => prev ? {
+                                  ...prev,
+                                  all_images: prev.all_images.filter((_, i) => i !== moveIdx),
+                                  image_count: data.remaining_in_source
+                                } : prev);
+                                setDishes(prev => prev.map(d => {
+                                  if (d.slug === moveSlug) return {...d, image_count: data.remaining_in_source};
+                                  if (d.slug === dest) return {...d, image_count: (d.image_count || 0) + 1};
+                                  return d;
+                                }));
+                              } else {
+                                setNotification({ message: 'Erro: ' + (data.error || 'falha'), type: 'error' });
+                              }
+                            } catch(e) {
+                              setNotification({ message: 'Erro parse: ' + e.message, type: 'error' });
                             }
-                          } catch (err) {
-                            notify(`Erro: ${err.message}`, 'error');
-                          }
+                            setTimeout(() => setNotification(null), 5000);
+                          };
+                          xhr.onerror = () => {
+                            setNotification({ message: 'Erro de rede ao mover', type: 'error' });
+                            setTimeout(() => setNotification(null), 5000);
+                          };
+                          xhr.ontimeout = () => {
+                            setNotification({ message: 'Timeout ao mover (30s)', type: 'error' });
+                            setTimeout(() => setNotification(null), 5000);
+                          };
+                          
+                          xhr.send(JSON.stringify({
+                            source_dish: moveSlug,
+                            target_dish: dest,
+                            image_name: moveImg
+                          }));
+                          
                           setMoveImageState(null);
                           setMoveDestination('');
                         }}
-                        style={{ padding: '6px 14px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
+                        style={{ padding: '6px 14px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold' }}
                       >
-                        Mover
+                        MOVER AGORA
                       </button>
                       <button
                         onClick={() => { setMoveImageState(null); setMoveDestination(''); }}
