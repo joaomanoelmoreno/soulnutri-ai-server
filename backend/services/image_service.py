@@ -96,7 +96,7 @@ def _find_local_folder(slug: str) -> Optional[Path]:
 def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
     """
     Retorna (bytes, content_type) de uma imagem.
-    LOCAL PRIMEIRO (rapido), cloud so se nao existir localmente.
+    LOCAL primeiro (rapido), R2 como fallback.
     """
     # 1. Tentar local PRIMEIRO (instantaneo)
     local_folder = _find_local_folder(slug)
@@ -108,7 +108,6 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
                 ct = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}.get(ext, "image/jpeg")
                 return local_path.read_bytes(), ct
         else:
-            # Sem filename: retornar qualquer imagem (preferir maiores)
             for pattern in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
                 found = sorted(local_folder.glob(pattern), key=lambda f: f.stat().st_size, reverse=True)
                 if found:
@@ -116,7 +115,7 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
                     ct = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}.get(ext, "image/jpeg")
                     return found[0].read_bytes(), ct
 
-    # 2. Se nao encontrou local, tentar cloud
+    # 2. Tentar R2 (Cloudflare)
     images = get_dish_images_from_db(slug)
     target_img = None
     if filename:
@@ -134,7 +133,15 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
 
     if target_img:
         storage_path = target_img.get("storage_path", "")
-        if storage_path and not storage_path.startswith("local:"):
+        if storage_path.startswith("r2:"):
+            try:
+                from services.r2_service import r2_get_image
+                data, ct = r2_get_image(storage_path)
+                if data:
+                    return data, ct
+            except Exception as e:
+                logger.warning(f"[IMG] R2 falhou para {slug}/{filename}: {e}")
+        elif storage_path and not storage_path.startswith("local:"):
             try:
                 from services.storage_service import get_dish_image as s3_get_image
                 data, ct = s3_get_image(storage_path)
@@ -147,33 +154,40 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
 
 def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
     """
-    Salva imagem localmente e atualiza MongoDB dish_storage.
-    S3 upload desativado temporariamente (plataforma retornando 500).
+    Salva imagem localmente + R2 e atualiza MongoDB dish_storage.
     """
     result = {"ok": False}
+    MIME = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}
+    
+    ext = Path(filename).suffix.lower()
+    ct = MIME.get(ext, "image/jpeg")
+    r2_key = f"dishes/{slug}/{filename}"
 
-    # 1. Salvar localmente PRIMEIRO (instantâneo)
+    # 1. Salvar localmente (instantaneo)
     try:
-        # Usar a pasta existente (com mais imagens) em vez de criar nova com hífens
         local_folder = _find_local_folder(slug)
-        if local_folder:
-            local_dir = local_folder
-        else:
-            local_dir = LOCAL_DATASET_DIR / slug
+        local_dir = local_folder if local_folder else LOCAL_DATASET_DIR / slug
         local_dir.mkdir(parents=True, exist_ok=True)
         (local_dir / filename).write_bytes(content)
         result["ok"] = True
     except Exception as e:
-        logger.error(f"[IMG] Erro ao salvar local {slug}/{filename}: {e}")
+        logger.error(f"[IMG] Erro local {slug}/{filename}: {e}")
 
-    # 2. Atualizar MongoDB dish_storage
+    # 2. Upload para R2 (background-safe)
+    try:
+        from services.r2_service import r2_upload_image
+        r2_upload_image(r2_key, content, ct)
+    except Exception as e:
+        logger.warning(f"[IMG] R2 upload falhou {slug}/{filename}: {e}")
+
+    # 3. Atualizar MongoDB
     try:
         db = _get_db()
         image_entry = {
             "filename": filename,
-            "storage_path": f"local:{LOCAL_DATASET_DIR / slug / filename}",
+            "storage_path": f"r2:{r2_key}",
             "size": len(content),
-            "source": "local"
+            "source": "r2"
         }
         db.dish_storage.update_one(
             {"slug": slug},
@@ -185,7 +199,7 @@ def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
             upsert=True
         )
     except Exception as e:
-        logger.error(f"[IMG] Erro MongoDB update {slug}: {e}")
+        logger.error(f"[IMG] MongoDB update {slug}: {e}")
 
     return result
 

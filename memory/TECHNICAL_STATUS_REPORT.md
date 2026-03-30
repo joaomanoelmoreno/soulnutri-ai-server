@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://hybrid-storage-dev.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://admin-r2-verify.preview.emergentagent.com
 ```
 
 ---
