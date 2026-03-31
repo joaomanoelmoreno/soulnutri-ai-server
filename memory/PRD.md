@@ -10,7 +10,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Frontend: React (CRA) + CSS Custom
 - Backend: FastAPI + Motor (MongoDB async)
 - AI: OpenCLIP local (ViT-B-32) para embedding de imagens
-- Storage: Hibrido - Object Storage (S3) via Emergent (99 pratos) + disco local (107 pratos)
+- Storage: Cloudflare R2 (bucket: soulnutri-images) - 3939 fotos migradas
 - DB: MongoDB Atlas
 
 ## Funcionalidades Implementadas
@@ -51,32 +51,39 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - 2 pratos restaurados do nutrition_sheets (abobora-ao-curry, tabule-de-trigo)
 - Botao Editar agora carrega galeria de imagens (antes nao carregava)
 
+## Migracao Cloudflare R2 (2026-03-30) - VALIDADO
+- 3939 imagens migradas com sucesso para bucket soulnutri-images
+- r2_service.py criado com boto3 para integracao nativa
+- image_service.py refatorado para rotear todos os requests para R2
+- Thumbnails gerados on-the-fly com Pillow (300x300, JPEG 60%)
+- Testes automatizados: 12/12 backend, frontend 100% - PASS
+
 ## Estado Atual
-- 206 pratos totais
-- 204 com imagens (4.854 fotos)
+- 196 pratos totais (189 com embeddings AI)
+- 3939 fotos no Cloudflare R2
+- 1632 embeddings de imagem no indice
 - 192 com ingredientes
 - 0 com descricao (nunca foi populado)
-- 99 pratos na nuvem (S3), 107 no disco local
-- Object Storage UPLOAD indisponivel (erro 500 da plataforma), READ OK
+- Object Storage Emergent: ABANDONADO (erro 500)
 
 ## Pending Issues
-- (P0 BLOQUEADO) Migracao completa para S3 - upload da plataforma retorna 500
 - (P1) 14 pratos sem ingredientes
 - (P1) 206 pratos sem descricao
-- (P2) 2 pratos sem nenhuma imagem acessivel (upload original falhou)
 - (P2) Categorias nao editaveis na aba Auditoria
 
 ## Upcoming Tasks
-- Validar notificacoes push
-- Atualizar dados nutricionais com safe_nutrition_updater.py
-- Validar referencias/links na tela de resultado
+- (P1) Validar notificacoes push
+- (P1) Atualizar dados nutricionais com safe_nutrition_updater.py
+- (P1) Validar referencias/links na tela de resultado
 
 ## Future Tasks
-- Refatorar server.py (5K+ linhas) e Admin.js (3K+ linhas)
-- Integracao Stripe para premium
-- Upload ZIP pelo admin
+- (P1) Refatorar server.py (5K+ linhas) e Admin.js (3K+ linhas)
+- (P2) Integracao Stripe para premium
+- (P2) Upload ZIP pelo admin
+- (P2) Investigar lentidao intermitente MongoDB
 
 ## Restricoes Tecnicas
 - NAO usar window.alert/confirm/prompt (iframe da Emergent bloqueia)
 - Imagens 2-4MB - sempre usar thumbnails no admin
-- Object Storage instavel - manter fallback local
+- Usar xhrGet/xhrPost/xhrDelete no Admin.js (fetch falha silenciosamente)
+- Storage definitivo: Cloudflare R2 (NAO usar Emergent S3)
