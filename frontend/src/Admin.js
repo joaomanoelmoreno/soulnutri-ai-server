@@ -1285,7 +1285,7 @@ export default function Admin() {
       {stats && activeTab === 'dishes' && (
         <div className="stats-bar">
           <div className="stat">
-            <span className="stat-value">{stats.total_dishes}</span>
+            <span className="stat-value">{dishes.length}</span>
             <span className="stat-label">Pratos</span>
           </div>
           <div className="stat">
@@ -1293,8 +1293,8 @@ export default function Admin() {
             <span className="stat-label">Imagens IA</span>
           </div>
           <div className="stat">
-            <span className="stat-value">{dishes.length}</span>
-            <span className="stat-label">Total Pratos</span>
+            <span className="stat-value">{stats.total_dishes}</span>
+            <span className="stat-label">Pratos IA</span>
           </div>
           <div className="stat">
             <span className="stat-value">{dishes.reduce((sum, d) => sum + (d.image_count || 0), 0)}</span>
