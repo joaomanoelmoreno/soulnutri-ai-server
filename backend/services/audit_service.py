@@ -43,7 +43,25 @@ INGREDIENTES_GLUTEN = [
 
 
 def audit_all_dishes() -> Dict[str, Any]:
-    """Audita todos os pratos e retorna relatório de problemas"""
+    """Audita todos os pratos e retorna relatório de problemas.
+    Usa MongoDB como fonte de verdade para a lista de pratos."""
+    import pymongo
+    import unicodedata
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent.parent / '.env')
+    
+    client = pymongo.MongoClient(os.environ.get("MONGO_URL"))
+    db = client[os.environ.get("DB_NAME", "soulnutri")]
+    db_dishes = {d['slug'] for d in db.dishes.find({}, {'_id': 0, 'slug': 1})}
+    client.close()
+    
+    def _normalize(name):
+        n = name.lower().replace('-', '').replace('_', '').replace(' ', '').replace('(', '').replace(')', '')
+        nfkd = unicodedata.normalize('NFKD', n)
+        return ''.join(c for c in nfkd if not unicodedata.combining(c))
+    
+    # Build normalized lookup: norm_slug -> original_slug
+    db_norm = {_normalize(s): s for s in db_dishes}
     
     problems = {
         'missing_info_file': [],
@@ -58,18 +76,25 @@ def audit_all_dishes() -> Dict[str, Any]:
     total_dishes = 0
     dishes_with_issues = 0
     
+    # Build mapping: db_slug -> first matching folder on disk
+    slug_to_folder = {}
     for dish_dir in DATASET_DIR.iterdir():
         if not dish_dir.is_dir():
             continue
-        
+        folder_norm = _normalize(dish_dir.name)
+        if folder_norm in db_norm:
+            db_slug = db_norm[folder_norm]
+            if db_slug not in slug_to_folder:
+                slug_to_folder[db_slug] = dish_dir
+    
+    for db_slug, dish_dir in slug_to_folder.items():
         total_dishes += 1
-        slug = dish_dir.name
         info_path = dish_dir / "dish_info.json"
         
         # Verificar se dish_info.json existe
         if not info_path.exists():
             problems['missing_info_file'].append({
-                'slug': slug,
+                'slug': db_slug,
                 'issue': 'Arquivo dish_info.json não existe',
                 'severity': 'high'
             })
@@ -82,7 +107,7 @@ def audit_all_dishes() -> Dict[str, Any]:
                 info = json.load(f)
         except Exception as e:
             problems['missing_info_file'].append({
-                'slug': slug,
+                'slug': db_slug,
                 'issue': f'Erro ao ler arquivo: {str(e)}',
                 'severity': 'high'
             })
@@ -95,7 +120,7 @@ def audit_all_dishes() -> Dict[str, Any]:
         nome = info.get('nome', '')
         if 'unknown' in nome.lower() or not nome:
             problems['unknown_names'].append({
-                'slug': slug,
+                'slug': db_slug,
                 'nome': nome,
                 'issue': 'Nome contém "Unknown" ou está vazio',
                 'severity': 'high'
@@ -106,7 +131,7 @@ def audit_all_dishes() -> Dict[str, Any]:
         nutricao = info.get('nutricao', {})
         if not nutricao or not nutricao.get('calorias') or nutricao.get('calorias') == '':
             problems['empty_nutrition'].append({
-                'slug': slug,
+                'slug': db_slug,
                 'nome': nome,
                 'issue': 'Informações nutricionais vazias',
                 'severity': 'medium'
@@ -117,7 +142,7 @@ def audit_all_dishes() -> Dict[str, Any]:
         ingredientes = info.get('ingredientes', [])
         if not ingredientes or len(ingredientes) == 0:
             problems['missing_ingredients'].append({
-                'slug': slug,
+                'slug': db_slug,
                 'nome': nome,
                 'issue': 'Lista de ingredientes vazia',
                 'severity': 'medium'
@@ -128,7 +153,7 @@ def audit_all_dishes() -> Dict[str, Any]:
         descricao = info.get('descricao', '')
         if not descricao or len(descricao) < 10:
             problems['missing_description'].append({
-                'slug': slug,
+                'slug': db_slug,
                 'nome': nome,
                 'issue': 'Descrição ausente ou muito curta',
                 'severity': 'low'
@@ -198,7 +223,7 @@ def audit_all_dishes() -> Dict[str, Any]:
             for ing in INGREDIENTES_ANIMAL:
                 if tem_ingrediente_animal(ing, ingredientes_text):
                     problems['category_conflicts'].append({
-                        'slug': slug,
+                        'slug': db_slug,
                         'nome': nome,
                         'issue': f'Prato marcado como VEGANO mas contém "{ing}"',
                         'severity': 'high'
@@ -210,7 +235,7 @@ def audit_all_dishes() -> Dict[str, Any]:
             for ing in ['frango', 'carne', 'boi', 'porco', 'bacon', 'peixe', 'camarão']:
                 if ing in ingredientes_text:
                     problems['category_conflicts'].append({
-                        'slug': slug,
+                        'slug': db_slug,
                         'nome': nome,
                         'issue': f'Prato marcado como VEGETARIANO mas contém "{ing}"',
                         'severity': 'high'
@@ -223,7 +248,7 @@ def audit_all_dishes() -> Dict[str, Any]:
         for ing in INGREDIENTES_GLUTEN:
             if ing in ingredientes_text and not contem_gluten:
                 problems['allergen_conflicts'].append({
-                    'slug': slug,
+                    'slug': db_slug,
                     'nome': nome,
                     'issue': f'Contém "{ing}" mas não está marcado como contém glúten',
                     'severity': 'medium'
@@ -289,7 +314,7 @@ async def fix_dish_with_ai(slug: str) -> Dict[str, Any]:
     
     return {
         'ok': True,
-        'slug': slug,
+        'slug': db_slug,
         'current_info': current_info,
         'suggestions': suggestions,
         'changes_needed': ai_result.get('changes_needed', [])

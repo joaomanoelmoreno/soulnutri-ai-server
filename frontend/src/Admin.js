@@ -1952,8 +1952,8 @@ export default function Admin() {
                           className="edit-btn"
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
-                            if (dish) setEditingDish(dish);
-                            
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
                           }}
                         >
                           ✏️
@@ -1992,8 +1992,8 @@ export default function Admin() {
                           className="edit-btn"
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
-                            if (dish) setEditingDish(dish);
-                            
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
                           }}
                         >
                           ✏️
@@ -2039,8 +2039,8 @@ export default function Admin() {
                           className="edit-btn small"
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
-                            if (dish) setEditingDish(dish);
-                            
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
                           }}
                         >
                           ✏️
@@ -2085,6 +2085,16 @@ export default function Admin() {
                         >
                           {fixingSlug === p.slug ? '⏳' : '🤖'}
                         </button>
+                        <button 
+                          className="edit-btn"
+                          onClick={() => {
+                            const dish = dishes.find(d => d.slug === p.slug);
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
+                          }}
+                        >
+                          ✏️
+                        </button>
                       </div>
                     ))}
                     {auditData.problems.missing_info_file.length > 20 && (
@@ -2108,8 +2118,8 @@ export default function Admin() {
                           className="edit-btn small"
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
-                            if (dish) setEditingDish(dish);
-                            
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
                           }}
                         >
                           ✏️
@@ -2145,8 +2155,8 @@ export default function Admin() {
                           className="edit-btn small"
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
-                            if (dish) setEditingDish(dish);
-                            
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
                           }}
                         >
                           ✏️
@@ -2181,8 +2191,8 @@ export default function Admin() {
                           className="edit-btn small"
                           onClick={() => {
                             const dish = dishes.find(d => d.slug === p.slug);
-                            if (dish) setEditingDish(dish);
-                            
+                            if (dish) { setEditingDish(dish); }
+                            else { notify('Prato nao encontrado no banco de dados. Verifique se o slug esta correto.', 'error'); }
                           }}
                         >
                           ✏️
