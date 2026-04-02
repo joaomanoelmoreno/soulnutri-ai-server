@@ -576,18 +576,15 @@ async def identify_image(
         
         # ══════════════════════════════════════════════════════════════════════
         # NÍVEL 2: Se CLIP nao confiante, usar Gemini como fallback
+        # HARD LOCK: Cibi Sana -> CLIP SEMPRE, Gemini TOTALMENTE BLOQUEADO
         # ══════════════════════════════════════════════════════════════════════
+        is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+        
         if decision is None:
-            logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
-            
-            from services.gemini_flash_service import (
-                identify_dish_gemini_flash,
-                is_gemini_flash_available
-            )
-            
-            if not is_gemini_flash_available():
-                # Gemini indisponivel, usar CLIP mesmo com baixa confianca
-                if index.is_ready():
+            if is_cibi_sana:
+                # HARD LOCK: Dentro do Cibi Sana, usar CLIP mesmo com baixa confianca
+                logger.info(f"[HARD LOCK] Cibi Sana - Gemini BLOQUEADO. Usando CLIP ({clip_score:.0%})")
+                if index.is_ready() and clip_decision:
                     decision = clip_decision
                     decision['source'] = 'local_index'
                 else:
@@ -596,39 +593,20 @@ async def identify_image(
                         identified=False,
                         confidence="baixa",
                         score=0.0,
-                        message="Servico de IA indisponivel."
+                        message="Prato nao identificado. Tente com outra foto."
                     )
             else:
-                # Buscar perfil do usuario se disponivel
-                flash_profile = None
-                if pin and nome:
-                    from services.profile_service import hash_pin
-                    pin_hash = hash_pin(pin)
-                    flash_profile = await db.users.find_one(
-                        {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
-                        {"_id": 0}
-                    )
+                # Fora do Cibi Sana: Gemini permitido como fallback
+                logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
+            
+                from services.gemini_flash_service import (
+                    identify_dish_gemini_flash,
+                    is_gemini_flash_available
+                )
                 
-                flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
-                
-                if flash_result.get('ok'):
-                    decision = {
-                        'identified': True,
-                        'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
-                        'dish_display': flash_result.get('nome'),
-                        'score': flash_result.get('score', 0.90),
-                        'source': 'gemini_flash',
-                        'category': flash_result.get('categoria'),
-                        'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteina animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
-                        'nutrition': flash_result.get('nutricao'),
-                        'alergenos': flash_result.get('alergenos', {}),
-                        'alertas_personalizados': flash_result.get('alertas_personalizados', []),
-                        'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
-                    }
-                    logger.info(f"[NÍVEL 2 - GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
-                else:
-                    # Gemini falhou, usar CLIP mesmo com baixa confianca
-                    if index.is_ready() and clip_decision:
+                if not is_gemini_flash_available():
+                    # Gemini indisponivel, usar CLIP mesmo com baixa confianca
+                    if index.is_ready():
                         decision = clip_decision
                         decision['source'] = 'local_index'
                     else:
@@ -637,8 +615,49 @@ async def identify_image(
                             identified=False,
                             confidence="baixa",
                             score=0.0,
-                            message="Nao foi possivel identificar o prato."
+                            message="Servico de IA indisponivel."
                         )
+                else:
+                    # Buscar perfil do usuario se disponivel
+                    flash_profile = None
+                    if pin and nome:
+                        from services.profile_service import hash_pin
+                        pin_hash = hash_pin(pin)
+                        flash_profile = await db.users.find_one(
+                            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                            {"_id": 0}
+                        )
+                    
+                    flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
+                    
+                    if flash_result.get('ok'):
+                        decision = {
+                            'identified': True,
+                            'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
+                            'dish_display': flash_result.get('nome'),
+                            'score': flash_result.get('score', 0.90),
+                            'source': 'gemini_flash',
+                            'category': flash_result.get('categoria'),
+                            'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteina animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
+                            'nutrition': flash_result.get('nutricao'),
+                            'alergenos': flash_result.get('alergenos', {}),
+                            'alertas_personalizados': flash_result.get('alertas_personalizados', []),
+                            'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
+                        }
+                        logger.info(f"[NÍVEL 2 - GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
+                    else:
+                        # Gemini falhou, usar CLIP mesmo com baixa confianca
+                        if index.is_ready() and clip_decision:
+                            decision = clip_decision
+                            decision['source'] = 'local_index'
+                        else:
+                            return IdentifyResponse(
+                                ok=False,
+                                identified=False,
+                                confidence="baixa",
+                                score=0.0,
+                                message="Nao foi possivel identificar o prato."
+                            )
         
         # ══════════════════════════════════════════════════════════════════════
         # APLICAR NÍVEIS DE CONFIANÇA - v1.3
@@ -968,12 +987,23 @@ async def identify_image(
 async def identify_with_ai(
     file: UploadFile = File(...),
     pin: str = Form(""),
-    nome: str = Form("")
+    nome: str = Form(""),
+    restaurant: Optional[str] = Form(None)
 ):
     """
     Identificacao usando Gemini Vision - CONSOME CRÉDITOS!
-    Usar apenas quando o usuario explicitamente solicitar.
+    HARD LOCK: Bloqueado quando restaurant=cibi_sana.
     """
+    # HARD LOCK: Cibi Sana -> Gemini totalmente bloqueado
+    is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+    if is_cibi_sana:
+        logger.info("[HARD LOCK] identify-with-ai BLOQUEADO - Cibi Sana")
+        return {
+            "ok": False,
+            "error": "Gemini nao disponivel dentro do Cibi Sana. Use o reconhecimento local.",
+            "blocked_by": "cibi_sana_hard_lock"
+        }
+    
     start_time = time.time()
     try:
         content = await file.read()
@@ -1601,11 +1631,22 @@ async def check_unknown(file: UploadFile = File(...)):
 async def identify_with_gemini_flash(
     file: UploadFile = File(...),
     pin: Optional[str] = Form(None),
-    nome: Optional[str] = Form(None)
+    nome: Optional[str] = Form(None),
+    restaurant: Optional[str] = Form(None)
 ):
     """
     Identificacao DIRETA usando Gemini Flash.
+    HARD LOCK: Bloqueado quando restaurant=cibi_sana.
     """
+    # HARD LOCK: Cibi Sana -> Gemini totalmente bloqueado
+    is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+    if is_cibi_sana:
+        logger.info("[HARD LOCK] identify-flash BLOQUEADO - Cibi Sana")
+        return JSONResponse(
+            status_code=403,
+            content={"ok": False, "error": "Gemini nao disponivel dentro do Cibi Sana.", "blocked_by": "cibi_sana_hard_lock"}
+        )
+    
     start_time = time.time()
     
     try:
