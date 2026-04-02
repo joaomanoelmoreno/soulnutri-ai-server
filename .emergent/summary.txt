@@ -1,138 +1,132 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual que identifica pratos em tempo real a partir de imagens. Recentemente, a aplicação apresentou problemas críticos no painel de administração (), onde os dados pareciam ter sido deletados (contagem de imagens igual a 0). O usuário solicitou a correção imediata sem a perda de dados. A engenharia recomendou a migração das imagens do disco local para o Object Storage (nuvem) da Emergent para evitar corrupção futura. Durante a migração e ajustes, o usuário notou lentidão severa, perda temporária de dados nutricionais e falhas nos botões de Mover e Deletar.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. Após a migração para o Cloudflare R2, o sistema apresentou problemas de sincronia de contagem no painel Admin, erros no sistema de auditoria, e necessidade de atualização nutricional inteligente para os pratos. Além disso, foi requisitado o bloqueio total do modelo Gemini dentro do restaurante Cibi Sana (usando apenas OpenCLIP local), a limpeza de imagens duplicadas no storage, e a resolução de crashes recentes () durante o scan de imagens reais no buffet, que também revelaram uma baixa precisão do OpenCLIP com base nas regras de pontuação atuais.
 
 **User's preferred language**: Português (Brasil). (INSTRUCT: The next agent MUST respond in Português).
 
-**what currently exists?**
-Uma aplicação full-stack (React + FastAPI + MongoDB). O problema de zero imagens foi resolvido limpando slugs duplicados e inconsistentes. O dataset de imagens agora está rodando em um sistema HÍBRIDO (99 pratos migrados para o Object Storage S3-compatível da Emergent e 107 pratos rodando no disco local  devido a instabilidades de timeout no upload do storage). Os dados nutricionais que haviam sumido foram 100% restaurados a partir de um backup (). O painel Admin foi fortemente otimizado com paginação, lazy loading nas fotos e compressão de thumbnails on-the-fly no backend usando  para evitar crashs no navegador.
+**what currently exists?** 
+Uma aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens no Cloudflare R2 totalmente funcional. O backend possui um serviço de IA duplo: OpenCLIP (local, via matriz de embeddings ) para o Cibi Sana e Gemini Flash (via Emergent LLM Key) para locais externos. O frontend envia a imagem via FormData. O painel Admin gerencia pratos, exibe auditorias (agora baseadas no MongoDB) e permite edição direta. A Tabela TACO foi profundamente corrigida para aceitar 255 ingredientes no cálculo nutricional.
 
 **Last working item**:
-- **Last item agent was working**: Implementação de compressão de imagens via  no endpoint  e testes de performance/funcionalidade do botão Mover no frontend após a refatoração.
-- **Status**: IN PROGRESS
-- **Agent Testing Done**: N (O código de compressão foi inserido no , mas a validação final da UI com screenshot/testing agent ainda não foi executada).
-- **Which testing method agent to use?**: screenshot tool ou manual testing by curl. É necessário validar se as imagens carregam rapidamente no painel Admin e se o fluxo de Mover foto entre pratos funciona visualmente sem erros.
-- **User Testing Done**: N
+    - Last item agent was working: Diagnóstico da baixa performance do OpenCLIP. O usuário enviou 57 fotos reais do buffet, onde a maioria falhou (NO) ou deu crash (ERROR). O agente corrigiu os crashes, bloqueou o Gemini definitivamente, e rodou um script para avaliar as fotos com o OpenCLIP. Descobriu-se que o modelo *está* acertando o prato no Top 1, mas o score de similaridade gerado fica entre 65% e 77%, o que cai na regra de baixa confiança (threshold atual é 85% para 'alta' e 90% para não usar fallback).
+    - Status: USER VERIFICATION PENDING / BLOCKED (O agente encontrou a causa raiz, mas encerrou antes de enviar a proposta de solução para o usuário analisar).
+    - Agent Testing Done: Y (Testes via Python local no backend concluídos com as fotos do usuário).
+    - Which testing method agent to use?: manual testing by python -c / bash (para calibrar o threshold de pontuação) e screenshot_tool (para a UI, se necessário).
+    - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-- Issue 1: (P0) Testar a estabilidade do painel Admin (carregamento de thumbnails compactados) e o fluxo de Mover imagens após as recentes otimizações.
-   - Attempted fixes: Endpoint reescrito para usar Pillow, endpoint de mover ajustado ( corrigido para ).
-   - Next debug checklist: Usar screenshot no . Clicar em Editar um prato e verificar se as fotos carregam rápido. Simular mover uma imagem de um prato para outro.
-   - Why fix this issue and what will be achieved with the fix?: Garante que as reclamações finais do usuário sobre lentidão e botões quebrados estão resolvidas.
-   - Status: TESTING PENDING
-   - Is recurring issue? N
-   - Should Test frontend/backend/both after fix?: Both
-- Issue 2: (P1) Retomar migração dos 107 pratos restantes para o Object Storage.
-   - Attempted fixes: Script de migração () falhou no meio devido a erros 500 (Rate Limit/Instabilidade) do S3 da plataforma.
-   - Next debug checklist: Executar script de status do storage. Se o endpoint  da Emergent estiver aceitando uploads novamente sem dar 500, continuar a subida dos arquivos restantes.
-   - Why fix this issue: Manter todas as imagens no disco local apresenta risco de perda e corrupção (recomendação da engenharia).
-   - Status: BLOCKED (Aguardando estabilidade da API de Object Storage da plataforma).
-   - Is recurring issue? Y
-   - Should Test frontend/backend/both after fix?: Backend
-- Issue 3: (P2) Saldo de créditos da Emergent invisível na UI da plataforma.
-   - Status: BLOCKED. O usuário reclamou que o saldo não aparece na barra superior da plataforma Emergent (fora do app). O agente de suporte informou que isso é uma falha visual da plataforma, necessitando refresh de cache ou contato com o suporte da Emergent. O agente não pode consertar o frame da plataforma.
+  - Issue 1: (P0) Propor e aplicar solução para a baixa pontuação de confiança do OpenCLIP nas fotos reais.
+     - Attempted fixes: Diagnóstico concluído. O OpenCLIP acerta o prato, mas o threshold atual exige  para identificação segura, o que fotos de buffet reais não estão alcançando (ficam na casa dos 0.70).
+     - Next debug checklist: Apresentar ao usuário a descoberta (ex: O modelo está acertando, mas a exigência de 85% de similaridade é muito alta para fotos reais com iluminação de buffet. Devemos baixar o threshold para 65-70% no Cibi Sana?). Aguardar aprovação e alterar .
+     - Why fix this issue and what will be achieved with the fix?: Permitirá que o aplicativo funcione perfeitamente no restaurante sem rejeitar fotos válidas.
+     - Status: USER VERIFICATION PENDING
+     - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix?: Backend
+     - Blocked on other issue: Nenhuma.
 
 **In progress Task List**:
-- Task 1: Otimização de Performance do Admin
-   - Where to resume: O código base está pronto (lazy loading, paginação, pillow compress). Validar se está renderizando corretamente via Screenshot tool.
-   - What will be achieved with this?: O admin deixará de travar o navegador do usuário ao carregar fotos de 3MB.
-   - Status: TESTING PENDING
-   - Should Test frontend/backend/both after fix?: Frontend
+  - Task 1: (P1) Revisão Nutricional dos pratos C a Z.
+     - Where to resume: Utilizar o mesmo script ( ou criar similar) que usa Gemini para deduzir proporções reais de ingredientes e calcula a nutrição com base na  recém-corrigida.
+     - What will be achieved with this?: Todos os pratos terão calorias e macronutrientes realistas.
+     - Status: NOT STARTED
+     - Should Test frontend/backend/both after fix?: Backend
+     - Blocked on something: Nenhuma.
 
 **Upcoming and Future Tasks**
-- **Upcoming Tasks:**
-  - (P1) Validar o funcionamento do sistema de notificações push.
-  - (P1) Planejar e executar a atualização segura dos dados nutricionais usando .
-  - (P1) Validar a funcionalidade de adicionar referências e links na tela de resultado.
-  - (P2) Investigar lentidão intermitente no MongoDB (Shard 02 Timeout) que afeta endpoints de imagem.
-- **Future Tasks:**
-  - (P1) Refatorar  (>5000 linhas) e  (>3000 linhas) em módulos menores.
-  - (P2) Investigar e implementar a integração com Stripe.
-  - (P2) Criar endpoint de upload de ZIP no admin.
+    Upcoming Tasks:
+    - (P1) Validar o funcionamento do sistema de notificações push.
+    - (P1) Validar a funcionalidade de adicionar referências e links na tela de resultado.
+    
+    Future Tasks:
+    - (P2) Criar endpoint de upload de ZIP no admin.
+    - (P2) Investigar e implementar a integração com Stripe.
+    - (P3) Refatorar  (>5000 linhas) e  (>3000 linhas) em módulos menores.
 
 **Completed work in this session**
-- Geração de relatório de Auditoria completo cruzando filesystem e MongoDB () (DONE)
-- Backup do banco de dados antigo antes da higienização (DONE)
-- Reconstrução da coleção  com slugs normatizados e consolidação de pastas duplicadas (DONE)
-- Migração parcial (99 pratos) para Emergent Object Storage S3 (DONE)
-- Restauração de dados nutricionais perdidos e ingredientes a partir da coleção de backup  - 190 pratos restaurados (DONE)
-- Substituição de TODOS os ,  e  no  por UI inline de duas etapas, pois o iframe da Emergent bloqueia pop-ups nativos do navegador (DONE)
-- Otimização do Admin com Paginação, Lazy Loading e Thumbnails comprimidas usando Pillow (DONE)
-- Separação do payload de  (117KB agora) e  para diminuir peso do request inicial (DONE)
+- Teste e validação visual de ponta-a-ponta do Cloudflare R2 no painel Admin (DONE).
+- Sincronização do Total de Pratos no Admin: Removido o count obsoleto do arquivo local do IA Index e substituído pelo count real do MongoDB (DONE).
+- Refatoração da aba Auditoria: Agora lê os dados do MongoDB (e não de pastas locais fantasma) e exibe o botão Editar (✏️) corretamente para todos os itens com problemas (DONE).
+- Correção massiva do banco TACO (): 63 mapeamentos quebrados consertados e ampliado para 255 ingredientes. (DONE).
+- Revisão Nutricional (Pratos A e B): Usado Gemini para gerar proporções reais (ex: Batata Frita = 98g batata, 2g páprica) aplicado ao TACO, atualizando 30 pratos no banco (DONE).
+- Correção de Segurança Cibi Sana (Hard Lock): Adicionado envio de  no Frontend () e bloqueado o fallback do Gemini no backend quando este parâmetro está presente (DONE).
+- Limpeza de Duplicatas Exatas: Removidas cópias inúteis de imagem (mesmo tamanho em bytes) do R2, preservando as burst photos legítimas (DONE).
+- Correção de Crash Crítico (): A limpeza do JSON do índice de IA desincronizou a lista de nomes (1701) com a matriz numpy de embeddings (1725). Matriz sincronizada e cortada corretamente para 1701 para evitar crashes na similaridade de cosseno (DONE).
 
 **Earlier issues found/mentioned but not fixed**
-- Issue 1: Categorias não podem ser editadas na aba Auditoria.
-   - Debug checklist: Verificar em  o render da tab de auditoria e entender se os inputs de categoria estão desabilitados ou falhando no PUT.
-   - Why to solve this issue and what will be achieved with this?: Relatado pelo usuário há duas sessões, não resolvido devido a prioridades críticas de corrupção de dados.
+   - Issue 1: Categorias não podem ser editadas na aba Auditoria.
+   - Debug checklist: Verificar no  o form de categorias durante a edição a partir da tela de Auditoria.
+   - Why to solve this issue and what will be achieved with this?: Relatado pelo usuário anteriormente, mas adiado devido à prioridade dos crashes na IA.
    - Should Test frontend/backend/both after fix: Frontend
    - Is recurring issue? N
 
 **Known issue recurrence from previous fork**
-- Issue recurrence in previous fork: O sistema é suscetível a sobrecargas se muitos arquivos grandes são processados. Além disso, o Storage S3 da plataforma costuma dar timeout/500 se não houver delays entre os uploads.
-- Recurrence count: 3 (Nesta sessão a API de S3 caiu múltiplas vezes).
-- Status: IN PROGRESS (Tratado com abordagem híbrida de storage).
+  - Nenhuma recorrência nova de forks passados. O problema da Emergent API 500 no Storage foi permanentemente contornado pelo uso do Cloudflare R2.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Hybrid Storage Model**: Como o S3 caiu durante o upload, a API lê de onde estiver disponível. O banco  não está mais apontando só para um lugar.
-- **Iframe Blocking**: O aplicativo roda em um iframe na plataforma. Funções nativas como  e  NÃO FUNCIONAM e congelam as ações do usuário silenciosamente. Foram substituídas por modais/buttons inline.
-- **Pillow Compression**: Implementado on-the-fly no  para devolver imagens max 300x300, senão o frontend trava com milhares de imagens de 3MB+.
+- **OpenCLIP Similarity**: A busca de imagem funciona via produto escalar (dot product) entre o vetor da imagem escaneada e a matriz  carregada em RAM.
+- **Gemini Hard Lock**: Quando o  recebe , o servidor FastAPI () aborta a execução do Gemini. Em locais externos, o Gemini atua como fallback se o score do OpenCLIP for inferior a 90%.
+- **Nutrição Inteligente**: TACO não entende 100g de prato misto. Usa-se o Gemini (via script de manutenção) para fracionar a receita em X% ingrediente A + Y% ingrediente B, consultando o TACO e gravando a caloria final no banco de dados.
 
 **key DB schema**
-- **dishes**: 
-- **dish_storage**:  (Count representa total real unificando nuvem e local).
-- **nutrition_sheets**: Contém fichas ricas exportadas anteriormente (foi usado como backup para os dados).
+  - : 
+  - : 
 
-**All files of reference**
-- : Modificado endpoints  e .
-- : Refatorado pesadamente. Removidos alertas nativos, implementada paginação e novo endpoint estrito para buscar fotos apenas ao editar.
-- : Protegido contra timeouts do MongoDB com fallbacks para ler arquivos do disco.
-- : Relatório que o usuário pediu para a engenharia.
+**changes in tech stack**
+  - Matriz de Embeddings do OpenCLIP () truncada permanentemente para 1701 elementos para igualar as validações de JSON, evitando Exceptions em memória.
 
-**Areas that need refactoring**:
--  e  estão gigantescos e difíceis de manter.
-- Timouts intermitentes no MongoDB (Shard 02) precisam de retry ou tratativas mais flexíveis nas rotas do admin.
+**All files of reference** 
+  - : Contém a regra matemática  e  que o agente precisa modificar na próxima etapa.
+  - : Lógica principal da rota de identificar prato ().
+  - : Fortemente modificado, dicionário de ingredientes expandido.
+  - : Atualizado em múltiplas funções de captura e envio de imagem para anexar .
+
+**Areas that need refactoring**: 
+-  e  continuam gigantes e complexos. O serviço de scan () mistura OpenCLIP local, Gemini, validação de créditos, regras de negócio e bloqueios em uma única função monolítica.
 
 **key api endpoints**
-- : Agora retorna *apenas* os metadados dos pratos (sem array massivo de imagens).
-- : Novo endpoint usado quando o usuário clica em Editar, para puxar os nomes das fotos.
-- : Alterado para retornar imagem redimensionada (thumbnail) com o  para melhor performance.
+- : Escaneia imagem primária. (Agora requer e respeita restrição de Cibi Sana).
+- : Força IA premium.
+- : Endpoint obsoleto; substituído pelo uso do script inteligente que integra Gemini+TACO, mas ainda no código.
 
-**Critical Info for New Agent**
-- **NÃO USE ,  OU .** O app roda num Iframe e eles não disparam as janelas de diálogo, fazendo os botões pararem de funcionar.
-- **A TENSÃO ESTÁ ALTA**. O usuário achou que tinha perdido os dados de ingredientes e descrições construídos por semanas. Os dados já foram restaurados (), mas a sensação de fragilidade é grande. NÃO FAÇA ALTERAÇÕES GLOBAIS NO MONGODB SEM TESTAR/FAZER BACKUP ANTES.
-- Imagens são enormes (2 a 4 MB por foto). Carregar 50 pratos com 20 fotos cada trava a página inteira. Mantenha a paginação e a compressão ativa.
-- **Saldo da Plataforma**: O usuário perguntou sobre o saldo da Emergent sumindo no cabeçalho. Explique que isso é da plataforma Emergent, e oriente-o a atualizar o cache ou chamar suporte (como instruído pelo support_agent).
+**Critical Info for New Agent** 
+- **NÃO force o uso do Gemini** se o . O usuário foi extremamente claro sobre isso. O bloqueio já está feito no código.
+- A correção do  foi resolvida igualando as 1701 posições de texto no JSON ao array numpy. Nunca edite o texto do json de IA () sem refletir o recorte no .
+- **A causa do OpenCLIP não reconhecer as fotos do buffet não é uma quebra da IA**, mas sim um **threshold** excessivamente rigoroso. As fotos do buffet batem em ~72% (o que é bom para ângulos reais), mas a  recusa tudo abaixo de 85%.
 
-**documents and test reports created in this job**
-- 
-- 
--  (Resultado do último teste completo do backend/frontend)
+**documents and test reports created in this job** 
+  -  (Atualizado com backlog e bugs fixados)
+  -  (Resultados de frontend UI na validação de Cloudflare R2)
+  -  (Relatório nutricional interno de divergências)
 
-**Last 10 User Messages and any pending HUMAN messages**
-- (User) Questionou por que o saldo de créditos da UI sumiu, e apontou que os botões de Mover e Deletar ainda não funcionavam. Informou com desespero que ingredientes e descrições tinham sumido (trabalho de semanas).
-- (Agent) Analisou e encontrou os dados no , recuperou tudo para 190 pratos sem tocar nas fotos.
-- (User) Mencionou que os dados haviam voltado, mas o botão Mover continuava falhando (apenas o deletar funcionava), e reclamou severamente da LENTIDÃO EXTREMA do admin para carregar.
-- (Agent) Corrigiu payload desajustado no endpoint Mover, modificou a resposta da listagem inicial (retirou arrays gigantescos) e aplicou Paginação e compressão (Pillow) para thumbnails das imagens no  e . (Aguardando validação desta otimização extrema).
-- **Pending Human Message:** O usuário está esperando a confirmação final de que o painel está rápido de novo e que consegue mover fotos com facilidade.
+**Last 10 User Messages and any pending HUMAN messages** 
+ 1. (User) Questionou por que havia fotos duplicadas no Admin, com sufixos.
+ 2. (Agent) Encontrou e confirmou serem burst-photos e duplicatas exatas de File System. Pediu como o usuário preferia limpar.
+ 3. (User) Ordenou remover apenas as duplicadas exatas de mesmo tamanho.
+ 4. (Agent) Removeu 4 clones exatos, limpou R2 e DB e atualizou log.
+ 5. (User) Enviou o ZIP com 57 fotos de buffet relatando que o Gemini ainda operava clandestinamente no Cibi Sana e 5 imagens cracharam o app (Erro ).
+ 6. (Agent) Consertou o Frontend (não enviava o parametro ) consertou o backend (Matrizes numpy e strings assíncronas geravam Crash).
+ 7. (User) Reclamou: O Clip não reconheceu 37 fotos... Faça alguns testes para diagnosticar o problema, suas causas e indique a provavel solução proposta para minha analise antes de fazermos qualquer alteracao
+ 8. **HUMAN PENDING**: O agente fez o teste final e comprovou no log que o threshold em 85% é irreal para fotos normais de buffet e deveria ser abaixado. Contudo, **o agente encerrou o job sem avisar o usuário de seu achado nem propor a solução explícita como foi pedido**. O Novo agente **deve** começar reportando isso usando .
 
 **Project Health Check:**
-- Broken: Object storage upload endpoint  throws 500 error currently. App running nicely with Hybrid Local/Cloud solution.
+- Broken: Thresholds do OpenCLIP em  estão descalibrados para a vida real.
+- Healthy: Cloudflare Storage, Bloqueios de Permissão IA, Sincronização do DB e Auditorias, Nutrição de ingredientes compostos.
 
-**3rd Party Integrations**
-- Emergent Object Storage (S3 API) — uses Emergent LLM Key (Currently facing rate-limits/instabilidade).
-- Gemini Flash (Visão Computacional no Admin) — uses Emergent LLM Key.
+**3rd Party Integrations** 
+	•	OpenAI OpenCLIP — local deployment (via HuggingFace weights)
+	•	Gemini 2.5 Flash / Lite (Fallback Image Scan) — uses Emergent LLM Key
+	•	Cloudflare R2 (Storage) — requires User API Key
 
-**Testing status**
-- Testing agent used after significant changes: YES ().
-- Troubleshoot agent used after agent stuck in loop: NO.
-- Test files created: None.
-- Known regressions: Nenhuma conhecida, mas a validação das últimas implementações de compressão (Pillow) ainda precisa ocorrer.
+**Testing status** 
+  - Testing agent used after significant changes: YES (usado no inicio do log para validar o R2).
+  - Troubleshoot agent used after agent stuck in loop: NO
+  - Test files created: 
+  - Known regressions: Nenhuma conhecida, o código do CLIP agora está robusto para index bounding.
 
 **Credentials to test flow:**
-- Admin User: 
-- Admin Password: 
+Admin:  / 
 
 **What agent forgot to execute**
-- O Agente implementou as compressões de thumbnails (Pillow) na última mensagem, mas a rotina de encerramento, o teste dessa rota e a notificação da resolução das lentidões ao usuário não foram efetuadas. A confirmação visual da funcionalidade de Mover imagens atualizada no Front não foi concluída.</analysis>
+O usuário pediu explicitamente: *indique a provavel solucao proposta para minha analise antes de fazermos qualquer alteracao*. O agente descobriu a causa no bash (pontuações batendo entre 65% e 75%, enquanto o corte é 85%), mas finalizou a tarefa prematuramente usando a ferramenta de finish em vez de mandar a resposta pelo . **A primeira ação do novo agente DEVE SER mandar os resultados do diagnóstico e propor a diminuição do threshold para o usuário pelo .**</analysis>

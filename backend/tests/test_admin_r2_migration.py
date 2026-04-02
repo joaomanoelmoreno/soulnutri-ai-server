@@ -6,7 +6,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://admin-r2-verify.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://clip-calibration.preview.emergentagent.com').rstrip('/')
 
 
 class TestAdminDishesAPI:
