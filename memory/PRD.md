@@ -15,7 +15,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 
 ## Regra de Negocio Critica: Hard Lock Cibi Sana
 - Dentro do Cibi Sana (restaurant=cibi_sana): APENAS OpenCLIP. Gemini 100% BLOQUEADO.
-- Fora do Cibi Sana: Gemini permitido como fallback quando CLIP < 90%.
+- Fora do Cibi Sana: Gemini permitido como fallback quando CLIP < 85%.
 - Aplicado em 3 endpoints: /ai/identify, /ai/identify-with-ai, /ai/identify-flash
 - Log: [HARD LOCK] nos logs do backend para rastreabilidade
 
@@ -29,6 +29,15 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Fluxo de feedback com fila de moderacao
 - Notificacoes push personalizadas
 - Design "Gourmet Dark Mode"
+
+## Calibracao CLIP (2026-04-02) - NOVO
+- Gap analysis removido: decisao baseada apenas em score absoluto
+- Thresholds sincronizados: >=0.85 alta, >=0.50 media, <0.50 rejeicao
+- Auto-aceite CLIP: de 0.90 para 0.85
+- Endpoint /api/ai/calibration: estatisticas, distribuicao, Youden's J
+- Aba "Calibracao CLIP" no Admin com dashboard
+- Feedback envia score/confidence/source para calibracao
+- Metodo Youden's J calcula threshold otimo com 5+ corretos e 5+ incorretos
 
 ## Correcoes Recentes (2026-04-01/02)
 
@@ -57,8 +66,10 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - 3929 fotos no Cloudflare R2
 - 255 mapeamentos TACO
 - 30 pratos A/B nutricionalmente revisados
+- Thresholds CLIP: 85% alta / 50% media / <50% rejeicao (sem gap analysis)
 
 ## Upcoming Tasks
+- (P0) Usuario testar fotos reais no buffet e coletar amostras para calibracao Youden
 - (P1) Revisao nutricional pratos C-Z
 - (P1) Validar notificacoes push
 - (P1) Validar referencias/links na tela de resultado

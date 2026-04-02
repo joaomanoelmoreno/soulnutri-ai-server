@@ -1,6 +1,6 @@
-# SoulNutri - Test Credentials
+# Test Credentials
 
 ## Admin Panel
-- URL: /admin
 - Username: joaomanoelmoreno
 - Password: Pqlamz0192
+- URL: /admin
