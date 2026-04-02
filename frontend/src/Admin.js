@@ -132,6 +132,9 @@ export default function Admin() {
   const [correctingItemId, setCorrectingItemId] = useState(null);
   const [correctionName, setCorrectionName] = useState('');
   const [moderationPendingCount, setModerationPendingCount] = useState(0);
+  // Calibração CLIP
+  const [calibrationData, setCalibrationData] = useState(null);
+  const [calibrationLoading, setCalibrationLoading] = useState(false);
   // Mover/Deletar imagens (substitui window.confirm/prompt bloqueados no iframe)
   const [moveImageState, setMoveImageState] = useState(null); // { idx, img, slug }
   const [moveDestination, setMoveDestination] = useState('');
@@ -178,6 +181,7 @@ export default function Admin() {
     if (activeTab === 'upload') loadUploadStatus();
     if (activeTab === 'moderation') loadModerationQueue();
     if (activeTab === 'audit' && !auditData) runAudit();
+    if (activeTab === 'calibration') loadCalibrationData();
   }, [activeTab]);
 
   // Apenas contagem de moderação (leve)
@@ -360,6 +364,20 @@ export default function Admin() {
   };
 
   const [confirmAction, setConfirmAction] = useState(null); // {type: 'approve'|'reject', itemId: string}
+
+  // Carregar dados de calibração CLIP
+  const loadCalibrationData = async () => {
+    setCalibrationLoading(true);
+    try {
+      const res = await retryFetch(`${API}/ai/calibration`);
+      if (!res.ok) { setCalibrationLoading(false); return; }
+      const data = await res.json();
+      if (data && data.ok) {
+        setCalibrationData(data);
+      }
+    } catch (e) { /* silent */ }
+    setCalibrationLoading(false);
+  };
 
   const approveModerationItem = async (itemId) => {
     try {
@@ -1212,6 +1230,13 @@ export default function Admin() {
               fontWeight: 'bold'
             }}>{moderationPendingCount}</span>
           )}
+        </button>
+        <button 
+          className={`tab-btn ${activeTab === 'calibration' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('calibration'); }}
+          data-testid="tab-calibration"
+        >
+          Calibracao CLIP
         </button>
       </div>
 
@@ -2849,6 +2874,211 @@ export default function Admin() {
                 </div>
               ))}
             </div>
+          )}
+        </div>
+      )}
+
+      {/* Calibração CLIP Tab */}
+      {activeTab === 'calibration' && (
+        <div className="calibration-section" data-testid="calibration-section">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h2 data-testid="calibration-title" style={{ margin: 0, color: '#e2e8f0' }}>Calibracao CLIP - Youden's J</h2>
+            <button onClick={loadCalibrationData} data-testid="calibration-refresh" style={{
+              padding: '8px 16px', background: '#3b82f6', color: '#fff', border: 'none',
+              borderRadius: '8px', cursor: 'pointer', fontSize: '14px'
+            }}>Atualizar</button>
+          </div>
+
+          {calibrationLoading && <p style={{ color: '#94a3b8' }}>Carregando dados...</p>}
+
+          {!calibrationLoading && calibrationData && (
+            <>
+              {/* Thresholds Atuais */}
+              <div data-testid="current-thresholds" style={{
+                background: '#1e293b', borderRadius: '12px', padding: '16px', marginBottom: '20px', border: '1px solid #334155'
+              }}>
+                <h3 style={{ color: '#94a3b8', margin: '0 0 12px', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Thresholds Atuais</h3>
+                <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                  <div style={{ flex: 1, minWidth: '120px', textAlign: 'center', padding: '12px', background: '#0f172a', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#22c55e' }}>{((calibrationData.current_thresholds?.alta || 0.85) * 100).toFixed(0)}%</div>
+                    <div style={{ fontSize: '12px', color: '#94a3b8' }}>Alta Confianca</div>
+                  </div>
+                  <div style={{ flex: 1, minWidth: '120px', textAlign: 'center', padding: '12px', background: '#0f172a', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#f59e0b' }}>{((calibrationData.current_thresholds?.media || 0.50) * 100).toFixed(0)}%</div>
+                    <div style={{ fontSize: '12px', color: '#94a3b8' }}>Media Confianca</div>
+                  </div>
+                  <div style={{ flex: 1, minWidth: '120px', textAlign: 'center', padding: '12px', background: '#0f172a', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ef4444' }}>&lt;{((calibrationData.current_thresholds?.rejeicao || 0.50) * 100).toFixed(0)}%</div>
+                    <div style={{ fontSize: '12px', color: '#94a3b8' }}>Rejeicao</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Estatísticas */}
+              <div data-testid="calibration-stats" style={{
+                background: '#1e293b', borderRadius: '12px', padding: '16px', marginBottom: '20px', border: '1px solid #334155'
+              }}>
+                <h3 style={{ color: '#94a3b8', margin: '0 0 12px', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amostras Coletadas</h3>
+                <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                  <div style={{ flex: 1, minWidth: '100px', textAlign: 'center', padding: '12px', background: '#0f172a', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#e2e8f0' }}>{calibrationData.stats?.total_samples || 0}</div>
+                    <div style={{ fontSize: '12px', color: '#94a3b8' }}>Total</div>
+                  </div>
+                  <div style={{ flex: 1, minWidth: '100px', textAlign: 'center', padding: '12px', background: '#0f172a', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#22c55e' }}>{calibrationData.stats?.correct_count || 0}</div>
+                    <div style={{ fontSize: '12px', color: '#94a3b8' }}>Corretos</div>
+                  </div>
+                  <div style={{ flex: 1, minWidth: '100px', textAlign: 'center', padding: '12px', background: '#0f172a', borderRadius: '8px' }}>
+                    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#ef4444' }}>{calibrationData.stats?.incorrect_count || 0}</div>
+                    <div style={{ fontSize: '12px', color: '#94a3b8' }}>Incorretos</div>
+                  </div>
+                </div>
+                {calibrationData.stats?.correct_scores?.avg && (
+                  <div style={{ marginTop: '12px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, padding: '8px', background: '#0f172a', borderRadius: '6px', fontSize: '13px', color: '#94a3b8' }}>
+                      Scores Corretos: min <strong style={{ color: '#22c55e' }}>{(calibrationData.stats.correct_scores.min * 100).toFixed(1)}%</strong> | 
+                      media <strong style={{ color: '#22c55e' }}>{(calibrationData.stats.correct_scores.avg * 100).toFixed(1)}%</strong> | 
+                      max <strong style={{ color: '#22c55e' }}>{(calibrationData.stats.correct_scores.max * 100).toFixed(1)}%</strong>
+                    </div>
+                    {calibrationData.stats?.incorrect_scores?.avg && (
+                      <div style={{ flex: 1, padding: '8px', background: '#0f172a', borderRadius: '6px', fontSize: '13px', color: '#94a3b8' }}>
+                        Scores Incorretos: min <strong style={{ color: '#ef4444' }}>{(calibrationData.stats.incorrect_scores.min * 100).toFixed(1)}%</strong> | 
+                        media <strong style={{ color: '#ef4444' }}>{(calibrationData.stats.incorrect_scores.avg * 100).toFixed(1)}%</strong> | 
+                        max <strong style={{ color: '#ef4444' }}>{(calibrationData.stats.incorrect_scores.max * 100).toFixed(1)}%</strong>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Youden's J */}
+              {calibrationData.youden ? (
+                <div data-testid="youden-result" style={{
+                  background: 'linear-gradient(135deg, #1e3a5f, #1e293b)', borderRadius: '12px', padding: '20px',
+                  marginBottom: '20px', border: '2px solid #3b82f6'
+                }}>
+                  <h3 style={{ color: '#60a5fa', margin: '0 0 12px', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Threshold Otimo (Youden's J)</h3>
+                  <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <div style={{ textAlign: 'center', padding: '16px 24px', background: '#0f172a', borderRadius: '12px' }}>
+                      <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#60a5fa' }}>{(calibrationData.youden.optimal_threshold * 100).toFixed(1)}%</div>
+                      <div style={{ fontSize: '12px', color: '#94a3b8' }}>Threshold Sugerido</div>
+                    </div>
+                    <div style={{ flex: 1, fontSize: '14px', color: '#cbd5e1', lineHeight: 1.6 }}>
+                      <div>Indice J: <strong>{calibrationData.youden.j_index.toFixed(3)}</strong></div>
+                      <div>Sensibilidade: <strong style={{ color: '#22c55e' }}>{(calibrationData.youden.sensitivity * 100).toFixed(0)}%</strong> dos corretos aceitos</div>
+                      <div>Especificidade: <strong style={{ color: '#f59e0b' }}>{(calibrationData.youden.specificity * 100).toFixed(0)}%</strong> dos errados rejeitados</div>
+                      <div style={{ marginTop: '8px', fontSize: '12px', color: '#64748b' }}>{calibrationData.youden.interpretation}</div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div style={{
+                  background: '#1e293b', borderRadius: '12px', padding: '20px', marginBottom: '20px',
+                  border: '1px dashed #475569', textAlign: 'center'
+                }}>
+                  <p style={{ color: '#94a3b8', margin: 0, fontSize: '14px' }}>
+                    Minimo de 5 amostras corretas e 5 incorretas necessarias para calcular o threshold otimo.
+                    <br/><span style={{ color: '#64748b', fontSize: '12px' }}>Escaneie pratos no app e confirme/corrija os resultados.</span>
+                  </p>
+                </div>
+              )}
+
+              {/* Distribuição por faixa */}
+              {calibrationData.distribution && (
+                <div data-testid="calibration-distribution" style={{
+                  background: '#1e293b', borderRadius: '12px', padding: '16px', marginBottom: '20px', border: '1px solid #334155'
+                }}>
+                  <h3 style={{ color: '#94a3b8', margin: '0 0 12px', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Distribuicao de Scores</h3>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '1px solid #334155' }}>
+                        <th style={{ textAlign: 'left', padding: '8px', color: '#94a3b8' }}>Faixa</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#22c55e' }}>Corretos</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#ef4444' }}>Incorretos</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Barra</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.entries(calibrationData.distribution).map(([range, counts]) => {
+                        const total = (counts.correct || 0) + (counts.incorrect || 0);
+                        const maxTotal = Math.max(...Object.values(calibrationData.distribution).map(c => (c.correct || 0) + (c.incorrect || 0)), 1);
+                        const label = range.replace('_', '-').replace('0.', '').replace('0.', '');
+                        const displayLabel = range.split('_').map(v => (parseFloat(v) * 100).toFixed(0) + '%').join(' - ');
+                        return (
+                          <tr key={range} style={{ borderBottom: '1px solid #1e293b' }}>
+                            <td style={{ padding: '6px 8px', color: '#e2e8f0', fontFamily: 'monospace' }}>{displayLabel}</td>
+                            <td style={{ textAlign: 'center', padding: '6px 8px', color: '#22c55e', fontWeight: counts.correct > 0 ? 'bold' : 'normal' }}>{counts.correct || 0}</td>
+                            <td style={{ textAlign: 'center', padding: '6px 8px', color: '#ef4444', fontWeight: counts.incorrect > 0 ? 'bold' : 'normal' }}>{counts.incorrect || 0}</td>
+                            <td style={{ padding: '6px 8px' }}>
+                              <div style={{ display: 'flex', height: '16px', borderRadius: '4px', overflow: 'hidden', background: '#0f172a' }}>
+                                {counts.correct > 0 && <div style={{ width: `${(counts.correct / maxTotal) * 100}%`, background: '#22c55e', minWidth: '2px' }} />}
+                                {counts.incorrect > 0 && <div style={{ width: `${(counts.incorrect / maxTotal) * 100}%`, background: '#ef4444', minWidth: '2px' }} />}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Tabela de amostras */}
+              {calibrationData.samples && calibrationData.samples.length > 0 && (
+                <div data-testid="calibration-samples" style={{
+                  background: '#1e293b', borderRadius: '12px', padding: '16px', border: '1px solid #334155'
+                }}>
+                  <h3 style={{ color: '#94a3b8', margin: '0 0 12px', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Ultimas Amostras ({calibrationData.samples.length})
+                  </h3>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '1px solid #334155' }}>
+                          <th style={{ textAlign: 'left', padding: '8px', color: '#94a3b8' }}>Prato CLIP</th>
+                          <th style={{ textAlign: 'left', padding: '8px', color: '#94a3b8' }}>Prato Real</th>
+                          <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Score</th>
+                          <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Acertou?</th>
+                          <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Fonte</th>
+                          <th style={{ textAlign: 'right', padding: '8px', color: '#94a3b8' }}>Data</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {calibrationData.samples.map((s, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid #1e293b', background: s.is_correct ? 'transparent' : 'rgba(239,68,68,0.05)' }}>
+                            <td style={{ padding: '6px 8px', color: '#e2e8f0' }}>{s.dish_slug || '-'}</td>
+                            <td style={{ padding: '6px 8px', color: s.is_correct ? '#22c55e' : '#ef4444' }}>{s.original_dish || s.dish_slug || '-'}</td>
+                            <td style={{ textAlign: 'center', padding: '6px 8px', color: '#e2e8f0', fontFamily: 'monospace', fontWeight: 'bold' }}>
+                              {s.score ? (s.score * 100).toFixed(1) + '%' : '-'}
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '6px 8px' }}>
+                              <span style={{ color: s.is_correct ? '#22c55e' : '#ef4444', fontWeight: 'bold' }}>{s.is_correct ? 'SIM' : 'NAO'}</span>
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '6px 8px', color: '#94a3b8', fontSize: '11px' }}>{s.source || '-'}</td>
+                            <td style={{ textAlign: 'right', padding: '6px 8px', color: '#64748b', fontSize: '11px' }}>
+                              {s.created_at ? new Date(s.created_at).toLocaleString('pt-BR') : '-'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {(!calibrationData.samples || calibrationData.samples.length === 0) && !calibrationLoading && (
+                <div style={{
+                  background: '#1e293b', borderRadius: '12px', padding: '30px', textAlign: 'center',
+                  border: '1px dashed #475569'
+                }}>
+                  <p style={{ color: '#94a3b8', margin: '0 0 8px', fontSize: '16px' }}>Nenhuma amostra coletada ainda</p>
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '13px' }}>
+                    Escaneie pratos pelo app e use os botoes "Correto" / "Incorreto" para alimentar a calibracao.
+                    <br/>Os scores serao registrados automaticamente.
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}

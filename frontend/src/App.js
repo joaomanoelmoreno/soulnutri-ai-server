@@ -1254,6 +1254,9 @@ function App() {
     fd.append("file", lastImageBlob, "photo.jpg");
     fd.append("dish_slug", result.dish);
     fd.append("is_correct", "true");
+    fd.append("score", String(result.score || 0));
+    fd.append("confidence", result.confidence || "");
+    fd.append("source", result.source || "");
     
     try {
       const controller = new AbortController();

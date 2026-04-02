@@ -1144,31 +1144,9 @@ def analyze_result(results: List[Dict]) -> Dict:
     if contem_gluten:
         riscos = [r for r in riscos if 'traços de glúten' not in r.lower()]
     
-    # DECISÃO DE CONFIANÇA
-    # Gap analysis: se top1 e top2 muito próximos, CLIP está confuso → rejeitar
-    if len(results) >= 2:
-        top1_score = results[0].get('score', 0)
-        top2_score = results[1].get('score', 0)
-        gap = top1_score - top2_score
-        if gap < 0.02:
-            return {
-                'identified': False,
-                'dish': dish,
-                'dish_display': dish_display,
-                'confidence': 'baixa',
-                'score': score,
-                'message': 'Prato nao reconhecido com seguranca.',
-                'category': None,
-                'category_emoji': None,
-                'nutrition': None,
-                'descricao': None,
-                'ingredientes': None,
-                'tecnica': None,
-                'beneficios': None,
-                'riscos': None,
-                'aviso_cibi_sana': None,
-                'alternatives': []
-            }
+    # DECISÃO DE CONFIANÇA — Baseada apenas no score absoluto
+    # Gap analysis removido: score absoluto é suficiente para decisão.
+    # Calibração futura via Youden's J com dados reais do buffet.
     
     if score >= 0.85:
         return {

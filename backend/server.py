@@ -568,8 +568,8 @@ async def identify_image(
             
             logger.info(f"[CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
             
-            # Se CLIP tem confianca >= 90%, usar resultado direto
-            if clip_score >= 0.90 and clip_decision.get('identified'):
+            # Se CLIP tem confianca >= 85%, usar resultado direto
+            if clip_score >= 0.85 and clip_decision.get('identified'):
                 decision = clip_decision
                 decision['source'] = 'local_index'
                 logger.info(f"[CASCATA] CLIP confiante ({clip_score:.0%}) - aceito")
@@ -685,7 +685,7 @@ async def identify_image(
             decision['confidence'] = 'baixa'
             decision['message'] = "Nao foi possivel identificar o prato"
             decision['aviso_confianca'] = "Tente outra foto ou consulte o atendente"
-            decision['alternatives'] = []  # Baixa = 0 alternativas
+            decision['alternatives'] = []
         
         # ══════════════════════════════════════════════════════════════════════
         # SINCRONIZAR NOMES DO ADMIN (MongoDB -> display)
@@ -2140,14 +2140,16 @@ async def submit_feedback(
     file: UploadFile = File(...),
     dish_slug: str = Form(""),
     is_correct: str = Form("true"),
-    original_dish: str = Form("")
+    original_dish: str = Form(""),
+    score: str = Form("0"),
+    confidence: str = Form(""),
+    source: str = Form("")
 ):
     """
     Recebe feedback sobre reconhecimento de prato.
     - Se correto: salva a foto no dataset do prato
     - Se incorreto: salva no prato correto informado pelo usuario
-    
-    Isso ajuda a melhorar o modelo com o tempo.
+    - Salva score/confidence para calibracao via Youden's J
     """
     try:
         import uuid
@@ -2174,11 +2176,21 @@ async def submit_feedback(
         # Salvar imagem no S3 + MongoDB + local
         save_dish_image(target_slug, filename, content)
         
-        # Log no MongoDB para analise posterior
+        # Parse score to float
+        try:
+            score_float = float(score)
+        except (ValueError, TypeError):
+            score_float = 0.0
+        
+        # Log no MongoDB para analise posterior e calibracao
         feedback_doc = {
             "dish_slug": dish_slug,
+            "target_slug": target_slug,
             "original_dish": original_dish if not is_correct_bool else dish_slug,
             "is_correct": is_correct_bool,
+            "score": score_float,
+            "confidence": confidence,
+            "source": source,
             "file_path": f"s3://soulnutri/dishes/{target_slug}/{filename}",
             "created_at": datetime.utcnow()
         }
@@ -2234,6 +2246,145 @@ async def get_feedback_stats():
             "most_corrected": most_corrected
         }
     except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/ai/calibration")
+async def get_calibration_data():
+    """
+    Retorna dados de calibracao: todas as amostras de feedback com scores,
+    estatisticas de distribuicao e calculo do threshold otimo via Youden's J.
+    """
+    try:
+        # Buscar todos os feedbacks que possuem score
+        pipeline_samples = [
+            {"$match": {"score": {"$exists": True, "$gt": 0}}},
+            {"$project": {
+                "_id": 0,
+                "dish_slug": 1,
+                "target_slug": 1,
+                "original_dish": 1,
+                "is_correct": 1,
+                "score": 1,
+                "confidence": 1,
+                "source": 1,
+                "created_at": 1
+            }},
+            {"$sort": {"created_at": -1}}
+        ]
+        samples = await db.feedback.aggregate(pipeline_samples).to_list(1000)
+        
+        # Estatisticas gerais
+        total = len(samples)
+        correct_samples = [s for s in samples if s.get('is_correct')]
+        incorrect_samples = [s for s in samples if not s.get('is_correct')]
+        
+        correct_scores = [s['score'] for s in correct_samples if s.get('score', 0) > 0]
+        incorrect_scores = [s['score'] for s in incorrect_samples if s.get('score', 0) > 0]
+        
+        stats = {
+            "total_samples": total,
+            "correct_count": len(correct_samples),
+            "incorrect_count": len(incorrect_samples),
+            "correct_scores": {
+                "min": round(min(correct_scores), 4) if correct_scores else None,
+                "max": round(max(correct_scores), 4) if correct_scores else None,
+                "avg": round(sum(correct_scores) / len(correct_scores), 4) if correct_scores else None,
+                "median": round(sorted(correct_scores)[len(correct_scores)//2], 4) if correct_scores else None
+            },
+            "incorrect_scores": {
+                "min": round(min(incorrect_scores), 4) if incorrect_scores else None,
+                "max": round(max(incorrect_scores), 4) if incorrect_scores else None,
+                "avg": round(sum(incorrect_scores) / len(incorrect_scores), 4) if incorrect_scores else None,
+                "median": round(sorted(incorrect_scores)[len(incorrect_scores)//2], 4) if incorrect_scores else None
+            }
+        }
+        
+        # Calculo de Youden's J para threshold otimo
+        youden_result = None
+        if len(correct_scores) >= 5 and len(incorrect_scores) >= 5:
+            all_scores = correct_scores + incorrect_scores
+            thresholds = sorted(set([round(s, 2) for s in all_scores]))
+            
+            best_j = -1
+            best_threshold = 0.85
+            best_sensitivity = 0
+            best_specificity = 0
+            
+            for t in thresholds:
+                # Sensibilidade: % corretos aceitos (score >= t)
+                tp = sum(1 for s in correct_scores if s >= t)
+                sensitivity = tp / len(correct_scores) if correct_scores else 0
+                
+                # Especificidade: % incorretos rejeitados (score < t)
+                tn = sum(1 for s in incorrect_scores if s < t)
+                specificity = tn / len(incorrect_scores) if incorrect_scores else 0
+                
+                j = sensitivity + specificity - 1
+                if j > best_j:
+                    best_j = j
+                    best_threshold = t
+                    best_sensitivity = sensitivity
+                    best_specificity = specificity
+            
+            youden_result = {
+                "optimal_threshold": round(best_threshold, 4),
+                "j_index": round(best_j, 4),
+                "sensitivity": round(best_sensitivity, 4),
+                "specificity": round(best_specificity, 4),
+                "interpretation": f"Com threshold {best_threshold:.2%}: aceita {best_sensitivity:.0%} dos corretos, rejeita {best_specificity:.0%} dos errados"
+            }
+        
+        # Distribuicao de scores por faixa
+        distribution = {
+            "0.90_1.00": {"correct": 0, "incorrect": 0},
+            "0.85_0.90": {"correct": 0, "incorrect": 0},
+            "0.80_0.85": {"correct": 0, "incorrect": 0},
+            "0.75_0.80": {"correct": 0, "incorrect": 0},
+            "0.70_0.75": {"correct": 0, "incorrect": 0},
+            "0.65_0.70": {"correct": 0, "incorrect": 0},
+            "0.60_0.65": {"correct": 0, "incorrect": 0},
+            "0.50_0.60": {"correct": 0, "incorrect": 0},
+            "0.00_0.50": {"correct": 0, "incorrect": 0}
+        }
+        
+        for s in samples:
+            score_val = s.get('score', 0)
+            is_correct_val = s.get('is_correct', False)
+            key = "correct" if is_correct_val else "incorrect"
+            
+            if score_val >= 0.90: distribution["0.90_1.00"][key] += 1
+            elif score_val >= 0.85: distribution["0.85_0.90"][key] += 1
+            elif score_val >= 0.80: distribution["0.80_0.85"][key] += 1
+            elif score_val >= 0.75: distribution["0.75_0.80"][key] += 1
+            elif score_val >= 0.70: distribution["0.70_0.75"][key] += 1
+            elif score_val >= 0.65: distribution["0.65_0.70"][key] += 1
+            elif score_val >= 0.60: distribution["0.60_0.65"][key] += 1
+            elif score_val >= 0.50: distribution["0.50_0.60"][key] += 1
+            else: distribution["0.00_0.50"][key] += 1
+        
+        # Thresholds atuais
+        current_thresholds = {
+            "alta": 0.85,
+            "media": 0.50,
+            "rejeicao": 0.50
+        }
+        
+        # Converter datetime para string nos samples
+        for s in samples:
+            if 'created_at' in s and hasattr(s['created_at'], 'isoformat'):
+                s['created_at'] = s['created_at'].isoformat()
+        
+        return {
+            "ok": True,
+            "stats": stats,
+            "distribution": distribution,
+            "youden": youden_result,
+            "current_thresholds": current_thresholds,
+            "samples": samples[:200]
+        }
+    except Exception as e:
+        logger.error(f"Erro ao buscar dados de calibracao: {e}")
         return {"ok": False, "error": str(e)}
 
 
@@ -3155,7 +3306,7 @@ async def get_dashboard_premium(pin: str, periodo: str = "semana"):
         streak = 0
         for i in range(min(dias, 365)):
             data = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
-            if any(l.get("data") == data and l.get("calorias_total", 0) > 0 for l in logs):
+            if any(l.get("data", "") == data for l in logs):
                 streak += 1
             else:
                 break
