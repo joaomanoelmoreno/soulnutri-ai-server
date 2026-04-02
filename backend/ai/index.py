@@ -206,6 +206,8 @@ class DishIndex:
         # Agregar por prato (pegar melhor score de cada prato)
         dish_scores: Dict[str, float] = {}
         for idx in top_indices:
+            if idx >= len(self.dishes):
+                continue  # Safety: skip indices beyond dishes list
             dish = self.dishes[idx]
             score = float(similarities[idx])
             if dish not in dish_scores or score > dish_scores[dish]:

@@ -729,6 +729,7 @@ function App() {
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
     fd.append("country", "BR");
+    fd.append("restaurant", "cibi_sana");
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
@@ -1049,6 +1050,7 @@ function App() {
           const fd = new FormData();
           fd.append("file", blob, "scan.jpg");
           fd.append("country", "BR");
+          fd.append("restaurant", "cibi_sana");
           
           const res = await fetch(`${API}/ai/identify`, {
             method: "POST",
@@ -1452,6 +1454,7 @@ function App() {
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
+    fd.append("restaurant", "cibi_sana");
     
     try {
       const controller = new AbortController();

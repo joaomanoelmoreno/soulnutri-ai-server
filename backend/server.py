@@ -2238,19 +2238,20 @@ async def get_feedback_stats():
 
 
 @api_router.post("/ai/identify-multi")
-async def identify_multiple_items(file: UploadFile = File(...)):
+async def identify_multiple_items(
+    file: UploadFile = File(...),
+    restaurant: Optional[str] = Form(None)
+):
     """
     Identifica MÚLTIPLOS itens em uma imagem de refeicao.
-    
-    ESTRATÉGIA HÍBRIDA:
-    1. Zoom central (50%) -> Identifica item PRINCIPAL no indice local
-    2. Analise por regioes -> Busca ACOMPANHAMENTOS por similaridade nos pratos do buffet
-    3. Fallback Gemini -> Para itens nao reconhecidos
-    
-    Returns:
-        Item principal + acompanhamentos reconhecidos do buffet do Cibi Sana
+    HARD LOCK: Cibi Sana -> Apenas CLIP local, Gemini bloqueado.
     """
     start_time = time.time()
+    
+    # HARD LOCK: Cibi Sana -> bloquear Gemini no multi também
+    is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+    if is_cibi_sana:
+        logger.info("[HARD LOCK] identify-multi Cibi Sana - Gemini BLOQUEADO, usando CLIP only")
     
     try:
         from services.hybrid_identify_v5 import identify_multi_v5
