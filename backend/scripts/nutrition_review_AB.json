@@ -1,9 +1,9 @@
 {
-  "data": "2026-04-02T10:37:08.123664+00:00",
+  "data": "2026-04-02T10:57:30.229531+00:00",
   "total_pratos": 35,
-  "divergentes": 34,
+  "divergentes": 30,
   "sem_ingredientes": 1,
-  "ok": 0,
+  "ok": 4,
   "resultados": [
     {
       "slug": "abobora-ao-curry",
@@ -24,30 +24,28 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "11 kcal",
-        "proteinas": "0.9g",
-        "carboidratos": "2.6g",
-        "gorduras": "0.1g",
-        "fibras": "1.6g",
-        "sodio": "0mg",
-        "calcio": "3mg",
-        "ferro": "0.0mg",
-        "vitamina_c": "9.1mg"
+        "calorias": "21 kcal",
+        "proteinas": "1.4g",
+        "carboidratos": "4.2g",
+        "gorduras": "0.5g",
+        "fibras": "2.6g",
+        "sodio": "777mg",
+        "calcio": "19mg",
+        "ferro": "0.9mg",
+        "vitamina_c": "9.5mg"
       },
       "antiga_nutricao": {},
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: SEM DADOS → 11 kcal",
-        "Não encontrados na TACO: ['sal (2g)', 'curry indiano (3g)']"
+        "Calorias: SEM DADOS → 21 kcal"
       ],
       "taco_match": [
-        "abobora (95g)"
-      ],
-      "taco_miss": [
+        "abobora (95g)",
         "sal (2g)",
         "curry indiano (3g)"
-      ]
+      ],
+      "taco_miss": []
     },
     {
       "slug": "abobrinha-grelhada",
@@ -72,15 +70,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "129 kcal",
-        "proteinas": "0.8g",
-        "carboidratos": "3.1g",
-        "gorduras": "13.1g",
-        "fibras": "1.0g",
-        "sodio": "0mg",
-        "calcio": "15mg",
-        "ferro": "0.2mg",
-        "vitamina_c": "4.9mg"
+        "calorias": "158 kcal",
+        "proteinas": "1.0g",
+        "carboidratos": "3.9g",
+        "gorduras": "16.1g",
+        "fibras": "1.7g",
+        "sodio": "235mg",
+        "calcio": "23mg",
+        "ferro": "1.1mg",
+        "vitamina_c": "5.9mg"
       },
       "antiga_nutricao": {
         "calorias": 231,
@@ -93,51 +91,49 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 231 → 129 kcal (diff: 102)",
-        "Gorduras: 25.1g → 13.1g",
-        "Não encontrados na TACO: ['azeitonas (15g)']"
+        "Calorias: 231 → 158 kcal (diff: 73)",
+        "Gorduras: 25.1g → 16.1g"
       ],
       "taco_match": [
         "abobrinha (70g)",
+        "azeitonas (15g)",
         "manjericao (2g)",
         "azeite (13g)"
       ],
-      "taco_miss": [
-        "azeitonas (15g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "alface-frisee",
       "name": "Alface Frisee",
-      "status": "DIVERGENTE",
+      "status": "OK",
       "proporcoes": [
         {
           "nome": "Alface Frisee",
-          "gramas": 90
+          "gramas": 95
         },
         {
-          "nome": "Azeite",
-          "gramas": 5
+          "nome": "Azeite de oliva extra virgem",
+          "gramas": 3
         },
         {
           "nome": "Sal",
-          "gramas": 2
+          "gramas": 1
         },
         {
-          "nome": "Vinagre",
-          "gramas": 3
+          "nome": "Pimenta do reino",
+          "gramas": 1
         }
       ],
       "nova_nutricao": {
-        "calorias": "52 kcal",
-        "proteinas": "0.5g",
-        "carboidratos": "1.5g",
-        "gorduras": "5.1g",
-        "fibras": "0.9g",
-        "sodio": "6mg",
-        "calcio": "13mg",
+        "calorias": "35 kcal",
+        "proteinas": "0.6g",
+        "carboidratos": "1.7g",
+        "gorduras": "3.1g",
+        "fibras": "1.0g",
+        "sodio": "394mg",
+        "calcio": "14mg",
         "ferro": "0.3mg",
-        "vitamina_c": "9.9mg"
+        "vitamina_c": "10.9mg"
       },
       "antiga_nutricao": {
         "calorias": 9,
@@ -149,19 +145,14 @@
       },
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
-      "divergencias": [
-        "Calorias: 9 → 52 kcal (diff: 43)",
-        "Gorduras: 0.1g → 5.1g",
-        "Não encontrados na TACO: ['Sal (2g)', 'Vinagre (3g)']"
-      ],
+      "divergencias": [],
       "taco_match": [
-        "Alface Frisee (90g)",
-        "Azeite (5g)"
+        "Alface Frisee (95g)",
+        "Azeite de oliva extra virgem (3g)",
+        "Sal (1g)",
+        "Pimenta do reino (1g)"
       ],
-      "taco_miss": [
-        "Sal (2g)",
-        "Vinagre (3g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "alho-poro-gratinado",
@@ -181,32 +172,32 @@
           "gramas": 20
         },
         {
-          "nome": "sal",
-          "gramas": 1
-        },
-        {
-          "nome": "alho",
-          "gramas": 1
-        },
-        {
           "nome": "cebola",
           "gramas": 5
         },
         {
+          "nome": "alho",
+          "gramas": 2
+        },
+        {
           "nome": "ervas secas",
-          "gramas": 3
+          "gramas": 2
+        },
+        {
+          "nome": "sal",
+          "gramas": 1
         }
       ],
       "nova_nutricao": {
-        "calorias": "135 kcal",
-        "proteinas": "4.4g",
-        "carboidratos": "8.2g",
-        "gorduras": "9.6g",
-        "fibras": "1.4g",
-        "sodio": "29mg",
-        "calcio": "134mg",
-        "ferro": "0.5mg",
-        "vitamina_c": "7.3mg"
+        "calorias": "196 kcal",
+        "proteinas": "4.6g",
+        "carboidratos": "6.1g",
+        "gorduras": "17.6g",
+        "fibras": "1.3g",
+        "sodio": "507mg",
+        "calcio": "129mg",
+        "ferro": "0.4mg",
+        "vitamina_c": "4.0mg"
       },
       "antiga_nutricao": {
         "calorias": 68.2,
@@ -219,21 +210,19 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 68 → 135 kcal (diff: 67)",
-        "Gorduras: 4.0g → 9.6g",
-        "Não encontrados na TACO: ['sal (1g)', 'ervas secas (3g)']"
+        "Calorias: 68 → 196 kcal (diff: 128)",
+        "Gorduras: 4.0g → 17.6g"
       ],
       "taco_match": [
         "alho poro (50g)",
         "creme vegetal (20g)",
         "queijo vegano (20g)",
-        "alho (1g)",
-        "cebola (5g)"
+        "cebola (5g)",
+        "alho (2g)",
+        "ervas secas (2g)",
+        "sal (1g)"
       ],
-      "taco_miss": [
-        "sal (1g)",
-        "ervas secas (3g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "aligot",
@@ -246,34 +235,34 @@
         },
         {
           "nome": "Leite",
-          "gramas": 10
+          "gramas": 15
         },
         {
-          "nome": "Queijos (mix, principalmente queijo prato e mussarela)",
-          "gramas": 25
+          "nome": "Queijos (mix)",
+          "gramas": 18
         },
         {
           "nome": "Manteiga",
-          "gramas": 5
+          "gramas": 7
         },
         {
-          "nome": "Creme de leite",
+          "nome": "Creme de Leite",
           "gramas": 3
         },
         {
-          "nome": "Sal e temperos",
+          "nome": "Sal e Temperos",
           "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "138 kcal",
-        "proteinas": "5.1g",
-        "carboidratos": "7.5g",
-        "gorduras": "9.8g",
+        "calorias": "134 kcal",
+        "proteinas": "3.9g",
+        "carboidratos": "7.3g",
+        "gorduras": "10.1g",
         "fibras": "0.7g",
-        "sodio": "46mg",
-        "calcio": "162mg",
-        "ferro": "0.4mg",
+        "sodio": "834mg",
+        "calcio": "128mg",
+        "ferro": "0.3mg",
         "vitamina_c": "2.1mg"
       },
       "antiga_nutricao": {
@@ -287,21 +276,19 @@
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegetariano",
       "divergencias": [
-        "Calorias: 286 → 138 kcal (diff: 148)",
-        "Proteínas: 9.4g → 5.1g",
-        "Gorduras: 26.4g → 9.8g",
-        "Não encontrados na TACO: ['Sal e temperos (2g)']"
+        "Calorias: 286 → 134 kcal (diff: 152)",
+        "Proteínas: 9.4g → 3.9g",
+        "Gorduras: 26.4g → 10.1g"
       ],
       "taco_match": [
         "Batata (55g)",
-        "Leite (10g)",
-        "Queijos (mix, principalmente queijo prato e mussarela) (25g)",
-        "Manteiga (5g)",
-        "Creme de leite (3g)"
+        "Leite (15g)",
+        "Queijos (mix) (18g)",
+        "Manteiga (7g)",
+        "Creme de Leite (3g)",
+        "Sal e Temperos (2g)"
       ],
-      "taco_miss": [
-        "Sal e temperos (2g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "almondegas-ao-molho-sugo",
@@ -326,15 +313,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "15 kcal",
-        "proteinas": "0.9g",
-        "carboidratos": "3.2g",
-        "gorduras": "0.1g",
-        "fibras": "0.9g",
-        "sodio": "1mg",
-        "calcio": "5mg",
-        "ferro": "0.1mg",
-        "vitamina_c": "7.9mg"
+        "calorias": "137 kcal",
+        "proteinas": "14.8g",
+        "carboidratos": "6.0g",
+        "gorduras": "5.7g",
+        "fibras": "1.1g",
+        "sodio": "229mg",
+        "calcio": "11mg",
+        "ferro": "1.9mg",
+        "vitamina_c": "6.6mg"
       },
       "antiga_nutricao": {
         "calorias": 160,
@@ -347,20 +334,15 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Calorias: 160 → 15 kcal (diff: 145)",
-        "Proteínas: 12.0g → 0.9g",
-        "Gorduras: 6.0g → 0.1g",
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['carne moida (50g)']"
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
+        "carne moida (50g)",
         "molho de tomate (35g)",
         "cebola (10g)",
         "alho (5g)"
       ],
-      "taco_miss": [
-        "carne moida (50g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "almondegas-com-especiarias-indiana",
@@ -369,15 +351,15 @@
       "proporcoes": [
         {
           "nome": "carne moida",
-          "gramas": 50
+          "gramas": 60
         },
         {
           "nome": "leite de coco",
-          "gramas": 25
+          "gramas": 20
         },
         {
           "nome": "cebola",
-          "gramas": 7
+          "gramas": 5
         },
         {
           "nome": "alho",
@@ -392,20 +374,36 @@
           "gramas": 5
         },
         {
-          "nome": "especiarias (canela, cardamomo, erva doce, zimbro, pimenta)",
-          "gramas": 9
+          "nome": "canela",
+          "gramas": 1
+        },
+        {
+          "nome": "cardamomo",
+          "gramas": 1
+        },
+        {
+          "nome": "erva doce",
+          "gramas": 1
+        },
+        {
+          "nome": "zimbro",
+          "gramas": 1
+        },
+        {
+          "nome": "pimenta",
+          "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "46 kcal",
-        "proteinas": "0.5g",
-        "carboidratos": "1.7g",
-        "gorduras": "4.6g",
-        "fibras": "0.4g",
-        "sodio": "11mg",
-        "calcio": "3mg",
-        "ferro": "0.2mg",
-        "vitamina_c": "0.3mg"
+        "calorias": "181 kcal",
+        "proteinas": "16.9g",
+        "carboidratos": "3.1g",
+        "gorduras": "11.1g",
+        "fibras": "0.7g",
+        "sodio": "1150mg",
+        "calcio": "24mg",
+        "ferro": "2.1mg",
+        "vitamina_c": "3.0mg"
       },
       "antiga_nutricao": {
         "calorias": 210,
@@ -418,23 +416,25 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Calorias: 210 → 46 kcal (diff: 164)",
-        "Proteínas: 11.0g → 0.5g",
-        "Carboidratos: 12.0g → 1.7g",
-        "Gorduras: 9.0g → 4.6g",
+        "Proteínas: 11.0g → 16.9g",
+        "Carboidratos: 12.0g → 3.1g",
         "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['carne moida (50g)', 'gengibre (2g)', 'caldo de carne (5g)', 'especiarias (canela, cardamomo, erva doce, zimbro, pimenta) (9g)']"
+        "Não encontrados na TACO: ['cardamomo (1g)', 'zimbro (1g)']"
       ],
       "taco_match": [
-        "leite de coco (25g)",
-        "cebola (7g)",
-        "alho (2g)"
-      ],
-      "taco_miss": [
-        "carne moida (50g)",
+        "carne moida (60g)",
+        "leite de coco (20g)",
+        "cebola (5g)",
+        "alho (2g)",
         "gengibre (2g)",
         "caldo de carne (5g)",
-        "especiarias (canela, cardamomo, erva doce, zimbro, pimenta) (9g)"
+        "canela (1g)",
+        "erva doce (1g)",
+        "pimenta (2g)"
+      ],
+      "taco_miss": [
+        "cardamomo (1g)",
+        "zimbro (1g)"
       ]
     },
     {
@@ -447,36 +447,36 @@
           "gramas": 45
         },
         {
-          "nome": "vinho branco",
-          "gramas": 5
-        },
-        {
-          "nome": "caldo de legumes",
-          "gramas": 10
-        },
-        {
-          "nome": "manteiga",
-          "gramas": 5
-        },
-        {
           "nome": "queijo parmesao",
           "gramas": 15
         },
         {
           "nome": "farinha de rosca",
-          "gramas": 20
+          "gramas": 25
+        },
+        {
+          "nome": "manteiga",
+          "gramas": 10
+        },
+        {
+          "nome": "vinho branco",
+          "gramas": 2
+        },
+        {
+          "nome": "caldo de legumes",
+          "gramas": 3
         }
       ],
       "nova_nutricao": {
-        "calorias": "240 kcal",
-        "proteinas": "9.0g",
-        "carboidratos": "29.0g",
-        "gorduras": "9.6g",
-        "fibras": "2.0g",
-        "sodio": "373mg",
-        "calcio": "163mg",
-        "ferro": "1.5mg",
-        "vitamina_c": "3.9mg"
+        "calorias": "299 kcal",
+        "proteinas": "9.6g",
+        "carboidratos": "32.4g",
+        "gorduras": "14.2g",
+        "fibras": "1.9g",
+        "sodio": "1084mg",
+        "calcio": "164mg",
+        "ferro": "1.8mg",
+        "vitamina_c": "0.0mg"
       },
       "antiga_nutricao": {
         "calorias": 288,
@@ -489,17 +489,15 @@
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegetariano",
       "divergencias": [
-        "Calorias: 288 → 240 kcal (diff: 48)",
-        "Carboidratos: 19.5g → 29.0g",
-        "Gorduras: 16.0g → 9.6g"
+        "Carboidratos: 19.5g → 32.4g"
       ],
       "taco_match": [
         "arroz arboreo (45g)",
-        "vinho branco (5g)",
-        "caldo de legumes (10g)",
-        "manteiga (5g)",
         "queijo parmesao (15g)",
-        "farinha de rosca (20g)"
+        "farinha de rosca (25g)",
+        "manteiga (10g)",
+        "vinho branco (2g)",
+        "caldo de legumes (3g)"
       ],
       "taco_miss": []
     },
@@ -517,7 +515,7 @@
           "gramas": 10
         },
         {
-          "nome": "linhaça",
+          "nome": "linhaca",
           "gramas": 5
         },
         {
@@ -538,23 +536,27 @@
         },
         {
           "nome": "damasco",
-          "gramas": 10
+          "gramas": 7
         },
         {
           "nome": "uva passa",
           "gramas": 10
+        },
+        {
+          "nome": "sal",
+          "gramas": 3
         }
       ],
       "nova_nutricao": {
-        "calorias": "208 kcal",
-        "proteinas": "6.0g",
-        "carboidratos": "39.7g",
-        "gorduras": "3.4g",
-        "fibras": "6.6g",
-        "sodio": "124mg",
-        "calcio": "82mg",
-        "ferro": "2.8mg",
-        "vitamina_c": "1.8mg"
+        "calorias": "204 kcal",
+        "proteinas": "6.2g",
+        "carboidratos": "41.4g",
+        "gorduras": "2.1g",
+        "fibras": "5.9g",
+        "sodio": "1172mg",
+        "calcio": "19mg",
+        "ferro": "1.8mg",
+        "vitamina_c": "5.1mg"
       },
       "antiga_nutricao": {
         "calorias": 220,
@@ -567,22 +569,22 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Carboidratos: 51.0g → 39.7g",
-        "Não encontrados na TACO: ['damasco (10g)']"
+        "Carboidratos: 51.0g → 41.4g",
+        "Gorduras: 5.5g → 2.1g"
       ],
       "taco_match": [
         "arroz integral (40g)",
         "quinoa (10g)",
-        "linhaça (5g)",
+        "linhaca (5g)",
         "aveia (10g)",
         "centeio (5g)",
         "cevada (5g)",
         "trigo (5g)",
-        "uva passa (10g)"
+        "damasco (7g)",
+        "uva passa (10g)",
+        "sal (3g)"
       ],
-      "taco_miss": [
-        "damasco (10g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "arroz-branco",
@@ -595,11 +597,11 @@
         },
         {
           "nome": "água",
-          "gramas": 21
+          "gramas": 22
         },
         {
           "nome": "alho",
-          "gramas": 2
+          "gramas": 1
         },
         {
           "nome": "cebola",
@@ -607,15 +609,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "144 kcal",
+        "calorias": "145 kcal",
         "proteinas": "2.0g",
-        "carboidratos": "21.7g",
+        "carboidratos": "21.5g",
         "gorduras": "0.2g",
         "fibras": "1.3g",
-        "sodio": "2mg",
-        "calcio": "4mg",
+        "sodio": "1mg",
+        "calcio": "3mg",
         "ferro": "0.1mg",
-        "vitamina_c": "0.1mg"
+        "vitamina_c": "0.3mg"
       },
       "antiga_nutricao": {
         "calorias": 123,
@@ -628,12 +630,12 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Carboidratos: 15.0g → 21.7g"
+        "Carboidratos: 15.0g → 21.5g"
       ],
       "taco_match": [
         "arroz branco (75g)",
-        "água (21g)",
-        "alho (2g)",
+        "água (22g)",
+        "alho (1g)",
         "cebola (2g)"
       ],
       "taco_miss": []
@@ -645,14 +647,14 @@
       "proporcoes": [
         {
           "nome": "arroz",
-          "gramas": 50
+          "gramas": 55
         },
         {
-          "nome": "brócolis",
-          "gramas": 35
+          "nome": "brocolis",
+          "gramas": 30
         },
         {
-          "nome": "amêndoas",
+          "nome": "amendoas",
           "gramas": 10
         },
         {
@@ -665,15 +667,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "134 kcal",
+        "calorias": "139 kcal",
         "proteinas": "4.1g",
-        "carboidratos": "19.3g",
+        "carboidratos": "20.4g",
         "gorduras": "5.0g",
-        "fibras": "3.3g",
-        "sodio": "29mg",
-        "calcio": "44mg",
-        "ferro": "0.6mg",
-        "vitamina_c": "14.7mg"
+        "fibras": "3.2g",
+        "sodio": "804mg",
+        "calcio": "42mg",
+        "ferro": "0.5mg",
+        "vitamina_c": "13.1mg"
       },
       "antiga_nutricao": {
         "calorias": 53.2,
@@ -686,20 +688,18 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 53 → 134 kcal (diff: 81)",
-        "Carboidratos: 11.3g → 19.3g",
-        "Gorduras: 0.2g → 5.0g",
-        "Não encontrados na TACO: ['sal (2g)']"
+        "Calorias: 53 → 139 kcal (diff: 86)",
+        "Carboidratos: 11.3g → 20.4g",
+        "Gorduras: 0.2g → 5.0g"
       ],
       "taco_match": [
-        "arroz (50g)",
-        "brócolis (35g)",
-        "amêndoas (10g)",
+        "arroz (55g)",
+        "brocolis (30g)",
+        "amendoas (10g)",
+        "sal (2g)",
         "alho (3g)"
       ],
-      "taco_miss": [
-        "sal (2g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "arroz-integral",
@@ -717,18 +717,26 @@
         {
           "nome": "cebola",
           "gramas": 3
+        },
+        {
+          "nome": "óleo vegetal (para refogar)",
+          "gramas": 2
+        },
+        {
+          "nome": "água",
+          "gramas": 18
         }
       ],
       "nova_nutricao": {
-        "calorias": "99 kcal",
-        "proteinas": "2.1g",
-        "carboidratos": "21.8g",
-        "gorduras": "0.2g",
-        "fibras": "1.4g",
-        "sodio": "1mg",
+        "calorias": "142 kcal",
+        "proteinas": "2.2g",
+        "carboidratos": "20.4g",
+        "gorduras": "1.3g",
+        "fibras": "2.2g",
+        "sodio": "4mg",
         "calcio": "4mg",
-        "ferro": "0.1mg",
-        "vitamina_c": "0.1mg"
+        "ferro": "0.2mg",
+        "vitamina_c": "0.5mg"
       },
       "antiga_nutricao": {
         "calorias": 137.7,
@@ -741,12 +749,14 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 138 → 99 kcal (diff: 38)"
+        "Carboidratos: 25.6g → 20.4g"
       ],
       "taco_match": [
         "arroz integral selecionado (75g)",
         "alho (2g)",
-        "cebola (3g)"
+        "cebola (3g)",
+        "óleo vegetal (para refogar) (2g)",
+        "água (18g)"
       ],
       "taco_miss": []
     },
@@ -757,10 +767,22 @@
       "proporcoes": [
         {
           "nome": "Arroz Integral",
-          "gramas": 45
+          "gramas": 40
         },
         {
           "nome": "Cenoura",
+          "gramas": 15
+        },
+        {
+          "nome": "Cebola",
+          "gramas": 10
+        },
+        {
+          "nome": "Azeite",
+          "gramas": 3
+        },
+        {
+          "nome": "Mandioquinha",
           "gramas": 15
         },
         {
@@ -768,32 +790,20 @@
           "gramas": 15
         },
         {
-          "nome": "Mandioquinha",
-          "gramas": 15
-        },
-        {
-          "nome": "Cebola",
-          "gramas": 5
-        },
-        {
-          "nome": "Azeite",
-          "gramas": 3
-        },
-        {
-          "nome": "Ervas frescas (salsa/cebolinha)",
+          "nome": "Ervas Frescas",
           "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "93 kcal",
-        "proteinas": "1.7g",
-        "carboidratos": "13.9g",
+        "calorias": "96 kcal",
+        "proteinas": "1.8g",
+        "carboidratos": "14.9g",
         "gorduras": "3.5g",
-        "fibras": "2.1g",
+        "fibras": "2.2g",
         "sodio": "1mg",
-        "calcio": "10mg",
-        "ferro": "0.2mg",
-        "vitamina_c": "2.7mg"
+        "calcio": "13mg",
+        "ferro": "0.3mg",
+        "vitamina_c": "3.9mg"
       },
       "antiga_nutricao": {
         "calorias": 184.7,
@@ -806,22 +816,20 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 185 → 93 kcal (diff: 92)",
-        "Carboidratos: 22.1g → 13.9g",
-        "Gorduras: 9.8g → 3.5g",
-        "Não encontrados na TACO: ['Mandioquinha (15g)']"
+        "Calorias: 185 → 96 kcal (diff: 88)",
+        "Carboidratos: 22.1g → 14.9g",
+        "Gorduras: 9.8g → 3.5g"
       ],
       "taco_match": [
-        "Arroz Integral (45g)",
+        "Arroz Integral (40g)",
         "Cenoura (15g)",
-        "Abobrinha (15g)",
-        "Cebola (5g)",
+        "Cebola (10g)",
         "Azeite (3g)",
-        "Ervas frescas (salsa/cebolinha) (2g)"
+        "Mandioquinha (15g)",
+        "Abobrinha (15g)",
+        "Ervas Frescas (2g)"
       ],
-      "taco_miss": [
-        "Mandioquinha (15g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "arroz-mar-e-campo",
@@ -830,10 +838,10 @@
       "proporcoes": [
         {
           "nome": "arroz",
-          "gramas": 40
+          "gramas": 45
         },
         {
-          "nome": "camaroes",
+          "nome": "camarões",
           "gramas": 20
         },
         {
@@ -842,15 +850,15 @@
         },
         {
           "nome": "bacon",
-          "gramas": 10
+          "gramas": 8
         },
         {
           "nome": "cebola",
-          "gramas": 7
+          "gramas": 5
         },
         {
           "nome": "castanhas de caju",
-          "gramas": 5
+          "gramas": 4
         },
         {
           "nome": "alho",
@@ -858,15 +866,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "57 kcal",
-        "proteinas": "1.3g",
-        "carboidratos": "12.6g",
-        "gorduras": "0.1g",
-        "fibras": "0.9g",
-        "sodio": "1mg",
-        "calcio": "3mg",
-        "ferro": "0.1mg",
-        "vitamina_c": "0.3mg"
+        "calorias": "188 kcal",
+        "proteinas": "8.4g",
+        "carboidratos": "15.0g",
+        "gorduras": "10.4g",
+        "fibras": "1.1g",
+        "sodio": "307mg",
+        "calcio": "7mg",
+        "ferro": "0.6mg",
+        "vitamina_c": "0.7mg"
       },
       "antiga_nutricao": {
         "calorias": 253.5,
@@ -879,23 +887,22 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Calorias: 254 → 57 kcal (diff: 196)",
-        "Proteínas: 4.8g → 1.3g",
-        "Carboidratos: 35.7g → 12.6g",
-        "Gorduras: 11.6g → 0.1g",
+        "Calorias: 254 → 188 kcal (diff: 65)",
+        "Proteínas: 4.8g → 8.4g",
+        "Carboidratos: 35.7g → 15.0g",
         "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['camaroes (20g)', 'carne seca (15g)', 'bacon (10g)', 'castanhas de caju (5g)']"
+        "Não encontrados na TACO: ['camarões (20g)']"
       ],
       "taco_match": [
-        "arroz (40g)",
-        "cebola (7g)",
+        "arroz (45g)",
+        "carne seca (15g)",
+        "bacon (8g)",
+        "cebola (5g)",
+        "castanhas de caju (4g)",
         "alho (3g)"
       ],
       "taco_miss": [
-        "camaroes (20g)",
-        "carne seca (15g)",
-        "bacon (10g)",
-        "castanhas de caju (5g)"
+        "camarões (20g)"
       ]
     },
     {
@@ -909,23 +916,23 @@
         },
         {
           "nome": "funghi secchi",
-          "gramas": 5
-        },
-        {
-          "nome": "azeite",
-          "gramas": 15
-        },
-        {
-          "nome": "alho",
-          "gramas": 2
-        },
-        {
-          "nome": "vinho branco",
           "gramas": 10
         },
         {
+          "nome": "azeite",
+          "gramas": 10
+        },
+        {
+          "nome": "alho",
+          "gramas": 1
+        },
+        {
+          "nome": "vinho branco",
+          "gramas": 15
+        },
+        {
           "nome": "farinha de trigo",
-          "gramas": 8
+          "gramas": 4
         },
         {
           "nome": "cheiro verde",
@@ -933,15 +940,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "227 kcal",
-        "proteinas": "14.1g",
-        "carboidratos": "7.3g",
-        "gorduras": "15.6g",
+        "calorias": "175 kcal",
+        "proteinas": "13.9g",
+        "carboidratos": "4.6g",
+        "gorduras": "10.6g",
         "fibras": "0.5g",
-        "sodio": "16mg",
-        "calcio": "12mg",
-        "ferro": "0.9mg",
-        "vitamina_c": "6.5mg"
+        "sodio": "56mg",
+        "calcio": "24mg",
+        "ferro": "1.2mg",
+        "vitamina_c": "5.3mg"
       },
       "antiga_nutricao": {
         "calorias": 217,
@@ -954,22 +961,22 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Proteínas: 6.5g → 14.1g",
-        "Carboidratos: 15.4g → 7.3g",
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['funghi secchi (5g)']"
+        "Calorias: 217 → 175 kcal (diff: 42)",
+        "Proteínas: 6.5g → 13.9g",
+        "Carboidratos: 15.4g → 4.6g",
+        "Gorduras: 14.7g → 10.6g",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
         "atum fresco (50g)",
-        "azeite (15g)",
-        "alho (2g)",
-        "vinho branco (10g)",
-        "farinha de trigo (8g)",
+        "funghi secchi (10g)",
+        "azeite (10g)",
+        "alho (1g)",
+        "vinho branco (15g)",
+        "farinha de trigo (4g)",
         "cheiro verde (10g)"
       ],
-      "taco_miss": [
-        "funghi secchi (5g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "atum-ao-gergelim",
@@ -978,7 +985,7 @@
       "proporcoes": [
         {
           "nome": "Atum fresco",
-          "gramas": 65
+          "gramas": 60
         },
         {
           "nome": "Gergelim",
@@ -986,7 +993,7 @@
         },
         {
           "nome": "Molho Tare",
-          "gramas": 20
+          "gramas": 25
         },
         {
           "nome": "Kewpie",
@@ -994,15 +1001,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "122 kcal",
-        "proteinas": "18.9g",
-        "carboidratos": "2.2g",
-        "gorduras": "3.8g",
-        "fibras": "1.2g",
-        "sodio": "288mg",
-        "calcio": "67mg",
-        "ferro": "1.3mg",
-        "vitamina_c": "2.1mg"
+        "calorias": "227 kcal",
+        "proteinas": "16.6g",
+        "carboidratos": "26.8g",
+        "gorduras": "6.1g",
+        "fibras": "0.6g",
+        "sodio": "97mg",
+        "calcio": "48mg",
+        "ferro": "1.1mg",
+        "vitamina_c": "0.0mg"
       },
       "antiga_nutricao": {
         "calorias": 28.3,
@@ -1015,20 +1022,19 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Calorias: 28 → 122 kcal (diff: 94)",
-        "Proteínas: 4.5g → 18.9g",
-        "Gorduras: 0.6g → 3.8g",
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['Kewpie (10g)']"
+        "Calorias: 28 → 227 kcal (diff: 199)",
+        "Proteínas: 4.5g → 16.6g",
+        "Carboidratos: 0.8g → 26.8g",
+        "Gorduras: 0.6g → 6.1g",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
-        "Atum fresco (65g)",
+        "Atum fresco (60g)",
         "Gergelim (5g)",
-        "Molho Tare (20g)"
-      ],
-      "taco_miss": [
+        "Molho Tare (25g)",
         "Kewpie (10g)"
-      ]
+      ],
+      "taco_miss": []
     },
     {
       "slug": "azeitona-preta",
@@ -1036,31 +1042,31 @@
       "status": "DIVERGENTE",
       "proporcoes": [
         {
-          "nome": "Azeitonas",
+          "nome": "Azeitonas Pretas",
           "gramas": 75
         },
         {
           "nome": "Azeite",
-          "gramas": 20
+          "gramas": 18
         },
         {
           "nome": "Vinagre",
-          "gramas": 3
+          "gramas": 5
         },
         {
-          "nome": "Ervas",
+          "nome": "Ervas (Orégano)",
           "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "177 kcal",
-        "proteinas": "0.0g",
-        "carboidratos": "0.0g",
-        "gorduras": "20.0g",
-        "fibras": "0.0g",
-        "sodio": "0mg",
-        "calcio": "0mg",
-        "ferro": "0.0mg",
+        "calorias": "306 kcal",
+        "proteinas": "0.9g",
+        "carboidratos": "4.2g",
+        "gorduras": "33.2g",
+        "fibras": "3.4g",
+        "sodio": "1176mg",
+        "calcio": "45mg",
+        "ferro": "4.2mg",
         "vitamina_c": "0.0mg"
       },
       "antiga_nutricao": {
@@ -1074,17 +1080,17 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 221 → 177 kcal (diff: 44)",
-        "Gorduras: 25.0g → 20.0g",
-        "Não encontrados na TACO: ['Azeitonas (75g)', 'Vinagre (3g)', 'Ervas (2g)']"
+        "Calorias: 221 → 306 kcal (diff: 85)",
+        "Gorduras: 25.0g → 33.2g",
+        "Não encontrados na TACO: ['Ervas (Orégano) (2g)']"
       ],
       "taco_match": [
-        "Azeite (20g)"
+        "Azeitonas Pretas (75g)",
+        "Azeite (18g)",
+        "Vinagre (5g)"
       ],
       "taco_miss": [
-        "Azeitonas (75g)",
-        "Vinagre (3g)",
-        "Ervas (2g)"
+        "Ervas (Orégano) (2g)"
       ]
     },
     {
@@ -1098,7 +1104,7 @@
         },
         {
           "nome": "tahine",
-          "gramas": 20
+          "gramas": 25
         },
         {
           "nome": "limao",
@@ -1106,23 +1112,23 @@
         },
         {
           "nome": "alho",
-          "gramas": 2
+          "gramas": 3
         },
         {
           "nome": "sal",
-          "gramas": 8
+          "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "6 kcal",
-        "proteinas": "0.1g",
-        "carboidratos": "1.5g",
-        "gorduras": "0.0g",
-        "fibras": "0.1g",
-        "sodio": "1mg",
-        "calcio": "0mg",
-        "ferro": "0.0mg",
-        "vitamina_c": "0.0mg"
+        "calorias": "170 kcal",
+        "proteinas": "6.6g",
+        "carboidratos": "9.1g",
+        "gorduras": "13.6g",
+        "fibras": "3.9g",
+        "sodio": "869mg",
+        "calcio": "21mg",
+        "ferro": "0.5mg",
+        "vitamina_c": "6.1mg"
       },
       "antiga_nutricao": {
         "calorias": 30.6,
@@ -1135,18 +1141,17 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Carboidratos: 6.8g → 1.5g",
-        "Não encontrados na TACO: ['beringela (60g)', 'tahine (20g)', 'sal (8g)']"
+        "Calorias: 31 → 170 kcal (diff: 139)",
+        "Proteínas: 1.4g → 6.6g"
       ],
       "taco_match": [
-        "limao (10g)",
-        "alho (2g)"
-      ],
-      "taco_miss": [
         "beringela (60g)",
-        "tahine (20g)",
-        "sal (8g)"
-      ]
+        "tahine (25g)",
+        "limao (10g)",
+        "alho (3g)",
+        "sal (2g)"
+      ],
+      "taco_miss": []
     },
     {
       "slug": "bacalhau-a-bras",
@@ -1155,19 +1160,19 @@
       "proporcoes": [
         {
           "nome": "Bacalhau",
-          "gramas": 30
+          "gramas": 35
         },
         {
           "nome": "Batatas",
-          "gramas": 40
+          "gramas": 30
         },
         {
           "nome": "Ovos",
-          "gramas": 10
+          "gramas": 15
         },
         {
           "nome": "Cebola",
-          "gramas": 7
+          "gramas": 8
         },
         {
           "nome": "Azeitonas",
@@ -1175,35 +1180,31 @@
         },
         {
           "nome": "Tomates",
-          "gramas": 5
-        },
-        {
-          "nome": "Alho",
-          "gramas": 2
+          "gramas": 3
         },
         {
           "nome": "Pimentão",
-          "gramas": 0
+          "gramas": 2
+        },
+        {
+          "nome": "Alho",
+          "gramas": 1
         },
         {
           "nome": "Ervas frescas",
           "gramas": 1
-        },
-        {
-          "nome": "Azeite",
-          "gramas": 0
         }
       ],
       "nova_nutricao": {
-        "calorias": "67 kcal",
-        "proteinas": "9.5g",
-        "carboidratos": "6.0g",
-        "gorduras": "0.4g",
-        "fibras": "0.8g",
-        "sodio": "4077mg",
-        "calcio": "50mg",
-        "ferro": "0.4mg",
-        "vitamina_c": "2.9mg"
+        "calorias": "100 kcal",
+        "proteinas": "12.9g",
+        "carboidratos": "5.1g",
+        "gorduras": "2.9g",
+        "fibras": "0.9g",
+        "sodio": "4856mg",
+        "calcio": "70mg",
+        "ferro": "0.9mg",
+        "vitamina_c": "4.8mg"
       },
       "antiga_nutricao": {
         "calorias": 62.8,
@@ -1216,24 +1217,23 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Proteínas: 3.1g → 9.5g",
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['Ovos (10g)', 'Azeitonas (5g)', 'Ervas frescas (1g)']"
+        "Calorias: 63 → 100 kcal (diff: 37)",
+        "Proteínas: 3.1g → 12.9g",
+        "Carboidratos: 10.8g → 5.1g",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
-        "Bacalhau (30g)",
-        "Batatas (40g)",
-        "Cebola (7g)",
-        "Tomates (5g)",
-        "Alho (2g)",
-        "Pimentão (0g)",
-        "Azeite (0g)"
-      ],
-      "taco_miss": [
-        "Ovos (10g)",
+        "Bacalhau (35g)",
+        "Batatas (30g)",
+        "Ovos (15g)",
+        "Cebola (8g)",
         "Azeitonas (5g)",
+        "Tomates (3g)",
+        "Pimentão (2g)",
+        "Alho (1g)",
         "Ervas frescas (1g)"
-      ]
+      ],
+      "taco_miss": []
     },
     {
       "slug": "bacalhau-com-natas",
@@ -1270,15 +1270,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "71 kcal",
-        "proteinas": "9.9g",
-        "carboidratos": "5.2g",
-        "gorduras": "1.0g",
+        "calorias": "116 kcal",
+        "proteinas": "10.3g",
+        "carboidratos": "6.2g",
+        "gorduras": "5.5g",
         "fibras": "0.7g",
-        "sodio": "4090mg",
-        "calcio": "91mg",
-        "ferro": "0.4mg",
-        "vitamina_c": "1.6mg"
+        "sodio": "4108mg",
+        "calcio": "84mg",
+        "ferro": "0.5mg",
+        "vitamina_c": "1.9mg"
       },
       "antiga_nutricao": {
         "calorias": 86.3,
@@ -1291,20 +1291,19 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['champignon (5g)']"
+        "Calorias: 86 → 116 kcal (diff: 30)",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
         "bacalhau (30g)",
         "batata (35g)",
+        "champignon (5g)",
         "creme de leite fresco (20g)",
         "cebola (5g)",
         "alho (2g)",
         "queijo (3g)"
       ],
-      "taco_miss": [
-        "champignon (5g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "baiao-de-dois",
@@ -1313,7 +1312,7 @@
       "proporcoes": [
         {
           "nome": "Arroz",
-          "gramas": 45
+          "gramas": 40
         },
         {
           "nome": "Feijão-de-corda",
@@ -1321,31 +1320,31 @@
         },
         {
           "nome": "Queijo coalho",
-          "gramas": 12
+          "gramas": 15
         },
         {
           "nome": "Bacon artesanal",
-          "gramas": 10
+          "gramas": 15
         },
         {
           "nome": "Manteiga fresca",
-          "gramas": 5
+          "gramas": 3
         },
         {
           "nome": "Temperos",
-          "gramas": 3
+          "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "145 kcal",
-        "proteinas": "4.4g",
-        "carboidratos": "16.5g",
-        "gorduras": "6.8g",
+        "calorias": "245 kcal",
+        "proteinas": "9.5g",
+        "carboidratos": "15.4g",
+        "gorduras": "16.0g",
         "fibras": "2.8g",
-        "sodio": "34mg",
-        "calcio": "79mg",
+        "sodio": "112mg",
+        "calcio": "115mg",
         "ferro": "0.5mg",
-        "vitamina_c": "0.0mg"
+        "vitamina_c": "0.1mg"
       },
       "antiga_nutricao": {
         "calorias": 141.1,
@@ -1358,19 +1357,20 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['Bacon artesanal (10g)', 'Temperos (3g)']"
+        "Calorias: 141 → 245 kcal (diff: 104)",
+        "Proteínas: 2.9g → 9.5g",
+        "Gorduras: 9.4g → 16.0g",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
-        "Arroz (45g)",
+        "Arroz (40g)",
         "Feijão-de-corda (25g)",
-        "Queijo coalho (12g)",
-        "Manteiga fresca (5g)"
+        "Queijo coalho (15g)",
+        "Bacon artesanal (15g)",
+        "Manteiga fresca (3g)",
+        "Temperos (2g)"
       ],
-      "taco_miss": [
-        "Bacon artesanal (10g)",
-        "Temperos (3g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "banana-caramelizada",
@@ -1395,15 +1395,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "139 kcal",
-        "proteinas": "1.8g",
-        "carboidratos": "34.7g",
-        "gorduras": "0.2g",
-        "fibras": "1.7g",
-        "sodio": "81mg",
-        "calcio": "16mg",
-        "ferro": "1.0mg",
-        "vitamina_c": "17.0mg"
+        "calorias": "186 kcal",
+        "proteinas": "1.0g",
+        "carboidratos": "48.9g",
+        "gorduras": "0.1g",
+        "fibras": "1.8g",
+        "sodio": "1mg",
+        "calcio": "32mg",
+        "ferro": "1.1mg",
+        "vitamina_c": "14.7mg"
       },
       "antiga_nutricao": {
         "calorias": 95,
@@ -1416,18 +1416,16 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 95 → 139 kcal (diff: 44)",
-        "Carboidratos: 23.0g → 34.7g",
-        "Não encontrados na TACO: ['canela (2g)', 'maple canadense (13g)']"
+        "Calorias: 95 → 186 kcal (diff: 91)",
+        "Carboidratos: 23.0g → 48.9g"
       ],
       "taco_match": [
         "banana (65g)",
-        "açúcar (20g)"
-      ],
-      "taco_miss": [
+        "açúcar (20g)",
         "canela (2g)",
         "maple canadense (13g)"
-      ]
+      ],
+      "taco_miss": []
     },
     {
       "slug": "batata-doce",
@@ -1436,11 +1434,11 @@
       "proporcoes": [
         {
           "nome": "batata doce",
-          "gramas": 60
+          "gramas": 50
         },
         {
           "nome": "batata",
-          "gramas": 37
+          "gramas": 47
         },
         {
           "nome": "sal",
@@ -1448,15 +1446,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "65 kcal",
-        "proteinas": "0.8g",
-        "carboidratos": "15.4g",
+        "calorias": "63 kcal",
+        "proteinas": "0.9g",
+        "carboidratos": "14.8g",
         "gorduras": "0.1g",
-        "fibras": "1.8g",
-        "sodio": "3mg",
-        "calcio": "12mg",
+        "fibras": "1.7g",
+        "sodio": "1165mg",
+        "calcio": "11mg",
         "ferro": "0.2mg",
-        "vitamina_c": "15.7mg"
+        "vitamina_c": "13.7mg"
       },
       "antiga_nutricao": {
         "calorias": 42.5,
@@ -1469,16 +1467,14 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Carboidratos: 9.4g → 15.4g",
-        "Não encontrados na TACO: ['sal (3g)']"
+        "Carboidratos: 9.4g → 14.8g"
       ],
       "taco_match": [
-        "batata doce (60g)",
-        "batata (37g)"
-      ],
-      "taco_miss": [
+        "batata doce (50g)",
+        "batata (47g)",
         "sal (3g)"
-      ]
+      ],
+      "taco_miss": []
     },
     {
       "slug": "batata-frita",
@@ -1490,7 +1486,7 @@
           "gramas": 98
         },
         {
-          "nome": "paprica defumada",
+          "nome": "páprica defumada",
           "gramas": 2
         }
       ],
@@ -1517,13 +1513,13 @@
       "antiga_categoria": "vegano",
       "divergencias": [
         "Carboidratos: 6.0g → 11.7g",
-        "Não encontrados na TACO: ['paprica defumada (2g)']"
+        "Não encontrados na TACO: ['páprica defumada (2g)']"
       ],
       "taco_match": [
         "batata (98g)"
       ],
       "taco_miss": [
-        "paprica defumada (2g)"
+        "páprica defumada (2g)"
       ]
     },
     {
@@ -1545,7 +1541,7 @@
         },
         {
           "nome": "Molho de tomate artesanal",
-          "gramas": 20
+          "gramas": 25
         },
         {
           "nome": "Mussarela",
@@ -1553,35 +1549,35 @@
         },
         {
           "nome": "Farinha de trigo",
-          "gramas": 3
+          "gramas": 1.5
         },
         {
           "nome": "Farinha de rosca",
-          "gramas": 3
-        },
-        {
-          "nome": "Ovo",
           "gramas": 2
         },
         {
-          "nome": "Alho",
+          "nome": "Ovo",
           "gramas": 1
         },
         {
+          "nome": "Alho",
+          "gramas": 0.5
+        },
+        {
           "nome": "Sal",
-          "gramas": 1
+          "gramas": 0
         }
       ],
       "nova_nutricao": {
-        "calorias": "26 kcal",
-        "proteinas": "0.9g",
-        "carboidratos": "5.4g",
-        "gorduras": "0.1g",
-        "fibras": "0.5g",
-        "sodio": "10mg",
-        "calcio": "3mg",
-        "ferro": "0.3mg",
-        "vitamina_c": "4.2mg"
+        "calorias": "172 kcal",
+        "proteinas": "22.2g",
+        "carboidratos": "5.9g",
+        "gorduras": "6.1g",
+        "fibras": "0.7g",
+        "sodio": "268mg",
+        "calcio": "150mg",
+        "ferro": "0.8mg",
+        "vitamina_c": "3.8mg"
       },
       "antiga_nutricao": {
         "calorias": 127.2,
@@ -1594,29 +1590,28 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Calorias: 127 → 26 kcal (diff: 101)",
-        "Proteínas: 7.7g → 0.9g",
-        "Carboidratos: 22.2g → 5.4g",
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['Frango/Peixe/Filé Mignon (55g)', 'Mussarela (15g)', 'Ovo (2g)', 'Sal (1g)']"
+        "Calorias: 127 → 172 kcal (diff: 44)",
+        "Proteínas: 7.7g → 22.2g",
+        "Carboidratos: 22.2g → 5.9g",
+        "Gorduras: 0.7g → 6.1g",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
-        "Molho de tomate artesanal (20g)",
-        "Farinha de trigo (3g)",
-        "Farinha de rosca (3g)",
-        "Alho (1g)"
-      ],
-      "taco_miss": [
         "Frango/Peixe/Filé Mignon (55g)",
+        "Molho de tomate artesanal (25g)",
         "Mussarela (15g)",
-        "Ovo (2g)",
-        "Sal (1g)"
-      ]
+        "Farinha de trigo (1.5g)",
+        "Farinha de rosca (2g)",
+        "Ovo (1g)",
+        "Alho (0.5g)",
+        "Sal (0g)"
+      ],
+      "taco_miss": []
     },
     {
       "slug": "berinjela-ao-curry",
       "name": "Berinjela ao Curry",
-      "status": "DIVERGENTE",
+      "status": "OK",
       "proporcoes": [
         {
           "nome": "berinjela",
@@ -1632,43 +1627,43 @@
         },
         {
           "nome": "cenouras",
-          "gramas": 15
-        },
-        {
-          "nome": "curry indiano importado",
-          "gramas": 2
-        },
-        {
-          "nome": "gengibre fresco",
-          "gramas": 1
+          "gramas": 10
         },
         {
           "nome": "laranja kimcan",
           "gramas": 5
         },
         {
-          "nome": "alho",
-          "gramas": 1
+          "nome": "azeite",
+          "gramas": 8
         },
         {
-          "nome": "azeite",
-          "gramas": 10
+          "nome": "alho",
+          "gramas": 2
+        },
+        {
+          "nome": "gengibre fresco",
+          "gramas": 2
+        },
+        {
+          "nome": "curry indiano importado",
+          "gramas": 3
         },
         {
           "nome": "sal",
-          "gramas": 6
+          "gramas": 10
         }
       ],
       "nova_nutricao": {
-        "calorias": "110 kcal",
-        "proteinas": "1.1g",
-        "carboidratos": "4.7g",
-        "gorduras": "10.1g",
-        "fibras": "2.0g",
-        "sodio": "1mg",
-        "calcio": "10mg",
-        "ferro": "0.2mg",
-        "vitamina_c": "8.1mg"
+        "calorias": "103 kcal",
+        "proteinas": "1.5g",
+        "carboidratos": "6.6g",
+        "gorduras": "8.5g",
+        "fibras": "2.9g",
+        "sodio": "3878mg",
+        "calcio": "28mg",
+        "ferro": "1.1mg",
+        "vitamina_c": "8.7mg"
       },
       "antiga_nutricao": {
         "calorias": 109.3,
@@ -1680,24 +1675,20 @@
       },
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
-      "divergencias": [
-        "Proteínas: 4.5g → 1.1g",
-        "Não encontrados na TACO: ['curry indiano importado (2g)', 'gengibre fresco (1g)', 'sal (6g)']"
-      ],
+      "divergencias": [],
       "taco_match": [
         "berinjela (35g)",
         "tomates (15g)",
         "cebola (10g)",
-        "cenouras (15g)",
+        "cenouras (10g)",
         "laranja kimcan (5g)",
-        "alho (1g)",
-        "azeite (10g)"
+        "azeite (8g)",
+        "alho (2g)",
+        "gengibre fresco (2g)",
+        "curry indiano importado (3g)",
+        "sal (10g)"
       ],
-      "taco_miss": [
-        "curry indiano importado (2g)",
-        "gengibre fresco (1g)",
-        "sal (6g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "berinjela-ao-limao",
@@ -1710,15 +1701,15 @@
         },
         {
           "nome": "azeite",
-          "gramas": 15
+          "gramas": 10
         },
         {
           "nome": "limao",
-          "gramas": 8
+          "gramas": 12
         },
         {
           "nome": "alho",
-          "gramas": 2
+          "gramas": 3
         },
         {
           "nome": "ervas frescas",
@@ -1726,15 +1717,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "152 kcal",
-        "proteinas": "1.0g",
-        "carboidratos": "4.4g",
-        "gorduras": "15.1g",
-        "fibras": "2.1g",
+        "calorias": "111 kcal",
+        "proteinas": "1.3g",
+        "carboidratos": "5.4g",
+        "gorduras": "10.1g",
+        "fibras": "2.4g",
         "sodio": "1mg",
-        "calcio": "7mg",
-        "ferro": "0.2mg",
-        "vitamina_c": "2.1mg"
+        "calcio": "22mg",
+        "ferro": "0.4mg",
+        "vitamina_c": "9.8mg"
       },
       "antiga_nutricao": {
         "calorias": 211.4,
@@ -1747,28 +1738,26 @@
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 211 → 152 kcal (diff: 59)",
-        "Gorduras: 20.1g → 15.1g",
-        "Não encontrados na TACO: ['ervas frescas (5g)']"
+        "Calorias: 211 → 111 kcal (diff: 100)",
+        "Gorduras: 20.1g → 10.1g"
       ],
       "taco_match": [
         "berinjela (70g)",
-        "azeite (15g)",
-        "limao (8g)",
-        "alho (2g)"
-      ],
-      "taco_miss": [
+        "azeite (10g)",
+        "limao (12g)",
+        "alho (3g)",
         "ervas frescas (5g)"
-      ]
+      ],
+      "taco_miss": []
     },
     {
       "slug": "beterraba-ao-balsamico",
       "name": "Beterraba ao Balsamico",
-      "status": "DIVERGENTE",
+      "status": "OK",
       "proporcoes": [
         {
           "nome": "beterraba",
-          "gramas": 70
+          "gramas": 65
         },
         {
           "nome": "vinagre balsamico",
@@ -1776,7 +1765,7 @@
         },
         {
           "nome": "laranja",
-          "gramas": 23
+          "gramas": 28
         },
         {
           "nome": "tomilho",
@@ -1784,15 +1773,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "45 kcal",
+        "calorias": "44 kcal",
         "proteinas": "1.6g",
-        "carboidratos": "10.2g",
+        "carboidratos": "9.9g",
         "gorduras": "0.1g",
-        "fibras": "2.7g",
-        "sodio": "12mg",
-        "calcio": "18mg",
-        "ferro": "0.2mg",
-        "vitamina_c": "14.6mg"
+        "fibras": "2.5g",
+        "sodio": "7mg",
+        "calcio": "22mg",
+        "ferro": "0.3mg",
+        "vitamina_c": "18.1mg"
       },
       "antiga_nutricao": {
         "calorias": 46,
@@ -1804,17 +1793,14 @@
       },
       "nova_categoria": "vegano",
       "antiga_categoria": "vegano",
-      "divergencias": [
-        "Não encontrados na TACO: ['vinagre balsamico (5g)']"
-      ],
+      "divergencias": [],
       "taco_match": [
-        "beterraba (70g)",
-        "laranja (23g)",
+        "beterraba (65g)",
+        "vinagre balsamico (5g)",
+        "laranja (28g)",
         "tomilho (2g)"
       ],
-      "taco_miss": [
-        "vinagre balsamico (5g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "bolinho-de-bacalhau",
@@ -1831,27 +1817,27 @@
         },
         {
           "nome": "ovo",
-          "gramas": 10
-        },
-        {
-          "nome": "cebola",
           "gramas": 15
         },
         {
+          "nome": "cebola",
+          "gramas": 12
+        },
+        {
           "nome": "salsinha",
-          "gramas": 5
+          "gramas": 3
         }
       ],
       "nova_nutricao": {
-        "calorias": "72 kcal",
-        "proteinas": "10.8g",
+        "calorias": "93 kcal",
+        "proteinas": "12.9g",
         "carboidratos": "5.5g",
-        "gorduras": "0.5g",
+        "gorduras": "1.9g",
         "fibras": "0.8g",
-        "sodio": "4756mg",
-        "calcio": "58mg",
-        "ferro": "0.4mg",
-        "vitamina_c": "2.0mg"
+        "sodio": "4778mg",
+        "calcio": "71mg",
+        "ferro": "0.7mg",
+        "vitamina_c": "3.4mg"
       },
       "antiga_nutricao": {
         "calorias": 64.2,
@@ -1864,19 +1850,17 @@
       "nova_categoria": "proteina animal",
       "antiga_categoria": "proteína animal",
       "divergencias": [
-        "Proteínas: 4.0g → 10.8g",
-        "Categoria: 'proteína animal' → 'proteina animal'",
-        "Não encontrados na TACO: ['ovo (10g)', 'salsinha (5g)']"
+        "Proteínas: 4.0g → 12.9g",
+        "Categoria: 'proteína animal' → 'proteina animal'"
       ],
       "taco_match": [
         "bacalhau (35g)",
         "batata (35g)",
-        "cebola (15g)"
+        "ovo (15g)",
+        "cebola (12g)",
+        "salsinha (3g)"
       ],
-      "taco_miss": [
-        "ovo (10g)",
-        "salsinha (5g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "bolo-brownie-de-chocolate",
@@ -1889,7 +1873,7 @@
         },
         {
           "nome": "manteiga",
-          "gramas": 15
+          "gramas": 20
         },
         {
           "nome": "maple",
@@ -1897,7 +1881,7 @@
         },
         {
           "nome": "ovos",
-          "gramas": 20
+          "gramas": 15
         },
         {
           "nome": "farinha",
@@ -1909,15 +1893,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "343 kcal",
-        "proteinas": "2.6g",
-        "carboidratos": "42.9g",
-        "gorduras": "18.4g",
-        "fibras": "1.2g",
-        "sodio": "202mg",
-        "calcio": "15mg",
-        "ferro": "5.8mg",
-        "vitamina_c": "28.6mg"
+        "calorias": "411 kcal",
+        "proteinas": "5.1g",
+        "carboidratos": "54.8g",
+        "gorduras": "19.9g",
+        "fibras": "1.4g",
+        "sodio": "172mg",
+        "calcio": "27mg",
+        "ferro": "1.6mg",
+        "vitamina_c": "0.1mg"
       },
       "antiga_nutricao": {
         "calorias": 213,
@@ -1930,21 +1914,20 @@
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegetariano",
       "divergencias": [
-        "Calorias: 213 → 343 kcal (diff: 130)",
-        "Carboidratos: 30.5g → 42.9g",
-        "Gorduras: 9.5g → 18.4g",
-        "Não encontrados na TACO: ['maple (10g)', 'ovos (20g)']"
+        "Calorias: 213 → 411 kcal (diff: 198)",
+        "Proteínas: 2.0g → 5.1g",
+        "Carboidratos: 30.5g → 54.8g",
+        "Gorduras: 9.5g → 19.9g"
       ],
       "taco_match": [
         "chocolate (30g)",
-        "manteiga (15g)",
+        "manteiga (20g)",
+        "maple (10g)",
+        "ovos (15g)",
         "farinha (15g)",
         "acucar (10g)"
       ],
-      "taco_miss": [
-        "maple (10g)",
-        "ovos (20g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "bolo-de-gengibre",
@@ -1952,44 +1935,44 @@
       "status": "DIVERGENTE",
       "proporcoes": [
         {
-          "nome": "farinha de trigo",
+          "nome": "Farinha de trigo",
           "gramas": 45
         },
         {
-          "nome": "gengibre fresco",
+          "nome": "Gengibre fresco",
           "gramas": 5
         },
         {
-          "nome": "maple canadense",
+          "nome": "Maple canadense",
           "gramas": 15
         },
         {
-          "nome": "acucar",
+          "nome": "Açúcar",
           "gramas": 15
         },
         {
-          "nome": "oleo vegetal",
+          "nome": "Óleo vegetal",
           "gramas": 10
         },
         {
-          "nome": "manteiga vegana",
+          "nome": "Manteiga vegana",
           "gramas": 8
         },
         {
-          "nome": "especiarias importadas",
+          "nome": "Especiarias importadas",
           "gramas": 2
         }
       ],
       "nova_nutricao": {
-        "calorias": "308 kcal",
-        "proteinas": "5.2g",
-        "carboidratos": "48.8g",
-        "gorduras": "10.1g",
-        "fibras": "1.3g",
-        "sodio": "119mg",
-        "calcio": "17mg",
-        "ferro": "1.1mg",
-        "vitamina_c": "2.2mg"
+        "calorias": "355 kcal",
+        "proteinas": "4.7g",
+        "carboidratos": "65.0g",
+        "gorduras": "8.8g",
+        "fibras": "1.6g",
+        "sodio": "59mg",
+        "calcio": "36mg",
+        "ferro": "1.3mg",
+        "vitamina_c": "0.9mg"
       },
       "antiga_nutricao": {
         "calorias": 254,
@@ -2002,23 +1985,21 @@
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 254 → 308 kcal (diff: 54)",
-        "Carboidratos: 25.8g → 48.8g",
-        "Gorduras: 16.0g → 10.1g",
-        "Categoria: 'vegano' → 'vegetariano'",
-        "Não encontrados na TACO: ['gengibre fresco (5g)', 'maple canadense (15g)', 'especiarias importadas (2g)']"
+        "Calorias: 254 → 355 kcal (diff: 101)",
+        "Carboidratos: 25.8g → 65.0g",
+        "Gorduras: 16.0g → 8.8g",
+        "Categoria: 'vegano' → 'vegetariano'"
       ],
       "taco_match": [
-        "farinha de trigo (45g)",
-        "acucar (15g)",
-        "oleo vegetal (10g)",
-        "manteiga vegana (8g)"
+        "Farinha de trigo (45g)",
+        "Gengibre fresco (5g)",
+        "Maple canadense (15g)",
+        "Açúcar (15g)",
+        "Óleo vegetal (10g)",
+        "Manteiga vegana (8g)",
+        "Especiarias importadas (2g)"
       ],
-      "taco_miss": [
-        "gengibre fresco (5g)",
-        "maple canadense (15g)",
-        "especiarias importadas (2g)"
-      ]
+      "taco_miss": []
     },
     {
       "slug": "bolo-vegano-de-chocolate",
@@ -2027,7 +2008,7 @@
       "proporcoes": [
         {
           "nome": "farinha de trigo",
-          "gramas": 35
+          "gramas": 45
         },
         {
           "nome": "cacau em pó",
@@ -2039,27 +2020,27 @@
         },
         {
           "nome": "óleo vegetal",
-          "gramas": 15
+          "gramas": 12
         },
         {
           "nome": "leite vegetal",
-          "gramas": 8
+          "gramas": 2
         },
         {
           "nome": "fermento",
-          "gramas": 2
+          "gramas": 1
         }
       ],
       "nova_nutricao": {
-        "calorias": "280 kcal",
-        "proteinas": "5.2g",
-        "carboidratos": "54.1g",
-        "gorduras": "4.8g",
-        "fibras": "1.7g",
-        "sodio": "124mg",
-        "calcio": "33mg",
-        "ferro": "1.4mg",
-        "vitamina_c": "5.7mg"
+        "calorias": "311 kcal",
+        "proteinas": "4.8g",
+        "carboidratos": "64.4g",
+        "gorduras": "3.9g",
+        "fibras": "1.4g",
+        "sodio": "15mg",
+        "calcio": "15mg",
+        "ferro": "0.6mg",
+        "vitamina_c": "2.0mg"
       },
       "antiga_nutricao": {
         "calorias": 152.8,
@@ -2072,17 +2053,17 @@
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegano",
       "divergencias": [
-        "Calorias: 153 → 280 kcal (diff: 128)",
-        "Carboidratos: 27.5g → 54.1g",
+        "Calorias: 153 → 311 kcal (diff: 158)",
+        "Carboidratos: 27.5g → 64.4g",
         "Categoria: 'vegano' → 'vegetariano'"
       ],
       "taco_match": [
-        "farinha de trigo (35g)",
+        "farinha de trigo (45g)",
         "cacau em pó (15g)",
         "açúcar (25g)",
-        "óleo vegetal (15g)",
-        "leite vegetal (8g)",
-        "fermento (2g)"
+        "óleo vegetal (12g)",
+        "leite vegetal (2g)",
+        "fermento (1g)"
       ],
       "taco_miss": []
     },
@@ -2093,27 +2074,27 @@
       "proporcoes": [
         {
           "nome": "Brocolis",
-          "gramas": 70
+          "gramas": 75
         },
         {
-          "nome": "Parmesao",
-          "gramas": 20
+          "nome": "parmesao",
+          "gramas": 15
         },
         {
-          "nome": "Alho",
+          "nome": "alho",
           "gramas": 10
         }
       ],
       "nova_nutricao": {
-        "calorias": "119 kcal",
-        "proteinas": "9.3g",
-        "carboidratos": "5.8g",
-        "gorduras": "7.1g",
-        "fibras": "2.8g",
-        "sodio": "371mg",
-        "calcio": "236mg",
+        "calorias": "84 kcal",
+        "proteinas": "5.7g",
+        "carboidratos": "6.0g",
+        "gorduras": "4.8g",
+        "fibras": "3.0g",
+        "sodio": "89mg",
+        "calcio": "181mg",
         "ferro": "0.5mg",
-        "vitamina_c": "29.4mg"
+        "vitamina_c": "33.2mg"
       },
       "antiga_nutricao": {
         "calorias": 197,
@@ -2126,32 +2107,32 @@
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegetariano",
       "divergencias": [
-        "Calorias: 197 → 119 kcal (diff: 78)",
-        "Proteínas: 14.9g → 9.3g",
-        "Gorduras: 11.4g → 7.1g"
+        "Calorias: 197 → 84 kcal (diff: 113)",
+        "Proteínas: 14.9g → 5.7g",
+        "Gorduras: 11.4g → 4.8g"
       ],
       "taco_match": [
-        "Brocolis (70g)",
-        "Parmesao (20g)",
-        "Alho (10g)"
+        "Brocolis (75g)",
+        "parmesao (15g)",
+        "alho (10g)"
       ],
       "taco_miss": []
     },
     {
       "slug": "brocolis-e-ou-couve-flor-gratinado",
       "name": "Brocolis e/ou Couve Flor Gratinado",
-      "status": "DIVERGENTE",
+      "status": "OK",
       "proporcoes": [
         {
           "nome": "Brocolis e/ou Couve flor",
-          "gramas": 60
+          "gramas": 65
         },
         {
           "nome": "creme de leite",
-          "gramas": 25
+          "gramas": 20
         },
         {
-          "nome": "queijo parmesao",
+          "nome": "queijo parmesão",
           "gramas": 12
         },
         {
@@ -2160,15 +2141,15 @@
         }
       ],
       "nova_nutricao": {
-        "calorias": "125 kcal",
-        "proteinas": "5.9g",
-        "carboidratos": "4.0g",
-        "gorduras": "9.9g",
-        "fibras": "2.0g",
-        "sodio": "235mg",
-        "calcio": "170mg",
-        "ferro": "0.4mg",
-        "vitamina_c": "25.2mg"
+        "calorias": "133 kcal",
+        "proteinas": "6.4g",
+        "carboidratos": "4.5g",
+        "gorduras": "10.6g",
+        "fibras": "2.4g",
+        "sodio": "233mg",
+        "calcio": "172mg",
+        "ferro": "0.5mg",
+        "vitamina_c": "27.3mg"
       },
       "antiga_nutricao": {
         "calorias": 126.4,
@@ -2180,17 +2161,14 @@
       },
       "nova_categoria": "vegetariano",
       "antiga_categoria": "vegetariano",
-      "divergencias": [
-        "Não encontrados na TACO: ['noz-moscada (3g)']"
-      ],
+      "divergencias": [],
       "taco_match": [
-        "Brocolis e/ou Couve flor (60g)",
-        "creme de leite (25g)",
-        "queijo parmesao (12g)"
-      ],
-      "taco_miss": [
+        "Brocolis e/ou Couve flor (65g)",
+        "creme de leite (20g)",
+        "queijo parmesão (12g)",
         "noz-moscada (3g)"
-      ]
+      ],
+      "taco_miss": []
     }
   ]
 }
