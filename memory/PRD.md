@@ -10,7 +10,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Frontend: React (CRA) + CSS Custom
 - Backend: FastAPI + Motor (MongoDB async)
 - AI: OpenCLIP local (ViT-B-32) para embedding de imagens
-- Storage: Cloudflare R2 (bucket: soulnutri-images) - 3939 fotos migradas
+- Storage: Cloudflare R2 (bucket: soulnutri-images) - 3929 fotos
 - DB: MongoDB Atlas
 
 ## Funcionalidades Implementadas
@@ -24,66 +24,64 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Notificacoes push personalizadas
 - Design "Gourmet Dark Mode"
 
-## Correcoes Realizadas (2026-03-27)
+## Correcoes Realizadas Anteriormente
+- Thumbnails via Pillow (300x300, JPEG 60%) - reducao de 207x
+- Botao Mover com dropdown + XHR
+- 48 alert() substituidos por notify() inline
+- dish_storage sincronizado com R2
 
-### Performance Admin
-- Thumbnails via Pillow (300x300, JPEG 60%) - reducao de 207x (3MB -> 14KB)
-- Todos os img tags do admin usam ?thumb=1
-- Paginacao com 30 pratos por pagina + lazy loading
+## Migracao Cloudflare R2 - CONCLUIDO
+- 3929 imagens no bucket soulnutri-images
+- r2_service.py + image_service.py refatorados
+- Testes 12/12 backend PASS
 
-### Botao Mover Imagens
-- Input texto substituido por dropdown/select com todos os pratos
-- Backend valida se prato destino existe antes de mover
-- Contagens atualizadas no frontend apos mover
+## Correcoes 2026-04-01
 
-### Sistema de Notificacao Inline
-- 48 chamadas alert() substituidas por notify() com toast inline
-- Resolve alert() bloqueado no iframe da Emergent
+### Auditoria Corrigida
+- audit_service.py agora usa MongoDB como fonte de verdade (antes usava filesystem)
+- Normalizacao de nomes de pastas para match com slugs do banco
+- Deduplicacao: cada prato auditado apenas uma vez
+- Botao Editar adicionado aos itens "sem dish_info.json"
+- Stats do admin agora mostra count real do DB (190), nao do indice IA (189)
+- Resultado: 190 pratos auditados, 93.2% saude, 13 com problemas
 
-### Validacoes de Backend
-- DELETE/MOVE retornam 404 para imagens inexistentes
-- Contagem usa len(images) real
-- get_dish_image_bytes nao retorna imagem aleatoria para filename inexistente
+### Indice IA Limpo
+- Removidos 12 pratos obsoletos (teste/fantasma)
+- Consolidadas 10 entradas duplicadas
+- De 212 -> 189 pratos IA unicos, 1701 embeddings
 
-### Sincronizacao de Dados
-- dish_storage sincronizado com arquivos reais no disco (4 counts corrigidos)
-- _find_local_folder melhorado: pula pastas vazias, normaliza parenteses
-- 2 pratos restaurados do nutrition_sheets (abobora-ao-curry, tabule-de-trigo)
-- Botao Editar agora carrega galeria de imagens (antes nao carregava)
+### Revisao Nutricional A e B - CONCLUIDO
+- 255 mapeamentos INGREDIENTE_PARA_TACO corrigidos (63 estavam quebrados)
+- 13 entradas adicionadas ao TACO_DATABASE (canela, gengibre, curry, alho, vinagre, etc.)
+- 30 pratos atualizados com proporcoes reais do Gemini Flash + dados TACO
+- Metodo: Gemini determina proporcoes culinarias reais por 100g, TACO calcula nutricao
+- Divergencias graves corrigidas: Atum ao Gergelim 28->227kcal, Babaganoush 31->170kcal, etc.
 
-## Migracao Cloudflare R2 (2026-03-30) - VALIDADO
-- 3939 imagens migradas com sucesso para bucket soulnutri-images
-- r2_service.py criado com boto3 para integracao nativa
-- image_service.py refatorado para rotear todos os requests para R2
-- Thumbnails gerados on-the-fly com Pillow (300x300, JPEG 60%)
-- Testes automatizados: 12/12 backend, frontend 100% - PASS
+### Upload Cocada
+- 6 fotos de cocada enviadas para R2 (total: 7 fotos)
 
 ## Estado Atual
-- 196 pratos totais (189 com embeddings AI)
-- 3939 fotos no Cloudflare R2
-- 1632 embeddings de imagem no indice
-- 192 com ingredientes
-- 0 com descricao (nunca foi populado)
-- Object Storage Emergent: ABANDONADO (erro 500)
-
-## Pending Issues
-- (P1) 14 pratos sem ingredientes
-- (P1) 206 pratos sem descricao
-- (P2) Categorias nao editaveis na aba Auditoria
+- 190 pratos no banco (189 com embeddings IA)
+- 3929 fotos no Cloudflare R2
+- 1701 embeddings de imagem
+- 255 mapeamentos de ingredientes TACO
+- 30 pratos A/B com nutricao revisada
+- beringela-a-parmegiana: sem ingredientes (possivel duplicata)
 
 ## Upcoming Tasks
+- (P1) Revisao nutricional pratos C-Z (mesmo metodo: Gemini proporcoes + TACO)
 - (P1) Validar notificacoes push
-- (P1) Atualizar dados nutricionais com safe_nutrition_updater.py
 - (P1) Validar referencias/links na tela de resultado
 
 ## Future Tasks
 - (P1) Refatorar server.py (5K+ linhas) e Admin.js (3K+ linhas)
 - (P2) Integracao Stripe para premium
-- (P2) Upload ZIP pelo admin
-- (P2) Investigar lentidao intermitente MongoDB
+- (P2) Upload ZIP no admin
+- (P2) Categorias nao editaveis na aba Auditoria
+- (P2) Investigar lentidao MongoDB
 
 ## Restricoes Tecnicas
-- NAO usar window.alert/confirm/prompt (iframe da Emergent bloqueia)
+- NAO usar window.alert/confirm/prompt (iframe bloqueia)
 - Imagens 2-4MB - sempre usar thumbnails no admin
-- Usar xhrGet/xhrPost/xhrDelete no Admin.js (fetch falha silenciosamente)
-- Storage definitivo: Cloudflare R2 (NAO usar Emergent S3)
+- Usar xhrGet/xhrPost/xhrDelete no Admin.js
+- Storage definitivo: Cloudflare R2
