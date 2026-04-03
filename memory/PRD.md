@@ -30,14 +30,16 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Notificacoes push personalizadas
 - Design "Gourmet Dark Mode"
 
-## Calibracao CLIP (2026-04-02) - NOVO
+## Calibracao CLIP (2026-04-02/03) - IMPLEMENTADO
 - Gap analysis removido: decisao baseada apenas em score absoluto
 - Thresholds sincronizados: >=0.85 alta, >=0.50 media, <0.50 rejeicao
 - Auto-aceite CLIP: de 0.90 para 0.85
-- Endpoint /api/ai/calibration: estatisticas, distribuicao, Youden's J
-- Aba "Calibracao CLIP" no Admin com dashboard
-- Feedback envia score/confidence/source para calibracao
-- Metodo Youden's J calcula threshold otimo com 5+ corretos e 5+ incorretos
+- Colecao `calibration_log` separada da `feedback` (registro leve, sem upload de imagem)
+- POST /api/ai/calibration/log: registro automatico de amostras (Sim e Nao)
+- DELETE /api/ai/calibration/{id}: deletar amostras individuais
+- GET /api/ai/calibration: estatisticas, distribuicao, Youden's J
+- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar por amostra
+- Frontend: ambos botoes "Sim, esta correto" e "Nao, tentar novamente" registram na calibracao
 
 ## Correcoes Recentes (2026-04-01/02)
 
