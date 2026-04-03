@@ -240,6 +240,8 @@ function App() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [dishes, setDishes] = useState([]);
   const [feedbackSent, setFeedbackSent] = useState(false);
+  const [showCorrectionFlow, setShowCorrectionFlow] = useState(false);
+  const [correctionSearch, setCorrectionSearch] = useState('');
   const [lastImageBlob, setLastImageBlob] = useState(null);
   const [newDishName, setNewDishName] = useState("");
   const [creatingDish, setCreatingDish] = useState(false);
@@ -724,6 +726,8 @@ function App() {
     setMultiResult(null);
     setError(null);
     setFeedbackSent(false);
+    setShowCorrectionFlow(false);
+    setCorrectionSearch('');
     setShowFeedback(false);
     
     const fd = new FormData(); 
@@ -1232,6 +1236,8 @@ function App() {
     setError(null);
     setShowFeedback(false);
     setFeedbackSent(false);
+    setShowCorrectionFlow(false);
+    setCorrectionSearch('');
     // Limpar preview da imagem
     if (previewImageUrl) {
       URL.revokeObjectURL(previewImageUrl);
@@ -1317,49 +1323,62 @@ function App() {
   const sendToModerationQueue = async () => {
     if (!result) return;
     
-    // SEMPRE registrar na calibracao como INCORRETO (independente do blob)
-    logCalibrationSample(false, result?.dish || "");
+    // Mostrar fluxo de correção em vez de enviar direto
+    setShowCorrectionFlow(true);
+  };
+
+  // Correção: Usuário seleciona o prato correto da lista
+  const sendCorrectionWithDish = async (dishName) => {
+    if (!result) return;
     
-    if (!lastImageBlob) {
-      // Sem blob, apenas registrar calibracao e voltar
-      setFeedbackSent(true);
-      setShowFeedback(false);
-      clearResult();
-      return;
+    // Registrar na calibracao como INCORRETO com prato real
+    logCalibrationSample(false, dishName);
+    
+    // Enviar para moderação se tiver imagem
+    if (lastImageBlob) {
+      try {
+        const fd = new FormData();
+        fd.append("file", lastImageBlob, "photo.jpg");
+        fd.append("original_dish", result?.dish || "");
+        fd.append("original_dish_display", result?.dish_display || "");
+        fd.append("confidence", result?.confidence || "");
+        fd.append("score", result?.score || 0);
+        fd.append("source", result?.source || "");
+        fd.append("correct_dish", dishName);
+        await fetch(`${API}/feedback/moderation-queue`, { method: "POST", body: fd });
+      } catch (e) { /* silent */ }
     }
     
-    const fd = new FormData();
-    fd.append("file", lastImageBlob, "photo.jpg");
-    fd.append("original_dish", result?.dish || "");
-    fd.append("original_dish_display", result?.dish_display || "");
-    fd.append("confidence", result?.confidence || "");
-    fd.append("score", result?.score || 0);
-    fd.append("source", result?.source || "");
+    setFeedbackSent(true);
+    setShowCorrectionFlow(false);
+    setCorrectionSearch('');
+  };
+
+  // Correção: Prato não está cadastrado
+  const sendCorrectionNotInList = async () => {
+    if (!result) return;
     
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const res = await fetch(`${API}/feedback/moderation-queue`, { 
-        method: "POST", 
-        body: fd,
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      
-      if (!mountedRef.current) return;
-      
-      const data = await res.json();
-      if (data.ok) {
-        setFeedbackSent(true);
-        setShowFeedback(false);
-        clearResult();
-      }
-    } catch (e) {
-      console.error('Erro ao enviar para moderação:', e);
-      // Mesmo com erro na moderação, feedback visual deve mudar
-      setFeedbackSent(true);
-      clearResult();
+    // Registrar na calibracao como NAO_CADASTRADO
+    logCalibrationSample(false, "NAO_CADASTRADO");
+    
+    // Enviar para moderação se tiver imagem
+    if (lastImageBlob) {
+      try {
+        const fd = new FormData();
+        fd.append("file", lastImageBlob, "photo.jpg");
+        fd.append("original_dish", result?.dish || "");
+        fd.append("original_dish_display", result?.dish_display || "");
+        fd.append("confidence", result?.confidence || "");
+        fd.append("score", result?.score || 0);
+        fd.append("source", result?.source || "");
+        fd.append("correct_dish", "NAO_CADASTRADO");
+        await fetch(`${API}/feedback/moderation-queue`, { method: "POST", body: fd });
+      } catch (e) { /* silent */ }
     }
+    
+    setFeedbackSent(true);
+    setShowCorrectionFlow(false);
+    setCorrectionSearch('');
   };
 
   // SALVAR CORREÇÃO DE PRATO MÚLTIPLO
@@ -2304,7 +2323,7 @@ function App() {
           {/* BOTÃO VOLTAR */}
           <button 
             className="back-btn"
-            onClick={() => { setResult(null); setPreviewImageUrl(null); setFeedbackSent(false); }}
+            onClick={() => { setResult(null); setPreviewImageUrl(null); setFeedbackSent(false); setShowCorrectionFlow(false); setCorrectionSearch(''); }}
             data-testid="back-btn"
           >
             ← Voltar
@@ -2668,20 +2687,91 @@ function App() {
           </div>
 
           {/* BOTÕES DE FEEDBACK - FLUXO SEGURO */}
-          {!feedbackSent && r.source !== 'new_dish' && (
+          {!feedbackSent && r.source !== 'new_dish' && !showCorrectionFlow && (
             <div className="feedback-section" data-testid="feedback-section">
               <p className="feedback-question">Este reconhecimento está correto?</p>
               <div className="feedback-btns">
                 <button className="fb-btn correct" onClick={sendFeedbackCorrect} data-testid="feedback-correct-btn">
-                  ✅ Sim, está correto
+                  Sim, está correto
                 </button>
                 <button className="fb-btn incorrect" onClick={sendToModerationQueue} data-testid="feedback-incorrect-btn">
-                  ❌ Não, tentar novamente
-                </button>
-                <button className="fb-btn back" onClick={clearResult} data-testid="feedback-back-btn">
-                  ← Voltar
+                  Não, está errado
                 </button>
               </div>
+            </div>
+          )}
+
+          {/* FLUXO DE CORREÇÃO - 3 opções */}
+          {showCorrectionFlow && !feedbackSent && (
+            <div className="feedback-section correction-flow" data-testid="correction-flow">
+              <p className="feedback-question">Qual é o prato correto?</p>
+              
+              <input
+                type="text"
+                value={correctionSearch}
+                onChange={e => setCorrectionSearch(e.target.value)}
+                placeholder="Buscar prato..."
+                data-testid="correction-search-input"
+                style={{
+                  width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.08)',
+                  color: '#fff', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '10px',
+                  fontSize: '15px', marginBottom: '8px', boxSizing: 'border-box'
+                }}
+              />
+              
+              <div style={{
+                maxHeight: '200px', overflowY: 'auto', marginBottom: '10px',
+                borderRadius: '10px', border: '1px solid rgba(255,255,255,0.1)'
+              }}>
+                {dishes
+                  .filter(d => {
+                    const name = (d.nome || d.name || d.slug || '').toLowerCase();
+                    return !correctionSearch || name.includes(correctionSearch.toLowerCase());
+                  })
+                  .sort((a, b) => (a.nome || a.name || '').localeCompare(b.nome || b.name || ''))
+                  .slice(0, 30)
+                  .map(d => (
+                    <button
+                      key={d.slug}
+                      onClick={() => sendCorrectionWithDish(d.nome || d.name || d.slug)}
+                      data-testid={`correction-dish-${d.slug}`}
+                      style={{
+                        display: 'block', width: '100%', padding: '10px 14px', textAlign: 'left',
+                        background: 'transparent', color: '#e2e8f0', border: 'none',
+                        borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer',
+                        fontSize: '14px'
+                      }}
+                    >
+                      {d.nome || d.name || d.slug}
+                    </button>
+                  ))
+                }
+              </div>
+
+              <div className="feedback-btns" style={{ gap: '8px' }}>
+                <button 
+                  className="fb-btn incorrect" 
+                  onClick={sendCorrectionNotInList} 
+                  data-testid="correction-not-in-list-btn"
+                  style={{ fontSize: '14px', padding: '10px' }}
+                >
+                  Prato não está na lista
+                </button>
+                <button 
+                  className="fb-btn back" 
+                  onClick={() => { setShowCorrectionFlow(false); setCorrectionSearch(''); }} 
+                  data-testid="correction-cancel-btn"
+                  style={{ fontSize: '14px', padding: '10px' }}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {feedbackSent && (
+            <div style={{ textAlign: 'center', padding: '12px', color: '#22c55e', fontSize: '14px' }} data-testid="feedback-sent-msg">
+              Registrado na calibração
             </div>
           )}
 
