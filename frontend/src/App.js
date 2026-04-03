@@ -1275,10 +1275,10 @@ function App() {
 
   // Enviar feedback - CORRETO
   const sendFeedbackCorrect = async () => {
-    if (!lastImageBlob || !result?.dish) return;
-    
-    // Registrar na calibracao
+    // SEMPRE registrar na calibracao (independente do blob)
     logCalibrationSample(true);
+    
+    if (!lastImageBlob || !result?.dish) return;
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
@@ -1308,14 +1308,25 @@ function App() {
     } catch (e) {
       console.error('Erro ao enviar feedback:', e);
     }
+    
+    // Garantir que feedback visual muda mesmo sem blob
+    setFeedbackSent(true);
   };
 
   // Enviar para fila de moderação - Usuário reporta que está incorreto
   const sendToModerationQueue = async () => {
-    if (!lastImageBlob || !result) return;
+    if (!result) return;
     
-    // Registrar na calibracao como INCORRETO
+    // SEMPRE registrar na calibracao como INCORRETO (independente do blob)
     logCalibrationSample(false, result?.dish || "");
+    
+    if (!lastImageBlob) {
+      // Sem blob, apenas registrar calibracao e voltar
+      setFeedbackSent(true);
+      setShowFeedback(false);
+      clearResult();
+      return;
+    }
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
@@ -1341,11 +1352,13 @@ function App() {
       if (data.ok) {
         setFeedbackSent(true);
         setShowFeedback(false);
-        // Limpar e voltar para câmera
         clearResult();
       }
     } catch (e) {
       console.error('Erro ao enviar para moderação:', e);
+      // Mesmo com erro na moderação, feedback visual deve mudar
+      setFeedbackSent(true);
+      clearResult();
     }
   };
 
@@ -2490,23 +2503,7 @@ function App() {
             </>
           )}
 
-          {/* BOTÃO CORRIGIR - Aparece quando confiança é BAIXA ou MÉDIA */}
-          {(r.confidence === 'baixa' || r.confidence === 'média' || r.confidence === 'media') && (
-            <div className="ia-disponivel-box" data-testid="ia-disponivel-box">
-              <p className="ia-hint">{(r.confidence === 'média' || r.confidence === 'media') ? 'Nao esta correto?' : 'Prato nao reconhecido'}</p>
-              <button 
-                className="corrigir-manual-btn"
-                onClick={() => setShowFeedback(true)}
-                data-testid="corrigir-manual-btn"
-              >
-                Corrigir manualmente
-              </button>
-            </div>
-          )}
-
-          {/* ══════════════════════════════════════════════════════════
-              VISTA BUFFET - Informações para DECISÃO RÁPIDA
-              ══════════════════════════════════════════════════════════ */}
+          {/* VISTA BUFFET - Informações para DECISÃO RÁPIDA */}
           
           {/* ALÉRGENOS */}
           <div className={`allergen-section ${allergenInfo.hasAllergens ? 'has-allergens' : 'no-allergens'}`}>
