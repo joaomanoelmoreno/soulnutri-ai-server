@@ -2729,7 +2729,7 @@ function App() {
                     return !correctionSearch || name.includes(correctionSearch.toLowerCase());
                   })
                   .sort((a, b) => (a.nome || a.name || '').localeCompare(b.nome || b.name || ''))
-                  .slice(0, 30)
+                  .slice(0, correctionSearch ? 50 : 206)
                   .map(d => (
                     <button
                       key={d.slug}
