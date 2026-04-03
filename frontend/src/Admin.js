@@ -2818,33 +2818,44 @@ export default function Admin() {
                           </>
                         )}
                         {correctingItemId === item.id ? (
-                          <div style={{ display: 'flex', gap: '8px', flex: 1, minWidth: '200px' }}>
-                            <input
-                              type="text"
+                          <div style={{ display: 'flex', gap: '8px', flex: 1, minWidth: '200px', flexWrap: 'wrap' }}>
+                            <select
                               value={correctionName}
                               onChange={e => setCorrectionName(e.target.value)}
-                              placeholder="Nome correto do prato..."
-                              data-testid={`moderation-correction-input-${item.id}`}
+                              data-testid={`moderation-correction-select-${item.id}`}
                               style={{
                                 flex: 1,
+                                minWidth: '200px',
                                 background: '#0f172a',
                                 color: '#e2e8f0',
                                 border: '1px solid #334155',
                                 borderRadius: '8px',
                                 padding: '8px 12px',
-                                fontSize: '13px'
+                                fontSize: '13px',
+                                cursor: 'pointer'
                               }}
-                            />
+                            >
+                              <option value="">Selecione o prato correto...</option>
+                              {dishes
+                                .sort((a, b) => (a.nome || a.name || '').localeCompare(b.nome || b.name || ''))
+                                .map(d => (
+                                  <option key={d.slug} value={d.nome || d.name || d.slug}>
+                                    {d.nome || d.name || d.slug}
+                                  </option>
+                                ))
+                              }
+                            </select>
                             <button
                               onClick={() => correctModerationItem(item.id)}
                               data-testid={`moderation-save-correction-${item.id}`}
+                              disabled={!correctionName}
                               style={{
-                                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                                background: correctionName ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)' : '#334155',
                                 color: '#fff',
                                 border: 'none',
                                 padding: '8px 16px',
                                 borderRadius: '8px',
-                                cursor: 'pointer',
+                                cursor: correctionName ? 'pointer' : 'not-allowed',
                                 fontWeight: 'bold',
                                 fontSize: '13px'
                               }}

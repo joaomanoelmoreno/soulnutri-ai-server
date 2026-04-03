@@ -1248,18 +1248,28 @@ function App() {
 
   // Registrar amostra de calibracao (chamado por Sim e Nao)
   const logCalibrationSample = async (isCorrect, dishReal = '') => {
-    if (!result?.score) return;
+    const scoreVal = result?.score;
+    const dishClip = result?.dish || "";
+    console.log('[CALIBRATION] Tentando registrar:', { isCorrect, dishClip, dishReal, scoreVal, hasResult: !!result });
+    
+    if (scoreVal === undefined || scoreVal === null) {
+      console.warn('[CALIBRATION] Score nao disponivel, abortando');
+      return;
+    }
+    
     try {
       const fd = new FormData();
-      fd.append("dish_clip", result.dish || "");
-      fd.append("dish_real", isCorrect ? (result.dish || "") : dishReal);
+      fd.append("dish_clip", dishClip);
+      fd.append("dish_real", isCorrect ? dishClip : (dishReal || dishClip));
       fd.append("is_correct", isCorrect ? "true" : "false");
-      fd.append("score", String(result.score || 0));
-      fd.append("confidence", result.confidence || "");
-      fd.append("source", result.source || "");
-      await fetch(`${API}/ai/calibration/log`, { method: "POST", body: fd });
+      fd.append("score", String(scoreVal));
+      fd.append("confidence", result?.confidence || "");
+      fd.append("source", result?.source || "");
+      const res = await fetch(`${API}/ai/calibration/log`, { method: "POST", body: fd });
+      const data = await res.json();
+      console.log('[CALIBRATION] Resposta:', data);
     } catch (e) {
-      console.error('Erro ao registrar calibracao:', e);
+      console.error('[CALIBRATION] Erro ao registrar:', e);
     }
   };
 
@@ -2373,7 +2383,7 @@ function App() {
                     Tente outra foto ou consulte o atendente
                   </div>
                 </div>
-              ) : r.confidence === 'média' ? (
+              ) : (r.confidence === 'média' || r.confidence === 'media') ? (
                 <div data-testid="medium-confidence-box">
                   <div style={{
                     background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.06))',
@@ -2481,9 +2491,9 @@ function App() {
           )}
 
           {/* BOTÃO CORRIGIR - Aparece quando confiança é BAIXA ou MÉDIA */}
-          {(r.confidence === 'baixa' || r.confidence === 'média') && (
+          {(r.confidence === 'baixa' || r.confidence === 'média' || r.confidence === 'media') && (
             <div className="ia-disponivel-box" data-testid="ia-disponivel-box">
-              <p className="ia-hint">{r.confidence === 'média' ? 'Nao esta correto?' : 'Prato nao reconhecido'}</p>
+              <p className="ia-hint">{(r.confidence === 'média' || r.confidence === 'media') ? 'Nao esta correto?' : 'Prato nao reconhecido'}</p>
               <button 
                 className="corrigir-manual-btn"
                 onClick={() => setShowFeedback(true)}

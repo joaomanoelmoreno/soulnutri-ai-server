@@ -2271,7 +2271,7 @@ async def log_calibration_sample(
         except (ValueError, TypeError):
             score_float = 0.0
         
-        if score_float <= 0:
+        if score_float < 0:
             return {"ok": False, "message": "Score invalido"}
         
         doc = {
