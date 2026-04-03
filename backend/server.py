@@ -5311,7 +5311,23 @@ async def approve_moderation_item(item_id: str):
             }}
         )
 
-        logger.info(f"[MODERATION] Aprovado: {doc.get('original_dish_display')}")
+        # Registrar na calibracao: CLIP acertou (usuario errou ao clicar Nao)
+        score_val = doc.get("score", 0)
+        try:
+            score_val = float(score_val)
+        except (ValueError, TypeError):
+            score_val = 0.0
+        await db.calibration_log.insert_one({
+            "dish_clip": doc.get("original_dish", ""),
+            "dish_real": doc.get("original_dish", ""),
+            "is_correct": True,
+            "score": score_val,
+            "confidence": doc.get("confidence", ""),
+            "source": doc.get("source", "moderation_approved"),
+            "created_at": datetime.utcnow()
+        })
+
+        logger.info(f"[MODERATION] Aprovado: {doc.get('original_dish_display')} | Score: {score_val} -> CALIBRATION: correto")
         return {"ok": True, "message": "Item aprovado e foto salva no dataset"}
 
     except Exception as e:
@@ -5321,7 +5337,7 @@ async def approve_moderation_item(item_id: str):
 
 @api_router.post("/admin/moderation/{item_id}/reject")
 async def reject_moderation_item(item_id: str):
-    """Admin rejeita o item (descarta)."""
+    """Admin rejeita o item — FALSO POSITIVO: CLIP identificou algo errado."""
     from bson import ObjectId
 
     try:
@@ -5341,8 +5357,24 @@ async def reject_moderation_item(item_id: str):
             }}
         )
 
-        logger.info(f"[MODERATION] Rejeitado: {doc.get('original_dish_display')}")
-        return {"ok": True, "message": "Item rejeitado"}
+        # Registrar na calibracao: FALSO POSITIVO (dado critico para Youden)
+        score_val = doc.get("score", 0)
+        try:
+            score_val = float(score_val)
+        except (ValueError, TypeError):
+            score_val = 0.0
+        await db.calibration_log.insert_one({
+            "dish_clip": doc.get("original_dish", ""),
+            "dish_real": "FALSO_POSITIVO",
+            "is_correct": False,
+            "score": score_val,
+            "confidence": doc.get("confidence", ""),
+            "source": doc.get("source", "moderation_rejected"),
+            "created_at": datetime.utcnow()
+        })
+
+        logger.info(f"[MODERATION] Rejeitado (FALSO POSITIVO): {doc.get('original_dish_display')} | Score: {score_val} -> CALIBRATION: incorreto")
+        return {"ok": True, "message": "Item rejeitado (falso positivo registrado na calibracao)"}
 
     except Exception as e:
         logger.error(f"[MODERATION] Erro ao rejeitar: {e}")
@@ -5402,7 +5434,23 @@ async def correct_moderation_item(item_id: str, request: Request):
             }}
         )
 
-        logger.info(f"[MODERATION] Corrigido: {doc.get('original_dish_display')} -> {correct_name}")
+        # Registrar na calibracao: CLIP errou o prato (admin corrigiu)
+        score_val = doc.get("score", 0)
+        try:
+            score_val = float(score_val)
+        except (ValueError, TypeError):
+            score_val = 0.0
+        await db.calibration_log.insert_one({
+            "dish_clip": doc.get("original_dish", ""),
+            "dish_real": correct_name,
+            "is_correct": False,
+            "score": score_val,
+            "confidence": doc.get("confidence", ""),
+            "source": doc.get("source", "moderation_corrected"),
+            "created_at": datetime.utcnow()
+        })
+
+        logger.info(f"[MODERATION] Corrigido: {doc.get('original_dish_display')} -> {correct_name} | Score: {score_val} -> CALIBRATION: incorreto")
         return {
             "ok": True,
             "message": f"Corrigido para '{correct_name}' e foto salva no dataset",
