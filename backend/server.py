@@ -1428,15 +1428,17 @@ Responda APENAS JSON valido."""
 
 
 @api_router.get("/ai/dishes")
-async def list_dishes():
-    """Lista todos os pratos no indice"""
+async def list_dishes_combined():
+    """Lista todos os pratos: indice IA + MongoDB (lista completa)."""
     try:
         from ai.index import get_index
         from ai.policy import get_dish_name, get_category, get_category_emoji
         
         index = get_index()
-        
+        seen_slugs = set()
         dishes = []
+        
+        # 1. Pratos do indice de IA
         for dish_slug, data in index.metadata.items():
             dishes.append({
                 'slug': dish_slug,
@@ -1445,8 +1447,25 @@ async def list_dishes():
                 'category_emoji': get_category_emoji(get_category(dish_slug)),
                 'image_count': data.get('image_count', 0)
             })
+            seen_slugs.add(dish_slug.lower().replace(' ', '_').replace('-', '_'))
         
-        # Ordenar por nome
+        # 2. Pratos do MongoDB que nao estao no indice
+        async for doc in db.dishes.find({}, {"_id": 0, "slug": 1, "nome": 1, "name": 1, "categoria": 1, "category_emoji": 1}):
+            slug = doc.get("slug", "")
+            if not slug:
+                continue
+            norm_slug = slug.lower().replace(' ', '_').replace('-', '_')
+            if norm_slug in seen_slugs:
+                continue
+            seen_slugs.add(norm_slug)
+            name = doc.get("nome") or doc.get("name") or slug.replace("_", " ").title()
+            dishes.append({
+                "slug": slug,
+                "name": name,
+                "category": doc.get("categoria", "outros"),
+                "category_emoji": doc.get("category_emoji", "")
+            })
+        
         dishes.sort(key=lambda x: x['name'])
         
         return {
@@ -1775,37 +1794,6 @@ async def google_quota_status():
                 "error": error_str[:200],
                 "recommendation": "Verifique a configuracao da GOOGLE_API_KEY"
             }
-
-
-@api_router.get("/ai/dishes")
-async def list_dishes():
-    """
-    Lista todos os pratos disponiveis para selecao no feedback.
-    """
-    try:
-        from ai.policy import DISH_NAMES, DISH_CATEGORIES, get_category_emoji
-        
-        dishes = []
-        for slug, name in sorted(DISH_NAMES.items(), key=lambda x: x[1]):
-            category = DISH_CATEGORIES.get(slug, 'outros')
-            dishes.append({
-                "slug": slug,
-                "name": name,
-                "category": category,
-                "category_emoji": get_category_emoji(category)
-            })
-        
-        return {
-            "ok": True,
-            "total": len(dishes),
-            "dishes": dishes
-        }
-    except Exception as e:
-        logger.error(f"Erro ao listar pratos: {e}")
-        return JSONResponse(
-            status_code=500,
-            content={"ok": False, "error": str(e)}
-        )
 
 
 @api_router.post("/ai/create-dish")
