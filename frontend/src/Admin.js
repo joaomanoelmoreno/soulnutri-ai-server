@@ -379,6 +379,22 @@ export default function Admin() {
     setCalibrationLoading(false);
   };
 
+  // Deletar amostra de calibração
+  const deleteCalibrationSample = async (sampleId) => {
+    try {
+      const res = await xhrDelete(`${API}/ai/calibration/${sampleId}`);
+      const data = await res.json();
+      if (data.ok) {
+        notify('Amostra deletada', 'success');
+        loadCalibrationData();
+      } else {
+        notify('Erro ao deletar: ' + (data.error || data.message), 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
   const approveModerationItem = async (itemId) => {
     try {
       const res = await fetch(`${API}/admin/moderation/${itemId}/approve`, { method: 'POST' });
@@ -3041,13 +3057,14 @@ export default function Admin() {
                           <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Acertou?</th>
                           <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Fonte</th>
                           <th style={{ textAlign: 'right', padding: '8px', color: '#94a3b8' }}>Data</th>
+                          <th style={{ textAlign: 'center', padding: '8px', color: '#94a3b8' }}>Acao</th>
                         </tr>
                       </thead>
                       <tbody>
                         {calibrationData.samples.map((s, i) => (
-                          <tr key={i} style={{ borderBottom: '1px solid #1e293b', background: s.is_correct ? 'transparent' : 'rgba(239,68,68,0.05)' }}>
-                            <td style={{ padding: '6px 8px', color: '#e2e8f0' }}>{s.dish_slug || '-'}</td>
-                            <td style={{ padding: '6px 8px', color: s.is_correct ? '#22c55e' : '#ef4444' }}>{s.original_dish || s.dish_slug || '-'}</td>
+                          <tr key={s._id || i} style={{ borderBottom: '1px solid #1e293b', background: s.is_correct ? 'transparent' : 'rgba(239,68,68,0.05)' }}>
+                            <td style={{ padding: '6px 8px', color: '#e2e8f0' }}>{s.dish_clip || s.dish_slug || '-'}</td>
+                            <td style={{ padding: '6px 8px', color: s.is_correct ? '#22c55e' : '#ef4444' }}>{s.dish_real || s.original_dish || s.dish_clip || '-'}</td>
                             <td style={{ textAlign: 'center', padding: '6px 8px', color: '#e2e8f0', fontFamily: 'monospace', fontWeight: 'bold' }}>
                               {s.score ? (s.score * 100).toFixed(1) + '%' : '-'}
                             </td>
@@ -3057,6 +3074,21 @@ export default function Admin() {
                             <td style={{ textAlign: 'center', padding: '6px 8px', color: '#94a3b8', fontSize: '11px' }}>{s.source || '-'}</td>
                             <td style={{ textAlign: 'right', padding: '6px 8px', color: '#64748b', fontSize: '11px' }}>
                               {s.created_at ? new Date(s.created_at).toLocaleString('pt-BR') : '-'}
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '6px 8px' }}>
+                              {s._id && (
+                                <button
+                                  data-testid={`calibration-delete-${i}`}
+                                  onClick={() => deleteCalibrationSample(s._id)}
+                                  style={{
+                                    background: 'transparent', border: '1px solid #475569', color: '#ef4444',
+                                    borderRadius: '4px', cursor: 'pointer', padding: '2px 8px', fontSize: '11px'
+                                  }}
+                                  title="Deletar amostra"
+                                >
+                                  Deletar
+                                </button>
+                              )}
                             </td>
                           </tr>
                         ))}

@@ -2249,21 +2249,81 @@ async def get_feedback_stats():
         return {"ok": False, "error": str(e)}
 
 
+@api_router.post("/ai/calibration/log")
+async def log_calibration_sample(
+    dish_clip: str = Form(""),
+    dish_real: str = Form(""),
+    is_correct: str = Form("true"),
+    score: str = Form("0"),
+    confidence: str = Form(""),
+    source: str = Form("")
+):
+    """
+    Registra uma amostra de calibracao (sem upload de imagem).
+    Chamado automaticamente pelo app quando usuario confirma ou corrige um prato.
+    """
+    try:
+        from datetime import datetime
+        
+        is_correct_bool = is_correct.lower() == "true"
+        try:
+            score_float = float(score)
+        except (ValueError, TypeError):
+            score_float = 0.0
+        
+        if score_float <= 0:
+            return {"ok": False, "message": "Score invalido"}
+        
+        doc = {
+            "dish_clip": dish_clip,
+            "dish_real": dish_real if not is_correct_bool else dish_clip,
+            "is_correct": is_correct_bool,
+            "score": score_float,
+            "confidence": confidence,
+            "source": source,
+            "created_at": datetime.utcnow()
+        }
+        result = await db.calibration_log.insert_one(doc)
+        
+        logger.info(f"[CALIBRATION] {dish_clip} -> {'OK' if is_correct_bool else 'ERRADO (real: ' + dish_real + ')'} score={score_float:.2%}")
+        
+        return {
+            "ok": True,
+            "id": str(result.inserted_id),
+            "message": "Amostra registrada"
+        }
+    except Exception as e:
+        logger.error(f"Erro ao registrar calibracao: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/ai/calibration/{sample_id}")
+async def delete_calibration_sample(sample_id: str):
+    """Deleta uma amostra de calibracao pelo ID."""
+    try:
+        from bson import ObjectId
+        result = await db.calibration_log.delete_one({"_id": ObjectId(sample_id)})
+        if result.deleted_count > 0:
+            return {"ok": True, "message": "Amostra deletada"}
+        return {"ok": False, "message": "Amostra nao encontrada"}
+    except Exception as e:
+        logger.error(f"Erro ao deletar amostra: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.get("/ai/calibration")
 async def get_calibration_data():
     """
-    Retorna dados de calibracao: todas as amostras de feedback com scores,
-    estatisticas de distribuicao e calculo do threshold otimo via Youden's J.
+    Retorna dados de calibracao da colecao calibration_log.
+    Estatisticas, distribuicao de scores e calculo de Youden's J.
     """
     try:
-        # Buscar todos os feedbacks que possuem score
+        # Buscar todas as amostras
         pipeline_samples = [
-            {"$match": {"score": {"$exists": True, "$gt": 0}}},
             {"$project": {
-                "_id": 0,
-                "dish_slug": 1,
-                "target_slug": 1,
-                "original_dish": 1,
+                "_id": {"$toString": "$_id"},
+                "dish_clip": 1,
+                "dish_real": 1,
                 "is_correct": 1,
                 "score": 1,
                 "confidence": 1,
@@ -2272,7 +2332,7 @@ async def get_calibration_data():
             }},
             {"$sort": {"created_at": -1}}
         ]
-        samples = await db.feedback.aggregate(pipeline_samples).to_list(1000)
+        samples = await db.calibration_log.aggregate(pipeline_samples).to_list(1000)
         
         # Estatisticas gerais
         total = len(samples)

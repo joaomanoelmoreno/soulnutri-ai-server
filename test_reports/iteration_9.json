@@ -1,0 +1,81 @@
+{
+  "summary": "Completed testing of CLIP Calibration fixes. Backend: 10/10 tests passed (100%). Frontend: Calibration tab renders correctly with thresholds, stats, distribution table, and delete buttons working.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_calibration_fixes.py",
+    "/app/test_reports/pytest/pytest_calibration_fixes.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "✓ POST /api/ai/calibration/log - lightweight logging endpoint works correctly (no file upload needed)",
+    "✓ POST /api/ai/calibration/log registers is_correct=true samples correctly",
+    "✓ POST /api/ai/calibration/log registers is_correct=false samples correctly",
+    "✓ DELETE /api/ai/calibration/{id} deletes samples by ID correctly",
+    "✓ DELETE /api/ai/calibration/{id} returns ok=false for non-existent samples",
+    "✓ GET /api/ai/calibration returns samples from calibration_log collection with _id field",
+    "✓ Thresholds correctly displayed: 85% alta, 50% media, <50% rejeicao",
+    "✓ Admin 'Calibracao CLIP' tab shows delete button for each sample",
+    "✓ Admin delete button removes sample and refreshes UI (notification 'Amostra deletada' shown)",
+    "✓ App.js logCalibrationSample() called from BOTH sendFeedbackCorrect() (Sim) and sendToModerationQueue() (Não)",
+    "✓ New calibration_log MongoDB collection used (separate from feedback collection)"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_calibration_fixes.py"
+  ],
+  "success_rate": {
+    "backend": "100% (10/10 passed)",
+    "frontend": "100%"
+  },
+  "seed_data_creation": "Test samples created and cleaned up during testing",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "CLIP calibration fixes validated. All features working: POST /api/ai/calibration/log (lightweight logging), DELETE /api/ai/calibration/{id}, GET /api/ai/calibration with _id field. Both Sim and Não buttons in App.js call logCalibrationSample(). Admin Calibracao tab shows delete buttons that work correctly.",
+  "features_tested": {
+    "POST /api/ai/calibration/log (is_correct=true)": {
+      "status": "PASS",
+      "details": "Registers correct samples with dish_clip, dish_real, score, confidence, source"
+    },
+    "POST /api/ai/calibration/log (is_correct=false)": {
+      "status": "PASS",
+      "details": "Registers incorrect samples correctly"
+    },
+    "DELETE /api/ai/calibration/{id}": {
+      "status": "PASS",
+      "details": "Deletes samples by ID, returns ok=false for non-existent/invalid IDs"
+    },
+    "GET /api/ai/calibration": {
+      "status": "PASS",
+      "details": "Returns samples from calibration_log collection with _id field for deletion"
+    },
+    "Admin Calibracao tab delete buttons": {
+      "status": "PASS",
+      "details": "Delete buttons visible for each sample, clicking removes sample and shows notification"
+    },
+    "Thresholds display": {
+      "status": "PASS",
+      "details": "85% alta, 50% media, <50% rejeicao displayed correctly"
+    },
+    "App.js logCalibrationSample integration": {
+      "status": "PASS",
+      "details": "Called from both sendFeedbackCorrect() (Sim button) and sendToModerationQueue() (Não button)"
+    }
+  },
+  "api_verification": {
+    "POST /api/ai/calibration/log": "PASS - Lightweight logging without file upload",
+    "DELETE /api/ai/calibration/{id}": "PASS - Deletes sample by ObjectId",
+    "GET /api/ai/calibration": "PASS - Returns samples with _id, stats, distribution, current_thresholds"
+  },
+  "threshold_values_verified": {
+    "alta_confianca": ">=0.85 (85%)",
+    "media_confianca": ">=0.50 (50%)",
+    "rejeicao": "<0.50 (<50%)"
+  }
+}

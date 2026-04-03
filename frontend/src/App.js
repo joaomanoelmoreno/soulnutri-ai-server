@@ -1246,9 +1246,29 @@ function App() {
     setSearchFilter("");
   };
 
+  // Registrar amostra de calibracao (chamado por Sim e Nao)
+  const logCalibrationSample = async (isCorrect, dishReal = '') => {
+    if (!result?.score) return;
+    try {
+      const fd = new FormData();
+      fd.append("dish_clip", result.dish || "");
+      fd.append("dish_real", isCorrect ? (result.dish || "") : dishReal);
+      fd.append("is_correct", isCorrect ? "true" : "false");
+      fd.append("score", String(result.score || 0));
+      fd.append("confidence", result.confidence || "");
+      fd.append("source", result.source || "");
+      await fetch(`${API}/ai/calibration/log`, { method: "POST", body: fd });
+    } catch (e) {
+      console.error('Erro ao registrar calibracao:', e);
+    }
+  };
+
   // Enviar feedback - CORRETO
   const sendFeedbackCorrect = async () => {
     if (!lastImageBlob || !result?.dish) return;
+    
+    // Registrar na calibracao
+    logCalibrationSample(true);
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
@@ -1283,6 +1303,9 @@ function App() {
   // Enviar para fila de moderação - Usuário reporta que está incorreto
   const sendToModerationQueue = async () => {
     if (!lastImageBlob || !result) return;
+    
+    // Registrar na calibracao como INCORRETO
+    logCalibrationSample(false, result?.dish || "");
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
