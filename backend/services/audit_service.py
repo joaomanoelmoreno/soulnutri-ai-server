@@ -118,6 +118,7 @@ def audit_all_dishes() -> Dict[str, Any]:
                 "descricao": db_doc.get("descricao") or db_doc.get("description", ""),
                 "nutricao": db_doc.get("nutricao") or db_doc.get("nutrition", {}),
                 "alergenos": db_doc.get("alergenos") or db_doc.get("allergens", []),
+                "contem_gluten": db_doc.get("contem_gluten") if db_doc.get("contem_gluten") is not None else db_doc.get("has_gluten"),
             }
         
         # 2. Fallback: dish_info.json local
@@ -277,18 +278,19 @@ def audit_all_dishes() -> Dict[str, Any]:
                     has_issue = True
                     break
         
-        # Verificar conflitos de alérgenos
-        contem_gluten = info.get('contem_gluten', False)
-        for ing in INGREDIENTES_GLUTEN:
-            if ing in ingredientes_text and not contem_gluten:
-                problems['allergen_conflicts'].append({
-                    'slug': db_slug,
-                    'nome': nome,
-                    'issue': f'Contém "{ing}" mas não está marcado como contém glúten',
-                    'severity': 'medium'
-                })
-                has_issue = True
-                break
+        # Verificar conflitos de alérgenos - só flaggear se explicitamente False
+        contem_gluten = info.get('contem_gluten')
+        if contem_gluten is False:
+            for ing in INGREDIENTES_GLUTEN:
+                if ing in ingredientes_text:
+                    problems['allergen_conflicts'].append({
+                        'slug': db_slug,
+                        'nome': nome,
+                        'issue': f'Contém "{ing}" mas marcado como NÃO contém glúten',
+                        'severity': 'medium'
+                    })
+                    has_issue = True
+                    break
         
         if has_issue:
             dishes_with_issues += 1
