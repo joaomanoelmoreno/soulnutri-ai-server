@@ -8,7 +8,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://clip-calibration.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://nutrition-verify-hub.preview.emergentagent.com').rstrip('/')
 
 
 class TestAdminDishesFull:

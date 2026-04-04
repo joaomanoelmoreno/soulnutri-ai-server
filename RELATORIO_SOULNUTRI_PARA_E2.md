@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://clip-calibration.preview.emergentagent.com
-- Admin: https://clip-calibration.preview.emergentagent.com/admin
-- Lista de Pratos: https://clip-calibration.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://nutrition-verify-hub.preview.emergentagent.com
+- Admin: https://nutrition-verify-hub.preview.emergentagent.com/admin
+- Lista de Pratos: https://nutrition-verify-hub.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

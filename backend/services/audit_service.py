@@ -87,32 +87,61 @@ def audit_all_dishes() -> Dict[str, Any]:
             if db_slug not in slug_to_folder:
                 slug_to_folder[db_slug] = dish_dir
     
+    # Pre-carregar TODOS os pratos do MongoDB de uma vez (performance)
+    db_dishes = {}
+    try:
+        import pymongo
+        client2 = pymongo.MongoClient(os.environ.get("MONGO_URL"), serverSelectionTimeoutMS=5000)
+        db2 = client2[os.environ.get("DB_NAME", "soulnutri")]
+        for doc in db2.dishes.find({}, {"_id": 0}):
+            slug = doc.get("slug", "")
+            if slug:
+                db_dishes[slug] = doc
+        client2.close()
+        logger.info(f"[AUDIT] Carregados {len(db_dishes)} pratos do MongoDB")
+    except Exception as e:
+        logger.warning(f"[AUDIT] Erro ao carregar MongoDB: {e}")
+
     for db_slug, dish_dir in slug_to_folder.items():
         total_dishes += 1
-        info_path = dish_dir / "dish_info.json"
         
-        # Verificar se dish_info.json existe
-        if not info_path.exists():
-            problems['missing_info_file'].append({
-                'slug': db_slug,
-                'issue': 'Arquivo dish_info.json não existe',
-                'severity': 'high'
-            })
-            dishes_with_issues += 1
-            continue
+        # Fonte de verdade: MongoDB. Fallback: dish_info.json local.
+        info = None
         
-        # Carregar e analisar
-        try:
-            with open(info_path, 'r', encoding='utf-8') as f:
-                info = json.load(f)
-        except Exception as e:
-            problems['missing_info_file'].append({
-                'slug': db_slug,
-                'issue': f'Erro ao ler arquivo: {str(e)}',
-                'severity': 'high'
-            })
-            dishes_with_issues += 1
-            continue
+        # 1. Tentar ler do MongoDB (já carregado em memória)
+        db_doc = db_dishes.get(db_slug)
+        if db_doc:
+            info = {
+                "nome": db_doc.get("nome") or db_doc.get("name", ""),
+                "categoria": db_doc.get("categoria") or db_doc.get("category", ""),
+                "ingredientes": db_doc.get("ingredientes", []),
+                "descricao": db_doc.get("descricao", ""),
+                "nutricao": db_doc.get("nutricao") or db_doc.get("nutrition", {}),
+                "alergenos": db_doc.get("alergenos", []),
+            }
+        
+        # 2. Fallback: dish_info.json local
+        if not info:
+            info_path = dish_dir / "dish_info.json"
+            if not info_path.exists():
+                problems['missing_info_file'].append({
+                    'slug': db_slug,
+                    'issue': 'Sem dados no MongoDB e sem dish_info.json local',
+                    'severity': 'high'
+                })
+                dishes_with_issues += 1
+                continue
+            try:
+                with open(info_path, 'r', encoding='utf-8') as f:
+                    info = json.load(f)
+            except Exception as e:
+                problems['missing_info_file'].append({
+                    'slug': db_slug,
+                    'issue': f'Erro ao ler arquivo: {str(e)}',
+                    'severity': 'high'
+                })
+                dishes_with_issues += 1
+                continue
         
         has_issue = False
         
@@ -138,9 +167,10 @@ def audit_all_dishes() -> Dict[str, Any]:
             })
             has_issue = True
         
-        # Verificar ingredientes
+        # Verificar ingredientes (só se prato tem dados preenchidos no MongoDB)
         ingredientes = info.get('ingredientes', [])
-        if not ingredientes or len(ingredientes) == 0:
+        has_some_data = bool(info.get('descricao') or info.get('categoria') or nutricao)
+        if has_some_data and (not ingredientes or len(ingredientes) == 0):
             problems['missing_ingredients'].append({
                 'slug': db_slug,
                 'nome': nome,
@@ -149,9 +179,10 @@ def audit_all_dishes() -> Dict[str, Any]:
             })
             has_issue = True
         
-        # Verificar descrição
-        descricao = info.get('descricao', '')
-        if not descricao or len(descricao) < 10:
+        # Verificar descrição (só se prato tem dados preenchidos)
+        desc_raw = info.get('descricao', '')
+        descricao = desc_raw if isinstance(desc_raw, str) else str(desc_raw or '')
+        if has_some_data and (not descricao or len(descricao) < 10):
             problems['missing_description'].append({
                 'slug': db_slug,
                 'nome': nome,
@@ -161,8 +192,10 @@ def audit_all_dishes() -> Dict[str, Any]:
             has_issue = True
         
         # Verificar conflitos de categoria
-        categoria = info.get('categoria', '').lower()
-        ingredientes_lower = [i.lower() for i in ingredientes]
+        cat_raw = info.get('categoria', '')
+        categoria = (cat_raw if isinstance(cat_raw, str) else str(cat_raw or '')).lower()
+        ingredientes_list = ingredientes if isinstance(ingredientes, list) else []
+        ingredientes_lower = [str(i).lower() for i in ingredientes_list if i]
         ingredientes_text = ' '.join(ingredientes_lower)
         
         # Função para verificar se ingrediente é de origem animal (excluindo versões vegetais)

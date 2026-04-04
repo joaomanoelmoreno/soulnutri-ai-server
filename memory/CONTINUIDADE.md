@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://clip-calibration.preview.emergentagent.com
+**URL**: https://nutrition-verify-hub.preview.emergentagent.com
 
 ---
 

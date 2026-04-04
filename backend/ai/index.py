@@ -282,7 +282,7 @@ class DishIndex:
     
     def _get_confidence_level(self, score: float) -> str:
         """Converte score em nível de confiança (sincronizado com policy.py)"""
-        if score >= 0.85:
+        if score >= 0.90:
             return "alta"
         elif score >= 0.50:
             return "media"

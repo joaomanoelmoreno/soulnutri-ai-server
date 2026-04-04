@@ -568,8 +568,8 @@ async def identify_image(
             
             logger.info(f"[CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
             
-            # Se CLIP tem confianca >= 85%, usar resultado direto
-            if clip_score >= 0.85 and clip_decision.get('identified'):
+            # Se CLIP tem confianca >= 90%, usar resultado direto
+            if clip_score >= 0.90 and clip_decision.get('identified'):
                 decision = clip_decision
                 decision['source'] = 'local_index'
                 logger.info(f"[CASCATA] CLIP confiante ({clip_score:.0%}) - aceito")
@@ -2413,7 +2413,7 @@ async def get_calibration_data():
         
         # Thresholds atuais
         current_thresholds = {
-            "alta": 0.85,
+            "alta": 0.90,
             "media": 0.50,
             "rejeicao": 0.50
         }

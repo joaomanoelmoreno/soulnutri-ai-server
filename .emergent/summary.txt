@@ -1,35 +1,45 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. Após a migração para o Cloudflare R2, o sistema apresentou problemas de sincronia de contagem no painel Admin, erros no sistema de auditoria, e necessidade de atualização nutricional inteligente para os pratos. Além disso, foi requisitado o bloqueio total do modelo Gemini dentro do restaurante Cibi Sana (usando apenas OpenCLIP local), a limpeza de imagens duplicadas no storage, e a resolução de crashes recentes () durante o scan de imagens reais no buffet, que também revelaram uma baixa precisão do OpenCLIP com base nas regras de pontuação atuais.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. O sistema usa Cloudflare R2 e uma API híbrida (OpenCLIP local + Gemini). O objetivo da sessão era diagnosticar e ajustar os *thresholds* do OpenCLIP que estavam reprovando pratos reais do buffet, criar um dashboard de calibração estatística no Admin para embasar os cortes, corrigir o fluxo de moderação (falsos positivos e pastas de imagens duplicadas), e solucionar bugs crônicos na aba de Auditoria. 
+PRODUCT REQUIREMENTS: Coletar amostras reais do uso do app para calcular precisão/recall, ajustar pontuações de similaridade adequadas para imagens de buffet e garantir a integridade dos dados no MongoDB.
 
-**User's preferred language**: Português (Brasil). (INSTRUCT: The next agent MUST respond in Português).
+**User's preferred language**: Português (Brasil). (INSTRUCT: The next agent MUST respond in Português only).
 
 **what currently exists?** 
-Uma aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens no Cloudflare R2 totalmente funcional. O backend possui um serviço de IA duplo: OpenCLIP (local, via matriz de embeddings ) para o Cibi Sana e Gemini Flash (via Emergent LLM Key) para locais externos. O frontend envia a imagem via FormData. O painel Admin gerencia pratos, exibe auditorias (agora baseadas no MongoDB) e permite edição direta. A Tabela TACO foi profundamente corrigida para aceitar 255 ingredientes no cálculo nutricional.
+Uma aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens no Cloudflare R2. Uma nova coleção  foi criada para registrar acertos, erros e falsos positivos do IA. O painel Admin agora conta com uma aba Calibracao CLIP. O fluxo do frontend foi simplificado para incluir opções de Correto, Corrigir para outro prato e Não cadastrado. O serviço de salvamento de imagens () foi ajustado para encontrar pastas originais com espaços em vez de criar novas pastas com underscores. O limite de confiança do CLIP foi reajustado para 90% a pedido do usuário.
 
 **Last working item**:
-    - Last item agent was working: Diagnóstico da baixa performance do OpenCLIP. O usuário enviou 57 fotos reais do buffet, onde a maioria falhou (NO) ou deu crash (ERROR). O agente corrigiu os crashes, bloqueou o Gemini definitivamente, e rodou um script para avaliar as fotos com o OpenCLIP. Descobriu-se que o modelo *está* acertando o prato no Top 1, mas o score de similaridade gerado fica entre 65% e 77%, o que cai na regra de baixa confiança (threshold atual é 85% para 'alta' e 90% para não usar fallback).
-    - Status: USER VERIFICATION PENDING / BLOCKED (O agente encontrou a causa raiz, mas encerrou antes de enviar a proposta de solução para o usuário analisar).
-    - Agent Testing Done: Y (Testes via Python local no backend concluídos com as fotos do usuário).
-    - Which testing method agent to use?: manual testing by python -c / bash (para calibrar o threshold de pontuação) e screenshot_tool (para a UI, se necessário).
+    - Last item agent was working: Correção do serviço de Auditoria (). O agente modificou o script para ler os dados do MongoDB (e não de  locais desatualizados). No entanto, o script começou a alertar 188 pratos com ingredientes ou descrições ausentes, o que é ruidoso. O agente estava ajustando as regras para filtrar esse ruído e precisava responder a várias dúvidas do usuário (sobre iOS vs Android, Índice de Youden, e falsos positivos > 90%).
+    - Status: IN PROGRESS
+    - Agent Testing Done: Y (via bash calls to internal script)
+    - Which testing method agent to use?: backend testing agent ou testes manuais via  e .
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-  - Issue 1: (P0) Propor e aplicar solução para a baixa pontuação de confiança do OpenCLIP nas fotos reais.
-     - Attempted fixes: Diagnóstico concluído. O OpenCLIP acerta o prato, mas o threshold atual exige  para identificação segura, o que fotos de buffet reais não estão alcançando (ficam na casa dos 0.70).
-     - Next debug checklist: Apresentar ao usuário a descoberta (ex: O modelo está acertando, mas a exigência de 85% de similaridade é muito alta para fotos reais com iluminação de buffet. Devemos baixar o threshold para 65-70% no Cibi Sana?). Aguardar aprovação e alterar .
-     - Why fix this issue and what will be achieved with the fix?: Permitirá que o aplicativo funcione perfeitamente no restaurante sem rejeitar fotos válidas.
-     - Status: USER VERIFICATION PENDING
-     - Is recurring issue? Y
-     - Should Test frontend/backend/both after fix?: Backend
-     - Blocked on other issue: Nenhuma.
+  - Issue 1: (P0) Finalizar a correção da Auditoria e responder às dúvidas complexas do usuário.
+     - Attempted fixes: O agente migrou o  para consultar o DB (MongoDB). Retirou as travas de limite, mas isso gerou logs de 188 itens com missing_description. 
+     - Next debug checklist: 1) Ajustar os filtros em  para reportar apenas erros severos (ex: conflitos de categoria) e ignorar pratos que apenas não têm descrição preenchida ainda. 2) Responder explicitamente às perguntas do usuário deixadas no chat (explicar o Índice de Youden, a variação de precisão iOS vs Android, e os motivos de 2 falsos positivos entrarem na faixa de 90%).
+     - Why fix this issue and what will be achieved with the fix?: O usuário fez perguntas diretas e pediu explicações lógicas. Ignorar as perguntas e apenas alterar o código quebra a confiança. A auditoria precisa voltar a ser útil.
+     - Status: IN PROGRESS
+     - Is recurring issue? Y (Problemas de auditoria são recorrentes devido à dessincronização passada).
+     - Should Test frontend/backend/both after fix?: Backend.
+     - Blocked on other issue: N/A.
+
+  - Issue 2: (P1) Verificação de pastas de pratos perdidas (Pernil de cordeiro e quiabo com amendoim).
+     - Attempted fixes: O agente fez query no banco e identificou que estão com slugs anômalos ( e ). 
+     - Next debug checklist: Consertar esses slugs no DB e mapeamentos de pastas via bash ou rotas admin.
+     - Why fix this issue and what will be achieved with the fix?: Recuperar as imagens e registros desses pratos para que voltem a aparecer.
+     - Status: NOT STARTED
+     - Is recurring issue? N
+     - Should Test frontend/backend/both after fix?: Backend.
+     - Blocked on other issue: N/A.
 
 **In progress Task List**:
   - Task 1: (P1) Revisão Nutricional dos pratos C a Z.
-     - Where to resume: Utilizar o mesmo script ( ou criar similar) que usa Gemini para deduzir proporções reais de ingredientes e calcula a nutrição com base na  recém-corrigida.
-     - What will be achieved with this?: Todos os pratos terão calorias e macronutrientes realistas.
+     - Where to resume: Continuar o uso do script () que usa Gemini + TACO.
+     - What will be achieved with this?: Padronizar calorias e macronutrientes.
      - Status: NOT STARTED
-     - Should Test frontend/backend/both after fix?: Backend
-     - Blocked on something: Nenhuma.
+     - Should Test frontend/backend/both after fix?: Backend.
+     - Blocked on something: N/A.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
@@ -42,91 +52,90 @@ Uma aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens
     - (P3) Refatorar  (>5000 linhas) e  (>3000 linhas) em módulos menores.
 
 **Completed work in this session**
-- Teste e validação visual de ponta-a-ponta do Cloudflare R2 no painel Admin (DONE).
-- Sincronização do Total de Pratos no Admin: Removido o count obsoleto do arquivo local do IA Index e substituído pelo count real do MongoDB (DONE).
-- Refatoração da aba Auditoria: Agora lê os dados do MongoDB (e não de pastas locais fantasma) e exibe o botão Editar (✏️) corretamente para todos os itens com problemas (DONE).
-- Correção massiva do banco TACO (): 63 mapeamentos quebrados consertados e ampliado para 255 ingredientes. (DONE).
-- Revisão Nutricional (Pratos A e B): Usado Gemini para gerar proporções reais (ex: Batata Frita = 98g batata, 2g páprica) aplicado ao TACO, atualizando 30 pratos no banco (DONE).
-- Correção de Segurança Cibi Sana (Hard Lock): Adicionado envio de  no Frontend () e bloqueado o fallback do Gemini no backend quando este parâmetro está presente (DONE).
-- Limpeza de Duplicatas Exatas: Removidas cópias inúteis de imagem (mesmo tamanho em bytes) do R2, preservando as burst photos legítimas (DONE).
-- Correção de Crash Crítico (): A limpeza do JSON do índice de IA desincronizou a lista de nomes (1701) com a matriz numpy de embeddings (1725). Matriz sincronizada e cortada corretamente para 1701 para evitar crashes na similaridade de cosseno (DONE).
+- Implementação da aba de Calibracao CLIP no Admin (DONE)
+- Criação da coleção  e endpoint  para estatísticas (DONE)
+- Conexão nativa do botão de Moderação (Sim/Não) com a API de Calibração (DONE)
+- Remoção do popup amarelo duplicado de feedback no frontend (DONE)
+- Inclusão da opção Não cadastrado no feedback (DONE)
+- Correção do limitador de 30 itens na busca de pratos do Dropdown de moderação (DONE)
+- Correção de pastas duplicadas com underscore (migrado e consertado no ) (DONE)
+- Ajuste de threshold OpenCLIP para >= 90% em  e  a pedido do usuário (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-   - Issue 1: Categorias não podem ser editadas na aba Auditoria.
-   - Debug checklist: Verificar no  o form de categorias durante a edição a partir da tela de Auditoria.
-   - Why to solve this issue and what will be achieved with this?: Relatado pelo usuário anteriormente, mas adiado devido à prioridade dos crashes na IA.
-   - Should Test frontend/backend/both after fix: Frontend
-   - Is recurring issue? N
+   - Issue 1: O botão Atualizar na aba de Auditoria não dá feedback claro no Frontend (embora o agente tenha injetado CSS/states, o funcionamento da API de auditoria em si ainda quebra).
+   - Issue 2: Edição de categoria via aba de Auditoria salva a key  no PUT, mas o Frontend e MongoDB usam  no GET, causando status nulo no load (O agente tentou corrigir, mas a auditoria geral quebrou antes de testes e2e).
 
 **Known issue recurrence from previous fork**
-  - Nenhuma recorrência nova de forks passados. O problema da Emergent API 500 no Storage foi permanentemente contornado pelo uso do Cloudflare R2.
+  - Bugs de Sincronização da Auditoria: O script continuava lendo de arquivos mortos () em vez da fonte da verdade (MongoDB). O agente atual iniciou a correção, mas esbarrou em problemas de formatação.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **OpenCLIP Similarity**: A busca de imagem funciona via produto escalar (dot product) entre o vetor da imagem escaneada e a matriz  carregada em RAM.
-- **Gemini Hard Lock**: Quando o  recebe , o servidor FastAPI () aborta a execução do Gemini. Em locais externos, o Gemini atua como fallback se o score do OpenCLIP for inferior a 90%.
-- **Nutrição Inteligente**: TACO não entende 100g de prato misto. Usa-se o Gemini (via script de manutenção) para fracionar a receita em X% ingrediente A + Y% ingrediente B, consultando o TACO e gravando a caloria final no banco de dados.
+- **Calibração**: Novo módulo que registra em  toda tentativa do usuário. Avalia Falsos Positivos vs Verdadeiros Positivos.
+- **Youden's J statistic**: Citado pelo agente no dashboard para definir o corte ótimo. O usuário perguntou o que é isso na última mensagem e espera resposta.
 
 **key DB schema**
   - : 
   - : 
+  - : 
 
 **changes in tech stack**
-  - Matriz de Embeddings do OpenCLIP () truncada permanentemente para 1701 elementos para igualar as validações de JSON, evitando Exceptions em memória.
+  - Nenhuma grande mudança estrutural. Apenas nova coleção no DB.
 
 **All files of reference** 
-  - : Contém a regra matemática  e  que o agente precisa modificar na próxima etapa.
-  - : Lógica principal da rota de identificar prato ().
-  - : Fortemente modificado, dicionário de ingredientes expandido.
-  - : Atualizado em múltiplas funções de captura e envio de imagem para anexar .
+  - : Precisa ser limpo de bugs (KeyErrors/TypeErrors ao ler MongoDB) e formatado para reduzir noise.
+  - : Painel de auditoria depende de .
+  - : Threshold modificado (>= 0.90).
 
 **Areas that need refactoring**: 
--  e  continuam gigantes e complexos. O serviço de scan () mistura OpenCLIP local, Gemini, validação de créditos, regras de negócio e bloqueios em uma única função monolítica.
+-  e  (enormes monolitos).
+- : Atualmente instável após transição de arquivos locais para pymongo.
 
 **key api endpoints**
-- : Escaneia imagem primária. (Agora requer e respeita restrição de Cibi Sana).
-- : Força IA premium.
-- : Endpoint obsoleto; substituído pelo uso do script inteligente que integra Gemini+TACO, mas ainda no código.
+- : Registra tentativas.
+- : Roda auditoria nos pratos.
+- : Fluxo de triagem.
 
 **Critical Info for New Agent** 
-- **NÃO force o uso do Gemini** se o . O usuário foi extremamente claro sobre isso. O bloqueio já está feito no código.
-- A correção do  foi resolvida igualando as 1701 posições de texto no JSON ao array numpy. Nunca edite o texto do json de IA () sem refletir o recorte no .
-- **A causa do OpenCLIP não reconhecer as fotos do buffet não é uma quebra da IA**, mas sim um **threshold** excessivamente rigoroso. As fotos do buffet batem em ~72% (o que é bom para ângulos reais), mas a  recusa tudo abaixo de 85%.
+- **MUITO IMPORTANTE:** O usuário listou 5 perguntas precisas (mensagem 463). Antes de sair programando loucamente, **leia as perguntas do usuário e estruture uma resposta clara usando o **.
+  - Ele quer saber o que é Youden Index e como difere do threshold de 85/90%.
+  - Ele quer saber por que o app web no iOS escaneia melhor que no Android.
+  - Ele quer entender porque 2 pratos tiveram falso positivo em >90%.
+- O Threshold já foi retornado para 90% (0.90) no código durante os passos de bash, confirme se está ok.
+- A função  está dando erro/timeout ou relatando quase todos os pratos no banco de dados como falhos por estarem faltando 'description'. O usuário só quer ver os erros severos ou conflitos.
 
 **documents and test reports created in this job** 
-  -  (Atualizado com backlog e bugs fixados)
-  -  (Resultados de frontend UI na validação de Cloudflare R2)
-  -  (Relatório nutricional interno de divergências)
+  -  (Atualizado)
+  -  (Testes da aba de Calibração)
+  -  (Testes de correções do botão de calibração)
+  -  (Atualizado)
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Questionou por que havia fotos duplicadas no Admin, com sufixos.
- 2. (Agent) Encontrou e confirmou serem burst-photos e duplicatas exatas de File System. Pediu como o usuário preferia limpar.
- 3. (User) Ordenou remover apenas as duplicadas exatas de mesmo tamanho.
- 4. (Agent) Removeu 4 clones exatos, limpou R2 e DB e atualizou log.
- 5. (User) Enviou o ZIP com 57 fotos de buffet relatando que o Gemini ainda operava clandestinamente no Cibi Sana e 5 imagens cracharam o app (Erro ).
- 6. (Agent) Consertou o Frontend (não enviava o parametro ) consertou o backend (Matrizes numpy e strings assíncronas geravam Crash).
- 7. (User) Reclamou: O Clip não reconheceu 37 fotos... Faça alguns testes para diagnosticar o problema, suas causas e indique a provavel solução proposta para minha analise antes de fazermos qualquer alteracao
- 8. **HUMAN PENDING**: O agente fez o teste final e comprovou no log que o threshold em 85% é irreal para fotos normais de buffet e deveria ser abaixado. Contudo, **o agente encerrou o job sem avisar o usuário de seu achado nem propor a solução explícita como foi pedido**. O Novo agente **deve** começar reportando isso usando .
+ 1. (User) Dropdown termina em bolinho de bacalhau. (Resolvido, limite de 30 itens na API removido).
+ 2. (User) Reporta bug do Ceviche de banana, do falso positivo do Feijão do chef, questiona past de teste misteriosa e reclama de novas pastas criadas com .
+ 3. (Agent) Analisa os slugs vs pastas, move 14 imagens corrigindo o bug dos underscores, apaga pastas fantasmas. Teste validado.
+ 4. (User) Reporta bugs na aba auditoria (não salva categoria, botão atualizar não funciona). Pede a análise de calibração.
+ 5. (Agent) Imprime análise de calibração via bash. Verifica que a auditoria estava lendo de  locais obsoletos.
+ 6. (User) **HUMAN PENDING**: Manda uma lista de 5 ordens/perguntas após ver a calibração: 1) Corrigir auditoria definitivamente. 2) Por que passaram 2 erros em 90-100%? Gerar lista de pratos que precisam de fotos. 3) Pernil de cordeiro e quiabo com amendoim sumiram, verifique. 4) O que é o Youden Index? 5) Por que o iOS funciona melhor que o Android (sugestões de padronização)? E pede para subir o threshold para 90% (o agente já subiu).
 
 **Project Health Check:**
-- Broken: Thresholds do OpenCLIP em  estão descalibrados para a vida real.
-- Healthy: Cloudflare Storage, Bloqueios de Permissão IA, Sincronização do DB e Auditorias, Nutrição de ingredientes compostos.
+- Broken:  (migração json -> db inacabada)
+- Healthy: Fluxos de IA, Frontend mobile, Admin Moderation & Calibration.
 
 **3rd Party Integrations** 
-	•	OpenAI OpenCLIP — local deployment (via HuggingFace weights)
-	•	Gemini 2.5 Flash / Lite (Fallback Image Scan) — uses Emergent LLM Key
+	•	OpenAI OpenCLIP — local deployment
+	•	Gemini 2.5 Flash / Lite — uses Emergent LLM Key
 	•	Cloudflare R2 (Storage) — requires User API Key
 
 **Testing status** 
-  - Testing agent used after significant changes: YES (usado no inicio do log para validar o R2).
+  - Testing agent used after significant changes: YES (iterations 8 & 9).
   - Troubleshoot agent used after agent stuck in loop: NO
-  - Test files created: 
-  - Known regressions: Nenhuma conhecida, o código do CLIP agora está robusto para index bounding.
+  - Test files created: , 
+  - Known regressions: O painel de Auditoria está quebrado na geração dos JSONs.
 
 **Credentials to test flow:**
 Admin:  / 
 
 **What agent forgot to execute**
-O usuário pediu explicitamente: *indique a provavel solucao proposta para minha analise antes de fazermos qualquer alteracao*. O agente descobriu a causa no bash (pontuações batendo entre 65% e 75%, enquanto o corte é 85%), mas finalizou a tarefa prematuramente usando a ferramenta de finish em vez de mandar a resposta pelo . **A primeira ação do novo agente DEVE SER mandar os resultados do diagnóstico e propor a diminuição do threshold para o usuário pelo .**</analysis>
+O agente consertou o código de 90%, mas **esqueceu** de responder às dúvidas lógicas do usuário antes de iniciar o loop de debug na auditoria. O novo agente deve iniciar com o  respondendo pacientemente às dúvidas do usuário (iOS/Android cache/camera behavior, Youden Index concept, e lista de pratos com poucas fotos) enquanto propõe finalizar os bugs da auditoria.</analysis>

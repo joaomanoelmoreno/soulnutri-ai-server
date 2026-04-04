@@ -1148,7 +1148,7 @@ def analyze_result(results: List[Dict]) -> Dict:
     # Gap analysis removido: score absoluto é suficiente para decisão.
     # Calibração futura via Youden's J com dados reais do buffet.
     
-    if score >= 0.85:
+    if score >= 0.90:
         return {
             'identified': True,
             'dish': dish,
