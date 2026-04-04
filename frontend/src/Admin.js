@@ -1928,7 +1928,7 @@ export default function Admin() {
                   {auditData.health_score}%
                 </div>
                 <div className="health-label">Saúde dos Dados</div>
-                <p>{auditData.dishes_with_issues} de {auditData.total_dishes} pratos com problemas</p>
+                <p>{auditData.dishes_with_issues} de {auditData.total_dishes} pratos com erros severos{auditData.dishes_info_only > 0 && ` (+ ${auditData.dishes_info_only} sem descrição)`}</p>
               </div>
 
               {/* Resumo de Problemas */}

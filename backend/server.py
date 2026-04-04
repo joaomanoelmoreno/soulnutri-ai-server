@@ -4446,6 +4446,24 @@ async def admin_audit_dishes():
         return {"ok": False, "error": str(e)}
 
 
+
+@api_router.get("/admin/audit/low-photos")
+async def admin_dishes_low_photos(max_photos: int = 5):
+    """Lista pratos com poucas fotos de referencia no disco"""
+    from pathlib import Path
+    dataset_dir = Path("/app/datasets/organized")
+    results = []
+    for dish_dir in sorted(dataset_dir.iterdir()):
+        if not dish_dir.is_dir():
+            continue
+        imgs = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg")) + list(dish_dir.glob("*.png"))
+        count = len(imgs)
+        if count <= max_photos:
+            results.append({"folder": dish_dir.name, "photo_count": count})
+    results.sort(key=lambda x: x["photo_count"])
+    return {"ok": True, "total": len(results), "max_photos": max_photos, "dishes": results}
+
+
 @api_router.post("/admin/audit/fix/{slug}")
 async def admin_fix_dish_with_ai(slug: str):
     """Usa IA para sugerir correcoes para um prato especifico"""

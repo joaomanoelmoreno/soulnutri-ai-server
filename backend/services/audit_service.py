@@ -114,10 +114,10 @@ def audit_all_dishes() -> Dict[str, Any]:
             info = {
                 "nome": db_doc.get("nome") or db_doc.get("name", ""),
                 "categoria": db_doc.get("categoria") or db_doc.get("category", ""),
-                "ingredientes": db_doc.get("ingredientes", []),
-                "descricao": db_doc.get("descricao", ""),
+                "ingredientes": db_doc.get("ingredientes") or db_doc.get("ingredients", []),
+                "descricao": db_doc.get("descricao") or db_doc.get("description", ""),
                 "nutricao": db_doc.get("nutricao") or db_doc.get("nutrition", {}),
-                "alergenos": db_doc.get("alergenos", []),
+                "alergenos": db_doc.get("alergenos") or db_doc.get("allergens", []),
             }
         
         # 2. Fallback: dish_info.json local
@@ -180,6 +180,7 @@ def audit_all_dishes() -> Dict[str, Any]:
             has_issue = True
         
         # Verificar descrição (só se prato tem dados preenchidos)
+        # Severidade LOW - informativo, não conta no health_score
         desc_raw = info.get('descricao', '')
         descricao = desc_raw if isinstance(desc_raw, str) else str(desc_raw or '')
         if has_some_data and (not descricao or len(descricao) < 10):
@@ -189,7 +190,7 @@ def audit_all_dishes() -> Dict[str, Any]:
                 'issue': 'Descrição ausente ou muito curta',
                 'severity': 'low'
             })
-            has_issue = True
+            # NÃO marca has_issue — é informativo apenas
         
         # Verificar conflitos de categoria
         cat_raw = info.get('categoria', '')
@@ -292,11 +293,27 @@ def audit_all_dishes() -> Dict[str, Any]:
         if has_issue:
             dishes_with_issues += 1
     
-    # Calcular estatísticas
+    # Calcular estatísticas — health_score baseado apenas em erros severos/médios
+    severe_count = (
+        len(problems['missing_info_file']) +
+        len(problems['unknown_names']) +
+        len(problems['category_conflicts']) +
+        len(problems['empty_nutrition']) +
+        len(problems['missing_ingredients']) +
+        len(problems['allergen_conflicts'])
+    )
+    # Pratos com pelo menos 1 erro severo/médio
+    severe_slugs = set()
+    for key in ['missing_info_file', 'unknown_names', 'category_conflicts', 'empty_nutrition', 'missing_ingredients', 'allergen_conflicts']:
+        for item in problems[key]:
+            severe_slugs.add(item.get('slug', ''))
+    dishes_with_severe = len(severe_slugs)
+    
     return {
         'total_dishes': total_dishes,
-        'dishes_with_issues': dishes_with_issues,
-        'health_score': round((1 - dishes_with_issues / total_dishes) * 100, 1) if total_dishes > 0 else 0,
+        'dishes_with_issues': dishes_with_severe,
+        'dishes_info_only': len(problems['missing_description']),
+        'health_score': round((1 - dishes_with_severe / total_dishes) * 100, 1) if total_dishes > 0 else 0,
         'problems': problems,
         'summary': {
             'missing_info_file': len(problems['missing_info_file']),

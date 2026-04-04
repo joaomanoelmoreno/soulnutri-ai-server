@@ -688,8 +688,8 @@ function App() {
       return;
     }
     
-    // Limitar tamanho máximo do canvas para economizar memória
-    const maxSize = 800;
+    // Resolucao padronizada 1024px para nivelar iOS/Android
+    const maxSize = 1024;
     let w = v.videoWidth;
     let h = v.videoHeight;
     if (w > maxSize || h > maxSize) {
@@ -703,7 +703,7 @@ function App() {
     const ctx = c.getContext('2d');
     ctx.drawImage(v, 0, 0, w, h);
     
-    // Qualidade reduzida para economizar memória
+    // Qualidade 85% padronizada para nivelar iOS/Android
     c.toBlob(b => {
       if (b && mountedRef.current) {
         setLastImageBlob(b);
@@ -711,7 +711,7 @@ function App() {
       }
       // Limpar canvas após uso
       ctx.clearRect(0, 0, w, h);
-    }, 'image/jpeg', 0.7);
+    }, 'image/jpeg', 0.85);
   }, [multiMode]);
 
   const identifyImage = async (blob) => {
@@ -1030,8 +1030,8 @@ function App() {
       scanCooldownRef.current = true;
       setTimeout(() => { scanCooldownRef.current = false; }, 2000);
       
-      // Capturar em maior resolução para identificação
-      const scanSize = 640;
+      // Resolucao padronizada 1024px para nivelar iOS/Android
+      const scanSize = 1024;
       let w = v.videoWidth;
       let h = v.videoHeight;
       if (w > scanSize || h > scanSize) {
@@ -1044,7 +1044,7 @@ function App() {
       c.height = h;
       ctx.drawImage(v, 0, 0, w, h);
       
-      // Converter e identificar
+      // Qualidade 85% padronizada para nivelar iOS/Android
       c.toBlob(async (blob) => {
         if (!blob || !mountedRef.current || scanningRef.current) return;
         
@@ -1097,7 +1097,7 @@ function App() {
         
         // Limpar canvas
         ctx.clearRect(0, 0, w, h);
-      }, 'image/jpeg', 0.7);
+      }, 'image/jpeg', 0.85);
     }
   }, [stream]);
 
@@ -1214,14 +1214,42 @@ function App() {
     itens: plateItems.length
   };
 
-  const handleFileSelect = (e) => {
+  // Normalizar imagem para resolucao padrao (1024px max, JPEG 85%)
+  const normalizeImage = (file) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxSize = 1024;
+        let w = img.width;
+        let h = img.height;
+        if (w > maxSize || h > maxSize) {
+          const ratio = Math.min(maxSize / w, maxSize / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob((blob) => {
+          resolve(blob || file);
+        }, 'image/jpeg', 0.85);
+      };
+      img.onerror = () => resolve(file);
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Criar URL de preview para mostrar a imagem
       const previewUrl = URL.createObjectURL(file);
       setPreviewImageUrl(previewUrl);
-      setLastImageBlob(file);
-      identifyImage(file);
+      // Normalizar resolucao e qualidade antes de enviar
+      const normalized = await normalizeImage(file);
+      setLastImageBlob(normalized);
+      identifyImage(normalized);
     }
   };
 
