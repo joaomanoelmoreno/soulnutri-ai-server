@@ -107,8 +107,19 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     # Modelo local
     try:
         import torch
+        from PIL import ImageEnhance, ImageFilter
         
         img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        
+        # Pre-processamento para normalizar qualidade iOS/Android
+        # 1. Auto-contraste (normaliza brilho/exposicao)
+        from PIL import ImageOps
+        img = ImageOps.autocontrast(img, cutoff=1)
+        # 2. Leve boost de nitidez (recupera detalhes perdidos em JPEG)
+        img = ImageEnhance.Sharpness(img).enhance(1.3)
+        # 3. Leve boost de cor (ajuda CLIP a distinguir pratos similares)
+        img = ImageEnhance.Color(img).enhance(1.1)
+        
         img_tensor = _PREPROCESS(img).unsqueeze(0).to(_DEVICE)
         
         with torch.no_grad():
@@ -119,7 +130,7 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
                 embedding = embedding / norm
             embedding = embedding.cpu().numpy().astype(np.float32)
         
-        logger.info(f"[embedder] Local: {(time.time()-start)*1000:.0f}ms")
+        logger.info(f"[embedder] Local: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
         return embedding
         
     except Exception as e:

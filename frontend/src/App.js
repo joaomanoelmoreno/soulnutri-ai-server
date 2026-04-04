@@ -597,31 +597,64 @@ function App() {
         console.warn('[Camera] Erro ao limpar stream anterior:', e);
       }
       
-      // Resolução reduzida para economizar memória em celulares
+      // Resolucao alta para melhor precisao CLIP (Android respeita literalmente)
       // Safari/Mac: tentar primeiro com facingMode, depois sem
       let s;
       try {
         s = await navigator.mediaDevices.getUserMedia({ 
           video: { 
-            facingMode: 'environment', 
-            width: { ideal: 640, max: 1280 }, 
-            height: { ideal: 480, max: 720 } 
+            facingMode: { ideal: 'environment' }, 
+            width: { ideal: 1280, min: 720 }, 
+            height: { ideal: 960, min: 540 },
+            // Auto-focus continuo - critico para Android
+            focusMode: { ideal: 'continuous' },
+            // White balance e exposure automaticos
+            whiteBalanceMode: { ideal: 'continuous' },
+            exposureMode: { ideal: 'continuous' }
           } 
         });
       } catch (firstError) {
-        console.warn('[Camera] Falhou com facingMode environment, tentando sem:', firstError);
-        // Fallback: tentar sem facingMode (para webcams de Mac/desktop)
+        console.warn('[Camera] Falhou com constraints avancados, tentando basico:', firstError);
+        // Fallback: sem focus/exposure constraints
         try {
           s = await navigator.mediaDevices.getUserMedia({ 
             video: { 
-              width: { ideal: 640, max: 1280 }, 
-              height: { ideal: 480, max: 720 } 
+              facingMode: 'environment',
+              width: { ideal: 1280 }, 
+              height: { ideal: 960 } 
             } 
           });
         } catch (secondError) {
-          console.warn('[Camera] Falhou sem facingMode, tentando básico:', secondError);
-          // Último recurso: apenas video: true
-          s = await navigator.mediaDevices.getUserMedia({ video: true });
+          console.warn('[Camera] Falhou com facingMode, tentando sem:', secondError);
+          try {
+            s = await navigator.mediaDevices.getUserMedia({ 
+              video: { 
+                width: { ideal: 1280 }, 
+                height: { ideal: 960 } 
+              } 
+            });
+          } catch (thirdError) {
+            console.warn('[Camera] Falhou tudo, tentando basico:', thirdError);
+            s = await navigator.mediaDevices.getUserMedia({ video: true });
+          }
+        }
+      }
+      
+      // Log da resolucao real obtida (diagnostico iOS vs Android)
+      const videoTrack = s.getVideoTracks()[0];
+      if (videoTrack) {
+        const settings = videoTrack.getSettings();
+        console.log(`[Camera] Resolucao real: ${settings.width}x${settings.height}, focusMode: ${settings.focusMode || 'N/A'}`);
+        
+        // Tentar aplicar auto-focus continuo no Android se disponivel
+        try {
+          const capabilities = videoTrack.getCapabilities?.();
+          if (capabilities?.focusMode?.includes('continuous')) {
+            await videoTrack.applyConstraints({ advanced: [{ focusMode: 'continuous' }] });
+            console.log('[Camera] Auto-focus continuo aplicado');
+          }
+        } catch (e) {
+          console.warn('[Camera] Nao foi possivel aplicar auto-focus:', e);
         }
       }
       
@@ -673,6 +706,28 @@ function App() {
     setStream(null);
   };
   
+  // Sharpen leve (unsharp mask) para melhorar nitidez em Android
+  const sharpenImageData = (imageData, w, h) => {
+    const d = imageData.data;
+    const copy = new Uint8ClampedArray(d);
+    const amount = 0.4; // intensidade do sharpen (0.3-0.6 ideal)
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const idx = (y * w + x) * 4;
+        for (let c = 0; c < 3; c++) {
+          // Kernel 3x3: centro*5 - vizinhos
+          const center = copy[idx + c] * 5;
+          const top = copy[((y-1)*w + x)*4 + c];
+          const bottom = copy[((y+1)*w + x)*4 + c];
+          const left = copy[(y*w + (x-1))*4 + c];
+          const right = copy[(y*w + (x+1))*4 + c];
+          const sharp = center - top - bottom - left - right;
+          d[idx + c] = Math.max(0, Math.min(255, copy[idx + c] + sharp * amount));
+        }
+      }
+    }
+  };
+
   const handleCameraTouch = useCallback(() => {
     // Prevenir cliques múltiplos (debounce de 1s)
     const now = Date.now();
@@ -692,6 +747,7 @@ function App() {
     const maxSize = 1024;
     let w = v.videoWidth;
     let h = v.videoHeight;
+    console.log(`[Capture] Video source: ${v.videoWidth}x${v.videoHeight}`);
     if (w > maxSize || h > maxSize) {
       const ratio = Math.min(maxSize / w, maxSize / h);
       w = Math.round(w * ratio);
@@ -701,7 +757,17 @@ function App() {
     c.width = w; 
     c.height = h;
     const ctx = c.getContext('2d');
+    // Qualidade de renderizacao alta
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(v, 0, 0, w, h);
+    
+    // Aplicar nitidez (unsharp mask leve) para compensar compressao
+    try {
+      const imageData = ctx.getImageData(0, 0, w, h);
+      sharpenImageData(imageData, w, h);
+      ctx.putImageData(imageData, 0, 0);
+    } catch (e) { /* security error em alguns browsers */ }
     
     // Qualidade 85% padronizada para nivelar iOS/Android
     c.toBlob(b => {
@@ -1042,7 +1108,16 @@ function App() {
       
       c.width = w;
       c.height = h;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(v, 0, 0, w, h);
+      
+      // Aplicar nitidez para compensar compressao Android
+      try {
+        const scanImageData = ctx.getImageData(0, 0, w, h);
+        sharpenImageData(scanImageData, w, h);
+        ctx.putImageData(scanImageData, 0, 0);
+      } catch (e) { /* security error */ }
       
       // Qualidade 85% padronizada para nivelar iOS/Android
       c.toBlob(async (blob) => {
