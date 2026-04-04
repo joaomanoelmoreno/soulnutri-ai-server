@@ -3979,8 +3979,8 @@ async def admin_list_dishes():
             dish_data = {
                 "slug": display_slug,
                 "nome": dish_doc.get("nome", dish_doc.get("name", slug.replace("_", " ").title())),
-                "categoria": dish_doc.get("categoria", ""),
-                "category_emoji": dish_doc.get("category_emoji", "🍽️"),
+                "categoria": dish_doc.get("categoria", dish_doc.get("category", "")),
+                "category_emoji": dish_doc.get("category_emoji", ""),
                 "ingredientes": dish_doc.get("ingredientes", []),
                 "descricao": dish_doc.get("descricao", ""),
                 "image_count": image_counts.get(n, 0)
@@ -4220,10 +4220,15 @@ async def admin_update_dish(slug: str, dish_data: dict):
         existing_info = await db.dishes.find_one({"slug": slug}, {"_id": 0}) or {}
         
         # Atualizar TODOS os campos
+        cat_value = dish_data.get("categoria", existing_info.get("category", existing_info.get("categoria", "")))
+        name_value = dish_data.get("nome", existing_info.get("name", existing_info.get("nome", slug)))
+        
         existing_info.update({
-            "name": dish_data.get("nome", existing_info.get("name", existing_info.get("nome", slug))),
+            "name": name_value,
+            "nome": name_value,
             "slug": slug,
-            "category": dish_data.get("categoria", existing_info.get("category", existing_info.get("categoria", ""))),
+            "category": cat_value,
+            "categoria": cat_value,
             "description": dish_data.get("descricao", existing_info.get("description", existing_info.get("descricao", ""))),
             "ingredients": dish_data.get("ingredientes", existing_info.get("ingredients", existing_info.get("ingredientes", []))),
             "beneficios": dish_data.get("beneficios", existing_info.get("beneficios", [])),

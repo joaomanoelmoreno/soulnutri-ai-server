@@ -559,11 +559,13 @@ export default function Admin() {
   // Auditoria de dados
   const runAudit = async () => {
     setAuditLoading(true);
+    setAuditData(null); // Limpar dados antigos para mostrar loading
     try {
       const res = await retryFetch(`${API}/admin/audit`);
       const data = await res.json();
       if (data.ok) {
         setAuditData(data);
+        notify('Auditoria atualizada', 'success');
       } else {
         notify('Erro na auditoria: ' + data.error, 'error');
       }
