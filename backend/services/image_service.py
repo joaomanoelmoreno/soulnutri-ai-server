@@ -155,30 +155,35 @@ def get_dish_image_bytes(slug: str, filename: str = None) -> tuple:
 def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
     """
     Salva imagem localmente + R2 e atualiza MongoDB dish_storage.
+    Resolve slug canonico para evitar pastas duplicadas.
     """
     result = {"ok": False}
     MIME = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}
     
     ext = Path(filename).suffix.lower()
     ct = MIME.get(ext, "image/jpeg")
-    r2_key = f"dishes/{slug}/{filename}"
+    
+    # Resolver slug canonico: buscar pasta existente ou dish_storage existente
+    canonical_slug = _resolve_canonical_slug(slug)
+    
+    r2_key = f"dishes/{canonical_slug}/{filename}"
 
     # 1. Salvar localmente (instantaneo)
     try:
-        local_folder = _find_local_folder(slug)
-        local_dir = local_folder if local_folder else LOCAL_DATASET_DIR / slug
+        local_folder = _find_local_folder(canonical_slug)
+        local_dir = local_folder if local_folder else LOCAL_DATASET_DIR / canonical_slug
         local_dir.mkdir(parents=True, exist_ok=True)
         (local_dir / filename).write_bytes(content)
         result["ok"] = True
     except Exception as e:
-        logger.error(f"[IMG] Erro local {slug}/{filename}: {e}")
+        logger.error(f"[IMG] Erro local {canonical_slug}/{filename}: {e}")
 
     # 2. Upload para R2 (background-safe)
     try:
         from services.r2_service import r2_upload_image
         r2_upload_image(r2_key, content, ct)
     except Exception as e:
-        logger.warning(f"[IMG] R2 upload falhou {slug}/{filename}: {e}")
+        logger.warning(f"[IMG] R2 upload falhou {canonical_slug}/{filename}: {e}")
 
     # 3. Atualizar MongoDB
     try:
@@ -190,7 +195,7 @@ def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
             "source": "r2"
         }
         db.dish_storage.update_one(
-            {"slug": slug},
+            {"slug": canonical_slug},
             {
                 "$push": {"images": image_entry},
                 "$inc": {"count": 1},
@@ -199,9 +204,53 @@ def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
             upsert=True
         )
     except Exception as e:
-        logger.error(f"[IMG] MongoDB update {slug}: {e}")
+        logger.error(f"[IMG] MongoDB update {canonical_slug}: {e}")
 
     return result
+
+
+def _resolve_canonical_slug(slug: str) -> str:
+    """
+    Resolve o slug canonico de um prato.
+    Prioridade: pasta local existente > dish_storage > dishes collection > slug original.
+    Evita criar pastas duplicadas (ex: 'Bacalhau com Natas' vs 'bacalhau_com_natas').
+    """
+    import unicodedata
+    
+    def _normalize(name):
+        n = name.lower().replace('-', '').replace('_', '').replace(' ', '').replace('(', '').replace(')', '')
+        nfkd = unicodedata.normalize('NFKD', n)
+        return ''.join(c for c in nfkd if not unicodedata.combining(c))
+    
+    slug_norm = _normalize(slug)
+    
+    # 1. Verificar pasta local existente (fonte mais confiavel)
+    for folder in LOCAL_DATASET_DIR.iterdir():
+        if folder.is_dir() and _normalize(folder.name) == slug_norm:
+            return folder.name  # Retorna o nome EXATO da pasta (com espacos)
+    
+    # 2. Verificar dish_storage no MongoDB
+    try:
+        db = _get_db()
+        for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1}):
+            s = doc.get("slug", "")
+            if _normalize(s) == slug_norm:
+                return s
+    except Exception:
+        pass
+    
+    # 3. Verificar dishes collection
+    try:
+        db = _get_db()
+        for doc in db.dishes.find({}, {"_id": 0, "slug": 1}):
+            s = doc.get("slug", "")
+            if _normalize(s) == slug_norm:
+                return s
+    except Exception:
+        pass
+    
+    # 4. Fallback: slug original
+    return slug
 
 
 def delete_dish_image_from_storage(slug: str, filename: str) -> dict:
