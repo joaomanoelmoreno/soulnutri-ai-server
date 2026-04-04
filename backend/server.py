@@ -4449,17 +4449,16 @@ async def admin_audit_dishes():
 
 @api_router.get("/admin/audit/low-photos")
 async def admin_dishes_low_photos(max_photos: int = 5):
-    """Lista pratos com poucas fotos de referencia no disco"""
-    from pathlib import Path
-    dataset_dir = Path("/app/datasets/organized")
+    """Lista pratos com poucas fotos de referencia no R2 (dish_storage)"""
     results = []
-    for dish_dir in sorted(dataset_dir.iterdir()):
-        if not dish_dir.is_dir():
-            continue
-        imgs = list(dish_dir.glob("*.jpg")) + list(dish_dir.glob("*.jpeg")) + list(dish_dir.glob("*.png"))
-        count = len(imgs)
+    async for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "name": 1, "count": 1}):
+        count = doc.get("count", 0)
         if count <= max_photos:
-            results.append({"folder": dish_dir.name, "photo_count": count})
+            results.append({
+                "slug": doc.get("slug", ""),
+                "name": doc.get("name", doc.get("slug", "")),
+                "photo_count": count
+            })
     results.sort(key=lambda x: x["photo_count"])
     return {"ok": True, "total": len(results), "max_photos": max_photos, "dishes": results}
 
