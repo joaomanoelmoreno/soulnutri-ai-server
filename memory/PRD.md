@@ -30,48 +30,42 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Notificacoes push personalizadas
 - Design "Gourmet Dark Mode"
 
-## Calibracao CLIP (2026-04-02/03) - IMPLEMENTADO
-- Gap analysis removido: decisao baseada apenas em score absoluto
-- Thresholds sincronizados: >=0.85 alta, >=0.50 media, <0.50 rejeicao
-- Auto-aceite CLIP: de 0.90 para 0.85
-- Colecao `calibration_log` separada da `feedback` (registro leve, sem upload de imagem)
-- POST /api/ai/calibration/log: registro automatico de amostras (Sim e Nao)
+## Calibracao CLIP - IMPLEMENTADO
+- Thresholds: >=0.90 alta, >=0.50 media, <0.50 rejeicao
+- Colecao `calibration_log` (registro leve, sem upload de imagem)
+- POST /api/ai/calibration/log: registro automatico de amostras
 - DELETE /api/ai/calibration/{id}: deletar amostras individuais
 - GET /api/ai/calibration: estatisticas, distribuicao, Youden's J
-- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar por amostra
-- Frontend: ambos botoes "Sim, esta correto" e "Nao, tentar novamente" registram na calibracao
+- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar
 
-## Correcoes Recentes (2026-04-01/02)
+## Normalizacao iOS/Android (2026-04-04) - IMPLEMENTADO
+- Resolucao padronizada 1024px max em todas as capturas (tap, auto-scan, galeria)
+- Qualidade JPEG padronizada em 85% (antes era 70%)
+- Funcao normalizeImage() aplicada no upload de galeria
 
-### Hard Lock Cibi Sana (2026-04-02)
-- /ai/identify: restaurant=cibi_sana -> CLIP only, Gemini bloqueado
-- /ai/identify-with-ai: restaurant=cibi_sana -> 403 bloqueado
-- /ai/identify-flash: restaurant=cibi_sana -> 403 bloqueado
-- Logs [HARD LOCK] para rastreabilidade
+## Auditoria de Dados (2026-04-04) - CORRIGIDO
+- Campos ingleses (ingredients, description) com fallback correto
+- Health Score baseado em erros severos apenas (ignora missing_description)
+- Endpoint GET /api/admin/audit/low-photos usando dish_storage (R2 real)
+- 27 pratos com <=5 fotos identificados
 
-### Auditoria Corrigida
-- audit_service.py usa MongoDB como fonte de verdade
-- Stats admin mostra count real do DB (190)
-- Botao Editar adicionado em itens sem dish_info.json
-
-### Revisao Nutricional A e B
-- 30 pratos atualizados com proporcoes Gemini + TACO
-- 255 mapeamentos TACO corrigidos (63 quebrados)
-- 13 alimentos adicionados ao banco TACO
-
-### Indice IA Limpo
-- 12 pratos obsoletos removidos, 10 duplicatas consolidadas
-- 189 pratos IA, 1701 embeddings
+## Padronizacao de Nomes (2026-04-04) - IMPLEMENTADO
+- Regra: Maiusculas nas palavras principais, minusculas em artigos/preposicoes
+- Sem acentos, sem hifens, sem underscores nos nomes
+- Parenteses preservados para agrupar pratos similares
+- Abreviacoes c/ e s/ preservadas
+- Aplicado em dishes e dish_storage
 
 ## Estado Atual
-- 190 pratos, 189 com embeddings IA
-- 3929 fotos no Cloudflare R2
+- 191 pratos, 189 com embeddings IA
+- 3929+ fotos no Cloudflare R2
 - 255 mapeamentos TACO
 - 30 pratos A/B nutricionalmente revisados
-- Thresholds CLIP: 85% alta / 50% media / <50% rejeicao (sem gap analysis)
+- Threshold CLIP: 90% alta / 50% media / <50% rejeicao
+- Health Score auditoria: 85.1%
 
-## Upcoming Tasks
-- (P0) Usuario testar fotos reais no buffet e coletar amostras para calibracao Youden
+## Upcoming Tasks (Aguardando testes no buffet)
+- (P0) Usuario testar fotos reais no buffet e coletar amostras para calibracao
 - (P1) Revisao nutricional pratos C-Z
 - (P1) Validar notificacoes push
 - (P1) Validar referencias/links na tela de resultado
@@ -80,7 +74,6 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - (P1) Refatorar server.py (5K+) e Admin.js (3K+)
 - (P2) Integracao Stripe
 - (P2) Upload ZIP no admin
-- (P2) Categorias nao editaveis na aba Auditoria
 
 ## Restricoes Tecnicas
 - NAO usar window.alert/confirm/prompt (iframe bloqueia)
@@ -88,3 +81,4 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Usar xhrGet/xhrPost/xhrDelete no Admin.js
 - Storage definitivo: Cloudflare R2
 - Cibi Sana: CLIP ONLY, Gemini HARD LOCK
+- Fonte de verdade para fotos: colecao dish_storage (R2), NAO disco local

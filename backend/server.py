@@ -4449,14 +4449,39 @@ async def admin_audit_dishes():
 
 @api_router.get("/admin/audit/low-photos")
 async def admin_dishes_low_photos(max_photos: int = 5):
-    """Lista pratos com poucas fotos de referencia no R2 (dish_storage)"""
-    results = []
+    """Lista pratos com poucas fotos de referencia no R2 (dish_storage agregado)"""
+    import unicodedata
+    
+    def _normalize(name):
+        n = name.lower().replace('-', '').replace('_', '').replace(' ', '').replace('(', '').replace(')', '')
+        nfkd = unicodedata.normalize('NFKD', n)
+        return ''.join(c for c in nfkd if not unicodedata.combining(c))
+    
+    # 1. Agregar todas as entradas de dish_storage por slug normalizado
+    photo_counts = {}  # norm_slug -> total count
+    best_names = {}    # norm_slug -> best name
     async for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "name": 1, "count": 1}):
+        norm = _normalize(doc.get("slug", ""))
         count = doc.get("count", 0)
+        photo_counts[norm] = photo_counts.get(norm, 0) + count
+        # Preferir nome sem hifens/underscores
+        name = doc.get("name", doc.get("slug", ""))
+        if norm not in best_names or ('-' not in name and '_' not in name):
+            best_names[norm] = name
+    
+    # 2. Cruzar com colecao dishes para pegar o nome oficial
+    async for doc in db.dishes.find({}, {"_id": 0, "slug": 1, "name": 1, "nome": 1}):
+        norm = _normalize(doc.get("slug", ""))
+        name = doc.get("name") or doc.get("nome", "")
+        if name and norm in photo_counts:
+            best_names[norm] = name
+    
+    # 3. Filtrar pratos com poucas fotos
+    results = []
+    for norm, count in photo_counts.items():
         if count <= max_photos:
             results.append({
-                "slug": doc.get("slug", ""),
-                "name": doc.get("name", doc.get("slug", "")),
+                "name": best_names.get(norm, norm),
                 "photo_count": count
             })
     results.sort(key=lambda x: x["photo_count"])
