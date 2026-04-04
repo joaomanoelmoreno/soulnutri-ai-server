@@ -3074,7 +3074,7 @@ export default function Admin() {
                         </tr>
                       </thead>
                       <tbody>
-                        {calibrationData.samples.map((s, i) => (
+                        {[...calibrationData.samples].sort((a, b) => (a.dish_clip || a.dish_slug || '').localeCompare(b.dish_clip || b.dish_slug || '', 'pt-BR')).map((s, i) => (
                           <tr key={s._id || i} style={{ borderBottom: '1px solid #1e293b', background: s.is_correct ? 'transparent' : 'rgba(239,68,68,0.05)' }}>
                             <td style={{ padding: '6px 8px', color: '#e2e8f0' }}>{s.dish_clip || s.dish_slug || '-'}</td>
                             <td style={{ padding: '6px 8px', color: s.is_correct ? '#22c55e' : '#ef4444' }}>{s.dish_real || s.original_dish || s.dish_clip || '-'}</td>
