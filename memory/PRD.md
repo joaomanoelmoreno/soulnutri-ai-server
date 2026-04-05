@@ -77,6 +77,17 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - (P2) Integracao Stripe
 - (P2) Upload ZIP no admin
 
+## REGRA CRITICA: LOCK do Pipeline ViT-B-16 (2026-04-05)
+### NENHUM AGENTE PODE ALTERAR OS SEGUINTES ARQUIVOS/CONFIGS SEM AUTORIZACAO EXPLICITA DO USUARIO:
+- /app/backend/ai/embedder.py — modelo, pre-processamento, parametros
+- /app/backend/ai/index.py — logica de similaridade, thresholds, penalidades
+- /app/datasets/dish_index.json — indice de pratos
+- /app/datasets/dish_index_embeddings.npy — vetores de embedding
+- Nao trocar modelo (ViT-B-16 DataComp.XL), nao alterar dimensao (512), nao mudar normalizacao
+- Nao rodar reindex sem autorizacao do usuario
+- Pequenos ajustes de threshold ou logica de resposta sao permitidos APENAS se o usuario pedir
+- Esta versao foi validada com 100% de precisao (20/20 pratos, 0 falsos positivos)
+
 ## Restricoes Tecnicas
 - NAO usar window.alert/confirm/prompt (iframe bloqueia)
 - Imagens 2-4MB - sempre usar thumbnails no admin
