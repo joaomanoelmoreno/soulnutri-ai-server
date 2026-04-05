@@ -1,4 +1,5 @@
 # SoulNutri - Product Requirements Document
+## Versao 2.0 — ViT-B-16 Stable (2026-04-05)
 
 ## Visao
 Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens com alta precisao, atuando como um "radar do prato".
