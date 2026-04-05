@@ -232,7 +232,7 @@ VALIDAÇÃO CRUZADA (Opcional):
 ## 10. CONTATOS E LINKS
 
 ### URL de Preview:
-https://nutrition-verify-hub.preview.emergentagent.com
+https://plate-classifier.preview.emergentagent.com
 
 ### Arquivos Importantes:
 - /app/memory/PRD.md - Requisitos do produto

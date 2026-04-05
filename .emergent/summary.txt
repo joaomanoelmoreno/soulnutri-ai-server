@@ -1,45 +1,45 @@
 <analysis>**original_problem_statement:**
-O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. O sistema usa Cloudflare R2 e uma API híbrida (OpenCLIP local + Gemini). O objetivo da sessão era diagnosticar e ajustar os *thresholds* do OpenCLIP que estavam reprovando pratos reais do buffet, criar um dashboard de calibração estatística no Admin para embasar os cortes, corrigir o fluxo de moderação (falsos positivos e pastas de imagens duplicadas), e solucionar bugs crônicos na aba de Auditoria. 
-PRODUCT REQUIREMENTS: Coletar amostras reais do uso do app para calcular precisão/recall, ajustar pontuações de similaridade adequadas para imagens de buffet e garantir a integridade dos dados no MongoDB.
+O usuário deseja construir o **SoulNutri**, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. O objetivo desta sessão foi corrigir falsos positivos da aba de Auditoria, padronizar nomes e slugs no MongoDB, fazer upload em massa de novas fotos do buffet, nivelar a qualidade da câmera do Android em relação ao iOS (ajustando resolução e nitidez no frontend) e resolver o problema persistente de alta confiança (scores > 80-90%) em pratos errados (falsos positivos). PRODUCT REQUIREMENTS: Coletar amostras reais, processar banco de imagens via ZIPs, garantir qualidade equivalente de scan entre Android e iOS, refinar a precisão do IA e trocar o modelo OpenCLIP base para mitigar o problema.
 
-**User's preferred language**: Português (Brasil). (INSTRUCT: The next agent MUST respond in Português only).
+**User's preferred language**: Portuguese (Brasil).
+(INSTRUCT: The next agent MUST respond in Português only)
 
 **what currently exists?** 
-Uma aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens no Cloudflare R2. Uma nova coleção  foi criada para registrar acertos, erros e falsos positivos do IA. O painel Admin agora conta com uma aba Calibracao CLIP. O fluxo do frontend foi simplificado para incluir opções de Correto, Corrigir para outro prato e Não cadastrado. O serviço de salvamento de imagens () foi ajustado para encontrar pastas originais com espaços em vez de criar novas pastas com underscores. O limite de confiança do CLIP foi reajustado para 90% a pedido do usuário.
+Uma aplicação full-stack (React + FastAPI + MongoDB). O armazenamento de imagens ocorre no Cloudflare R2 e a coleção  mantém a contagem atualizada. A aba Auditoria agora lê campos corretos e a aba Calibração avalia precisão/recall. A captura de imagem no React () foi reescrita para forçar resoluções maiores (1280x960) no Android e aplicar um filtro de nitidez em canvas antes do upload. O pipeline de IA baseia-se em OpenCLIP local, o qual acabou de ser alterado de ViT-B-32 para ViT-B-16 a fim de resolver o problema de falsos positivos com confiança irreal.
 
 **Last working item**:
-    - Last item agent was working: Correção do serviço de Auditoria (). O agente modificou o script para ler os dados do MongoDB (e não de  locais desatualizados). No entanto, o script começou a alertar 188 pratos com ingredientes ou descrições ausentes, o que é ruidoso. O agente estava ajustando as regras para filtrar esse ruído e precisava responder a várias dúvidas do usuário (sobre iOS vs Android, Índice de Youden, e falsos positivos > 90%).
-    - Status: IN PROGRESS
-    - Agent Testing Done: Y (via bash calls to internal script)
-    - Which testing method agent to use?: backend testing agent ou testes manuais via  e .
+    - Last item agent was working: Atualização do modelo OpenCLIP para  e implementação de uma nova lógica de verificação de consistência em  e  para punir falsos positivos com alta confiança.
+    - Status: TESTING PENDING (O código foi editado na última mensagem, mas o servidor não foi testado e o reindex não foi feito).
+    - Agent Testing Done: N
+    - Which testing method agent to use?: backend testing agent / manual testing by bash (verificar logs do uvicorn/supervisor e chamar rotas com python/curl).
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-  - Issue 1: (P0) Finalizar a correção da Auditoria e responder às dúvidas complexas do usuário.
-     - Attempted fixes: O agente migrou o  para consultar o DB (MongoDB). Retirou as travas de limite, mas isso gerou logs de 188 itens com missing_description. 
-     - Next debug checklist: 1) Ajustar os filtros em  para reportar apenas erros severos (ex: conflitos de categoria) e ignorar pratos que apenas não têm descrição preenchida ainda. 2) Responder explicitamente às perguntas do usuário deixadas no chat (explicar o Índice de Youden, a variação de precisão iOS vs Android, e os motivos de 2 falsos positivos entrarem na faixa de 90%).
-     - Why fix this issue and what will be achieved with the fix?: O usuário fez perguntas diretas e pediu explicações lógicas. Ignorar as perguntas e apenas alterar o código quebra a confiança. A auditoria precisa voltar a ser útil.
-     - Status: IN PROGRESS
-     - Is recurring issue? Y (Problemas de auditoria são recorrentes devido à dessincronização passada).
+  - Issue 1: (P0) **Reconstrução do Índice Visual para ViT-B-16**
+     - Attempted fixes: O agente trocou o modelo no código, mas o índice físico ( e ) ainda contém os vetores de 512 dimensões do ViT-B-32.
+     - Next debug checklist: Chamar o endpoint  passando . Monitorar usando . Aguardar o término. Depois, usar o script de teste ou  em  com uma foto real para garantir que o formato vetorial não quebre a API.
+     - Why fix this issue and what will be achieved with the fix?: O servidor de IA falhará ou retornará lixo matemático se tentar usar um índice antigo com o modelo novo. Isso fará o app inteiro quebrar durante o buffet.
+     - Status: NOT STARTED
+     - Is recurring issue? N (Causado pela troca de modelo).
      - Should Test frontend/backend/both after fix?: Backend.
      - Blocked on other issue: N/A.
 
-  - Issue 2: (P1) Verificação de pastas de pratos perdidas (Pernil de cordeiro e quiabo com amendoim).
-     - Attempted fixes: O agente fez query no banco e identificou que estão com slugs anômalos ( e ). 
-     - Next debug checklist: Consertar esses slugs no DB e mapeamentos de pastas via bash ou rotas admin.
-     - Why fix this issue and what will be achieved with the fix?: Recuperar as imagens e registros desses pratos para que voltem a aparecer.
-     - Status: NOT STARTED
-     - Is recurring issue? N
+  - Issue 2: (P1) Validar se os Falsos Positivos deixaram de receber Alta Confiança.
+     - Attempted fixes: Adicionada lógica que compara distância do centroid.
+     - Next debug checklist: Testar imagens locais que geravam 80-90% em pratos errados.
+     - Why fix this issue and what will be achieved with the fix?: Era a principal reclamação do usuário (Msg 419). O threshold precisa fazer sentido lógico.
+     - Status: TESTING PENDING
+     - Is recurring issue? Y
      - Should Test frontend/backend/both after fix?: Backend.
-     - Blocked on other issue: N/A.
+     - Blocked on other issue: Issue 1.
 
 **In progress Task List**:
-  - Task 1: (P1) Revisão Nutricional dos pratos C a Z.
+  - Task 1: (P2) Revisão Nutricional dos pratos C a Z.
      - Where to resume: Continuar o uso do script () que usa Gemini + TACO.
      - What will be achieved with this?: Padronizar calorias e macronutrientes.
      - Status: NOT STARTED
      - Should Test frontend/backend/both after fix?: Backend.
-     - Blocked on something: N/A.
+     - Blocked on something: Prioridades de IA atuais.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
@@ -47,95 +47,100 @@ Uma aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens
     - (P1) Validar a funcionalidade de adicionar referências e links na tela de resultado.
     
     Future Tasks:
-    - (P2) Criar endpoint de upload de ZIP no admin.
+    - (P2) Criar endpoint de upload de ZIP oficial no admin (Atualmente sendo feito via scripts isolados/bash).
     - (P2) Investigar e implementar a integração com Stripe.
     - (P3) Refatorar  (>5000 linhas) e  (>3000 linhas) em módulos menores.
 
 **Completed work in this session**
-- Implementação da aba de Calibracao CLIP no Admin (DONE)
-- Criação da coleção  e endpoint  para estatísticas (DONE)
-- Conexão nativa do botão de Moderação (Sim/Não) com a API de Calibração (DONE)
-- Remoção do popup amarelo duplicado de feedback no frontend (DONE)
-- Inclusão da opção Não cadastrado no feedback (DONE)
-- Correção do limitador de 30 itens na busca de pratos do Dropdown de moderação (DONE)
-- Correção de pastas duplicadas com underscore (migrado e consertado no ) (DONE)
-- Ajuste de threshold OpenCLIP para >= 90% em  e  a pedido do usuário (DONE)
+- Correção dos bugs na aba de Auditoria que apontavam falta de ingredientes/descrição erradamente (lendo chaves em PT em vez de EN) (DONE)
+- Padronização global de nomenclaturas no MongoDB (remoção de hífens, underscores, ajuste de Title Case) (DONE)
+- Correção no script de contagem de imagens que ignorava o Cloudflare R2 (DONE)
+- Ordenação alfabética na tela de Calibração (DONE)
+- Otimização do frontend (App.js) focada no Android: resolução ideal de 1280x960 e filtro  em canvas antes de buscar IA (DONE)
+- Processamento, extração e upload de dezenas de arquivos ZIP com novas imagens de pratos (~1000 novas imagens consolidadas) (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-   - Issue 1: O botão Atualizar na aba de Auditoria não dá feedback claro no Frontend (embora o agente tenha injetado CSS/states, o funcionamento da API de auditoria em si ainda quebra).
-   - Issue 2: Edição de categoria via aba de Auditoria salva a key  no PUT, mas o Frontend e MongoDB usam  no GET, causando status nulo no load (O agente tentou corrigir, mas a auditoria geral quebrou antes de testes e2e).
+   - Issue 1: O usuário apontou que há misturas passadas em pratos similares (ex: Muqueca x Ceviche). Muitas foram corrigidas, mas o usuário deve validar.
+   - Issue 2: A melhoria da câmera do Android foi feita no código, mas o impacto no mundo real requer validação pelo usuário no próprio aparelho.
 
 **Known issue recurrence from previous fork**
-  - Bugs de Sincronização da Auditoria: O script continuava lendo de arquivos mortos () em vez da fonte da verdade (MongoDB). O agente atual iniciou a correção, mas esbarrou em problemas de formatação.
+  - Bugs de nomenclatura de pastas e slugs: Uploads criavam pastas com nomes descritivos e duplicavam entradas que deveriam ser slugs. O agente alterou a função  e  para mitigar isso.
+  - Recurrence count: 3
+  - Status: RESOLVED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Calibração**: Novo módulo que registra em  toda tentativa do usuário. Avalia Falsos Positivos vs Verdadeiros Positivos.
-- **Youden's J statistic**: Citado pelo agente no dashboard para definir o corte ótimo. O usuário perguntou o que é isso na última mensagem e espera resposta.
+- Híbrido: React (PWA) -> FastAPI -> OpenCLIP (Embeddings 512d) -> Gemini Flash (Se clipping incerto).
+- Cloudflare R2 usado como fonte da verdade de imagens, cache via indexação numpy ().
+- Thresholds / Índice de Youden: Usado para calibração estatística na aba do Admin.
 
 **key DB schema**
-  - : 
-  - : 
-  - : 
+  - :  -> Essencial para validar fotos reais no R2.
+  - :  -> Fonte da verdade do prato.
 
 **changes in tech stack**
-  - Nenhuma grande mudança estrutural. Apenas nova coleção no DB.
+  - **Crítico:** Modelo CLIP foi trocado de  para  para melhorar precisão.
 
 **All files of reference** 
-  - : Precisa ser limpo de bugs (KeyErrors/TypeErrors ao ler MongoDB) e formatado para reduzir noise.
-  - : Painel de auditoria depende de .
-  - : Threshold modificado (>= 0.90).
+  -  e : Modificados na última etapa.
+  - : Adicionada otimização pesada para Android.
+  - : Central de upload e match de slugs.
 
 **Areas that need refactoring**: 
--  e  (enormes monolitos).
-- : Atualmente instável após transição de arquivos locais para pymongo.
+-  e  (estão excessivamente grandes).
 
 **key api endpoints**
-- : Registra tentativas.
-- : Roda auditoria nos pratos.
-- : Fluxo de triagem.
+- : Cria o índice de imagens a partir do DB/R2.
+- : Endpoint seguro para ingestão de novas imagens.
 
 **Critical Info for New Agent** 
-- **MUITO IMPORTANTE:** O usuário listou 5 perguntas precisas (mensagem 463). Antes de sair programando loucamente, **leia as perguntas do usuário e estruture uma resposta clara usando o **.
-  - Ele quer saber o que é Youden Index e como difere do threshold de 85/90%.
-  - Ele quer saber por que o app web no iOS escaneia melhor que no Android.
-  - Ele quer entender porque 2 pratos tiveram falso positivo em >90%.
-- O Threshold já foi retornado para 90% (0.90) no código durante os passos de bash, confirme se está ok.
-- A função  está dando erro/timeout ou relatando quase todos os pratos no banco de dados como falhos por estarem faltando 'description'. O usuário só quer ver os erros severos ou conflitos.
+- **NÃO PULE A REINDEXAÇÃO!** A última coisa feita foi a troca de um modelo de IA base ( -> ). Os vetores que estão no disco atualmente são do modelo antigo. Inicie disparando um Curl no  e espere terminar antes de testar a precisão ou o usuário vai ver o app quebrar.
+- O usuário foi extremamente colaborativo, mandou vários zips de teste e o buffet estava aberto. **Responda rápido ao Ask Human confirmando que o sistema está indexando o modelo novo que resolverá as falhas reportadas**.
+- No Android, o frontend agora desenha a imagem no Canvas com uma função customizada de  para forçar texturas em câmeras baratas, isso já foi comitado em .
 
 **documents and test reports created in this job** 
   -  (Atualizado)
-  -  (Testes da aba de Calibração)
-  -  (Testes de correções do botão de calibração)
-  -  (Atualizado)
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Dropdown termina em bolinho de bacalhau. (Resolvido, limite de 30 itens na API removido).
- 2. (User) Reporta bug do Ceviche de banana, do falso positivo do Feijão do chef, questiona past de teste misteriosa e reclama de novas pastas criadas com .
- 3. (Agent) Analisa os slugs vs pastas, move 14 imagens corrigindo o bug dos underscores, apaga pastas fantasmas. Teste validado.
- 4. (User) Reporta bugs na aba auditoria (não salva categoria, botão atualizar não funciona). Pede a análise de calibração.
- 5. (Agent) Imprime análise de calibração via bash. Verifica que a auditoria estava lendo de  locais obsoletos.
- 6. (User) **HUMAN PENDING**: Manda uma lista de 5 ordens/perguntas após ver a calibração: 1) Corrigir auditoria definitivamente. 2) Por que passaram 2 erros em 90-100%? Gerar lista de pratos que precisam de fotos. 3) Pernil de cordeiro e quiabo com amendoim sumiram, verifique. 4) O que é o Youden Index? 5) Por que o iOS funciona melhor que o Android (sugestões de padronização)? E pede para subir o threshold para 90% (o agente já subiu).
+ 1. (User) Reclamou que Android tem 60% precisão vs iOS 90%. (Agent corrigiu camera constraints).
+ 2. (User) Enviou múltiplos ZIPs (Alface frisee, milanesa, etc.). (Agent processou todos via Bash/Upload).
+ 3. (User) Pediu correção entre Maminhas (Mostarda/Madeira). (Agent consertou BD e slugs).
+ 4. (User) Enviou mais zips (Vagem, Tabule, Parmegiana, etc.). (Agent processou e corrigiu dedup).
+ 5. (User) Notou que 23 pratos na auditoria tinham conflito falso de glúten. (Agent arrumou a chave do MongoDB).
+ 6. (User) Pediu comparativo final de calibração após o rebuild do meio do processo.
+ 7. (Agent) Mostrou comparativo (subiu de 42% para 58%).
+ 8. (User) **HUMAN PENDING**: Questionou a lógica dos Falsos Positivos de Alta Confiança (>80%). Rejeitou que pratos com poucas fotos fossem a raiz do problema. Pediu fine-tuning ou novo modelo melhor/mais rápido.
+ 9. (Agent) Propôs mudar de ViT-B-32 para ViT-B-16 e alterar a lógica matemática do Index.
+ 10. (User) Respondeu: ok. (Agent implementou a mudança no código, parando exatamente aqui).
 
 **Project Health Check:**
-- Broken:  (migração json -> db inacabada)
-- Healthy: Fluxos de IA, Frontend mobile, Admin Moderation & Calibration.
+- Broken: IA está em transição de modelos (Reindex necessário).
+- Healthy: Front-end, Auditoria e Uploads funcionando.
 
 **3rd Party Integrations** 
-	•	OpenAI OpenCLIP — local deployment
-	•	Gemini 2.5 Flash / Lite — uses Emergent LLM Key
-	•	Cloudflare R2 (Storage) — requires User API Key
+	•	OpenAI OpenCLIP — local deployment (Modelos da HuggingFace).
+	•	Gemini 2.5 Flash / Lite — uses Emergent LLM Key.
+	•	Cloudflare R2 (Storage) — requires User API Key.
 
 **Testing status** 
-  - Testing agent used after significant changes: YES (iterations 8 & 9).
-  - Troubleshoot agent used after agent stuck in loop: NO
-  - Test files created: , 
-  - Known regressions: O painel de Auditoria está quebrado na geração dos JSONs.
+  - Testing agent used after significant changes: NO (Última modificação foi script de IA backend simples).
+  - Troubleshoot agent used after agent stuck in loop: NO.
+  - Test files created: Nenhum nesta bateria.
+  - Known regressions: O sistema tentará comparar features do modelo ViT-B-32 em vetores novos até que seja totalmente reindexado.
 
 **Credentials to test flow:**
 Admin:  / 
 
 **What agent forgot to execute**
-O agente consertou o código de 90%, mas **esqueceu** de responder às dúvidas lógicas do usuário antes de iniciar o loop de debug na auditoria. O novo agente deve iniciar com o  respondendo pacientemente às dúvidas do usuário (iOS/Android cache/camera behavior, Youden Index concept, e lista de pratos com poucas fotos) enquanto propõe finalizar os bugs da auditoria.</analysis>
+O agente alterou o  e  para usar ViT-B-16 mas esqueceu de rodar o comando de reindexação, o que deixará a busca vetorial inconsistente. 
+
+**Debugging checklist for current issue**
+    Issue: Rebuild do índice após troca do modelo base OpenCLIP
+    Backend files to check: 
+    -  (verifique se ViT-B-16 está forçado corretamente)
+    -  (verifique se a lógica de similaridade de centroid não possui loops/erros)
+    Command to run:
+    
+    Should Test frontend/backend/both after fix: Backend via curl mock image.</analysis>

@@ -200,14 +200,23 @@ class DishIndex:
         # Como os embeddings já estão normalizados, o dot product = cosine similarity
         similarities = np.dot(self.embeddings, query_embedding)
         
-        # Pegar top-k índices
-        top_indices = np.argsort(similarities)[::-1][:top_k * 3]  # Pega mais para agregar
+        # Pegar top-k índices (mais para agregar e medir consistencia)
+        top_indices = np.argsort(similarities)[::-1][:top_k * 10]
+        
+        # Medir consistencia: dos top-15 matches individuais, quantos pratos diferentes?
+        top15_dishes = []
+        for idx in top_indices[:15]:
+            if idx < len(self.dishes):
+                top15_dishes.append(self.dishes[idx])
+        consistency_dishes = len(set(top15_dishes))
+        # Se top-15 tem 1-3 pratos: alta consistencia. 5+: modelo confuso.
+        consistency_penalty = max(0, (consistency_dishes - 3) * 0.02)
         
         # Agregar por prato (pegar melhor score de cada prato)
         dish_scores: Dict[str, float] = {}
         for idx in top_indices:
             if idx >= len(self.dishes):
-                continue  # Safety: skip indices beyond dishes list
+                continue
             dish = self.dishes[idx]
             score = float(similarities[idx])
             if dish not in dish_scores or score > dish_scores[dish]:
@@ -216,18 +225,35 @@ class DishIndex:
         # Ordenar por score
         sorted_dishes = sorted(dish_scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
         
+        # Calcular gap entre 1o e 2o lugar
+        gap = 0.0
+        if len(sorted_dishes) >= 2:
+            gap = sorted_dishes[0][1] - sorted_dishes[1][1]
+        
+        # Penalidade por gap pequeno (modelo indeciso entre pratos)
+        gap_penalty = 0.0
+        if gap < 0.03:
+            gap_penalty = (0.03 - gap) * 2  # Quanto menor o gap, maior a penalidade
+        
         elapsed_ms = (time.time() - start_time) * 1000
         
-        # v1.2 restaurada: usar raw score direto, sem calibração
         results = []
-        for dish_name, raw_score in sorted_dishes:
-            confidence_level = self._get_confidence_level(raw_score)
-            logger.info(f"[CLIP] {dish_name} - Raw: {raw_score:.3f} - {confidence_level}")
+        for i, (dish_name, raw_score) in enumerate(sorted_dishes):
+            # Aplicar penalidades apenas ao 1o lugar
+            adjusted_score = raw_score
+            if i == 0:
+                adjusted_score = raw_score - consistency_penalty - gap_penalty
+                adjusted_score = max(0, adjusted_score)
+            
+            confidence_level = self._get_confidence_level(adjusted_score)
+            logger.info(f"[CLIP] {dish_name} - Raw: {raw_score:.3f} Adj: {adjusted_score:.3f} Gap: {gap:.3f} Consist: {consistency_dishes} - {confidence_level}")
             results.append({
                 'dish': dish_name,
-                'score': round(raw_score, 4),
+                'score': round(adjusted_score, 4),
                 'raw_score': round(raw_score, 4),
                 'confidence': confidence_level,
+                'gap': round(gap, 4),
+                'consistency': consistency_dishes,
                 'image_count': self.metadata.get(dish_name, {}).get('image_count', 0)
             })
         

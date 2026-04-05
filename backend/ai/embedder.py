@@ -43,8 +43,8 @@ def _try_load_local_model():
         
         _DEVICE = "cpu"
         model, _, preprocess = open_clip.create_model_and_transforms(
-            model_name="ViT-B-32",
-            pretrained="openai",
+            model_name="ViT-B-16",
+            pretrained="datacomp_xl_s13b_b90k",
             device=_DEVICE
         )
         model = model.to(_DEVICE)

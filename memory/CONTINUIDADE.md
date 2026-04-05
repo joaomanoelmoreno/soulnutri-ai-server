@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://nutrition-verify-hub.preview.emergentagent.com
+**URL**: https://plate-classifier.preview.emergentagent.com
 
 ---
 
