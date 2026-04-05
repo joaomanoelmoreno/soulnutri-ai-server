@@ -312,22 +312,45 @@ def get_dish_all_image_names(slug: str) -> list:
 
 
 def find_dish_slug_match(dish_name: str) -> Optional[str]:
-    """Busca slug do prato mais similar no dish_storage."""
+    """Busca slug do prato mais similar, priorizando match exato por nome."""
     from difflib import SequenceMatcher
     db = _get_db()
-    dish_lower = dish_name.lower().replace('_', ' ')
+    dish_lower = dish_name.lower().replace('_', ' ').replace('-', ' ').strip()
     best_match = None
     best_score = 0
 
-    for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1}):
-        slug = doc.get("slug", "")
-        slug_lower = slug.lower().replace('_', ' ')
+    # Unificar todas as fontes: dish_storage + dishes
+    all_entries = []
+    for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "name": 1}):
+        all_entries.append(doc)
+    for doc in db.dishes.find({}, {"_id": 0, "slug": 1, "name": 1}):
+        all_entries.append(doc)
 
-        if slug == dish_name or slug_lower == dish_lower:
+    for doc in all_entries:
+        slug = doc.get("slug", "")
+        name = doc.get("name", "")
+        slug_lower = slug.lower().replace('_', ' ').replace('-', ' ')
+        name_lower = name.lower()
+
+        # Match exato por nome: prioridade maxima
+        if name_lower == dish_lower:
+            return slug
+        # Match exato por slug normalizado
+        if slug_lower == dish_lower:
             return slug
 
-        score = SequenceMatcher(None, dish_lower, slug_lower).ratio()
-        if dish_lower in slug_lower or slug_lower in dish_lower:
+    # Segundo passo: fuzzy match
+    for doc in all_entries:
+        slug = doc.get("slug", "")
+        name = doc.get("name", "")
+        slug_lower = slug.lower().replace('_', ' ').replace('-', ' ')
+        name_lower = name.lower()
+
+        score = max(
+            SequenceMatcher(None, dish_lower, slug_lower).ratio(),
+            SequenceMatcher(None, dish_lower, name_lower).ratio()
+        )
+        if dish_lower in name_lower or name_lower in dish_lower:
             score = min(1.0, score + 0.3)
         if score > best_score:
             best_score = score
