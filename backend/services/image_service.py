@@ -212,8 +212,8 @@ def save_dish_image(slug: str, filename: str, content: bytes) -> dict:
 def _resolve_canonical_slug(slug: str) -> str:
     """
     Resolve o slug canonico de um prato.
-    Prioridade: pasta local existente > dish_storage > dishes collection > slug original.
-    Evita criar pastas duplicadas (ex: 'Bacalhau com Natas' vs 'bacalhau_com_natas').
+    Prioridade: dish_storage > dishes collection > pasta local > slug original.
+    Retorna slug do DB (com hifens) para evitar duplicatas no dish_storage.
     """
     import unicodedata
     
@@ -224,12 +224,7 @@ def _resolve_canonical_slug(slug: str) -> str:
     
     slug_norm = _normalize(slug)
     
-    # 1. Verificar pasta local existente (fonte mais confiavel)
-    for folder in LOCAL_DATASET_DIR.iterdir():
-        if folder.is_dir() and _normalize(folder.name) == slug_norm:
-            return folder.name  # Retorna o nome EXATO da pasta (com espacos)
-    
-    # 2. Verificar dish_storage no MongoDB
+    # 1. Verificar dish_storage no MongoDB (fonte da verdade para R2)
     try:
         db = _get_db()
         for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1}):
@@ -239,7 +234,7 @@ def _resolve_canonical_slug(slug: str) -> str:
     except Exception:
         pass
     
-    # 3. Verificar dishes collection
+    # 2. Verificar dishes collection
     try:
         db = _get_db()
         for doc in db.dishes.find({}, {"_id": 0, "slug": 1}):
@@ -248,6 +243,11 @@ def _resolve_canonical_slug(slug: str) -> str:
                 return s
     except Exception:
         pass
+    
+    # 3. Verificar pasta local existente (fallback)
+    for folder in LOCAL_DATASET_DIR.iterdir():
+        if folder.is_dir() and _normalize(folder.name) == slug_norm:
+            return folder.name
     
     # 4. Fallback: slug original
     return slug
