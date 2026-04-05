@@ -313,14 +313,14 @@ def get_model_info():
     """Retorna informações do modelo em uso"""
     if _USE_HF_API:
         return {
-            "model": "openai/clip-vit-base-patch32",
+            "model": "openai/clip-vit-base-patch16",
             "provider": "Hugging Face Inference API",
             "local": False,
             "device": "cloud"
         }
     else:
         return {
-            "model": "ViT-B-32",
+            "model": "ViT-B-16",
             "provider": "OpenCLIP (local)",
             "local": True,
             "device": _DEVICE

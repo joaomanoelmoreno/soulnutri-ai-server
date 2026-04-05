@@ -9,7 +9,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 ## Arquitetura
 - Frontend: React (CRA) + CSS Custom
 - Backend: FastAPI + Motor (MongoDB async)
-- AI: OpenCLIP local (ViT-B-32) para embedding de imagens
+- AI: OpenCLIP local (ViT-B-16, DataComp.XL) para embedding de imagens
 - Storage: Cloudflare R2 (bucket: soulnutri-images) - 3929 fotos
 - DB: MongoDB Atlas
 
@@ -57,15 +57,17 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Aplicado em dishes e dish_storage
 
 ## Estado Atual
-- 191 pratos, 189 com embeddings IA
+- 191 pratos, 191 com embeddings IA (ViT-B-16)
+- 2994 embeddings no indice (max 20/prato)
 - 3929+ fotos no Cloudflare R2
 - 255 mapeamentos TACO
 - 30 pratos A/B nutricionalmente revisados
 - Threshold CLIP: 90% alta / 50% media / <50% rejeicao
 - Health Score auditoria: 85.1%
+- Precisao teste: 100% (20/20 pratos aleatorios, 0 falsos positivos)
 
 ## Upcoming Tasks (Aguardando testes no buffet)
-- (P0) Usuario testar fotos reais no buffet e coletar amostras para calibracao
+- (P0) Usuario testar fotos reais no buffet com modelo ViT-B-16 (reindexado 2026-04-05)
 - (P1) Revisao nutricional pratos C-Z
 - (P1) Validar notificacoes push
 - (P1) Validar referencias/links na tela de resultado
