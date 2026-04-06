@@ -6,6 +6,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 
 ## Credenciais
 - Admin: joaomanoelmoreno / Pqlamz0192
+- Premium test user: pin=1234, nome=Teste SoulNutri
 
 ## Arquitetura
 - Frontend: React (CRA) + CSS Custom
@@ -28,16 +29,31 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Sistema de engajamento (gamificacao)
 - Painel admin completo com moderacao
 - Fluxo de feedback com fila de moderacao
-- Notificacoes push personalizadas
+- Notificacoes push personalizadas (VALIDADO 2026-04-06)
 - Design "Gourmet Dark Mode"
 
 ## Calibracao CLIP - IMPLEMENTADO
 - Thresholds: >=0.90 alta, >=0.50 media, <0.50 rejeicao
 - Colecao `calibration_log` (registro leve, sem upload de imagem)
 - POST /api/ai/calibration/log: registro automatico de amostras
+- DELETE /api/ai/calibration/clear-all: zerar TODAS as amostras (NOVO 2026-04-06)
 - DELETE /api/ai/calibration/{id}: deletar amostras individuais
 - GET /api/ai/calibration: estatisticas, distribuicao, Youden's J
-- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar
+- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar + botao "Zerar Tudo" (NOVO 2026-04-06)
+
+## Notificacoes Push - VALIDADO (2026-04-06)
+- POST /api/notifications/generate: gera notificacao diaria personalizada com referencias
+- GET /api/notifications/{user_pin}: lista notificacoes com unread count
+- POST /api/notifications/{user_pin}/read: marca como lida
+- NotificationPanel.jsx: painel deslizante com icones, prioridades, referencias clicaveis
+- Max 1 notificacao/dia/usuario
+- Tipos: high_sodium, low_fiber, good_protein, calorie_alert, vitamin_tip, hydration
+- Cada notificacao inclui referencias verificaveis (WHO, Harvard, Mayo Clinic, etc.)
+
+## Referencias na Tela de Resultado - VALIDADO (2026-04-06)
+- Secao "Fontes Nutricionais" visivel quando confianca != baixa
+- Links: TACO/UNICAMP, USDA FoodData Central, Open Food Facts
+- data-testid: ref-taco, ref-usda, ref-off
 
 ## Normalizacao iOS/Android (2026-04-04) - IMPLEMENTADO
 - Resolucao padronizada 1024px max em todas as capturas (tap, auto-scan, galeria)
@@ -66,12 +82,11 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Threshold CLIP: 90% alta / 50% media / <50% rejeicao
 - Health Score auditoria: 85.1%
 - Precisao teste: 100% (20/20 pratos aleatorios, 0 falsos positivos)
+- Calibracao zerada para novos testes (2026-04-06)
 
-## Upcoming Tasks (Aguardando testes no buffet)
+## Upcoming Tasks
 - (P0) Usuario testar fotos reais no buffet com modelo ViT-B-16 (reindexado 2026-04-05)
-- (P1) Revisao nutricional pratos C-Z
-- (P1) Validar notificacoes push
-- (P1) Validar referencias/links na tela de resultado
+- (P2) Revisao nutricional pratos C-Z
 
 ## Future Tasks
 - (P1) Refatorar server.py (5K+) e Admin.js (3K+)
