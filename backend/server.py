@@ -2286,8 +2286,11 @@ async def log_calibration_sample(
 
 
 @api_router.delete("/ai/calibration/clear-all")
-async def clear_all_calibration():
-    """Zera todas as amostras de calibracao."""
+async def clear_all_calibration(confirm: bool = False):
+    """Zera todas as amostras de calibracao. Requer confirm=true."""
+    if not confirm:
+        count = await db.calibration_log.count_documents({})
+        return {"ok": False, "message": f"Tem certeza? Existem {count} amostras. Envie confirm=true para confirmar.", "current_count": count}
     try:
         result = await db.calibration_log.delete_many({})
         logger.info(f"[CALIBRATION] Todas as amostras zeradas: {result.deleted_count} removidas")

@@ -382,7 +382,7 @@ export default function Admin() {
   // Zerar todas as amostras de calibração
   const clearAllCalibration = async () => {
     try {
-      const res = await xhrDelete(`${API}/ai/calibration/clear-all`);
+      const res = await xhrDelete(`${API}/ai/calibration/clear-all?confirm=true`);
       const data = await res.json();
       if (data.ok) {
         notify(`${data.deleted_count || 0} amostras removidas`, 'success');
