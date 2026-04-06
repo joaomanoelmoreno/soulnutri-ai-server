@@ -1,21 +1,21 @@
 /* ========================================
-   SOULNUTRI PREMIUM STYLES - GOLD EDITION
-   Paleta exclusiva: Dourado/Âmbar
+   SOULNUTRI PREMIUM STYLES - OBSIDIAN BLACK CARD
+   Paleta exclusiva: Preto + Dourado Fosco/Champagne
    ======================================== */
 
-/* Variáveis de cor Premium */
+/* Variáveis de cor Premium Obsidian */
 :root {
-  --premium-gold: #f59e0b;
-  --premium-gold-light: #fbbf24;
-  --premium-gold-dark: #d97706;
-  --premium-amber: #f59e0b;
-  --premium-bg: rgba(245, 158, 11, 0.08);
-  --premium-border: rgba(245, 158, 11, 0.3);
+  --premium-gold: #d4af37;
+  --premium-gold-light: #e8d48b;
+  --premium-gold-dark: #b8960f;
+  --premium-amber: #c5a028;
+  --premium-bg: rgba(212, 175, 55, 0.06);
+  --premium-border: rgba(212, 175, 55, 0.2);
 }
 
 .premium-form {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05));
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(184, 150, 15, 0.03));
+  border: 1px solid rgba(212, 175, 55, 0.12);
   border-radius: 16px;
   padding: 24px;
   animation: slideUp 0.3s ease;
@@ -32,12 +32,12 @@
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 4px;
-  color: #fbbf24;
+  color: #d4af37;
 }
 
 .premium-form .subtitle {
   text-align: center;
-  color: #d4a574;
+  color: #a09070;
   font-size: 0.85rem;
   margin-bottom: 20px;
 }
@@ -49,7 +49,7 @@
 .form-group label {
   display: block;
   font-size: 0.8rem;
-  color: #d4a574;
+  color: #a09070;
   margin-bottom: 6px;
 }
 
@@ -57,8 +57,8 @@
 .form-group select {
   width: 100%;
   padding: 12px 14px;
-  background: rgba(245, 158, 11, 0.05);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: rgba(212, 175, 55, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.12);
   border-radius: 10px;
   color: #fff;
   font-size: 1rem;
@@ -67,13 +67,13 @@
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #f59e0b;
-  background: rgba(245, 158, 11, 0.1);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
 }
 
 .form-group input::placeholder {
-  color: #8b7355;
+  color: #6b5e4a;
 }
 
 .form-row {
@@ -91,23 +91,23 @@
 
 .objetivo-btn {
   padding: 10px 8px;
-  background: rgba(245, 158, 11, 0.05);
-  border: 2px solid rgba(245, 158, 11, 0.15);
+  background: rgba(212, 175, 55, 0.04);
+  border: 2px solid rgba(212, 175, 55, 0.1);
   border-radius: 10px;
-  color: #a08060;
+  color: #a09070;
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .objetivo-btn.active {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: #f59e0b;
-  color: #fbbf24;
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+  color: #d4af37;
 }
 
 .objetivo-btn:hover {
-  border-color: rgba(245, 158, 11, 0.4);
+  border-color: rgba(212, 175, 55, 0.4);
 }
 
 /* Restrições grid */
@@ -119,19 +119,19 @@
 
 .restricao-btn {
   padding: 10px;
-  background: rgba(245, 158, 11, 0.05);
-  border: 2px solid rgba(245, 158, 11, 0.15);
+  background: rgba(212, 175, 55, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.15);
   border-radius: 10px;
-  color: #a08060;
+  color: #a09070;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .restricao-btn.active {
-  background: rgba(34, 197, 94, 0.2);
-  border-color: #22c55e;
-  color: #22c55e;
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #d4af37;
+  color: #d4af37;
 }
 
 /* Alergias - cor diferente (vermelho) */
@@ -149,7 +149,7 @@
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #d4af37, #b8960f);
   border: none;
   border-radius: 12px;
   color: #fff;
@@ -163,7 +163,7 @@
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
 }
 
 .submit-btn:disabled {
@@ -219,15 +219,15 @@
   font-size: 2rem;
   text-align: center;
   letter-spacing: 8px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 2px solid rgba(245, 158, 11, 0.3);
+  background: rgba(212, 175, 55, 0.08);
+  border: 2px solid rgba(212, 175, 55, 0.3);
   border-radius: 12px;
   color: #fff;
 }
 
 .pin-input:focus {
   outline: none;
-  border-color: #f59e0b;
+  border-color: #d4af37;
 }
 
 .pin-input-small {
@@ -243,7 +243,7 @@
 }
 
 .login-footer p {
-  color: #8b7355;
+  color: #6b5e4a;
   font-size: 0.85rem;
   margin-bottom: 8px;
 }
@@ -251,20 +251,20 @@
 .register-link {
   background: transparent;
   border: none;
-  color: #f59e0b;
+  color: #d4af37;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: underline;
 }
 
 .register-link:hover {
-  color: #fbbf24;
+  color: #e8d48b;
 }
 
 /* Daily Counter - GOLD THEME */
 .daily-counter {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05));
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(217, 119, 6, 0.05));
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: 16px;
   padding: 20px;
   animation: slideUp 0.3s ease;
@@ -279,7 +279,7 @@
 
 .counter-header h3 {
   font-size: 1.1rem;
-  color: #fbbf24;
+  color: #e8d48b;
 }
 
 .logout-btn {
@@ -308,7 +308,7 @@
 
 .ring-bg {
   fill: none;
-  stroke: rgba(245, 158, 11, 0.15);
+  stroke: rgba(212, 175, 55, 0.15);
   stroke-width: 8;
 }
 
@@ -331,24 +331,24 @@
 .ring-content .consumed {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: #e8d48b;
 }
 
 .ring-content .label {
   font-size: 0.9rem;
-  color: #a08060;
+  color: #a09070;
 }
 
 .ring-content .meta {
   font-size: 0.75rem;
-  color: #8b7355;
+  color: #6b5e4a;
   margin-top: 4px;
 }
 
 /* Progress bar */
 .progress-bar {
   height: 8px;
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(212, 175, 55, 0.15);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 8px;
@@ -377,8 +377,8 @@
 .macro-item {
   text-align: center;
   padding: 12px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.15);
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.15);
   border-radius: 10px;
 }
 
@@ -386,12 +386,12 @@
   display: block;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: #e8d48b;
 }
 
 .macro-label {
   font-size: 0.7rem;
-  color: #a08060;
+  color: #a09070;
   text-transform: uppercase;
 }
 
@@ -399,13 +399,13 @@
 .meals-list {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid rgba(245, 158, 11, 0.15);
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .meals-list h4 {
   font-size: 0.9rem;
   margin-bottom: 12px;
-  color: #d4a574;
+  color: #a09070;
 }
 
 .meal-item {
@@ -413,14 +413,14 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  background: rgba(245, 158, 11, 0.05);
+  background: rgba(212, 175, 55, 0.05);
   border-radius: 8px;
   margin-bottom: 8px;
 }
 
 .meal-time {
   font-size: 0.75rem;
-  color: #8b7355;
+  color: #6b5e4a;
   width: 45px;
 }
 
@@ -432,7 +432,7 @@
 
 .meal-cal {
   font-size: 0.8rem;
-  color: #f59e0b;
+  color: #d4af37;
   font-weight: 600;
 }
 
@@ -440,7 +440,7 @@
 .back-to-camera-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #d4af37, #b8960f);
   border: none;
   border-radius: 12px;
   color: #fff;
@@ -453,7 +453,7 @@
 
 .back-to-camera-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
 }
 
 /* Premium button in main screen - GOLD */
@@ -461,24 +461,24 @@
   position: fixed;
   bottom: 12px;
   left: 12px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.2));
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(217, 119, 6, 0.2));
+  border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 8px;
   width: auto;
   height: auto;
   padding: 6px 10px;
   font-size: 0.7rem;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
   z-index: 100;
   transition: all 0.2s;
-  color: #fbbf24;
+  color: #e8d48b;
   font-weight: 600;
 }
 
 .premium-btn:hover {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.5), rgba(217, 119, 6, 0.3));
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.5), rgba(217, 119, 6, 0.3));
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
 .premium-btn.logged-in {
@@ -539,7 +539,7 @@
   overflow-y: auto;
   padding-bottom: 40px;
   background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 /* ========================================
@@ -572,8 +572,8 @@
 }
 
 .premium-novidade.warning {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1));
-  border-color: rgba(245, 158, 11, 0.4);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(217, 119, 6, 0.1));
+  border-color: rgba(212, 175, 55, 0.4);
 }
 
 .premium-novidade.danger {
@@ -603,8 +603,8 @@
 }
 
 .premium-novidade.warning .novidade-tipo {
-  color: #fbbf24;
-  background: rgba(245, 158, 11, 0.2);
+  color: #e8d48b;
+  background: rgba(212, 175, 55, 0.2);
 }
 
 .premium-novidade.danger .novidade-tipo {
@@ -645,7 +645,7 @@
   position: fixed;
   bottom: 12px;
   right: 12px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9));
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.9), rgba(217, 119, 6, 0.9));
   border: none;
   border-radius: 12px;
   padding: 10px 16px;
@@ -653,14 +653,14 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
   z-index: 100;
   transition: all 0.2s;
 }
 
 .checkin-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
 }
 
 .checkin-btn:active {

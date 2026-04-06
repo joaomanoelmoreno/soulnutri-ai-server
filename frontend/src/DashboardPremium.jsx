@@ -316,7 +316,7 @@ export default function DashboardPremium({ user, onClose }) {
                 <CircularProgress 
                   value={hoje.calorias} 
                   max={metas.calorias} 
-                  color="#f59e0b" 
+                  color="#d4af37" 
                   label="kcal"
                   icon={Flame}
                 />
@@ -330,7 +330,7 @@ export default function DashboardPremium({ user, onClose }) {
                 <CircularProgress 
                   value={hoje.carboidratos} 
                   max={metas.carboidratos} 
-                  color="#3b82f6" 
+                  color="#d4af37" 
                   label="Carb"
                   icon={Wheat}
                 />
@@ -352,7 +352,7 @@ export default function DashboardPremium({ user, onClose }) {
                   <BarChart 
                     data={grafico.map(d => ({ day: d.dia, value: d.calorias }))} 
                     label="Calorias (kcal)" 
-                    color="#f59e0b"
+                    color="#d4af37"
                     maxValue={metas.calorias * 1.2}
                   />
                   <BarChart 
@@ -372,12 +372,12 @@ export default function DashboardPremium({ user, onClose }) {
               <h3>📈 Estatísticas</h3>
               <div className="stats-grid">
                 <div className="stat-item">
-                  <Award className="stat-icon" color="#f59e0b" />
+                  <Award className="stat-icon" color="#d4af37" />
                   <span className="stat-value">{stats.streak || 0}</span>
                   <span className="stat-label">Dias seguidos</span>
                 </div>
                 <div className="stat-item">
-                  <Calendar className="stat-icon" color="#3b82f6" />
+                  <Calendar className="stat-icon" color="#d4af37" />
                   <span className="stat-value">{stats.dias_registrados || 0}</span>
                   <span className="stat-label">Dias registrados</span>
                 </div>
@@ -474,7 +474,7 @@ export default function DashboardPremium({ user, onClose }) {
             
             <div className="metas-grid">
               <div className="meta-card">
-                <Flame size={24} color="#f59e0b" />
+                <Flame size={24} color="#d4af37" />
                 <span className="meta-value">{metas.calorias}</span>
                 <span className="meta-unit">kcal</span>
                 <span className="meta-label">Calorias</span>
@@ -486,7 +486,7 @@ export default function DashboardPremium({ user, onClose }) {
                 <span className="meta-label">Proteínas</span>
               </div>
               <div className="meta-card">
-                <Wheat size={24} color="#3b82f6" />
+                <Wheat size={24} color="#d4af37" />
                 <span className="meta-value">{metas.carboidratos}</span>
                 <span className="meta-unit">g</span>
                 <span className="meta-label">Carboidratos</span>
@@ -505,7 +505,7 @@ export default function DashboardPremium({ user, onClose }) {
               <ProgressBar 
                 value={stats.media_calorias || 0}
                 max={metas.calorias}
-                color="#f59e0b"
+                color="#d4af37"
                 label="Calorias"
                 unit=" kcal"
               />
@@ -519,7 +519,7 @@ export default function DashboardPremium({ user, onClose }) {
               <ProgressBar 
                 value={stats.media_carboidratos || 0}
                 max={metas.carboidratos}
-                color="#3b82f6"
+                color="#d4af37"
                 label="Carboidratos"
                 unit="g"
               />
@@ -563,10 +563,10 @@ export default function DashboardPremium({ user, onClose }) {
                   <h4>Composicao do Score</h4>
                   <div className="component-bars">
                     {[
-                      { key: 'aderencia', label: 'Aderencia as metas', max: 40, color: '#f59e0b' },
-                      { key: 'consistencia', label: 'Consistencia', max: 20, color: '#3b82f6' },
-                      { key: 'variedade', label: 'Variedade', max: 20, color: '#10b981' },
-                      { key: 'equilibrio', label: 'Equilibrio macro', max: 20, color: '#8b5cf6' }
+                      { key: 'aderencia', label: 'Aderencia as metas', max: 40, color: '#d4af37' },
+                      { key: 'consistencia', label: 'Consistencia', max: 20, color: '#e8d48b' },
+                      { key: 'variedade', label: 'Variedade', max: 20, color: '#c5a028' },
+                      { key: 'equilibrio', label: 'Equilibrio macro', max: 20, color: '#b8960f' }
                     ].map(comp => (
                       <div key={comp.key} className="comp-bar-item">
                         <div className="comp-bar-label">
@@ -614,10 +614,10 @@ export default function DashboardPremium({ user, onClose }) {
                 <div className="report-macros" data-testid="report-macros">
                   <h4>Medias Diarias vs Metas</h4>
                   {[
-                    { label: 'Calorias', media: reportData.resumo.media_calorias, meta: reportData.metas.calorias, unit: 'kcal', color: '#f59e0b' },
-                    { label: 'Proteinas', media: reportData.resumo.media_proteinas, meta: reportData.metas.proteinas, unit: 'g', color: '#ef4444' },
-                    { label: 'Carboidratos', media: reportData.resumo.media_carboidratos, meta: reportData.metas.carboidratos, unit: 'g', color: '#3b82f6' },
-                    { label: 'Gorduras', media: reportData.resumo.media_gorduras, meta: reportData.metas.gorduras, unit: 'g', color: '#10b981' }
+                    { label: 'Calorias', media: reportData.resumo.media_calorias, meta: reportData.metas.calorias, unit: 'kcal', color: '#d4af37' },
+                    { label: 'Proteinas', media: reportData.resumo.media_proteinas, meta: reportData.metas.proteinas, unit: 'g', color: '#e8d48b' },
+                    { label: 'Carboidratos', media: reportData.resumo.media_carboidratos, meta: reportData.metas.carboidratos, unit: 'g', color: '#c5a028' },
+                    { label: 'Gorduras', media: reportData.resumo.media_gorduras, meta: reportData.metas.gorduras, unit: 'g', color: '#b8960f' }
                   ].map(m => (
                     <div key={m.label} className="macro-compare">
                       <div className="macro-compare-label">
@@ -640,15 +640,15 @@ export default function DashboardPremium({ user, onClose }) {
                     <h4>Distribuicao Energetica</h4>
                     <div className="dist-bars">
                       <div className="dist-item">
-                        <div className="dist-bar" style={{ width: `${reportData.resumo.distribuicao.proteinas_pct}%`, backgroundColor: '#ef4444' }} />
+                        <div className="dist-bar" style={{ width: `${reportData.resumo.distribuicao.proteinas_pct}%`, backgroundColor: '#e8d48b' }} />
                         <span>Prot {reportData.resumo.distribuicao.proteinas_pct}%</span>
                       </div>
                       <div className="dist-item">
-                        <div className="dist-bar" style={{ width: `${reportData.resumo.distribuicao.carboidratos_pct}%`, backgroundColor: '#3b82f6' }} />
+                        <div className="dist-bar" style={{ width: `${reportData.resumo.distribuicao.carboidratos_pct}%`, backgroundColor: '#c5a028' }} />
                         <span>Carb {reportData.resumo.distribuicao.carboidratos_pct}%</span>
                       </div>
                       <div className="dist-item">
-                        <div className="dist-bar" style={{ width: `${reportData.resumo.distribuicao.gorduras_pct}%`, backgroundColor: '#10b981' }} />
+                        <div className="dist-bar" style={{ width: `${reportData.resumo.distribuicao.gorduras_pct}%`, backgroundColor: '#b8960f' }} />
                         <span>Gord {reportData.resumo.distribuicao.gorduras_pct}%</span>
                       </div>
                     </div>

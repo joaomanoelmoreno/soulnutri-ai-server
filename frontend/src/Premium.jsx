@@ -157,8 +157,8 @@ export function PremiumRegister({ onSuccess, onCancel }) {
           <div className="objetivo-btns">
             {[
               { value: 'perder', label: '📉 Perder peso', color: '#ef4444' },
-              { value: 'manter', label: '⚖️ Manter', color: '#3b82f6' },
-              { value: 'ganhar', label: '📈 Ganhar massa', color: '#22c55e' }
+              { value: 'manter', label: '⚖️ Manter', color: '#d4af37' },
+              { value: 'ganhar', label: '📈 Ganhar massa', color: '#d4af37' }
             ].map(obj => (
               <button
                 key={obj.value}
@@ -397,8 +397,8 @@ export function PremiumEditProfile({ onSuccess, onCancel }) {
           <div className="objetivo-btns">
             {[
               { value: 'perder', label: '📉 Perder peso', color: '#ef4444' },
-              { value: 'manter', label: '⚖️ Manter', color: '#3b82f6' },
-              { value: 'ganhar', label: '📈 Ganhar massa', color: '#22c55e' }
+              { value: 'manter', label: '⚖️ Manter', color: '#d4af37' },
+              { value: 'ganhar', label: '📈 Ganhar massa', color: '#d4af37' }
             ].map(obj => (
               <button
                 key={obj.value}
@@ -577,7 +577,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
   if (loading) return <div className="loading">Carregando...</div>;
 
   const percentual = summary?.percentual || 0;
-  const progressColor = percentual >= 100 ? '#ef4444' : percentual >= 75 ? '#f59e0b' : '#22c55e';
+  const progressColor = percentual >= 100 ? '#ef4444' : percentual >= 75 ? '#e8d48b' : '#d4af37';
 
   return (
     <div className="daily-counter expanded" data-testid="daily-counter">
@@ -599,10 +599,10 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
           onClick={() => setActiveView('hoje')}
           style={{
             padding: '8px 16px',
-            border: 'none',
+            border: activeView === 'hoje' ? 'none' : '1px solid rgba(212,175,55,0.15)',
             borderRadius: '20px',
-            background: activeView === 'hoje' ? '#22c55e' : '#333',
-            color: '#fff',
+            background: activeView === 'hoje' ? 'linear-gradient(135deg, #d4af37, #b8960f)' : 'rgba(212,175,55,0.06)',
+            color: activeView === 'hoje' ? '#080808' : '#d4af37',
             fontWeight: 'bold',
             cursor: 'pointer',
             fontSize: '13px'
@@ -615,10 +615,10 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
           onClick={() => setActiveView('semana')}
           style={{
             padding: '8px 16px',
-            border: 'none',
+            border: activeView === 'semana' ? 'none' : '1px solid rgba(212,175,55,0.15)',
             borderRadius: '20px',
-            background: activeView === 'semana' ? '#3b82f6' : '#333',
-            color: '#fff',
+            background: activeView === 'semana' ? 'linear-gradient(135deg, #d4af37, #b8960f)' : 'rgba(212,175,55,0.06)',
+            color: activeView === 'semana' ? '#080808' : '#d4af37',
             fontWeight: 'bold',
             cursor: 'pointer',
             fontSize: '13px'
@@ -631,10 +631,10 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
           onClick={() => setActiveView('perfil')}
           style={{
             padding: '8px 16px',
-            border: 'none',
+            border: activeView === 'perfil' ? 'none' : '1px solid rgba(212,175,55,0.15)',
             borderRadius: '20px',
-            background: activeView === 'perfil' ? '#f59e0b' : '#333',
-            color: '#fff',
+            background: activeView === 'perfil' ? 'linear-gradient(135deg, #d4af37, #b8960f)' : 'rgba(212,175,55,0.06)',
+            color: activeView === 'perfil' ? '#080808' : '#d4af37',
             fontWeight: 'bold',
             cursor: 'pointer',
             fontSize: '13px'
@@ -648,10 +648,10 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
           data-testid="btn-dashboard-premium"
           style={{
             padding: '8px 16px',
-            border: 'none',
+            border: activeView === 'dashboard' ? 'none' : '1px solid rgba(212,175,55,0.15)',
             borderRadius: '20px',
-            background: activeView === 'dashboard' ? '#8b5cf6' : '#333',
-            color: '#fff',
+            background: activeView === 'dashboard' ? 'linear-gradient(135deg, #d4af37, #b8960f)' : 'rgba(212,175,55,0.06)',
+            color: activeView === 'dashboard' ? '#080808' : '#d4af37',
             fontWeight: 'bold',
             cursor: 'pointer',
             fontSize: '13px'
@@ -738,7 +738,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                   gap: '8px',
                   padding: '8px',
                   marginBottom: '8px',
-                  background: alerta.nivel === 'alto' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.2)',
+                  background: alerta.nivel === 'alto' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(212, 175, 55, 0.1)',
                   borderRadius: '8px'
                 }}>
                   <span style={{ fontSize: '20px' }}>{alerta.emoji}</span>
@@ -750,7 +750,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                       {alerta.mensagem}
                     </p>
                     {alerta.dica && (
-                      <p style={{ margin: '4px 0 0', color: '#22c55e', fontSize: '11px' }}>
+                      <p style={{ margin: '4px 0 0', color: '#d4af37', fontSize: '11px' }}>
                         💡 {alerta.dica}
                       </p>
                     )}
@@ -776,7 +776,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                   { key: 'sodio', label: 'Sódio', emoji: '🧂' }
                 ].map(item => {
                   const perc = fullAnalysis.percentuais[item.key] || 0;
-                  const cor = perc > 100 ? '#ef4444' : perc > 70 ? '#22c55e' : '#f59e0b';
+                  const cor = perc > 100 ? '#ef4444' : perc > 70 ? '#d4af37' : '#e8d48b';
                   return (
                     <div key={item.key} style={{
                       background: 'rgba(255,255,255,0.05)',
@@ -865,10 +865,10 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                       <p style={{ color: '#ccc', fontSize: '12px', margin: '6px 0 0' }}>
                         {t.mensagem}
                       </p>
-                      <p style={{ color: '#f59e0b', fontSize: '11px', margin: '4px 0 0' }}>
+                      <p style={{ color: '#e8d48b', fontSize: '11px', margin: '4px 0 0' }}>
                         ⚠️ {t.impacto}
                       </p>
-                      <p style={{ color: '#22c55e', fontSize: '11px', margin: '4px 0 0' }}>
+                      <p style={{ color: '#d4af37', fontSize: '11px', margin: '4px 0 0' }}>
                         💡 {t.sugestao}
                       </p>
                     </div>
@@ -916,7 +916,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                   borderRadius: '12px'
                 }}>
                   <span style={{ fontSize: '32px' }}>🎉</span>
-                  <p style={{ color: '#22c55e', margin: '8px 0 0' }}>
+                  <p style={{ color: '#d4af37', margin: '8px 0 0' }}>
                     Parabéns! Sua alimentação está equilibrada esta semana!
                   </p>
                 </div>
@@ -930,14 +930,14 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
       {activeView === 'perfil' && (
         <div className="profile-view">
           <div style={{
-            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05))',
+            background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(184, 150, 15, 0.04))',
             borderRadius: '16px',
             padding: '20px',
             marginBottom: '16px'
           }}>
             <div style={{ textAlign: 'center', marginBottom: '16px' }}>
               <span style={{ fontSize: '48px' }}>👤</span>
-              <h3 style={{ color: '#f59e0b', margin: '8px 0' }}>{summary?.nome}</h3>
+              <h3 style={{ color: '#e8d48b', margin: '8px 0' }}>{summary?.nome}</h3>
               <p style={{ color: '#888', fontSize: '12px' }}>Membro Premium</p>
             </div>
 
@@ -950,13 +950,13 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
             }}>
               <div style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '10px', textAlign: 'center' }}>
                 <p style={{ color: '#888', fontSize: '11px', margin: 0 }}>Meta Diária</p>
-                <p style={{ color: '#22c55e', fontSize: '18px', fontWeight: 'bold', margin: '4px 0 0' }}>
+                <p style={{ color: '#d4af37', fontSize: '18px', fontWeight: 'bold', margin: '4px 0 0' }}>
                   {summary?.meta?.toFixed(0) || '2000'} kcal
                 </p>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '10px', textAlign: 'center' }}>
                 <p style={{ color: '#888', fontSize: '11px', margin: 0 }}>Objetivo</p>
-                <p style={{ color: '#3b82f6', fontSize: '14px', fontWeight: 'bold', margin: '4px 0 0' }}>
+                <p style={{ color: '#d4af37', fontSize: '14px', fontWeight: 'bold', margin: '4px 0 0' }}>
                   {fullAnalysis?.metas ? (
                     fullAnalysis.metas.calorias < 1800 ? '📉 Perder peso' :
                     fullAnalysis.metas.calorias > 2200 ? '📈 Ganhar massa' : '⚖️ Manter'
@@ -984,8 +984,8 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
               style={{
                 width: '100%',
                 padding: '12px',
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                color: '#fff',
+                background: 'linear-gradient(135deg, #d4af37, #b8960f)',
+                color: '#080808',
                 border: 'none',
                 borderRadius: '10px',
                 fontWeight: 'bold',

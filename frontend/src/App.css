@@ -2216,6 +2216,37 @@ body:has(.premium-active) {
   border-color: rgba(212, 175, 55, 0.15);
 }
 
+/* Botoes Foto/Gallery/Limpar - Obsidian */
+.premium-active .action-btn.upload {
+  background: linear-gradient(135deg, #d4af37, #b8960f) !important;
+  color: #080808 !important;
+  border: none;
+}
+
+.premium-active .action-btn.gallery {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #e8d48b !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+}
+
+.premium-active .action-btn.clear {
+  background: rgba(212, 175, 55, 0.05) !important;
+  color: #d4af37 !important;
+  border: 1px solid rgba(212, 175, 55, 0.15) !important;
+}
+
+.premium-active .action-btn.mode {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #d4af37 !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+}
+
+.premium-active .action-btn.mode.active {
+  background: rgba(212, 175, 55, 0.2) !important;
+  color: #e8d48b !important;
+  border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
 /* Scrollbar premium */
 .premium-active::-webkit-scrollbar-thumb {
   background: rgba(212, 175, 55, 0.2);
