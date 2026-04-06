@@ -1,0 +1,55 @@
+{
+  "summary": "Iteration 11 - Tested Upload Fotos Title Case, Calibration Zerar Tudo, Premium Gold Theme, and Notifications. All backend APIs pass. Frontend Premium layout verified.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_11.py",
+    "/app/test_reports/pytest/pytest_iteration_11.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_11.py"
+  ],
+  "success_rate": {
+    "backend": "100% (11/11 tests passed)",
+    "frontend": "100% (all Premium/Free layout features verified)"
+  },
+  "test_credentials": {
+    "admin": "joaomanoelmoreno / Pqlamz0192",
+    "premium_user": "pin=1234, nome=Teste SoulNutri"
+  },
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 11 verified: 1) Upload Fotos shows 196 dishes in Title Case (no hyphens), 2) Calibration Zerar Tudo button works (DELETE /api/ai/calibration/clear-all returns ok=true), 3) Premium layout has gold theme (premium-active class, gold header border, PREMIUM badge, notification bell), 4) Free version has no premium features. Camera not available in headless browser (expected).",
+  "verified_features": {
+    "upload_fotos_tab": {
+      "status": "PASS",
+      "details": "196 dishes displayed in Title Case (e.g., 'Abobora ao Curry', 'Arroz 7 Graos (c/ ou s/ Frutas Secas)')"
+    },
+    "calibration_zerar_tudo": {
+      "status": "PASS",
+      "details": "Button with data-testid='calibration-clear-all' found and API DELETE /api/ai/calibration/clear-all returns ok=true"
+    },
+    "premium_layout": {
+      "status": "PASS",
+      "details": "premium-active class applied, gold header border (rgba(245, 158, 11, 0.2)), PREMIUM badge visible, notification bell present"
+    },
+    "free_version": {
+      "status": "PASS",
+      "details": "No premium badge, no premium-active class, no notification bell"
+    },
+    "notifications_api": {
+      "status": "PASS",
+      "details": "GET /api/notifications/1234 returns notifications with references"
+    }
+  }
+}

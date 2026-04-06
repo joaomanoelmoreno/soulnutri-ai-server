@@ -283,9 +283,9 @@ def get_all_dishes_stats() -> dict:
     total_images = 0
 
     for doc in db.dish_storage.find({}, {"_id": 0, "slug": 1, "name": 1, "count": 1}):
-        slug = doc.get("slug", "")
+        display_name = doc.get("name", "") or doc.get("slug", "")
         count = doc.get("count", 0)
-        stats[slug] = count
+        stats[display_name] = count
         total_images += count
 
     return {

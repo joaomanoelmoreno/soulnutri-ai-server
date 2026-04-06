@@ -1777,7 +1777,7 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className={`app${premiumUser ? ' premium-active' : ''}`}>
       {/* Tela de Permissões Unificada */}
       {showPermissions && (
         <div className="permissions-screen" style={{
@@ -1863,6 +1863,9 @@ function App() {
         <div className="logo-container">
           <img src="/images/soulnutri-logo.png" alt="SoulNutri" className="logo" />
           <span className="trademark">®</span>
+          {premiumUser && (
+            <span className="premium-badge-header" data-testid="premium-badge">PREMIUM</span>
+          )}
         </div>
         <div className="header-right">
           <LanguageSelector />
@@ -1887,8 +1890,8 @@ function App() {
                   position: 'absolute',
                   top: '0',
                   right: '0',
-                  background: '#ef4444',
-                  color: '#fff',
+                  background: '#f59e0b',
+                  color: '#1a1a2e',
                   borderRadius: '50%',
                   width: '16px',
                   height: '16px',

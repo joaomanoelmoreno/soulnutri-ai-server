@@ -2056,3 +2056,138 @@ iframe[src*="emergent"], div[style*="Made with"] {
 .install-popup-btn.secondary:hover {
   background: #f3f4f6;
 }
+
+
+/* ============================================
+   PREMIUM ACTIVE THEME - Gold Edition Override
+   Aplicado quando .premium-active esta no .app
+   ============================================ */
+
+/* Premium Badge no Header */
+.premium-badge-header {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #1a1a2e;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  text-transform: uppercase;
+  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.4);
+  animation: premiumShine 3s ease-in-out infinite;
+}
+
+@keyframes premiumShine {
+  0%, 100% { box-shadow: 0 1px 4px rgba(245, 158, 11, 0.4); }
+  50% { box-shadow: 0 1px 12px rgba(245, 158, 11, 0.7); }
+}
+
+/* Header Premium */
+.premium-active .hdr {
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  padding-bottom: 10px;
+}
+
+.premium-active .menu-btn {
+  color: #fbbf24;
+}
+
+.premium-active .st {
+  color: #fbbf24 !important;
+}
+
+/* Result Card Premium */
+.premium-active .res {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(245, 158, 11, 0.04));
+  border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.premium-active .res.alta {
+  border-left: 3px solid #fbbf24;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+}
+
+.premium-active .res.média {
+  border-left: 3px solid #f59e0b;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+}
+
+.premium-active .dish-name {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Back Button Premium */
+.premium-active .back-btn {
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.premium-active .back-btn:hover {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: #f59e0b;
+}
+
+/* Premium Scan Area Highlight */
+.premium-active video {
+  border: 2px solid rgba(245, 158, 11, 0.25);
+  border-radius: 16px;
+}
+
+/* Tap Button Premium */
+.premium-active .scan-tap-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: #1a1a2e !important;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Info boxes Premium */
+.premium-active .info-box {
+  border-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Nutrient bars Premium accent */
+.premium-active .macro-fill {
+  opacity: 0.9;
+}
+
+/* Daily Counter Premium */
+.premium-active .daily-counter-container {
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(217, 119, 6, 0.03));
+}
+
+/* Menu Overlay Premium */
+.premium-active .menu-overlay {
+  border-left: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+/* Footer area premium */
+.premium-active .premium-upsell {
+  display: none;
+}
+
+/* Gallery Premium accent */
+.premium-active .gallery-item {
+  border-color: rgba(245, 158, 11, 0.15);
+}
+
+/* Allergen chips Premium */
+.premium-active .allergen-chip.has {
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+/* Confidence label Premium */
+.premium-active .confidence-label {
+  color: #fbbf24;
+}
+
+/* Premium scan instructions text */
+.premium-active .scan-instruction {
+  color: #fbbf24;
+}
