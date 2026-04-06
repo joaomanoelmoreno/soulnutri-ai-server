@@ -12,7 +12,7 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Frontend: React (CRA) + CSS Custom
 - Backend: FastAPI + Motor (MongoDB async)
 - AI: OpenCLIP local (ViT-B-16, DataComp.XL) para embedding de imagens
-- Storage: Cloudflare R2 (bucket: soulnutri-images) - 3929 fotos
+- Storage: Cloudflare R2 (bucket: soulnutri-images) - 4389 fotos
 - DB: MongoDB Atlas
 
 ## Regra de Negocio Critica: Hard Lock Cibi Sana
@@ -22,87 +22,89 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 - Log: [HARD LOCK] nos logs do backend para rastreabilidade
 
 ## Funcionalidades Implementadas
-- Identificacao de pratos via camera/foto
+
+### Layout Premium vs Gratuito (NOVO 2026-04-06)
+- Classe CSS `premium-active` no container principal quando usuario premium logado
+- **Premium**: Badge "PREMIUM" dourado no header, cores gold (#f59e0b, #fbbf24, #d97706) em todo o app
+  - Header com borda inferior dourada, menu/pratos/sino em gold
+  - Resultado: gradiente gold no nome do prato, borda lateral gold
+  - Camera com borda dourada
+  - Botao scan gold, mini-counter gold, botao "Dieta" gold
+  - Sino de notificacoes com badge gold
+- **Gratuito**: Sem badge, sem sino, cores padrao (verde/branco), botao "Premium" (convite)
+- Estilos em App.css (overrides .premium-active) e Premium.css
+
+### Calibracao CLIP
+- Thresholds: >=0.90 alta, >=0.50 media, <0.50 rejeicao
+- Colecao `calibration_log` (registro leve, sem upload de imagem)
+- POST /api/ai/calibration/log: registro automatico de amostras
+- DELETE /api/ai/calibration/clear-all: zerar TODAS as amostras (2026-04-06)
+- DELETE /api/ai/calibration/{id}: deletar amostras individuais
+- GET /api/ai/calibration: estatisticas, distribuicao, Youden's J
+- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar + botao "Zerar Tudo"
+
+### Notificacoes Push (VALIDADO 2026-04-06)
+- POST /api/notifications/generate: gera notificacao diaria personalizada com referencias
+- GET /api/notifications/{user_pin}: lista notificacoes com unread count
+- POST /api/notifications/{user_pin}/read: marca como lida
+- NotificationPanel.jsx: painel deslizante com icones, prioridades, referencias clicaveis
+
+### Upload Fotos (FIX 2026-04-06)
+- Dataset exibe nomes em Title Case (ex: "Abobora ao Curry") nao mais slugs com hifens
+- Corrigido `get_all_dishes_stats()` para usar campo `name` ao inves de `slug`
+- Corrigido slug com underscore: arroz_7_graos -> arroz-7-graos-c-ou-s-frutas-secas
+- Mescladas 3 duplicatas (Bolinho de Bacalhau, Frango ao Creme de Limao, Sobrecoxa ao Tandoori)
+- Upload ZIP funcional no admin
+
+### Dados Nutricionais
+- 196 pratos com dados nutricionais
+- Pratos A-E todos com dados completos
+- 2 pratos preenchidos: Ceviche de Banana da Terra, Espaguete de Abobrinha ao Pesto (2026-04-06)
+- Fonte: TACO + Gemini Flash
+
+### Outras funcionalidades
+- Identificacao de pratos via camera/foto (PWA)
 - Ficha nutricional detalhada com dados TACO (255 mapeamentos)
 - Sistema premium com pin de acesso
 - Nutri News (feed de noticias IA)
 - Sistema de engajamento (gamificacao)
 - Painel admin completo com moderacao
 - Fluxo de feedback com fila de moderacao
-- Notificacoes push personalizadas (VALIDADO 2026-04-06)
 - Design "Gourmet Dark Mode"
-
-## Calibracao CLIP - IMPLEMENTADO
-- Thresholds: >=0.90 alta, >=0.50 media, <0.50 rejeicao
-- Colecao `calibration_log` (registro leve, sem upload de imagem)
-- POST /api/ai/calibration/log: registro automatico de amostras
-- DELETE /api/ai/calibration/clear-all: zerar TODAS as amostras (NOVO 2026-04-06)
-- DELETE /api/ai/calibration/{id}: deletar amostras individuais
-- GET /api/ai/calibration: estatisticas, distribuicao, Youden's J
-- Aba "Calibracao CLIP" no Admin com dashboard + botao Deletar + botao "Zerar Tudo" (NOVO 2026-04-06)
-
-## Notificacoes Push - VALIDADO (2026-04-06)
-- POST /api/notifications/generate: gera notificacao diaria personalizada com referencias
-- GET /api/notifications/{user_pin}: lista notificacoes com unread count
-- POST /api/notifications/{user_pin}/read: marca como lida
-- NotificationPanel.jsx: painel deslizante com icones, prioridades, referencias clicaveis
-- Max 1 notificacao/dia/usuario
-- Tipos: high_sodium, low_fiber, good_protein, calorie_alert, vitamin_tip, hydration
-- Cada notificacao inclui referencias verificaveis (WHO, Harvard, Mayo Clinic, etc.)
-
-## Referencias na Tela de Resultado - VALIDADO (2026-04-06)
-- Secao "Fontes Nutricionais" visivel quando confianca != baixa
-- Links: TACO/UNICAMP, USDA FoodData Central, Open Food Facts
-- data-testid: ref-taco, ref-usda, ref-off
-
-## Normalizacao iOS/Android (2026-04-04) - IMPLEMENTADO
-- Resolucao padronizada 1024px max em todas as capturas (tap, auto-scan, galeria)
-- Qualidade JPEG padronizada em 85% (antes era 70%)
-- Funcao normalizeImage() aplicada no upload de galeria
-
-## Auditoria de Dados (2026-04-04) - CORRIGIDO
-- Campos ingleses (ingredients, description) com fallback correto
-- Health Score baseado em erros severos apenas (ignora missing_description)
-- Endpoint GET /api/admin/audit/low-photos usando dish_storage (R2 real)
-- 27 pratos com <=5 fotos identificados
-
-## Padronizacao de Nomes (2026-04-04) - IMPLEMENTADO
-- Regra: Maiusculas nas palavras principais, minusculas em artigos/preposicoes
-- Sem acentos, sem hifens, sem underscores nos nomes
-- Parenteses preservados para agrupar pratos similares
-- Abreviacoes c/ e s/ preservadas
-- Aplicado em dishes e dish_storage
+- Normalizacao iOS/Android (1024px, 85% JPEG)
+- Padronizacao de nomes (Title Case)
 
 ## Estado Atual
-- 191 pratos, 191 com embeddings IA (ViT-B-16)
-- 2994 embeddings no indice (max 20/prato)
-- 3929+ fotos no Cloudflare R2
+- 196 pratos, todos com embeddings IA (ViT-B-16)
+- 4389+ fotos no Cloudflare R2
 - 255 mapeamentos TACO
-- 30 pratos A/B nutricionalmente revisados
-- Threshold CLIP: 90% alta / 50% media / <50% rejeicao
-- Health Score auditoria: 85.1%
-- Precisao teste: 100% (20/20 pratos aleatorios, 0 falsos positivos)
+- Precisao teste: 100% (20/20 pratos, 0 falsos positivos)
 - Calibracao zerada para novos testes (2026-04-06)
+- 23 pratos com poucas fotos (<=5) - necessitam mais fotos
+
+## Pratos com Poucas Fotos (<=5)
+- [CRITICO] Ceviche de Banana da Terra: 1
+- [CRITICO] Sobrecoxa ao Tandoori: 1+28 (merged)
+- [CRITICO] Frango ao Creme de Limao: 2+50 (merged)  
+- [BAIXO] Bolinho de Bacalhau: 3+38 (merged)
+- ... mais 19 pratos com 0-5 fotos
 
 ## Upcoming Tasks
-- (P0) Usuario testar fotos reais no buffet com modelo ViT-B-16 (reindexado 2026-04-05)
-- (P2) Revisao nutricional pratos C-Z
+- (P0) Usuario testar fotos reais no buffet com modelo ViT-B-16
+- (P2) Revisao nutricional pratos F-Z
 
 ## Future Tasks
-- (P1) Refatorar server.py (5K+) e Admin.js (3K+)
-- (P2) Integracao Stripe
-- (P2) Upload ZIP no admin
+- (P1) Comercializacao Apple Store / Google Play
+- (P1) Integracao Stripe para premium
+- (P2) Refatorar server.py (5K+) e Admin.js (3K+)
+- (P2) Upload ZIP verificar se esta funcionando
 
 ## REGRA CRITICA: LOCK do Pipeline ViT-B-16 (2026-04-05)
-### NENHUM AGENTE PODE ALTERAR OS SEGUINTES ARQUIVOS/CONFIGS SEM AUTORIZACAO EXPLICITA DO USUARIO:
-- /app/backend/ai/embedder.py — modelo, pre-processamento, parametros
-- /app/backend/ai/index.py — logica de similaridade, thresholds, penalidades
-- /app/datasets/dish_index.json — indice de pratos
-- /app/datasets/dish_index_embeddings.npy — vetores de embedding
-- Nao trocar modelo (ViT-B-16 DataComp.XL), nao alterar dimensao (512), nao mudar normalizacao
-- Nao rodar reindex sem autorizacao do usuario
-- Pequenos ajustes de threshold ou logica de resposta sao permitidos APENAS se o usuario pedir
-- Esta versao foi validada com 100% de precisao (20/20 pratos, 0 falsos positivos)
+- /app/backend/ai/embedder.py — NAO ALTERAR
+- /app/backend/ai/index.py — NAO ALTERAR
+- /app/datasets/dish_index.json — NAO ALTERAR
+- /app/datasets/dish_index_embeddings.npy — NAO ALTERAR
+- Modelo: ViT-B-16 DataComp.XL, dimensao 512, validado 100%
 
 ## Restricoes Tecnicas
 - NAO usar window.alert/confirm/prompt (iframe bloqueia)
