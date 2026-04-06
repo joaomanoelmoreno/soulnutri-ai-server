@@ -482,19 +482,19 @@
 }
 
 .premium-btn.logged-in {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(217, 119, 6, 0.25));
-  border-color: rgba(245, 158, 11, 0.5);
-  color: #fbbf24;
-  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(184, 150, 15, 0.2));
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #d4af37;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
 }
 
-/* Mini counter badge - GOLD */
+/* Mini counter badge - OBSIDIAN */
 .mini-counter {
   position: fixed;
   bottom: 12px;
   left: 75px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(30, 20, 10, 0.95));
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: linear-gradient(135deg, rgba(8, 8, 8, 0.95), rgba(20, 18, 12, 0.98));
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: 8px;
   padding: 4px 8px;
   z-index: 100;
@@ -505,23 +505,23 @@
 }
 
 .mini-counter:hover {
-  border-color: rgba(245, 158, 11, 0.5);
+  border-color: rgba(212, 175, 55, 0.4);
 }
 
 .mini-counter .mini-value {
   font-size: 1rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: #d4af37;
 }
 
 .mini-counter .mini-label {
   font-size: 0.6rem;
-  color: #a08060;
+  color: #a09070;
 }
 
 .mini-counter .mini-progress {
   height: 3px;
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(212, 175, 55, 0.1);
   border-radius: 2px;
   margin-top: 4px;
   overflow: hidden;

@@ -2059,9 +2059,19 @@ iframe[src*="emergent"], div[style*="Made with"] {
 
 
 /* ============================================
-   PREMIUM ACTIVE THEME - Gold Edition Override
+   PREMIUM ACTIVE THEME - Obsidian Black Card
+   Fundo preto puro com acentos dourado fosco
    Aplicado quando .premium-active esta no .app
    ============================================ */
+
+/* Fundo Obsidian - diferencia totalmente do gratuito */
+.premium-active {
+  background: #080808;
+}
+
+body:has(.premium-active) {
+  background: #080808;
+}
 
 /* Premium Badge no Header */
 .premium-badge-header {
@@ -2070,85 +2080,86 @@ iframe[src*="emergent"], div[style*="Made with"] {
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  color: #1a1a2e;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+  color: #080808;
+  background: linear-gradient(135deg, #d4af37, #c5a028, #b8960f);
   padding: 2px 8px;
   border-radius: 4px;
   margin-left: 6px;
   text-transform: uppercase;
-  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 1px 6px rgba(212, 175, 55, 0.4);
   animation: premiumShine 3s ease-in-out infinite;
 }
 
 @keyframes premiumShine {
-  0%, 100% { box-shadow: 0 1px 4px rgba(245, 158, 11, 0.4); }
-  50% { box-shadow: 0 1px 12px rgba(245, 158, 11, 0.7); }
+  0%, 100% { box-shadow: 0 1px 6px rgba(212, 175, 55, 0.3); }
+  50% { box-shadow: 0 1px 14px rgba(212, 175, 55, 0.6); }
 }
 
-/* Header Premium */
+/* Header Premium - Obsidian */
 .premium-active .hdr {
-  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
   padding-bottom: 10px;
 }
 
 .premium-active .menu-btn {
-  color: #fbbf24;
+  color: #d4af37;
 }
 
 .premium-active .st {
-  color: #fbbf24 !important;
+  color: #d4af37 !important;
 }
 
-/* Result Card Premium */
+/* Result Card Premium - Obsidian */
 .premium-active .res {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(245, 158, 11, 0.04));
-  border: 1px solid rgba(245, 158, 11, 0.15);
+  background: linear-gradient(135deg, rgba(15, 15, 15, 0.9), rgba(212, 175, 55, 0.03));
+  border: 1px solid rgba(212, 175, 55, 0.12);
 }
 
 .premium-active .res.alta {
-  border-left: 3px solid #fbbf24;
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+  border-left: 3px solid #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.06);
 }
 
 .premium-active .res.média {
-  border-left: 3px solid #f59e0b;
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+  border-left: 3px solid #c5a028;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.06);
 }
 
 .premium-active .dish-name {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #e8d48b, #d4af37, #b8960f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Back Button Premium */
+/* Back Button Premium - Obsidian */
 .premium-active .back-btn {
-  color: #fbbf24;
-  border-color: rgba(245, 158, 11, 0.3);
+  color: #d4af37;
+  border-color: rgba(212, 175, 55, 0.25);
 }
 
 .premium-active .back-btn:hover {
-  background: rgba(245, 158, 11, 0.1);
-  border-color: #f59e0b;
+  background: rgba(212, 175, 55, 0.08);
+  border-color: #d4af37;
 }
 
-/* Premium Scan Area Highlight */
+/* Premium Scan Area - Obsidian */
 .premium-active video {
-  border: 2px solid rgba(245, 158, 11, 0.25);
+  border: 2px solid rgba(212, 175, 55, 0.2);
   border-radius: 16px;
 }
 
-/* Tap Button Premium */
+/* Tap Button Premium - Obsidian */
 .premium-active .scan-tap-btn {
-  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-  color: #1a1a2e !important;
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+  background: linear-gradient(135deg, #d4af37, #b8960f) !important;
+  color: #080808 !important;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
 }
 
-/* Info boxes Premium */
+/* Info boxes Premium - Obsidian */
 .premium-active .info-box {
-  border-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(212, 175, 55, 0.1) !important;
+  background: rgba(15, 15, 15, 0.6) !important;
 }
 
 /* Nutrient bars Premium accent */
@@ -2156,15 +2167,16 @@ iframe[src*="emergent"], div[style*="Made with"] {
   opacity: 0.9;
 }
 
-/* Daily Counter Premium */
+/* Daily Counter Premium - Obsidian */
 .premium-active .daily-counter-container {
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(217, 119, 6, 0.03));
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.04), rgba(184, 150, 15, 0.02));
 }
 
-/* Menu Overlay Premium */
+/* Menu Overlay Premium - Obsidian */
 .premium-active .menu-overlay {
-  border-left: 1px solid rgba(245, 158, 11, 0.15);
+  border-left: 1px solid rgba(212, 175, 55, 0.1);
+  background: rgba(8, 8, 8, 0.98) !important;
 }
 
 /* Footer area premium */
@@ -2172,22 +2184,44 @@ iframe[src*="emergent"], div[style*="Made with"] {
   display: none;
 }
 
-/* Gallery Premium accent */
+/* Gallery Premium accent - Obsidian */
 .premium-active .gallery-item {
-  border-color: rgba(245, 158, 11, 0.15);
+  border-color: rgba(212, 175, 55, 0.1);
 }
 
-/* Allergen chips Premium */
+/* Allergen chips Premium - Obsidian */
 .premium-active .allergen-chip.has {
-  border-color: rgba(245, 158, 11, 0.4);
+  border-color: rgba(212, 175, 55, 0.3);
 }
 
 /* Confidence label Premium */
 .premium-active .confidence-label {
-  color: #fbbf24;
+  color: #d4af37;
 }
 
 /* Premium scan instructions text */
 .premium-active .scan-instruction {
-  color: #fbbf24;
+  color: #d4af37;
+}
+
+/* Camera fallback area - Obsidian */
+.premium-active .camera-fallback,
+.premium-active .camera-area {
+  background: rgba(15, 15, 15, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+/* Action buttons row - Obsidian */
+.premium-active .action-btn {
+  border-color: rgba(212, 175, 55, 0.15);
+}
+
+/* Scrollbar premium */
+.premium-active::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.2);
+}
+
+/* Error message premium */
+.premium-active .err {
+  border-color: rgba(212, 175, 55, 0.15);
 }
