@@ -434,9 +434,9 @@ function App() {
         clearTimeout(timeoutId);
         const data = await res.json();
         if (data.ok && mountedRef.current) {
-          setPremiumUser(data.user);
+          setPremiumUser({ ...data.user, pin });
           loadDailySummary();
-          loadNotifCount(data.user.pin);
+          loadNotifCount(pin);
         }
       }
     } catch (e) {

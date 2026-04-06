@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://plate-classifier.preview.emergentagent.com
-- Admin: https://plate-classifier.preview.emergentagent.com/admin
-- Lista de Pratos: https://plate-classifier.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://nutriai-stable.preview.emergentagent.com
+- Admin: https://nutriai-stable.preview.emergentagent.com/admin
+- Lista de Pratos: https://nutriai-stable.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

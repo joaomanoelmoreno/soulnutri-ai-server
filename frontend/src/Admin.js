@@ -379,6 +379,22 @@ export default function Admin() {
     setCalibrationLoading(false);
   };
 
+  // Zerar todas as amostras de calibração
+  const clearAllCalibration = async () => {
+    try {
+      const res = await xhrDelete(`${API}/ai/calibration/clear-all`);
+      const data = await res.json();
+      if (data.ok) {
+        notify(`${data.deleted_count || 0} amostras removidas`, 'success');
+        loadCalibrationData();
+      } else {
+        notify('Erro ao zerar: ' + (data.error || data.message), 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
   // Deletar amostra de calibração
   const deleteCalibrationSample = async (sampleId) => {
     try {
@@ -2912,10 +2928,16 @@ export default function Admin() {
         <div className="calibration-section" data-testid="calibration-section">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <h2 data-testid="calibration-title" style={{ margin: 0, color: '#e2e8f0' }}>Calibracao CLIP - Youden's J</h2>
-            <button onClick={loadCalibrationData} data-testid="calibration-refresh" style={{
-              padding: '8px 16px', background: '#3b82f6', color: '#fff', border: 'none',
-              borderRadius: '8px', cursor: 'pointer', fontSize: '14px'
-            }}>Atualizar</button>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={clearAllCalibration} data-testid="calibration-clear-all" style={{
+                padding: '8px 16px', background: '#dc2626', color: '#fff', border: 'none',
+                borderRadius: '8px', cursor: 'pointer', fontSize: '14px'
+              }}>Zerar Tudo</button>
+              <button onClick={loadCalibrationData} data-testid="calibration-refresh" style={{
+                padding: '8px 16px', background: '#3b82f6', color: '#fff', border: 'none',
+                borderRadius: '8px', cursor: 'pointer', fontSize: '14px'
+              }}>Atualizar</button>
+            </div>
           </div>
 
           {calibrationLoading && <p style={{ color: '#94a3b8' }}>Carregando dados...</p>}

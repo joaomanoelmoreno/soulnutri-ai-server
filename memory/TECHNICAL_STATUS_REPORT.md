@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://plate-classifier.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://nutriai-stable.preview.emergentagent.com
 ```
 
 ---

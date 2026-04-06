@@ -2285,6 +2285,18 @@ async def log_calibration_sample(
         return {"ok": False, "error": str(e)}
 
 
+@api_router.delete("/ai/calibration/clear-all")
+async def clear_all_calibration():
+    """Zera todas as amostras de calibracao."""
+    try:
+        result = await db.calibration_log.delete_many({})
+        logger.info(f"[CALIBRATION] Todas as amostras zeradas: {result.deleted_count} removidas")
+        return {"ok": True, "deleted_count": result.deleted_count, "message": f"{result.deleted_count} amostras removidas"}
+    except Exception as e:
+        logger.error(f"Erro ao zerar calibracao: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.delete("/ai/calibration/{sample_id}")
 async def delete_calibration_sample(sample_id: str):
     """Deleta uma amostra de calibracao pelo ID."""
