@@ -3,7 +3,7 @@
 ## Admin
 - Username: joaomanoelmoreno
 - Password: Pqlamz0192
-- URL: https://nutriai-stable.preview.emergentagent.com/admin
+- URL: https://nutriai-preview-4.preview.emergentagent.com/admin
 
 ## Premium User (Test)
 - PIN: 1234

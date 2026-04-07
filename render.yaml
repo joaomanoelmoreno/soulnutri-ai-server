@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: soulnutri
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: oregon
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: DB_NAME
+        value: soulnutri
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: EMERGENT_LLM_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: USDA_API_KEY
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_BUCKET
+        value: soulnutri-images
+      - key: USE_LOCAL_MODEL
+        value: "false"
