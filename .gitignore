@@ -94,3 +94,7 @@ frontend/build/fotos_revisar/
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
