@@ -41,6 +41,9 @@ COPY datasets/dish_name_mapping.json datasets/dish_name_mapping.json
 # Render usa $PORT (default 8001)
 EXPOSE 8001
 
+# Garantir que Python encontre os modulos locais (ai/, services/, etc.)
+ENV PYTHONPATH=/app/backend
+
 # Iniciar a partir do diretorio backend (mesmo que dev)
 WORKDIR /app/backend
 CMD uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001} --workers 1

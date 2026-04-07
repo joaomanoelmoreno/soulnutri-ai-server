@@ -34,7 +34,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 
 # Carregar configuracoes
-ROOT_DIR = Path(__file__).parent
+ROOT_DIR = Path(__file__).resolve().parent
 load_dotenv(ROOT_DIR / '.env')
 
 # Configurar logging
