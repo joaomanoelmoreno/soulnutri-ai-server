@@ -1,111 +1,139 @@
-<analysis>**original_problem_statement:** O usuário deseja construir o SoulNutri, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. O objetivo principal atual era trocar o modelo OpenCLIP para  e reindexar as imagens para melhorar a precisão da IA e reduzir falsos positivos de alta confiança. Após testes bem-sucedidos que retornaram 100% de acerto nas amostras, o usuário exigiu o bloqueio (HARD LOCK) dessa versão do modelo para impedir futuras alterações automáticas e a rotulou como Versão 2.0. PRODUCT REQUIREMENTS: Coletar amostras reais, processar banco de imagens, refinar precisão de IA, travar modelo em ViT-B-16, corrigir dados nutricionais.
+<analysis>**original_problem_statement:** O usuário deseja construir o SoulNutri, um aplicativo de agente de nutrição virtual para o restaurante Cibi Sana. O objetivo atual principal é realizar o deploy em produção (no Render) usando o domínio . PRODUCT REQUIREMENTS: Coletar amostras reais, processar banco de imagens, manter precisão de IA (ViT-B-16 travado na V2.0), ter notificações push, referências nutricionais, e uma UI exclusiva para usuários Premium (Tema Obsidian Black Card). O backend e frontend devem ser unificados (FastAPI servindo o build do React) para simplificar o deploy.
 
-**User's preferred language**: Portuguese (Brasil).
-(INSTRUCT: The next agent MUST respond in Português only)
+**User's preferred language**: Portuguese (Brasil)
+(INSTRUCT: The next agent MUST automatically detect the user's primary language from their messages inside the <trajectory> tag and INSTRUCT next agent to respond in the user's preferred language only. The language is PORTUGUESE).
 
 **what currently exists?** 
-Aplicação full-stack (React + FastAPI + MongoDB). Armazenamento de imagens no Cloudflare R2 (). O pipeline de IA baseia-se no modelo OpenCLIP local  gerando vetores de 512d em cache. O índice de embeddings foi totalmente limpo, pastas físicas foram normalizadas (de 204 reduzidas para 191 após mesclar/deletar lixo) e o sistema alcançou excelente precisão nos scripts de teste. A pedido direto do usuário, a lógica de IA (, , índice e vetores) foi rigidamente **TRAVADA (LOCKED)** na Versão 2.0 — ViT-B-16 Stable. 
+Aplicação full-stack com React (Frontend) e FastAPI (Backend). O sistema possui integração com IA local (ViT-B-16 - HARD LOCKED) para reconhecimento de pratos e R2 (Cloudflare) para armazenamento de imagens. A UI Premium foi totalmente remodelada para um tema Obsidian Black Card (Preto e Dourado) coeso em todas as telas. O app agora conta com notificações push diárias, botão seguro () de zerar calibração, e links de referência nutricional na tela de resultados. 
 
 **Last working item**:
-    - Last item agent was working: Atualização do documento  para registrar a Versão 2.0 e adicionar a regra explícita de bloqueio (HARD LOCK) do sistema de IA ViT-B-16, conforme exigência do usuário na última mensagem.
-    - Status: COMPLETED
-    - Agent Testing Done: Y (Scripts de teste do backend rodaram confirmando 100% de acerto em pratos aleatórios e índice reconstruído perfeitamente).
-    - Which testing method agent to use?: NA (testing is already done)
-    - User Testing Done: Y (Usuário concordou com os resultados e pediu para travar a versão).
+    - Last item agent was working: Preparação para o deploy unificado no Render. O agente decidiu pela estratégia (A) de fazer o FastAPI servir o build de produção do React. O agente acabou de rodar o comando yarn run v1.22.22
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command. com sucesso no diretório  e estava explorando o  e os arquivos de indexação da IA () para garantir que tudo funcionará no ambiente do Render.
+    - Status: IN PROGRESS
+    - Agent Testing Done: N
+    - Which testing method agent to use?: manual testing by curl / screenshot tool (verificar se o FastAPI consegue servir a página HTML inicial).
+    - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-Nenhuma issue ativa ou de bloqueio no momento. A issue crítica de troca de modelo e reindexação foi totalmente resolvida.
+  Issue 1: Finalizar a configuração de Deploy Unificado (FastAPI + React) (P0)
+     - Attempted fixes: O build de produção do frontend acabou de ser gerado ().
+     - Next debug checklist: Editar  para montar a pasta estática do React (). Garantir fallback de roteamento para o React Router (retornar  para rotas não-API). Garantir que os arquivos  e  de dataset da IA estejam referenciados corretamente de forma relativa para rodarem no ambiente do Render.
+     - Why fix this issue and what will be achieved with the fix?: Permitirá que o usuário suba apenas um repositório para o Render (plano Starter recém-adquirido), simplificando a infraestrutura, eliminando problemas de CORS e resolvendo a hospedagem.
+     - Status: IN PROGRESS
+     - Is recurring issue? N
+     - Should Test frontend/backend/both after fix?: Both (verificar se o  renderiza a UI corretamente).
+     - Blocked on other issue: N/A
 
 **In progress Task List**:
-  - Task 1: (P2) Revisão Nutricional dos pratos C a Z.
-     - Where to resume: Continuar o uso do script ( ou criar similares) que usa Gemini + TACO.
-     - What will be achieved with this?: Padronizar calorias e macronutrientes dos pratos restantes no banco de dados.
-     - Status: NOT STARTED
-     - Should Test frontend/backend/both after fix?: Backend.
-     - Blocked on something: N/A.
+  Task 1: (P2) Revisão Nutricional dos pratos C a Z.
+     - Where to resume: Continuar o preenchimento de macros e calorias no MongoDB  (C a E já foram preenchidos pontualmente para os pratos faltantes).
+     - What will be achieved with this?: Base nutricional completa para todos os 196 pratos.
+     - Status: NOT STARTED (Pausado para focar no deploy).
+     - Should Test frontend/backend/both after fix?: Backend
+     - Blocked on something: N/A
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - (P1) Validar o funcionamento do sistema de notificações push.
-    - (P1) Validar a funcionalidade de adicionar referências e links na tela de resultado.
+    - (P0) Testar fotos reais no buffet com ViT-B-16 diretamente no Render (pós-deploy).
+    - (P2) Criar endpoint de upload de ZIP oficial no admin (para facilitar inserção em massa de fotos).
     
     Future Tasks:
-    - (P2) Criar endpoint de upload de ZIP oficial no admin.
-    - (P2) Investigar e implementar a integração com Stripe.
-    - (P3) Refatorar  (>5500 linhas) e  (>3000 linhas) em módulos menores.
+    - (P1) Landing page de onboarding premium com trial de 7 dias.
+    - (P2) Comercialização via Apple Store / Google Play + Stripe.
+    - (P3) Refatorar  (>5500 linhas) e  (>3500 linhas) em módulos menores e organizados.
 
 **Completed work in this session**
-- Substituição total do modelo OpenCLIP para  (DONE)
-- Reindexação completa em background (duas vezes, para garantir dados limpos) (DONE)
-- Limpeza e normalização de pastas/slugs legados e duplicados no disco (reduzido de 204 para 191 pratos limpos) (DONE)
-- Validação local de identificação que bateu 100% de precisão num sample de 20 imagens (DONE)
-- Trava (LOCK) de código AI imposta a pedido do usuário (Versão 2.0) salva no PRD.md (DONE)
+- Endpoint  criado (agora exige  para evitar reset acidental pelo testing agent) (DONE)
+- Notificações Push para usuários Premium concluídas (DONE)
+- Fontes Nutricionais (TACO, USDA) adicionadas na tela de resultado do Scan (DONE)
+- Tema Premium Obsidian Black Card (Preto #080808 e Dourado) aplicado uniformemente em todas as telas (DONE)
+- Correção de exibição de nomes com hífens na tab de Upload de Fotos (DONE)
+- Limpeza e merge de pratos duplicados no banco de dados de imagens ( unificado para exatos 196 pratos) (DONE)
+- Geração do Frontend Build para Deploy (yarn run v1.22.22
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.) (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-   - Issue 1: A IA melhorou significativamente (100% de acerto no teste local), mas a resolução real das confusões entre misturas similares (ex: Muqueca x Ceviche) só poderá ser definitivamente atestada pelo usuário no próprio restaurante. Sem ação técnica pendente no momento.
+   Nenhuma pendência técnica oculta no momento.
 
 **Known issue recurrence from previous fork**
-  - Bugs de nomenclatura de pastas e slugs: Uploads criavam pastas descritivas com hífens e duplicavam slugs. 
-  - Recurrence count: 0 (Resolvido: O agente anterior corrigiu o upload, e o agente atual limpou as pastas legadas no disco. Todas as pastas agora estão em Title Case puro e normalizadas).
+  - Recurrence count: 0 
   - Status: RESOLVED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-React (PWA), FastAPI, MongoDB. Integração com IA local (OpenCLIP ViT-B-16). Cloudflare R2 como storage principal, indexação  guardada localmente em .
+React (PWA), FastAPI, MongoDB. Integração com IA local (ViT-B-16 LOCKED). Cloudflare DNS com Render para hospedagem backend/frontend unificada. Tema da UI varia baseado no estado da conta ().
 
 **key DB schema**
-  - :  -> Imagens indexadas.
-  - : .
+  - :  -> Mapeamento de R2 imagens.
+  - : Perfis premium cadastrados.
+  - : Registros de calibração no campo.
 
 **changes in tech stack**
-  - Modelo atualizado para  e **BLOQUEADO** (Versão 2.0).
+  - Preparando para **Unified Deployment**: O FastAPI servirá os arquivos estáticos do React em vez de rodarem em portas separadas, facilitando deploy via Render.
 
 **All files of reference** 
-  - : Atualizado com regras estritas.
-  -  e : NÃO DEVEM SER ALTERADOS.
+  -  (Alvo da próxima modificação de deploy)
+  -  (Conteúdo estático recém-compilado)
+  -  e  (Atualizados).
 
 **Areas that need refactoring**: 
--  e .
+-  está gigantesco e gerencia rotas, banco, IA e agora servirá arquivos estáticos. Precisa ser dividido futuramente.
 
 **key api endpoints**
-- : Endpoint de ingestão.
-- : Endpoint principal de identificação.
+- 
+- 
+- 
 
 **Critical Info for New Agent** 
-- **CRÍTICO: CÓDIGO DE IA TRAVADO.** O usuário determinou um HARD LOCK nos arquivos ,  e no processo de embeddings ViT-B-16. **NÃO modifique estes arquivos, limiares de confiança ou pipelines de IA sem ordem explícita do usuário**. 
-- O projeto atualizou para a versão 2.0 — ViT-B-16 Stable. A etapa atual foi perfeitamente bem-sucedida. Sua próxima ação deve ser utilizar o Ask Human oferecendo dar continuidade a **Revisão Nutricional (Task P2)** ou a validação de **Notificações Push (Task P1)**. 
+- **CÓDIGO IA LOCKED:** Não toque em  ou . A arquitetura IA V2.0 é intocável.
+- **Acidente de Calibração:** Na iteração passada o *Testing Agent* acidentalmente invocou o endpoint de  apagando testes reais do usuário. A rota agora exige o param  - não remova isso.
+- **Deploy:** O usuário conseguiu assinar o Render (plano Starter) e concordou com o plano de fazer o FastAPI servir o Frontend. Sua primeira missão é alterar o  para montar a pasta  na raiz do FastAPI, mantendo as rotas  separadas, e garantir que se faça o direcionamento correto de index.html para React Router. Prepare a arquitetura para envio ao Render.
 
 **documents and test reports created in this job** 
-  -  (Atualizado para a v2.0)
+  - 
+  - 
+  - 
+  - 
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Please use ask_human tool and confirm your plan now. (Agent propos o plano de reindexar).
- 2. (User) sim. (Agent rodou e limpou os índices).
- 3. (User) Os testes foram melhores agora, vamos travar esta versao. Por enquanto nao se mexe nos ajustes do Vit B16. Coloque uma regra nesse sentido para que nenhum agente altere esse sistema novo. (Agent adicionou regras ao PRD).
- 4. (User) salve com novo numero de versao. (Agent salvou Versão 2.0 em PRD.md).
- *(Não há Human Pending. O agente anterior finalizou a tarefa com sucesso e aguarda você iniciar a próxima iteração).*
+ 1. (User) selecionei o standard mas ele continua no free e nao muda
+ 2. (User) *Upload screenshots Render Dashboard*
+ 3. (User) a psata esta la e iniciei novo deploy
+ 4. (User) ele repete a informcao que so vai mudar o instance apos finalizar o deploy free
+ 5. (User) *Upload screenshot* conseguimos resolver, veja o status atual
+ 6. (User) sim, mas depois oriente-me passo a passo
+ 7. (User) Se nao mudar nada na operacao de front end eplo usuari e enm inerferir na performance de tempo de respotas e reconhecimento do app , podemos ir em a). Há alguma outra consideracao importante a ser feita?
+ 8. (User) ok.
+ *(Pending Human Message: Nenhuma. O usuário deu ok para o seu plano de configurar o deploy unificado. Você precisa agora finalizar essa configuração (server.py + build) e orientá-lo sobre o push pro GitHub)*.
 
 **Project Health Check:**
-- Healthy: Todo o pipeline backend, frontend e AI está estável, livre de erros e calibrado. O ambiente está 100% pronto para seguir aos próximos passos do desenvolvimento.
+- Frontend: Healthy (Novo tema Obsidian Gold aprovado visualmente).
+- Backend: Healthy (100% testes passaram).
+- Deploy: IN PROGRESS.
 
 **3rd Party Integrations** 
-	•	OpenAI OpenCLIP (HuggingFace local) — Usa CPU e modelo local, sem custos.
+	•	OpenAI OpenCLIP (HuggingFace local) — Usa CPU e modelo local (LOCKED).
 	•	Gemini 2.5 Flash / Lite — uses Emergent LLM Key.
 	•	Cloudflare R2 (Storage) — requires User API Key.
 
 **Testing status** 
-  - Testing agent used after significant changes: NO (A validação extensiva manual via Bash em dezenas de imagens provou 100% de estabilidade sem dependências de UI).
-  - Troubleshoot agent used after agent stuck in loop: NO.
-  - Test files created: N/A.
-  - Known regressions: Nenhum.
+  - Testing agent used after significant changes: YES (Usado nas iterações 10, 11 e 12 com 100% de sucesso).
+  - Troubleshoot agent used after agent stuck in loop: NO
+  - Test files created: 
+  - Known regressions: Nenhum atual.
 
 **Credentials to test flow:**
-Admin:  / 
+  - Admin:  / 
+  - Premium User: pin=, nome=
 
 **What agent forgot to execute**
-Nada. A solicitação de troca, reindexação e congelamento de versão (LOCK) foi perfeitamente acatada.
+O agente parou exatamente na verificação dos arquivos  e  de datasets, antes de editar o  para servir a pasta do React Build.
 
 **Debugging checklist for current issue**
-    Issue: Não há bugs na fila. Comece ofertando opções de continuidade (ex: Revisão Nutricional dos pratos, Notificações Push) via ask_human.</analysis>
+    Issue: Configurar FastAPI para servir o frontend (Deploy Unificado)
+    - Editar : Adicionar  e lidar com o Catch-All para React Router.
+    - Garantir que todas as chamadas do frontend internamente apontarão para  (já usam , que agora na produção será a própria origem).
+    - Verificar referências absolutas vs relativas para o modelo de embeddings (paths dos  e ).
+    - Orientar o usuário após o ajuste sobre como subir para o GitHub e Render.</analysis>

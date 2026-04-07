@@ -5516,3 +5516,25 @@ async def correct_moderation_item(item_id: str, request: Request):
 # ═════════════════════════════
 
 app.include_router(api_router)
+
+# ═══════════════════════════════════════════════════════
+# DEPLOY UNIFICADO: FastAPI serve o React Build (SPA)
+# ═══════════════════════════════════════════════════════
+from fastapi.responses import FileResponse
+
+FRONTEND_BUILD_DIR = ROOT_DIR.parent / "frontend" / "build"
+
+if FRONTEND_BUILD_DIR.exists() and (FRONTEND_BUILD_DIR / "index.html").exists():
+    logger.info(f"[DEPLOY] Frontend build encontrado em {FRONTEND_BUILD_DIR} - Modo unificado ativo")
+
+    @app.get("/{full_path:path}")
+    async def serve_react_app(full_path: str):
+        """Serve React SPA - catch-all para rotas nao-API"""
+        if full_path:
+            file_path = (FRONTEND_BUILD_DIR / full_path).resolve()
+            build_resolved = FRONTEND_BUILD_DIR.resolve()
+            if file_path.is_file() and str(file_path).startswith(str(build_resolved)):
+                return FileResponse(str(file_path))
+        return FileResponse(str(FRONTEND_BUILD_DIR / "index.html"))
+else:
+    logger.warning("[DEPLOY] Frontend build NAO encontrado. Modo API-only.")

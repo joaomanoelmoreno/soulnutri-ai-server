@@ -39,11 +39,17 @@ venv/
 # Build caches
 .cache/
 
-# Dataset images - too large for git
-datasets/
+# Dataset images - too large for git (3.3GB)
+datasets/organized/
 *.faiss
 *.index
 backups/
+
+# Manter no repo (necessarios em runtime ~6MB):
+# datasets/dish_index.json
+# datasets/dish_index_embeddings.npy
+# datasets/descriptions.json
+# datasets/dish_name_mapping.json
 
 # Environment files
 *.env
@@ -51,19 +57,12 @@ backups/
 
 # ML model files
 ml/dataset.zip
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
+
+# Frontend build (gerado pelo Docker no deploy)
+frontend/build/
+
+# Debug / temp
+test_reports/
+frontend/build/debug_screenshots/
+frontend/build/fotos_revisar/
+*.docx

@@ -1,0 +1,27 @@
+# Ignorar arquivos desnecessarios no Docker build
+node_modules/
+frontend/node_modules/
+frontend/build/
+__pycache__/
+*.pyc
+.git/
+.emergent/
+.env
+backend/.env
+frontend/.env
+
+# Pasta de imagens originais (3.3GB - NAO necessaria em runtime)
+datasets/organized/
+
+# Arquivos de teste e debug
+test_reports/
+backend/tests/
+frontend/build/debug_screenshots/
+frontend/build/fotos_revisar/
+
+# Documentos
+*.docx
+*.pdf
+*.txt
+!requirements.txt
+!frontend/build/sw.js
