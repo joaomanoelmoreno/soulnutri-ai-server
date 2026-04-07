@@ -26,7 +26,7 @@ COPY frontend/ /app/frontend/
 
 # Build com URL vazia = paths relativos (funciona em qualquer dominio)
 ENV REACT_APP_BACKEND_URL=""
-RUN yarn build
+RUN yarn build && test -f /app/frontend/build/index.html && echo "BUILD OK: index.html exists"
 
 # ── Backend + Datasets ──
 WORKDIR /app
