@@ -5496,6 +5496,39 @@ async def correct_moderation_item(item_id: str, request: Request):
 
 app.include_router(api_router)
 
+# Endpoint de diagnostico do deploy (temporario)
+@app.get("/api/debug/deploy")
+async def debug_deploy():
+    import os
+    backend_dir = Path(__file__).resolve().parent
+    base_dir = backend_dir.parent
+    build_path = base_dir / "frontend" / "build"
+    abs_build = Path("/app/frontend/build")
+    
+    build_files = []
+    for p in [build_path, abs_build]:
+        if p.exists():
+            try:
+                build_files = [str(f.name) for f in p.iterdir()][:10]
+            except:
+                pass
+            break
+    
+    return {
+        "cwd": os.getcwd(),
+        "file": str(Path(__file__).resolve()),
+        "backend_dir": str(backend_dir),
+        "base_dir": str(base_dir),
+        "build_relative": str(build_path),
+        "build_relative_exists": build_path.exists(),
+        "build_absolute": str(abs_build),
+        "build_absolute_exists": abs_build.exists(),
+        "index_relative": (build_path / "index.html").exists(),
+        "index_absolute": (abs_build / "index.html").exists(),
+        "build_files": build_files,
+        "sys_path": sys.path[:5],
+    }
+
 # ═══════════════════════════════════════════════════════
 # DEPLOY UNIFICADO: FastAPI serve o React Build (SPA)
 # ═══════════════════════════════════════════════════════
