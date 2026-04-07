@@ -544,120 +544,95 @@ async def identify_image(
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
-        # SISTEMA DE IDENTIFICAÇÃO - V1.2 RESTAURADA (logica limpa)
+        # SISTEMA DE IDENTIFICAÇÃO - V2.1 (Bifurcacao por localizacao)
         # ═══════════════════════════════════════════════════════════════════════
-        # CLIP score ≥ 90% -> aceito direto
-        # Cibi Sana -> CLIP sempre, Gemini TRAVADO
-        # Fora Cibi Sana -> Gemini como fallback
+        # Cibi Sana (GPS): CLIP ONLY (Gemini HARD LOCK, pratos calibrados)
+        # Fora Cibi Sana: GEMINI ONLY (CLIP desligado, pratos genericos)
         # ═══════════════════════════════════════════════════════════════════════
         
         decision = None
-        
-        from ai.index import get_index
-        from ai.policy import analyze_result
-        
-        index = get_index()
-        clip_score = 0.0
-        clip_decision = None
-        is_known_restaurant = False  # Fluxo unificado: CLIP + Gemini para todos
-        
-        if index.is_ready():
-            results = index.search(content, top_k=5)
-            clip_decision = analyze_result(results)
-            clip_score = clip_decision.get('score', 0.0)
-            
-            logger.info(f"[CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
-            
-            # Se CLIP tem confianca >= 90%, usar resultado direto
-            if clip_score >= 0.90 and clip_decision.get('identified'):
-                decision = clip_decision
-                decision['source'] = 'local_index'
-                logger.info(f"[CASCATA] CLIP confiante ({clip_score:.0%}) - aceito")
-        
-        # ══════════════════════════════════════════════════════════════════════
-        # NÍVEL 2: Se CLIP nao confiante, usar Gemini como fallback
-        # HARD LOCK: Cibi Sana -> CLIP SEMPRE, Gemini TOTALMENTE BLOQUEADO
-        # ══════════════════════════════════════════════════════════════════════
         is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
         
-        if decision is None:
-            if is_cibi_sana:
-                # HARD LOCK: Dentro do Cibi Sana, usar CLIP mesmo com baixa confianca
-                logger.info(f"[HARD LOCK] Cibi Sana - Gemini BLOQUEADO. Usando CLIP ({clip_score:.0%})")
-                if index.is_ready() and clip_decision:
-                    decision = clip_decision
-                    decision['source'] = 'local_index'
-                else:
-                    return IdentifyResponse(
-                        ok=False,
-                        identified=False,
-                        confidence="baixa",
-                        score=0.0,
-                        message="Prato nao identificado. Tente com outra foto."
-                    )
-            else:
-                # Fora do Cibi Sana: Gemini permitido como fallback
-                logger.info(f"[CASCATA] CLIP incerto ({clip_score:.0%}) - chamando Gemini")
+        if is_cibi_sana:
+            # ══════════════════════════════════════════════════════════════════
+            # MODO CIBI SANA: CLIP ONLY (HARD LOCK - Gemini bloqueado)
+            # ══════════════════════════════════════════════════════════════════
+            from ai.index import get_index
+            from ai.policy import analyze_result
             
-                from services.gemini_flash_service import (
-                    identify_dish_gemini_flash,
-                    is_gemini_flash_available
-                )
+            index = get_index()
+            
+            if index.is_ready():
+                results = index.search(content, top_k=5)
+                clip_decision = analyze_result(results)
+                clip_score = clip_decision.get('score', 0.0)
                 
-                if not is_gemini_flash_available():
-                    # Gemini indisponivel, usar CLIP mesmo com baixa confianca
-                    if index.is_ready():
-                        decision = clip_decision
-                        decision['source'] = 'local_index'
-                    else:
-                        return IdentifyResponse(
-                            ok=False,
-                            identified=False,
-                            confidence="baixa",
-                            score=0.0,
-                            message="Servico de IA indisponivel."
-                        )
-                else:
-                    # Buscar perfil do usuario se disponivel
-                    flash_profile = None
-                    if pin and nome:
-                        from services.profile_service import hash_pin
-                        pin_hash = hash_pin(pin)
-                        flash_profile = await db.users.find_one(
-                            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
-                            {"_id": 0}
-                        )
-                    
-                    flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
-                    
-                    if flash_result.get('ok'):
-                        decision = {
-                            'identified': True,
-                            'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
-                            'dish_display': flash_result.get('nome'),
-                            'score': flash_result.get('score', 0.90),
-                            'source': 'gemini_flash',
-                            'category': flash_result.get('categoria'),
-                            'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteina animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
-                            'nutrition': flash_result.get('nutricao'),
-                            'alergenos': flash_result.get('alergenos', {}),
-                            'alertas_personalizados': flash_result.get('alertas_personalizados', []),
-                            'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
-                        }
-                        logger.info(f"[NÍVEL 2 - GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
-                    else:
-                        # Gemini falhou, usar CLIP mesmo com baixa confianca
-                        if index.is_ready() and clip_decision:
-                            decision = clip_decision
-                            decision['source'] = 'local_index'
-                        else:
-                            return IdentifyResponse(
-                                ok=False,
-                                identified=False,
-                                confidence="baixa",
-                                score=0.0,
-                                message="Nao foi possivel identificar o prato."
-                            )
+                logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
+                
+                decision = clip_decision
+                decision['source'] = 'local_index'
+            else:
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Prato nao identificado. Tente com outra foto."
+                )
+        else:
+            # ══════════════════════════════════════════════════════════════════
+            # MODO EXTERNO: GEMINI ONLY (CLIP desligado - evita pratos Cibi Sana)
+            # ══════════════════════════════════════════════════════════════════
+            logger.info(f"[EXTERNO] Usando Gemini (CLIP desligado para evitar pratos Cibi Sana)")
+            
+            from services.gemini_flash_service import (
+                identify_dish_gemini_flash,
+                is_gemini_flash_available
+            )
+            
+            if not is_gemini_flash_available():
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Servico de IA indisponivel. Ative a localizacao para usar o modo Cibi Sana."
+                )
+            
+            flash_profile = None
+            if pin and nome:
+                from services.profile_service import hash_pin
+                pin_hash = hash_pin(pin)
+                flash_profile = await db.users.find_one(
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                    {"_id": 0}
+                )
+            
+            flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
+            
+            if flash_result.get('ok'):
+                decision = {
+                    'identified': True,
+                    'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
+                    'dish_display': flash_result.get('nome'),
+                    'score': flash_result.get('score', 0.90),
+                    'source': 'gemini_flash',
+                    'category': flash_result.get('categoria'),
+                    'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteina animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
+                    'nutrition': flash_result.get('nutricao'),
+                    'alergenos': flash_result.get('alergenos', {}),
+                    'alertas_personalizados': flash_result.get('alertas_personalizados', []),
+                    'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
+                }
+                logger.info(f"[EXTERNO | GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
+            else:
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Nao foi possivel identificar o prato."
+                )
         
         # ══════════════════════════════════════════════════════════════════════
         # APLICAR NÍVEIS DE CONFIANÇA - v1.3

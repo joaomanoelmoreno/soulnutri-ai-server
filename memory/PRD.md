@@ -1,5 +1,5 @@
 # SoulNutri - Product Requirements Document
-## Versao 2.1 — Deploy Unificado (2026-04-07)
+## Versao 2.1 — Bifurcacao GPS + Deploy Unificado (2026-04-07)
 
 ## Visao
 Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens com alta precisao.
@@ -19,6 +19,17 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 ## Regra de Negocio Critica: Hard Lock Cibi Sana
 - Cibi Sana: APENAS OpenCLIP. Gemini HARD LOCK.
 
+## Bifurcacao por Localizacao V2.1 (IMPLEMENTADO 2026-04-07)
+Coordenadas Cibi Sana: -23.0373642, -46.9767934 (Av Independencia 1222, Vinhedo SP)
+Raio de deteccao: 100 metros (+ margem de precisao GPS ate 50m)
+- DENTRO Cibi Sana (GPS ou manual): CLIP ONLY - pratos calibrados, Gemini bloqueado
+- FORA Cibi Sana: GEMINI ONLY - CLIP desligado (evita poluicao de pratos Cibi Sana)
+- GPS negado: Prompt manual "Onde voce esta?" com duas opcoes
+- Indicador visual no header: badge dourado (Cibi Sana) ou azul (Externo)
+- Badge clicavel para trocar localizacao a qualquer momento
+- Backend: server.py linhas 546-640 reestruturado para bifurcacao limpa
+- Frontend: 3 pontos de fd.append("restaurant") agora usam getRestaurantValue()
+
 ## Layout Premium Obsidian / Black Card (2026-04-06)
 Paleta coerente em TODAS as telas premium:
 - Fundo: #080808 (preto puro Obsidian)
@@ -33,19 +44,14 @@ Versao Gratuita: Fundo azul navy #0f172a, sem badge, sem sino, cores padrao
 
 ## Deploy Unificado (IMPLEMENTADO 2026-04-07)
 - FastAPI serve React build via catch-all route
-- Rotas /api/* -> Backend FastAPI
-- Rotas /* -> React SPA (index.html fallback)
-- Arquivos estaticos servidos diretamente do build/
 - Dockerfile + render.yaml + .dockerignore criados
-- App.js: BACKEND_URL com fallback para '' (paths relativos)
-- Guia completo: DEPLOY_RENDER.md
+- DEPLOY_RENDER.md: guia passo-a-passo completo
 
 ## Calibracao CLIP
 - DELETE /api/ai/calibration/clear-all: zerar TODAS amostras (requer ?confirm=true)
 
 ## Notificacoes Push (VALIDADO)
 - Endpoints: generate, list, mark-read
-- NotificationPanel.jsx com referencias clicaveis
 
 ## Estado Atual
 - 196 pratos, embeddings ViT-B-16
@@ -53,11 +59,9 @@ Versao Gratuita: Fundo azul navy #0f172a, sem badge, sem sino, cores padrao
 - Precisao: 100% (20/20, 0 falsos positivos)
 
 ## Completed
+- [x] Bifurcacao GPS: Cibi Sana (CLIP) vs Externo (Gemini)
 - [x] Deploy unificado FastAPI+React (server.py catch-all SPA)
 - [x] Dockerfile, render.yaml, .dockerignore
-- [x] .gitignore atualizado (datasets/organized/ excluido, index files mantidos)
-- [x] App.js BACKEND_URL fallback para paths relativos
-- [x] Guia DEPLOY_RENDER.md completo
 - [x] Tema Obsidian Black Card
 - [x] Notificacoes Push Premium
 - [x] Fontes Nutricionais TACO/USDA
@@ -66,7 +70,8 @@ Versao Gratuita: Fundo azul navy #0f172a, sem badge, sem sino, cores padrao
 
 ## Upcoming Tasks
 - (P0) Fazer push para GitHub e deploy no Render
-- (P0) Testar fotos reais no buffet com ViT-B-16
+- (P0) Testar fotos reais no buffet com ViT-B-16 (modo Cibi Sana)
+- (P0) Testar reconhecimento Gemini fora do Cibi Sana
 - (P2) Revisao nutricional pratos F-Z
 
 ## Future/Backlog

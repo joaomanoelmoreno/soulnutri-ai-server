@@ -19,6 +19,23 @@ const API = `${BACKEND_URL}/api`;
 // Timeout para requisições (evita travamentos)
 const REQUEST_TIMEOUT = 15000; // 15 segundos
 
+// ═══════════════════════════════════════════════════════════════
+// GEOLOCALIZAÇÃO - Detecção Cibi Sana vs Externo
+// ═══════════════════════════════════════════════════════════════
+const CIBI_SANA_LAT = -23.0373642;
+const CIBI_SANA_LNG = -46.9767934;
+const CIBI_SANA_RADIUS_METERS = 100; // Raio de detecção (metros)
+
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371000; // Raio da Terra em metros
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 // Error Boundary para capturar erros da câmera
 class CameraErrorBoundary extends Component {
   constructor(props) {
@@ -296,6 +313,11 @@ function App() {
     camera: 'pending',
     location: 'pending'
   });
+  // Detecção de localização (Cibi Sana vs Externo)
+  const [detectedRestaurant, setDetectedRestaurant] = useState(() => {
+    return localStorage.getItem('soulnutri_restaurant') || null;
+  });
+  const [showLocationPrompt, setShowLocationPrompt] = useState(false);
   // Welcome popup com seleção de idioma
   const [showWelcome, setShowWelcome] = useState(() => {
     return !localStorage.getItem('soulnutri_welcomed');
@@ -316,7 +338,6 @@ function App() {
   // Função para solicitar todas as permissões de uma vez
   const requestAllPermissions = async () => {
     let cameraGranted = false;
-    let locationGranted = false;
     
     // 1. Solicitar permissão de câmera
     try {
@@ -328,6 +349,9 @@ function App() {
       setPermissionsStatus(prev => ({ ...prev, camera: 'denied' }));
     }
     
+    // 2. Solicitar permissão de localização (detectar Cibi Sana)
+    detectLocation();
+    
     // Marcar permissões como solicitadas
     localStorage.setItem('soulnutri_permissions_granted', 'true');
     setShowPermissions(false);
@@ -338,6 +362,56 @@ function App() {
     }
   };
 
+  // Detectar localização GPS para determinar Cibi Sana vs Externo
+  const detectLocation = () => {
+    if (!navigator.geolocation) {
+      setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
+      setShowLocationPrompt(true);
+      return;
+    }
+    
+    setPermissionsStatus(prev => ({ ...prev, location: 'pending' }));
+    
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const dist = haversineDistance(
+          position.coords.latitude, position.coords.longitude,
+          CIBI_SANA_LAT, CIBI_SANA_LNG
+        );
+        const accuracy = position.coords.accuracy || 0;
+        const effectiveRadius = CIBI_SANA_RADIUS_METERS + Math.min(accuracy, 50);
+        const isCibiSana = dist <= effectiveRadius;
+        
+        const restaurant = isCibiSana ? 'cibi_sana' : 'external';
+        setDetectedRestaurant(restaurant);
+        localStorage.setItem('soulnutri_restaurant', restaurant);
+        setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
+        console.log(`[GPS] Distancia: ${Math.round(dist)}m | Precisao: ${Math.round(accuracy)}m | Modo: ${restaurant}`);
+      },
+      (error) => {
+        console.warn('[GPS] Erro:', error.message);
+        setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
+        if (!detectedRestaurant) {
+          setShowLocationPrompt(true);
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  };
+
+  // Selecao manual de localização
+  const selectLocationManual = (location) => {
+    setDetectedRestaurant(location);
+    localStorage.setItem('soulnutri_restaurant', location);
+    setShowLocationPrompt(false);
+  };
+
+  // Valor do restaurant para enviar na API
+  const getRestaurantValue = () => {
+    if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
+    return 'external';
+  };
+
   useEffect(() => { 
     mountedRef.current = true;
     checkStatus(); 
@@ -345,6 +419,8 @@ function App() {
     // Só inicia câmera automaticamente se as permissões já foram concedidas
     if (!showPermissions) {
       startCamera();
+      // Detectar localização ao iniciar (re-verifica a cada sessão)
+      detectLocation();
     }
     
     loadDishes();
@@ -391,6 +467,14 @@ function App() {
       }
     };
   }, []);
+
+  // Detectar localização quando tela de permissões é fechada
+  useEffect(() => {
+    if (!showPermissions && !detectedRestaurant) {
+      detectLocation();
+    }
+  }, [showPermissions]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   const checkStatus = async () => {
     try {
@@ -799,7 +883,7 @@ function App() {
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
     fd.append("country", "BR");
-    fd.append("restaurant", "cibi_sana");
+    fd.append("restaurant", getRestaurantValue());
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
@@ -1129,7 +1213,7 @@ function App() {
           const fd = new FormData();
           fd.append("file", blob, "scan.jpg");
           fd.append("country", "BR");
-          fd.append("restaurant", "cibi_sana");
+          fd.append("restaurant", getRestaurantValue());
           
           const res = await fetch(`${API}/ai/identify`, {
             method: "POST",
@@ -1625,7 +1709,7 @@ function App() {
     
     const fd = new FormData();
     fd.append("file", lastImageBlob, "photo.jpg");
-    fd.append("restaurant", "cibi_sana");
+    fd.append("restaurant", getRestaurantValue());
     
     try {
       const controller = new AbortController();
@@ -1817,6 +1901,14 @@ function App() {
               </div>
               {permissionsStatus.camera === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', color: '#fff' }}>
+              <span style={{ fontSize: '28px', marginRight: '16px' }}>📍</span>
+              <div>
+                <div style={{ fontWeight: 'bold' }}>Localização</div>
+                <div style={{ fontSize: '13px', color: '#aaa' }}>Para detectar se está no Cibi Sana</div>
+              </div>
+              {permissionsStatus.location === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
+            </div>
           </div>
           
           <button
@@ -1858,6 +1950,50 @@ function App() {
         </div>
       )}
 
+      {/* Modal de seleção manual de localização (quando GPS negado) */}
+      {showLocationPrompt && (
+        <div data-testid="location-prompt" style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', zIndex: 10001, padding: '20px'
+        }}>
+          <div style={{
+            background: '#1a1a2e', borderRadius: '20px', padding: '32px',
+            maxWidth: '340px', width: '100%', textAlign: 'center'
+          }}>
+            <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📍</span>
+            <h3 style={{ color: '#fff', fontSize: '20px', marginBottom: '8px' }}>
+              Onde você está?
+            </h3>
+            <p style={{ color: '#aaa', fontSize: '14px', marginBottom: '24px' }}>
+              Não conseguimos detectar sua localização. Selecione para uma melhor experiência:
+            </p>
+            <button
+              data-testid="location-cibi-sana"
+              onClick={() => selectLocationManual('cibi_sana')}
+              style={{
+                width: '100%', padding: '14px', fontSize: '16px', fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #d4af37, #b8960f)', color: '#080808',
+                border: 'none', borderRadius: '12px', cursor: 'pointer', marginBottom: '12px'
+              }}
+            >
+              Estou no Cibi Sana
+            </button>
+            <button
+              data-testid="location-external"
+              onClick={() => selectLocationManual('external')}
+              style={{
+                width: '100%', padding: '14px', fontSize: '16px', fontWeight: '600',
+                background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#fff',
+                border: 'none', borderRadius: '12px', cursor: 'pointer'
+              }}
+            >
+              Estou em outro local
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header com Logo e Menu */}
       <header className="hdr">
         <div className="logo-container">
@@ -1869,6 +2005,25 @@ function App() {
         </div>
         <div className="header-right">
           <LanguageSelector />
+          {detectedRestaurant && (
+            <span
+              data-testid="location-indicator"
+              onClick={() => setShowLocationPrompt(true)}
+              style={{
+                fontSize: '11px',
+                padding: '3px 8px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: '600',
+                background: detectedRestaurant === 'cibi_sana' 
+                  ? 'rgba(212,175,55,0.2)' : 'rgba(59,130,246,0.2)',
+                color: detectedRestaurant === 'cibi_sana' ? '#d4af37' : '#60a5fa',
+                border: `1px solid ${detectedRestaurant === 'cibi_sana' ? '#d4af3750' : '#3b82f650'}`
+              }}
+            >
+              {detectedRestaurant === 'cibi_sana' ? '📍 Cibi Sana' : '🌐 Externo'}
+            </span>
+          )}
           {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
           {premiumUser && (
             <button
