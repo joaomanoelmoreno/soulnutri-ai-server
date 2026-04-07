@@ -5500,7 +5500,18 @@ app.include_router(api_router)
 # DEPLOY UNIFICADO: FastAPI serve o React Build (SPA)
 # ═══════════════════════════════════════════════════════
 from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
+from starlette.staticfiles import StaticFiles as StarletteStaticFiles
+
+class SPAStaticFiles(StarletteStaticFiles):
+    """Serve arquivos estaticos com fallback para index.html (React SPA)"""
+    async def get_response(self, path, scope):
+        try:
+            response = await super().get_response(path, scope)
+            if response.status_code == 404:
+                response = await super().get_response("index.html", scope)
+            return response
+        except Exception:
+            return await super().get_response("index.html", scope)
 
 # Detectar build do frontend
 BACKEND_DIR = Path(__file__).resolve().parent
@@ -5516,26 +5527,7 @@ logger.info(f"[DEPLOY] BASE_DIR={BASE_DIR}")
 logger.info(f"[DEPLOY] FRONTEND_BUILD={FRONTEND_BUILD} (exists={FRONTEND_BUILD.exists()})")
 
 if FRONTEND_BUILD.exists() and (FRONTEND_BUILD / "index.html").exists():
-    logger.info(f"[DEPLOY] Frontend build ENCONTRADO - Modo unificado ativo")
-    
-    # Montar arquivos estaticos (JS, CSS, media)
-    static_dir = FRONTEND_BUILD / "static"
-    if static_dir.exists():
-        app.mount("/static", StaticFiles(directory=str(static_dir)), name="static-assets")
-        logger.info(f"[DEPLOY] /static montado de {static_dir}")
+    logger.info(f"[DEPLOY] Frontend build ENCONTRADO - Montando SPA em /")
+    app.mount("/", SPAStaticFiles(directory=str(FRONTEND_BUILD), html=True), name="frontend")
 else:
     logger.warning(f"[DEPLOY] Frontend build NAO encontrado. Modo API-only.")
-
-@app.get("/{full_path:path}")
-async def serve_react_app(full_path: str):
-    """Serve React SPA - catch-all para rotas nao-API"""
-    if not FRONTEND_BUILD.exists():
-        return JSONResponse({"detail": "Frontend not deployed"}, status_code=404)
-    if full_path:
-        file_path = (FRONTEND_BUILD / full_path).resolve()
-        if file_path.is_file() and str(file_path).startswith(str(FRONTEND_BUILD.resolve())):
-            return FileResponse(str(file_path))
-    index_file = FRONTEND_BUILD / "index.html"
-    if index_file.exists():
-        return FileResponse(str(index_file))
-    return JSONResponse({"detail": "index.html not found"}, status_code=404)
