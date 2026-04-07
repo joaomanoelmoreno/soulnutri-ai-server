@@ -14,6 +14,7 @@ Endpoints:
 
 # IMPORTANTE: Forcar CPU ANTES de qualquer import que possa carregar PyTorch
 import os
+import sys
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 os.environ["CUDA_HOME"] = ""
 os.environ["USE_CUDA"] = "0"
@@ -35,6 +36,9 @@ from typing import Optional, List
 
 # Carregar configuracoes
 ROOT_DIR = Path(__file__).resolve().parent
+# Garantir que modulos locais (ai/, services/) sejam encontrados
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 load_dotenv(ROOT_DIR / '.env')
 
 # Configurar logging
