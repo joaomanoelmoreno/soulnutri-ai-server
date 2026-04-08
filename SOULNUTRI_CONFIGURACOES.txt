@@ -1,0 +1,129 @@
+SOULNUTRI - CONFIGURACOES VARIAVEIS DO SISTEMA
+================================================
+Documento Tecnico para Engenharia
+Data: 08/04/2026
+Versao: 2.1
+
+
+1. PARAMETROS DE IDENTIFICACAO DE PRATOS
+-----------------------------------------
+
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Campo de Configuracao             | Valor           | Definicao e Impacto                                           |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Confidence Score - ALTA           | >= 90% (0.90)   | Score minimo do OpenCLIP para classificar identificacao como   |
+|                                   |                 | ALTA confianca. Resultado aceito com alta certeza.             |
+|                                   |                 | Impacto: garante precisao maxima na identificacao.             |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Confidence Score - MEDIA          | 50% a 89%       | Faixa intermediaria. O prato e identificado mas com ressalva.  |
+|                                   | (0.50 a 0.89)   | Impacto: resultado apresentado ao usuario com indicacao de     |
+|                                   |                 | confianca media. Pode requerer confirmacao visual.             |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Confidence Score - BAIXA          | < 50% (< 0.50)  | Score insuficiente para identificacao confiavel.               |
+|                                   |                 | Impacto: resultado descartado ou apresentado como incerto.     |
+|                                   |                 | Usuario orientado a tentar nova foto.                          |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Top-K CLIP                        | 5               | Quantidade de pratos candidatos retornados na busca por        |
+|                                   |                 | similaridade. Impacto: mais candidatos = melhor chance de      |
+|                                   |                 | acerto, com custo minimo de processamento.                     |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Tempo Maximo de Resposta          | 0,5 segundo     | Tempo alvo para identificacao completa de um prato.            |
+|                                   | (500ms)         | Impacto: garante experiencia fluida para o usuario.            |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+
+
+2. PARAMETROS DE GEOLOCALIZACAO
+--------------------------------
+
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Campo de Configuracao             | Valor           | Definicao e Impacto                                           |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Coordenadas Cibi Sana            | -23.0373642,    | Localizacao GPS do restaurante Cibi Sana                      |
+|                                   | -46.9767934     | (Av. Independencia 1222, Vinhedo SP).                         |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Raio GPS Cibi Sana               | 100 metros      | Distancia maxima para ativar modo CLIP (pratos calibrados).   |
+|                                   |                 | Fora deste raio, sistema usa Gemini para pratos genericos.    |
+|                                   |                 | Impacto: raio reduzido evita ativacao em restaurantes          |
+|                                   |                 | vizinhos.                                                     |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Margem de Precisao GPS            | +50 metros      | Tolerancia adicionada ao raio baseada na precisao do GPS      |
+|                                   |                 | do dispositivo. Impacto: compensa imprecisao em ambientes     |
+|                                   |                 | fechados.                                                     |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Modo Interno (Cibi Sana)         | CLIP ONLY       | Dentro do raio: OpenCLIP identifica usando base calibrada     |
+|                                   |                 | de 204 pratos. Gemini BLOQUEADO.                              |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Modo Externo                      | GEMINI ONLY     | Fora do raio: Gemini identifica pratos genericos.             |
+|                                   |                 | CLIP DESLIGADO para evitar poluicao com pratos Cibi Sana.    |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| GPS Indisponivel                  | Selecao Manual  | Se usuario nega GPS, prompt solicita selecao manual:          |
+|                                   |                 | "Estou no Cibi Sana" ou "Estou em outro local".              |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+
+
+3. MODELOS DE INTELIGENCIA ARTIFICIAL
+--------------------------------------
+
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Campo de Configuracao             | Valor           | Definicao e Impacto                                           |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Modelo IA - Cibi Sana            | ViT-B-16        | OpenCLIP (DataComp.XL). Modelo de embeddings visuais.         |
+|                                   | (LOCKED V2.0)   | TRAVADO na versao 2.0. Nao deve ser alterado.                 |
+|                                   |                 | Impacto: precisao calibrada para os pratos do Cibi Sana.     |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Modelo IA - Externo              | Gemini 2.5      | IA generativa do Google para identificacao de pratos          |
+|                                   | Flash           | genericos fora do Cibi Sana.                                  |
+|                                   |                 | Impacto: identifica qualquer prato sem calibracao especifica. |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| USE_LOCAL_MODEL                   | false           | Modelo CLIP roda localmente (true) ou usa indice              |
+|                                   | (producao)      | pre-calculado (false). Em producao sem GPU = false.            |
+|                                   |                 | Buscas funcionam normalmente; novos embeddings indisponiveis. |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Dimensao do Embedding             | 512             | Tamanho do vetor de embedding CLIP.                           |
+|                                   |                 | Impacto: define a resolucao da comparacao visual.             |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+
+
+4. BASE DE DADOS DE PRATOS
+---------------------------
+
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Campo de Configuracao             | Valor           | Definicao e Impacto                                           |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Total de Pratos Cadastrados       | 204             | Pratos unicos no indice de embeddings do Cibi Sana.           |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Total de Embeddings               | 1.494           | Amostras de imagens indexadas (multiplas fotos por prato).    |
+|                                   |                 | Impacto: mais amostras por prato = maior robustez.            |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Mapeamentos TACO                  | 255             | Pratos com dados nutricionais da Tabela TACO (UNICAMP).       |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Fotos no Storage (R2)            | 4.389+          | Total de fotografias armazenadas no Cloudflare R2.            |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+
+
+5. CONFIGURACOES DE INFRAESTRUTURA
+------------------------------------
+
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Campo de Configuracao             | Valor           | Definicao e Impacto                                           |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Plataforma de Deploy              | Render          | Plano Starter. Docker containerizado.                         |
+|                                   | (Docker)        |                                                               |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Banco de Dados                    | MongoDB Atlas   | Banco NoSQL gerenciado na nuvem.                              |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Storage de Imagens                | Cloudflare R2   | Bucket: soulnutri-images. Armazena fotos dos pratos.          |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| CORS_ORIGINS                      | *               | Origens permitidas para requisicoes cross-origin.             |
+|                                   |                 | Necessario para funcionamento como PWA.                       |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+| Dominio                           | soulnutri.app.br| Dominio customizado com DNS via Cloudflare.                   |
++-----------------------------------+-----------------+---------------------------------------------------------------+
+
+
+OBSERVACOES IMPORTANTES:
+- O modelo ViT-B-16 (V2.0) esta TRAVADO e nao deve ser alterado.
+- A bifurcacao CLIP/Gemini por GPS garante que pratos do Cibi Sana
+  nao sejam sugeridos em locais externos.
+- O tempo alvo de 0,5s refere-se a busca no indice pre-calculado.
+  Identificacao via Gemini pode ter latencia adicional de rede.
