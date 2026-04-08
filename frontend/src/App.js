@@ -363,16 +363,24 @@ function App() {
   };
 
   // Detectar localização GPS para determinar Cibi Sana vs Externo
+  const watchIdRef = useRef(null);
+  
   const detectLocation = () => {
     if (!navigator.geolocation) {
       setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
-      setShowLocationPrompt(true);
+      if (!detectedRestaurant) setShowLocationPrompt(true);
       return;
     }
     
     setPermissionsStatus(prev => ({ ...prev, location: 'pending' }));
     
-    navigator.geolocation.getCurrentPosition(
+    // Limpar watcher anterior
+    if (watchIdRef.current !== null) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
+    }
+    
+    // Monitoramento contínuo de localização
+    watchIdRef.current = navigator.geolocation.watchPosition(
       (position) => {
         const dist = haversineDistance(
           position.coords.latitude, position.coords.longitude,
@@ -382,11 +390,23 @@ function App() {
         const effectiveRadius = CIBI_SANA_RADIUS_METERS + Math.min(accuracy, 50);
         const isCibiSana = dist <= effectiveRadius;
         
-        const restaurant = isCibiSana ? 'cibi_sana' : 'external';
-        setDetectedRestaurant(restaurant);
-        localStorage.setItem('soulnutri_restaurant', restaurant);
+        const newRestaurant = isCibiSana ? 'cibi_sana' : 'external';
+        
+        setDetectedRestaurant(prev => {
+          // Se mudou de local, auto-finalizar refeição atual
+          if (prev && prev !== newRestaurant) {
+            console.log(`[GPS] Local mudou: ${prev} → ${newRestaurant}. Nova refeição.`);
+            // Limpar prato para iniciar nova refeição no novo local
+            setPlateItems([]);
+            setResult(null);
+            setViewMode('camera');
+          }
+          return newRestaurant;
+        });
+        
+        localStorage.setItem('soulnutri_restaurant', newRestaurant);
         setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
-        console.log(`[GPS] Distancia: ${Math.round(dist)}m | Precisao: ${Math.round(accuracy)}m | Modo: ${restaurant}`);
+        console.log(`[GPS] Dist: ${Math.round(dist)}m | Precisão: ${Math.round(accuracy)}m | Modo: ${newRestaurant}`);
       },
       (error) => {
         console.warn('[GPS] Erro:', error.message);
@@ -395,7 +415,7 @@ function App() {
           setShowLocationPrompt(true);
         }
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
     );
   };
 
@@ -464,6 +484,10 @@ function App() {
       // Cancelar requisições pendentes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
+      }
+      // Limpar monitoramento GPS
+      if (watchIdRef.current !== null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
       }
     };
   }, []);
@@ -607,8 +631,9 @@ function App() {
       fd.append('proteinas', parseFloat(prato.nutrition?.proteinas?.replace(/[^\d]/g, '') || prato.proteinas?.replace?.(/[^\d]/g, '') || 10));
       fd.append('carboidratos', parseFloat(prato.nutrition?.carboidratos?.replace(/[^\d]/g, '') || prato.carboidratos?.replace?.(/[^\d]/g, '') || 25));
       fd.append('gorduras', parseFloat(prato.nutrition?.gorduras?.replace(/[^\d]/g, '') || prato.gorduras?.replace?.(/[^\d]/g, '') || 8));
+      fd.append('source', prato.source || 'clip');
       
-      console.log('[PREMIUM] Registrando refeição:', prato.dish_display);
+      console.log('[PREMIUM] Registrando refeição:', prato.dish_display, '| Source:', prato.source || 'clip');
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -1000,7 +1025,8 @@ function App() {
           castanhas: result.contem_castanhas,
           frutosMar: result.contem_frutos_mar
         },
-        score: result.score
+        score: result.score,
+        source: result.source || 'clip'
       };
       console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
@@ -1018,7 +1044,8 @@ function App() {
             proteinas: newItem.proteinas,
             carboidratos: newItem.carboidratos,
             gorduras: newItem.gorduras
-          }
+          },
+          source: newItem.source
         });
         if (registered) {
           setMealRegistered(true);
@@ -1033,7 +1060,7 @@ function App() {
   };
 
   // Fluxo Único: Finalizar prato e mostrar resumo consolidado
-  const finishPlate = () => {
+  const finishPlate = async () => {
     console.log('[DEBUG] finishPlate chamado, result:', result?.dish_display);
     console.log('[DEBUG] plateItems antes:', plateItems.length, 'itens');
     
@@ -1058,7 +1085,8 @@ function App() {
           castanhas: result.contem_castanhas,
           frutosMar: result.contem_frutos_mar
         },
-        score: result.score
+        score: result.score,
+        source: result.source || 'clip'
       };
       console.log('[DEBUG] Adicionando último item:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
@@ -1066,6 +1094,20 @@ function App() {
         console.log('[DEBUG] plateItems final:', updated.length, 'itens');
         return updated;
       });
+      
+      // Registrar no histórico Premium
+      if (premiumUser) {
+        await logMealToPremium({
+          dish_display: newItem.dish_display,
+          nutrition: {
+            calorias: newItem.calorias,
+            proteinas: newItem.proteinas,
+            carboidratos: newItem.carboidratos,
+            gorduras: newItem.gorduras
+          },
+          source: newItem.source
+        });
+      }
     }
     setShowAddMore(false);
     setResult(null);

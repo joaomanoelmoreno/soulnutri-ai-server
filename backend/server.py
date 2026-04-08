@@ -2901,10 +2901,12 @@ async def log_meal(
     proteinas: float = Form(0),
     carboidratos: float = Form(0),
     gorduras: float = Form(0),
-    porcao: str = Form("1 porcao")
+    porcao: str = Form("1 porcao"),
+    source: str = Form("clip")
 ):
     """
     Registra uma refeicao no contador diario.
+    source: 'clip' (Cibi Sana) ou 'gemini' (externo)
     """
     try:
         from services.profile_service import hash_pin
@@ -2928,7 +2930,8 @@ async def log_meal(
             "carboidratos": carboidratos,
             "gorduras": gorduras,
             "porcao": porcao,
-            "hora": agora.strftime("%H:%M")
+            "hora": agora.strftime("%H:%M"),
+            "source": source
         }
         
         # Atualizar ou criar log diario
