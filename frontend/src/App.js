@@ -379,9 +379,18 @@ function App() {
       navigator.geolocation.clearWatch(watchIdRef.current);
     }
     
+    // Fallback: se GPS não responder em 4s, mostrar seleção manual
+    const fallbackTimer = setTimeout(() => {
+      if (!detectedRestaurant && !localStorage.getItem('soulnutri_restaurant')) {
+        console.log('[GPS] Timeout 4s - mostrando seleção manual');
+        setShowLocationPrompt(true);
+      }
+    }, 4000);
+    
     // Monitoramento contínuo de localização
     watchIdRef.current = navigator.geolocation.watchPosition(
       (position) => {
+        clearTimeout(fallbackTimer);
         const dist = haversineDistance(
           position.coords.latitude, position.coords.longitude,
           CIBI_SANA_LAT, CIBI_SANA_LNG
@@ -406,16 +415,18 @@ function App() {
         
         localStorage.setItem('soulnutri_restaurant', newRestaurant);
         setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
+        setShowLocationPrompt(false);
         console.log(`[GPS] Dist: ${Math.round(dist)}m | Precisão: ${Math.round(accuracy)}m | Modo: ${newRestaurant}`);
       },
       (error) => {
+        clearTimeout(fallbackTimer);
         console.warn('[GPS] Erro:', error.message);
         setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
-        if (!detectedRestaurant) {
+        if (!detectedRestaurant && !localStorage.getItem('soulnutri_restaurant')) {
           setShowLocationPrompt(true);
         }
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 30000 }
     );
   };
 
@@ -1976,7 +1987,7 @@ function App() {
               <span style={{ fontSize: '28px', marginRight: '16px' }}>📍</span>
               <div>
                 <div style={{ fontWeight: 'bold' }}>Localização</div>
-                <div style={{ fontSize: '13px', color: '#aaa' }}>Para detectar se está no Cibi Sana</div>
+                <div style={{ fontSize: '13px', color: '#aaa' }}>Para personalizar o serviço</div>
               </div>
               {permissionsStatus.location === 'granted' && <span style={{ marginLeft: 'auto', color: '#22c55e' }}>✓</span>}
             </div>
@@ -2037,7 +2048,7 @@ function App() {
               Onde você está?
             </h3>
             <p style={{ color: '#aaa', fontSize: '14px', marginBottom: '24px' }}>
-              Não conseguimos detectar sua localização. Selecione para uma melhor experiência:
+              Selecione sua localização para uma melhor experiência:
             </p>
             <button
               data-testid="location-cibi-sana"
