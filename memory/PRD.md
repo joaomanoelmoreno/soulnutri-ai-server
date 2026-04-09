@@ -1,5 +1,5 @@
 # SoulNutri - Product Requirements Document
-## Versao 2.3 — Premium Features Fix (2026-04-09)
+## Versao 2.4 — Persistencia + Noticias + Fix MitoVerdade (2026-04-09)
 
 ## Visao
 Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens com alta precisao.
@@ -67,6 +67,12 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
   - Frontend armazena dados Premium nos plateItems
   - Mesa view exibe todas as secoes Premium consolidadas
   - Alertas de alergenos corrigidos para funcionar sem funcoes faltantes
+- [x] **FIX**: Mito/Verdade renderizacao corrigida (campos mito/verdade mapeados corretamente)
+- [x] **NOVO**: Noticias e Alertas sobre Ingredientes (📰) — Gemini retorna alertas recentes da OMS, pesquisas, etc.
+- [x] **MELHORIA**: Riscos agora especificos com dados concretos por ingrediente
+- [x] **NOVO**: Persistencia da refeicao no localStorage (sobrevive saida/retorno da tela)
+- [x] **NOVO**: Botao "Voltar a minha refeicao" na tela da camera quando ha itens salvos
+- [x] **FIX**: GPS timeout reduzido de 10s para 5s + fallback manual em 4s
 
 ## Upcoming Tasks
 - (P0) Sincronizar codigo para GitHub/Render (instruir usuario: "Save to GitHub")

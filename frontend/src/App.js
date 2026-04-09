@@ -270,10 +270,32 @@ function App() {
   const [showMultiCorrection, setShowMultiCorrection] = useState(false); // Modal correção multi
   const [multiCorrections, setMultiCorrections] = useState({ principal: '', acompanhamentos: '' }); // Correções
   // Fluxo Único Inteligente - acumula itens do prato
-  const [plateItems, setPlateItems] = useState([]); // Lista de itens identificados
+  const [plateItems, setPlateItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem('soulnutri_plate_items');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
   const [showAddMore, setShowAddMore] = useState(false); // Modal "Adicionar mais?"
   const [showFirstTimeHelp, setShowFirstTimeHelp] = useState(false); // Popup explicativo primeira vez
-  const [viewMode, setViewMode] = useState('buffet'); // 'buffet' = vista rápida, 'mesa' = vista completa
+  const [viewMode, setViewMode] = useState(() => {
+    try {
+      const savedPlate = localStorage.getItem('soulnutri_plate_items');
+      const items = savedPlate ? JSON.parse(savedPlate) : [];
+      if (items.length > 0) {
+        const savedMode = localStorage.getItem('soulnutri_view_mode');
+        return savedMode || 'buffet';
+      }
+      return 'buffet';
+    } catch { return 'buffet'; }
+  });
+  // Persistir plateItems e viewMode no localStorage
+  useEffect(() => {
+    localStorage.setItem('soulnutri_plate_items', JSON.stringify(plateItems));
+  }, [plateItems]);
+  useEffect(() => {
+    localStorage.setItem('soulnutri_view_mode', viewMode);
+  }, [viewMode]);
   // IA sob demanda
   const [loadingIA, setLoadingIA] = useState(false); // Carregando IA
   // Galeria de fotos capturadas
@@ -1164,6 +1186,8 @@ function App() {
     setPreviewImageUrl(null);
     setShowAddMore(false);
     setScannerResult(null);
+    localStorage.removeItem('soulnutri_plate_items');
+    localStorage.removeItem('soulnutri_view_mode');
   };
 
   // ═══════════════════════════════════════════════════════════════
@@ -2268,6 +2292,28 @@ function App() {
           <div className="cam-hint">
             <span>👆</span>
             <p>Toque para fotografar</p>
+          </div>
+        )}
+
+        {/* BOTÃO VOLTAR À REFEIÇÃO - quando há itens salvos e está na câmera */}
+        {!loading && !r && plateItems.length > 0 && viewMode !== 'mesa' && (
+          <div data-testid="voltar-refeicao-btn" style={{
+            position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)',
+            zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px'
+          }}>
+            <button
+              onClick={() => setViewMode('mesa')}
+              style={{
+                background: 'linear-gradient(135deg, #d4af37, #b8960f)',
+                color: '#080808', border: 'none', borderRadius: '25px',
+                padding: '12px 24px', fontSize: '14px', fontWeight: 'bold',
+                cursor: 'pointer', boxShadow: '0 4px 15px rgba(212,175,55,0.3)',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                animation: 'pulse 2s ease-in-out infinite'
+              }}
+            >
+              🍽️ Voltar à minha refeição ({plateItems.length} {plateItems.length === 1 ? 'item' : 'itens'})
+            </button>
           </div>
         )}
 
