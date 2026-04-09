@@ -1013,6 +1013,32 @@ function App() {
             console.log('[RADAR] Erro ao buscar fatos:', radarErr);
             setRadarInfo(null);
           }
+          
+          // ENRIQUECIMENTO PREMIUM EM BACKGROUND (não bloqueia o scan)
+          if (premiumUser && resultWithTime.source === 'gemini_flash') {
+            fetch(`${API}/ai/enrich`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                nome: resultWithTime.dish_display,
+                ingredientes: resultWithTime.ingredientes || [],
+                pin: premiumUser.pin,
+                user_nome: premiumUser.nome
+              })
+            }).then(r => r.json()).then(enrichData => {
+              if (enrichData.ok) {
+                console.log('[ENRICH] ✅ Premium data recebido:', Object.keys(enrichData));
+                setResult(prev => prev ? {
+                  ...prev,
+                  beneficios: enrichData.beneficios || prev.beneficios,
+                  riscos: enrichData.riscos || prev.riscos,
+                  curiosidade: enrichData.curiosidade || prev.curiosidade,
+                  combinacoes: enrichData.combinacoes || prev.combinacoes,
+                  noticias: enrichData.noticias || prev.noticias
+                } : prev);
+              }
+            }).catch(err => console.log('[ENRICH] Erro (não crítico):', err));
+          }
         }
         // NÃO mostrar modal automaticamente - deixar usuário ver as informações primeiro
       }
@@ -3130,33 +3156,75 @@ function App() {
             </div>
           )}
 
+          {/* ALERTA DE ALÉRGENOS - Visível para TODOS durante scan (fase buffet) */}
+          {(() => {
+            const alergenos = [];
+            if (r.contem_gluten || r.alergenos?.gluten) alergenos.push({ icone: '🌾', nome: 'Glúten' });
+            if (r.contem_lactose || r.alergenos?.lactose) alergenos.push({ icone: '🥛', nome: 'Lactose' });
+            if (r.contem_ovo || r.alergenos?.ovo) alergenos.push({ icone: '🥚', nome: 'Ovo' });
+            if (r.contem_frutos_mar || r.alergenos?.frutos_mar || r.alergenos?.frutosMar) alergenos.push({ icone: '🦐', nome: 'Frutos do Mar' });
+            if (r.contem_castanhas || r.alergenos?.castanhas) alergenos.push({ icone: '🥜', nome: 'Castanhas' });
+            if (r.contem_soja || r.alergenos?.soja) alergenos.push({ icone: '🫘', nome: 'Soja' });
+            
+            if (alergenos.length > 0) {
+              return (
+                <div data-testid="scan-allergen-alert" style={{
+                  background: 'rgba(245, 158, 11, 0.15)',
+                  border: '2px solid #f59e0b',
+                  borderRadius: '12px',
+                  padding: '12px',
+                  marginTop: '8px'
+                }}>
+                  <h4 style={{ color: '#fbbf24', margin: '0 0 8px', fontSize: '14px' }}>
+                    ⚠️ Alérgenos detectados
+                  </h4>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {alergenos.map((a, i) => (
+                      <span key={i} style={{
+                        background: 'rgba(245, 158, 11, 0.25)',
+                        color: '#fbbf24',
+                        padding: '4px 10px',
+                        borderRadius: '20px',
+                        fontSize: '13px',
+                        fontWeight: 'bold'
+                      }}>
+                        {a.icone} {a.nome}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+            return null;
+          })()}
+
           {/* ALERTA PERSONALIZADO - Baseado nas restrições do perfil Premium */}
           {premiumUser && (() => {
             const restricoes = premiumUser.restricoes || [];
             const alertasPersonalizados = [];
             
             // Verificar glúten
-            if (restricoes.includes('sem_gluten') && r.contem_gluten) {
+            if (restricoes.includes('sem_gluten') && (r.contem_gluten || r.alergenos?.gluten)) {
               alertasPersonalizados.push({ icone: '🌾', texto: 'Contém GLÚTEN - você registrou restrição!' });
             }
             // Verificar lactose
-            if (restricoes.includes('sem_lactose') && r.contem_lactose) {
+            if (restricoes.includes('sem_lactose') && (r.contem_lactose || r.alergenos?.lactose)) {
               alertasPersonalizados.push({ icone: '🥛', texto: 'Contém LACTOSE - você registrou restrição!' });
             }
             // Verificar ovo
-            if (restricoes.includes('sem_ovo') && r.contem_ovo) {
+            if (restricoes.includes('sem_ovo') && (r.contem_ovo || r.alergenos?.ovo)) {
               alertasPersonalizados.push({ icone: '🥚', texto: 'Contém OVO - você registrou restrição!' });
             }
             // Verificar frutos do mar
-            if (restricoes.includes('sem_frutos_mar') && r.contem_frutos_mar) {
+            if (restricoes.includes('sem_frutos_mar') && (r.contem_frutos_mar || r.alergenos?.frutos_mar || r.alergenos?.frutosMar)) {
               alertasPersonalizados.push({ icone: '🦐', texto: 'Contém FRUTOS DO MAR - você registrou restrição!' });
             }
             // Verificar oleaginosas/castanhas
-            if (restricoes.includes('sem_oleaginosas') && r.contem_castanhas) {
+            if (restricoes.includes('sem_oleaginosas') && (r.contem_castanhas || r.alergenos?.castanhas)) {
               alertasPersonalizados.push({ icone: '🥜', texto: 'Contém OLEAGINOSAS - você registrou restrição!' });
             }
             // Verificar soja
-            if (restricoes.includes('sem_soja') && r.contem_soja) {
+            if (restricoes.includes('sem_soja') && (r.contem_soja || r.alergenos?.soja)) {
               alertasPersonalizados.push({ icone: '🫘', texto: 'Contém SOJA - você registrou restrição!' });
             }
             // Verificar vegano/vegetariano

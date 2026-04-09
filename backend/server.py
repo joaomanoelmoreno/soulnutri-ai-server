@@ -981,6 +981,56 @@ async def identify_image(
         )
 
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENRIQUECIMENTO PREMIUM (background - chamado pelo frontend após scan rápido)
+# ═══════════════════════════════════════════════════════════════════════════════
+@api_router.post("/ai/enrich")
+async def enrich_dish(request: Request):
+    """Enriquece um prato com dados Premium (benefícios, riscos, curiosidades, etc.)"""
+    try:
+        body = await request.json()
+        nome = body.get("nome", "")
+        ingredientes = body.get("ingredientes", [])
+        pin = body.get("pin", "")
+        user_nome = body.get("user_nome", "")
+        
+        if not nome:
+            return {"ok": False, "error": "Nome do prato é obrigatório"}
+        
+        # Verificar se é Premium
+        is_premium = False
+        if pin:
+            import hashlib
+            pin_hash = hashlib.sha256(pin.encode()).hexdigest()
+            user = await db.users.find_one(
+                {"pin_hash": pin_hash, "premium_ativo": True},
+                {"_id": 0}
+            )
+            is_premium = user is not None
+        
+        if not is_premium:
+            return {"ok": False, "error": "Acesso Premium necessário"}
+        
+        from services.gemini_flash_service import enrich_dish_gemini
+        logger.info(f"[Enrich] Calling enrich for '{nome}' with {len(ingredientes)} ingredientes")
+        enrichment = await enrich_dish_gemini(nome, ingredientes)
+        logger.info(f"[Enrich] Got enrichment: {list(enrichment.keys()) if enrichment else 'empty'}")
+        
+        return {
+            "ok": bool(enrichment),
+            "beneficios": enrichment.get("beneficios", []),
+            "riscos": enrichment.get("riscos", []),
+            "curiosidade": enrichment.get("curiosidade", ""),
+            "combinacoes": enrichment.get("combinacoes", []),
+            "noticias": enrichment.get("noticias", [])
+        }
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        logger.error(f"[Enrich] Erro: {e}\n{tb}")
+        return {"ok": False, "error": str(e)}
+
 @api_router.post("/ai/identify-with-ai")
 async def identify_with_ai(
     file: UploadFile = File(...),

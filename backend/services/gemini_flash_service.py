@@ -48,27 +48,14 @@ logger = logging.getLogger(__name__)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # PROMPT OTIMIZADO - Melhor precisão mantendo velocidade
-SYSTEM_PROMPT_FLASH = """Você é um especialista em identificação de alimentos e nutrição. Analise a imagem e identifique EXATAMENTE o que está no prato.
+SYSTEM_PROMPT_FLASH = """Identifique o prato na imagem. Linguiça/salsicha/embutidos=proteína animal. Retorne APENAS JSON:
+{"nome":"Nome do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2","ingrediente3"]}
+cat:v=vegano,veg=vegetariano,p=proteína animal. score:confiança 0-1. alerg:apenas presentes. ing:3-5 ingredientes visíveis. Porção ~150g."""
 
-REGRAS CRÍTICAS:
-1. OLHE COM ATENÇÃO para os ingredientes visíveis
-2. Linguiça/salsicha/embutidos = proteína animal, NÃO confunda com legumes
-3. Carne vermelha/frango/peixe = proteína animal
-4. Se houver dúvida, descreva o que você VÊ na imagem
-
-Retorne APENAS JSON válido:
-{"nome":"Nome descritivo do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2"],"benef":["beneficio1","beneficio2","beneficio3"],"riscos":["risco especifico 1","risco especifico 2"],"curios":"Uma curiosidade cientifica sobre este prato","combo":["Combina bem com X para potencializar Y","Combina com Z para melhor absorcao"],"noticias":["noticia ou alerta recente relevante sobre um ingrediente deste prato"]}
-
-cat: v=vegano (só vegetais), veg=vegetariano (tem ovo/queijo), p=proteína animal (carne/peixe/frango/embutidos)
-score: sua confiança de 0.0 a 1.0
-alerg: lista apenas os presentes
-ing: ingredientes principais visíveis (3-6 itens)
-benef: 3 benefícios nutricionais reais e específicos deste prato
-riscos: 2-3 riscos ESPECÍFICOS com dados concretos (ex: "Queijo mussarela: 22g de gordura saturada por 100g", "Sódio elevado: molho de soja contém ~900mg por colher")
-curios: 1 curiosidade científica interessante sobre o prato ou ingrediente principal
-combo: 2 combinações alimentares que potencializam os nutrientes deste prato
-noticias: 1-2 alertas ou fatos recentes sobre saúde/nutrição relacionados aos ingredientes (ex: "Pesquisas recentes indicam que cogumelos podem auxiliar na produção de vitamina D", "OMS recomenda limitar consumo de embutidos a 50g/dia por risco oncológico")
-Valores por porção ~150g."""
+# Prompt para enriquecimento Premium (segunda chamada, background)
+ENRICH_TEMPLATE_PRE = 'Dado o prato "'
+ENRICH_TEMPLATE_MID = '" com ingredientes ['
+ENRICH_TEMPLATE_POST = """], retorne APENAS JSON válido com os campos: benef (3 benefícios nutricionais reais), riscos (2 riscos ESPECÍFICOS com dados concretos), curios (1 curiosidade científica), combo (2 combinações que potencializam), noticias (1-2 alertas recentes de saúde/nutrição sobre ingredientes). Formato: {"benef":["...","...","..."],"riscos":["...","..."],"curios":"...","combo":["...","..."],"noticias":["..."]}"""
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROMPT PARA ALERTAS PERSONALIZADOS (segunda etapa, se necessário)
@@ -297,11 +284,11 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
             },
             "alergenos": {},
             "ingredientes": result.get("ing", []),
-            "beneficios": result.get("benef", []),
-            "riscos": result.get("riscos", []),
-            "curiosidade": result.get("curios", ""),
-            "combinacoes": result.get("combo", []),
-            "noticias": result.get("noticias", [])
+            "beneficios": [],
+            "riscos": [],
+            "curiosidade": "",
+            "combinacoes": [],
+            "noticias": []
         }
         
         # Converter lista de alérgenos para dict
@@ -360,3 +347,79 @@ def gerar_alertas_personalizados(result: dict, profile: dict) -> list:
     except Exception:
         pass
     return alertas
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENRIQUECIMENTO PREMIUM (chamada em background, não bloqueia o scan)
+# ═══════════════════════════════════════════════════════════════════════════════
+async def enrich_dish_gemini(nome: str, ingredientes: list) -> Dict:
+    """Enriquece o prato com dados Premium via Gemini (background)."""
+    import time as _time
+    start = _time.time()
+    
+    prompt = ENRICH_TEMPLATE_PRE + nome + ENRICH_TEMPLATE_MID + (", ".join(ingredientes) if ingredientes else "não informados") + ENRICH_TEMPLATE_POST
+    
+    response_text = None
+    
+    # Tentar Google API primeiro
+    google_key = os.environ.get('GOOGLE_API_KEY')
+    if google_key:
+        try:
+            from google import genai
+            client = genai.Client(api_key=google_key)
+            response = client.models.generate_content(
+                model='gemini-2.0-flash-lite',
+                contents=[prompt]
+            )
+            response_text = response.text.strip()
+        except Exception as e:
+            logger.warning(f"[Enrich] Google API erro: {str(e)[:60]}")
+    
+    # Fallback: Emergent Key
+    if response_text is None:
+        emergent_key = os.environ.get('EMERGENT_LLM_KEY')
+        if emergent_key:
+            try:
+                from emergentintegrations.llm.chat import LlmChat, UserMessage
+                chat = LlmChat(
+                    api_key=emergent_key,
+                    session_id=f"enrich-{int(_time.time())}",
+                    system_message="Retorne apenas JSON válido."
+                ).with_model("gemini", "gemini-2.0-flash-lite")
+                msg = UserMessage(text=prompt)
+                resp = await chat.send_message_async(msg)
+                response_text = resp.text.strip() if resp else None
+            except Exception as e:
+                logger.warning(f"[Enrich] Emergent erro: {str(e)[:60]}")
+    
+    if not response_text:
+        return {}
+    
+    try:
+        import json, re
+        clean = response_text
+        if '```' in clean:
+            clean = re.sub(r'```(?:json)?\s*', '', clean).replace('```', '')
+        clean = clean.strip()
+        logger.info(f"[Enrich] Raw response: {clean[:200]}")
+        parsed = json.loads(clean)
+        
+        # Normalizar: o Gemini pode retornar com nomes curtos ou longos
+        beneficios = parsed.get("benef") or parsed.get("beneficios") or []
+        riscos = parsed.get("riscos") or []
+        curiosidade = parsed.get("curios") or parsed.get("curiosidade") or ""
+        combinacoes = parsed.get("combo") or parsed.get("combinacoes") or []
+        noticias = parsed.get("noticias") or []
+        
+        elapsed = (_time.time() - start) * 1000
+        logger.info(f"[Enrich] Premium data para '{nome}' em {elapsed:.0f}ms")
+        return {
+            "beneficios": beneficios,
+            "riscos": riscos,
+            "curiosidade": curiosidade,
+            "combinacoes": combinacoes,
+            "noticias": noticias
+        }
+    except Exception as e:
+        logger.warning(f"[Enrich] Parse erro: {str(e)[:100]} | Raw: {response_text[:100] if response_text else 'None'}")
+        return {}
