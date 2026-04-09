@@ -153,6 +153,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Middleware para forçar limpeza de Service Worker e cache antigos
+@app.middleware("http")
+async def clear_old_cache(request, call_next):
+    response = await call_next(request)
+    # Header que força o navegador a limpar cache, cookies e SW
+    if request.url.path == "/" or request.url.path == "/index.html":
+        response.headers["Clear-Site-Data"] = '"cache", "storage"'
+    # Impedir cache de HTML
+    if response.headers.get("content-type", "").startswith("text/html"):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+    return response
+
 # =====================
 # MODELS
 # =====================
