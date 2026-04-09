@@ -7,7 +7,7 @@ import os
 def is_gemini_flash_available() -> bool:
     """Verifica se o Gemini Flash está disponível"""
     try:
-        api_key = os.environ.get("EMERGENT_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
         return bool(api_key)
     except Exception:
         return False
