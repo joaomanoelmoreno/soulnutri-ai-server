@@ -14,8 +14,10 @@ RUN apt-get update && \
 WORKDIR /app
 
 # ── Python dependencies ──
+# Remover pacotes pesados (torch ~800MB RAM) que nao cabem no free tier 512MB
 COPY backend/requirements.txt backend/requirements.txt
-RUN pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements.txt
+RUN grep -v -E "^(torch|torchvision|open.clip)" backend/requirements.txt > backend/requirements-deploy.txt && \
+    pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements-deploy.txt
 
 # ── Frontend build ──
 COPY frontend/package.json frontend/yarn.lock frontend/
