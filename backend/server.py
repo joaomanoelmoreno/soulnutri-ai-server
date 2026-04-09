@@ -115,10 +115,23 @@ api_router = APIRouter(prefix="/api")
 
 # Função auxiliar de configuração
 async def get_setting(key: str):
-    """Retorna configuração do banco ou False como default"""
+    """Retorna configuração do banco ou False como default (com cache)"""
+    if not hasattr(get_setting, '_cache'):
+        get_setting._cache = {}
+        get_setting._cache_time = {}
+    
+    import time as _time
+    now = _time.time()
+    # Cache por 60 segundos
+    if key in get_setting._cache and (now - get_setting._cache_time.get(key, 0)) < 60:
+        return get_setting._cache[key]
+    
     try:
         doc = await db.settings.find_one({"key": key}, {"_id": 0})
-        return doc.get("value", False) if doc else False
+        val = doc.get("value", False) if doc else False
+        get_setting._cache[key] = val
+        get_setting._cache_time[key] = now
+        return val
     except Exception:
         return False
 
@@ -715,50 +728,62 @@ async def identify_image(
         logger.info(f"Identificacao: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
         
         # ═══════════════════════════════════════════════════════════════════════
-        # VERIFICAR SE É USUÁRIO PREMIUM
+        # VERIFICAR SE É USUÁRIO PREMIUM + DADOS CIENTÍFICOS (EM PARALELO)
         # ═══════════════════════════════════════════════════════════════════════
         is_premium = False
         user_profile = None
         premium_data = {}
-        
-        if pin and nome:
-            from services.profile_service import hash_pin
-            pin_hash = hash_pin(pin)
-            user_profile = await db.users.find_one(
-                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
-                {"_id": 0}
-            )
-            is_premium = user_profile is not None
-            
-            if is_premium:
-                logger.info(f"[PREMIUM] Usuario {nome} identificado")
-        
-        # Buscar dados cientificos - primeiro MongoDB, depois local
         scientific_data = {}
         mito_verdade = None
         dish_slug = decision.get('dish')
         categoria = decision.get('category', '')
         
-        if dish_slug and decision.get('source') != 'generic_ai':
-            # Normalizar slug para busca
-            slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
-            mongo_dish = await db.dishes.find_one(
-                {'$or': [
-                    {'slug': slug_normalized},
-                    {'slug': dish_slug}
-                ]},
-                {'_id': 0, 'beneficio_principal': 1, 'curiosidade_cientifica': 1, 
-                 'referencia_pesquisa': 1, 'alerta_saude': 1}
+        if pin and nome:
+            from services.profile_service import hash_pin
+            pin_hash = hash_pin(pin)
+            
+            # Executar queries em paralelo
+            import asyncio as _asyncio
+            
+            # Query 1: Perfil do usuario
+            user_future = db.users.find_one(
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                {"_id": 0}
             )
-            if mongo_dish and is_premium:
-                scientific_data = mongo_dish
-                logger.info(f"[PREMIUM] Dados cientificos do MongoDB para {dish_slug}")
+            
+            # Query 2: Dados científicos do prato (se slug existe)
+            sci_future = None
+            if dish_slug and decision.get('source') != 'generic_ai':
+                slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
+                sci_future = db.dishes.find_one(
+                    {'$or': [
+                        {'slug': slug_normalized},
+                        {'slug': dish_slug}
+                    ]},
+                    {'_id': 0, 'beneficio_principal': 1, 'curiosidade_cientifica': 1, 
+                     'referencia_pesquisa': 1, 'alerta_saude': 1}
+                )
+            
+            # Executar em paralelo
+            if sci_future:
+                user_profile, mongo_dish = await _asyncio.gather(user_future, sci_future)
+            else:
+                user_profile = await user_future
+                mongo_dish = None
+            
+            is_premium = user_profile is not None
+            
+            if is_premium:
+                logger.info(f"[PREMIUM] Usuario {nome} identificado")
+                if mongo_dish:
+                    scientific_data = mongo_dish
+                    logger.info(f"[PREMIUM] Dados cientificos do MongoDB para {dish_slug}")
             
             # Se nao encontrou no MongoDB, buscar dados Premium LOCAIS (SEM CRÉDITOS)
             if not scientific_data and is_premium:
                 try:
                     from services.local_dish_updater import obter_conteudo_premium, encontrar_tipo_prato
-                    tipo_prato = encontrar_tipo_prato(dish_slug.replace('_', ' '))
+                    tipo_prato = encontrar_tipo_prato(dish_slug.replace('_', ' ')) if dish_slug else None
                     premium_local = obter_conteudo_premium(categoria, tipo_prato)
                     scientific_data = {
                         'beneficio_principal': premium_local.get('beneficio_principal'),
@@ -767,7 +792,7 @@ async def identify_image(
                         'alerta_saude': premium_local.get('alerta_saude')
                     }
                     mito_verdade = premium_local.get('mito_verdade')
-                    logger.info(f"[PREMIUM] Dados cientificos LOCAIS para {dish_slug} (categoria: {categoria})")
+                    logger.info(f"[PREMIUM] Dados cientificos LOCAIS para {dish_slug}")
                 except Exception as e:
                     logger.warning(f"[PREMIUM] Erro ao buscar dados locais: {e}")
         

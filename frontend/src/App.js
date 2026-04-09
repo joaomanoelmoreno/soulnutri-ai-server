@@ -900,8 +900,9 @@ function App() {
       return;
     }
     
-    // Resolucao padronizada 1024px para nivelar iOS/Android
-    const maxSize = 1024;
+    // Resolucao otimizada: 512px é suficiente para CLIP (usa 224x224 interno)
+    // Reduz upload em ~75% e processamento significativamente
+    const maxSize = 512;
     let w = v.videoWidth;
     let h = v.videoHeight;
     console.log(`[Capture] Video source: ${v.videoWidth}x${v.videoHeight}`);
@@ -914,19 +915,9 @@ function App() {
     c.width = w; 
     c.height = h;
     const ctx = c.getContext('2d');
-    // Qualidade de renderizacao alta
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(v, 0, 0, w, h);
     
-    // Aplicar nitidez (unsharp mask leve) para compensar compressao
-    try {
-      const imageData = ctx.getImageData(0, 0, w, h);
-      sharpenImageData(imageData, w, h);
-      ctx.putImageData(imageData, 0, 0);
-    } catch (e) { /* security error em alguns browsers */ }
-    
-    // Qualidade 85% padronizada para nivelar iOS/Android
+    // Qualidade 70% - suficiente para IA, reduz upload significativamente
     c.toBlob(b => {
       if (b && mountedRef.current) {
         setLastImageBlob(b);
@@ -934,7 +925,7 @@ function App() {
       }
       // Limpar canvas após uso
       ctx.clearRect(0, 0, w, h);
-    }, 'image/jpeg', 0.85);
+    }, 'image/jpeg', 0.70);
   }, [multiMode]);
 
   const identifyImage = async (blob) => {
@@ -1320,8 +1311,8 @@ function App() {
       scanCooldownRef.current = true;
       setTimeout(() => { scanCooldownRef.current = false; }, 2000);
       
-      // Resolucao padronizada 1024px para nivelar iOS/Android
-      const scanSize = 1024;
+      // Resolucao otimizada 512px para IA (CLIP usa 224x224 interno)
+      const scanSize = 512;
       let w = v.videoWidth;
       let h = v.videoHeight;
       if (w > scanSize || h > scanSize) {
@@ -1332,18 +1323,9 @@ function App() {
       
       c.width = w;
       c.height = h;
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(v, 0, 0, w, h);
       
-      // Aplicar nitidez para compensar compressao Android
-      try {
-        const scanImageData = ctx.getImageData(0, 0, w, h);
-        sharpenImageData(scanImageData, w, h);
-        ctx.putImageData(scanImageData, 0, 0);
-      } catch (e) { /* security error */ }
-      
-      // Qualidade 85% padronizada para nivelar iOS/Android
+      // Qualidade 70% otimizada para IA
       c.toBlob(async (blob) => {
         if (!blob || !mountedRef.current || scanningRef.current) return;
         
@@ -1396,7 +1378,7 @@ function App() {
         
         // Limpar canvas
         ctx.clearRect(0, 0, w, h);
-      }, 'image/jpeg', 0.85);
+      }, 'image/jpeg', 0.70);
     }
   }, [stream]);
 
