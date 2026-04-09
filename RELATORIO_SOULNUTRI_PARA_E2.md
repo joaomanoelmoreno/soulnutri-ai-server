@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://nutriai-preview-4.preview.emergentagent.com
-- Admin: https://nutriai-preview-4.preview.emergentagent.com/admin
-- Lista de Pratos: https://nutriai-preview-4.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://geofence-analysis.preview.emergentagent.com
+- Admin: https://geofence-analysis.preview.emergentagent.com/admin
+- Lista de Pratos: https://geofence-analysis.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

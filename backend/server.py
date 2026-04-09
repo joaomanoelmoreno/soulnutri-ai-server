@@ -627,6 +627,11 @@ async def identify_image(
                     'alergenos': flash_result.get('alergenos', {}),
                     'alertas_personalizados': flash_result.get('alertas_personalizados', []),
                     'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
+                    'ingredientes': flash_result.get('ingredientes', []),
+                    'beneficios': flash_result.get('beneficios', []),
+                    'riscos': flash_result.get('riscos', []),
+                    'curiosidade': flash_result.get('curiosidade', ''),
+                    'combinacoes': flash_result.get('combinacoes', []),
                 }
                 logger.info(f"[EXTERNO | GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
             else:
@@ -770,32 +775,41 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         if is_premium and user_profile:
             try:
-                from services.alerts_service import (
-                    gerar_alertas_tempo_real,
-                    gerar_combinacoes_sugeridas,
-                    gerar_substituicoes,
-                    verificar_alergenos_perfil
-                )
-                
                 ingredientes = decision.get('ingredientes', [])
                 
                 # Alertas de alergenos baseados no perfil
-                alertas_alergenos = verificar_alergenos_perfil(user_profile, ingredientes)
+                alertas_alergenos = []
+                restricoes = user_profile.get("restricoes", [])
+                alergenos_detectados = decision.get('alergenos', {})
+                for restricao in restricoes:
+                    r_lower = restricao.lower().replace(" ", "_")
+                    if alergenos_detectados.get(r_lower):
+                        alertas_alergenos.append({
+                            "tipo": "alergia",
+                            "severidade": "alta",
+                            "mensagem": f"Contém {restricao} - você tem restrição registrada!",
+                            "icone": "🚫"
+                        })
                 
-                # Alertas baseados no historico semanal
-                alertas_historico = await gerar_alertas_tempo_real(
-                    db, nome, decision, ingredientes
-                )
+                # Alertas baseados no historico (consumo repetido)
+                alertas_historico = []
+                try:
+                    from services.alerts_service import generate_food_alert
+                    alert_data = await generate_food_alert(
+                        decision.get('dish_display', ''), 
+                        ingredientes, 
+                        db=db, 
+                        user_nome=nome
+                    )
+                    if alert_data and alert_data.get('has_alert'):
+                        alertas_historico.append(alert_data)
+                except Exception as e:
+                    logger.warning(f"[PREMIUM] Erro em alertas historico: {e}")
                 
-                # Combinacoes inteligentes
-                combinacoes = gerar_combinacoes_sugeridas(ingredientes)
+                # Combinacoes - usar as do Gemini se disponíveis
+                combinacoes_sugeridas = decision.get('combinacoes', [])
                 
-                # Substituicoes saudaveis
-                substituicoes = gerar_substituicoes(ingredientes)
-                
-                # ═══════════════════════════════════════════════════════════════════
                 # NOVIDADES/NOTÍCIAS DO PRATO (PREMIUM)
-                # ═══════════════════════════════════════════════════════════════════
                 novidade = None
                 dish_slug = decision.get('dish')
                 if dish_slug:
@@ -810,8 +824,7 @@ async def identify_image(
                 premium_data = {
                     "alertas_alergenos": alertas_alergenos,
                     "alertas_historico": alertas_historico,
-                    "combinacoes_sugeridas": combinacoes,
-                    "substituicoes": substituicoes,
+                    "combinacoes_sugeridas": combinacoes_sugeridas,
                     "novidade": novidade,
                     "is_premium": True
                 }
@@ -919,6 +932,9 @@ async def identify_image(
             "dica_nutricional": decision.get('dica_nutricional'),
             "alertas_personalizados": decision.get('alertas_personalizados', []),
             "tempo_ia_ms": decision.get('tempo_ia_ms'),
+            # Curiosidade e combinacoes (Gemini ou local)
+            "curiosidade": decision.get('curiosidade') if is_premium else None,
+            "combinacoes": decision.get('combinacoes', []) if is_premium else [],
             # Familias de Pratos - honestidade
             "family_name": decision.get('family_name'),
             "family_candidates": decision.get('family_candidates', []),
