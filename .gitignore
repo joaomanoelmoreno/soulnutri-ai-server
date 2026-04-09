@@ -66,3 +66,7 @@ test_reports/
 frontend/build/debug_screenshots/
 frontend/build/fotos_revisar/
 *.docx
+-e 
+# Environment files
+*.env
+*.env.*
