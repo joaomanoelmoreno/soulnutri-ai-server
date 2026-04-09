@@ -1047,8 +1047,14 @@ function App() {
         voce_sabia: result.voce_sabia || '',
         dica_chef: result.dica_chef || '',
         premium: result.premium || null,
-        alertas_personalizados: result.alertas_personalizados || []
+        alertas_personalizados: result.alertas_personalizados || [],
+        noticias: result.noticias || []
       };
+
+      const updatedPlate = [...plateItems, newItem];
+      setPlateItems(updatedPlate);
+      
+      console.log('[DEBUG] Adicionando item:', newItem.dish_display, 'Calorias:', newItem.calorias, 'Noticias:', newItem.noticias?.length);
       console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
         const updated = [...prev, newItem];
@@ -1117,8 +1123,14 @@ function App() {
         voce_sabia: result.voce_sabia || '',
         dica_chef: result.dica_chef || '',
         premium: result.premium || null,
-        alertas_personalizados: result.alertas_personalizados || []
+        alertas_personalizados: result.alertas_personalizados || [],
+        noticias: result.noticias || []
       };
+
+      const updatedPlate = [...plateItems, newItem];
+      setPlateItems(updatedPlate);
+      
+      console.log('[DEBUG] Adicionando item:', newItem.dish_display, 'Calorias:', newItem.calorias, 'Noticias:', newItem.noticias?.length);
       setPlateItems(prev => {
         const updated = [...prev, newItem];
         console.log('[DEBUG] plateItems final:', updated.length, 'itens');
@@ -1445,6 +1457,7 @@ function App() {
       voce_sabia: plateItems.map(item => item.voce_sabia).filter(Boolean),
       dicas_chef: plateItems.map(item => item.dica_chef).filter(Boolean),
       alertas_personalizados: plateItems.flatMap(item => item.alertas_personalizados || []),
+      noticias: [...new Set(plateItems.flatMap(item => item.noticias || []))],
       premiumData: plateItems.map(item => item.premium).filter(Boolean)
     };
   }, [plateItems]);
@@ -2530,6 +2543,23 @@ function App() {
                 </div>
               )}
 
+              {/* NOTÍCIAS E ALERTAS SOBRE INGREDIENTES */}
+              {plateConsolidated?.noticias?.length > 0 && (
+                <div className="mesa-section" data-testid="mesa-noticias" style={{
+                  background: 'rgba(251, 191, 36, 0.1)',
+                  borderLeft: '3px solid #fbbf24',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#fbbf24', marginBottom: '8px' }}>📰 Notícias e Alertas sobre Ingredientes</h4>
+                  {plateConsolidated.noticias.map((noticia, i) => (
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 8px', paddingLeft: '8px', borderLeft: '2px solid rgba(251, 191, 36, 0.3)' }}>
+                      {noticia}
+                    </p>
+                  ))}
+                </div>
+              )}
+
               {/* BENEFÍCIO PRINCIPAL DETALHADO */}
               {plateConsolidated?.beneficio_principal?.length > 0 && (
                 <div className="mesa-section" data-testid="mesa-beneficio-principal" style={{
@@ -2571,8 +2601,16 @@ function App() {
                   <h4 style={{ color: '#c084fc', marginBottom: '8px' }}>🧪 Verdade ou Mito?</h4>
                   {plateConsolidated.mitos_verdades.map((mv, i) => (
                     <div key={i} style={{ marginBottom: '8px' }}>
-                      {mv.afirmacao && <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>{mv.afirmacao}</p>}
-                      {mv.resposta && <p style={{ color: '#d1d5db', fontSize: '12px', margin: '0 0 4px' }}>{mv.resposta}</p>}
+                      {(mv.mito || mv.afirmacao) && (
+                        <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>
+                          "{mv.mito || mv.afirmacao}"
+                        </p>
+                      )}
+                      {(mv.verdade || mv.resposta) && (
+                        <p style={{ color: '#d1d5db', fontSize: '12px', margin: '0 0 4px' }}>
+                          {(mv.verdade || mv.resposta)}
+                        </p>
+                      )}
                       {mv.explicacao && <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0, fontStyle: 'italic' }}>{mv.explicacao}</p>}
                     </div>
                   ))}
