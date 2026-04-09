@@ -1,101 +1,37 @@
-// SoulNutri Service Worker - v3 (fix postMessage clone error)
-const CACHE_NAME = 'soulnutri-v3';
-const urlsToCache = [
-  '/manifest.json',
-  '/images/soulnutri-logo.png',
-  '/images/soulnutri-logo-light.png'
-];
+// SoulNutri Service Worker - v4 FORCE UPDATE
+// Este SW limpa TODOS os caches e se desregistra automaticamente
+const CACHE_NAME = 'soulnutri-v4';
 
-// Install Service Worker - limpar caches antigos
+// Install: skipWaiting para ativar imediatamente
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('SoulNutri: Cache v2 aberto');
-        return cache.addAll(urlsToCache);
-      })
-      .catch((err) => {
-        console.log('SoulNutri: Erro ao cachear:', err);
-      })
-  );
   self.skipWaiting();
 });
 
-// Activate - limpar caches antigos
+// Activate: limpar TODOS os caches antigos e tomar controle
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('SoulNutri: Removendo cache antigo:', cacheName);
-            return caches.delete(cacheName);
-          }
+          console.log('SoulNutri: Limpando cache:', cacheName);
+          return caches.delete(cacheName);
         })
       );
+    }).then(() => {
+      return self.clients.claim();
+    }).then(() => {
+      // Forcar reload em todos os clientes
+      return self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({ type: 'SW_UPDATED', version: 'v4' });
+        });
+      });
     })
   );
-  self.clients.claim();
 });
 
-// Fetch - Network first para HTML/JS, cache only para imagens
+// Fetch: NUNCA cachear - sempre buscar do servidor
 self.addEventListener('fetch', (event) => {
-  // Ignorar requisições de API, blob URLs e media streams
-  if (event.request.url.includes('/api/') ||
-      event.request.url.startsWith('blob:') ||
-      event.request.url.startsWith('data:') ||
-      event.request.url.includes('mediastream') ||
-      event.request.method !== 'GET') {
-    return;
-  }
-  
-  // HTML e JS sempre do servidor (evita cache desatualizado)
-  if (event.request.url.endsWith('.html') || 
-      event.request.url.endsWith('.js') ||
-      event.request.url.endsWith('/') ||
-      event.request.mode === 'navigate') {
-    event.respondWith(
-      fetch(event.request)
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-  
-  // Outros recursos: network first com fallback para cache
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        if (response.status === 200) {
-          try {
-            const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseClone).catch(() => {});
-            });
-          } catch (e) {
-            // Request nao pode ser clonado (blob, media, etc) - ignorar
-          }
-        }
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
-  );
-});
-
-// Activate - limpar caches antigos
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('SoulNutri: Removendo cache antigo:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
+  // Passar direto para o servidor, sem cache
+  return;
 });
