@@ -1,11 +1,14 @@
-# Test Credentials
+# SoulNutri Test Credentials
 
 ## Admin
 - Username: joaomanoelmoreno
 - Password: Pqlamz0192
-- URL: https://geofence-analysis.preview.emergentagent.com/admin
 
-## Premium User (Test)
+## Premium User
 - PIN: 1234
 - Nome: Teste SoulNutri
-- Criado em: 2026-04-06
+
+## API Testing
+- Backend URL: from REACT_APP_BACKEND_URL in /app/frontend/.env
+- Identify endpoint: POST /api/ai/identify (multipart form: file, pin, nome, restaurant)
+- Premium login: POST /api/premium/login (form: pin, nome)
