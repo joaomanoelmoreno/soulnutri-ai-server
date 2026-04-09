@@ -1,5 +1,5 @@
 # SoulNutri - Product Requirements Document
-## Versao 2.4 — Persistencia + Noticias + Fix MitoVerdade (2026-04-09)
+## Versao 2.5 — Performance + Alertas Scan (2026-04-09)
 
 ## Visao
 Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens com alta precisao.
@@ -76,6 +76,18 @@ Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a
 
 ## Upcoming Tasks
 - (P0) Sincronizar codigo para GitHub/Render (instruir usuario: "Save to GitHub")
+- (P0) Testar fluxo completo no Render com fotos reais
+- (P0) Configurar dominio soulnutri.app.br no Render + Cloudflare DNS
+
+## Future/Backlog
+- (P1) Landing page onboarding premium (trial 7 dias)
+- (P1) Stripe + App Store/Google Play
+- (P2) Revisao nutricional pratos F-Z
+- (P2) Endpoint upload ZIP admin
+- (P3) Refatorar server.py e Admin.js
+
+## LOCK ViT-B-16 — NAO ALTERAR embedder.py, index.py
+"Save to GitHub")
 - (P0) Testar fluxo completo no Render com fotos reais
 - (P0) Configurar dominio soulnutri.app.br no Render + Cloudflare DNS
 
