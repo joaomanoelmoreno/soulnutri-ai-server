@@ -153,17 +153,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Middleware para forçar limpeza de Service Worker e cache antigos
+# Middleware para controle de cache (produção-ready)
 @app.middleware("http")
-async def clear_old_cache(request, call_next):
+async def cache_control_middleware(request, call_next):
     response = await call_next(request)
-    # Header que força o navegador a limpar cache, cookies e SW
-    if request.url.path == "/" or request.url.path == "/index.html":
-        response.headers["Clear-Site-Data"] = '"cache", "storage"'
-    # Impedir cache de HTML
+    # HTML nunca deve ser cacheado (garante que o user sempre pega a versão nova)
+    # Assets estáticos (JS/CSS) já têm hash no nome (ex: main.abc123.js) e podem ser cacheados
     if response.headers.get("content-type", "").startswith("text/html"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        response.headers["Pragma"] = "no-cache"
     return response
 
 # =====================
