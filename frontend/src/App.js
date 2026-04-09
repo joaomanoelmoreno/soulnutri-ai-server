@@ -2139,11 +2139,10 @@ function App() {
         </div>
         <div className="header-right">
           <LanguageSelector />
-          {detectedRestaurant && (
+          {detectedRestaurant ? (
             <span
               data-testid="location-indicator"
               onClick={() => {
-                // Resetar flag manual para permitir nova seleção
                 localStorage.removeItem('soulnutri_location_manual');
                 setShowLocationPrompt(true);
               }}
@@ -2160,6 +2159,23 @@ function App() {
               }}
             >
               {detectedRestaurant === 'cibi_sana' ? '📍 Cibi Sana' : '🌐 Externo'}
+            </span>
+          ) : (
+            <span
+              data-testid="location-indicator-pending"
+              onClick={() => setShowLocationPrompt(true)}
+              style={{
+                fontSize: '11px',
+                padding: '3px 8px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: '600',
+                background: 'rgba(245,158,11,0.2)',
+                color: '#f59e0b',
+                border: '1px solid rgba(245,158,11,0.3)'
+              }}
+            >
+              📍 Selecionar local
             </span>
           )}
           {status?.ready && <span className="st">✓ {status.total_dishes} pratos</span>}
