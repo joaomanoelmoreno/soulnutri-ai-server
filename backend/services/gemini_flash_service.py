@@ -57,16 +57,17 @@ REGRAS CRÍTICAS:
 4. Se houver dúvida, descreva o que você VÊ na imagem
 
 Retorne APENAS JSON válido:
-{"nome":"Nome descritivo do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2"],"benef":["beneficio1","beneficio2","beneficio3"],"riscos":["risco1","risco2"],"curios":"Uma curiosidade cientifica sobre este prato","combo":["Combina bem com X para potencializar Y","Combina com Z para melhor absorcao"]}
+{"nome":"Nome descritivo do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2"],"benef":["beneficio1","beneficio2","beneficio3"],"riscos":["risco especifico 1","risco especifico 2"],"curios":"Uma curiosidade cientifica sobre este prato","combo":["Combina bem com X para potencializar Y","Combina com Z para melhor absorcao"],"noticias":["noticia ou alerta recente relevante sobre um ingrediente deste prato"]}
 
 cat: v=vegano (só vegetais), veg=vegetariano (tem ovo/queijo), p=proteína animal (carne/peixe/frango/embutidos)
 score: sua confiança de 0.0 a 1.0
 alerg: lista apenas os presentes
 ing: ingredientes principais visíveis (3-6 itens)
 benef: 3 benefícios nutricionais reais e específicos deste prato
-riscos: 1-2 riscos ou pontos de atenção (ex: alto sódio, gordura saturada)
+riscos: 2-3 riscos ESPECÍFICOS com dados concretos (ex: "Queijo mussarela: 22g de gordura saturada por 100g", "Sódio elevado: molho de soja contém ~900mg por colher")
 curios: 1 curiosidade científica interessante sobre o prato ou ingrediente principal
 combo: 2 combinações alimentares que potencializam os nutrientes deste prato
+noticias: 1-2 alertas ou fatos recentes sobre saúde/nutrição relacionados aos ingredientes (ex: "Pesquisas recentes indicam que cogumelos podem auxiliar na produção de vitamina D", "OMS recomenda limitar consumo de embutidos a 50g/dia por risco oncológico")
 Valores por porção ~150g."""
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -299,7 +300,8 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
             "beneficios": result.get("benef", []),
             "riscos": result.get("riscos", []),
             "curiosidade": result.get("curios", ""),
-            "combinacoes": result.get("combo", [])
+            "combinacoes": result.get("combo", []),
+            "noticias": result.get("noticias", [])
         }
         
         # Converter lista de alérgenos para dict

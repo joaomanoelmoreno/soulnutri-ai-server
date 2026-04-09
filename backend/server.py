@@ -632,6 +632,7 @@ async def identify_image(
                     'riscos': flash_result.get('riscos', []),
                     'curiosidade': flash_result.get('curiosidade', ''),
                     'combinacoes': flash_result.get('combinacoes', []),
+                    'noticias': flash_result.get('noticias', []),
                 }
                 logger.info(f"[EXTERNO | GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
             else:
@@ -935,6 +936,8 @@ async def identify_image(
             # Curiosidade e combinacoes (Gemini ou local)
             "curiosidade": decision.get('curiosidade') if is_premium else None,
             "combinacoes": decision.get('combinacoes', []) if is_premium else [],
+            # Noticias e alertas sobre ingredientes (Gemini)
+            "noticias": decision.get('noticias', []) if is_premium else [],
             # Familias de Pratos - honestidade
             "family_name": decision.get('family_name'),
             "family_candidates": decision.get('family_candidates', []),
