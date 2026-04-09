@@ -994,33 +994,30 @@ function App() {
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
         setResult(resultWithTime);
+        setLoading(false); // Mostrar resultado IMEDIATAMENTE
+        loadingRef.current = false;
+        
         // Salvar foto na galeria se identificou com sucesso
         if (resultWithTime.ok && resultWithTime.identified && previewImageUrl) {
           saveToGallery(previewImageUrl, resultWithTime.dish_display, resultWithTime);
         }
-        // Buscar informações do Radar de Notícias (sem consumir créditos)
+        // Buscar informações do Radar e Enrich em BACKGROUND (sem bloquear UI)
         if (resultWithTime.ok && resultWithTime.identified) {
-          try {
-            const ingredientes = resultWithTime.ingredientes?.join(',') || '';
-            console.log('[RADAR] Buscando para:', resultWithTime.dish_display, 'ingredientes:', ingredientes);
-            const radarRes = await fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}`);
-            const radarData = await radarRes.json();
-            console.log('[RADAR] Resposta:', radarData);
-            // Mostrar Radar se tiver QUALQUER conteúdo (alerta, voce_sabia, combinacoes)
-            if (radarData.ok && radarData.radar && 
-                (radarData.radar.has_alert || radarData.radar.voce_sabia || radarData.radar.combinacoes?.length > 0)) {
-              console.log('[RADAR] ✅ Definindo radarInfo:', radarData.radar);
-              setRadarInfo(radarData.radar);
-            } else {
-              console.log('[RADAR] ❌ Sem conteúdo relevante');
-              setRadarInfo(null);
-            }
-          } catch (radarErr) {
-            console.log('[RADAR] Erro ao buscar fatos:', radarErr);
-            setRadarInfo(null);
-          }
+          // Radar - fire and forget
+          const ingredientes = resultWithTime.ingredientes?.join(',') || '';
+          fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}`)
+            .then(r => r.json())
+            .then(radarData => {
+              if (radarData.ok && radarData.radar && 
+                  (radarData.radar.has_alert || radarData.radar.voce_sabia || radarData.radar.combinacoes?.length > 0)) {
+                setRadarInfo(radarData.radar);
+              } else {
+                setRadarInfo(null);
+              }
+            })
+            .catch(() => setRadarInfo(null));
           
-          // ENRIQUECIMENTO PREMIUM EM BACKGROUND (não bloqueia o scan)
+          // Enriquecimento Premium em background (só para Gemini)
           if (premiumUser && resultWithTime.source === 'gemini_flash') {
             fetch(`${API}/ai/enrich`, {
               method: 'POST',
@@ -1033,7 +1030,6 @@ function App() {
               })
             }).then(r => r.json()).then(enrichData => {
               if (enrichData.ok) {
-                console.log('[ENRICH] ✅ Premium data recebido:', Object.keys(enrichData));
                 setResult(prev => prev ? {
                   ...prev,
                   beneficios: enrichData.beneficios || prev.beneficios,
@@ -1061,9 +1057,12 @@ function App() {
         setError(e.message || 'Erro de conexão');
       }
     } finally { 
-      loadingRef.current = false;
-      if (mountedRef.current) {
-        setLoading(false);
+      // Garantir que loading é desligado em caso de erro
+      if (loadingRef.current) {
+        loadingRef.current = false;
+        if (mountedRef.current) {
+          setLoading(false);
+        }
       }
     }
   };
