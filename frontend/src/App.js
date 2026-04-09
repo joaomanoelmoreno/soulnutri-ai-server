@@ -1073,11 +1073,6 @@ function App() {
         noticias: result.noticias || []
       };
 
-      const updatedPlate = [...plateItems, newItem];
-      setPlateItems(updatedPlate);
-      
-      console.log('[DEBUG] Adicionando item:', newItem.dish_display, 'Calorias:', newItem.calorias, 'Noticias:', newItem.noticias?.length);
-      console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
         const updated = [...prev, newItem];
         console.log('[DEBUG] plateItems agora tem', updated.length, 'itens');
@@ -1149,10 +1144,6 @@ function App() {
         noticias: result.noticias || []
       };
 
-      const updatedPlate = [...plateItems, newItem];
-      setPlateItems(updatedPlate);
-      
-      console.log('[DEBUG] Adicionando item:', newItem.dish_display, 'Calorias:', newItem.calorias, 'Noticias:', newItem.noticias?.length);
       setPlateItems(prev => {
         const updated = [...prev, newItem];
         console.log('[DEBUG] plateItems final:', updated.length, 'itens');
@@ -1473,14 +1464,16 @@ function App() {
       contemSoja,
       categorias,
       // Premium consolidated data
-      curiosidades: plateItems.map(item => item.curiosidade).filter(Boolean),
+      curiosidades: [...new Set(plateItems.map(item => item.curiosidade).filter(Boolean))],
       combinacoes: [...new Set(plateItems.flatMap(item => item.combinacoes || []))].slice(0, 6),
-      beneficio_principal: plateItems.map(item => item.beneficio_principal).filter(Boolean),
-      alerta_saude: plateItems.map(item => item.alerta_saude).filter(Boolean),
-      mitos_verdades: plateItems.map(item => item.mito_verdade).filter(Boolean),
-      voce_sabia: plateItems.map(item => item.voce_sabia).filter(Boolean),
-      dicas_chef: plateItems.map(item => item.dica_chef).filter(Boolean),
-      alertas_personalizados: plateItems.flatMap(item => item.alertas_personalizados || []),
+      beneficio_principal: [...new Set(plateItems.map(item => item.beneficio_principal).filter(Boolean))],
+      alerta_saude: [...new Set(plateItems.map(item => item.alerta_saude).filter(Boolean))],
+      mitos_verdades: plateItems.map(item => item.mito_verdade).filter(Boolean)
+        .filter((mv, i, arr) => arr.findIndex(x => (x.mito || x.afirmacao) === (mv.mito || mv.afirmacao)) === i),
+      voce_sabia: [...new Set(plateItems.map(item => item.voce_sabia).filter(Boolean))],
+      dicas_chef: [...new Set(plateItems.map(item => item.dica_chef).filter(Boolean))],
+      alertas_personalizados: plateItems.flatMap(item => item.alertas_personalizados || [])
+        .filter((a, i, arr) => arr.findIndex(x => (x.mensagem || x) === (a.mensagem || a)) === i),
       noticias: [...new Set(plateItems.flatMap(item => item.noticias || []))],
       premiumData: plateItems.map(item => item.premium).filter(Boolean)
     };
