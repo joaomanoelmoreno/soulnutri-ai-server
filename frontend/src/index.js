@@ -5,8 +5,15 @@ import "@/index.css";
 import App from "@/App";
 import Admin from "@/Admin";
 
-// Desregistrar Service Worker (causava erro postMessage)
+// Forçar atualização: desregistrar SW antigo e limpar todos os caches
 if ('serviceWorker' in navigator) {
+  // Limpar todos os caches imediatamente
+  if ('caches' in window) {
+    caches.keys().then(names => {
+      names.forEach(name => caches.delete(name));
+    });
+  }
+  // Desregistrar todos os service workers
   navigator.serviceWorker.getRegistrations().then(registrations => {
     registrations.forEach(registration => {
       registration.unregister();
