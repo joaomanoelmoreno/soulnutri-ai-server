@@ -1019,14 +1019,24 @@ function App() {
         beneficios: result.beneficios || [],
         riscos: result.riscos || [],
         alergenos: {
-          gluten: result.contem_gluten,
-          lactose: result.contem_lactose,
-          ovo: result.contem_ovo,
-          castanhas: result.contem_castanhas,
-          frutosMar: result.contem_frutos_mar
+          gluten: result.contem_gluten || result.alergenos?.gluten,
+          lactose: result.contem_lactose || result.alergenos?.lactose,
+          ovo: result.contem_ovo || result.alergenos?.ovo,
+          castanhas: result.contem_castanhas || result.alergenos?.castanhas,
+          frutosMar: result.contem_frutos_mar || result.alergenos?.frutos_mar
         },
         score: result.score,
-        source: result.source || 'clip'
+        source: result.source || 'clip',
+        // Premium data
+        curiosidade: result.curiosidade || result.curiosidade_cientifica || '',
+        combinacoes: result.combinacoes || result.premium?.combinacoes_sugeridas || [],
+        beneficio_principal: result.beneficio_principal || '',
+        alerta_saude: result.alerta_saude || '',
+        mito_verdade: result.mito_verdade || null,
+        voce_sabia: result.voce_sabia || '',
+        dica_chef: result.dica_chef || '',
+        premium: result.premium || null,
+        alertas_personalizados: result.alertas_personalizados || []
       };
       console.log('[DEBUG] Adicionando item ao prato:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
@@ -1079,16 +1089,25 @@ function App() {
         beneficios: result.beneficios || [],
         riscos: result.riscos || [],
         alergenos: {
-          gluten: result.contem_gluten,
-          lactose: result.contem_lactose,
-          ovo: result.contem_ovo,
-          castanhas: result.contem_castanhas,
-          frutosMar: result.contem_frutos_mar
+          gluten: result.contem_gluten || result.alergenos?.gluten,
+          lactose: result.contem_lactose || result.alergenos?.lactose,
+          ovo: result.contem_ovo || result.alergenos?.ovo,
+          castanhas: result.contem_castanhas || result.alergenos?.castanhas,
+          frutosMar: result.contem_frutos_mar || result.alergenos?.frutos_mar
         },
         score: result.score,
-        source: result.source || 'clip'
+        source: result.source || 'clip',
+        // Premium data
+        curiosidade: result.curiosidade || result.curiosidade_cientifica || '',
+        combinacoes: result.combinacoes || result.premium?.combinacoes_sugeridas || [],
+        beneficio_principal: result.beneficio_principal || '',
+        alerta_saude: result.alerta_saude || '',
+        mito_verdade: result.mito_verdade || null,
+        voce_sabia: result.voce_sabia || '',
+        dica_chef: result.dica_chef || '',
+        premium: result.premium || null,
+        alertas_personalizados: result.alertas_personalizados || []
       };
-      console.log('[DEBUG] Adicionando último item:', newItem.dish_display, 'Calorias:', newItem.calorias);
       setPlateItems(prev => {
         const updated = [...prev, newItem];
         console.log('[DEBUG] plateItems final:', updated.length, 'itens');
@@ -1405,7 +1424,17 @@ function App() {
       contemCastanhas,
       contemFrutosMar,
       contemSoja,
-      categorias
+      categorias,
+      // Premium consolidated data
+      curiosidades: plateItems.map(item => item.curiosidade).filter(Boolean),
+      combinacoes: [...new Set(plateItems.flatMap(item => item.combinacoes || []))].slice(0, 6),
+      beneficio_principal: plateItems.map(item => item.beneficio_principal).filter(Boolean),
+      alerta_saude: plateItems.map(item => item.alerta_saude).filter(Boolean),
+      mitos_verdades: plateItems.map(item => item.mito_verdade).filter(Boolean),
+      voce_sabia: plateItems.map(item => item.voce_sabia).filter(Boolean),
+      dicas_chef: plateItems.map(item => item.dica_chef).filter(Boolean),
+      alertas_personalizados: plateItems.flatMap(item => item.alertas_personalizados || []),
+      premiumData: plateItems.map(item => item.premium).filter(Boolean)
     };
   }, [plateItems]);
 
@@ -2453,39 +2482,127 @@ function App() {
           {/* CONTEÚDO EXCLUSIVO PREMIUM */}
           {premiumUser && (
             <>
-              {/* VOCÊ SABIA? */}
-              {radarInfo?.voce_sabia && (
-                <div className="mesa-section voce-sabia" style={{
+              {/* CURIOSIDADES CIENTÍFICAS */}
+              {(plateConsolidated?.curiosidades?.length > 0 || radarInfo?.voce_sabia) && (
+                <div className="mesa-section voce-sabia" data-testid="mesa-curiosidades" style={{
                   background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15))',
                   borderLeft: '3px solid #3b82f6',
                   borderRadius: '8px',
                   padding: '12px'
                 }}>
-                  <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Você sabia?</h4>
-                  <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                    {radarInfo.voce_sabia}
-                  </p>
+                  <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Curiosidades</h4>
+                  {plateConsolidated.curiosidades.map((c, i) => (
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 6px' }}>
+                      {c}
+                    </p>
+                  ))}
+                  {radarInfo?.voce_sabia && !plateConsolidated.curiosidades.some(c => c === radarInfo.voce_sabia) && (
+                    <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
+                      {radarInfo.voce_sabia}
+                    </p>
+                  )}
                 </div>
               )}
 
               {/* COMBINAÇÕES QUE POTENCIALIZAM */}
-              {radarInfo?.combinacoes?.length > 0 && (
-                <div className="mesa-section combinacoes" style={{
+              {(plateConsolidated?.combinacoes?.length > 0 || radarInfo?.combinacoes?.length > 0) && (
+                <div className="mesa-section combinacoes" data-testid="mesa-combinacoes" style={{
                   background: 'rgba(34, 197, 94, 0.1)',
                   borderLeft: '3px solid #22c55e',
                   borderRadius: '8px',
                   padding: '12px'
                 }}>
                   <h4 style={{ color: '#22c55e', marginBottom: '8px' }}>🔗 Combinações que potencializam</h4>
-                  {radarInfo.combinacoes.map((combo, i) => (
+                  {(plateConsolidated.combinacoes.length > 0 ? plateConsolidated.combinacoes : radarInfo?.combinacoes || []).map((combo, i) => (
                     <p key={i} style={{ color: '#ccc', fontSize: '12px', margin: '4px 0' }}>• {combo}</p>
                   ))}
                 </div>
               )}
 
-              {/* FATOS INTERESSANTES / ALERTAS */}
+              {/* BENEFÍCIO PRINCIPAL DETALHADO */}
+              {plateConsolidated?.beneficio_principal?.length > 0 && (
+                <div className="mesa-section" data-testid="mesa-beneficio-principal" style={{
+                  background: 'rgba(16, 185, 129, 0.1)',
+                  borderLeft: '3px solid #10b981',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#34d399', marginBottom: '8px' }}>🌟 Benefício Principal</h4>
+                  {plateConsolidated.beneficio_principal.map((b, i) => (
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{b}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* ALERTA DE SAÚDE */}
+              {plateConsolidated?.alerta_saude?.length > 0 && (
+                <div className="mesa-section" data-testid="mesa-alerta-saude" style={{
+                  background: 'rgba(245, 158, 11, 0.1)',
+                  borderLeft: '3px solid #f59e0b',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#fbbf24', marginBottom: '8px' }}>⚠️ Alertas de Saúde</h4>
+                  {plateConsolidated.alerta_saude.map((a, i) => (
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{a}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* VERDADE OU MITO */}
+              {plateConsolidated?.mitos_verdades?.length > 0 && (
+                <div className="mesa-section" data-testid="mesa-mito-verdade" style={{
+                  background: 'rgba(168, 85, 247, 0.1)',
+                  borderLeft: '3px solid #a855f7',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#c084fc', marginBottom: '8px' }}>🧪 Verdade ou Mito?</h4>
+                  {plateConsolidated.mitos_verdades.map((mv, i) => (
+                    <div key={i} style={{ marginBottom: '8px' }}>
+                      {mv.afirmacao && <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>{mv.afirmacao}</p>}
+                      {mv.resposta && <p style={{ color: '#d1d5db', fontSize: '12px', margin: '0 0 4px' }}>{mv.resposta}</p>}
+                      {mv.explicacao && <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0, fontStyle: 'italic' }}>{mv.explicacao}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* DICA DO CHEF */}
+              {plateConsolidated?.dicas_chef?.length > 0 && (
+                <div className="mesa-section" data-testid="mesa-dica-chef" style={{
+                  background: 'rgba(251, 146, 60, 0.1)',
+                  borderLeft: '3px solid #fb923c',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#fb923c', marginBottom: '8px' }}>👨‍🍳 Dica do Chef</h4>
+                  {plateConsolidated.dicas_chef.map((d, i) => (
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{d}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* ALERTAS PERSONALIZADOS */}
+              {plateConsolidated?.alertas_personalizados?.length > 0 && (
+                <div className="mesa-section" data-testid="mesa-alertas-personalizados" style={{
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  borderLeft: '3px solid #ef4444',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#f87171', marginBottom: '8px' }}>🔔 Alertas Personalizados</h4>
+                  {plateConsolidated.alertas_personalizados.map((a, i) => (
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', margin: '0 0 4px' }}>
+                      {typeof a === 'string' ? a : `${a.icone || '⚠️'} ${a.mensagem || a.texto || a}`}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {/* FATOS INTERESSANTES DO RADAR */}
               {radarInfo?.has_alert && radarInfo?.facts?.length > 0 && (
-                <div className="mesa-section fatos" style={{
+                <div className="mesa-section fatos" data-testid="mesa-fatos" style={{
                   background: radarInfo.type === 'alerta' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
                   borderLeft: `3px solid ${radarInfo.type === 'alerta' ? '#ef4444' : '#f59e0b'}`,
                   borderRadius: '8px',
@@ -2512,6 +2629,21 @@ function App() {
                       ))}
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* VOCÊ SABIA (radar) - só exibir se não houver curiosidades consolidadas */}
+              {radarInfo?.voce_sabia && !plateConsolidated?.curiosidades?.length && (
+                <div className="mesa-section voce-sabia" style={{
+                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15))',
+                  borderLeft: '3px solid #3b82f6',
+                  borderRadius: '8px',
+                  padding: '12px'
+                }}>
+                  <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Você sabia?</h4>
+                  <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
+                    {radarInfo.voce_sabia}
+                  </p>
                 </div>
               )}
             </>

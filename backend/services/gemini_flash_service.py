@@ -48,7 +48,7 @@ logger = logging.getLogger(__name__)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # PROMPT OTIMIZADO - Melhor precisão mantendo velocidade
-SYSTEM_PROMPT_FLASH = """Você é um especialista em identificação de alimentos. Analise a imagem e identifique EXATAMENTE o que está no prato.
+SYSTEM_PROMPT_FLASH = """Você é um especialista em identificação de alimentos e nutrição. Analise a imagem e identifique EXATAMENTE o que está no prato.
 
 REGRAS CRÍTICAS:
 1. OLHE COM ATENÇÃO para os ingredientes visíveis
@@ -57,11 +57,16 @@ REGRAS CRÍTICAS:
 4. Se houver dúvida, descreva o que você VÊ na imagem
 
 Retorne APENAS JSON válido:
-{"nome":"Nome descritivo do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9}
+{"nome":"Nome descritivo do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2"],"benef":["beneficio1","beneficio2","beneficio3"],"riscos":["risco1","risco2"],"curios":"Uma curiosidade cientifica sobre este prato","combo":["Combina bem com X para potencializar Y","Combina com Z para melhor absorcao"]}
 
 cat: v=vegano (só vegetais), veg=vegetariano (tem ovo/queijo), p=proteína animal (carne/peixe/frango/embutidos)
 score: sua confiança de 0.0 a 1.0
 alerg: lista apenas os presentes
+ing: ingredientes principais visíveis (3-6 itens)
+benef: 3 benefícios nutricionais reais e específicos deste prato
+riscos: 1-2 riscos ou pontos de atenção (ex: alto sódio, gordura saturada)
+curios: 1 curiosidade científica interessante sobre o prato ou ingrediente principal
+combo: 2 combinações alimentares que potencializam os nutrientes deste prato
 Valores por porção ~150g."""
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -289,7 +294,12 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                 "carboidratos": f"{result.get('carb', 0)}g",
                 "gorduras": f"{result.get('gord', 0)}g"
             },
-            "alergenos": {}
+            "alergenos": {},
+            "ingredientes": result.get("ing", []),
+            "beneficios": result.get("benef", []),
+            "riscos": result.get("riscos", []),
+            "curiosidade": result.get("curios", ""),
+            "combinacoes": result.get("combo", [])
         }
         
         # Converter lista de alérgenos para dict
