@@ -390,7 +390,7 @@ function App() {
   const detectLocation = () => {
     if (!navigator.geolocation) {
       setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
-      if (!detectedRestaurant) setShowLocationPrompt(true);
+      if (!localStorage.getItem('soulnutri_restaurant')) setShowLocationPrompt(true);
       return;
     }
     
@@ -402,8 +402,9 @@ function App() {
     }
     
     // Fallback: se GPS não responder em 4s, mostrar seleção manual
+    // Usa localStorage (síncrono) para evitar stale closures do React state
     const fallbackTimer = setTimeout(() => {
-      if (!detectedRestaurant && !localStorage.getItem('soulnutri_restaurant')) {
+      if (!localStorage.getItem('soulnutri_restaurant')) {
         console.log('[GPS] Timeout 4s - mostrando seleção manual');
         setShowLocationPrompt(true);
       }
@@ -413,6 +414,13 @@ function App() {
     watchIdRef.current = navigator.geolocation.watchPosition(
       (position) => {
         clearTimeout(fallbackTimer);
+        
+        // Se seleção manual está ativa, NÃO sobrescrever
+        if (localStorage.getItem('soulnutri_location_manual') === 'true') {
+          setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
+          return;
+        }
+        
         const dist = haversineDistance(
           position.coords.latitude, position.coords.longitude,
           CIBI_SANA_LAT, CIBI_SANA_LNG
@@ -424,10 +432,8 @@ function App() {
         const newRestaurant = isCibiSana ? 'cibi_sana' : 'external';
         
         setDetectedRestaurant(prev => {
-          // Se mudou de local, auto-finalizar refeição atual
           if (prev && prev !== newRestaurant) {
             console.log(`[GPS] Local mudou: ${prev} → ${newRestaurant}. Nova refeição.`);
-            // Limpar prato para iniciar nova refeição no novo local
             setPlateItems([]);
             setResult(null);
             setViewMode('camera');
@@ -444,7 +450,7 @@ function App() {
         clearTimeout(fallbackTimer);
         console.warn('[GPS] Erro:', error.message);
         setPermissionsStatus(prev => ({ ...prev, location: 'denied' }));
-        if (!detectedRestaurant && !localStorage.getItem('soulnutri_restaurant')) {
+        if (!localStorage.getItem('soulnutri_restaurant')) {
           setShowLocationPrompt(true);
         }
       },
@@ -454,14 +460,23 @@ function App() {
 
   // Selecao manual de localização
   const selectLocationManual = (location) => {
+    // Parar GPS watcher para evitar conflito
+    if (watchIdRef.current !== null) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
+      watchIdRef.current = null;
+    }
     setDetectedRestaurant(location);
     localStorage.setItem('soulnutri_restaurant', location);
+    localStorage.setItem('soulnutri_location_manual', 'true');
     setShowLocationPrompt(false);
   };
 
   // Valor do restaurant para enviar na API
+  // Checa React state + localStorage para nunca perder cibi_sana
   const getRestaurantValue = () => {
     if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
+    const stored = localStorage.getItem('soulnutri_restaurant');
+    if (stored === 'cibi_sana') return 'cibi_sana';
     return 'external';
   };
 
@@ -2146,7 +2161,11 @@ function App() {
           {detectedRestaurant && (
             <span
               data-testid="location-indicator"
-              onClick={() => setShowLocationPrompt(true)}
+              onClick={() => {
+                // Resetar flag manual para permitir nova seleção
+                localStorage.removeItem('soulnutri_location_manual');
+                setShowLocationPrompt(true);
+              }}
               style={{
                 fontSize: '11px',
                 padding: '3px 8px',
