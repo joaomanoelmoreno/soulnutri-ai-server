@@ -15,7 +15,7 @@ WORKDIR /app
 
 # ── Python dependencies ──
 COPY backend/requirements.txt backend/requirements.txt
-RUN pip install --no-cache-dir -r backend/requirements.txt
+RUN pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements.txt
 
 # ── Frontend build ──
 COPY frontend/package.json frontend/yarn.lock frontend/
