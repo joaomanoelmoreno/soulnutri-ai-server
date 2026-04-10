@@ -15,11 +15,22 @@ WORKDIR /app
 
 # ── Python dependencies ──
 # Instalar torch CPU-only PRIMEIRO (muito menor que versao padrao com CUDA)
-# torch+cpu ~200MB vs torch+cuda ~800MB — essencial para caber no plano 512MB
 COPY backend/requirements.txt backend/requirements.txt
 RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
     grep -v -E "^(torch==|torchvision==)" backend/requirements.txt > backend/requirements-deploy.txt && \
     pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements-deploy.txt
+
+# ── Pre-download e converter modelo CLIP para float16 ──
+# Build tem mais RAM que runtime. Salvar modelo pre-convertido reduz pico de memoria
+RUN python3 -c "\
+import open_clip, torch; \
+print('Baixando e convertendo modelo ViT-B-16 para float16...'); \
+m, _, p = open_clip.create_model_and_transforms('ViT-B-16', pretrained='datacomp_xl_s13b_b90k'); \
+m = m.half(); \
+torch.save(m.state_dict(), '/app/clip_vit_b16_fp16.pt'); \
+del m; \
+print('Modelo salvo como float16 em /app/clip_vit_b16_fp16.pt'); \
+"
 
 # ── Frontend build ──
 COPY frontend/package.json frontend/yarn.lock frontend/

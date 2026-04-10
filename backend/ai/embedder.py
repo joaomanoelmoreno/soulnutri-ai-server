@@ -38,10 +38,42 @@ def _try_load_local_model():
         
         import open_clip
         
-        logger.info("[embedder] Carregando modelo OpenCLIP local (CPU, float16)...")
+        _DEVICE = "cpu"
+        fp16_path = "/app/clip_vit_b16_fp16.pt"
+        
+        # MODO DEPLOY: carregar modelo pre-convertido float16 (economiza ~50% RAM)
+        if os.path.exists(fp16_path):
+            logger.info("[embedder] Carregando modelo float16 pre-convertido (deploy)...")
+            start = time.time()
+            
+            # Criar arquitetura SEM pesos (leve, ~1MB)
+            model, _, preprocess = open_clip.create_model_and_transforms(
+                model_name="ViT-B-16",
+                pretrained=None,
+                device=_DEVICE
+            )
+            model = model.half()
+            
+            # Carregar pesos float16 com mmap (pico de memoria minimo)
+            state_dict = torch.load(fp16_path, map_location='cpu', mmap=True)
+            model.load_state_dict(state_dict)
+            del state_dict
+            
+            model.eval()
+            for param in model.parameters():
+                param.requires_grad = False
+            
+            _MODEL = model
+            _PREPROCESS = preprocess
+            _USE_HF_API = False
+            
+            logger.info(f"[embedder] Modelo float16 carregado em {time.time()-start:.2f}s (deploy mode)")
+            return True
+        
+        # MODO LOCAL: carregar normalmente (mais RAM disponivel)
+        logger.info("[embedder] Carregando modelo OpenCLIP local (CPU)...")
         start = time.time()
         
-        _DEVICE = "cpu"
         model, _, preprocess = open_clip.create_model_and_transforms(
             model_name="ViT-B-16",
             pretrained="datacomp_xl_s13b_b90k",
@@ -50,9 +82,6 @@ def _try_load_local_model():
         model = model.to(_DEVICE)
         model.eval()
         
-        # Converter para float16 para economizar ~50% de memoria RAM
-        model = model.half()
-        
         for param in model.parameters():
             param.requires_grad = False
         
@@ -60,7 +89,7 @@ def _try_load_local_model():
         _PREPROCESS = preprocess
         _USE_HF_API = False
         
-        logger.info(f"[embedder] Modelo local carregado (float16) em {time.time()-start:.2f}s")
+        logger.info(f"[embedder] Modelo local carregado em {time.time()-start:.2f}s")
         return True
         
     except Exception as e:
