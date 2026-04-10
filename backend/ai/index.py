@@ -190,15 +190,21 @@ class DishIndex:
         start_time = time.time()
         
         # Gerar embedding da query
+        t0 = time.time()
         query_embedding = image_embedding_from_bytes(image_bytes)
+        t_embed = (time.time() - t0) * 1000
+        logger.info(f"[TIMING] Embedding (ONNX/PyTorch): {t_embed:.0f}ms")
         
         # Verificar se embedding foi gerado com sucesso
         if query_embedding is None:
             return [{'error': 'Falha ao gerar embedding da imagem. Tente novamente.'}]
         
         # Calcular similaridade de cosseno
+        t0 = time.time()
         # Como os embeddings já estão normalizados, o dot product = cosine similarity
         similarities = np.dot(self.embeddings, query_embedding)
+        t_sim = (time.time() - t0) * 1000
+        logger.info(f"[TIMING] Similaridade ({len(self.embeddings)} embeddings): {t_sim:.1f}ms")
         
         # Pegar top-k índices (mais para agregar e medir consistencia)
         top_indices = np.argsort(similarities)[::-1][:top_k * 10]

@@ -542,7 +542,10 @@ async def identify_image(
     
     try:
         # Ler imagem
+        t0 = time.perf_counter()
         content = await file.read()
+        t_upload = (time.perf_counter() - t0) * 1000
+        logger.info(f"[TIMING] Upload/Read: {t_upload:.0f}ms ({len(content)//1024}KB)")
         
         if len(content) == 0:
             return IdentifyResponse(
@@ -595,7 +598,10 @@ async def identify_image(
             index = get_index()
             
             if index.is_ready():
+                t_clip = time.perf_counter()
                 results = index.search(content, top_k=5)
+                t_clip_ms = (time.perf_counter() - t_clip) * 1000
+                logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
                 clip_decision = analyze_result(results)
                 clip_score = clip_decision.get('score', 0.0)
                 

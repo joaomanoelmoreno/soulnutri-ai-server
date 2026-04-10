@@ -900,22 +900,66 @@ function App() {
       return;
     }
     
-    // Resolucao otimizada: 512px é suficiente para CLIP (usa 224x224 interno)
-    // Reduz upload em ~75% e processamento significativamente
-    const maxSize = 512;
-    let w = v.videoWidth;
-    let h = v.videoHeight;
-    console.log(`[Capture] Video source: ${v.videoWidth}x${v.videoHeight}`);
-    if (w > maxSize || h > maxSize) {
-      const ratio = Math.min(maxSize / w, maxSize / h);
-      w = Math.round(w * ratio);
-      h = Math.round(h * ratio);
+    // ═══════════════════════════════════════════════════════════════
+    // CROP: Capturar APENAS a area dentro da guide-frame (55% x 90%)
+    // Isso evita capturar pratos vizinhos fora da moldura
+    // ═══════════════════════════════════════════════════════════════
+    const guideW = 0.55; // Largura da moldura (55% do container)
+    const guideH = 0.90; // Altura da moldura (90% do container)
+    
+    // Obter dimensoes reais do container de video na tela
+    const rect = v.getBoundingClientRect();
+    const containerW = rect.width;
+    const containerH = rect.height;
+    
+    // Calcular como object-fit:cover posiciona o video
+    const videoAR = v.videoWidth / v.videoHeight;
+    const containerAR = containerW / containerH;
+    
+    let displayW, displayH, offsetX, offsetY;
+    if (videoAR < containerAR) {
+      // Video mais alto - corta topo/base
+      displayW = containerW;
+      displayH = containerW / videoAR;
+      offsetX = 0;
+      offsetY = (displayH - containerH) / 2;
+    } else {
+      // Video mais largo - corta lados
+      displayH = containerH;
+      displayW = containerH * videoAR;
+      offsetX = (displayW - containerW) / 2;
+      offsetY = 0;
     }
     
-    c.width = w; 
-    c.height = h;
+    // Coordenadas da guide-frame no espaco do container (centralizada)
+    const gLeft = containerW * (1 - guideW) / 2;
+    const gTop = containerH * (1 - guideH) / 2;
+    const gWidth = containerW * guideW;
+    const gHeight = containerH * guideH;
+    
+    // Converter para coordenadas do video original
+    const scaleX = v.videoWidth / displayW;
+    const scaleY = v.videoHeight / displayH;
+    const sx = (gLeft + offsetX) * scaleX;
+    const sy = (gTop + offsetY) * scaleY;
+    const sw = gWidth * scaleX;
+    const sh = gHeight * scaleY;
+    
+    // Canvas de saida: max 512px, proporcional a guide-frame
+    const maxSize = 512;
+    let outW = sw, outH = sh;
+    if (outW > maxSize || outH > maxSize) {
+      const ratio = Math.min(maxSize / outW, maxSize / outH);
+      outW = Math.round(outW * ratio);
+      outH = Math.round(outH * ratio);
+    }
+    
+    c.width = outW;
+    c.height = outH;
     const ctx = c.getContext('2d');
-    ctx.drawImage(v, 0, 0, w, h);
+    // drawImage(source, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+    ctx.drawImage(v, sx, sy, sw, sh, 0, 0, outW, outH);
+    console.log(`[Capture] Crop: video(${v.videoWidth}x${v.videoHeight}) guide(${Math.round(sx)},${Math.round(sy)} ${Math.round(sw)}x${Math.round(sh)}) -> canvas(${outW}x${outH})`);
     
     // Qualidade 70% - suficiente para IA, reduz upload significativamente
     c.toBlob(b => {
@@ -924,7 +968,7 @@ function App() {
         identifyImage(b);
       }
       // Limpar canvas após uso
-      ctx.clearRect(0, 0, w, h);
+      ctx.clearRect(0, 0, outW, outH);
     }, 'image/jpeg', 0.70);
   }, [multiMode]);
 
@@ -1310,10 +1354,22 @@ function App() {
       scanCooldownRef.current = true;
       setTimeout(() => { scanCooldownRef.current = false; }, 2000);
       
-      // Resolucao otimizada 512px para IA (CLIP usa 224x224 interno)
+      // ═══ CROP: Capturar apenas area da guide-frame ═══
+      const guideW = 0.55, guideH = 0.90;
+      const rect = v.getBoundingClientRect();
+      const cW = rect.width, cH = rect.height;
+      const vAR = v.videoWidth / v.videoHeight;
+      const cAR = cW / cH;
+      let dW, dH, oX, oY;
+      if (vAR < cAR) { dW = cW; dH = cW / vAR; oX = 0; oY = (dH - cH) / 2; }
+      else { dH = cH; dW = cH * vAR; oX = (dW - cW) / 2; oY = 0; }
+      const sX = ((cW * (1 - guideW) / 2) + oX) * (v.videoWidth / dW);
+      const sY = ((cH * (1 - guideH) / 2) + oY) * (v.videoHeight / dH);
+      const sW = (cW * guideW) * (v.videoWidth / dW);
+      const sH = (cH * guideH) * (v.videoHeight / dH);
+      
       const scanSize = 512;
-      let w = v.videoWidth;
-      let h = v.videoHeight;
+      let w = sW, h = sH;
       if (w > scanSize || h > scanSize) {
         const ratio = Math.min(scanSize / w, scanSize / h);
         w = Math.round(w * ratio);
@@ -1322,7 +1378,7 @@ function App() {
       
       c.width = w;
       c.height = h;
-      ctx.drawImage(v, 0, 0, w, h);
+      ctx.drawImage(v, sX, sY, sW, sH, 0, 0, w, h);
       
       // Qualidade 70% otimizada para IA
       c.toBlob(async (blob) => {
