@@ -90,7 +90,7 @@ def get_confidence_level_message(score: float, confidence: str) -> str:
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL')
 if mongo_url:
-    mongo_url = mongo_url.strip()  # Remover espacos/newlines acidentais
+    mongo_url = mongo_url.replace('\n', '').replace('\r', '').strip()
 if not mongo_url:
     mongo_url = 'mongodb://localhost:27017'
     logger.warning("[MongoDB] MONGO_URL nao definido, usando localhost (apenas para dev)")
