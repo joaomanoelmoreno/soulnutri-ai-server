@@ -1,14 +1,14 @@
-# SoulNutri Test Credentials
+# Test Credentials
 
-## Admin
-- Username: joaomanoelmoreno
-- Password: Pqlamz0192
+## App Users
+- Premium User: pin=1234, nome=Teste
+- Admin: joaomanoelmoreno / Pqlamz0192
 
-## Premium User
-- PIN: 1234
-- Nome: Teste SoulNutri
+## Environment Keys
+- EMERGENT_LLM_KEY: sk-emergent-06e1c5e5a3e1cEf36C
+- GOOGLE_API_KEY: AIzaSyBZAwyEEJFqzh6y8b0BmOZsXk_9s7y7PEk
 
-## API Testing
-- Backend URL: from REACT_APP_BACKEND_URL in /app/frontend/.env
-- Identify endpoint: POST /api/ai/identify (multipart form: file, pin, nome, restaurant)
-- Premium login: POST /api/premium/login (form: pin, nome)
+## Render Deploy
+- URL: https://soulnutri.app.br
+- Plan: Starter ($8/month, 512MB RAM)
+- Branch: main

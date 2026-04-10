@@ -1,101 +1,100 @@
 # SoulNutri - Product Requirements Document
-## Versao 2.5 — Performance + Alertas Scan (2026-04-09)
 
-## Visao
-Aplicativo de "agente de nutricao virtual" que identifica pratos em tempo real a partir de imagens com alta precisao.
+## Visao Geral
+SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifica pratos via foto usando IA (CLIP para Cibi Sana, Gemini para locais externos) e fornece informacoes nutricionais personalizadas.
 
-## Credenciais
-- Admin: joaomanoelmoreno / Pqlamz0192
-- Premium test user: pin=1234, nome=Teste SoulNutri
+## Versao Atual: V2.5
 
 ## Arquitetura
-- Frontend: React (CRA) + CSS Custom
-- Backend: FastAPI + Motor (MongoDB async)
-- AI: OpenCLIP local (ViT-B-16, DataComp.XL) para embedding de imagens
-- Storage: Cloudflare R2 (bucket: soulnutri-images) - 4389 fotos
+```
+/app
+├── backend/
+│   ├── ai/               # OpenCLIP embedder (NAO ALTERAR logica CLIP)
+│   │   ├── embedder.py   # Hibrido: ONNX (deploy) / PyTorch (dev)
+│   │   ├── index.py      # Busca por similaridade (Top-K)
+│   │   └── policy.py     # Analise de resultados CLIP
+│   ├── services/         # gemini_flash_service.py (fast scan + enrich)
+│   ├── scripts/          # export_onnx.py (build-time ONNX export)
+│   └── server.py         # Endpoints FastAPI (~5700 linhas)
+├── frontend/
+│   ├── public/           # sw.js (PWA), manifest.json, icons
+│   └── src/
+│       └── App.js        # Core app (~4000 linhas)
+├── datasets/             # Embeddings pre-calculados (2994 itens, 191 pratos)
+└── Dockerfile            # Build unificado para Render
+```
+
+## Stack Tecnica
+- Frontend: React (PWA), Service Worker com cache network-first
+- Backend: FastAPI, Motor (MongoDB async)
+- IA: OpenCLIP ViT-B-16 (ONNX Runtime no deploy, PyTorch no dev)
+- IA Externa: Gemini 2.5 Flash Lite (Emergent LLM Key)
 - DB: MongoDB Atlas
-- Deploy: Render (Docker) — Unificado (FastAPI serve React build via SPAStaticFiles)
+- Deploy: Render.com ($8/mes Starter, 512MB RAM)
+- Dominio: soulnutri.app.br
 
-## Regra de Negocio Critica
-- Cibi Sana: APENAS OpenCLIP. Gemini HARD LOCK.
-- Externo: APENAS Gemini. CLIP DESLIGADO.
+## Regras Criticas (HARD LOCK)
+1. CLIP ONLY no Cibi Sana - Gemini PROIBIDO para identificacao local
+2. NAO ALTERAR embedder.py/index.py logica de reconhecimento sem autorizacao
+3. ViT-B-16 DataComp XL travado - nao mudar modelo
 
-## Fluxo Premium (ATUALIZADO 2026-04-09)
-### Fase Buffet/Servindo (resposta rapida):
-- Identificacao do prato + alertas criticos (alergenos, ingredientes)
-- Resposta em <0.5s
+## O que foi implementado
 
-### Fase Mesa (refeicao finalizada):
-- Todas as features Premium: beneficios, riscos, noticias, curiosidades, combinacoes
-- Ingredientes detalhados, beneficio principal, alerta saude
-- Mito/Verdade educacional, dica do chef
-- Alertas personalizados baseados no perfil
+### Deploy Render (Sessao atual - Abril 2026)
+- [x] Fix yarn.lock nao rastreado pelo Git
+- [x] Fix emergentintegrations (extra-index-url no pip)
+- [x] Fix memoria RAM: ONNX Runtime substitui PyTorch no deploy (300MB vs 610MB+)
+- [x] Script export_onnx.py para conversao durante Docker build
+- [x] Modelo ONNX fp16 (165MB) - embeddings identicos ao PyTorch (cosine=0.9999)
+- [x] Fix MONGO_URL com newline (.strip() + replace)
+- [x] Variáveis de ambiente configuradas no Render
+- [x] Git history limpo (arquivos grandes removidos)
 
-## Bifurcacao GPS V2.2
-- Coordenadas Cibi Sana: -23.0373642, -46.9767934
-- Raio: 100m + margem GPS 50m
-- GPS CONTINUO via watchPosition (atualiza em tempo real)
+### PWA Instalavel
+- [x] manifest.json com name, short_name, start_url, display=standalone
+- [x] Icones corretos: 192x192 e 512x512 (quadrados, gerados do logo)
+- [x] Service Worker funcional (network-first + cache)
+- [x] index.js registra SW (antes estava desregistrando)
+- [x] Cache headers: sw.js e manifest.json com no-cache
 
-## Meal Tracking V2.2
-- finishPlate() registra no historico Premium
-- addItemToPlate() e finishPlate() incluem campo source (clip/gemini_flash)
-- Backend log-meal aceita source parameter
+### Otimizacoes (Sessao anterior)
+- [x] Gemini Fast Scan (~1.1s) + Enrichment em background
+- [x] CLIP otimizado: canvas 512px, queries MongoDB paralelas (~1.5s)
+- [x] GPS fix: localStorage como fonte de verdade
+- [x] Persistencia de refeicao (localStorage)
+- [x] Clear-Site-Data middleware para PWA cache
 
-## Confidence Scores
-- ALTA: >= 90% (0.90)
-- MEDIA: 50% a 89% (0.50 a 0.89)
-- BAIXA: < 50% (0.50)
+## Endpoints Principais
+- POST /ai/identify - Fast scan (CLIP ou Gemini)
+- POST /ai/identify-with-ai - Enrichment Premium (background)
+- GET /ai/status - Status do indice
 
-## Deploy Unificado
-- SPAStaticFiles serve React build com fallback index.html
-- Render: soulnutri-v3wd.onrender.com (live)
-- Dominio: soulnutri.app.br (configuracao pendente DNS)
+## DB Schema
+- users: {pin_hash, premium_ativo, restricoes}
+- meal_history: Historico de pratos consumidos
 
-## Completed
-- [x] Deploy unificado no Render (SPAStaticFiles)
-- [x] Bifurcacao GPS: Cibi Sana (CLIP) vs Externo (Gemini)
-- [x] GPS continuo (watchPosition)
-- [x] finishPlate() registra no historico (bug fix)
-- [x] Campo source (clip/gemini) no meal tracking
-- [x] Documento SOULNUTRI_CONFIGURACOES.docx para engenharia
-- [x] Tema Obsidian Black Card
-- [x] Notificacoes Push Premium
-- [x] Fontes Nutricionais TACO/USDA
-- [x] **FIX P0**: Features Premium na UI (ingredientes, beneficios, riscos, curiosidade, combinacoes) — 2026-04-09
-  - Gemini Flash prompt agora retorna dados ricos (ing, benef, riscos, curios, combo)
-  - Backend mapeia todos os campos para a response API
-  - Frontend armazena dados Premium nos plateItems
-  - Mesa view exibe todas as secoes Premium consolidadas
-  - Alertas de alergenos corrigidos para funcionar sem funcoes faltantes
-- [x] **FIX**: Mito/Verdade renderizacao corrigida (campos mito/verdade mapeados corretamente)
-- [x] **NOVO**: Noticias e Alertas sobre Ingredientes (📰) — Gemini retorna alertas recentes da OMS, pesquisas, etc.
-- [x] **MELHORIA**: Riscos agora especificos com dados concretos por ingrediente
-- [x] **NOVO**: Persistencia da refeicao no localStorage (sobrevive saida/retorno da tela)
-- [x] **NOVO**: Botao "Voltar a minha refeicao" na tela da camera quando ha itens salvos
-- [x] **FIX**: GPS timeout reduzido de 10s para 5s + fallback manual em 4s
+## Credenciais
+- Premium User: pin=1234, nome=Teste
+- Admin: joaomanoelmoreno / Pqlamz0192
 
-## Upcoming Tasks
-- (P0) Sincronizar codigo para GitHub/Render (instruir usuario: "Save to GitHub")
-- (P0) Testar fluxo completo no Render com fotos reais
-- (P0) Configurar dominio soulnutri.app.br no Render + Cloudflare DNS
+## Backlog
 
-## Future/Backlog
-- (P1) Landing page onboarding premium (trial 7 dias)
-- (P1) Stripe + App Store/Google Play
-- (P2) Revisao nutricional pratos F-Z
-- (P2) Endpoint upload ZIP admin
-- (P3) Refatorar server.py e Admin.js
+### P0 - Imediato
+- Testar fluxo completo no celular em producao
+- Investigar velocidade CLIP no Cibi Sana (2-3s reportado)
 
-## LOCK ViT-B-16 — NAO ALTERAR embedder.py, index.py
-"Save to GitHub")
-- (P0) Testar fluxo completo no Render com fotos reais
-- (P0) Configurar dominio soulnutri.app.br no Render + Cloudflare DNS
+### P1 - Proximo
+- Landing page de onboarding premium (trial 7 dias)
+- Modo acessibilidade com audio (OpenAI TTS - vozes Alloy/Onyx)
+- Stripe para assinatura Premium
 
-## Future/Backlog
-- (P1) Landing page onboarding premium (trial 7 dias)
-- (P1) Stripe + App Store/Google Play
-- (P2) Revisao nutricional pratos F-Z
-- (P2) Endpoint upload ZIP admin
-- (P3) Refatorar server.py e Admin.js
+### P2 - Futuro
+- Publicacao Google Play (TWA) e Apple Store (Capacitor)
+- Revisao nutricional pratos F-J (com verificacao de contaminacao)
+- Verificar endpoint upload ZIP admin
+- Refatorar server.py (~5700 linhas) e App.js (~4000 linhas)
 
-## LOCK ViT-B-16 — NAO ALTERAR embedder.py, index.py
+## Integracoes 3rd Party
+- OpenCLIP ViT-B-16 (HuggingFace, local/ONNX)
+- Gemini 2.5 Flash Lite (Emergent LLM Key)
+- OpenAI TTS (testado: Alloy e Onyx melhores em portugues)
