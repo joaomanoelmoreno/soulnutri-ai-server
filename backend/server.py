@@ -161,6 +161,9 @@ async def cache_control_middleware(request, call_next):
     # Assets estáticos (JS/CSS) já têm hash no nome (ex: main.abc123.js) e podem ser cacheados
     if response.headers.get("content-type", "").startswith("text/html"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    # Service Worker nunca deve ser cacheado (garante atualização do PWA)
+    if request.url.path.endswith("sw.js") or request.url.path.endswith("manifest.json"):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     return response
 
 # =====================

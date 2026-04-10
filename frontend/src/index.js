@@ -5,20 +5,16 @@ import "@/index.css";
 import App from "@/App";
 import Admin from "@/Admin";
 
-// Forçar atualização: desregistrar SW antigo e limpar todos os caches
+// PWA: Registrar Service Worker para instalacao
 if ('serviceWorker' in navigator) {
-  // Limpar todos os caches imediatamente
-  if ('caches' in window) {
-    caches.keys().then(names => {
-      names.forEach(name => caches.delete(name));
-    });
-  }
-  // Desregistrar todos os service workers
-  navigator.serviceWorker.getRegistrations().then(registrations => {
-    registrations.forEach(registration => {
-      registration.unregister();
-      console.log('SoulNutri: SW removido');
-    });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => {
+        console.log('SoulNutri: SW registrado', reg.scope);
+        // Verificar atualizacoes periodicamente
+        reg.update();
+      })
+      .catch(err => console.warn('SoulNutri: SW falhou', err));
   });
 }
 
