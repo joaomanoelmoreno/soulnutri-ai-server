@@ -13,13 +13,17 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 │   │   ├── embedder.py   # Hibrido: ONNX (deploy) / PyTorch (dev)
 │   │   ├── index.py      # Busca por similaridade (Top-K) + timing logs
 │   │   └── policy.py     # Analise de resultados CLIP
-│   ├── services/         # gemini_flash_service.py (fast scan + enrich)
+│   ├── services/
+│   │   ├── gemini_flash_service.py  # Fast scan + enrich
+│   │   └── tts_service.py          # OpenAI TTS (Alloy/Onyx)
 │   ├── scripts/          # export_onnx.py (build-time ONNX export)
 │   └── server.py         # Endpoints FastAPI (~5700 linhas) + timing logs
 ├── frontend/
 │   ├── public/           # sw.js (PWA), manifest.json, icons
 │   └── src/
-│       └── App.js        # Core app (~4000 linhas)
+│       ├── App.js        # Core app (~4000 linhas)
+│       ├── Demo.jsx      # Modo Demo (/demo)
+│       └── index.js      # Rotas: /, /admin, /demo
 ├── datasets/             # Embeddings pre-calculados (2994 itens, 191 pratos)
 └── Dockerfile            # Build unificado para Render (ONNX export)
 ```
@@ -29,6 +33,7 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 - Backend: FastAPI, Motor (MongoDB async)
 - IA: OpenCLIP ViT-B-16 (ONNX Runtime no deploy, PyTorch no dev)
 - IA Externa: Gemini 2.5 Flash Lite (Emergent LLM Key)
+- TTS: OpenAI TTS (vozes Alloy/Onyx, via Emergent LLM Key)
 - DB: MongoDB Atlas
 - Deploy: Render.com ($8/mes Starter, 512MB RAM)
 - Dominio: soulnutri.app.br
@@ -38,52 +43,42 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 2. NAO ALTERAR embedder.py/index.py logica de reconhecimento sem autorizacao
 3. ViT-B-16 DataComp XL travado - nao mudar modelo
 
-## O que foi implementado
+## O que foi implementado (Sessao atual - Abril 2026)
 
-### Deploy Render (Abril 2026)
-- [x] Fix yarn.lock nao rastreado pelo Git
-- [x] Fix emergentintegrations (extra-index-url no pip)
-- [x] Fix memoria RAM: ONNX Runtime substitui PyTorch no deploy (300MB vs 610MB+)
-- [x] Script export_onnx.py para conversao durante Docker build
-- [x] Modelo ONNX fp16 (165MB) - embeddings identicos ao PyTorch (cosine=0.9999)
-- [x] Fix MONGO_URL com newline (.replace + .strip)
-- [x] Variaveis de ambiente configuradas no Render
-- [x] Git history limpo (arquivos grandes removidos)
+### Deploy Render
+- [x] Fix yarn.lock, emergentintegrations, memoria RAM (ONNX Runtime)
+- [x] Modelo ONNX fp16 (165MB), MONGO_URL strip
 
 ### PWA Instalavel
-- [x] manifest.json com name, short_name, start_url, display=standalone
-- [x] Icones corretos: 192x192 e 512x512 (quadrados, gerados do logo)
-- [x] Service Worker funcional (network-first + cache)
-- [x] index.js registra SW (antes estava desregistrando)
-- [x] Cache headers: sw.js e manifest.json com no-cache
+- [x] manifest.json, icones 192/512, SW funcional, cache headers
 
-### Bug Fix: Camera Crop (Abril 2026)
-- [x] Captura agora faz CROP real baseado na guide-frame (55% x 90%)
-- [x] Calcula object-fit:cover para converter coordenadas do video
-- [x] Aplica tanto no toque manual quanto no scanner continuo
-- [x] Evita capturar pratos vizinhos fora da moldura
+### Camera Crop Fix
+- [x] Captura recorta apenas area da guide-frame (55% x 90%)
 
-### Timing Logs para Diagnostico CLIP
-- [x] Log de upload/read time + tamanho da imagem
-- [x] Log de embedding time (ONNX ou PyTorch)
-- [x] Log de similaridade time
-- [x] Log de CLIP search total
+### OpenAI TTS (Acessibilidade)
+- [x] Endpoint POST /ai/tts (gera MP3 via OpenAI TTS)
+- [x] Servico tts_service.py (monta texto descritivo do prato)
+- [x] Botao "Ouvir" no resultado do prato (verde, grande, acessivel)
+- [x] Vozes testadas: Alloy e Onyx (melhores em portugues)
+- [x] Stop/Play toggle, loading state
 
-### Otimizacoes (Sessao anterior)
-- [x] Gemini Fast Scan (~1.1s) + Enrichment em background
-- [x] CLIP otimizado: canvas 512px, queries MongoDB paralelas (~1.5s)
-- [x] GPS fix: localStorage como fonte de verdade
-- [x] Persistencia de refeicao (localStorage)
-- [x] Clear-Site-Data middleware para PWA cache
+### Modo Demo
+- [x] Pagina /demo com 3 pratos de exemplo
+- [x] Detalhe do prato com nutricao, alergenos, ingredientes, beneficios
+- [x] TTS funcional no demo (botao "Ouvir")
+- [x] CTA para instalar o app
+
+### Revisao Nutricional F-J
+- [x] INICIADA - Verificacao de fotos
+- [x] CONTAMINACAO ENCONTRADA: Jilo Empanado mostra fotos de Quiabo Empanado
+- [x] PAUSADA conforme instrucao do usuario (ele revisara fotos manualmente)
+- [x] Pratos sem ingredientes/nutricao no MongoDB (dados faltando)
 
 ## Endpoints Principais
 - POST /ai/identify - Fast scan (CLIP ou Gemini) com timing logs
 - POST /ai/identify-with-ai - Enrichment Premium (background)
+- POST /ai/tts - Text-to-Speech (OpenAI TTS, vozes alloy/onyx)
 - GET /ai/status - Status do indice
-
-## DB Schema
-- users: {pin_hash, premium_ativo, restricoes}
-- meal_history: Historico de pratos consumidos
 
 ## Credenciais
 - Premium User: pin=1234, nome=Teste
@@ -92,23 +87,21 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 ## Backlog
 
 ### P0 - Imediato
-- Investigar velocidade CLIP no Cibi Sana (2-3s) — logs de timing adicionados, aguardando teste real do usuario no Render para ver breakdown
-- Testar crop da camera no celular (fix da moldura guia)
+- Investigar velocidade CLIP (2-3s) — timing logs prontos, aguardando teste do usuario
+- Testar crop da camera + TTS no celular
 
 ### P1 - Proximo
-- OpenAI TTS modo acessibilidade (vozes Alloy/Onyx selecionadas pelo usuario)
-  - Botao "Ouvir" (nao automatico)
-  - Facil de encontrar para deficientes visuais
 - Landing page premium (aguardando mockup do usuario)
-- Revisao nutricional pratos F-J (com verificacao de contaminacao)
+- Revisao nutricional F-J (usuario revisara fotos primeiro)
+- Adicionar dados nutricionais/ingredientes para pratos F-J no MongoDB
 
 ### P2 - Futuro
 - Stripe para assinatura Premium
-- Modo demo na landing page
-- Publicacao Google Play (TWA) e Apple Store (Capacitor)
+- Google Play (TWA) / Apple Store (Capacitor)
 - Refatorar server.py (~5700 linhas) e App.js (~4000 linhas)
 
-## Integracoes 3rd Party
-- OpenCLIP ViT-B-16 (HuggingFace, local/ONNX)
-- Gemini 2.5 Flash Lite (Emergent LLM Key)
-- OpenAI TTS (testado: Alloy e Onyx melhores em portugues - HD model)
+## Problemas Conhecidos
+- Jilo Empanado: fotos contaminadas (mostra Quiabo Empanado)
+- Feijoada e Frango a Milanesa: sem fotos no dataset
+- Feijao do Chef: apenas 1 embedding (pouca confiabilidade)
+- Maioria dos pratos F-J sem ingredientes/nutricao no MongoDB

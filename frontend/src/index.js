@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "@/index.css";
 import App from "@/App";
 import Admin from "@/Admin";
+import Demo from "@/Demo";
 
 // PWA: Registrar Service Worker para instalacao
 if ('serviceWorker' in navigator) {
@@ -24,6 +25,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/demo" element={<Demo />} />
       </Routes>
     </BrowserRouter>,
 );
