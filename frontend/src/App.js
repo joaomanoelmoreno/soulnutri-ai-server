@@ -316,6 +316,56 @@ function App() {
   const [radarInfo, setRadarInfo] = useState(null); // {has_alert, message, facts}
   const [showRadarDetails, setShowRadarDetails] = useState(false); // Modal com fatos detalhados
   
+  // TTS - Acessibilidade
+  const [ttsPlaying, setTtsPlaying] = useState(false);
+  const [ttsLoading, setTtsLoading] = useState(false);
+  const ttsAudioRef = useRef(null);
+  
+  const playDishAudio = async (dishData, voice = 'alloy') => {
+    // Se já está tocando, parar
+    if (ttsAudioRef.current) {
+      ttsAudioRef.current.pause();
+      ttsAudioRef.current = null;
+      setTtsPlaying(false);
+      return;
+    }
+    
+    setTtsLoading(true);
+    try {
+      const res = await fetch(`${API}/ai/tts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dish_data: dishData, voice })
+      });
+      
+      if (!res.ok) throw new Error('Erro ao gerar audio');
+      
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      ttsAudioRef.current = audio;
+      
+      audio.onended = () => {
+        setTtsPlaying(false);
+        ttsAudioRef.current = null;
+        URL.revokeObjectURL(url);
+      };
+      
+      audio.onerror = () => {
+        setTtsPlaying(false);
+        ttsAudioRef.current = null;
+      };
+      
+      setTtsPlaying(true);
+      await audio.play();
+    } catch (e) {
+      console.error('[TTS] Erro:', e);
+      setTtsPlaying(false);
+    } finally {
+      setTtsLoading(false);
+    }
+  };
+  
   const [premiumUser, setPremiumUser] = useState(null);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
@@ -2944,11 +2994,51 @@ function App() {
           {/* BOTÃO VOLTAR */}
           <button 
             className="back-btn"
-            onClick={() => { setResult(null); setPreviewImageUrl(null); setFeedbackSent(false); setShowCorrectionFlow(false); setCorrectionSearch(''); }}
+            onClick={() => { setResult(null); setPreviewImageUrl(null); setFeedbackSent(false); setShowCorrectionFlow(false); setCorrectionSearch(''); if(ttsAudioRef.current){ttsAudioRef.current.pause();ttsAudioRef.current=null;setTtsPlaying(false);} }}
             data-testid="back-btn"
           >
             ← Voltar
           </button>
+          
+          {/* BOTAO OUVIR - Acessibilidade TTS */}
+          {r.identified && (
+            <button
+              className="tts-btn"
+              data-testid="tts-listen-btn"
+              onClick={() => playDishAudio(r)}
+              disabled={ttsLoading}
+              aria-label={ttsPlaying ? 'Parar audio' : 'Ouvir descricao do prato'}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                width: '100%',
+                padding: '14px 20px',
+                margin: '8px 0 12px',
+                background: ttsPlaying 
+                  ? 'linear-gradient(135deg, #ef4444, #dc2626)' 
+                  : 'linear-gradient(135deg, #10b981, #059669)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '14px',
+                fontSize: '16px',
+                fontWeight: '700',
+                cursor: ttsLoading ? 'wait' : 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 4px 12px rgba(16,185,129,0.3)',
+                minHeight: '52px',
+              }}
+            >
+              {ttsLoading ? (
+                <span>Gerando audio...</span>
+              ) : ttsPlaying ? (
+                <><span style={{fontSize:'20px'}}>&#9724;</span> Parar</>
+              ) : (
+                <><span style={{fontSize:'20px'}}>&#128266;</span> Ouvir</>
+              )}
+            </button>
+          )}
           
           {/* Preview da imagem */}
           {previewImageUrl && (

@@ -342,6 +342,43 @@ async def get_nutrition_sheet(dish_name: str):
 
 
 
+# ═══════════════════════════════════════════════════════════════
+# TTS - Text-to-Speech para acessibilidade
+# ═══════════════════════════════════════════════════════════════
+@api_router.post("/ai/tts")
+async def text_to_speech(request: Request):
+    """Gera audio MP3 descrevendo o prato identificado"""
+    from services.tts_service import generate_dish_audio
+    from fastapi.responses import Response
+    
+    try:
+        body = await request.json()
+        dish_data = body.get("dish_data", {})
+        voice = body.get("voice", "alloy")
+        
+        if voice not in ("alloy", "onyx"):
+            voice = "alloy"
+        
+        if not dish_data.get("dish_display") and not dish_data.get("nome"):
+            return {"ok": False, "message": "Dados do prato nao fornecidos"}
+        
+        audio_bytes = await generate_dish_audio(dish_data, voice=voice)
+        
+        if audio_bytes:
+            return Response(
+                content=audio_bytes,
+                media_type="audio/mpeg",
+                headers={"Content-Disposition": "inline; filename=soulnutri-audio.mp3"}
+            )
+        else:
+            return {"ok": False, "message": "Erro ao gerar audio"}
+    
+    except Exception as e:
+        logger.error(f"[TTS] Erro: {e}")
+        return {"ok": False, "message": "Erro interno no servico de audio"}
+
+
+
 @api_router.post("/ai/clear-cache")
 async def clear_ai_cache():
     """
