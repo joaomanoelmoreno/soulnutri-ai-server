@@ -66,6 +66,13 @@ test_reports/
 frontend/build/debug_screenshots/
 frontend/build/fotos_revisar/
 *.docx
+
+# ONNX models (gerados no Docker build)
+*.onnx
+*.onnx.data
+
+# Deploy docs com secrets
+DEPLOY_RENDER.md
 -e 
 # Environment files
 *.env
