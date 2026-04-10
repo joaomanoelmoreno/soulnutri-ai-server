@@ -340,6 +340,12 @@ function App() {
       
       if (!res.ok) throw new Error('Erro ao gerar audio');
       
+      // Verificar se resposta é audio (não JSON de erro)
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('audio')) {
+        throw new Error('Servico de audio indisponivel');
+      }
+      
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);

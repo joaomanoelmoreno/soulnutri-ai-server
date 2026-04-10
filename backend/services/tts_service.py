@@ -22,6 +22,7 @@ async def generate_dish_audio(dish_data: dict, voice: str = "alloy") -> bytes:
     if not api_key:
         logger.error("[TTS] EMERGENT_LLM_KEY nao configurada")
         return None
+    api_key = api_key.replace('\n', '').replace('\r', '').strip()
     
     # Montar texto descritivo do prato
     text = _build_dish_description(dish_data)

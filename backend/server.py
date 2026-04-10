@@ -20,6 +20,13 @@ os.environ["CUDA_HOME"] = ""
 os.environ["USE_CUDA"] = "0"
 os.environ["FORCE_CPU"] = "1"
 
+# Limpar newlines/espacos de TODAS as env vars (problema comum ao colar no Render)
+for key in ['MONGO_URL', 'DB_NAME', 'EMERGENT_LLM_KEY', 'GOOGLE_API_KEY', 'CORS_ORIGINS',
+            'USDA_API_KEY', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_ENDPOINT', 'R2_BUCKET']:
+    val = os.environ.get(key)
+    if val:
+        os.environ[key] = val.replace('\n', '').replace('\r', '').strip()
+
 from datetime import datetime, timedelta
 import json
 import asyncio
