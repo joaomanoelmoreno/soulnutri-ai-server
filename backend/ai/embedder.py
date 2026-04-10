@@ -1,5 +1,5 @@
 """SoulNutri AI - Embedder CLIP
-Versão híbrida: tenta usar modelo local, fallback para API externa
+Versao hibrida: ONNX Runtime (deploy) / PyTorch (dev local)
 """
 
 import os
@@ -11,21 +11,87 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Tentar usar API externa primeiro (mais confiável em produção)
-USE_LOCAL_MODEL = os.environ.get("USE_LOCAL_MODEL", "false").lower() == "true"
-
 # Cache global
 _MODEL = None
 _PREPROCESS = None
 _DEVICE = "cpu"
-_USE_HF_API = True  # Flag para usar HF API
+_USE_HF_API = True
+_USE_ONNX = False  # True quando modelo ONNX esta disponivel
+_ONNX_SESSION = None
+
+# Caminho do modelo ONNX (gerado no Docker build)
+ONNX_MODEL_PATH = "/app/clip_visual_fp16.onnx"
+
+# Constantes CLIP ViT-B-16 preprocessing
+CLIP_MEAN = np.array([0.48145466, 0.4578275, 0.40821073], dtype=np.float32)
+CLIP_STD = np.array([0.26862954, 0.26130258, 0.27577711], dtype=np.float32)
+
+
+def _preprocess_clip_numpy(img):
+    """Preprocessing CLIP ViT-B-16 com PIL + numpy (sem torch)"""
+    # Resize shortest side to 224 (bicubic)
+    w, h = img.size
+    if w < h:
+        new_w = 224
+        new_h = int(h * 224 / w)
+    else:
+        new_h = 224
+        new_w = int(w * 224 / h)
+    img = img.resize((new_w, new_h), Image.BICUBIC)
+    
+    # Center crop 224x224
+    left = (new_w - 224) // 2
+    top = (new_h - 224) // 2
+    img = img.crop((left, top, left + 224, top + 224))
+    
+    # To numpy float32 [0, 1]
+    arr = np.array(img).astype(np.float32) / 255.0
+    
+    # Normalize
+    arr = (arr - CLIP_MEAN) / CLIP_STD
+    
+    # HWC -> CHW -> BCHW
+    arr = arr.transpose(2, 0, 1)[np.newaxis, ...]
+    return arr
+
+
+def _try_load_onnx_model():
+    """Tenta carregar modelo ONNX (deploy - usa ~300MB RAM)"""
+    global _ONNX_SESSION, _USE_ONNX, _USE_HF_API
+    
+    if not os.path.exists(ONNX_MODEL_PATH):
+        return False
+    
+    try:
+        import onnxruntime as ort
+        
+        logger.info("[embedder] Carregando modelo CLIP via ONNX Runtime (deploy)...")
+        start = time.time()
+        
+        opts = ort.SessionOptions()
+        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
+        opts.inter_op_num_threads = 1
+        opts.intra_op_num_threads = 2
+        opts.enable_mem_pattern = False
+        opts.enable_cpu_mem_arena = False
+        
+        _ONNX_SESSION = ort.InferenceSession(ONNX_MODEL_PATH, opts)
+        _USE_ONNX = True
+        _USE_HF_API = False
+        
+        logger.info(f"[embedder] Modelo ONNX carregado em {time.time()-start:.2f}s (~300MB RAM)")
+        return True
+        
+    except Exception as e:
+        logger.warning(f"[embedder] ONNX nao disponivel: {e}")
+        return False
+
 
 def _try_load_local_model():
-    """Tenta carregar modelo local (pode falhar em ambientes sem GPU)"""
+    """Tenta carregar modelo PyTorch local (dev - mais RAM disponivel)"""
     global _MODEL, _PREPROCESS, _DEVICE, _USE_HF_API
     
     try:
-        # Forçar CPU
         os.environ["CUDA_VISIBLE_DEVICES"] = ""
         os.environ["CUDA_HOME"] = ""
         os.environ["USE_CUDA"] = "0"
@@ -38,42 +104,10 @@ def _try_load_local_model():
         
         import open_clip
         
-        _DEVICE = "cpu"
-        fp16_path = "/app/clip_vit_b16_fp16.pt"
-        
-        # MODO DEPLOY: carregar modelo pre-convertido float16 (economiza ~50% RAM)
-        if os.path.exists(fp16_path):
-            logger.info("[embedder] Carregando modelo float16 pre-convertido (deploy)...")
-            start = time.time()
-            
-            # Criar arquitetura SEM pesos (leve, ~1MB)
-            model, _, preprocess = open_clip.create_model_and_transforms(
-                model_name="ViT-B-16",
-                pretrained=None,
-                device=_DEVICE
-            )
-            model = model.half()
-            
-            # Carregar pesos float16 com mmap (pico de memoria minimo)
-            state_dict = torch.load(fp16_path, map_location='cpu', mmap=True)
-            model.load_state_dict(state_dict)
-            del state_dict
-            
-            model.eval()
-            for param in model.parameters():
-                param.requires_grad = False
-            
-            _MODEL = model
-            _PREPROCESS = preprocess
-            _USE_HF_API = False
-            
-            logger.info(f"[embedder] Modelo float16 carregado em {time.time()-start:.2f}s (deploy mode)")
-            return True
-        
-        # MODO LOCAL: carregar normalmente (mais RAM disponivel)
         logger.info("[embedder] Carregando modelo OpenCLIP local (CPU)...")
         start = time.time()
         
+        _DEVICE = "cpu"
         model, _, preprocess = open_clip.create_model_and_transforms(
             model_name="ViT-B-16",
             pretrained="datacomp_xl_s13b_b90k",
@@ -89,90 +123,103 @@ def _try_load_local_model():
         _PREPROCESS = preprocess
         _USE_HF_API = False
         
-        logger.info(f"[embedder] Modelo local carregado em {time.time()-start:.2f}s")
+        logger.info(f"[embedder] Modelo PyTorch carregado em {time.time()-start:.2f}s")
         return True
         
     except Exception as e:
-        logger.warning(f"[embedder] Modelo local não disponível: {e}")
-        logger.info("[embedder] Usando Hugging Face Inference API como fallback")
+        logger.warning(f"[embedder] Modelo PyTorch nao disponivel: {e}")
         _USE_HF_API = True
         return False
 
 
 def preload_model():
-    """Pré-carrega o modelo LOCAL - API externa DESABILITADA
-    
-    NOTA: Se o modelo local falhar (ex: sem GPU/CUDA no deploy), 
-    o sistema ainda funciona para BUSCAS usando o índice pré-calculado.
-    Apenas a criação de NOVOS embeddings ficará indisponível.
-    """
+    """Pre-carrega o modelo. Prioridade: ONNX (deploy) > PyTorch (dev)"""
     global _USE_HF_API
-    
-    # SEMPRE usar modelo local - API externa DESABILITADA para economizar créditos
     _USE_HF_API = False
-    success = _try_load_local_model()
-    if success:
-        logger.info("[embedder] ✅ Modelo LOCAL carregado - ZERO créditos")
+    
+    # 1. Tentar ONNX (deploy no Render - memoria otimizada)
+    if _try_load_onnx_model():
+        logger.info("[embedder] Modo ONNX ativo (deploy)")
         return True
     
-    # Em ambiente de deploy sem GPU, o modelo local pode falhar
-    # MAS o sistema ainda funciona para BUSCAS usando embeddings pré-calculados
-    logger.warning("[embedder] ⚠️ Modelo local indisponível (provavelmente sem GPU)")
-    logger.warning("[embedder] ⚠️ BUSCAS funcionam normalmente com índice pré-calculado")
-    logger.warning("[embedder] ⚠️ Criação de NOVOS embeddings indisponível")
+    # 2. Tentar PyTorch (desenvolvimento local - mais RAM)
+    if _try_load_local_model():
+        logger.info("[embedder] Modo PyTorch ativo (dev)")
+        return True
     
-    # Retornar True para não bloquear a inicialização do servidor
-    # O índice pré-calculado ainda permite buscas
+    # 3. Nenhum modelo disponivel
+    logger.warning("[embedder] Nenhum modelo disponivel")
     return True
 
 
 def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     """Gera embedding de uma imagem a partir de bytes"""
-    global _MODEL, _PREPROCESS, _USE_HF_API
+    global _MODEL, _PREPROCESS, _USE_HF_API, _ONNX_SESSION, _USE_ONNX
     
     start = time.time()
     
-    # Se usando API externa
-    if _USE_HF_API or _MODEL is None:
-        return _get_embedding_via_api(image_bytes)
-    
-    # Modelo local
-    try:
-        import torch
-        from PIL import ImageEnhance, ImageFilter
-        
-        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        
-        # Pre-processamento para normalizar qualidade iOS/Android
-        # 1. Auto-contraste (normaliza brilho/exposicao)
-        from PIL import ImageOps
-        img = ImageOps.autocontrast(img, cutoff=1)
-        # 2. Leve boost de nitidez (recupera detalhes perdidos em JPEG)
-        img = ImageEnhance.Sharpness(img).enhance(1.3)
-        # 3. Leve boost de cor (ajuda CLIP a distinguir pratos similares)
-        img = ImageEnhance.Color(img).enhance(1.1)
-        
-        img_tensor = _PREPROCESS(img).unsqueeze(0).to(_DEVICE)
-        
-        # Converter para float16 se modelo estiver em half precision
-        if next(_MODEL.parameters()).dtype == torch.float16:
-            img_tensor = img_tensor.half()
-        
-        with torch.no_grad():
-            embedding = _MODEL.encode_image(img_tensor)
-            embedding = embedding.squeeze(0)
-            norm = embedding.norm(dim=-1, keepdim=True)
-            if norm.item() > 0:
+    # ═══ MODO ONNX (deploy) ═══
+    if _USE_ONNX and _ONNX_SESSION is not None:
+        try:
+            from PIL import ImageEnhance, ImageOps
+            
+            img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+            
+            # Mesmo pre-processamento que o modo PyTorch
+            img = ImageOps.autocontrast(img, cutoff=1)
+            img = ImageEnhance.Sharpness(img).enhance(1.3)
+            img = ImageEnhance.Color(img).enhance(1.1)
+            
+            # Preprocessing CLIP via numpy (sem torch)
+            img_np = _preprocess_clip_numpy(img)
+            
+            # Inferencia ONNX
+            result = _ONNX_SESSION.run(None, {'image': img_np})[0]
+            
+            # Normalizar
+            embedding = result[0].astype(np.float32)
+            norm = np.linalg.norm(embedding)
+            if norm > 0:
                 embedding = embedding / norm
-            embedding = embedding.cpu().numpy().astype(np.float32)
-        
-        logger.info(f"[embedder] Local: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
-        return embedding
-        
-    except Exception as e:
-        logger.error(f"[embedder] Erro no modelo local: {e}")
-        # Fallback para API
-        return _get_embedding_via_api(image_bytes)
+            
+            logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
+            return embedding
+            
+        except Exception as e:
+            logger.error(f"[embedder] Erro ONNX: {e}")
+            return None
+    
+    # ═══ MODO PYTORCH (dev local) ═══
+    if _MODEL is not None and not _USE_HF_API:
+        try:
+            import torch
+            from PIL import ImageEnhance, ImageOps
+            
+            img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+            img = ImageOps.autocontrast(img, cutoff=1)
+            img = ImageEnhance.Sharpness(img).enhance(1.3)
+            img = ImageEnhance.Color(img).enhance(1.1)
+            
+            img_tensor = _PREPROCESS(img).unsqueeze(0).to(_DEVICE)
+            
+            with torch.no_grad():
+                embedding = _MODEL.encode_image(img_tensor)
+                embedding = embedding.squeeze(0)
+                norm = embedding.norm(dim=-1, keepdim=True)
+                if norm.item() > 0:
+                    embedding = embedding / norm
+                embedding = embedding.cpu().numpy().astype(np.float32)
+            
+            logger.info(f"[embedder] PyTorch: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
+            return embedding
+            
+        except Exception as e:
+            logger.error(f"[embedder] Erro PyTorch: {e}")
+            return None
+    
+    # ═══ NENHUM MODELO ═══
+    logger.error("[embedder] ERRO: Nenhum modelo disponivel para gerar embedding")
+    return None
 
 
 # Aliases para compatibilidade com index.py
@@ -189,175 +236,31 @@ def image_embedding_from_path(image_path: str) -> np.ndarray:
 
 
 def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
-    """DESABILITADO - NÃO usar API externa para economizar créditos"""
-    # API externa está desabilitada para economizar créditos
-    # Retorna None se o modelo local falhar - evita loop infinito
-    logger.error("[embedder] ERRO: Modelo local falhou e API externa está desabilitada")
-    logger.error("[embedder] A busca usará apenas o índice pré-calculado")
+    """DESABILITADO"""
+    logger.error("[embedder] ERRO: API externa desabilitada")
     return None
 
 
-def _get_embedding_via_gemini_fallback(image_bytes: bytes) -> np.ndarray:
-    """Fallback: usa Gemini para identificar o prato e busca embedding local"""
-    import json
-    
-    start = time.time()
-    
-    try:
-        # Usar Gemini para identificar o nome do prato
-        from services.generic_ai import identify_unknown_dish
-        import asyncio
-        import nest_asyncio
-        
-        # Permitir event loops aninhados
-        nest_asyncio.apply()
-        
-        # Rodar função async de forma síncrona
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        
-        result = loop.run_until_complete(identify_unknown_dish(image_bytes))
-        
-        if result.get('ok') and result.get('nome'):
-            dish_name = result.get('nome', '').lower().strip()
-            logger.info(f"[embedder] Gemini identificou: {dish_name}")
-            
-            # Buscar embedding do prato mais similar no índice local
-            embedding = _get_best_match_embedding(dish_name)
-            if embedding is not None:
-                logger.info(f"[embedder] Usando embedding local para '{dish_name}': {(time.time()-start)*1000:.0f}ms")
-                return embedding
-        
-        # Se não encontrou, retornar None para o sistema lidar com "não reconhecido"
-        logger.warning("[embedder] Fallback: sem embedding disponível, retornando None")
-        return None
-                
-    except Exception as e:
-        logger.error(f"[embedder] Erro na identificação: {e}")
-        return None
-
-
-def _get_best_match_embedding(dish_name: str) -> np.ndarray:
-    """Busca o embedding mais similar ao nome do prato no índice local"""
-    try:
-        import json
-        from difflib import SequenceMatcher
-        
-        # Dicionário de sinônimos inglês -> português
-        SINONIMOS = {
-            'spaghetti': 'espaguete', 'pasta': 'macarrao', 'noodles': 'macarrao',
-            'rice': 'arroz', 'white rice': 'arrozbranco', 'brown rice': 'arrozintegral',
-            'beans': 'feijao', 'black beans': 'feijaopreto', 'chicken': 'frango',
-            'fish': 'peixe', 'salmon': 'salmao', 'tuna': 'atum', 'cod': 'bacalhau',
-            'beef': 'carne', 'steak': 'bife', 'pork': 'porco', 'bacon': 'bacon',
-            'shrimp': 'camarao', 'seafood': 'frutosdomai', 'salad': 'salada',
-            'soup': 'sopa', 'cake': 'bolo', 'pie': 'torta', 'pudding': 'pudim',
-            'gelatin': 'gelatina', 'mousse': 'mousse', 'cream': 'creme',
-            'egg': 'ovo', 'potato': 'batata', 'sweet potato': 'batata doce',
-            'carrot': 'cenoura', 'broccoli': 'brocolis', 'spinach': 'espinafre',
-            'tomato': 'tomate', 'onion': 'cebola', 'garlic': 'alho',
-            'cheese': 'queijo', 'milk': 'leite', 'butter': 'manteiga',
-            'bread': 'pao', 'lasagna': 'lasanha', 'risotto': 'risoto',
-            'grilled': 'grelhado', 'fried': 'frito', 'roasted': 'assado',
-            'aglio e olio': 'alho e oleo', 'carbonara': 'carbonara',
-            'bolognese': 'bolonhesa', 'parmigiana': 'parmegiana',
-            'meatball': 'almondega', 'croquette': 'croquete',
-            'cocada': 'cocada', 'flan': 'pudim', 'brigadeiro': 'brigadeiro'
-        }
-        
-        index_file = "/app/datasets/dish_index.json"
-        emb_file = "/app/datasets/dish_index_embeddings.npy"
-        
-        if not os.path.exists(index_file) or not os.path.exists(emb_file):
-            return None
-        
-        with open(index_file, 'r') as f:
-            index_data = json.load(f)
-        
-        embeddings = np.load(emb_file)
-        dishes = index_data.get('dishes', [])
-        dish_to_idx = index_data.get('dish_to_idx', {})
-        
-        # Normalizar nome para busca
-        dish_name_clean = dish_name.lower().replace('_', ' ').strip()
-        
-        # Traduzir termos em inglês
-        for en, pt in SINONIMOS.items():
-            if en in dish_name_clean:
-                dish_name_clean = dish_name_clean.replace(en, pt)
-        
-        # Limpar caracteres especiais
-        dish_name_clean = dish_name_clean.replace('-', ' ').replace('  ', ' ')
-        
-        # Extrair palavras-chave principais
-        keywords = [w for w in dish_name_clean.split() if len(w) > 3]
-        
-        # Buscar prato mais similar por nome usando SequenceMatcher
-        best_match = None
-        best_score = 0
-        
-        for slug in dish_to_idx.keys():
-            slug_clean = slug.lower().replace('_', ' ')
-            slug_joined = slug.lower()  # Sem espaços para match de substring
-            
-            # Calcular similaridade com SequenceMatcher (mais preciso)
-            score = SequenceMatcher(None, dish_name_clean, slug_clean).ratio()
-            
-            # Boost se uma string contém a outra
-            if dish_name_clean in slug_clean or slug_clean in dish_name_clean:
-                score = min(1.0, score + 0.4)
-            
-            # Boost GRANDE para palavras-chave que aparecem como radical no slug
-            for kw in keywords:
-                # Verificar se a palavra-chave (ou início dela) aparece no slug
-                if kw[:4] in slug_joined:  # Pelo menos 4 primeiras letras
-                    score = min(1.0, score + 0.35)
-                    break
-            
-            # Boost para palavras-chave em comum
-            words1 = set(dish_name_clean.split())
-            words2 = set(slug_clean.split())
-            common = words1 & words2
-            if common:
-                score = min(1.0, score + len(common) * 0.15)
-            
-            if score > best_score:
-                best_score = score
-                best_match = slug
-        
-        # Só usar se tiver uma correspondência razoável (>40%)
-        if best_match and best_score > 0.40 and best_match in dish_to_idx:
-            # Pegar primeiro embedding desse prato
-            idx = dish_to_idx[best_match][0]
-            logger.info(f"[embedder] Match encontrado: '{dish_name}' -> '{best_match}' (score={best_score:.2f})")
-            return embeddings[idx]
-        
-        logger.warning(f"[embedder] Nenhum match bom encontrado para '{dish_name}' (best: {best_match}, score: {best_score:.2f})")
-        
-        # Retornar None para usar fallback do Gemini
-        return None
-        
-    except Exception as e:
-        logger.error(f"[embedder] Erro ao buscar embedding local: {e}")
-        return None
-
-
 def get_model_info():
-    """Retorna informações do modelo em uso"""
-    if _USE_HF_API:
+    """Retorna informacoes do modelo em uso"""
+    if _USE_ONNX:
         return {
-            "model": "openai/clip-vit-base-patch16",
-            "provider": "Hugging Face Inference API",
-            "local": False,
-            "device": "cloud"
+            "model": "ViT-B-16 (ONNX fp16)",
+            "provider": "ONNX Runtime (deploy)",
+            "local": True,
+            "device": "cpu"
+        }
+    elif _MODEL is not None:
+        return {
+            "model": "ViT-B-16",
+            "provider": "OpenCLIP PyTorch (local)",
+            "local": True,
+            "device": _DEVICE
         }
     else:
         return {
-            "model": "ViT-B-16",
-            "provider": "OpenCLIP (local)",
-            "local": True,
-            "device": _DEVICE
+            "model": "N/A",
+            "provider": "Nenhum modelo carregado",
+            "local": False,
+            "device": "N/A"
         }
