@@ -585,85 +585,30 @@ async def identify_image(
         
         if is_cibi_sana:
             # ══════════════════════════════════════════════════════════════════
-            # MODO CIBI SANA: CLIP preferencial, Gemini como fallback
-            # (Em deploy sem torch/GPU, CLIP nao gera embeddings → usa Gemini)
+            # MODO CIBI SANA: CLIP ONLY (HARD LOCK - Gemini bloqueado)
             # ══════════════════════════════════════════════════════════════════
-            clip_worked = False
-            try:
-                from ai.index import get_index
-                from ai.policy import analyze_result
-                
-                index = get_index()
-                
-                if index.is_ready():
-                    results = index.search(content, top_k=5)
-                    # Verificar se search retornou erro (embedding falhou)
-                    if results and not results[0].get('error'):
-                        clip_decision = analyze_result(results)
-                        clip_score = clip_decision.get('score', 0.0)
-                        
-                        logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
-                        
-                        decision = clip_decision
-                        decision['source'] = 'local_index'
-                        clip_worked = True
-                    else:
-                        logger.warning(f"[CIBI SANA] CLIP search falhou (sem modelo local). Fallback → Gemini")
-                else:
-                    logger.warning(f"[CIBI SANA] Indice CLIP nao pronto. Fallback → Gemini")
-            except Exception as clip_err:
-                logger.warning(f"[CIBI SANA] CLIP indisponivel ({clip_err}). Fallback → Gemini")
+            from ai.index import get_index
+            from ai.policy import analyze_result
             
-            # Fallback para Gemini se CLIP falhou (deploy sem torch)
-            if not clip_worked:
-                logger.info(f"[CIBI SANA | FALLBACK] Usando Gemini (CLIP indisponivel no deploy)")
-                from services.gemini_flash_service import (
-                    identify_dish_gemini_flash,
-                    is_gemini_flash_available
+            index = get_index()
+            
+            if index.is_ready():
+                results = index.search(content, top_k=5)
+                clip_decision = analyze_result(results)
+                clip_score = clip_decision.get('score', 0.0)
+                
+                logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
+                
+                decision = clip_decision
+                decision['source'] = 'local_index'
+            else:
+                return IdentifyResponse(
+                    ok=False,
+                    identified=False,
+                    confidence="baixa",
+                    score=0.0,
+                    message="Prato nao identificado. Tente com outra foto."
                 )
-                
-                if is_gemini_flash_available():
-                    flash_profile = None
-                    if pin and nome:
-                        from services.profile_service import hash_pin
-                        pin_hash = hash_pin(pin)
-                        flash_profile = await db.users.find_one(
-                            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
-                            {"_id": 0}
-                        )
-                    
-                    flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
-                    
-                    if flash_result.get('ok'):
-                        decision = {
-                            'identified': True,
-                            'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
-                            'dish_display': flash_result.get('nome'),
-                            'score': flash_result.get('score', 0.90),
-                            'source': 'gemini_flash',
-                            'category': flash_result.get('categoria'),
-                            'category_emoji': {"vegano": "🌱", "vegetariano": "🥬", "proteina animal": "🍖"}.get(flash_result.get('categoria', ''), '🍽️'),
-                            'nutrition': flash_result.get('nutricao'),
-                            'alergenos': flash_result.get('alergenos', {}),
-                            'alertas_personalizados': flash_result.get('alertas_personalizados', []),
-                            'tempo_ia_ms': flash_result.get('tempo_processamento_ms', 0),
-                            'ingredientes': flash_result.get('ingredientes', []),
-                            'beneficios': flash_result.get('beneficios', []),
-                            'riscos': flash_result.get('riscos', []),
-                            'curiosidade': flash_result.get('curiosidade', ''),
-                            'combinacoes': flash_result.get('combinacoes', []),
-                            'noticias': flash_result.get('noticias', []),
-                        }
-                        logger.info(f"[CIBI SANA | GEMINI FALLBACK] {decision.get('dish_display', 'N/A')}")
-                
-                if decision is None:
-                    return IdentifyResponse(
-                        ok=False,
-                        identified=False,
-                        confidence="baixa",
-                        score=0.0,
-                        message="Prato nao identificado. Tente com outra foto."
-                    )
         else:
             # ══════════════════════════════════════════════════════════════════
             # MODO EXTERNO: GEMINI ONLY (CLIP desligado - evita pratos Cibi Sana)

@@ -14,9 +14,11 @@ RUN apt-get update && \
 WORKDIR /app
 
 # ── Python dependencies ──
-# Remover pacotes pesados (torch ~800MB RAM) que nao cabem no free tier 512MB
+# Instalar torch CPU-only PRIMEIRO (muito menor que versao padrao com CUDA)
+# torch+cpu ~200MB vs torch+cuda ~800MB — essencial para caber no plano 512MB
 COPY backend/requirements.txt backend/requirements.txt
-RUN grep -v -E "^(torch|torchvision|open.clip)" backend/requirements.txt > backend/requirements-deploy.txt && \
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
+    grep -v -E "^(torch==|torchvision==)" backend/requirements.txt > backend/requirements-deploy.txt && \
     pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements-deploy.txt
 
 # ── Frontend build ──

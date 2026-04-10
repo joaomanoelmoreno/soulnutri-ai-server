@@ -31,14 +31,14 @@ def _try_load_local_model():
         os.environ["USE_CUDA"] = "0"
         
         import torch
-        torch.set_num_threads(8)
+        torch.set_num_threads(4)
         
         if hasattr(torch, 'set_default_device'):
             torch.set_default_device('cpu')
         
         import open_clip
         
-        logger.info("[embedder] Carregando modelo OpenCLIP local (CPU)...")
+        logger.info("[embedder] Carregando modelo OpenCLIP local (CPU, float16)...")
         start = time.time()
         
         _DEVICE = "cpu"
@@ -50,6 +50,9 @@ def _try_load_local_model():
         model = model.to(_DEVICE)
         model.eval()
         
+        # Converter para float16 para economizar ~50% de memoria RAM
+        model = model.half()
+        
         for param in model.parameters():
             param.requires_grad = False
         
@@ -57,7 +60,7 @@ def _try_load_local_model():
         _PREPROCESS = preprocess
         _USE_HF_API = False
         
-        logger.info(f"[embedder] Modelo local carregado em {time.time()-start:.2f}s")
+        logger.info(f"[embedder] Modelo local carregado (float16) em {time.time()-start:.2f}s")
         return True
         
     except Exception as e:
@@ -121,6 +124,10 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
         img = ImageEnhance.Color(img).enhance(1.1)
         
         img_tensor = _PREPROCESS(img).unsqueeze(0).to(_DEVICE)
+        
+        # Converter para float16 se modelo estiver em half precision
+        if next(_MODEL.parameters()).dtype == torch.float16:
+            img_tensor = img_tensor.half()
         
         with torch.no_grad():
             embedding = _MODEL.encode_image(img_tensor)
