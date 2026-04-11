@@ -1,8 +1,8 @@
-"""SoulNutri - Servico de Text-to-Speech via OpenAI TTS"""
+"""SoulNutri - Servico de Text-to-Speech via gTTS (Google Translate TTS)
+Gratuito, sem API key, voz nativa pt-BR."""
 
-import os
+import io
 import logging
-from emergentintegrations.llm.openai import OpenAITextToSpeech
 
 logger = logging.getLogger(__name__)
 
@@ -10,38 +10,29 @@ logger = logging.getLogger(__name__)
 async def generate_dish_audio(dish_data: dict, voice: str = "alloy") -> bytes:
     """
     Gera audio MP3 descrevendo o prato identificado.
+    Usa gTTS (gratuito, voz nativa brasileira).
     
     Args:
         dish_data: Dados do prato (dish_display, nutrition, alergenos, etc.)
-        voice: Voz do TTS (alloy ou onyx)
+        voice: Ignorado (gTTS usa voz pt-BR nativa)
     
     Returns:
         bytes do MP3 ou None se falhar
     """
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
-    if not api_key:
-        logger.error("[TTS] EMERGENT_LLM_KEY nao configurada")
-        return None
-    api_key = api_key.replace('\n', '').replace('\r', '').strip()
-    
-    # Montar texto descritivo do prato
     text = _build_dish_description(dish_data)
     
     if not text:
         return None
     
     try:
-        tts = OpenAITextToSpeech(api_key=api_key)
+        from gtts import gTTS
+        tts = gTTS(text=text, lang='pt-br', slow=False)
+        mp3_buffer = io.BytesIO()
+        tts.write_to_fp(mp3_buffer)
+        mp3_buffer.seek(0)
+        audio = mp3_buffer.read()
         
-        audio = await tts.generate_speech(
-            text=text,
-            model="tts-1",
-            voice=voice,
-            speed=0.95,
-            response_format="mp3"
-        )
-        
-        logger.info(f"[TTS] Audio gerado: {len(audio)//1024}KB, voz={voice}")
+        logger.info(f"[TTS] Audio gerado (gTTS pt-BR): {len(audio)//1024}KB")
         return audio
         
     except Exception as e:

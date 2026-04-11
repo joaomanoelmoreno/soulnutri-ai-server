@@ -1157,6 +1157,11 @@ function App() {
                       alertas_historico: enrichData.alertas_historico
                     };
                   }
+                  // Merge nutrition data (para Cibi Sana que nao buscou no identify)
+                  if (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0) {
+                    const prevNutrition = prev.nutrition || {};
+                    updated.nutrition = { ...prevNutrition, ...enrichData.nutrition };
+                  }
                   return updated;
                 });
               }

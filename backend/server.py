@@ -27,7 +27,7 @@ for key in ['MONGO_URL', 'DB_NAME', 'EMERGENT_LLM_KEY', 'GOOGLE_API_KEY', 'CORS_
     if val:
         os.environ[key] = val.replace('\n', '').replace('\r', '').strip()
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import json
 import asyncio
 from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query
@@ -286,31 +286,20 @@ async def ai_status():
 async def lookup_nutrition_sheet(dish_display: str) -> dict:
     """
     Busca ficha nutricional precisa na colecao nutrition_sheets.
-    Retorna dict com campos numericos ou {} se nao encontrar.
-    Busca por: nome exato, slug, nomes_alternativos e regex case-insensitive.
+    Usa uma unica query $or para evitar round-trips sequenciais.
     """
     if not dish_display:
         return {}
     try:
         sheet = await db.nutrition_sheets.find_one(
-            {"nome": dish_display},
+            {"$or": [
+                {"nome": dish_display},
+                {"slug": dish_display},
+                {"nomes_alternativos": dish_display},
+                {"nome": {"$regex": f"^{dish_display}$", "$options": "i"}}
+            ]},
             {"_id": 0}
         )
-        if not sheet:
-            sheet = await db.nutrition_sheets.find_one(
-                {"slug": dish_display},
-                {"_id": 0}
-            )
-        if not sheet:
-            sheet = await db.nutrition_sheets.find_one(
-                {"nomes_alternativos": dish_display},
-                {"_id": 0}
-            )
-        if not sheet:
-            sheet = await db.nutrition_sheets.find_one(
-                {"nome": {"$regex": f"^{dish_display}$", "$options": "i"}},
-                {"_id": 0}
-            )
         if sheet:
             return {
                 "calorias_kcal": sheet.get("calorias_kcal"),
@@ -751,201 +740,80 @@ async def identify_image(
             decision['alternatives'] = []
         
         # ══════════════════════════════════════════════════════════════════════
-        # SINCRONIZAR NOMES DO ADMIN (MongoDB -> display)
-        # Se o proprietario renomeou um prato no Admin, usar o novo nome
+        # POST-CLIP: RESPOSTA RAPIDA para Cibi Sana (<500ms)
+        # MongoDB queries delegadas para /ai/enrich (background)
         # ══════════════════════════════════════════════════════════════════════
-        if decision.get('dish_display'):
-            try:
-                index_name = decision.get('dish_display', '')
-                # Gerar slug do nome do indice para matching
-                import re as _re
-                index_slug = _re.sub(r'[^a-z0-9]', '', index_name.lower())
-                
-                # Buscar por nome exato OU por slug similar
-                admin_dish = await db.dishes.find_one(
-                    {'$or': [
-                        {'name': index_name},
-                        {'nome': index_name},
-                        {'nome_original': index_name},
-                        {'nome_indice': index_name}
-                    ]},
-                    {'_id': 0, 'name': 1, 'nome': 1}
-                )
-                
-                if admin_dish:
-                    new_name = admin_dish.get('name') or admin_dish.get('nome')
-                    if new_name and new_name != index_name:
-                        decision['dish_display'] = new_name
-                        if 'Identificado:' in decision.get('message', ''):
-                            decision['message'] = f"Identificado: {new_name}"
-                        elif 'Parece ser:' in decision.get('message', ''):
-                            decision['message'] = f"Parece ser: {new_name}"
-                        logger.info(f"[ADMIN SYNC] Nome: {index_name} -> {new_name}")
-            except Exception as e:
-                logger.warning(f"[ADMIN SYNC] Erro: {e}")
-        
         decision['ia_disponivel'] = False
         decision['ok'] = True
         
-        # Calcular tempo total
-        elapsed_ms = (time.time() - start_time) * 1000
-        
-        logger.info(f"Identificacao: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
-        
-        # ═══════════════════════════════════════════════════════════════════════
-        # VERIFICAR SE É USUÁRIO PREMIUM + DADOS CIENTÍFICOS (EM PARALELO)
-        # ═══════════════════════════════════════════════════════════════════════
         is_premium = False
         user_profile = None
         premium_data = {}
-        scientific_data = {}
-        mito_verdade = None
-        dish_slug = decision.get('dish')
-        categoria = decision.get('category', '')
-        
-        if pin and nome:
-            from services.profile_service import hash_pin
-            pin_hash = hash_pin(pin)
-            
-            # Executar queries em paralelo
-            import asyncio as _asyncio
-            
-            # Query 1: Perfil do usuario
-            user_future = db.users.find_one(
-                {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
-                {"_id": 0}
-            )
-            
-            # Query 2: Dados científicos do prato (se slug existe)
-            sci_future = None
-            if dish_slug and decision.get('source') != 'generic_ai':
-                slug_normalized = dish_slug.lower().replace('_', '').replace('-', '').replace(' ', '')
-                sci_future = db.dishes.find_one(
-                    {'$or': [
-                        {'slug': slug_normalized},
-                        {'slug': dish_slug}
-                    ]},
-                    {'_id': 0, 'beneficio_principal': 1, 'curiosidade_cientifica': 1, 
-                     'referencia_pesquisa': 1, 'alerta_saude': 1}
-                )
-            
-            # Executar em paralelo
-            if sci_future:
-                user_profile, mongo_dish = await _asyncio.gather(user_future, sci_future)
-            else:
-                user_profile = await user_future
-                mongo_dish = None
-            
-            is_premium = user_profile is not None
-            
-            if is_premium:
-                logger.info(f"[PREMIUM] Usuario {nome} identificado")
-                if mongo_dish:
-                    scientific_data = mongo_dish
-                    logger.info(f"[PREMIUM] Dados cientificos do MongoDB para {dish_slug}")
-            
-            # Se nao encontrou no MongoDB, buscar dados Premium LOCAIS (SEM CRÉDITOS)
-            if not scientific_data and is_premium:
-                try:
-                    from services.local_dish_updater import obter_conteudo_premium, encontrar_tipo_prato
-                    tipo_prato = encontrar_tipo_prato(dish_slug.replace('_', ' ')) if dish_slug else None
-                    premium_local = obter_conteudo_premium(categoria, tipo_prato)
-                    scientific_data = {
-                        'beneficio_principal': premium_local.get('beneficio_principal'),
-                        'curiosidade_cientifica': premium_local.get('curiosidade_cientifica'),
-                        'referencia_pesquisa': premium_local.get('referencia_pesquisa'),
-                        'alerta_saude': premium_local.get('alerta_saude')
-                    }
-                    mito_verdade = premium_local.get('mito_verdade')
-                    logger.info(f"[PREMIUM] Dados cientificos LOCAIS para {dish_slug}")
-                except Exception as e:
-                    logger.warning(f"[PREMIUM] Erro ao buscar dados locais: {e}")
-        
-        # ═══════════════════════════════════════════════════════════════════════
-        # ALERTAS PREMIUM EM TEMPO REAL
-        # ═══════════════════════════════════════════════════════════════════════
-        if is_premium and user_profile:
-            try:
-                ingredientes = decision.get('ingredientes', [])
-                
-                # Alertas de alergenos baseados no perfil (RAPIDO - sem LLM)
-                alertas_alergenos = []
-                restricoes = user_profile.get("restricoes", [])
-                alergenos_detectados = decision.get('alergenos', {})
-                for restricao in restricoes:
-                    r_lower = restricao.lower().replace(" ", "_")
-                    if alergenos_detectados.get(r_lower):
-                        alertas_alergenos.append({
-                            "tipo": "alergia",
-                            "severidade": "alta",
-                            "mensagem": f"Contém {restricao} - você tem restrição registrada!",
-                            "icone": "🚫"
-                        })
-                
-                # Combinacoes - usar as do Gemini se disponíveis
-                combinacoes_sugeridas = decision.get('combinacoes', [])
-                
-                # NOVIDADES/NOTÍCIAS DO PRATO (PREMIUM) - busca rapida MongoDB
-                novidade = None
-                dish_slug = decision.get('dish')
-                if dish_slug:
-                    novidade_doc = await db.novidades.find_one(
-                        {"dish_slug": dish_slug, "ativa": True},
-                        {"_id": 0}
-                    )
-                    if novidade_doc:
-                        novidade = novidade_doc
-                        logger.info(f"[PREMIUM] Novidade encontrada para {dish_slug}: {novidade_doc.get('tipo')}")
-                
-                premium_data = {
-                    "alertas_alergenos": alertas_alergenos,
-                    "alertas_historico": [],
-                    "combinacoes_sugeridas": combinacoes_sugeridas,
-                    "novidade": novidade,
-                    "is_premium": True,
-                    "enrichment_pending": True
-                }
-                
-                logger.info(f"[PREMIUM] {len(alertas_alergenos)} alertas de alergenos (LLM alerts movidos para /ai/enrich)")
-                
-            except Exception as e:
-                logger.error(f"[PREMIUM] Erro ao gerar alertas: {e}")
-        
-        # ═══════════════════════════════════════════════════════════════════════
-        # VERDADE OU MITO - EDUCAÇÃO NUTRICIONAL (PREMIUM)
-        # ═══════════════════════════════════════════════════════════════════════
-        # mito_verdade pode ja ter sido definido pelo local_dish_updater
-        if is_premium and not mito_verdade:
-            try:
-                from services.mitos_verdades import get_mito_verdade
-                
-                ingredientes = decision.get('ingredientes', [])
-                categoria = decision.get('category', '')
-                
-                mito_verdade = get_mito_verdade(
-                    ingredientes=ingredientes,
-                    categoria=categoria
-                )
-                
-                if mito_verdade:
-                    logger.info(f"[PREMIUM] Verdade/Mito: {mito_verdade.get('resposta')}")
-                    
-            except Exception as e:
-                logger.error(f"[PREMIUM] Erro ao buscar mito/verdade: {e}")
-        
-        # Preparar nutrition como objeto - enriquecer com nutrition_sheets
-        nutrition_data = decision.get('nutrition') or {}
         dish_display_name = format_dish_name(decision.get('dish_display', ''))
         
-        # Buscar dados precisos da nutrition_sheets
-        if decision.get('identified') and dish_display_name:
-            # Tentar com display name E com nome original do index (sem acento)
-            sheet_data = await lookup_nutrition_sheet(dish_display_name)
-            if not sheet_data and decision.get('dish'):
-                sheet_data = await lookup_nutrition_sheet(decision['dish'])
+        # Para Cibi Sana: retorno imediato SEM queries MongoDB (velocidade <500ms)
+        # Para modo externo (Gemini): queries rapidas em paralelo
+        if is_cibi_sana:
+            # CLIP retorna rapido - nutrition e premium virao pelo /ai/enrich
+            nutrition_data = decision.get('nutrition') or {}
+            
+            # Check premium apenas se credenciais enviadas (unica query)
+            if pin and nome:
+                import asyncio as _asyncio
+                from services.profile_service import hash_pin
+                pin_hash = hash_pin(pin)
+                user_profile = await db.users.find_one(
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+                    {"_id": 0}
+                )
+                is_premium = user_profile is not None
+                if is_premium:
+                    alertas_alergenos = []
+                    restricoes = user_profile.get("restricoes", [])
+                    alergenos_detectados = decision.get('alergenos', {})
+                    for restricao in restricoes:
+                        r_lower = restricao.lower().replace(" ", "_")
+                        if alergenos_detectados.get(r_lower):
+                            alertas_alergenos.append({
+                                "tipo": "alergia", "severidade": "alta",
+                                "mensagem": f"Contém {restricao} - restrição registrada!",
+                                "icone": "🚫"
+                            })
+                    premium_data = {
+                        "alertas_alergenos": alertas_alergenos,
+                        "alertas_historico": [],
+                        "combinacoes_sugeridas": decision.get('combinacoes', []),
+                        "is_premium": True, "enrichment_pending": True
+                    }
+        else:
+            # Modo externo (Gemini): queries em paralelo
+            import asyncio as _asyncio
+            parallel_tasks = {}
+            
+            if decision.get('identified') and dish_display_name:
+                parallel_tasks['nutrition'] = lookup_nutrition_sheet(dish_display_name)
+            if pin and nome:
+                from services.profile_service import hash_pin
+                pin_hash = hash_pin(pin)
+                parallel_tasks['user'] = db.users.find_one(
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+                    {"_id": 0}
+                )
+            
+            if parallel_tasks:
+                task_keys = list(parallel_tasks.keys())
+                results = await _asyncio.gather(*parallel_tasks.values(), return_exceptions=True)
+                resolved = dict(zip(task_keys, results))
+            else:
+                resolved = {}
+            
+            sheet_data = resolved.get('nutrition') if not isinstance(resolved.get('nutrition'), Exception) else None
+            user_profile = resolved.get('user') if not isinstance(resolved.get('user'), Exception) else None
+            is_premium = user_profile is not None
+            
+            nutrition_data = decision.get('nutrition') or {}
             if sheet_data:
                 nutrition_data = {**nutrition_data, **sheet_data}
-                # Sobrescrever strings com valores precisos formatados
                 if sheet_data.get('calorias_kcal') is not None:
                     nutrition_data['calorias'] = f"{sheet_data['calorias_kcal']:.0f} kcal"
                 if sheet_data.get('proteinas_g') is not None:
@@ -958,8 +826,31 @@ async def identify_image(
                     nutrition_data['fibras'] = f"{sheet_data['fibras_g']:.1f}g"
                 if sheet_data.get('sodio_mg') is not None:
                     nutrition_data['sodio'] = f"{sheet_data['sodio_mg']:.0f}mg"
+            
+            if is_premium:
+                alertas_alergenos = []
+                restricoes = user_profile.get("restricoes", [])
+                alergenos_detectados = decision.get('alergenos', {})
+                for restricao in restricoes:
+                    r_lower = restricao.lower().replace(" ", "_")
+                    if alergenos_detectados.get(r_lower):
+                        alertas_alergenos.append({
+                            "tipo": "alergia", "severidade": "alta",
+                            "mensagem": f"Contém {restricao} - restrição registrada!",
+                            "icone": "🚫"
+                        })
+                premium_data = {
+                    "alertas_alergenos": alertas_alergenos,
+                    "alertas_historico": [],
+                    "combinacoes_sugeridas": decision.get('combinacoes', []),
+                    "is_premium": True, "enrichment_pending": True
+                }
         
         nutrition_obj = NutritionInfo(**nutrition_data) if nutrition_data else None
+        
+        # Calcular tempo total
+        elapsed_ms = (time.time() - start_time) * 1000
+        logger.info(f"Identificacao: {decision.get('dish')} ({decision.get('confidence')}) em {elapsed_ms:.0f}ms")
         
         # Gerar mensagem de confianca em 3 niveis
         confidence_level_msg = get_confidence_level_message(
@@ -989,16 +880,14 @@ async def identify_image(
             "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
             "search_time_ms": round(elapsed_ms, 2),
             "source": decision.get('source', 'local_index'),
-            # Dados cientificos - SÓ PREMIUM
-            "beneficio_principal": scientific_data.get('beneficio_principal') if is_premium else None,
-            "curiosidade_cientifica": scientific_data.get('curiosidade_cientifica') if is_premium else None,
-            "referencia_pesquisa": scientific_data.get('referencia_pesquisa') if is_premium else None,
-            "alerta_saude": scientific_data.get('alerta_saude') if is_premium else None,
-            # Novos campos Premium
-            "voce_sabia": scientific_data.get('voce_sabia') if is_premium else None,
-            "dica_chef": scientific_data.get('dica_chef') if is_premium else None,
-            # Verdade ou Mito - PREMIUM
-            "mito_verdade": mito_verdade if is_premium else None,
+            # Dados cientificos - movidos para /ai/enrich (velocidade)
+            "beneficio_principal": None,
+            "curiosidade_cientifica": None,
+            "referencia_pesquisa": None,
+            "alerta_saude": None,
+            "voce_sabia": None,
+            "dica_chef": None,
+            "mito_verdade": None,
             # Dados Premium extras
             "premium": premium_data if is_premium else None,
             "is_premium": is_premium,
@@ -1090,16 +979,19 @@ async def enrich_dish(request: Request):
         if not is_premium:
             return {"ok": False, "error": "Acesso Premium necessário"}
         
-        # Executar enrichment Gemini + alertas LLM em paralelo
+        # Executar enrichment Gemini + alertas LLM + nutrition em paralelo
         from services.gemini_flash_service import enrich_dish_gemini
         from services.alerts_service import generate_food_alert
         
-        logger.info(f"[Enrich] Chamando enrich + alertas em paralelo para '{nome}'")
+        logger.info(f"[Enrich] Chamando enrich + alertas + nutrition em paralelo para '{nome}'")
         
         enrich_task = enrich_dish_gemini(nome, ingredientes)
         alert_task = generate_food_alert(nome, ingredientes, db=db, user_nome=user_nome)
+        nutrition_task = lookup_nutrition_sheet(nome)
         
-        enrichment, alert_data = await _asyncio.gather(enrich_task, alert_task, return_exceptions=True)
+        enrichment, alert_data, nutrition_sheet = await _asyncio.gather(
+            enrich_task, alert_task, nutrition_task, return_exceptions=True
+        )
         
         # Tratar exceções do gather
         if isinstance(enrichment, Exception):
@@ -1108,22 +1000,42 @@ async def enrich_dish(request: Request):
         if isinstance(alert_data, Exception):
             logger.warning(f"[Enrich] Alertas erro: {alert_data}")
             alert_data = None
+        if isinstance(nutrition_sheet, Exception):
+            logger.warning(f"[Enrich] Nutrition erro: {nutrition_sheet}")
+            nutrition_sheet = None
         
         # Montar alertas de histórico
         alertas_historico = []
         if alert_data and isinstance(alert_data, dict):
             alertas_historico.append(alert_data)
         
-        logger.info(f"[Enrich] Enrichment: {list(enrichment.keys()) if enrichment else 'vazio'}, Alertas: {len(alertas_historico)}")
+        # Formatar nutrition
+        nutrition_formatted = {}
+        if nutrition_sheet and isinstance(nutrition_sheet, dict):
+            if nutrition_sheet.get('calorias_kcal') is not None:
+                nutrition_formatted['calorias'] = f"{nutrition_sheet['calorias_kcal']:.0f} kcal"
+            if nutrition_sheet.get('proteinas_g') is not None:
+                nutrition_formatted['proteinas'] = f"{nutrition_sheet['proteinas_g']:.1f}g"
+            if nutrition_sheet.get('carboidratos_g') is not None:
+                nutrition_formatted['carboidratos'] = f"{nutrition_sheet['carboidratos_g']:.1f}g"
+            if nutrition_sheet.get('gorduras_g') is not None:
+                nutrition_formatted['gorduras'] = f"{nutrition_sheet['gorduras_g']:.1f}g"
+            if nutrition_sheet.get('fibras_g') is not None:
+                nutrition_formatted['fibras'] = f"{nutrition_sheet['fibras_g']:.1f}g"
+            if nutrition_sheet.get('sodio_mg') is not None:
+                nutrition_formatted['sodio'] = f"{nutrition_sheet['sodio_mg']:.0f}mg"
+        
+        logger.info(f"[Enrich] Enrichment: {list(enrichment.keys()) if enrichment else 'vazio'}, Alertas: {len(alertas_historico)}, Nutrition: {bool(nutrition_formatted)}")
         
         return {
-            "ok": bool(enrichment) or bool(alertas_historico),
+            "ok": bool(enrichment) or bool(alertas_historico) or bool(nutrition_formatted),
             "beneficios": enrichment.get("beneficios", []),
             "riscos": enrichment.get("riscos", []),
             "curiosidade": enrichment.get("curiosidade", ""),
             "combinacoes": enrichment.get("combinacoes", []),
             "noticias": enrichment.get("noticias", []),
-            "alertas_historico": alertas_historico
+            "alertas_historico": alertas_historico,
+            "nutrition": nutrition_formatted
         }
     except Exception as e:
         import traceback
@@ -2795,7 +2707,10 @@ async def register_user(
             "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
             "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
             "meta_calorica": meta_info,
-            "premium_ativo": True,  # Ativar Premium automaticamente no registro
+            "premium_ativo": True,
+            "is_trial": True,
+            "premium_trial_start": datetime.now(timezone.utc).isoformat(),
+            "premium_expira_em": (datetime.now(timezone.utc) + timedelta(days=7)).isoformat(),
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc)
         }
@@ -2839,34 +2754,49 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
         if not user:
             return {"ok": False, "error": "Nome ou PIN incorreto"}
         
-        # Verificar se Premium esta ativo e nao expirou
-        # Se o campo nao existir, assume True para usuarios ja registrados
-        premium_ativo = user.get("premium_ativo", True)  # Default True para manter compatibilidade
+        # Verificar se Premium esta ativo e nao expirou (trial de 7 dias)
+        premium_ativo = user.get("premium_ativo", False)
         premium_expira_em = user.get("premium_expira_em")
+        is_trial = user.get("is_trial", False)
         
-        if premium_expira_em:
+        if premium_expira_em and premium_ativo:
             try:
-                expiracao = datetime.fromisoformat(premium_expira_em)
-                if datetime.now() > expiracao:
+                expiracao = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+                agora = datetime.now(timezone.utc)
+                if agora > expiracao:
                     premium_ativo = False
-                    # Atualizar no banco
                     await db.users.update_one(
                         {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
-                        {"$set": {"premium_ativo": False, "premium_expirado": True}}
+                        {"$set": {"premium_ativo": False, "premium_expirado": True, "trial_expirado": True}}
                     )
+                    logger.info(f"[PREMIUM] Trial expirado para {user.get('nome')}")
+            except Exception as e:
+                logger.warning(f"[PREMIUM] Erro ao verificar expiracao: {e}")
+        
+        user["premium_ativo"] = premium_ativo
+        user["is_trial"] = is_trial
+        
+        # Calcular dias restantes do trial
+        dias_restantes = None
+        if premium_ativo and premium_expira_em:
+            try:
+                expiracao = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+                dias_restantes = max(0, (expiracao - datetime.now(timezone.utc)).days)
             except:
                 pass
+        user["dias_restantes_trial"] = dias_restantes
         
-        # Adicionar status Premium a resposta
-        user["premium_ativo"] = premium_ativo
-        
-        # Se Premium nao esta ativo, retornar mensagem informativa
         if not premium_ativo:
+            msg = f"Ola, {user['nome']}! "
+            if user.get("trial_expirado") or user.get("premium_expirado"):
+                msg += "Seu periodo de teste expirou. Entre em contato para ativar o Premium."
+            else:
+                msg += "Seu acesso Premium ainda nao foi liberado. Entre em contato para ativacao."
             return {
                 "ok": True,
                 "user": user,
                 "premium_bloqueado": True,
-                "message": f"Ola, {user['nome']}! Seu acesso Premium ainda nao foi liberado. Entre em contato para ativacao."
+                "message": msg
             }
         
         # Buscar consumo do dia
@@ -5200,10 +5130,10 @@ async def save_admin_settings(request: Request):
 
 @api_router.get("/admin/premium/users")
 async def get_premium_users():
-    """Lista usuários premium."""
+    """Lista todos os usuarios registrados com status premium e trial."""
     try:
         users = []
-        async for u in db.premium_users.find({}, {"_id": 0}).sort("created_at", -1).limit(100):
+        async for u in db.users.find({}, {"_id": 0, "pin_hash": 0}).sort("created_at", -1).limit(100):
             users.append(u)
         return {"ok": True, "users": users}
     except Exception as e:
@@ -5212,34 +5142,49 @@ async def get_premium_users():
 
 @api_router.post("/admin/premium/liberar")
 async def liberar_premium(request: Request):
-    """Libera acesso premium para um usuário."""
+    """Libera acesso premium para um usuario (sem data de expiracao)."""
     try:
         data = await request.json()
         nome = data.get("nome", "").strip()
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
-        await db.premium_users.update_one(
-            {"user_name": nome},
-            {"$set": {"user_name": nome, "premium": True, "updated_at": datetime.now().isoformat()}},
-            upsert=True
+        result = await db.users.update_one(
+            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"$set": {
+                "premium_ativo": True,
+                "is_trial": False,
+                "premium_expirado": False,
+                "trial_expirado": False,
+                "premium_expira_em": None,
+                "premium_liberado_por": "admin",
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }}
         )
-        return {"ok": True, "message": f"Premium liberado para {nome}"}
+        if result.modified_count == 0:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
+        return {"ok": True, "message": f"Premium liberado permanentemente para {nome}"}
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
 
 @api_router.post("/admin/premium/bloquear")
 async def bloquear_premium(request: Request):
-    """Bloqueia acesso premium de um usuário."""
+    """Bloqueia acesso premium de um usuario."""
     try:
         data = await request.json()
         nome = data.get("nome", "").strip()
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
-        await db.premium_users.update_one(
-            {"user_name": nome},
-            {"$set": {"premium": False, "updated_at": datetime.now().isoformat()}}
+        result = await db.users.update_one(
+            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"$set": {
+                "premium_ativo": False,
+                "premium_bloqueado_por": "admin",
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }}
         )
+        if result.modified_count == 0:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
         return {"ok": True, "message": f"Premium bloqueado para {nome}"}
     except Exception as e:
         return {"ok": False, "error": str(e)}
