@@ -166,13 +166,22 @@ app.add_middleware(
 @app.middleware("http")
 async def cache_control_middleware(request, call_next):
     response = await call_next(request)
+    content_type = response.headers.get("content-type", "")
+    path = request.url.path
+    
     # HTML nunca deve ser cacheado (garante que o user sempre pega a versão nova)
-    # Assets estáticos (JS/CSS) já têm hash no nome (ex: main.abc123.js) e podem ser cacheados
-    if response.headers.get("content-type", "").startswith("text/html"):
+    if content_type.startswith("text/html"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    # Service Worker nunca deve ser cacheado (garante atualização do PWA)
-    if request.url.path.endswith("sw.js") or request.url.path.endswith("manifest.json"):
+        response.headers["Pragma"] = "no-cache"
+    
+    # Service Worker e manifest nunca devem ser cacheados
+    if path.endswith("sw.js") or path.endswith("manifest.json"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+    
+    # Assets com hash no nome (main.abc123.js) podem ser cacheados longamente
+    # Isso é o comportamento padrão do React build
+    
     return response
 
 # =====================
@@ -5708,15 +5717,26 @@ logger.info(f"[DEPLOY] BASE_DIR={BASE_DIR}")
 logger.info(f"[DEPLOY] FRONTEND_BUILD={FRONTEND_BUILD} (exists={FRONTEND_BUILD.exists()})")
 
 # ═══════════════════════════════════════════════════════
-# ROTA EXPLÍCITA PARA sw.js — ANTI-CACHE (RESOLVE TRAVAMENTO)
+# ROTAS ANTI-CACHE PARA PWA (sw.js + manifest.json)
 # Browsers cacheiam sw.js como arquivo estático. Sem no-cache,
 # o SW antigo fica preso e impede atualizações do app.
 # ═══════════════════════════════════════════════════════
+import hashlib
+
+def _read_file_hash(path):
+    """Gera ETag baseado no conteúdo do arquivo"""
+    try:
+        with open(path, 'rb') as f:
+            return hashlib.md5(f.read()).hexdigest()[:12]
+    except Exception:
+        return "unknown"
+
 @app.get("/sw.js")
 async def serve_sw():
     sw_path = FRONTEND_BUILD / "sw.js" if FRONTEND_BUILD.exists() else Path("/app/frontend/public/sw.js")
     if not sw_path.exists():
         sw_path = Path("/app/frontend/public/sw.js")
+    etag = _read_file_hash(sw_path)
     return FileResponse(
         sw_path,
         media_type="application/javascript",
@@ -5724,7 +5744,22 @@ async def serve_sw():
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
+            "ETag": f'"{etag}"',
             "Service-Worker-Allowed": "/"
+        }
+    )
+
+@app.get("/manifest.json")
+async def serve_manifest():
+    mf_path = FRONTEND_BUILD / "manifest.json" if FRONTEND_BUILD.exists() else Path("/app/frontend/public/manifest.json")
+    if not mf_path.exists():
+        mf_path = Path("/app/frontend/public/manifest.json")
+    return FileResponse(
+        mf_path,
+        media_type="application/manifest+json",
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
         }
     )
 

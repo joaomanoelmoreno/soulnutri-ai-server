@@ -1,74 +1,27 @@
-// SoulNutri Service Worker v8 - Force cache refresh
-const CACHE_VERSION = 'soulnutri-v8';
-const STATIC_CACHE = `${CACHE_VERSION}-static`;
-const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
+// SoulNutri Service Worker v10 - MINIMAL (apenas para PWA installability)
+// NÃO cacheia nada. NÃO intercepta fetch. Apenas limpa caches antigos.
+// O browser usa HTTP cache normal (React build já gera hashes nos arquivos).
 
-// Arquivos essenciais para cache (app shell)
-const APP_SHELL = [
-  '/',
-  '/manifest.json',
-  '/images/icon-192x192.png',
-  '/images/icon-512x512.png'
-];
+const SW_VERSION = 'v10-minimal';
 
-// Install: pre-cache app shell + force activate
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then(cache => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
-  );
+// Install: ativa imediatamente (não espera SW anterior)
+self.addEventListener('install', () => {
+  console.log('[SW] Install', SW_VERSION);
+  self.skipWaiting();
 });
 
-// Activate: limpar TODOS os caches antigos
+// Activate: limpa TODOS os caches anteriores e assume controle
 self.addEventListener('activate', (event) => {
+  console.log('[SW] Activate', SW_VERSION);
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys
-          .filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
-          .map(key => caches.delete(key))
-      );
-    }).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.map(key => {
+        console.log('[SW] Deletando cache:', key);
+        return caches.delete(key);
+      })))
+      .then(() => self.clients.claim())
   );
 });
 
-// Fetch: network-first com protecao contra body locked
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
-
-  // Ignorar requests nao-GET, API, e cross-origin
-  if (request.method !== 'GET') return;
-  if (url.pathname.startsWith('/api/')) return;
-  if (url.origin !== self.location.origin) return;
-
-  // Para navegacao (HTML): network-first
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          if (response && response.status === 200 && response.type === 'basic') {
-            const clone = response.clone();
-            caches.open(DYNAMIC_CACHE).then(cache => cache.put(request, clone));
-          }
-          return response;
-        })
-        .catch(() => caches.match(request).then(r => r || caches.match('/')))
-    );
-    return;
-  }
-
-  // Para assets estaticos: network-first (garante atualizacao)
-  event.respondWith(
-    fetch(request)
-      .then(response => {
-        if (response && response.status === 200 && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(DYNAMIC_CACHE).then(cache => cache.put(request, clone));
-        }
-        return response;
-      })
-      .catch(() => caches.match(request))
-  );
-});
+// Fetch: NÃO intercepta. Deixa o browser operar normalmente.
+// Sem fetch listener = zero risco de "body locked", respostas stale, etc.
