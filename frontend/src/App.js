@@ -649,10 +649,20 @@ function App() {
           setPremiumUser({ ...data.user, pin });
           loadDailySummary();
           loadNotifCount(pin);
+        } else {
+          // PIN obsoleto ou invalido - limpar sessao para evitar loop
+          console.warn('[PREMIUM] Sessao invalida, limpando localStorage');
+          localStorage.removeItem('soulnutri_pin');
+          localStorage.removeItem('soulnutri_nome');
+          localStorage.removeItem('soulnutri_user');
         }
       }
     } catch (e) {
       console.error('Erro ao verificar sessão:', e);
+      // Em caso de erro de rede, limpar dados potencialmente corrompidos
+      localStorage.removeItem('soulnutri_pin');
+      localStorage.removeItem('soulnutri_nome');
+      localStorage.removeItem('soulnutri_user');
     }
   };
 
@@ -1117,8 +1127,8 @@ function App() {
             })
             .catch(() => setRadarInfo(null));
           
-          // Enriquecimento Premium em background (só para Gemini)
-          if (premiumUser && resultWithTime.source === 'gemini_flash') {
+          // Enriquecimento Premium em background (TODOS os modos)
+          if (premiumUser) {
             fetch(`${API}/ai/enrich`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -1130,14 +1140,25 @@ function App() {
               })
             }).then(r => r.json()).then(enrichData => {
               if (enrichData.ok) {
-                setResult(prev => prev ? {
-                  ...prev,
-                  beneficios: enrichData.beneficios || prev.beneficios,
-                  riscos: enrichData.riscos || prev.riscos,
-                  curiosidade: enrichData.curiosidade || prev.curiosidade,
-                  combinacoes: enrichData.combinacoes || prev.combinacoes,
-                  noticias: enrichData.noticias || prev.noticias
-                } : prev);
+                setResult(prev => {
+                  if (!prev) return prev;
+                  const updated = {
+                    ...prev,
+                    beneficios: enrichData.beneficios || prev.beneficios,
+                    riscos: enrichData.riscos || prev.riscos,
+                    curiosidade: enrichData.curiosidade || prev.curiosidade,
+                    combinacoes: enrichData.combinacoes || prev.combinacoes,
+                    noticias: enrichData.noticias || prev.noticias
+                  };
+                  // Merge alertas de historico no premium data
+                  if (enrichData.alertas_historico?.length > 0 && prev.premium) {
+                    updated.premium = {
+                      ...prev.premium,
+                      alertas_historico: enrichData.alertas_historico
+                    };
+                  }
+                  return updated;
+                });
               }
             }).catch(err => console.log('[ENRICH] Erro (não crítico):', err));
           }

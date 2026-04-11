@@ -387,8 +387,8 @@ async def enrich_dish_gemini(nome: str, ingredientes: list) -> Dict:
                     system_message="Retorne apenas JSON válido."
                 ).with_model("gemini", "gemini-2.0-flash-lite")
                 msg = UserMessage(text=prompt)
-                resp = await chat.send_message_async(msg)
-                response_text = resp.text.strip() if resp else None
+                resp = await chat.send_message(msg)
+                response_text = resp.strip() if resp else None
             except Exception as e:
                 logger.warning(f"[Enrich] Emergent erro: {str(e)[:60]}")
     

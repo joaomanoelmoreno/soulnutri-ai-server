@@ -1,7 +1,8 @@
 # Test Credentials
 
 ## App Users
-- Premium User: pin=1234, nome=Teste
+- Premium User: pin=2212, nome=Joao Manoel (with trailing space in DB)
+- Also works: pin=1234, nome=Teste SoulNutri
 - Admin: joaomanoelmoreno / Pqlamz0192
 
 ## Environment Keys

@@ -686,7 +686,7 @@ async def identify_image(
                 from services.profile_service import hash_pin
                 pin_hash = hash_pin(pin)
                 flash_profile = await db.users.find_one(
-                    {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
                     {"_id": 0}
                 )
             
@@ -812,7 +812,7 @@ async def identify_image(
             
             # Query 1: Perfil do usuario
             user_future = db.users.find_one(
-                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
                 {"_id": 0}
             )
             
@@ -868,7 +868,7 @@ async def identify_image(
             try:
                 ingredientes = decision.get('ingredientes', [])
                 
-                # Alertas de alergenos baseados no perfil
+                # Alertas de alergenos baseados no perfil (RAPIDO - sem LLM)
                 alertas_alergenos = []
                 restricoes = user_profile.get("restricoes", [])
                 alergenos_detectados = decision.get('alergenos', {})
@@ -882,25 +882,10 @@ async def identify_image(
                             "icone": "🚫"
                         })
                 
-                # Alertas baseados no historico (consumo repetido)
-                alertas_historico = []
-                try:
-                    from services.alerts_service import generate_food_alert
-                    alert_data = await generate_food_alert(
-                        decision.get('dish_display', ''), 
-                        ingredientes, 
-                        db=db, 
-                        user_nome=nome
-                    )
-                    if alert_data and alert_data.get('has_alert'):
-                        alertas_historico.append(alert_data)
-                except Exception as e:
-                    logger.warning(f"[PREMIUM] Erro em alertas historico: {e}")
-                
                 # Combinacoes - usar as do Gemini se disponíveis
                 combinacoes_sugeridas = decision.get('combinacoes', [])
                 
-                # NOVIDADES/NOTÍCIAS DO PRATO (PREMIUM)
+                # NOVIDADES/NOTÍCIAS DO PRATO (PREMIUM) - busca rapida MongoDB
                 novidade = None
                 dish_slug = decision.get('dish')
                 if dish_slug:
@@ -914,13 +899,14 @@ async def identify_image(
                 
                 premium_data = {
                     "alertas_alergenos": alertas_alergenos,
-                    "alertas_historico": alertas_historico,
+                    "alertas_historico": [],
                     "combinacoes_sugeridas": combinacoes_sugeridas,
                     "novidade": novidade,
-                    "is_premium": True
+                    "is_premium": True,
+                    "enrichment_pending": True
                 }
                 
-                logger.info(f"[PREMIUM] {len(alertas_alergenos)} alertas de alergenos, {len(alertas_historico)} alertas de historico")
+                logger.info(f"[PREMIUM] {len(alertas_alergenos)} alertas de alergenos (LLM alerts movidos para /ai/enrich)")
                 
             except Exception as e:
                 logger.error(f"[PREMIUM] Erro ao gerar alertas: {e}")
@@ -1077,7 +1063,9 @@ async def identify_image(
 # ═══════════════════════════════════════════════════════════════════════════════
 @api_router.post("/ai/enrich")
 async def enrich_dish(request: Request):
-    """Enriquece um prato com dados Premium (benefícios, riscos, curiosidades, etc.)"""
+    """Enriquece um prato com dados Premium (benefícios, riscos, curiosidades, alertas, etc.)
+    Chamado pelo frontend em BACKGROUND após o Fast Scan retornar."""
+    import asyncio as _asyncio
     try:
         body = await request.json()
         nome = body.get("nome", "")
@@ -1102,18 +1090,40 @@ async def enrich_dish(request: Request):
         if not is_premium:
             return {"ok": False, "error": "Acesso Premium necessário"}
         
+        # Executar enrichment Gemini + alertas LLM em paralelo
         from services.gemini_flash_service import enrich_dish_gemini
-        logger.info(f"[Enrich] Calling enrich for '{nome}' with {len(ingredientes)} ingredientes")
-        enrichment = await enrich_dish_gemini(nome, ingredientes)
-        logger.info(f"[Enrich] Got enrichment: {list(enrichment.keys()) if enrichment else 'empty'}")
+        from services.alerts_service import generate_food_alert
+        
+        logger.info(f"[Enrich] Chamando enrich + alertas em paralelo para '{nome}'")
+        
+        enrich_task = enrich_dish_gemini(nome, ingredientes)
+        alert_task = generate_food_alert(nome, ingredientes, db=db, user_nome=user_nome)
+        
+        enrichment, alert_data = await _asyncio.gather(enrich_task, alert_task, return_exceptions=True)
+        
+        # Tratar exceções do gather
+        if isinstance(enrichment, Exception):
+            logger.warning(f"[Enrich] Gemini erro: {enrichment}")
+            enrichment = {}
+        if isinstance(alert_data, Exception):
+            logger.warning(f"[Enrich] Alertas erro: {alert_data}")
+            alert_data = None
+        
+        # Montar alertas de histórico
+        alertas_historico = []
+        if alert_data and isinstance(alert_data, dict):
+            alertas_historico.append(alert_data)
+        
+        logger.info(f"[Enrich] Enrichment: {list(enrichment.keys()) if enrichment else 'vazio'}, Alertas: {len(alertas_historico)}")
         
         return {
-            "ok": bool(enrichment),
+            "ok": bool(enrichment) or bool(alertas_historico),
             "beneficios": enrichment.get("beneficios", []),
             "riscos": enrichment.get("riscos", []),
             "curiosidade": enrichment.get("curiosidade", ""),
             "combinacoes": enrichment.get("combinacoes", []),
-            "noticias": enrichment.get("noticias", [])
+            "noticias": enrichment.get("noticias", []),
+            "alertas_historico": alertas_historico
         }
     except Exception as e:
         import traceback
@@ -1833,7 +1843,7 @@ async def identify_with_gemini_flash(
             from services.profile_service import hash_pin
             pin_hash = hash_pin(pin)
             user_profile = await db.users.find_one(
-                {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
                 {"_id": 0}
             )
         
@@ -2280,6 +2290,9 @@ async def submit_feedback(
     try:
         import uuid
         from datetime import datetime
+        
+        # Garantir que diretorio base existe
+        os.makedirs("/app/datasets/organized", exist_ok=True)
         
         content = await file.read()
         is_correct_bool = is_correct.lower() == "true"
@@ -2819,7 +2832,7 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
         pin_hash = hash_pin(pin)
         # Buscar por nome E pin_hash
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
             {"_id": 0, "pin_hash": 0}
         )
         
@@ -2838,7 +2851,7 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
                     premium_ativo = False
                     # Atualizar no banco
                     await db.users.update_one(
-                        {"nome": {"$regex": f"^{nome}$", "$options": "i"}},
+                        {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
                         {"$set": {"premium_ativo": False, "premium_expirado": True}}
                     )
             except:
@@ -2900,7 +2913,7 @@ async def get_user_profile(pin: str, nome: str):
         
         pin_hash = hash_pin(pin)
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}},
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
             {"_id": 0, "pin_hash": 0}
         )
         
@@ -2950,7 +2963,7 @@ async def update_user_profile(
         
         pin_hash = hash_pin(pin)
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^{nome}$", "$options": "i"}}
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}}
         )
         
         if not user:
