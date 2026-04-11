@@ -26,14 +26,24 @@ async def generate_dish_audio(dish_data: dict, voice: str = "alloy") -> bytes:
     
     try:
         from gtts import gTTS
+        from pydub import AudioSegment
+        
         tts = gTTS(text=text, lang='pt-br', slow=False)
         mp3_buffer = io.BytesIO()
         tts.write_to_fp(mp3_buffer)
         mp3_buffer.seek(0)
-        audio = mp3_buffer.read()
         
-        logger.info(f"[TTS] Audio gerado (gTTS pt-BR): {len(audio)//1024}KB")
-        return audio
+        # Acelerar para 1.35x
+        audio = AudioSegment.from_mp3(mp3_buffer)
+        audio = audio.speedup(playback_speed=1.35, chunk_size=80, crossfade=25)
+        
+        out = io.BytesIO()
+        audio.export(out, format="mp3")
+        out.seek(0)
+        result = out.read()
+        
+        logger.info(f"[TTS] Audio gerado (gTTS pt-BR 1.35x): {len(result)//1024}KB")
+        return result
         
     except Exception as e:
         logger.error(f"[TTS] Erro ao gerar audio: {e}")

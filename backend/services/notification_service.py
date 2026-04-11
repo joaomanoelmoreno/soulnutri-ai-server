@@ -273,13 +273,31 @@ def _analyze_and_generate(meals: list, user_name: str) -> dict:
             "dishes_context": dishes_eaten[:3]
         }
 
-    # Dica generica com base no que comeu
+    # Dica generica com base no que comeu - rotacao diaria
+    day = datetime.now(timezone.utc).timetuple().tm_yday
+    variety_tips = [
+        {
+            "type": "vitamin_tip",
+            "title": "Variedade Alimentar",
+            "message": f"{greeting}nos ultimos dias voce consumiu {len(dishes_eaten)} pratos diferentes. "
+                       f"A variedade e fundamental para garantir todos os nutrientes que o corpo precisa.",
+        },
+        {
+            "type": "vitamin_tip",
+            "title": "Equilibrio no Prato",
+            "message": f"{greeting}tente montar seu prato com 50% vegetais, 25% proteina e 25% carboidrato. "
+                       f"Esse equilibrio garante saciedade e nutricao completa.",
+        },
+        {
+            "type": "vitamin_tip",
+            "title": "Comer com Atencao",
+            "message": f"{greeting}voce registrou {meal_count} refeicoes recentemente. "
+                       f"Preste atencao no que come: saborear cada garfada melhora a digestao e saciedade.",
+        },
+    ]
+    tip = variety_tips[day % len(variety_tips)]
     return {
-        "type": "vitamin_tip",
-        "title": "Dica Nutricional",
-        "message": f"{greeting}que tal variar o cardapio? Nos ultimos dias voce consumiu "
-                   f"{len(dishes_eaten)} pratos diferentes. A variedade alimentar e fundamental "
-                   f"para garantir todos os nutrientes que o corpo precisa.",
+        **tip,
         "icon": "sun",
         "priority": "low",
         "references": [
@@ -299,26 +317,93 @@ def _analyze_and_generate(meals: list, user_name: str) -> dict:
 
 
 def _generate_generic_notification() -> dict:
-    """Gera uma notificacao generica quando nao ha dados de consumo."""
+    """Gera uma notificacao generica com rotacao diaria (nunca repete no mesmo dia)."""
+    from datetime import datetime, timezone
+    
+    DICAS_POOL = [
+        {
+            "type": "hydration", "title": "Hidratacao", "icon": "droplets", "priority": "medium",
+            "message": "Beber agua suficiente e essencial. A recomendacao e de pelo menos 2 litros por dia, mais se fizer atividade fisica.",
+            "references": [{"source": "Mayo Clinic", "title": "How much water?", "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/water/art-20044256"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Vitamina D e Sol", "icon": "sun", "priority": "low",
+            "message": "15 minutos de sol pela manha ajudam na producao de vitamina D, essencial para ossos e imunidade.",
+            "references": [{"source": "Harvard", "title": "Vitamin D", "url": "https://www.hsph.harvard.edu/nutritionsource/vitamin-d/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Cores no Prato", "icon": "leaf", "priority": "low",
+            "message": "Quanto mais cores no prato, maior a variedade de nutrientes. Tente incluir pelo menos 3 cores diferentes em cada refeicao.",
+            "references": [{"source": "Guia Alimentar", "title": "Guia Alimentar Brasileiro", "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Mastigar Bem", "icon": "check-circle", "priority": "low",
+            "message": "Mastigar devagar melhora a digestao e aumenta a saciedade. Tente comer sem pressa, saboreando cada garfada.",
+            "references": [{"source": "Harvard", "title": "Mindful Eating", "url": "https://www.hsph.harvard.edu/nutritionsource/mindful-eating/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Ferro e Vitamina C", "icon": "leaf", "priority": "medium",
+            "message": "Combinacao poderosa: alimentos ricos em ferro (feijao, lentilha) com vitamina C (limao, laranja) aumentam a absorcao de ferro em ate 6x.",
+            "references": [{"source": "PubMed", "title": "Iron absorption", "url": "https://pubmed.ncbi.nlm.nih.gov/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Omega 3", "icon": "sun", "priority": "low",
+            "message": "Peixes como sardinha e salmao sao ricos em omega-3, importante para o cerebro e coracao. Tente incluir peixe pelo menos 2x por semana.",
+            "references": [{"source": "WHO", "title": "Healthy diet", "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet"}]
+        },
+        {
+            "type": "low_fiber", "title": "Fibras e Intestino", "icon": "leaf", "priority": "medium",
+            "message": "Fibras ajudam o intestino a funcionar bem. Aveia, frutas com casca e legumes sao otimas fontes. Meta: 25g por dia.",
+            "references": [{"source": "Harvard", "title": "Fiber", "url": "https://www.hsph.harvard.edu/nutritionsource/carbohydrates/fiber/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Calcio Alem do Leite", "icon": "check-circle", "priority": "low",
+            "message": "Brocolis, couve, gergelim e sardinha sao fontes de calcio para quem nao consome lacteos.",
+            "references": [{"source": "Harvard", "title": "Calcium", "url": "https://www.hsph.harvard.edu/nutritionsource/calcium/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Acucar Oculto", "icon": "alert-triangle", "priority": "medium",
+            "message": "Cuidado com o acucar escondido! Sucos industrializados, molhos prontos e cereais matinais podem ter mais acucar do que voce imagina.",
+            "references": [{"source": "ANVISA", "title": "Rotulagem", "url": "https://www.gov.br/anvisa/pt-br/assuntos/alimentos/rotulagem"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Probioticos Naturais", "icon": "leaf", "priority": "low",
+            "message": "Iogurte natural, kefir e kombucha contem probioticos que beneficiam a flora intestinal e a imunidade.",
+            "references": [{"source": "Harvard", "title": "Probiotics", "url": "https://www.hsph.harvard.edu/nutritionsource/food-features/fermented-foods/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Proteina Vegetal", "icon": "leaf", "priority": "low",
+            "message": "Feijao com arroz formam uma proteina completa! A combinacao brasileira tradicional e nutricionalmente perfeita.",
+            "references": [{"source": "Guia Alimentar", "title": "Guia Alimentar Brasileiro", "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf"}]
+        },
+        {
+            "type": "hydration", "title": "Agua e Disposicao", "icon": "droplets", "priority": "medium",
+            "message": "Desidratacao leve (1-2%) ja causa cansaco, dor de cabeca e dificuldade de concentracao. Mantenha uma garrafa por perto!",
+            "references": [{"source": "Mayo Clinic", "title": "Dehydration", "url": "https://www.mayoclinic.org/diseases-conditions/dehydration/symptoms-causes/syc-20354086"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Temperos Naturais", "icon": "sun", "priority": "low",
+            "message": "Curcuma, gengibre e canela tem propriedades anti-inflamatorias. Use como tempero para reduzir o sal e ganhar saude.",
+            "references": [{"source": "PubMed", "title": "Spices and Health", "url": "https://pubmed.ncbi.nlm.nih.gov/"}]
+        },
+        {
+            "type": "vitamin_tip", "title": "Sono e Alimentacao", "icon": "sun", "priority": "low",
+            "message": "Dormir mal aumenta a fome e a vontade de comer doces. Tente jantar leve e evitar cafeina apos as 15h.",
+            "references": [{"source": "Harvard", "title": "Sleep and health", "url": "https://www.hsph.harvard.edu/nutritionsource/sleep/"}]
+        },
+    ]
+    
+    # Rotacao por dia do ano (nunca repete no mesmo dia)
+    day_of_year = datetime.now(timezone.utc).timetuple().tm_yday
+    idx = day_of_year % len(DICAS_POOL)
+    
+    dica = DICAS_POOL[idx]
     return {
-        "type": "hydration",
-        "title": "Lembre-se de se Hidratar",
-        "message": "Beber agua suficiente e essencial para a saude. "
-                   "A recomendacao geral e de pelo menos 2 litros por dia, "
-                   "mas pode variar conforme atividade fisica e clima.",
-        "icon": "droplets",
-        "priority": "medium",
-        "references": [
-            {
-                "source": "Mayo Clinic",
-                "title": "Water: How much should you drink every day?",
-                "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/water/art-20044256"
-            },
-            {
-                "source": "WHO",
-                "title": "Drinking-water",
-                "url": "https://www.who.int/news-room/fact-sheets/detail/drinking-water"
-            }
-        ],
+        "type": dica["type"],
+        "title": dica["title"],
+        "message": dica["message"],
+        "icon": dica["icon"],
+        "priority": dica["priority"],
+        "references": dica["references"],
         "dishes_context": []
     }

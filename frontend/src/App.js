@@ -2507,10 +2507,32 @@ function App() {
                 <span className="scanner-cat">{scannerResult.categoria}</span>
               </div>
               {scannerResult.contem_gluten === false && (
-                <span className="scanner-badge gluten-free">Sem glúten</span>
+                <span className="scanner-badge gluten-free">Sem gluten</span>
               )}
               {scannerResult.riscos?.length > 0 && (
-                <span className="scanner-badge warning">⚠️ {scannerResult.riscos[0]}</span>
+                <span className="scanner-badge warning">{scannerResult.riscos[0]}</span>
+              )}
+              {/* ALERTAS PREMIUM - destaque visual para decidir */}
+              {scannerResult.premium?.alertas_alergenos?.length > 0 && (
+                <div data-testid="scanner-allergen-alerts" style={{
+                  margin: '8px 0', padding: '8px 12px',
+                  background: 'rgba(239,68,68,0.25)', border: '2px solid rgba(239,68,68,0.6)',
+                  borderRadius: '10px', animation: 'pulse 1.5s infinite'
+                }}>
+                  {scannerResult.premium.alertas_alergenos.map((al, i) => (
+                    <div key={i} style={{color:'#fca5a5',fontWeight:'bold',fontSize:'14px',padding:'2px 0'}}>
+                      {al.icone} {al.mensagem}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Alergenos detectados */}
+              {scannerResult.alergenos && Object.entries(scannerResult.alergenos).filter(([,v])=>v).length > 0 && !scannerResult.premium?.alertas_alergenos?.length && (
+                <div style={{margin:'4px 0',display:'flex',gap:'4px',flexWrap:'wrap'}}>
+                  {Object.entries(scannerResult.alergenos).filter(([,v])=>v).map(([k]) => (
+                    <span key={k} className="scanner-badge warning" style={{fontSize:'11px'}}>{k}</span>
+                  ))}
+                </div>
               )}
               <p className="scanner-tap">Toque para mais detalhes</p>
             </div>
@@ -2762,7 +2784,7 @@ function App() {
                 </div>
               )}
 
-              {/* NOTÍCIAS E ALERTAS SOBRE INGREDIENTES */}
+              {/* NOTICIAS E ALERTAS SOBRE INGREDIENTES */}
               {plateConsolidated?.noticias?.length > 0 && (
                 <div className="mesa-section" data-testid="mesa-noticias" style={{
                   background: 'rgba(251, 191, 36, 0.1)',
@@ -2770,12 +2792,22 @@ function App() {
                   borderRadius: '8px',
                   padding: '12px'
                 }}>
-                  <h4 style={{ color: '#fbbf24', marginBottom: '8px' }}>📰 Notícias e Alertas sobre Ingredientes</h4>
-                  {plateConsolidated.noticias.map((noticia, i) => (
-                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 8px', paddingLeft: '8px', borderLeft: '2px solid rgba(251, 191, 36, 0.3)' }}>
-                      {noticia}
-                    </p>
-                  ))}
+                  <h4 style={{ color: '#fbbf24', marginBottom: '8px' }}>Noticias e Alertas sobre Ingredientes</h4>
+                  {plateConsolidated.noticias.map((noticia, i) => {
+                    const texto = typeof noticia === 'string' ? noticia : (noticia?.texto || noticia?.titulo || '');
+                    const url = typeof noticia === 'object' ? (noticia?.url || noticia?.link) : null;
+                    return (
+                      <div key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 8px', paddingLeft: '8px', borderLeft: '2px solid rgba(251, 191, 36, 0.3)' }}>
+                        <p style={{margin:0}}>{texto}</p>
+                        {url && (
+                          <a href={url} target="_blank" rel="noopener noreferrer" 
+                            style={{color:'#fbbf24',fontSize:'12px',textDecoration:'underline',display:'inline-flex',alignItems:'center',gap:'4px',marginTop:'4px'}}>
+                            Ver fonte &#8599;
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -3070,6 +3102,36 @@ function App() {
                 <><span style={{fontSize:'20px'}}>&#128266;</span> Ouvir</>
               )}
             </button>
+          )}
+          
+          {/* ALERTAS PREMIUM - Destaque na tela de resultado */}
+          {r.premium?.alertas_alergenos?.length > 0 && (
+            <div data-testid="result-allergen-alerts" style={{
+              margin: '8px 0', padding: '12px 16px',
+              background: 'linear-gradient(135deg, rgba(239,68,68,0.2), rgba(185,28,28,0.15))',
+              border: '2px solid rgba(239,68,68,0.5)',
+              borderRadius: '14px',
+            }}>
+              {r.premium.alertas_alergenos.map((al, i) => (
+                <div key={i} style={{color:'#fca5a5',fontWeight:'bold',fontSize:'15px',padding:'4px 0'}}>
+                  {al.icone} {al.mensagem}
+                </div>
+              ))}
+            </div>
+          )}
+          {r.premium?.alertas_historico?.length > 0 && (
+            <div data-testid="result-history-alerts" style={{
+              margin: '8px 0', padding: '12px 16px',
+              background: 'rgba(245,158,11,0.12)',
+              border: '1px solid rgba(245,158,11,0.4)',
+              borderRadius: '14px',
+            }}>
+              {r.premium.alertas_historico.map((al, i) => (
+                <div key={i} style={{color:'#fcd34d',fontSize:'14px',padding:'2px 0'}}>
+                  {al.alerta_breve || al.mensagem || JSON.stringify(al)}
+                </div>
+              ))}
+            </div>
           )}
           
           {/* Preview da imagem */}
