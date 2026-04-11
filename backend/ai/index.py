@@ -345,3 +345,13 @@ def get_index() -> DishIndex:
     if _INDEX is None:
         _INDEX = DishIndex()
     return _INDEX
+
+
+def get_index_info() -> dict:
+    """Retorna informacoes do indice incluindo nomes dos pratos."""
+    idx = get_index()
+    return {
+        "total_dishes": len(idx.dish_to_idx),
+        "total_embeddings": len(idx.dishes),
+        "dish_names": sorted(idx.dish_to_idx.keys()),
+    }

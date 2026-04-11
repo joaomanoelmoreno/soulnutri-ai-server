@@ -4205,6 +4205,32 @@ async def admin_list_dishes_full():
                     "first_image": None,
                 })
 
+        # 5. Adicionar pratos do CLIP index que nao estao em nenhuma colecao
+        try:
+            from ai.index import get_index_info
+            index_info = get_index_info()
+            clip_dishes = index_info.get("dish_names", [])
+            for clip_name in clip_dishes:
+                clip_slug = clip_name.lower().replace(" ", "_")
+                if clip_slug not in seen:
+                    seen.add(clip_slug)
+                    dishes.append({
+                        "slug": clip_slug,
+                        "nome": clip_name,
+                        "categoria": "",
+                        "category_emoji": "",
+                        "ingredientes": [],
+                        "descricao": "",
+                        "nutricao": {},
+                        "contem_gluten": None,
+                        "is_vegan": None,
+                        "image_count": 0,
+                        "first_image": None,
+                        "clip_only": True,
+                    })
+        except Exception as e:
+            logger.warning(f"[ADMIN] Erro ao carregar CLIP index: {e}")
+
         dishes.sort(key=lambda d: d.get("nome", ""))
         return {"ok": True, "dishes": dishes, "total": len(dishes)}
         

@@ -1,25 +1,23 @@
 # SoulNutri - Product Requirements Document
 
-## Visao Geral
-SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifica pratos via foto usando IA (CLIP/ONNX para Cibi Sana, Gemini para locais externos) e fornece informacoes nutricionais personalizadas.
+## Versao Atual: V2.8
 
-## Versao Atual: V2.7
+## Visao Geral
+SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifica pratos via foto usando IA (CLIP/ONNX para Cibi Sana, Gemini para locais externos).
 
 ## Arquitetura
 ```
 /app
 ├── backend/
-│   ├── ai/               # OpenCLIP embedder (ONNX deploy / PyTorch dev)
-│   ├── services/
-│   │   ├── gemini_flash_service.py  # Fast scan + enrich
-│   │   ├── tts_service.py          # gTTS (gratuito, pt-BR nativo)
-│   │   └── alerts_service.py       # Alertas LLM via /ai/enrich
+│   ├── ai/               # embedder.py (ONNX), index.py (CLIP search + get_index_info)
+│   ├── services/         # gemini_flash_service.py, tts_service.py (gTTS), alerts_service.py
 │   ├── scripts/          # export_onnx.py (build-time)
 │   └── server.py         # FastAPI (~5700 linhas)
 ├── frontend/
 │   ├── public/           # sw.js, manifest.json, icons
 │   └── src/
-│       ├── App.js        # React Principal (~4000 linhas)
+│       ├── App.js        # React Principal (~4100 linhas)
+│       ├── Admin.js      # Painel Admin (~3600 linhas)
 │       ├── Demo.jsx      # Modo Demo
 │       └── index.js      # Rotas
 ├── datasets/             # CLIP index (2994 itens, 191 pratos)
@@ -42,56 +40,53 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 
 ## Implementado
 
+### V2.8 (11/Abr/2026)
+- Admin: Todos 360 pratos visiveis (CLIP index + DB merged)
+- Admin: Filtro "Sem ingredientes" para revisao rapida (168 pratos pendentes)
+- Admin: Pratos CLIP-only aparecem no painel para edicao
+- Admin: Premium update_many para lidar com duplicatas
+
 ### V2.7 (11/Abr/2026)
 - CLIP speed: 384ms sem premium, ~500ms com premium (era 8-9s)
-- TTS: Trocado OpenAI por gTTS (gratuito, voz brasileira nativa, sem sotaque)
-- Trial Premium: 7 dias gratis para novos usuarios, expiracao automatica
-- Admin Premium: Liberar/Bloquear permanente via /admin/premium/
-- Admin endpoints usam update_many para lidar com duplicatas
-- Nutrition data carrega via /ai/enrich em background (nao bloqueia CLIP)
+- TTS: gTTS gratuito, voz brasileira nativa sem sotaque
+- Trial Premium: 7 dias gratis, expiracao automatica
+- Admin Premium: Liberar/Bloquear permanente
 
 ### V2.6 (11/Abr/2026)
 - Resposta lenta /ai/identify corrigida (LLM movido para /ai/enrich)
-- Login Premium travado corrigido (localStorage limpo automaticamente)
-- Alertas/Noticias gerados via /ai/enrich (fix has_alert)
-- Feedback 500 corrigido (mkdir /app/datasets/organized)
-- TTS expandido (beneficios, riscos, ingredientes, alertas, curiosidades, noticias)
-- Regex whitespace-tolerant para nomes com espaco no DB
-- Fix send_message_async -> send_message
+- Login Premium travado (localStorage limpo)
+- Alertas/Noticias via /ai/enrich
+- Feedback 500, TTS expandido, regex whitespace
 
 ### Anteriores
-- Deploy Render ONNX fp16 (300MB RAM)
-- PWA instalavel, Camera Crop, Modo Demo
-- OpenAI TTS original (substituido por gTTS)
+- Deploy Render ONNX fp16, PWA, Camera Crop, Modo Demo
 
 ## Endpoints Principais
 - POST /ai/identify - Fast scan (<500ms Cibi Sana, <2s Gemini)
-- POST /ai/enrich - Enrichment Premium background (beneficios, riscos, alertas, nutrition, noticias)
-- POST /ai/tts - Text-to-Speech (gTTS pt-BR, gratuito)
-- POST /ai/feedback - Feedback de calibracao
+- POST /ai/enrich - Enrichment background (beneficios, riscos, alertas, nutrition, noticias)
+- POST /ai/tts - gTTS pt-BR (gratuito)
+- POST /ai/feedback - Feedback calibracao
 - POST /premium/login - Login Premium (verifica trial 7 dias)
-- GET /admin/premium/users - Lista usuarios com status premium
-- POST /admin/premium/liberar - Libera premium permanente
-- POST /admin/premium/bloquear - Bloqueia premium
+- GET /admin/dishes-full - Lista TODOS pratos (DB + CLIP index)
+- GET /admin/premium/users - Lista usuarios premium
+- POST /admin/premium/liberar / bloquear - Gestao premium
+- POST /admin/revisar-prato-taco - Revisao nutricional gratuita
 
 ## Backlog
 
-### P0 - Nenhum
-
-### P1 - Proximo
+### P1
 - Landing page premium (aguardando mockup)
 - Integracao Stripe para assinaturas
 - Fichas nutricionais para 4 pratos faltantes (Feijao Branco, Gelatina de Uva, Guacamole, Jilo Empanado)
 
-### P2 - Futuro
-- Revisao nutricional F-J: ingredientes para 28 pratos (usuario fara manualmente)
-- Limpeza de imagens contaminadas: Jilo Empanado (usuario fara manualmente)
+### P2
+- Revisao nutricional F-Z: 168 pratos sem ingredientes (usuario fara pelo admin)
+- Limpeza de imagens: Jilo Empanado (usuario fara manualmente)
 - Google Play (TWA) / Apple Store (Capacitor)
-- Refatorar server.py (~5700 linhas) e App.js (~4000 linhas)
+- Refatorar server.py e App.js
 
 ## Problemas Conhecidos
-- Jilo Empanado: fotos contaminadas com Quiabo (limpeza manual pendente)
-- Feijao do Chef: apenas 1 embedding
-- Gelatina de Uva: apenas 3 embeddings
-- Google API Key pode estar 403 (fallback Emergent LLM Key funciona)
-- 3 usuarios duplicados "Joao Manoel" no DB (update_many mitiga)
+- Jilo Empanado: fotos contaminadas com Quiabo
+- Feijao do Chef: 1 embedding, Gelatina de Uva: 3 embeddings
+- Google API Key 403 (fallback Emergent LLM Key funciona)
+- 3 usuarios duplicados "Joao Manoel" no DB
