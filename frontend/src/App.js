@@ -4033,6 +4033,25 @@ function App() {
                 background: dailySummary.percentual >= 100 ? '#ef4444' : dailySummary.percentual >= 75 ? '#f59e0b' : '#22c55e'
               }} 
             />
+
+      {/* PREMIUM - Botao perfil (sempre visivel) */}
+      {premiumUser && !showPremium && !dailySummary && (
+        <div 
+          data-testid="premium-profile-btn"
+          onClick={() => setShowPremium('dashboard')} 
+          style={{
+            position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000,
+            background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff',
+            width: '52px', height: '52px', borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '22px', cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(245,158,11,0.4)'
+          }}
+          title="Meu Perfil Premium"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      )}
           </div>
         </div>
       )}
