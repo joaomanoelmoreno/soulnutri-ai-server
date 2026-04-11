@@ -3,7 +3,7 @@
 ## Visao Geral
 SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifica pratos via foto usando IA (CLIP para Cibi Sana, Gemini para locais externos) e fornece informacoes nutricionais personalizadas.
 
-## Versao Atual: V2.5
+## Versao Atual: V2.6
 
 ## Arquitetura
 ```
@@ -14,8 +14,9 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 │   │   ├── index.py      # Busca por similaridade (Top-K) + timing logs
 │   │   └── policy.py     # Analise de resultados CLIP
 │   ├── services/
-│   │   ├── gemini_flash_service.py  # Fast scan + enrich
-│   │   └── tts_service.py          # OpenAI TTS (Alloy/Onyx)
+│   │   ├── gemini_flash_service.py  # Fast scan + enrich (fix: send_message)
+│   │   ├── tts_service.py          # OpenAI TTS (Alloy/Onyx) - EXPANDIDO
+│   │   └── alerts_service.py       # Alertas LLM (agora via /ai/enrich)
 │   ├── scripts/          # export_onnx.py (build-time ONNX export)
 │   └── server.py         # Endpoints FastAPI (~5700 linhas) + timing logs
 ├── frontend/
@@ -43,7 +44,7 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 2. NAO ALTERAR embedder.py/index.py logica de reconhecimento sem autorizacao
 3. ViT-B-16 DataComp XL travado - nao mudar modelo
 
-## O que foi implementado (Sessao atual - Abril 2026)
+## O que foi implementado
 
 ### Deploy Render
 - [x] Fix yarn.lock, emergentintegrations, memoria RAM (ONNX Runtime)
@@ -57,10 +58,11 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 
 ### OpenAI TTS (Acessibilidade)
 - [x] Endpoint POST /ai/tts (gera MP3 via OpenAI TTS)
-- [x] Servico tts_service.py (monta texto descritivo do prato)
+- [x] Servico tts_service.py (texto descritivo EXPANDIDO do prato)
 - [x] Botao "Ouvir" no resultado do prato (verde, grande, acessivel)
 - [x] Vozes testadas: Alloy e Onyx (melhores em portugues)
 - [x] Stop/Play toggle, loading state
+- [x] TTS expandido: beneficios, riscos, ingredientes, alertas, curiosidades, noticias, verdade/mito
 
 ### Modo Demo
 - [x] Pagina /demo com 3 pratos de exemplo
@@ -68,35 +70,40 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 - [x] TTS funcional no demo (botao "Ouvir")
 - [x] CTA para instalar o app
 
+### Correcoes V2.6 (11/Abr/2026)
+- [x] P0: Resposta lenta /ai/identify (8-9s -> <2s) - LLM movido para /ai/enrich background
+- [x] P0: Login Premium travado com PIN obsoleto - localStorage limpo automaticamente
+- [x] P1: Alertas/Noticias nao gerados - corrigido has_alert bug, alertas movidos para /ai/enrich
+- [x] P1: Feedback 500 (/app/datasets/organized) - diretorio criado programaticamente
+- [x] P2: TTS expandido com conteudo completo
+- [x] Fix: regex whitespace-tolerant para nomes com espaco no DB
+- [x] Fix: send_message_async -> send_message em gemini_flash_service.py
+
 ### Revisao Nutricional F-J
 - [x] INICIADA - Verificacao de fotos
 - [x] CONTAMINACAO ENCONTRADA: Jilo Empanado mostra fotos de Quiabo Empanado
 - [x] PAUSADA conforme instrucao do usuario (ele revisara fotos manualmente)
-- [x] Pratos sem ingredientes/nutricao no MongoDB (dados faltando)
 
 ## Endpoints Principais
-- POST /ai/identify - Fast scan (CLIP ou Gemini) com timing logs
-- POST /ai/identify-with-ai - Enrichment Premium (background)
+- POST /ai/identify - Fast scan (CLIP ou Gemini) - retorno rapido <2s
+- POST /ai/enrich - Enrichment Premium em background (beneficios, riscos, alertas, noticias)
 - POST /ai/tts - Text-to-Speech (OpenAI TTS, vozes alloy/onyx)
+- POST /ai/feedback - Feedback de calibracao (salva imagem + MongoDB)
+- POST /premium/login - Login Premium (PIN + Nome)
 - GET /ai/status - Status do indice
 
 ## Credenciais
-- Premium User: pin=1234, nome=Teste
+- Premium User: pin=2212, nome=Joao Manoel (espaco no final no DB)
 - Admin: joaomanoelmoreno / Pqlamz0192
 
 ## Backlog
 
-### P0 - Imediato
-- Investigar velocidade CLIP (2-3s) — timing logs prontos, aguardando teste do usuario
-- Testar crop da camera + TTS no celular
-
 ### P1 - Proximo
 - Landing page premium (aguardando mockup do usuario)
+- Integracao Stripe para assinaturas
 - Revisao nutricional F-J (usuario revisara fotos primeiro)
-- Adicionar dados nutricionais/ingredientes para pratos F-J no MongoDB
 
 ### P2 - Futuro
-- Stripe para assinatura Premium
 - Google Play (TWA) / Apple Store (Capacitor)
 - Refatorar server.py (~5700 linhas) e App.js (~4000 linhas)
 
@@ -105,3 +112,4 @@ SoulNutri e um agente de nutricao virtual para o restaurante Cibi Sana. Identifi
 - Feijoada e Frango a Milanesa: sem fotos no dataset
 - Feijao do Chef: apenas 1 embedding (pouca confiabilidade)
 - Maioria dos pratos F-J sem ingredientes/nutricao no MongoDB
+- Google API Key pode estar expirada (403) - fallback via Emergent LLM Key funciona
