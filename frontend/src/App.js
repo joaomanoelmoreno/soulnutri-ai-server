@@ -376,6 +376,9 @@ function App() {
   };
   
   const [premiumUser, setPremiumUser] = useState(null);
+  const premiumUserRef = useRef(null);
+  // Sync ref com state para evitar stale closure em callbacks memoizados
+  useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser]);
   const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
   const [personalizedTips, setPersonalizedTips] = useState(null); // Dicas personalizadas
@@ -1131,7 +1134,9 @@ function App() {
             .catch(() => setRadarInfo(null));
           
           // Enriquecimento Premium em background (TODOS os modos)
-          if (premiumUser) {
+          // Usa ref para evitar stale closure (handleCameraTouch memoiza identifyImage)
+          const currentPremiumUser = premiumUserRef.current;
+          if (currentPremiumUser) {
             const dishName = resultWithTime.dish_display;
             setEnrichLoading(true);
             fetch(`${API}/ai/enrich`, {
@@ -1140,8 +1145,8 @@ function App() {
               body: JSON.stringify({
                 nome: dishName,
                 ingredientes: resultWithTime.ingredientes || [],
-                pin: premiumUser.pin,
-                user_nome: premiumUser.nome
+                pin: currentPremiumUser.pin,
+                user_nome: currentPremiumUser.nome
               })
             }).then(r => r.json()).then(enrichData => {
               if (enrichData.ok) {
@@ -1197,8 +1202,8 @@ function App() {
                 }));
 
                 console.log('[ENRICH] Premium data recebido para:', dishName);
-                setEnrichLoading(false);
               }
+              setEnrichLoading(false);
             }).catch(err => { console.log('[ENRICH] Erro (não crítico):', err); setEnrichLoading(false); });
           }
         }

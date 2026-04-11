@@ -26,6 +26,11 @@
 - O `/api/ai/enrich` roda em BACKGROUND e traz: benefícios ricos, riscos detalhados, curiosidades, combinações, notícias, alertas de histórico
 - O enrich NUNCA deve bloquear a resposta do identify
 
+### REGRA TÉCNICA CRÍTICA: premiumUserRef
+- SEMPRE usar `premiumUserRef.current` (não `premiumUser`) dentro de callbacks assíncronos e funções memoizadas (useCallback)
+- Motivo: `handleCameraTouch` e `performScan` usam `useCallback` com deps limitadas, criando stale closures que capturam `premiumUser = null`
+- O `premiumUserRef` é sincronizado via `useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser])`
+
 ### Propagação para o Prato
 - Quando enrich completa, DEVE atualizar TANTO o `result` QUANTO os `plateItems`
 - Se o usuário já adicionou ao prato antes do enrich terminar, os dados DEVEM chegar depois
