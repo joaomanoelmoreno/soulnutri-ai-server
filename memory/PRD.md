@@ -1,6 +1,6 @@
 # SoulNutri - Product Requirements Document
 
-## Versao Atual: V3.0
+## Versao Atual: V3.1
 
 ## Stack
 - Frontend: React (PWA) | Backend: FastAPI, Motor (MongoDB async)
@@ -11,8 +11,15 @@
 1. CLIP ONLY no Cibi Sana - Gemini PROIBIDO para identificacao local
 2. NAO reinstalar PyTorch no Dockerfile
 3. Proporcoes nutricionais: NUNCA dividir igualmente por ingrediente
+4. Service Worker MINIMAL - NÃO cacheia nada, NÃO intercepta fetch
 
 ## Implementado
+
+### V3.1 (11/Abr/2026)
+- P0 FIX: Service Worker reescrito para v10-minimal (sem cache, sem fetch interception)
+- P0 FIX: index.js com lifecycle management (hadController, orphan cache cleanup)
+- P0 FIX: Backend serve sw.js e manifest.json com no-cache + ETag
+- P0 FIX: Middleware reforçado com Pragma: no-cache para HTML
 
 ### V3.0 (11/Abr/2026)
 - Admin Premium: Liberar/Bloquear funcional (FormData + JSON), com dias de trial
@@ -37,14 +44,8 @@
 - GET /admin/premium/users
 - POST /admin/premium/liberar, /admin/premium/bloquear
 - POST /admin/revisar-prato-taco (zero creditos, proporcoes comerciais)
-
-## Backlog - Sugestoes para avaliacao do usuario
-
-| # | Sugestao | Origem |
-|---|----------|--------|
-| 1 | Resumo semanal por audio (TTS gera MP3 com relatorio nutricional Premium, envia via push) | V2.6 |
-| 2 | Painel admin para cadastro de ingredientes de pratos que so existem no CLIP index | V2.8 |
-| 3 | Landing page de onboarding premium com trial | Handoff |
+- GET /sw.js (anti-cache, ETag)
+- GET /manifest.json (anti-cache)
 
 ## Backlog - Tarefas pendentes
 
@@ -57,7 +58,7 @@
 - Fichas nutricionais automaticas apos usuario cadastrar ingredientes
 - Limpeza imagens Jilo Empanado (usuario fara)
 - Google Play (TWA) / Apple Store (Capacitor)
-- Refatorar server.py (~5700 linhas) e App.js (~4100 linhas)
+- Refatorar server.py (~5700 linhas) e App.js (~4200 linhas)
 
 ## Problemas Conhecidos
 - Jilo Empanado: fotos contaminadas com Quiabo
