@@ -5707,6 +5707,27 @@ logger.info(f"[DEPLOY] BACKEND_DIR={BACKEND_DIR}")
 logger.info(f"[DEPLOY] BASE_DIR={BASE_DIR}")
 logger.info(f"[DEPLOY] FRONTEND_BUILD={FRONTEND_BUILD} (exists={FRONTEND_BUILD.exists()})")
 
+# ═══════════════════════════════════════════════════════
+# ROTA EXPLÍCITA PARA sw.js — ANTI-CACHE (RESOLVE TRAVAMENTO)
+# Browsers cacheiam sw.js como arquivo estático. Sem no-cache,
+# o SW antigo fica preso e impede atualizações do app.
+# ═══════════════════════════════════════════════════════
+@app.get("/sw.js")
+async def serve_sw():
+    sw_path = FRONTEND_BUILD / "sw.js" if FRONTEND_BUILD.exists() else Path("/app/frontend/public/sw.js")
+    if not sw_path.exists():
+        sw_path = Path("/app/frontend/public/sw.js")
+    return FileResponse(
+        sw_path,
+        media_type="application/javascript",
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "Service-Worker-Allowed": "/"
+        }
+    )
+
 if FRONTEND_BUILD.exists() and (FRONTEND_BUILD / "index.html").exists():
     logger.info(f"[DEPLOY] Frontend build ENCONTRADO - Montando SPA em /")
     app.mount("/", SPAStaticFiles(directory=str(FRONTEND_BUILD), html=True), name="frontend")

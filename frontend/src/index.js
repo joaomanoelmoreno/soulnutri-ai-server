@@ -6,14 +6,16 @@ import App from "@/App";
 import Admin from "@/Admin";
 import Demo from "@/Demo";
 
-// PWA: Registrar Service Worker para instalacao
+// PWA: Registrar Service Worker com anti-cache forçado
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' })
       .then(reg => {
         console.log('SoulNutri: SW registrado', reg.scope);
-        // Verificar atualizacoes periodicamente
+        // Forçar verificação de atualização a cada abertura
         reg.update();
+        // Verificar periodicamente (a cada 60s)
+        setInterval(() => reg.update(), 60000);
       })
       .catch(err => console.warn('SoulNutri: SW falhou', err));
   });
