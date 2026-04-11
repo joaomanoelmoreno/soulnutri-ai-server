@@ -5148,7 +5148,7 @@ async def liberar_premium(request: Request):
         nome = data.get("nome", "").strip()
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
-        result = await db.users.update_one(
+        result = await db.users.update_many(
             {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
             {"$set": {
                 "premium_ativo": True,
@@ -5162,7 +5162,7 @@ async def liberar_premium(request: Request):
         )
         if result.modified_count == 0:
             return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
-        return {"ok": True, "message": f"Premium liberado permanentemente para {nome}"}
+        return {"ok": True, "message": f"Premium liberado permanentemente para {nome} ({result.modified_count} registros)"}
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
@@ -5175,7 +5175,7 @@ async def bloquear_premium(request: Request):
         nome = data.get("nome", "").strip()
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
-        result = await db.users.update_one(
+        result = await db.users.update_many(
             {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
             {"$set": {
                 "premium_ativo": False,
@@ -5185,7 +5185,7 @@ async def bloquear_premium(request: Request):
         )
         if result.modified_count == 0:
             return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
-        return {"ok": True, "message": f"Premium bloqueado para {nome}"}
+        return {"ok": True, "message": f"Premium bloqueado para {nome} ({result.modified_count} registros)"}
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
