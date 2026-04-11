@@ -36,7 +36,17 @@
 - **Biblioteca**: gTTS (GRATUITO, pt-BR) - NUNCA usar OpenAI TTS
 - **Velocidade**: 1.35x via pydub/ffmpeg
 - **Custo**: ZERO (gTTS é gratuito, não consome créditos de IA)
-- O botão "Ouvir" deve estar disponível tanto na vista de resultado quanto no "Prato Completo"
+
+### Áudio no SCAN (resultado imediato, buffet)
+- Dados enviados ao TTS: APENAS nome do prato, categoria, ficha nutricional, ingredientes, alérgenos, alertas
+- NÃO inclui: benefícios, riscos, curiosidades, combinações, notícias (esses vêm do enrich que ainda está processando)
+- Propósito: Deficiente visual em pé no buffet precisa saber RÁPIDO o que escaneou
+
+### Áudio no PRATO COMPLETO (mesa view, premium)
+- Dados enviados ao TTS: TUDO — benefícios, riscos, curiosidades, combinações, notícias, alertas de saúde, verdade/mito
+- Botão desabilitado enquanto enrich está carregando (aguardar dados premium)
+- Botão dourado (diferenciado do verde do scan) para indicar conteúdo premium
+- Propósito: Deficiente visual sentado, prato completo, quer ouvir TODAS as informações premium
 
 ## 4. ECONOMIA DE CRÉDITOS
 - Cibi Sana identify: ZERO créditos (CLIP local)

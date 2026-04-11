@@ -2665,7 +2665,7 @@ function App() {
           <h2 className="mesa-title">🍽️ Seu Prato Completo</h2>
           <p className="mesa-subtitle">{plateItems.length} itens selecionados</p>
           
-          {/* BOTAO OUVIR - TTS no Prato Completo */}
+          {/* BOTAO OUVIR - TTS Premium Completo (benefícios, riscos, curiosidades, etc.) */}
           {premiumUser && plateConsolidated && (
             <button
               className="tts-btn"
@@ -2680,29 +2680,40 @@ function App() {
                   gluten: plateConsolidated.contemGluten,
                   lactose: plateConsolidated.contemLactose,
                   ovo: plateConsolidated.contemOvo,
+                  castanhas: plateConsolidated.contemCastanhas,
+                  frutosMar: plateConsolidated.contemFrutosMar,
+                  soja: plateConsolidated.contemSoja,
                 },
-                curiosidade: plateConsolidated.curiosidades?.[0] || '',
+                curiosidade: plateConsolidated.curiosidades?.join('. ') || '',
+                combinacoes: plateConsolidated.combinacoes,
                 noticias: plateConsolidated.noticias,
+                beneficio_principal: plateConsolidated.beneficio_principal?.join('. ') || '',
+                alerta_saude: plateConsolidated.alerta_saude?.join('. ') || '',
+                mito_verdade: plateConsolidated.mitos_verdades?.[0] || null,
               })}
-              disabled={ttsLoading}
+              disabled={ttsLoading || enrichLoading}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 gap: '10px', width: '100%', padding: '14px 20px', margin: '8px 0 12px',
                 background: ttsPlaying
                   ? 'linear-gradient(135deg, #ef4444, #dc2626)'
-                  : 'linear-gradient(135deg, #10b981, #059669)',
-                color: '#fff', border: 'none', borderRadius: '14px',
+                  : enrichLoading
+                    ? 'linear-gradient(135deg, #6b7280, #4b5563)'
+                    : 'linear-gradient(135deg, #ffd700, #ff8c00)',
+                color: enrichLoading ? '#ccc' : '#000', border: 'none', borderRadius: '14px',
                 fontSize: '16px', fontWeight: '700',
-                cursor: ttsLoading ? 'wait' : 'pointer',
-                boxShadow: '0 4px 12px rgba(16,185,129,0.3)', minHeight: '52px',
+                cursor: (ttsLoading || enrichLoading) ? 'wait' : 'pointer',
+                boxShadow: '0 4px 12px rgba(255,215,0,0.3)', minHeight: '52px',
               }}
             >
               {ttsLoading ? (
-                <span>Gerando audio...</span>
+                <span>Gerando audio premium...</span>
+              ) : enrichLoading ? (
+                <span>Aguardando dados premium...</span>
               ) : ttsPlaying ? (
                 <><span style={{fontSize:'20px'}}>&#9724;</span> Parar</>
               ) : (
-                <><span style={{fontSize:'20px'}}>&#128266;</span> Ouvir resumo do prato</>
+                <><span style={{fontSize:'20px'}}>&#128266;</span> Ouvir resumo completo</>
               )}
             </button>
           )}
@@ -3157,12 +3168,20 @@ function App() {
             ← Voltar
           </button>
           
-          {/* BOTAO OUVIR - Acessibilidade TTS */}
+          {/* BOTAO OUVIR - Acessibilidade (RÁPIDO: nome, nutrição, alertas) */}
           {r.identified && (
             <button
               className="tts-btn"
               data-testid="tts-listen-btn"
-              onClick={() => playDishAudio(r)}
+              onClick={() => playDishAudio({
+                dish_display: r.dish_display,
+                category: r.category,
+                nutrition: r.nutrition,
+                ingredientes: r.ingredientes,
+                alergenos: r.alergenos,
+                alertas_personalizados: r.alertas_personalizados,
+                premium: r.premium ? { alertas_alergenos: r.premium.alertas_alergenos } : null,
+              })}
               disabled={ttsLoading}
               aria-label={ttsPlaying ? 'Parar audio' : 'Ouvir descricao do prato'}
               style={{
