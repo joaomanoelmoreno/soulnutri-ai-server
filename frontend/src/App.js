@@ -321,6 +321,9 @@ function App() {
   const [ttsLoading, setTtsLoading] = useState(false);
   const ttsAudioRef = useRef(null);
   
+  // Enrich Premium - Loading state
+  const [enrichLoading, setEnrichLoading] = useState(false);
+  
   const playDishAudio = async (dishData, voice = 'alloy') => {
     // Se já está tocando, parar
     if (ttsAudioRef.current) {
@@ -1129,43 +1132,74 @@ function App() {
           
           // Enriquecimento Premium em background (TODOS os modos)
           if (premiumUser) {
+            const dishName = resultWithTime.dish_display;
+            setEnrichLoading(true);
             fetch(`${API}/ai/enrich`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                nome: resultWithTime.dish_display,
+                nome: dishName,
                 ingredientes: resultWithTime.ingredientes || [],
                 pin: premiumUser.pin,
                 user_nome: premiumUser.nome
               })
             }).then(r => r.json()).then(enrichData => {
               if (enrichData.ok) {
+                const enrichFields = {
+                  beneficios: enrichData.beneficios || [],
+                  riscos: enrichData.riscos || [],
+                  curiosidade: enrichData.curiosidade || '',
+                  combinacoes: enrichData.combinacoes || [],
+                  noticias: enrichData.noticias || [],
+                  alertas_historico: enrichData.alertas_historico || []
+                };
+                const enrichNutrition = (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0)
+                  ? enrichData.nutrition : null;
+
+                // 1) Atualizar o result (se ainda estiver na tela)
                 setResult(prev => {
                   if (!prev) return prev;
                   const updated = {
                     ...prev,
-                    beneficios: enrichData.beneficios || prev.beneficios,
-                    riscos: enrichData.riscos || prev.riscos,
-                    curiosidade: enrichData.curiosidade || prev.curiosidade,
-                    combinacoes: enrichData.combinacoes || prev.combinacoes,
-                    noticias: enrichData.noticias || prev.noticias
+                    ...enrichFields,
+                    beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
+                    riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
                   };
-                  // Merge alertas de historico no premium data
-                  if (enrichData.alertas_historico?.length > 0 && prev.premium) {
-                    updated.premium = {
-                      ...prev.premium,
-                      alertas_historico: enrichData.alertas_historico
-                    };
+                  if (enrichFields.alertas_historico.length > 0 && prev.premium) {
+                    updated.premium = { ...prev.premium, alertas_historico: enrichFields.alertas_historico };
                   }
-                  // Merge nutrition data (para Cibi Sana que nao buscou no identify)
-                  if (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0) {
-                    const prevNutrition = prev.nutrition || {};
-                    updated.nutrition = { ...prevNutrition, ...enrichData.nutrition };
+                  if (enrichNutrition) {
+                    updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
                   }
                   return updated;
                 });
+
+                // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
+                setPlateItems(prev => prev.map(item => {
+                  if (item.dish_display === dishName) {
+                    const updated = {
+                      ...item,
+                      beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
+                      riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
+                      curiosidade: enrichFields.curiosidade || item.curiosidade,
+                      combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
+                      noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
+                    };
+                    if (enrichFields.alertas_historico.length > 0 && item.premium) {
+                      updated.premium = { ...item.premium, alertas_historico: enrichFields.alertas_historico };
+                    }
+                    if (enrichNutrition) {
+                      updated.nutrition = { ...(item.nutrition || {}), ...enrichNutrition };
+                    }
+                    return updated;
+                  }
+                  return item;
+                }));
+
+                console.log('[ENRICH] Premium data recebido para:', dishName);
+                setEnrichLoading(false);
               }
-            }).catch(err => console.log('[ENRICH] Erro (não crítico):', err));
+            }).catch(err => { console.log('[ENRICH] Erro (não crítico):', err); setEnrichLoading(false); });
           }
         }
         // NÃO mostrar modal automaticamente - deixar usuário ver as informações primeiro
@@ -2631,6 +2665,48 @@ function App() {
           <h2 className="mesa-title">🍽️ Seu Prato Completo</h2>
           <p className="mesa-subtitle">{plateItems.length} itens selecionados</p>
           
+          {/* BOTAO OUVIR - TTS no Prato Completo */}
+          {premiumUser && plateConsolidated && (
+            <button
+              className="tts-btn"
+              data-testid="mesa-tts-btn"
+              onClick={() => playDishAudio({
+                dish_display: plateConsolidated.itens?.join(' e ') || 'Seu Prato',
+                nutrition: plateConsolidated.nutrition,
+                ingredientes: plateConsolidated.ingredientes,
+                beneficios: plateConsolidated.beneficios,
+                riscos: plateConsolidated.riscos,
+                alergenos: {
+                  gluten: plateConsolidated.contemGluten,
+                  lactose: plateConsolidated.contemLactose,
+                  ovo: plateConsolidated.contemOvo,
+                },
+                curiosidade: plateConsolidated.curiosidades?.[0] || '',
+                noticias: plateConsolidated.noticias,
+              })}
+              disabled={ttsLoading}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                gap: '10px', width: '100%', padding: '14px 20px', margin: '8px 0 12px',
+                background: ttsPlaying
+                  ? 'linear-gradient(135deg, #ef4444, #dc2626)'
+                  : 'linear-gradient(135deg, #10b981, #059669)',
+                color: '#fff', border: 'none', borderRadius: '14px',
+                fontSize: '16px', fontWeight: '700',
+                cursor: ttsLoading ? 'wait' : 'pointer',
+                boxShadow: '0 4px 12px rgba(16,185,129,0.3)', minHeight: '52px',
+              }}
+            >
+              {ttsLoading ? (
+                <span>Gerando audio...</span>
+              ) : ttsPlaying ? (
+                <><span style={{fontSize:'20px'}}>&#9724;</span> Parar</>
+              ) : (
+                <><span style={{fontSize:'20px'}}>&#128266;</span> Ouvir resumo do prato</>
+              )}
+            </button>
+          )}
+          
           {/* Lista dos itens escolhidos */}
           <div className="mesa-items-list">
             {plateItems.map((item, i) => (
@@ -2713,6 +2789,23 @@ function App() {
               CONTEÚDO PREMIUM - Radar de Notícias (apenas na vista completa)
               ══════════════════════════════════════════════════════════ */}
           
+          {/* LOADING PREMIUM */}
+          {premiumUser && enrichLoading && (
+            <div data-testid="enrich-loading" style={{
+              background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05))',
+              border: '1px solid rgba(255, 215, 0, 0.2)',
+              borderRadius: '12px',
+              padding: '16px',
+              textAlign: 'center',
+              margin: '12px 0',
+              animation: 'pulse 1.5s ease-in-out infinite'
+            }}>
+              <span style={{ color: '#ffd700', fontSize: '14px' }}>
+                Carregando conteudo Premium...
+              </span>
+            </div>
+          )}
+
           {/* AVISO PARA USUÁRIOS FREE */}
           {!premiumUser && (
             <div className="premium-upsell" style={{
@@ -2728,7 +2821,7 @@ function App() {
                 Desbloqueie: Curiosidades científicas, Combinações inteligentes, Alertas personalizados e mais!
               </p>
               <button 
-                onClick={() => setShowPremiumModal(true)}
+                onClick={() => setShowPremium('login')}
                 style={{
                   background: 'linear-gradient(135deg, #ffd700, #ff8c00)',
                   color: '#000',
