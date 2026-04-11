@@ -2433,9 +2433,9 @@ export default function Admin() {
                       <td>{user.nome}</td>
                       <td>
                         {user.premium_ativo ? (
-                          <span className="badge ativo">✅ Ativo</span>
+                          <span className="badge ativo">{user.is_trial ? '🕐 Trial' : '✅ Ativo'}</span>
                         ) : (
-                          <span className="badge inativo">🔒 Bloqueado</span>
+                          <span className="badge inativo">{user.trial_expirado ? '⏰ Expirado' : '🔒 Bloqueado'}</span>
                         )}
                       </td>
                       <td>

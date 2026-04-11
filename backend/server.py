@@ -5142,37 +5142,65 @@ async def get_premium_users():
 
 @api_router.post("/admin/premium/liberar")
 async def liberar_premium(request: Request):
-    """Libera acesso premium para um usuario (sem data de expiracao)."""
+    """Libera acesso premium para um usuario. Aceita FormData ou JSON."""
     try:
-        data = await request.json()
-        nome = data.get("nome", "").strip()
+        content_type = request.headers.get("content-type", "")
+        if "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
+            form = await request.form()
+            nome = form.get("nome", "").strip()
+            dias = int(form.get("dias", 0))
+        else:
+            data = await request.json()
+            nome = data.get("nome", "").strip()
+            dias = int(data.get("dias", 0))
+        
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
+        
+        update_fields = {
+            "premium_ativo": True,
+            "is_trial": False,
+            "premium_expirado": False,
+            "trial_expirado": False,
+            "premium_liberado_por": "admin",
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        if dias > 0 and dias < 9999:
+            update_fields["premium_expira_em"] = (datetime.now(timezone.utc) + timedelta(days=dias)).isoformat()
+            update_fields["is_trial"] = True
+        else:
+            update_fields["premium_expira_em"] = None
+        
         result = await db.users.update_many(
             {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
-            {"$set": {
-                "premium_ativo": True,
-                "is_trial": False,
-                "premium_expirado": False,
-                "trial_expirado": False,
-                "premium_expira_em": None,
-                "premium_liberado_por": "admin",
-                "updated_at": datetime.now(timezone.utc).isoformat()
-            }}
+            {"$set": update_fields}
         )
         if result.modified_count == 0:
             return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
-        return {"ok": True, "message": f"Premium liberado permanentemente para {nome} ({result.modified_count} registros)"}
+        
+        msg = f"Premium liberado para {nome}"
+        if dias > 0 and dias < 9999:
+            msg += f" por {dias} dias"
+        else:
+            msg += " permanentemente"
+        return {"ok": True, "message": msg}
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
 
 @api_router.post("/admin/premium/bloquear")
 async def bloquear_premium(request: Request):
-    """Bloqueia acesso premium de um usuario."""
+    """Bloqueia acesso premium de um usuario. Aceita FormData ou JSON."""
     try:
-        data = await request.json()
-        nome = data.get("nome", "").strip()
+        content_type = request.headers.get("content-type", "")
+        if "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
+            form = await request.form()
+            nome = form.get("nome", "").strip()
+        else:
+            data = await request.json()
+            nome = data.get("nome", "").strip()
+        
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
         result = await db.users.update_many(

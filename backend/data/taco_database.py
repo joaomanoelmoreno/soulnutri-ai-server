@@ -933,11 +933,76 @@ def buscar_dados_taco(ingrediente: str) -> dict:
 
 
 def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dict:
-    """Calcula a nutrição total de um prato baseado nos ingredientes."""
+    """Calcula a nutrição total de um prato baseado nos ingredientes.
+    Usa proporções realistas de receitas comerciais (NÃO divide igualmente)."""
     if not ingredientes:
         return None
     
-    gramas_por_ingrediente = porcao_gramas / len(ingredientes)
+    # Proporções típicas por tipo de ingrediente em receitas comerciais brasileiras
+    PROPORCOES = {
+        # Bases / Carboidratos (componente principal: 40-60%)
+        "arroz": 0.50, "macarrao": 0.45, "espaguete": 0.45, "massa": 0.45,
+        "batata": 0.55, "mandioca": 0.50, "inhame": 0.50, "tapioca": 0.50,
+        "farofa": 0.40, "farinha": 0.20, "pao": 0.45, "cuscuz": 0.50,
+        "feijao": 0.45, "lentilha": 0.45, "grao de bico": 0.45,
+        "polenta": 0.50, "risoto": 0.45, "risone": 0.45,
+        # Proteínas (25-35%)
+        "frango": 0.30, "carne": 0.30, "boi": 0.30, "porco": 0.25,
+        "peixe": 0.30, "file": 0.30, "maminha": 0.35, "costela": 0.35,
+        "camarao": 0.25, "atum": 0.30, "salmao": 0.30, "bacalhau": 0.30,
+        "ovo": 0.15, "sobrecoxa": 0.35, "linguica": 0.30,
+        "kibe": 0.35, "almondega": 0.30, "milanesa": 0.30,
+        # Vegetais / Complementos (10-20%)
+        "tomate": 0.10, "cebola": 0.08, "alho": 0.02, "pimentao": 0.08,
+        "brocolis": 0.30, "abobrinha": 0.30, "beringela": 0.30,
+        "repolho": 0.35, "couve": 0.20, "espinafre": 0.20,
+        "cenoura": 0.12, "vagem": 0.35, "jilo": 0.30, "quiabo": 0.30,
+        "abobora": 0.30, "pepino": 0.20, "alface": 0.15,
+        "banana da terra": 0.30, "palmito": 0.15,
+        # Gorduras / Óleos (5-15%)
+        "oleo": 0.08, "azeite": 0.06, "manteiga": 0.05, "banha": 0.06,
+        "bacon": 0.10, "presunto": 0.10,
+        # Laticínios
+        "queijo": 0.15, "creme de leite": 0.10, "leite": 0.15,
+        "gorgonzola": 0.10, "parmesao": 0.05, "mussarela": 0.15,
+        "iogurte": 0.20, "requeijao": 0.10,
+        # Molhos / Condimentos (5-10%)
+        "molho": 0.10, "shoyu": 0.03, "vinagre": 0.03,
+        "limao": 0.03, "laranja": 0.08, "curry": 0.02,
+        "gengibre": 0.02, "pesto": 0.08, "mostarda": 0.03,
+        # Cereais / Grãos
+        "aveia": 0.20, "granola": 0.20, "quinoa": 0.25,
+        # Frutas secas / Nozes
+        "castanha": 0.05, "nozes": 0.05, "amendoim": 0.05,
+        "frutas secas": 0.08, "uva passa": 0.05, "coco": 0.08,
+        # Doces
+        "chocolate": 0.30, "acucar": 0.15, "leite condensado": 0.20,
+        "gelatina": 0.50, "mousse": 0.40, "creme": 0.20,
+        "figo": 0.15, "morango": 0.20, "frutas vermelhas": 0.20,
+        # Temperos (proporção mínima)
+        "sal": 0.01, "pimenta": 0.01, "oregano": 0.01,
+        "salsa": 0.02, "coentro": 0.02, "cebolinha": 0.02,
+        "ervas": 0.02, "especiarias": 0.02,
+    }
+    
+    # Calcular proporção para cada ingrediente
+    proporcoes = []
+    for ing in ingredientes:
+        ing_lower = ing.lower().strip()
+        prop = 0.0
+        # Buscar proporção mais específica primeiro
+        for chave, valor in PROPORCOES.items():
+            if chave in ing_lower or ing_lower in chave:
+                prop = valor
+                break
+        if prop == 0:
+            prop = 1.0 / len(ingredientes)  # fallback: divide igual
+        proporcoes.append(prop)
+    
+    # Normalizar proporções para somar 100%
+    total_prop = sum(proporcoes)
+    if total_prop > 0:
+        proporcoes = [p / total_prop for p in proporcoes]
     
     totais = {
         "calorias": 0, "proteinas": 0, "carboidratos": 0, "gorduras": 0, "fibras": 0,
@@ -946,10 +1011,11 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dic
         "ingredientes_encontrados": [], "ingredientes_nao_encontrados": []
     }
     
-    for ingrediente in ingredientes:
+    for i, ingrediente in enumerate(ingredientes):
         dados = buscar_dados_taco(ingrediente)
         if dados:
-            fator = gramas_por_ingrediente / 100
+            gramas = porcao_gramas * proporcoes[i]
+            fator = gramas / 100
             for key in ["calorias", "proteinas", "carboidratos", "gorduras", "fibras",
                        "sodio", "calcio", "ferro", "vitamina_a", "vitamina_c",
                        "vitamina_b12", "potassio", "zinco", "acucar"]:
