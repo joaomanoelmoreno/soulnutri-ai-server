@@ -1152,10 +1152,7 @@ export default function Admin() {
   const filteredDishes = dishes.filter(d => {
     const matchSearch = d.nome?.toLowerCase().includes(search.toLowerCase()) ||
                        d.slug?.toLowerCase().includes(search.toLowerCase());
-    const matchCategory = !filterCategory || 
-      filterCategory === '__sem_ingredientes__' 
-        ? (!d.ingredientes || d.ingredientes.length === 0)
-        : d.categoria === filterCategory;
+    const matchCategory = !filterCategory || d.categoria === filterCategory;
     return matchSearch && matchCategory;
   });
 
@@ -1390,7 +1387,6 @@ export default function Admin() {
             className="filter-select"
           >
             <option value="">Todas categorias</option>
-            <option value="__sem_ingredientes__" style={{color:'#ef4444', fontWeight:'bold'}}>Sem ingredientes</option>
             {categories.map(cat => (
               <option key={cat} value={cat}>{cat}</option>
             ))}
