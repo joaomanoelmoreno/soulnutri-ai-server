@@ -1,5 +1,5 @@
-// SoulNutri Service Worker v6 - PWA Install Ready
-const CACHE_VERSION = 'soulnutri-v6';
+// SoulNutri Service Worker v8 - Force cache refresh
+const CACHE_VERSION = 'soulnutri-v8';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 
@@ -11,7 +11,7 @@ const APP_SHELL = [
   '/images/icon-512x512.png'
 ];
 
-// Install: pre-cache app shell
+// Install: pre-cache app shell + force activate
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
@@ -20,7 +20,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate: limpar caches antigos
+// Activate: limpar TODOS os caches antigos
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -33,22 +33,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: network-first para tudo (garante dados frescos)
+// Fetch: network-first com protecao contra body locked
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Ignorar requests nao-GET e requests de API
+  // Ignorar requests nao-GET, API, e cross-origin
   if (request.method !== 'GET') return;
   if (url.pathname.startsWith('/api/')) return;
+  if (url.origin !== self.location.origin) return;
 
   // Para navegacao (HTML): network-first
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
         .then(response => {
-          const clone = response.clone();
-          caches.open(DYNAMIC_CACHE).then(cache => cache.put(request, clone));
+          if (response && response.status === 200 && response.type === 'basic') {
+            const clone = response.clone();
+            caches.open(DYNAMIC_CACHE).then(cache => cache.put(request, clone));
+          }
           return response;
         })
         .catch(() => caches.match(request).then(r => r || caches.match('/')))
@@ -56,18 +59,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Para assets estaticos: stale-while-revalidate
+  // Para assets estaticos: network-first (garante atualizacao)
   event.respondWith(
-    caches.match(request).then(cached => {
-      const fetchPromise = fetch(request).then(response => {
-        if (response && response.status === 200) {
+    fetch(request)
+      .then(response => {
+        if (response && response.status === 200 && response.type === 'basic') {
           const clone = response.clone();
           caches.open(DYNAMIC_CACHE).then(cache => cache.put(request, clone));
         }
         return response;
-      }).catch(() => cached);
-
-      return cached || fetchPromise;
-    })
+      })
+      .catch(() => caches.match(request))
   );
 });
