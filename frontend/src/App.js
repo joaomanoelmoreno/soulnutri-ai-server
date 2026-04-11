@@ -319,13 +319,13 @@ function App() {
   // TTS - Acessibilidade
   const [ttsPlaying, setTtsPlaying] = useState(false);
   const [ttsLoading, setTtsLoading] = useState(false);
+  const [ttsError, setTtsError] = useState(null);
   const ttsAudioRef = useRef(null);
   
   // Enrich Premium - Loading state
   const [enrichLoading, setEnrichLoading] = useState(false);
   
   const playDishAudio = async (dishData, voice = 'alloy') => {
-    // Se já está tocando, parar
     if (ttsAudioRef.current) {
       ttsAudioRef.current.pause();
       ttsAudioRef.current = null;
@@ -334,6 +334,7 @@ function App() {
     }
     
     setTtsLoading(true);
+    setTtsError(null);
     try {
       const res = await fetch(`${API}/ai/tts`, {
         method: 'POST',
@@ -341,12 +342,10 @@ function App() {
         body: JSON.stringify({ dish_data: dishData, voice })
       });
       
-      if (!res.ok) throw new Error('Erro ao gerar audio');
-      
-      // Verificar se resposta é audio (não JSON de erro)
       const contentType = res.headers.get('content-type') || '';
-      if (!contentType.includes('audio')) {
-        throw new Error('Servico de audio indisponivel');
+      if (!res.ok || !contentType.includes('audio')) {
+        const errBody = await res.text().catch(() => 'Erro desconhecido');
+        throw new Error(errBody.substring(0, 100));
       }
       
       const blob = await res.blob();
@@ -359,17 +358,20 @@ function App() {
         ttsAudioRef.current = null;
         URL.revokeObjectURL(url);
       };
-      
       audio.onerror = () => {
+        setTtsError('Erro ao reproduzir');
         setTtsPlaying(false);
         ttsAudioRef.current = null;
+        setTimeout(() => setTtsError(null), 4000);
       };
       
       setTtsPlaying(true);
       await audio.play();
     } catch (e) {
       console.error('[TTS] Erro:', e);
+      setTtsError('Audio indisponivel');
       setTtsPlaying(false);
+      setTimeout(() => setTtsError(null), 4000);
     } finally {
       setTtsLoading(false);
     }
@@ -608,6 +610,93 @@ function App() {
       detectLocation();
     }
   }, [showPermissions]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ═══════════════════════════════════════════════════════════════
+  // ENRICH PREMIUM - useEffect dedicado (ZERO stale closure)
+  // Dispara quando um novo resultado é identificado E o user é premium
+  // ═══════════════════════════════════════════════════════════════
+  useEffect(() => {
+    if (!result?.ok || !result?.identified || !premiumUser) return;
+    
+    const dishName = result.dish_display;
+    if (!dishName) return;
+
+    // Evitar chamadas duplicadas para o mesmo prato
+    const enrichKey = `enrich_${dishName}`;
+    if (sessionStorage.getItem(enrichKey)) return;
+    sessionStorage.setItem(enrichKey, 'loading');
+
+    setEnrichLoading(true);
+    console.log('[ENRICH] Iniciando para:', dishName, '| Premium:', premiumUser.nome);
+
+    fetch(`${API}/ai/enrich`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: dishName,
+        ingredientes: result.ingredientes || [],
+        pin: premiumUser.pin,
+        user_nome: premiumUser.nome
+      })
+    })
+    .then(r => r.json())
+    .then(enrichData => {
+      if (!enrichData.ok) {
+        console.warn('[ENRICH] Resposta não ok:', enrichData);
+        return;
+      }
+
+      const enrichFields = {
+        beneficios: enrichData.beneficios || [],
+        riscos: enrichData.riscos || [],
+        curiosidade: enrichData.curiosidade || '',
+        combinacoes: enrichData.combinacoes || [],
+        noticias: enrichData.noticias || [],
+        alertas_historico: enrichData.alertas_historico || []
+      };
+      const enrichNutrition = (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0)
+        ? enrichData.nutrition : null;
+
+      // 1) Atualizar o result (se ainda estiver na tela)
+      setResult(prev => {
+        if (!prev || prev.dish_display !== dishName) return prev;
+        const updated = {
+          ...prev,
+          beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
+          riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
+          curiosidade: enrichFields.curiosidade || prev.curiosidade,
+          combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : prev.combinacoes,
+          noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : prev.noticias,
+        };
+        if (enrichFields.alertas_historico.length > 0 && prev.premium) {
+          updated.premium = { ...prev.premium, alertas_historico: enrichFields.alertas_historico };
+        }
+        if (enrichNutrition) {
+          updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
+        }
+        return updated;
+      });
+
+      // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
+      setPlateItems(prev => prev.map(item => {
+        if (item.dish_display !== dishName) return item;
+        return {
+          ...item,
+          beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
+          riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
+          curiosidade: enrichFields.curiosidade || item.curiosidade,
+          combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
+          noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
+          ...(enrichNutrition ? { nutrition: { ...(item.nutrition || {}), ...enrichNutrition } } : {}),
+        };
+      }));
+
+      sessionStorage.setItem(enrichKey, 'done');
+      console.log('[ENRICH] Premium data recebido para:', dishName);
+    })
+    .catch(err => console.warn('[ENRICH] Erro:', err))
+    .finally(() => setEnrichLoading(false));
+  }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   const checkStatus = async () => {
@@ -1133,79 +1222,7 @@ function App() {
             })
             .catch(() => setRadarInfo(null));
           
-          // Enriquecimento Premium em background (TODOS os modos)
-          // Usa ref para evitar stale closure (handleCameraTouch memoiza identifyImage)
-          const currentPremiumUser = premiumUserRef.current;
-          if (currentPremiumUser) {
-            const dishName = resultWithTime.dish_display;
-            setEnrichLoading(true);
-            fetch(`${API}/ai/enrich`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                nome: dishName,
-                ingredientes: resultWithTime.ingredientes || [],
-                pin: currentPremiumUser.pin,
-                user_nome: currentPremiumUser.nome
-              })
-            }).then(r => r.json()).then(enrichData => {
-              if (enrichData.ok) {
-                const enrichFields = {
-                  beneficios: enrichData.beneficios || [],
-                  riscos: enrichData.riscos || [],
-                  curiosidade: enrichData.curiosidade || '',
-                  combinacoes: enrichData.combinacoes || [],
-                  noticias: enrichData.noticias || [],
-                  alertas_historico: enrichData.alertas_historico || []
-                };
-                const enrichNutrition = (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0)
-                  ? enrichData.nutrition : null;
-
-                // 1) Atualizar o result (se ainda estiver na tela)
-                setResult(prev => {
-                  if (!prev) return prev;
-                  const updated = {
-                    ...prev,
-                    ...enrichFields,
-                    beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
-                    riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
-                  };
-                  if (enrichFields.alertas_historico.length > 0 && prev.premium) {
-                    updated.premium = { ...prev.premium, alertas_historico: enrichFields.alertas_historico };
-                  }
-                  if (enrichNutrition) {
-                    updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
-                  }
-                  return updated;
-                });
-
-                // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
-                setPlateItems(prev => prev.map(item => {
-                  if (item.dish_display === dishName) {
-                    const updated = {
-                      ...item,
-                      beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
-                      riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
-                      curiosidade: enrichFields.curiosidade || item.curiosidade,
-                      combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
-                      noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
-                    };
-                    if (enrichFields.alertas_historico.length > 0 && item.premium) {
-                      updated.premium = { ...item.premium, alertas_historico: enrichFields.alertas_historico };
-                    }
-                    if (enrichNutrition) {
-                      updated.nutrition = { ...(item.nutrition || {}), ...enrichNutrition };
-                    }
-                    return updated;
-                  }
-                  return item;
-                }));
-
-                console.log('[ENRICH] Premium data recebido para:', dishName);
-              }
-              setEnrichLoading(false);
-            }).catch(err => { console.log('[ENRICH] Erro (não crítico):', err); setEnrichLoading(false); });
-          }
+          // ENRICH: movido para useEffect dedicado (evita stale closure)
         }
         // NÃO mostrar modal automaticamente - deixar usuário ver as informações primeiro
       }
@@ -3220,6 +3237,7 @@ function App() {
               )}
             </button>
           )}
+          {ttsError && <div style={{color:'#ef4444',fontSize:'12px',textAlign:'center',margin:'4px 0'}}>{ttsError}</div>}
           
           {/* ALERTAS PREMIUM - Destaque na tela de resultado */}
           {r.premium?.alertas_alergenos?.length > 0 && (
