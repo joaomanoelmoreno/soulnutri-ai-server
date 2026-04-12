@@ -76,7 +76,9 @@
   - NUNCA remover este header
 - **X-Content-Type-Options**: `nosniff` (previne MIME sniffing)
 - **Health check**: `/health` endpoint configurado no render.yaml para manter serviço ativo
-- **Futuro**: Submeter domínio ao HSTS Preload List (hstspreload.org) para proteção máxima
+- **emergent-main.js**: Carrega APENAS no preview (iframe). Em produção causa "body stream already read" e mata o app.
+  - NUNCA voltar para `<script src="...emergent-main.js">` direto no HTML
+  - Manter a lógica `if (window.self !== window.top)` para carregar condicionalmente
 
 ## 6. DADOS
 - Proporções nutricionais: NUNCA dividir igualmente por ingrediente (usar proporções comerciais)

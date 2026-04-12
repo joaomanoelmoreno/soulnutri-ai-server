@@ -34,7 +34,15 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
         
-        <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
+        <script>
+        // emergent-main.js: carrega APENAS no preview (iframe), NÃO em produção
+        // Em produção (Render), esse script intercepta fetch() e causa "body stream already read"
+        if (window.self !== window.top) {
+            var s = document.createElement('script');
+            s.src = 'https://assets.emergent.sh/scripts/emergent-main.js';
+            document.head.appendChild(s);
+        }
+        </script>
         <!--
         These two scripts have been added for the Visual Edits, please do not edit or remove them
         -->
