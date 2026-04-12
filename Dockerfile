@@ -13,20 +13,21 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# ── Python dependencies ──
-# Instalar torch CPU-only (necessario para exportar modelo ONNX durante build)
+# ── Python dependencies (SEM torch - modelo vem pronto do R2) ──
 COPY backend/requirements.txt backend/requirements.txt
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
-    pip install --no-cache-dir onnx onnxscript onnxruntime && \
-    grep -v -E "^(torch==|torchvision==)" backend/requirements.txt > backend/requirements-deploy.txt && \
+RUN grep -v -E "^(torch==|torchvision==)" backend/requirements.txt > backend/requirements-deploy.txt && \
+    pip install --no-cache-dir onnxruntime && \
     pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements-deploy.txt
 
-# ── Exportar modelo CLIP para ONNX float16 (feito no build, que tem mais RAM) ──
-COPY backend/scripts/export_onnx.py /app/export_onnx.py
-RUN python3 /app/export_onnx.py && rm /app/export_onnx.py
-
-# Remover torch apos export (economiza ~1.5GB de espaco em disco no container)
-RUN pip uninstall -y torch torchvision onnx onnxscript 2>/dev/null; true
+# ── Baixar modelo CLIP ONNX pre-compilado do R2 (testado e funcionando) ──
+RUN pip install --no-cache-dir boto3 && \
+    python3 -c "import boto3,os; \
+    r2=boto3.client('s3',endpoint_url='https://2723f210eede7a83470abe72ffeaeecb.r2.cloudflarestorage.com', \
+    aws_access_key_id='a5a02bd055dfda49dd119c3306473172', \
+    aws_secret_access_key='d17b5049f0a518523c00f94fdf229a0528da00eae287a5797739ac1d4aab1314', \
+    region_name='auto'); \
+    r2.download_file('soulnutri-images','models/clip_visual_fp16.onnx','/app/clip_visual_fp16.onnx'); \
+    print(f'Modelo baixado: {os.path.getsize(\"/app/clip_visual_fp16.onnx\")/1024/1024:.1f} MB')"
 
 # ── Frontend build ──
 COPY frontend/package.json frontend/yarn.lock frontend/
