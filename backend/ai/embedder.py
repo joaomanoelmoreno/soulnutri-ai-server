@@ -69,7 +69,7 @@ def _try_load_onnx_model():
         start = time.time()
         
         opts = ort.SessionOptions()
-        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
+        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_DISABLE_ALL
         opts.inter_op_num_threads = 1
         opts.intra_op_num_threads = 2
         opts.enable_mem_pattern = False
