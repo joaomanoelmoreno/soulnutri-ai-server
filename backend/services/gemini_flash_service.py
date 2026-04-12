@@ -57,7 +57,7 @@ ENRICH_TEMPLATE_PRE = 'Dado o prato "'
 ENRICH_TEMPLATE_MID = '" com ingredientes ['
 ENRICH_TEMPLATE_POST = """], retorne APENAS JSON válido:
 {"benef":["frase curta até 20 palavras","...","..."],"riscos":["frase curta até 20 palavras","..."],"curios":"1 frase curta e surpreendente","combo":["combinação 1","combinação 2"],"noticias":[{"texto":"resumo curto da informação nutricional","fonte":"Nome da Instituição (ex: Harvard, OMS, UNICAMP)"}],"mito":{"mito":"Ovo aumenta o colesterol","resposta":"MITO. Estudos recentes mostram que...","fonte":"Nome da Instituição"}}
-Regras: benef=3 benefícios nutricionais CURTOS com dado concreto. riscos=2 riscos CURTOS e específicos. curios=1 curiosidade surpreendente CURTA. combo=2 combinações alimentares. noticias=1 informação nutricional relevante com nome da fonte (NÃO invente URLs, apenas o nome da instituição como Harvard, OMS, ANVISA, USP). mito=1 verdade ou mito popular sobre algum ingrediente do prato."""
+Regras: benef=3 benefícios nutricionais CURTOS com dado concreto. riscos=2 riscos CURTOS e específicos. curios=1 curiosidade surpreendente CURTA. combo=2 combinações alimentares. noticias=1 informação nutricional relevante com nome da fonte (NÃO invente URLs, use nome da instituição como Harvard, OMS, ANVISA, USP, Mayo Clinic, Embrapa, etc - pode ser brasileira ou internacional, desde que relacionada ao alimento). mito=1 verdade ou mito popular sobre algum ingrediente do prato."""
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROMPT PARA ALERTAS PERSONALIZADOS (segunda etapa, se necessário)
