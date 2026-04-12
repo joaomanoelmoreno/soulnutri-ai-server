@@ -70,6 +70,14 @@
 - Backend serve sw.js com no-cache headers
 - NUNCA adicionar cache agressivo ao SW novamente
 
+## 7. HEADERS DE SEGURANÇA E DISPONIBILIDADE
+- **HSTS obrigatório**: `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+  - Sem HSTS, Chrome pode tratar a URL como busca do Google após uma falha de DNS
+  - NUNCA remover este header
+- **X-Content-Type-Options**: `nosniff` (previne MIME sniffing)
+- **Health check**: `/health` endpoint configurado no render.yaml para manter serviço ativo
+- **Futuro**: Submeter domínio ao HSTS Preload List (hstspreload.org) para proteção máxima
+
 ## 6. DADOS
 - Proporções nutricionais: NUNCA dividir igualmente por ingrediente (usar proporções comerciais)
 - Base de pratos: 200 pratos oficiais (não inflar com pratos da IA)

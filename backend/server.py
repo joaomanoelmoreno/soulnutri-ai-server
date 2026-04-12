@@ -162,12 +162,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Middleware para controle de cache (produção-ready)
+# Middleware para controle de cache e segurança (produção-ready)
 @app.middleware("http")
 async def cache_control_middleware(request, call_next):
     response = await call_next(request)
     content_type = response.headers.get("content-type", "")
     path = request.url.path
+    
+    # ═══════════════════════════════════════════════════════════
+    # HSTS - Strict Transport Security (CRÍTICO para Chrome)
+    # Diz ao Chrome: "Este domínio é SEMPRE um site HTTPS".
+    # Sem isso, Chrome pode tratar a URL como busca do Google
+    # se uma única tentativa de DNS falhar.
+    # max-age=31536000 = 1 ano | includeSubDomains | preload
+    # ═══════════════════════════════════════════════════════════
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+    
+    # X-Content-Type-Options - Previne MIME sniffing
+    response.headers["X-Content-Type-Options"] = "nosniff"
     
     # HTML nunca deve ser cacheado (garante que o user sempre pega a versão nova)
     if content_type.startswith("text/html"):
@@ -178,9 +190,6 @@ async def cache_control_middleware(request, call_next):
     if path.endswith("sw.js") or path.endswith("manifest.json"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         response.headers["Pragma"] = "no-cache"
-    
-    # Assets com hash no nome (main.abc123.js) podem ser cacheados longamente
-    # Isso é o comportamento padrão do React build
     
     return response
 
