@@ -156,6 +156,9 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     """Gera embedding de uma imagem a partir de bytes"""
     global _MODEL, _PREPROCESS, _USE_HF_API, _ONNX_SESSION, _USE_ONNX
     
+    import gc
+    gc.collect()  # Liberar memória antes de inferência
+    
     start = time.time()
     
     # ═══ MODO ONNX (deploy) ═══
@@ -173,20 +176,29 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
             # Preprocessing CLIP via numpy (sem torch)
             img_np = _preprocess_clip_numpy(img)
             
+            # Liberar imagem PIL (não mais necessária)
+            del img
+            
             # Inferencia ONNX
             result = _ONNX_SESSION.run(None, {'image': img_np})[0]
             
+            # Liberar input
+            del img_np
+            
             # Normalizar
             embedding = result[0].astype(np.float32)
+            del result
             norm = np.linalg.norm(embedding)
             if norm > 0:
                 embedding = embedding / norm
             
-            logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
+            gc.collect()  # Liberar memória após inferência
+            logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms")
             return embedding
             
         except Exception as e:
             logger.error(f"[embedder] Erro ONNX: {e}")
+            gc.collect()
             return None
     
     # ═══ MODO PYTORCH (dev local) ═══
