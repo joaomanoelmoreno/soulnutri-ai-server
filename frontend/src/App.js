@@ -1188,11 +1188,18 @@ function App() {
       
       // Verificar se a resposta foi bem sucedida
       if (!res.ok) {
-        const errorText = await res.text();
+        let errorText = `HTTP ${res.status}`;
+        try { errorText = await res.clone().text(); } catch {}
         throw new Error(`Erro do servidor: ${res.status} - ${errorText.substring(0, 100)}`);
       }
       
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        // Body pode já ter sido consumido por script externo
+        throw new Error('Erro ao processar resposta do servidor');
+      }
       
       if (multiMode) {
         setMultiResult({ ...data, totalTime: Date.now() - t });
@@ -1232,9 +1239,9 @@ function App() {
       
       if (e.name === 'AbortError') {
         setError('Tempo limite excedido. Tente novamente.');
-      } else if (e.message && e.message.includes('postMessage')) {
-        // Erro do preview iframe - ignorar silenciosamente
-        console.warn('[IDENTIFY] Erro postMessage ignorado (preview iframe)');
+      } else if (e.message && (e.message.includes('postMessage') || e.message.includes('body stream'))) {
+        // Erro de script externo (emergent-main.js) - ignorar
+        console.warn('[IDENTIFY] Erro de script externo ignorado:', e.message);
       } else {
         setError(e.message || 'Erro de conexão');
       }
@@ -1537,7 +1544,8 @@ function App() {
           
           if (!mountedRef.current) return;
           
-          const data = await res.json();
+          let data;
+          try { data = await res.json(); } catch { return; }
           
           // Só mostrar se score >= 0.7 (mais confiável)
           if (data.ok && data.identified && data.score >= 0.7) {
