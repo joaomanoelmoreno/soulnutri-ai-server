@@ -19,7 +19,7 @@ torch.onnx.export(
     "/app/clip_visual_fp32.onnx",
     input_names=["image"],
     output_names=["embedding"],
-    opset_version=17,
+    opset_version=18,
     dynamic_axes={"image": {0: "batch"}, "embedding": {0: "batch"}},
 )
 
