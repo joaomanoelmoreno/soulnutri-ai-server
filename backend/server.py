@@ -1098,6 +1098,7 @@ async def enrich_dish(request: Request):
             "curiosidade": enrichment.get("curiosidade", ""),
             "combinacoes": enrichment.get("combinacoes", []),
             "noticias": enrichment.get("noticias", []),
+            "mito_verdade": enrichment.get("mito_verdade"),
             "alertas_historico": alertas_historico,
             "nutrition": nutrition_formatted
         }

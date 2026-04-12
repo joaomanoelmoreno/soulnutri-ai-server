@@ -55,7 +55,9 @@ cat:v=vegano,veg=vegetariano,p=proteína animal. score:confiança 0-1. alerg:ape
 # Prompt para enriquecimento Premium (segunda chamada, background)
 ENRICH_TEMPLATE_PRE = 'Dado o prato "'
 ENRICH_TEMPLATE_MID = '" com ingredientes ['
-ENRICH_TEMPLATE_POST = """], retorne APENAS JSON válido com os campos: benef (3 benefícios nutricionais reais), riscos (2 riscos ESPECÍFICOS com dados concretos), curios (1 curiosidade científica), combo (2 combinações que potencializam), noticias (1-2 alertas recentes de saúde/nutrição sobre ingredientes). Formato: {"benef":["...","...","..."],"riscos":["...","..."],"curios":"...","combo":["...","..."],"noticias":["..."]}"""
+ENRICH_TEMPLATE_POST = """], retorne APENAS JSON válido:
+{"benef":["frase curta até 20 palavras","...","..."],"riscos":["frase curta até 20 palavras","..."],"curios":"1 frase curta e surpreendente","combo":["combinação 1","combinação 2"],"noticias":[{"texto":"resumo curto","url":"link da fonte"}],"mito":{"mito":"Ovo aumenta o colesterol","resposta":"MITO. Estudos recentes mostram que...","fonte":"url"}}
+Regras: benef=3 benefícios nutricionais CURTOS com dado concreto. riscos=2 riscos CURTOS e específicos. curios=1 curiosidade surpreendente CURTA. combo=2 combinações alimentares. noticias=1 notícia recente com URL real. mito=1 verdade ou mito popular sobre algum ingrediente do prato."""
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROMPT PARA ALERTAS PERSONALIZADOS (segunda etapa, se necessário)
@@ -410,6 +412,7 @@ async def enrich_dish_gemini(nome: str, ingredientes: list) -> Dict:
         curiosidade = parsed.get("curios") or parsed.get("curiosidade") or ""
         combinacoes = parsed.get("combo") or parsed.get("combinacoes") or []
         noticias = parsed.get("noticias") or []
+        mito_verdade = parsed.get("mito") or parsed.get("mito_verdade") or None
         
         elapsed = (_time.time() - start) * 1000
         logger.info(f"[Enrich] Premium data para '{nome}' em {elapsed:.0f}ms")
@@ -418,7 +421,8 @@ async def enrich_dish_gemini(nome: str, ingredientes: list) -> Dict:
             "riscos": riscos,
             "curiosidade": curiosidade,
             "combinacoes": combinacoes,
-            "noticias": noticias
+            "noticias": noticias,
+            "mito_verdade": mito_verdade
         }
     except Exception as e:
         logger.warning(f"[Enrich] Parse erro: {str(e)[:100]} | Raw: {response_text[:100] if response_text else 'None'}")

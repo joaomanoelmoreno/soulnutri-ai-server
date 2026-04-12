@@ -652,7 +652,8 @@ function App() {
         curiosidade: enrichData.curiosidade || '',
         combinacoes: enrichData.combinacoes || [],
         noticias: enrichData.noticias || [],
-        alertas_historico: enrichData.alertas_historico || []
+        alertas_historico: enrichData.alertas_historico || [],
+        mito_verdade: enrichData.mito_verdade || null
       };
       const enrichNutrition = (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0)
         ? enrichData.nutrition : null;
@@ -667,6 +668,7 @@ function App() {
           curiosidade: enrichFields.curiosidade || prev.curiosidade,
           combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : prev.combinacoes,
           noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : prev.noticias,
+          mito_verdade: enrichFields.mito_verdade || prev.mito_verdade,
         };
         if (enrichFields.alertas_historico.length > 0 && prev.premium) {
           updated.premium = { ...prev.premium, alertas_historico: enrichFields.alertas_historico };
@@ -687,6 +689,7 @@ function App() {
           curiosidade: enrichFields.curiosidade || item.curiosidade,
           combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
           noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
+          mito_verdade: enrichFields.mito_verdade || item.mito_verdade,
           ...(enrichNutrition ? { nutrition: { ...(item.nutrition || {}), ...enrichNutrition } } : {}),
         };
       }));
