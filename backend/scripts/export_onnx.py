@@ -1,4 +1,4 @@
-"""Script de build: exporta modelo CLIP para ONNX float16"""
+"""Script de build: exporta modelo CLIP para ONNX float16 (legacy exporter)"""
 import torch
 import open_clip
 import onnx
@@ -11,16 +11,18 @@ model, _, _ = open_clip.create_model_and_transforms(
 )
 model.eval()
 
-print("[BUILD] Exportando para ONNX...")
+print("[BUILD] Exportando para ONNX (legacy exporter, opset 14)...")
 dummy = torch.randn(1, 3, 224, 224)
+
+# FORÇAR legacy exporter (não dynamo) - compatível com onnxruntime em qualquer CPU
 torch.onnx.export(
     model.visual,
     dummy,
     "/app/clip_visual_fp32.onnx",
     input_names=["image"],
     output_names=["embedding"],
-    opset_version=18,
-    dynamic_axes={"image": {0: "batch"}, "embedding": {0: "batch"}},
+    opset_version=14,
+    dynamo=False,
 )
 
 print("[BUILD] Convertendo para float16...")
