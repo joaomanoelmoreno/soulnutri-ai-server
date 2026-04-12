@@ -1188,17 +1188,14 @@ function App() {
       
       // Verificar se a resposta foi bem sucedida
       if (!res.ok) {
-        let errorText = `HTTP ${res.status}`;
-        try { errorText = await res.clone().text(); } catch {}
-        throw new Error(`Erro do servidor: ${res.status} - ${errorText.substring(0, 100)}`);
+        throw new Error('Servidor temporariamente indisponivel. Tente novamente.');
       }
       
       let data;
       try {
         data = await res.json();
       } catch {
-        // Body pode já ter sido consumido por script externo
-        throw new Error('Erro ao processar resposta do servidor');
+        throw new Error('Servidor reiniciando. Aguarde e tente novamente.');
       }
       
       if (multiMode) {
