@@ -407,22 +407,19 @@ async def get_nutrition_sheet(dish_name: str):
 # ═══════════════════════════════════════════════════════════════
 @api_router.post("/ai/tts")
 async def text_to_speech(request: Request):
-    """Gera audio MP3 descrevendo o prato identificado"""
+    """Gera audio MP3. premium_tts=true usa OpenAI Shimmer (Prato Completo)"""
     from services.tts_service import generate_dish_audio
     from fastapi.responses import Response
     
     try:
         body = await request.json()
         dish_data = body.get("dish_data", {})
-        voice = body.get("voice", "alloy")
-        
-        if voice not in ("alloy", "onyx"):
-            voice = "alloy"
+        premium_tts = body.get("premium_tts", False)
         
         if not dish_data.get("dish_display") and not dish_data.get("nome"):
             return {"ok": False, "message": "Dados do prato nao fornecidos"}
         
-        audio_bytes = await generate_dish_audio(dish_data, voice=voice)
+        audio_bytes = await generate_dish_audio(dish_data, premium_tts=premium_tts)
         
         if audio_bytes:
             return Response(

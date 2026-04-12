@@ -1,5 +1,6 @@
-"""SoulNutri - Servico de Text-to-Speech via gTTS (Google Translate TTS)
-Gratuito, sem API key, voz nativa pt-BR."""
+"""SoulNutri - Servico de Text-to-Speech
+Scan (buffet): gTTS gratuito, rapido
+Prato Completo (premium): OpenAI Shimmer, voz natural"""
 
 import io
 import logging
@@ -7,23 +8,52 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-async def generate_dish_audio(dish_data: dict, voice: str = "alloy") -> bytes:
+async def generate_dish_audio(dish_data: dict, voice: str = "alloy", premium_tts: bool = False) -> bytes:
     """
-    Gera audio MP3 descrevendo o prato identificado.
-    Usa gTTS (gratuito, voz nativa brasileira).
-    
-    Args:
-        dish_data: Dados do prato (dish_display, nutrition, alergenos, etc.)
-        voice: Ignorado (gTTS usa voz pt-BR nativa)
-    
-    Returns:
-        bytes do MP3 ou None se falhar
+    Gera audio MP3 descrevendo o prato.
+    premium_tts=False: gTTS (gratuito, scan no buffet)
+    premium_tts=True: OpenAI Shimmer (premium, Prato Completo)
     """
     text = _build_dish_description(dish_data)
-    
     if not text:
         return None
-    
+
+    if premium_tts:
+        return await _generate_openai_tts(text)
+    else:
+        return await _generate_gtts(text)
+
+
+async def _generate_openai_tts(text: str) -> bytes:
+    """OpenAI TTS - voz Shimmer 1.0x para Prato Completo premium"""
+    try:
+        from emergentintegrations.llm.openai import OpenAITextToSpeech
+        import os
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        key = os.getenv("OPENAI_API_KEY") or os.getenv("EMERGENT_LLM_KEY")
+        if not key:
+            logger.warning("[TTS] Sem key OpenAI/Emergent, fallback para gTTS")
+            return await _generate_gtts(text)
+        
+        tts = OpenAITextToSpeech(api_key=key)
+        audio_bytes = await tts.generate_speech(
+            text=text[:4096],
+            model="tts-1",
+            voice="shimmer",
+            speed=1.0,
+            response_format="mp3"
+        )
+        logger.info(f"[TTS] OpenAI Shimmer: {len(audio_bytes)//1024}KB")
+        return audio_bytes
+    except Exception as e:
+        logger.error(f"[TTS] OpenAI falhou, fallback gTTS: {e}")
+        return await _generate_gtts(text)
+
+
+async def _generate_gtts(text: str) -> bytes:
+    """gTTS gratuito - para scan rapido no buffet"""
     try:
         from gtts import gTTS
         
@@ -32,7 +62,6 @@ async def generate_dish_audio(dish_data: dict, voice: str = "alloy") -> bytes:
         tts.write_to_fp(mp3_buffer)
         mp3_buffer.seek(0)
         
-        # Tentar acelerar para 1.35x (requer ffmpeg)
         try:
             from pydub import AudioSegment
             audio = AudioSegment.from_mp3(mp3_buffer)
@@ -41,24 +70,20 @@ async def generate_dish_audio(dish_data: dict, voice: str = "alloy") -> bytes:
             audio.export(out, format="mp3")
             out.seek(0)
             result = out.read()
-            logger.info(f"[TTS] Audio gerado (gTTS pt-BR 1.35x): {len(result)//1024}KB")
-        except Exception as speed_err:
-            logger.warning(f"[TTS] Speedup falhou (ffmpeg?), usando velocidade normal: {speed_err}")
+            logger.info(f"[TTS] gTTS 1.35x: {len(result)//1024}KB")
+        except Exception:
             mp3_buffer.seek(0)
             result = mp3_buffer.read()
-            logger.info(f"[TTS] Audio gerado (gTTS pt-BR 1.0x): {len(result)//1024}KB")
+            logger.info(f"[TTS] gTTS 1.0x: {len(result)//1024}KB")
         
         return result
-        
     except Exception as e:
-        logger.error(f"[TTS] Erro ao gerar audio: {e}")
+        logger.error(f"[TTS] gTTS erro: {e}")
         return None
 
 
 def _build_dish_description(data: dict) -> str:
-    """Constroi texto natural e completo para o TTS ler.
-    Inclui: nome, calorias, macros, ingredientes, beneficios, riscos,
-    alergenos, alertas, curiosidade, noticias, verdade/mito, resumo premium."""
+    """Constroi texto para o TTS ler."""
     parts = []
     
     nome = data.get("dish_display") or data.get("nome")
@@ -67,42 +92,33 @@ def _build_dish_description(data: dict) -> str:
     
     parts.append(f"{nome}.")
     
-    # Categoria
-    categoria = data.get("category") or data.get("categoria")
-    if categoria:
-        parts.append(f"Categoria: {categoria}.")
-    
     # Calorias e Macros
     nutrition = data.get("nutrition") or {}
     calorias = nutrition.get("calorias") or data.get("calorias_estimadas")
     if calorias:
         cal_str = str(calorias).replace("kcal", "").replace("cal", "").strip()
-        parts.append(f"{cal_str} calorias por porcao.")
+        parts.append(f"{cal_str} calorias por porção.")
     
     macros = []
     if nutrition.get("proteinas"):
-        macros.append(f"proteinas {nutrition['proteinas']}")
+        macros.append(f"proteínas {nutrition['proteinas']}")
     if nutrition.get("carboidratos"):
         macros.append(f"carboidratos {nutrition['carboidratos']}")
     if nutrition.get("gorduras"):
         macros.append(f"gorduras {nutrition['gorduras']}")
-    if nutrition.get("fibras"):
-        macros.append(f"fibras {nutrition['fibras']}")
-    if nutrition.get("sodio"):
-        macros.append(f"sodio {nutrition['sodio']}")
     if macros:
-        parts.append("Dados nutricionais: " + ", ".join(macros) + ".")
+        parts.append(", ".join(macros) + ".")
     
     # Ingredientes
     ingredientes = data.get("ingredientes") or []
     if ingredientes:
-        parts.append("Ingredientes: " + ", ".join(ingredientes[:10]) + ".")
+        parts.append("Ingredientes: " + ", ".join(ingredientes[:8]) + ".")
     
     # Alergenos - CRITICO para acessibilidade
     alergenos = data.get("alergenos") or {}
     contidos = [nome_al for nome_al, presente in alergenos.items() if presente]
     if contidos:
-        parts.append(f"Atencao! Contem: {', '.join(contidos)}.")
+        parts.append(f"Atenção! Contém: {', '.join(contidos)}.")
     
     # Alertas personalizados
     alertas = data.get("alertas_personalizados") or []
@@ -111,32 +127,17 @@ def _build_dish_description(data: dict) -> str:
         if isinstance(msg, str) and msg:
             parts.append(msg + ".")
     
-    # Alertas premium (alergenos do perfil)
+    # Alertas premium
     premium = data.get("premium") or {}
-    alertas_alergenos = premium.get("alertas_alergenos") or []
-    for alerta in alertas_alergenos[:3]:
+    for alerta in (premium.get("alertas_alergenos") or [])[:2]:
         msg = alerta.get("mensagem", "")
         if msg:
-            parts.append(f"Alerta importante: {msg}")
-    
-    # Alertas de historico
-    alertas_hist = premium.get("alertas_historico") or []
-    for hist in alertas_hist[:2]:
-        if isinstance(hist, dict):
-            breve = hist.get("alerta_breve", "")
-            if breve:
-                parts.append(breve + ".")
-            consumo = hist.get("alerta_consumo")
-            if consumo and isinstance(consumo, dict):
-                for sub_alert in consumo.get("alerts", [])[:2]:
-                    txt = sub_alert.get("texto", "")
-                    if txt:
-                        parts.append(txt)
+            parts.append(f"Alerta: {msg}")
     
     # Beneficios
     beneficios = data.get("beneficios") or []
     if beneficios:
-        parts.append("Beneficios: " + ". ".join(beneficios[:3]) + ".")
+        parts.append("Benefícios: " + ". ".join(beneficios[:3]) + ".")
     
     # Riscos
     riscos = data.get("riscos") or []
@@ -144,37 +145,31 @@ def _build_dish_description(data: dict) -> str:
         parts.append("Riscos: " + ". ".join(riscos[:2]) + ".")
     
     # Curiosidade
-    curiosidade = data.get("curiosidade") or data.get("curiosidade_cientifica") or ""
+    curiosidade = data.get("curiosidade") or ""
     if curiosidade:
         parts.append(f"Curiosidade: {curiosidade}")
     
     # Verdade ou Mito
     mito = data.get("mito_verdade")
     if mito and isinstance(mito, dict):
-        afirmacao = mito.get("afirmacao", "")
-        resposta = mito.get("resposta", "")
-        explicacao = mito.get("explicacao", "")
-        if afirmacao:
-            parts.append(f"Verdade ou mito: {afirmacao}. {resposta}. {explicacao}")
+        frase = mito.get("mito") or mito.get("afirmacao") or mito.get("frase", "")
+        resposta = mito.get("resposta") or mito.get("verdade", "")
+        if frase:
+            parts.append(f"Verdade ou mito: {frase}. {resposta}")
     
     # Noticias
     noticias = data.get("noticias") or []
-    if noticias:
-        for noticia in noticias[:2]:
-            if isinstance(noticia, str):
-                parts.append(f"Noticia: {noticia}")
-            elif isinstance(noticia, dict):
-                txt = noticia.get("texto") or noticia.get("titulo", "")
-                if txt:
-                    parts.append(f"Noticia: {txt}")
+    for noticia in noticias[:2]:
+        if isinstance(noticia, str):
+            parts.append(f"Notícia: {noticia}")
+        elif isinstance(noticia, dict):
+            txt = noticia.get("texto") or noticia.get("titulo", "")
+            if txt:
+                parts.append(f"Notícia: {txt}")
     
-    # Beneficio principal e alerta de saude (Premium MongoDB)
-    benef_principal = data.get("beneficio_principal")
-    if benef_principal:
-        parts.append(f"Beneficio principal: {benef_principal}")
-    
+    # Alerta de saude
     alerta_saude = data.get("alerta_saude")
     if alerta_saude:
-        parts.append(f"Alerta de saude: {alerta_saude}")
+        parts.append(f"Alerta de saúde: {alerta_saude}")
     
     return " ".join(parts)

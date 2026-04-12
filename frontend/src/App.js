@@ -325,7 +325,7 @@ function App() {
   // Enrich Premium - Loading state
   const [enrichLoading, setEnrichLoading] = useState(false);
   
-  const playDishAudio = async (dishData, voice = 'alloy') => {
+  const playDishAudio = async (dishData, premiumTts = false) => {
     if (ttsAudioRef.current) {
       ttsAudioRef.current.pause();
       ttsAudioRef.current = null;
@@ -339,7 +339,7 @@ function App() {
       const res = await fetch(`${API}/ai/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dish_data: dishData, voice })
+        body: JSON.stringify({ dish_data: dishData, premium_tts: premiumTts })
       });
       
       const contentType = res.headers.get('content-type') || '';
@@ -2720,7 +2720,7 @@ function App() {
                 beneficio_principal: plateConsolidated.beneficio_principal?.join('. ') || '',
                 alerta_saude: plateConsolidated.alerta_saude?.join('. ') || '',
                 mito_verdade: plateConsolidated.mitos_verdades?.[0] || null,
-              })}
+              }, true)}
               disabled={ttsLoading || enrichLoading}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
