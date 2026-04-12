@@ -11,17 +11,19 @@ logger = logging.getLogger(__name__)
 async def generate_dish_audio(dish_data: dict, voice: str = "alloy", premium_tts: bool = False) -> bytes:
     """
     Gera audio MP3 descrevendo o prato.
-    premium_tts=False: gTTS (gratuito, scan no buffet)
-    premium_tts=True: OpenAI Shimmer (premium, Prato Completo)
+    SEMPRE usa OpenAI Shimmer (voz natural e consistente).
+    Fallback para gTTS se OpenAI falhar.
     """
     text = _build_dish_description(dish_data)
     if not text:
         return None
 
-    if premium_tts:
-        return await _generate_openai_tts(text)
-    else:
-        return await _generate_gtts(text)
+    # Tentar OpenAI Shimmer primeiro (consistência de voz)
+    result = await _generate_openai_tts(text)
+    if result:
+        return result
+    # Fallback gratuito
+    return await _generate_gtts(text)
 
 
 async def _generate_openai_tts(text: str) -> bytes:
@@ -148,6 +150,11 @@ def _build_dish_description(data: dict) -> str:
     curiosidade = data.get("curiosidade") or ""
     if curiosidade:
         parts.append(f"Curiosidade: {curiosidade}")
+    
+    # Combinacoes
+    combinacoes = data.get("combinacoes") or []
+    if combinacoes:
+        parts.append("Combinações que potencializam: " + ". ".join(combinacoes[:3]) + ".")
     
     # Verdade ou Mito
     mito = data.get("mito_verdade")

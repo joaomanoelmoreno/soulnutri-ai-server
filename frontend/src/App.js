@@ -2345,6 +2345,11 @@ function App() {
             <span
               data-testid="location-indicator"
               onClick={() => {
+                // Parar GPS para não fechar o modal automaticamente
+                if (watchIdRef.current !== null) {
+                  navigator.geolocation.clearWatch(watchIdRef.current);
+                  watchIdRef.current = null;
+                }
                 localStorage.removeItem('soulnutri_location_manual');
                 setShowLocationPrompt(true);
               }}
