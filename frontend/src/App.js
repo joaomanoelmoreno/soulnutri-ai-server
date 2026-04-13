@@ -604,6 +604,14 @@ function App() {
     };
   }, []);
 
+  // Reiniciar câmera quando resultado é limpo (volta para tela de scan)
+  useEffect(() => {
+    if (!result && !loading && viewMode !== 'mesa' && stream === null) {
+      startCamera();
+    }
+  }, [result, loading, viewMode]); // eslint-disable-line react-hooks/exhaustive-deps
+
+
   // Detectar localização quando tela de permissões é fechada
   useEffect(() => {
     if (!showPermissions && !detectedRestaurant) {

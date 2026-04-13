@@ -849,8 +849,34 @@ async def identify_image(
         # Para Cibi Sana: retorno imediato SEM queries MongoDB (velocidade <500ms)
         # Para modo externo (Gemini): queries rapidas em paralelo
         if is_cibi_sana:
-            # CLIP retorna rapido - nutrition e premium virao pelo /ai/enrich
+            # CLIP retorna rapido - busca ingredientes + nutrition do MongoDB (query rapida ~10ms)
             nutrition_data = decision.get('nutrition') or {}
+            
+            # Buscar ingredientes e nutrition sheet do MongoDB (1 query rapida)
+            if decision.get('identified') and dish_display_name:
+                import asyncio as _asyncio
+                slug = dish_display_name.lower().replace(' ', '_').replace('-', '_')
+                
+                parallel = {
+                    'dish': db.dishes.find_one(
+                        {"$or": [{"slug": slug}, {"name": {"$regex": f"^{dish_display_name}$", "$options": "i"}}]},
+                        {"_id": 0, "ingredients": 1, "ingredientes": 1, "category": 1}
+                    ),
+                    'nutrition': lookup_nutrition_sheet(dish_display_name)
+                }
+                keys = list(parallel.keys())
+                results = await _asyncio.gather(*parallel.values(), return_exceptions=True)
+                resolved = dict(zip(keys, results))
+                
+                dish_doc = resolved.get('dish') if not isinstance(resolved.get('dish'), Exception) else None
+                sheet = resolved.get('nutrition') if not isinstance(resolved.get('nutrition'), Exception) else None
+                
+                if dish_doc:
+                    ings = dish_doc.get('ingredients') or dish_doc.get('ingredientes') or []
+                    if ings:
+                        decision['ingredientes'] = ings
+                if sheet:
+                    nutrition_data = sheet
             
             # Check premium apenas se credenciais enviadas (unica query)
             if pin and nome:
