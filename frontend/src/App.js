@@ -604,14 +604,7 @@ function App() {
     };
   }, []);
 
-  // Reiniciar câmera quando resultado é limpo (volta para tela de scan)
-  useEffect(() => {
-    if (!result && !loading && viewMode !== 'mesa') {
-      // Pequeno delay para o DOM renderizar o video element antes de pedir a câmera
-      const timer = setTimeout(() => startCamera(), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [result, loading, viewMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Camera restart é feito pelos botões diretamente (getUserMedia requer gesto do usuário no mobile)
 
 
   // Detectar localização quando tela de permissões é fechada
@@ -2631,7 +2624,7 @@ function App() {
         </button>
         <button 
           className="action-btn clear" 
-          onClick={() => { clearResult(); clearPlate(); setViewMode('buffet'); }}
+          onClick={() => { clearResult(); clearPlate(); setViewMode('buffet'); startCamera(); }}
           disabled={!r && !multiResult && !error && plateItems.length === 0}
           data-testid="clear-button"
         >
@@ -2694,7 +2687,7 @@ function App() {
           {/* BOTÃO VOLTAR */}
           <button 
             className="back-btn"
-            onClick={() => { setViewMode('buffet'); }}
+            onClick={() => { setViewMode('buffet'); startCamera(); }}
             data-testid="mesa-back-btn"
           >
             ← Voltar ao buffet
@@ -3138,13 +3131,13 @@ function App() {
           <div className="mesa-actions">
             <button 
               className="add-more-btn"
-              onClick={() => { setViewMode('buffet'); }}
+              onClick={() => { clearResult(); setViewMode('buffet'); startCamera(); }}
             >
               + Adicionar mais itens
             </button>
             <button 
               className="clear-plate-btn"
-              onClick={() => { clearPlate(); setViewMode('buffet'); }}
+              onClick={() => { clearPlate(); setViewMode('buffet'); startCamera(); }}
             >
               🗑️ Limpar prato
             </button>
@@ -3153,7 +3146,7 @@ function App() {
           {/* BOTÃO SAIR */}
           <button 
             className="exit-btn"
-            onClick={() => { clearPlate(); clearResult(); setViewMode('buffet'); }}
+            onClick={() => { clearPlate(); clearResult(); setViewMode('buffet'); startCamera(); }}
             style={{
               marginTop: '16px',
               padding: '12px 24px',
