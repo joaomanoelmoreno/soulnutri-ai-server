@@ -629,10 +629,9 @@ function App() {
     const dishName = result.dish_display;
     if (!dishName) return;
 
-    // Evitar chamadas duplicadas para o mesmo prato
-    const enrichKey = `enrich_${dishName}`;
-    if (sessionStorage.getItem(enrichKey)) return;
-    sessionStorage.setItem(enrichKey, 'loading');
+    // Evitar chamadas duplicadas para o mesmo prato ATIVO
+    if (result._enrichStarted) return;
+    result._enrichStarted = true;
 
     setEnrichLoading(true);
     console.log('[ENRICH] Iniciando para:', dishName, '| Premium:', premiumUser.nome);
@@ -702,7 +701,6 @@ function App() {
         };
       }));
 
-      sessionStorage.setItem(enrichKey, 'done');
       console.log('[ENRICH] Premium data recebido para:', dishName);
     })
     .catch(err => console.warn('[ENRICH] Erro:', err))
