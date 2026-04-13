@@ -1,58 +1,68 @@
 # SoulNutri - Product Requirements Document
 
-## Versao Atual: V3.1
+## Versao Atual: V3.2
 
 ## Stack
 - Frontend: React (PWA) | Backend: FastAPI, Motor (MongoDB async)
-- IA: OpenCLIP ViT-B-16 (ONNX) | Gemini 2.5 Flash Lite (Emergent LLM Key)
-- TTS: gTTS 1.35x (gratuito, pt-BR) | DB: MongoDB Atlas | Deploy: Render.com
+- IA: OpenCLIP ViT-B-16 (ONNX pré-otimizado R2) | Gemini 2.5 Flash Lite (Emergent LLM Key)
+- TTS: OpenAI Shimmer (Emergent Key) com fallback gTTS | DB: MongoDB Atlas | Deploy: Render Standard 1GB
 
 ## REGRAS IMUTÁVEIS → /app/memory/REGRAS_IMUTAVEIS.md
-Arquivo criado com todas as regras que NUNCA podem ser violadas por nenhum agente.
 
 ## Implementado
 
-### V3.1 (11/Abr/2026)
-- P0 FIX: Service Worker reescrito para v10-minimal (sem cache, sem fetch interception)
-- P0 FIX: index.js com lifecycle management (hadController, orphan cache cleanup)
-- P0 FIX: Backend serve sw.js e manifest.json com no-cache + ETag
-- FIX: Race condition do enrich - callback agora atualiza TANTO result QUANTO plateItems
-- FIX: Botao TTS "Ouvir resumo do prato" adicionado ao Prato Completo (mesa view)
-- FIX: Indicador visual "Carregando conteudo Premium..." no mesa view
-- FIX: setShowPremiumModal corrigido para setShowPremium('login')
-- REGRAS_IMUTAVEIS.md criado para proteger requisitos fundamentais
+### V3.2 (13/Abr/2026)
+- Fontes (instituições reais) em benefícios, riscos, notícias e Verdade/Mito
+- Alertas nutricionais automáticos no scan (calorias, proteínas, gorduras, sódio, fibras, alérgenos) — zero créditos
+- TTS OpenAI Shimmer em tudo (voz consistente scan + prato completo)
+- Combinações incluídas no áudio TTS
+- Anti-duplicata de pratos no prato completo
+- Botão remover prato individual (X)
+- Bug localização corrigido (GPS watcher parado no modal)
+- Proporções nutricionais: fallback 0.10 para ingredientes desconhecidos
+- Limpeza de 18 notificações "hidratar" duplicadas do banco
+- Textos premium curtos (max 20 palavras)
+- Notícias sem URLs falsos (apenas nome da instituição)
 
-### V3.0 (11/Abr/2026)
-- Admin Premium: Liberar/Bloquear funcional (FormData + JSON), com dias de trial
-- TACO proporcoes comerciais reais
-- 36 fichas nutricionais geradas automaticamente
-- Notificacoes rotativas: 14 dicas com links
-- TTS acelerado 1.35x via pydub
-- Alertas alergenos com destaque visual
-- Noticias com links clicaveis
-
-### V2.7 (11/Abr/2026)
-- CLIP <500ms, gTTS gratuito, Trial Premium 7 dias
+### V3.1 (12/Abr/2026)
+- ONNX modelo pré-otimizado no R2 (sem re-export no build)
+- ORT_DISABLE_ALL (compatível com CPU Render)
+- Dockerfile sem torch (build 5min mais rápido)
+- HSTS header + HSTS Preload submetido
+- emergent-main.js condicional (só no preview)
+- Enrich via useEffect (zero stale closure)
+- Service Worker v10 minimal
+- Health check, mensagens de erro amigáveis
 
 ## Endpoints Principais
-- POST /ai/identify (CLIP <500ms cibi_sana | Gemini <2.5s externo)
-- POST /ai/enrich (background, Gemini, enriquecimento premium)
-- POST /ai/tts (gTTS gratuito, 1.35x)
-- POST /premium/login
+- POST /ai/identify (CLIP + alertas automáticos)
+- POST /ai/enrich (Gemini: benefícios/riscos/curiosidades/combinações/notícias/mito com fontes)
+- POST /ai/tts (OpenAI Shimmer, fallback gTTS)
 - GET /sw.js, /manifest.json (anti-cache)
 
-## Backlog
+## Backlog Priorizado
 
-### P1
-- Landing page premium (aguardando mockup)
-- Integracao Stripe para assinaturas
+### P0 - Urgente
+- (nenhum)
 
-### P2
-- Revisao ingredientes/descricao F-Z (usuario fara pelo admin)
-- Fichas nutricionais automaticas apos cadastro
+### P1 - Próximo
+- Verificação geral de ingredientes e tabela nutricional em todos os pratos (versão gratuita e premium)
+- Landing page premium com trial (aguardando mockup do usuário)
+- Integração Stripe para cobrança de assinaturas
+- Migração futura para key OpenAI própria (TTS) — em backlog até testes de voz
+
+### P2 - Importante
+- Revisão ingredientes/descrição pratos F-Z (usuário inserindo via admin)
+- Fichas nutricionais automáticas após cadastro de ingredientes
+- Melhorar tempo CLIP de 2s para <500ms (testar ORT_ENABLE_BASIC com modelo pré-otimizado)
+- Notificações push: verificar se rotação diária funciona consistentemente
+
+### P3 - Futuro
 - Google Play (TWA) / Apple Store (Capacitor)
-- Refatorar server.py (~5700 linhas) e App.js (~4300 linhas)
+- Refatorar server.py (~5800 linhas) e App.js (~4400 linhas)
+- Limpeza imagens Jiló Empanado (fotos contaminadas com Quiabo)
 
 ## Problemas Conhecidos
-- Jilo Empanado: fotos contaminadas com Quiabo
-- 3+ usuarios duplicados "Joao Manoel" no DB (update_many mitiga)
+- Gemini pode gerar nomes de fontes imprecisos (mas não inventa URLs mais)
+- 3+ usuários duplicados "Joao Manoel" no DB (update_many mitiga)
+- Tempo CLIP no Render: ~2s (acima do ideal de 500ms, ORT_DISABLE_ALL necessário)
