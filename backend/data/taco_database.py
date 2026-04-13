@@ -996,7 +996,9 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dic
                 prop = valor
                 break
         if prop == 0:
-            prop = 1.0 / len(ingredientes)  # fallback: divide igual
+            # Fallback inteligente: proporção pequena para ingrediente desconhecido
+            # (não divide igual, preserva proporções dos ingredientes conhecidos)
+            prop = 0.10
         proporcoes.append(prop)
     
     # Normalizar proporções para somar 100%

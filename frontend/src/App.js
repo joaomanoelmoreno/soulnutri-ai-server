@@ -2840,7 +2840,7 @@ function App() {
           {plateConsolidated?.beneficios?.length > 0 && (
             <div className="mesa-section good">
               <h4>✅ Benefícios da sua refeição</h4>
-              <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{b}</li>)}</ul>
+              <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && <span style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}> — {b.fonte}</span>}</>) : b}</li>)}</ul>
             </div>
           )}
 
@@ -3105,7 +3105,7 @@ function App() {
           {plateConsolidated?.riscos?.length > 0 && (
             <div className="mesa-section warning">
               <h4>⚠️ Pontos de atenção</h4>
-              <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{r}</li>)}</ul>
+              <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{typeof r === 'object' ? (<>{r.texto}{r.fonte && <span style={{color:'#ef4444',fontSize:'11px',fontStyle:'italic'}}> — {r.fonte}</span>}</>) : r}</li>)}</ul>
             </div>
           )}
 
@@ -3536,7 +3536,7 @@ function App() {
           {r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
               <h4>✅ Benefícios</h4>
-              <ul>{r.beneficios.slice(0, 2).map((b,i) => <li key={i}>{b}</li>)}</ul>
+              <ul>{r.beneficios.slice(0, 2).map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && <span style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}> — {b.fonte}</span>}</>) : b}</li>)}</ul>
             </div>
           )}
 

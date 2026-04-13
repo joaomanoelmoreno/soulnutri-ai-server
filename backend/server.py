@@ -57,6 +57,40 @@ logger = logging.getLogger(__name__)
 
 import re
 
+
+def _generate_nutrition_alerts(nutrition, alergenos):
+    """Gera alertas nutricionais automáticos baseados nos dados do prato (sem IA)"""
+    alerts = []
+    if not nutrition:
+        return alerts
+    
+    def parse_val(v):
+        if not v: return 0
+        try: return float(str(v).replace('kcal','').replace('g','').replace('mg','').replace(',','.').strip())
+        except: return 0
+    
+    cal = parse_val(getattr(nutrition, 'calorias', None) if hasattr(nutrition, 'calorias') else nutrition.get('calorias') if isinstance(nutrition, dict) else None)
+    prot = parse_val(getattr(nutrition, 'proteinas', None) if hasattr(nutrition, 'proteinas') else nutrition.get('proteinas') if isinstance(nutrition, dict) else None)
+    gord = parse_val(getattr(nutrition, 'gorduras', None) if hasattr(nutrition, 'gorduras') else nutrition.get('gorduras') if isinstance(nutrition, dict) else None)
+    sod = parse_val(getattr(nutrition, 'sodio', None) if hasattr(nutrition, 'sodio') else nutrition.get('sodio') if isinstance(nutrition, dict) else None)
+    fib = parse_val(getattr(nutrition, 'fibras', None) if hasattr(nutrition, 'fibras') else nutrition.get('fibras') if isinstance(nutrition, dict) else None)
+    
+    if cal > 600: alerts.append({"tipo": "atencao", "mensagem": f"Alto em calorias ({int(cal)} kcal). Considere uma porção menor."})
+    elif cal > 0 and cal < 200: alerts.append({"tipo": "positivo", "mensagem": f"Prato leve ({int(cal)} kcal). Boa escolha para quem busca controle calórico."})
+    if prot > 25: alerts.append({"tipo": "positivo", "mensagem": f"Rico em proteínas ({prot:.0f}g). Excelente para recuperação muscular."})
+    if gord > 25: alerts.append({"tipo": "atencao", "mensagem": f"Alto em gorduras ({gord:.0f}g). Prefira preparações grelhadas ou assadas."})
+    if sod > 800: alerts.append({"tipo": "atencao", "mensagem": f"Alto em sódio ({sod:.0f}mg). Atenção se tiver pressão alta."})
+    if fib > 5: alerts.append({"tipo": "positivo", "mensagem": f"Rico em fibras ({fib:.0f}g). Ótimo para a digestão."})
+    
+    # Alertas de alérgenos
+    if isinstance(alergenos, dict):
+        alerg_list = [k for k, v in alergenos.items() if v]
+        if alerg_list:
+            alerts.append({"tipo": "alerta", "mensagem": f"Contém: {', '.join(alerg_list)}. Verifique suas restrições alimentares."})
+    
+    return alerts
+
+
 def format_dish_name(name: str) -> str:
     """Formata nome do prato usando o mapeamento do policy.py.
     Prioriza nomes definidos no DISH_NAMES (que refletem renomeacoes do Admin).
@@ -957,7 +991,7 @@ async def identify_image(
             # Novos campos do Gemini Flash
             "alergenos": decision.get('alergenos', {}),
             "dica_nutricional": decision.get('dica_nutricional'),
-            "alertas_personalizados": decision.get('alertas_personalizados', []),
+            "alertas_personalizados": decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {})),
             "tempo_ia_ms": decision.get('tempo_ia_ms'),
             # Curiosidade e combinacoes (Gemini ou local)
             "curiosidade": decision.get('curiosidade') if is_premium else None,
