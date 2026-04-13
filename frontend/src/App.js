@@ -606,8 +606,10 @@ function App() {
 
   // Reiniciar câmera quando resultado é limpo (volta para tela de scan)
   useEffect(() => {
-    if (!result && !loading && viewMode !== 'mesa' && stream === null) {
-      startCamera();
+    if (!result && !loading && viewMode !== 'mesa') {
+      // Pequeno delay para o DOM renderizar o video element antes de pedir a câmera
+      const timer = setTimeout(() => startCamera(), 300);
+      return () => clearTimeout(timer);
     }
   }, [result, loading, viewMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1815,8 +1817,9 @@ function App() {
 
   // Enviar feedback - CORRETO
   const sendFeedbackCorrect = async () => {
-    // SEMPRE registrar na calibracao (independente do blob)
     logCalibrationSample(true);
+    setFeedbackSent(true);
+    setShowFeedback(false);
     
     if (!lastImageBlob || !result?.dish) return;
     
@@ -1831,26 +1834,15 @@ function App() {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const res = await fetch(`${API}/ai/feedback`, { 
+      await fetch(`${API}/ai/feedback`, { 
         method: "POST", 
         body: fd,
         signal: controller.signal
       });
       clearTimeout(timeoutId);
-      
-      if (!mountedRef.current) return;
-      
-      const data = await res.json();
-      if (data.ok) {
-        setFeedbackSent(true);
-        setShowFeedback(false);
-      }
     } catch (e) {
       console.error('Erro ao enviar feedback:', e);
     }
-    
-    // Garantir que feedback visual muda mesmo sem blob
-    setFeedbackSent(true);
   };
 
   // Enviar para fila de moderação - Usuário reporta que está incorreto
