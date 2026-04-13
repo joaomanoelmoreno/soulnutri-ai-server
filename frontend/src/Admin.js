@@ -4,6 +4,15 @@ import './Admin.css';
 const API = '/api';
 const BUILD_VERSION = 'v3.28-' + Date.now();
 
+// Admin auth key - enviada em todas as chamadas /admin/*
+const ADMIN_KEY = localStorage.getItem('soulnutri_admin_key') || '';
+
+// Helper para fetch com admin auth
+function adminFetch(url, opts = {}) {
+  opts.headers = { ...opts.headers, 'X-Admin-Key': ADMIN_KEY };
+  return fetch(url, opts);
+}
+
 // XHR direto - contorna o wrapper fetch da plataforma Emergent
 function xhrGet(url) {
   return new Promise((resolve, reject) => {
@@ -72,6 +81,8 @@ async function retryFetch(url, options, retries = 2) {
 }
 
 export default function Admin() {
+  const [adminKey, setAdminKey] = useState(() => localStorage.getItem('soulnutri_admin_key') || '');
+  const [adminAuth, setAdminAuth] = useState(() => !!localStorage.getItem('soulnutri_admin_key'));
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');

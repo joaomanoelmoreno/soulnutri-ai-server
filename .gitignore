@@ -463,3 +463,7 @@ credentials.json
 *.pem
 *.key
 .credentials
+
+# Backups de env
+*.env.backup*
+.env.backup_*

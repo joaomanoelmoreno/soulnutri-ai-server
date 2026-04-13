@@ -30,7 +30,7 @@ for key in ['MONGO_URL', 'DB_NAME', 'EMERGENT_LLM_KEY', 'GOOGLE_API_KEY', 'CORS_
 from datetime import datetime, timedelta, timezone
 import json
 import asyncio
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query, Depends, Header
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -56,6 +56,31 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 import re
+
+
+# ═══════════════════════════════════════════════════════════════
+# ADMIN AUTH - Todas as rotas /admin/* requerem X-Admin-Key header
+# ═══════════════════════════════════════════════════════════════
+ADMIN_SECRET_KEY = os.environ.get("ADMIN_SECRET_KEY", "")
+
+async def verify_admin_key(x_admin_key: str = Header(None)):
+    if not ADMIN_SECRET_KEY:
+        return True  # Dev mode sem key configurada
+    if x_admin_key != ADMIN_SECRET_KEY:
+        raise HTTPException(status_code=401, detail="Admin key invalida")
+    return True
+
+# Limite de upload: 10MB
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024
+
+async def validate_upload_size(file: UploadFile):
+    """Valida tamanho do upload - máximo 10MB"""
+    content = await file.read()
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=413, detail=f"Arquivo muito grande ({len(content)//1024//1024}MB). Máximo: 10MB")
+    await file.seek(0)
+    return content
+
 
 
 def _generate_nutrition_alerts(nutrition, alergenos):
@@ -1260,7 +1285,7 @@ async def identify_with_ai(
         }
 
 
-@api_router.post("/admin/revisar-prato-taco")
+@api_router.post("/admin/revisar-prato-taco", dependencies=[Depends(verify_admin_key)])
 async def revisar_prato_com_taco(request: Request):
     """
     Busca informacoes nutricionais usando a Tabela TACO.
@@ -1348,7 +1373,7 @@ async def revisar_prato_com_taco(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/revisar-prato-ia")
+@api_router.post("/admin/revisar-prato-ia", dependencies=[Depends(verify_admin_key)])
 async def revisar_prato_com_ia(request: Request):
     """
     Usa Gemini Flash para analisar ingredientes e sugerir:
@@ -1447,7 +1472,7 @@ Responda APENAS JSON valido."""
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/revisar-lote-ia")
+@api_router.post("/admin/revisar-lote-ia", dependencies=[Depends(verify_admin_key)])
 async def revisar_pratos_em_lote(request: Request):
     """
     Revisa multiplos pratos com IA Gemini Flash em lote.
@@ -4164,7 +4189,7 @@ async def get_nutricao_taco(ingrediente: str):
 # ADMIN - Endpoints de administracao do banco de dados
 # ═══════════════════════════════════════════════════════════════════════════════
 
-@api_router.get("/admin/dishes")
+@api_router.get("/admin/dishes", dependencies=[Depends(verify_admin_key)])
 async def admin_list_dishes():
     """Lista todos os pratos com informacoes detalhadas para admin."""
     try:
@@ -4231,7 +4256,7 @@ async def admin_list_dishes():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/dishes-full")
+@api_router.get("/admin/dishes-full", dependencies=[Depends(verify_admin_key)])
 async def admin_list_dishes_full():
     """Lista todos os pratos com informacoes para admin.
     Fonte de verdade: dish_storage (imagens) + dishes (metadados).
@@ -4335,7 +4360,7 @@ async def admin_list_dishes_full():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/dish-images-list/{slug}")
+@api_router.get("/admin/dish-images-list/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_dish_images_list(slug: str):
     """Retorna a lista de nomes de imagens de um prato. Usado ao abrir Editar."""
     try:
@@ -4349,7 +4374,7 @@ async def admin_dish_images_list(slug: str):
 
 
 
-@api_router.get("/admin/dish-image/{slug}")
+@api_router.get("/admin/dish-image/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_get_dish_image(slug: str, img: str = None, thumb: int = 0):
     """Retorna uma imagem de um prato. thumb=1 para thumbnail comprimido (rápido)."""
     from fastapi.responses import Response, FileResponse
@@ -4433,7 +4458,7 @@ async def admin_get_dish_image(slug: str, img: str = None, thumb: int = 0):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@api_router.put("/admin/dishes/{slug}")
+@api_router.put("/admin/dishes/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_update_dish(slug: str, dish_data: dict):
     """Atualiza TODAS as informacoes de um prato no MongoDB."""
     try:
@@ -4499,7 +4524,7 @@ async def admin_update_dish(slug: str, dish_data: dict):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/dishes/{slug}/regenerate")
+@api_router.post("/admin/dishes/{slug}/regenerate", dependencies=[Depends(verify_admin_key)])
 async def admin_regenerate_dish_info(slug: str, data: dict = None):
     """
     Regenera TODAS as informacoes de um prato baseado no nome.
@@ -4574,7 +4599,7 @@ async def admin_regenerate_dish_info(slug: str, data: dict = None):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.delete("/admin/dishes/{slug}")
+@api_router.delete("/admin/dishes/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_delete_dish(slug: str):
     """Exclui um prato e todas suas fotos do S3, MongoDB e disco local."""
     try:
@@ -4605,7 +4630,7 @@ async def admin_delete_dish(slug: str):
 # ATUALIZAÇÃO LOCAL (SEM IA, SEM CRÉDITOS)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-@api_router.post("/admin/dishes/{slug}/update-local")
+@api_router.post("/admin/dishes/{slug}/update-local", dependencies=[Depends(verify_admin_key)])
 async def admin_update_dish_local(slug: str, data: dict = None):
     """
     Atualiza prato LOCALMENTE baseado em regras.
@@ -4629,7 +4654,7 @@ async def admin_update_dish_local(slug: str, data: dict = None):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/update-all-local")
+@api_router.post("/admin/update-all-local", dependencies=[Depends(verify_admin_key)])
 async def admin_update_all_local():
     """
     Atualiza TODOS os pratos baseado no nome.
@@ -4653,7 +4678,7 @@ async def admin_update_all_local():
 # AUDITORIA - Analise de qualidade dos dados dos pratos
 # ═══════════════════════════════════════════════════════════════════════════════
 
-@api_router.get("/admin/audit")
+@api_router.get("/admin/audit", dependencies=[Depends(verify_admin_key)])
 async def admin_audit_dishes():
     """Audita todos os pratos e retorna relatorio de problemas de qualidade"""
     try:
@@ -4668,7 +4693,7 @@ async def admin_audit_dishes():
 
 
 
-@api_router.get("/admin/audit/low-photos")
+@api_router.get("/admin/audit/low-photos", dependencies=[Depends(verify_admin_key)])
 async def admin_dishes_low_photos(max_photos: int = 5):
     """Lista pratos com poucas fotos de referencia no R2 (dish_storage agregado)"""
     import unicodedata
@@ -4709,7 +4734,7 @@ async def admin_dishes_low_photos(max_photos: int = 5):
     return {"ok": True, "total": len(results), "max_photos": max_photos, "dishes": results}
 
 
-@api_router.post("/admin/audit/fix/{slug}")
+@api_router.post("/admin/audit/fix/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_fix_dish_with_ai(slug: str):
     """Usa IA para sugerir correcoes para um prato especifico"""
     try:
@@ -4723,7 +4748,7 @@ async def admin_fix_dish_with_ai(slug: str):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/audit/apply/{slug}")
+@api_router.post("/admin/audit/apply/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_apply_ai_suggestions(slug: str, suggestions: dict):
     """Aplica as sugestoes da IA ao prato"""
     try:
@@ -4737,7 +4762,7 @@ async def admin_apply_ai_suggestions(slug: str, suggestions: dict):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/audit/fix-single/{slug}")
+@api_router.post("/admin/audit/fix-single/{slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_fix_single_dish(slug: str):
     """Usa IA para corrigir dados de um unico prato"""
     try:
@@ -4781,7 +4806,7 @@ async def admin_fix_single_dish(slug: str):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/audit/batch-fix")
+@api_router.post("/admin/audit/batch-fix", dependencies=[Depends(verify_admin_key)])
 async def admin_batch_fix_dishes(request: dict):
     """Corrige multiplos pratos em lote usando IA"""
     try:
@@ -4802,7 +4827,7 @@ async def admin_batch_fix_dishes(request: dict):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.delete("/admin/dish-image/{slug}")
+@api_router.delete("/admin/dish-image/{slug}", dependencies=[Depends(verify_admin_key)])
 async def delete_dish_image(slug: str, img: str = Query(...)):
     """Deleta uma imagem de um prato do S3 e disco local"""
     try:
@@ -4826,7 +4851,7 @@ async def delete_dish_image(slug: str, img: str = Query(...)):
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 
-@api_router.post("/admin/move-image")
+@api_router.post("/admin/move-image", dependencies=[Depends(verify_admin_key)])
 async def move_dish_image(request: Request):
     """Move uma imagem de um prato para outro (S3 + MongoDB + local)"""
     try:
@@ -4865,7 +4890,7 @@ async def move_dish_image(request: Request):
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 
-@api_router.get("/admin/duplicates")
+@api_router.get("/admin/duplicates", dependencies=[Depends(verify_admin_key)])
 async def get_duplicate_groups():
     """Retorna grupos de pratos duplicados para consolidacao"""
     try:
@@ -4879,7 +4904,7 @@ async def get_duplicate_groups():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/consolidate")
+@api_router.post("/admin/consolidate", dependencies=[Depends(verify_admin_key)])
 async def consolidate_dishes(request: dict):
     """Consolida um grupo de pratos duplicados"""
     try:
@@ -4897,7 +4922,7 @@ async def consolidate_dishes(request: dict):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/consolidate-all")
+@api_router.post("/admin/consolidate-all", dependencies=[Depends(verify_admin_key)])
 async def consolidate_all_duplicates():
     """Consolida todos os grupos de duplicados automaticamente"""
     try:
@@ -5022,6 +5047,20 @@ async def startup_event():
         logger.warning(f"Nao foi possivel carregar indice: {e}")
     
     logger.info("SoulNutri AI Server pronto!")
+    
+    # Criar índices MongoDB para performance
+    try:
+        await db.dishes.create_index("slug", unique=True, sparse=True)
+        await db.dishes.create_index("name")
+        await db.dishes.create_index("category")
+        await db.users.create_index("pin_hash")
+        await db.notifications.create_index([("user_pin", 1), ("date", -1)])
+        await db.nutrition_sheets.create_index("dish_slug", unique=True, sparse=True)
+        await db.meal_logs.create_index([("user_pin", 1), ("date", -1)])
+        await db.feedback.create_index("dish_slug")
+        logger.info("Índices MongoDB criados/verificados")
+    except Exception as e:
+        logger.warning(f"Índices MongoDB: {e}")
 
 @api_router.get("/download/marketing")
 async def download_marketing_doc():
@@ -5102,7 +5141,7 @@ async def list_novidades():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/novidades")
+@api_router.post("/admin/novidades", dependencies=[Depends(verify_admin_key)])
 async def admin_create_novidade(
     dish_slug: str = Form(...),
     tipo: str = Form(...),  # "info", "alerta", "dica", "estudo"
@@ -5155,7 +5194,7 @@ async def admin_create_novidade(
         return {"ok": False, "error": str(e)}
 
 
-@api_router.delete("/admin/novidades/{dish_slug}")
+@api_router.delete("/admin/novidades/{dish_slug}", dependencies=[Depends(verify_admin_key)])
 async def admin_delete_novidade(dish_slug: str):
     """Remove uma novidade."""
     try:
@@ -5227,7 +5266,7 @@ async def mark_read(user_pin: str, request: Request):
 # ADMIN SETTINGS & PREMIUM USERS (stubs para o painel admin)
 # ═══════════════════════════════════════════════════════════════
 
-@api_router.get("/admin/settings")
+@api_router.get("/admin/settings", dependencies=[Depends(verify_admin_key)])
 async def get_admin_settings():
     """Retorna configurações do admin."""
     try:
@@ -5239,7 +5278,7 @@ async def get_admin_settings():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/settings")
+@api_router.post("/admin/settings", dependencies=[Depends(verify_admin_key)])
 async def save_admin_settings(request: Request):
     """Salva configurações do admin."""
     try:
@@ -5250,7 +5289,7 @@ async def save_admin_settings(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/premium/users")
+@api_router.get("/admin/premium/users", dependencies=[Depends(verify_admin_key)])
 async def get_premium_users():
     """Lista todos os usuarios registrados com status premium e trial."""
     try:
@@ -5262,7 +5301,7 @@ async def get_premium_users():
         return {"ok": False, "error": str(e), "users": []}
 
 
-@api_router.post("/admin/premium/liberar")
+@api_router.post("/admin/premium/liberar", dependencies=[Depends(verify_admin_key)])
 async def liberar_premium(request: Request):
     """Libera acesso premium para um usuario. Aceita FormData ou JSON."""
     try:
@@ -5311,7 +5350,7 @@ async def liberar_premium(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/premium/bloquear")
+@api_router.post("/admin/premium/bloquear", dependencies=[Depends(verify_admin_key)])
 async def bloquear_premium(request: Request):
     """Bloqueia acesso premium de um usuario. Aceita FormData ou JSON."""
     try:
@@ -5340,7 +5379,7 @@ async def bloquear_premium(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/api-usage")
+@api_router.get("/admin/api-usage", dependencies=[Depends(verify_admin_key)])
 async def get_api_usage():
     """Retorna estatísticas de uso de APIs."""
     try:
@@ -5359,7 +5398,7 @@ async def get_api_usage():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/processing-metrics")
+@api_router.get("/admin/processing-metrics", dependencies=[Depends(verify_admin_key)])
 async def get_processing_metrics(date: str = ""):
     """Retorna métricas de processamento."""
     try:
@@ -5378,7 +5417,7 @@ async def get_processing_metrics(date: str = ""):
 # ATUALIZAÇÃO NUTRICIONAL SEGURA
 # ═══════════════════════════════════════════════════════════════
 
-@api_router.post("/admin/nutrition/preview")
+@api_router.post("/admin/nutrition/preview", dependencies=[Depends(verify_admin_key)])
 async def preview_nutrition_changes(request: Request):
     """
     DRY RUN: Mostra o que mudaria sem alterar nada.
@@ -5396,7 +5435,7 @@ async def preview_nutrition_changes(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/nutrition/update-single")
+@api_router.post("/admin/nutrition/update-single", dependencies=[Depends(verify_admin_key)])
 async def update_single_nutrition(request: Request):
     """
     Atualiza dados nutricionais de UM prato.
@@ -5417,7 +5456,7 @@ async def update_single_nutrition(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/nutrition/rollback")
+@api_router.post("/admin/nutrition/rollback", dependencies=[Depends(verify_admin_key)])
 async def rollback_nutrition_endpoint(request: Request):
     """
     Reverte a última atualização nutricional de um prato.
@@ -5436,7 +5475,7 @@ async def rollback_nutrition_endpoint(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/nutrition/audit-log")
+@api_router.get("/admin/nutrition/audit-log", dependencies=[Depends(verify_admin_key)])
 async def get_nutrition_audit_log(slug: str = "", limit: int = 50):
     """Retorna o log de auditoria de alterações nutricionais."""
     try:
@@ -5515,7 +5554,7 @@ async def submit_to_moderation_queue(
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/moderation-queue")
+@api_router.get("/admin/moderation-queue", dependencies=[Depends(verify_admin_key)])
 async def get_moderation_queue(status: str = "pending"):
     """Lista os itens na fila de moderação."""
     try:
@@ -5553,7 +5592,7 @@ async def get_moderation_queue(status: str = "pending"):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/moderation-image/{item_id}")
+@api_router.get("/admin/moderation-image/{item_id}", dependencies=[Depends(verify_admin_key)])
 async def get_moderation_image(item_id: str):
     """Retorna a imagem de um item da fila de moderação."""
     from bson import ObjectId
@@ -5574,7 +5613,7 @@ async def get_moderation_image(item_id: str):
         return Response(content=b"", media_type="image/jpeg", status_code=500)
 
 
-@api_router.post("/admin/moderation/{item_id}/approve")
+@api_router.post("/admin/moderation/{item_id}/approve", dependencies=[Depends(verify_admin_key)])
 async def approve_moderation_item(item_id: str):
     """Admin aprova o reconhecimento original como correto e salva a foto no dataset."""
     from bson import ObjectId
@@ -5634,7 +5673,7 @@ async def approve_moderation_item(item_id: str):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/moderation/{item_id}/reject")
+@api_router.post("/admin/moderation/{item_id}/reject", dependencies=[Depends(verify_admin_key)])
 async def reject_moderation_item(item_id: str):
     """Admin rejeita o item — FALSO POSITIVO: CLIP identificou algo errado."""
     from bson import ObjectId
@@ -5680,7 +5719,7 @@ async def reject_moderation_item(item_id: str):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/moderation/{item_id}/correct")
+@api_router.post("/admin/moderation/{item_id}/correct", dependencies=[Depends(verify_admin_key)])
 async def correct_moderation_item(item_id: str, request: Request):
     """
     Admin corrige o nome do prato e salva a foto no dataset correto.
