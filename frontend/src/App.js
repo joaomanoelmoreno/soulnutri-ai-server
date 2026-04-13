@@ -1294,8 +1294,13 @@ function App() {
       };
 
       setPlateItems(prev => {
+        // Evitar duplicatas pelo nome do prato
+        if (prev.some(item => item.dish_display === newItem.dish_display)) {
+          console.log('[PLATE] Prato já no prato:', newItem.dish_display);
+          return prev;
+        }
         const updated = [...prev, newItem];
-        console.log('[DEBUG] plateItems agora tem', updated.length, 'itens');
+        console.log('[PLATE] Adicionado:', newItem.dish_display, '| Total:', updated.length);
         return updated;
       });
       
@@ -2756,7 +2761,15 @@ function App() {
           {/* Lista dos itens escolhidos */}
           <div className="mesa-items-list">
             {plateItems.map((item, i) => (
-              <span key={item.id} className="mesa-item-tag">{item.dish_display}</span>
+              <span key={item.id} className="mesa-item-tag" style={{display:'flex',alignItems:'center',gap:'6px'}}>
+                {item.dish_display}
+                <span
+                  data-testid={`remove-plate-item-${i}`}
+                  onClick={() => setPlateItems(prev => prev.filter(p => p.id !== item.id))}
+                  style={{cursor:'pointer',color:'#ef4444',fontWeight:'bold',fontSize:'16px',lineHeight:'1',padding:'0 4px'}}
+                  title="Remover do prato"
+                >x</span>
+              </span>
             ))}
           </div>
 
@@ -2934,15 +2947,14 @@ function App() {
                   <h4 style={{ color: '#fbbf24', marginBottom: '8px' }}>Noticias e Alertas sobre Ingredientes</h4>
                   {plateConsolidated.noticias.map((noticia, i) => {
                     const texto = typeof noticia === 'string' ? noticia : (noticia?.texto || noticia?.titulo || '');
-                    const url = typeof noticia === 'object' ? (noticia?.url || noticia?.link) : null;
+                    const fonte = typeof noticia === 'object' ? (noticia?.fonte || noticia?.url || noticia?.link) : null;
                     return (
                       <div key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 8px', paddingLeft: '8px', borderLeft: '2px solid rgba(251, 191, 36, 0.3)' }}>
                         <p style={{margin:0}}>{texto}</p>
-                        {url && (
-                          <a href={url} target="_blank" rel="noopener noreferrer" 
-                            style={{color:'#fbbf24',fontSize:'12px',textDecoration:'underline',display:'inline-flex',alignItems:'center',gap:'4px',marginTop:'4px'}}>
-                            Ver fonte &#8599;
-                          </a>
+                        {fonte && (
+                          <span style={{color:'#fbbf24',fontSize:'11px',fontStyle:'italic',marginTop:'4px',display:'block'}}>
+                            Fonte: {fonte}
+                          </span>
                         )}
                       </div>
                     );
@@ -3002,6 +3014,7 @@ function App() {
                         </p>
                       )}
                       {mv.explicacao && <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0, fontStyle: 'italic' }}>{mv.explicacao}</p>}
+                      {mv.fonte && <span style={{color:'#a855f7',fontSize:'11px',fontStyle:'italic',display:'block',marginTop:'4px'}}>Fonte: {mv.fonte}</span>}
                     </div>
                   ))}
                 </div>
