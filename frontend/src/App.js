@@ -571,7 +571,7 @@ if (!res.ok || !contentType.includes('audio')) {
       setIsInstalled(true);
     }
     
-    // Capturar evento de instalação PWA
+       // Capturar evento de instalação PWA
     const handleBeforeInstall = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -588,10 +588,12 @@ if (!res.ok || !contentType.includes('audio')) {
           console.log('[Camera] App em background, pausando...');
           stopCameraInternal();
         }
-      } else if (cameraWasActive) {
-        // Só reinicia se estava ativa antes
-        console.log('[Camera] App em foreground, retomando...');
-        setTimeout(() => startCamera(), 500);
+      } else {
+        if (cameraWasActive) {
+          // No mobile, getUserMedia exige gesto do usuário.
+          // Não reiniciar automaticamente ao voltar do background.
+          console.log('[Camera] App em foreground; aguardando ação do usuário para retomar.');
+        }
       }
     };
     document.addEventListener('visibilitychange', handleVisibility);
@@ -604,7 +606,7 @@ if (!res.ok || !contentType.includes('audio')) {
       // Cancelar requisições pendentes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
-      }
+      }      
       // Limpar monitoramento GPS
       if (watchIdRef.current !== null) {
         navigator.geolocation.clearWatch(watchIdRef.current);
