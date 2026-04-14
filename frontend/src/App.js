@@ -625,93 +625,138 @@ if (!res.ok || !contentType.includes('audio')) {
   }, [showPermissions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ═══════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════
   // ENRICH PREMIUM - useEffect dedicado (ZERO stale closure)
   // Dispara quando um novo resultado é identificado E o user é premium
   // ═══════════════════════════════════════════════════════════════
   useEffect(() => {
     if (!result?.ok || !result?.identified || !premiumUser) return;
-    
+
     const dishName = result.dish_display;
     if (!dishName) return;
 
-    // Evitar chamadas duplicadas para o mesmo prato ATIVO
+    // Evitar chamadas duplicadas sem mutar o state diretamente
     if (result._enrichStarted) return;
-    result._enrichStarted = true;
+
+    let cancelled = false;
+    const currentDishName = dishName;
+    const currentUserPin = premiumUser.pin;
+    const currentUserName = premiumUser.nome;
+
+    setResult((prev) => {
+      if (!prev || !prev.ok || !prev.identified) return prev;
+      if (prev.dish_display !== currentDishName) return prev;
+      if (prev._enrichStarted) return prev;
+      return { ...prev, _enrichStarted: true };
+    });
 
     setEnrichLoading(true);
-    console.log('[ENRICH] Iniciando para:', dishName, '| Premium:', premiumUser.nome);
+    console.log('[ENRICH] Iniciando para:', currentDishName, '| Premium:', currentUserName);
 
     fetch(`${API}/ai/enrich`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nome: dishName,
+        nome: currentDishName,
         ingredientes: result.ingredientes || [],
-        pin: premiumUser.pin,
-        user_nome: premiumUser.nome
+        pin: currentUserPin,
+        user_nome: currentUserName
       })
     })
-    .then(r => r.json())
-    .then(enrichData => {
-      if (!enrichData.ok) {
-        console.warn('[ENRICH] Resposta não ok:', enrichData);
-        return;
-      }
+      .then((r) => r.json())
+      .then((enrichData) => {
+        if (cancelled) return;
 
-      const enrichFields = {
-        beneficios: enrichData.beneficios || [],
-        riscos: enrichData.riscos || [],
-        curiosidade: enrichData.curiosidade || '',
-        combinacoes: enrichData.combinacoes || [],
-        noticias: enrichData.noticias || [],
-        alertas_historico: enrichData.alertas_historico || [],
-        mito_verdade: enrichData.mito_verdade || null
-      };
-      const enrichNutrition = (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0)
-        ? enrichData.nutrition : null;
+        if (!enrichData.ok) {
+          console.warn('[ENRICH] Resposta não ok:', enrichData);
+          return;
+        }
 
-      // 1) Atualizar o result (se ainda estiver na tela)
-      setResult(prev => {
-        if (!prev || prev.dish_display !== dishName) return prev;
-        const updated = {
-          ...prev,
-          beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
-          riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
-          curiosidade: enrichFields.curiosidade || prev.curiosidade,
-          combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : prev.combinacoes,
-          noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : prev.noticias,
-          mito_verdade: enrichFields.mito_verdade || prev.mito_verdade,
+        const enrichFields = {
+          beneficios: enrichData.beneficios || [],
+          riscos: enrichData.riscos || [],
+          curiosidade: enrichData.curiosidade || '',
+          combinacoes: enrichData.combinacoes || [],
+          noticias: enrichData.noticias || [],
+          alertas_historico: enrichData.alertas_historico || [],
+          mito_verdade: enrichData.mito_verdade || null
         };
-        if (enrichFields.alertas_historico.length > 0 && prev.premium) {
-          updated.premium = { ...prev.premium, alertas_historico: enrichFields.alertas_historico };
-        }
-        if (enrichNutrition) {
-          updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
-        }
-        return updated;
+
+        const enrichNutrition =
+          enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0
+            ? enrichData.nutrition
+            : null;
+
+        // 1) Atualizar o result (se ainda estiver na tela)
+        setResult((prev) => {
+          if (!prev || prev.dish_display !== currentDishName) return prev;
+
+          const updated = {
+            ...prev,
+            beneficios:
+              enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
+            riscos:
+              enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
+            curiosidade: enrichFields.curiosidade || prev.curiosidade,
+            combinacoes:
+              enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : prev.combinacoes,
+            noticias:
+              enrichFields.noticias.length > 0 ? enrichFields.noticias : prev.noticias,
+            mito_verdade: enrichFields.mito_verdade || prev.mito_verdade
+          };
+
+          if (enrichFields.alertas_historico.length > 0 && prev.premium) {
+            updated.premium = {
+              ...prev.premium,
+              alertas_historico: enrichFields.alertas_historico
+            };
+          }
+
+          if (enrichNutrition) {
+            updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
+          }
+
+          return updated;
+        });
+
+        // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
+        setPlateItems((prev) =>
+          prev.map((item) => {
+            if (item.dish_display !== currentDishName) return item;
+
+            return {
+              ...item,
+              beneficios:
+                enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
+              riscos:
+                enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
+              curiosidade: enrichFields.curiosidade || item.curiosidade,
+              combinacoes:
+                enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
+              noticias:
+                enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
+              mito_verdade: enrichFields.mito_verdade || item.mito_verdade,
+              ...(enrichNutrition
+                ? { nutrition: { ...(item.nutrition || {}), ...enrichNutrition } }
+                : {})
+            };
+          })
+        );
+
+        console.log('[ENRICH] Premium data recebido para:', currentDishName);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.warn('[ENRICH] Erro:', err);
+      })
+      .finally(() => {
+        if (!cancelled) setEnrichLoading(false);
       });
 
-      // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
-      setPlateItems(prev => prev.map(item => {
-        if (item.dish_display !== dishName) return item;
-        return {
-          ...item,
-          beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
-          riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
-          curiosidade: enrichFields.curiosidade || item.curiosidade,
-          combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
-          noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
-          mito_verdade: enrichFields.mito_verdade || item.mito_verdade,
-          ...(enrichNutrition ? { nutrition: { ...(item.nutrition || {}), ...enrichNutrition } } : {}),
-        };
-      }));
-
-      console.log('[ENRICH] Premium data recebido para:', dishName);
-    })
-    .catch(err => console.warn('[ENRICH] Erro:', err))
-    .finally(() => setEnrichLoading(false));
-  }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
-
+    return () => {
+      cancelled = true;
+    };
+    }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkStatus = async () => {
     try {
@@ -720,8 +765,8 @@ if (!res.ok || !contentType.includes('audio')) {
       const res = await fetch(`${API}/ai/status`, { signal: controller.signal });
       clearTimeout(timeoutId);
       if (mountedRef.current) setStatus(await res.json());
-    } catch { 
-      if (mountedRef.current) setStatus({ ok: false }); 
+    } catch {
+      if (mountedRef.current) setStatus({ ok: false });
     }
   };
 
@@ -733,9 +778,10 @@ if (!res.ok || !contentType.includes('audio')) {
       clearTimeout(timeoutId);
       const data = await res.json();
       if (data.ok && mountedRef.current) setDishes(data.dishes || []);
-    } catch (e) { console.error('Erro ao carregar pratos:', e); }
+    } catch (e) {
+      console.error('Erro ao carregar pratos:', e);
+    }
   };
-
   // Verificar sessão Premium salva
   const checkPremiumSession = async () => {
     try {
