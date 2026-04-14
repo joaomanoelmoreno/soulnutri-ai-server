@@ -342,11 +342,19 @@ function App() {
         body: JSON.stringify({ dish_data: dishData, premium_tts: premiumTts })
       });
       
-      const contentType = res.headers.get('content-type') || '';
-      if (!res.ok || !contentType.includes('audio')) {
-        const errBody = await res.text().catch(() => 'Erro desconhecido');
-        throw new Error(errBody.substring(0, 100));
-      }
+      let contentType = '';
+try {
+  contentType = res.headers.get('content-type') || '';
+} catch {}
+
+if (!res.ok || !contentType.includes('audio')) {
+  let errorText = `HTTP ${res.status}`;
+  try {
+    errorText = await res.clone().text();
+  } catch {}
+
+  throw new Error(`Erro do servidor: ${res.status} - ${errorText.substring(0, 100)}`);
+ }
       
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
