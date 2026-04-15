@@ -389,7 +389,17 @@ if (!res.ok || !contentType.includes('audio')) {
   const premiumUserRef = useRef(null);
   // Sync ref com state para evitar stale closure em callbacks memoizados
   useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser]);
-  const [dailySummary, setDailySummary] = useState(null);
+  // 🔒 Normalizador de texto seguro (EVITA CRASH .toLowerCase)
+const safeText = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string') return v.toLowerCase();
+  if (typeof v === 'number') return String(v).toLowerCase();
+  if (Array.isArray(v)) return v.map(safeText).join(' ');
+  if (typeof v === 'object') {
+    return safeText(v.text || v.label || JSON.stringify(v));
+  }
+  return '';
+};  const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
   const [personalizedTips, setPersonalizedTips] = useState(null); // Dicas personalizadas
   // Menu e PWA
@@ -2189,9 +2199,9 @@ return {
     if (!riscos || riscos.length === 0) {
       return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
     }
-    
-     const allergenRisks = riscos.filter((r) => {
-  const text = safeText(r);
+    const riscosSafe = Array.isArray(riscos) ? riscos : [];
+    const allergenRisks = riscosSafe.filter((r) => {
+    const text = safeText(r);
   return (
     text.includes('alérgeno') ||
     text.includes('contém') ||
@@ -2211,7 +2221,7 @@ return {
     // Remover duplicações - priorizar "contém" sobre "pode conter"
     const seen = new Set();
     const uniqueAlerts = allergenRisks.filter(risco => {
-    const key = safeText(risco)
+    const key = safeText(risco || '')
       .replace('pode conter traços de ', '')
         .replace('contém ', '')
         .replace('pode conter ', '')
