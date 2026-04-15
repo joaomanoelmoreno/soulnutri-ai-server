@@ -1704,7 +1704,7 @@ if (!res.ok || !contentType.includes('audio')) {
     const allRiscos = [...new Set(plateItems.flatMap(item => item.riscos || []))].slice(0, 3);
     
     // Verificar alérgenos presentes em qualquer item (objeto alergenos ou texto nos riscos)
-    const riscosLower = allRiscos.join(' ').toLowerCase();
+   const riscosLower = String(allRiscos.join(' ') ?? '').toLowerCase();
     const contemGluten = plateItems.some(item => item.alergenos?.gluten) || 
                          riscosLower.includes('glúten') || riscosLower.includes('gluten');
     const contemLactose = plateItems.some(item => item.alergenos?.lactose) || 
@@ -1721,7 +1721,7 @@ if (!res.ok || !contentType.includes('audio')) {
     
     // Filtrar riscos que NÃO são sobre alérgenos (para evitar duplicação)
     const riscosNaoAlergenos = allRiscos.filter(r => {
-      const lower = r.toLowerCase();
+      const lower = String(r ?? '').toLowerCase();
       return !(lower.includes('alérgeno') || lower.includes('glúten') || lower.includes('lactose') || 
                lower.includes('ovo') || lower.includes('castanha') || lower.includes('peixe') ||
                lower.includes('camarão') || lower.includes('soja'));
