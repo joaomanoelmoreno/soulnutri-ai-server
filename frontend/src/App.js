@@ -2190,18 +2190,20 @@ return {
       return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
     }
     
-    const allergenRisks = riscos.filter(r => 
-      r.toLowerCase().includes('alérgeno') || 
-      r.toLowerCase().includes('contém') ||
-      r.toLowerCase().includes('glúten') ||
-      r.toLowerCase().includes('lactose') ||
-      r.toLowerCase().includes('crustáceo') ||
-      r.toLowerCase().includes('camarão') ||
-      r.toLowerCase().includes('amendoim') ||
-      r.toLowerCase().includes('soja') ||
-      r.toLowerCase().includes('ovo')
-    );
-    
+     const allergenRisks = riscos.filter((r) => {
+  const text = safeText(r);
+  return (
+    text.includes('alérgeno') ||
+    text.includes('contém') ||
+    text.includes('glúten') ||
+    text.includes('lactose') ||
+    text.includes('crustáceo') ||
+    text.includes('camarão') ||
+    text.includes('amendoim') ||
+    text.includes('soja') ||
+    text.includes('ovo')
+  );
+});    
     if (allergenRisks.length === 0) {
       return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
     }
@@ -2209,8 +2211,8 @@ return {
     // Remover duplicações - priorizar "contém" sobre "pode conter"
     const seen = new Set();
     const uniqueAlerts = allergenRisks.filter(risco => {
-      const key = risco.toLowerCase()
-        .replace('pode conter traços de ', '')
+    const key = safeText(risco)
+      .replace('pode conter traços de ', '')
         .replace('contém ', '')
         .replace('pode conter ', '')
         .trim();
