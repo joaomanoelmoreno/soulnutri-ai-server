@@ -1701,46 +1701,46 @@ if (!res.ok || !contentType.includes('audio')) {
     const allBeneficios = [...new Set(plateItems.flatMap(item => item.beneficios || []))].slice(0, 5);
     
     // Coletar riscos únicos (máx 3)
-    const allRiscos = [...new Set(plateItems.flatMap(item => item.riscos || []))].slice(0, 3);
-    
-    // Verificar alérgenos presentes em qualquer item (objeto alergenos ou texto nos riscos)
-   const riscosLower = String(allRiscos.join(' ') ?? '').toLowerCase();
-    const contemGluten = plateItems.some(item => item.alergenos?.gluten) || 
-                         riscosLower.includes('glúten') || riscosLower.includes('gluten');
-    const contemLactose = plateItems.some(item => item.alergenos?.lactose) || 
-                          riscosLower.includes('lactose') || riscosLower.includes('leite');
-    const contemOvo = plateItems.some(item => item.alergenos?.ovo) || 
-                      riscosLower.includes('ovo');
-    const contemCastanhas = plateItems.some(item => item.alergenos?.castanhas) || 
-                            riscosLower.includes('castanha') || riscosLower.includes('amendoim') || riscosLower.includes('nozes');
-    const contemFrutosMar = plateItems.some(item => item.alergenos?.frutosMar) || 
-                            riscosLower.includes('peixe') || riscosLower.includes('camarão') || 
-                            riscosLower.includes('crustáceo') || riscosLower.includes('frutos do mar');
-    const contemSoja = plateItems.some(item => item.alergenos?.soja) || 
-                       riscosLower.includes('soja');
-    
-    // Filtrar riscos que NÃO são sobre alérgenos (para evitar duplicação)
-    const riscosNaoAlergenos = allRiscos.filter(r => {
-      const lower = String(r ?? '').toLowerCase();
-      return !(lower.includes('alérgeno') || lower.includes('glúten') || lower.includes('lactose') || 
-               lower.includes('ovo') || lower.includes('castanha') || lower.includes('peixe') ||
-               lower.includes('camarão') || lower.includes('soja'));
-    });
-    
-    // Categorias presentes
-    const categorias = [...new Set(plateItems.map(item => item.category).filter(Boolean))];
-    
-    return {
-      itens: plateItems.map(i => i.dish_display),
-      totalItens: plateItems.length,
-      nutrition: {
-        calorias: `${Math.round(totals.calorias)} kcal`,
-        proteinas: `${Math.round(totals.proteinas)}g`,
-        carboidratos: `${Math.round(totals.carboidratos)}g`,
-        gorduras: `${Math.round(totals.gorduras)}g`
-      },
-      ingredientes: allIngredientes,
-      beneficios: allBeneficios,
+const allRiscos = [...new Set(plateItems.flatMap(item => item.riscos || []))].slice(0, 3);
+
+// Verificar alérgenos presentes em qualquer item (objeto alergenos ou texto nos riscos)
+const riscosLower = safeText(allRiscos.join(' '));
+const contemGluten = plateItems.some(item => item.alergenos?.gluten) ||
+                     riscosLower.includes('glúten') || riscosLower.includes('gluten');
+const contemLactose = plateItems.some(item => item.alergenos?.lactose) ||
+                      riscosLower.includes('lactose') || riscosLower.includes('leite');
+const contemOvo = plateItems.some(item => item.alergenos?.ovo) ||
+                  riscosLower.includes('ovo');
+const contemCastanhas = plateItems.some(item => item.alergenos?.castanhas) ||
+                        riscosLower.includes('castanha') || riscosLower.includes('amendoim') || riscosLower.includes('nozes');
+const contemFrutosMar = plateItems.some(item => item.alergenos?.frutosMar) ||
+                        riscosLower.includes('peixe') || riscosLower.includes('camarão') ||
+                        riscosLower.includes('crustáceo') || riscosLower.includes('frutos do mar');
+const contemSoja = plateItems.some(item => item.alergenos?.soja) ||
+                   riscosLower.includes('soja');
+
+// Filtrar riscos que NÃO são sobre alérgenos (para evitar duplicação)
+const riscosNaoAlergenos = allRiscos.filter((r) => {
+  const lower = safeText(r);
+  return !(lower.includes('alérgeno') || lower.includes('glúten') || lower.includes('lactose') ||
+           lower.includes('ovo') || lower.includes('castanha') || lower.includes('peixe') ||
+           lower.includes('camarão') || lower.includes('soja'));
+});
+
+// Categorias presentes
+const categorias = [...new Set(plateItems.map(item => item.category).filter(Boolean))];
+
+return {
+  itens: plateItems.map(i => i.dish_display),
+  totalItens: plateItems.length,
+  nutrition: {
+    calorias: `${Math.round(totals.calorias)} kcal`,
+    proteinas: `${Math.round(totals.proteinas)}g`,
+    carboidratos: `${Math.round(totals.carboidratos)}g`,
+    gorduras: `${Math.round(totals.gorduras)}g`
+  },
+  ingredientes: allIngredientes,
+  beneficios: allBeneficios,
       riscos: riscosNaoAlergenos.length > 0 ? riscosNaoAlergenos : allRiscos.slice(0, 2),
       contemGluten,
       contemLactose,
