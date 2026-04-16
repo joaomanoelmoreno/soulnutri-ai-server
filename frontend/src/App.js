@@ -832,15 +832,35 @@ const safeText = (v) => {
   };
 
   // Carregar contagem de notificações não lidas
-  const loadNotifCount = async (pin) => {
+const loadNotifCount = async (pin) => {
+  try {
+    if (!pin) return;
+
+    const res = await fetch(`${API}/notifications/${pin}`);
+
+    if (!res.ok) {
+      let errorText = `HTTP ${res.status}`;
+      try { errorText = await res.clone().text(); } catch {}
+      console.warn('[NOTIF] Erro ao carregar notificações:', errorText);
+      return;
+    }
+
+    let data;
     try {
-      if (!pin) return;
-      const res = await fetch(`${API}/notifications/${pin}`);
-      if (!res.ok) return;
-      const data = await res.json();
-      if (data.ok) setNotifUnread(data.unread || 0);
-    } catch (e) { /* silent */ }
-  };
+      data = await res.json();
+    } catch {
+      console.warn('[NOTIF] Falha ao processar resposta do servidor');
+      return;
+    }
+
+    if (data?.ok) {
+      setNotifUnread(data.unread || 0);
+    }
+
+  } catch (e) {
+    console.warn('[NOTIF] Erro inesperado:', e?.message);
+  }
+};
 
   // Carregar resumo diário
   const loadDailySummary = async () => {
