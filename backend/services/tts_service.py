@@ -12,7 +12,7 @@ Objetivos desta versao:
 import io
 import logging
 import re
-from typing import Any, Iterable, Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -184,14 +184,12 @@ def _normalize_text_for_tts(text: str) -> str:
     for old, new in replacements:
         normalized = normalized.replace(old, new)
 
-    # Corrigir padrões numéricos comuns
     normalized = re.sub(r"(\d+)\s*g\b", r"\1 gramas", normalized, flags=re.IGNORECASE)
     normalized = re.sub(r"(\d+)\s*kcal\b", r"\1 calorias", normalized, flags=re.IGNORECASE)
     normalized = re.sub(r"(\d+)\s*cal\b", r"\1 calorias", normalized, flags=re.IGNORECASE)
     normalized = re.sub(r"(\d+)\s*mg\b", r"\1 miligramas", normalized, flags=re.IGNORECASE)
     normalized = re.sub(r"(\d+)\s*kg\b", r"\1 quilogramas", normalized, flags=re.IGNORECASE)
 
-    # Limpeza final
     normalized = normalized.replace("gramas gramas", "gramas")
     normalized = normalized.replace("calorias calorias", "calorias")
     normalized = re.sub(r"\s+", " ", normalized).strip()
@@ -216,7 +214,6 @@ def _build_dish_description(data: dict) -> str:
 
     parts.append(f"{nome}.")
 
-    # Calorias e macros
     nutrition = data.get("nutrition") or {}
     calorias = nutrition.get("calorias") or data.get("calorias_estimadas")
     calorias_txt = _strip_unit_prefix(calorias)
@@ -238,12 +235,10 @@ def _build_dish_description(data: dict) -> str:
     if macros:
         parts.append("Macronutrientes: " + ", ".join(macros) + ".")
 
-    # Ingredientes
     ingredientes = _safe_list(data.get("ingredientes"))[:8]
     if ingredientes:
         parts.append("Ingredientes: " + ", ".join(ingredientes) + ".")
 
-    # Alergenos - critico para acessibilidade
     alergenos = data.get("alergenos") or {}
     if isinstance(alergenos, dict):
         contidos = [_safe_str(nome_al) for nome_al, presente in alergenos.items() if presente]
@@ -251,37 +246,30 @@ def _build_dish_description(data: dict) -> str:
         if contidos:
             parts.append(f"Atenção. Contém: {', '.join(contidos)}.")
 
-    # Alertas personalizados
     for alerta in _safe_list(data.get("alertas_personalizados"))[:3]:
         parts.append(f"{alerta}.")
 
-    # Alertas premium
     premium = data.get("premium") or {}
     if isinstance(premium, dict):
         for alerta in _safe_list(premium.get("alertas_alergenos"))[:2]:
             parts.append(f"Alerta: {alerta}.")
 
-    # Beneficios
     beneficios = _safe_list(data.get("beneficios"))[:3]
     if beneficios:
         parts.append("Benefícios: " + ". ".join(beneficios) + ".")
 
-    # Riscos
     riscos = _safe_list(data.get("riscos"))[:2]
     if riscos:
         parts.append("Riscos: " + ". ".join(riscos) + ".")
 
-    # Curiosidade
     curiosidade = _safe_str(data.get("curiosidade"))
     if curiosidade:
         parts.append(f"Curiosidade: {curiosidade}.")
 
-    # Combinacoes
     combinacoes = _safe_list(data.get("combinacoes"))[:3]
     if combinacoes:
         parts.append("Combinações que potencializam esta refeição: " + ". ".join(combinacoes) + ".")
 
-    # Verdade ou mito
     mito = data.get("mito_verdade")
     if isinstance(mito, dict):
         frase = _safe_str(mito.get("mito") or mito.get("afirmacao") or mito.get("frase"))
@@ -292,12 +280,10 @@ def _build_dish_description(data: dict) -> str:
             else:
                 parts.append(f"Verdade ou mito: {frase}.")
 
-    # Noticias
     noticias = data.get("noticias") or []
     for noticia in _safe_list(noticias)[:2]:
         parts.append(f"Notícia: {noticia}.")
 
-    # Alerta de saude
     alerta_saude = _safe_str(data.get("alerta_saude"))
     if alerta_saude:
         parts.append(f"Alerta de saúde: {alerta_saude}.")
