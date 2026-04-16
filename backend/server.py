@@ -152,6 +152,64 @@ app = FastAPI(
 async def health_check():
     """Health check para Kubernetes - responde rapidamente"""
     return {"status": "healthy", "service": "soulnutri-backend"}
+            
+# Router com prefixo /api
+api_router = APIRouter(prefix="/api")
+
+
+@api_router.get("/debug/memory")
+async def debug_memory():
+    """Diagnóstico de memória do servidor"""
+    import psutil, gc
+
+    process = psutil.Process()
+    mem = process.memory_info()
+
+    gc.collect()
+
+    mem_after_gc = process.memory_info()
+
+    return {
+        "rss_mb": round(mem.rss / 1024 / 1024, 1),
+        "vms_mb": round(mem.vms / 1024 / 1024, 1),
+        "rss_after_gc_mb": round(mem_after_gc.rss / 1024 / 1024, 1),
+        "onnx_loaded": bool(getattr(__import__('ai.embedder', fromlist=['_ONNX_SESSION']), '_ONNX_SESSION', None)),
+    }
+
+
+@api_router.post("/debug/test-onnx")
+async def debug_test_onnx():
+    """Teste isolado de inferência ONNX - diagnóstico de crash"""
+    import gc, psutil, io
+    from PIL import Image
+
+    process = psutil.Process()
+    mem_before = process.memory_info().rss / 1024 / 1024
+
+    try:
+        # Criar imagem dummy 224x224
+        dummy_img = Image.new('RGB', (224, 224), color='red')
+        buf = io.BytesIO()
+        dummy_img.save(buf, format='JPEG')
+        dummy_bytes = buf.getvalue()
+
+        from ai.embedder import get_image_embedding
+        embedding = get_image_embedding(dummy_bytes)
+
+        gc.collect()
+        mem_after = process.memory_info().rss / 1024 / 1024
+
+        return {
+            "ok": True,
+            "embedding_shape": list(embedding.shape) if embedding is not None else None,
+            "mem_before_mb": round(mem_before, 1),
+            "mem_after_mb": round(mem_after, 1),
+            "mem_delta_mb": round(mem_after - mem_before, 1)
+        }
+
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
 
 # Router com prefixo /api
 api_router = APIRouter(prefix="/api")
