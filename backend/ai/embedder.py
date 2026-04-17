@@ -224,7 +224,6 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     logger.error("[embedder] ERRO: Nenhum modelo disponivel para gerar embedding")
     return None
 
-
 def image_embedding_from_path(image_path: str) -> np.ndarray:
     """Gera embedding de uma imagem a partir do caminho do arquivo"""
     with open(image_path, 'rb') as f:
@@ -232,11 +231,15 @@ def image_embedding_from_path(image_path: str) -> np.ndarray:
     return get_image_embedding(image_bytes)
 
 
+def image_embedding_from_bytes(image_bytes: bytes) -> np.ndarray:
+    """Alias para compatibilidade com código legado"""
+    return get_image_embedding(image_bytes)
+
+
 def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
     """DESABILITADO"""
     logger.error("[embedder] ERRO: API externa desabilitada")
     return None
-
 
 def get_model_info():
     """Retorna informacoes do modelo em uso"""
