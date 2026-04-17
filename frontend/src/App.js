@@ -3189,13 +3189,33 @@ return {
             </>
           )}
 
-          {/* RISCOS CONSOLIDADOS */}
-          {plateConsolidated?.riscos?.length > 0 && (
-            <div className="mesa-section warning">
-              <h4>⚠️ Pontos de atenção</h4>
-              <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{typeof r === 'object' ? (<>{r.texto}{r.fonte && <span style={{color:'#ef4444',fontSize:'11px',fontStyle:'italic'}}> — {r.fonte}</span>}</>) : r}</li>)}</ul>
-            </div>
-          )}
+     {/* RISCOS CONSOLIDADOS */}
+{plateConsolidated?.riscos?.length > 0 && (
+  <div className="mesa-section warning">
+    <h4>⚠️ Pontos de atenção</h4>
+    <ul>
+      {plateConsolidated.riscos.map((r,i) => (
+        <li key={i}>
+          {typeof r === 'object' ? (
+            <>
+              {r.texto}
+              {r.fonte && (
+                <a 
+                  href={`https://www.google.com/search?q=${encodeURIComponent(r.fonte + ' nutrição estudo')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{color:'#ef4444',fontSize:'11px',fontStyle:'italic'}}
+                >
+                  {" — " + r.fonte}
+                </a>
+              )}
+            </>
+          ) : r}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
           {/* BOTÃO COMPARTILHAR */}
           <button 
