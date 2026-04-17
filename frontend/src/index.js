@@ -22,3 +22,13 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/demo" element={<Demo />} />
+    </Routes>
+  </BrowserRouter>,
+);
