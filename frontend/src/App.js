@@ -2919,7 +2919,16 @@ return {
           {plateConsolidated?.beneficios?.length > 0 && (
             <div className="mesa-section good">
               <h4>✅ Benefícios da sua refeição</h4>
-              <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && <span style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}> — {b.fonte}</span>}</>) : b}</li>)}</ul>
+<ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && (
+  <a 
+    href={`https://www.google.com/search?q=${encodeURIComponent(b.fonte + ' nutrição estudo')}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}
+  >
+    {" — " + b.fonte}
+  </a>
+)}</>) : b}</li>)}</ul>
             </div>
           )}
 
