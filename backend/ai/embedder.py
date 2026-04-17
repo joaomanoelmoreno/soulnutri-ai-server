@@ -157,7 +157,7 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     global _MODEL, _PREPROCESS, _USE_HF_API, _ONNX_SESSION, _USE_ONNX
 
     import gc
-    gc.collect()  # Liberar memória antes de inferência
+    gc.collect()
 
     start = time.time()
 
@@ -166,19 +166,12 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
         try:
             img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
 
-            # Preprocessing CLIP via numpy (sem torch)
             img_np = _preprocess_clip_numpy(img)
-
-            # Liberar imagem PIL (não mais necessária)
             del img
 
-            # Inferência ONNX
             result = _ONNX_SESSION.run(None, {'image': img_np})[0]
-
-            # Liberar input
             del img_np
 
-            # Normalizar
             embedding = result[0].astype(np.float32)
             del result
 
@@ -186,8 +179,9 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
             if norm > 0:
                 embedding = embedding / norm
 
-            gc.collect()  # Liberar memória após inferência
+            gc.collect()
             logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms")
+
             return embedding
 
         except Exception as e:
@@ -211,19 +205,22 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
             with torch.no_grad():
                 embedding = _MODEL.encode_image(img_tensor)
                 embedding = embedding.squeeze(0)
+
                 norm = embedding.norm(dim=-1, keepdim=True)
                 if norm.item() > 0:
                     embedding = embedding / norm
+
                 embedding = embedding.cpu().numpy().astype(np.float32)
 
             logger.info(f"[embedder] PyTorch: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
+
             return embedding
 
-                except Exception as e:
+        except Exception as e:
             logger.error(f"[embedder] Erro PyTorch: {e}")
             return None
 
-    # ═══ NENHUM MODELO ═══
+            # ═══ NENHUM MODELO ═══
     logger.error("[embedder] ERRO: Nenhum modelo disponivel para gerar embedding")
     return None
 
