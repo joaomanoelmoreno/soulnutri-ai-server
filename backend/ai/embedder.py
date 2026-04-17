@@ -155,25 +155,59 @@ def preload_model():
 def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     """Gera embedding de uma imagem a partir de bytes"""
     global _MODEL, _PREPROCESS, _USE_HF_API, _ONNX_SESSION, _USE_ONNX
-    
-  import gc
-gc.collect()  # Liberar memória antes de inferência
 
-start = time.time()
+    import gc
+    gc.collect()  # Liberar memória antes de inferência
+
+    start = time.time()
+
+    # ═══ MODO ONNX (deploy) ═══
+    if _USE_ONNX and _ONNX_SESSION:
+        try:
+            img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+
+            # Preprocessing CLIP via numpy (sem torch)
+            img_np = _preprocess_clip_numpy(img)
+
+            # Liberar imagem PIL (não mais necessária)
+            del img
+
+            # Inferência ONNX
+            result = _ONNX_SESSION.run(None, {'image': img_np})[0]
+
+            # Liberar input
+            del img_np
+
+            # Normalizar
+            embedding = result[0].astype(np.float32)
+            del result
+
+            norm = np.linalg.norm(embedding)
+            if norm > 0:
+                embedding = embedding / norm
+
+            gc.collect()  # Liberar memória após inferência
+            logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms")
+            return embedding
+
+        except Exception as e:
+            logger.error(f"[embedder] Erro ONNX: {e}")
+            gc.collect()
+            return None
 
     # ═══ MODO PYTORCH (dev local) ═══
     if _MODEL is not None and not _USE_HF_API:
         try:
             import torch
             from PIL import ImageEnhance, ImageOps
-            
+
             img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
             img = ImageOps.autocontrast(img, cutoff=1)
             img = ImageEnhance.Sharpness(img).enhance(1.3)
             img = ImageEnhance.Color(img).enhance(1.1)
-            
+
             img_tensor = _PREPROCESS(img).unsqueeze(0).to(_DEVICE)
-            
+
             with torch.no_grad():
                 embedding = _MODEL.encode_image(img_tensor)
                 embedding = embedding.squeeze(0)
@@ -181,17 +215,18 @@ start = time.time()
                 if norm.item() > 0:
                     embedding = embedding / norm
                 embedding = embedding.cpu().numpy().astype(np.float32)
-            
+
             logger.info(f"[embedder] PyTorch: {(time.time()-start)*1000:.0f}ms (img: {img.size[0]}x{img.size[1]})")
             return embedding
-            
-        except Exception as e:
+
+                except Exception as e:
             logger.error(f"[embedder] Erro PyTorch: {e}")
             return None
-    
+
     # ═══ NENHUM MODELO ═══
     logger.error("[embedder] ERRO: Nenhum modelo disponivel para gerar embedding")
     return None
+
 
 def image_embedding_from_path(image_path: str) -> np.ndarray:
     """Gera embedding de uma imagem a partir do caminho do arquivo"""
