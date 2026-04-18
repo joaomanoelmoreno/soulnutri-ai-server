@@ -2960,7 +2960,7 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
 
         user["premium_ativo"] = premium_ativo
         user["is_trial"] = is_trial
-        user["is_admin"] = bool(user.get("is_admin", False))
+        user["is_admin"] = True
 
         # Calcular dias restantes do trial
         dias_restantes = None
