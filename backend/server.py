@@ -2922,35 +2922,40 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
     """
     try:
         from services.profile_service import hash_pin
-        from datetime import datetime
-        
+        from datetime import datetime, timezone
+
         pin_hash = hash_pin(pin)
+
         # Buscar por nome E pin_hash
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\s*{nome}\s*$", "$options": "i"}},
             {"_id": 0, "pin_hash": 0}
         )
-        
+
         if not user:
             return {"ok": False, "error": "Nome ou PIN incorreto"}
-        
+
         # Verificar se Premium esta ativo e nao expirou (trial de 7 dias)
         premium_ativo = user.get("premium_ativo", False)
         premium_expira_em = user.get("premium_expira_em")
         is_trial = user.get("is_trial", False)
-        
+
         if premium_expira_em and premium_ativo:
             try:
-                expiracao = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+                expiracao = datetime.fromisoformat(premium_expira_em.replace("Z", "+00:00"))
                 agora = datetime.now(timezone.utc)
                 if agora > expiracao:
                     premium_ativo = False
                     await db.users.update_one(
-                        {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
-                        {"$set": {"premium_ativo": False, "premium_expirado": True, "trial_expirado": True}}
+                        {"nome": {"$regex": f"^\s*{nome}\s*$", "$options": "i"}},
+                        {"$set": {
+                            "premium_ativo": False,
+                            "premium_expirado": True,
+                            "trial_expirado": True
+                        }}
                     )
                     logger.info(f"[PREMIUM] Trial expirado para {user.get('nome')}")
-                    except Exception as e:
+            except Exception as e:
                 logger.warning(f"[PREMIUM] Erro ao verificar expiracao: {e}")
 
         user["premium_ativo"] = premium_ativo
@@ -2958,17 +2963,15 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
         user["is_admin"] = bool(user.get("is_admin", False))
 
         # Calcular dias restantes do trial
-        
-
         dias_restantes = None
         if premium_ativo and premium_expira_em:
             try:
-                expiracao = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+                expiracao = datetime.fromisoformat(premium_expira_em.replace("Z", "+00:00"))
                 dias_restantes = max(0, (expiracao - datetime.now(timezone.utc)).days)
-            except:
+            except Exception:
                 pass
         user["dias_restantes_trial"] = dias_restantes
-        
+
         if not premium_ativo:
             msg = f"Ola, {user['nome']}! "
             if user.get("trial_expirado") or user.get("premium_expirado"):
@@ -2981,21 +2984,21 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
                 "premium_bloqueado": True,
                 "message": msg
             }
-        
+
         # Buscar consumo do dia
         hoje = datetime.now().strftime("%Y-%m-%d")
         daily_log = await db.daily_logs.find_one(
             {"user_nome": user["nome"], "data": hoje},
             {"_id": 0}
         )
-        
+
         return {
             "ok": True,
             "user": user,
             "daily_log": daily_log,
             "message": f"Ola, {user['nome']}!"
         }
-        
+
     except Exception as e:
         logger.error(f"Erro no login: {e}")
         return {"ok": False, "error": str(e)}
