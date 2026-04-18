@@ -959,7 +959,11 @@ const loadNotifCount = async (pin) => {
         return true;
       }
       return false;
-    } catch (e) {
+     } catch (e) {
+      if (e?.name === 'AbortError') {
+        console.log('[PREMIUM] Registro de refeição abortado (troca de fluxo/componente).');
+        return false;
+      }
       console.error('Erro ao registrar refeição:', e);
       return false;
     }
