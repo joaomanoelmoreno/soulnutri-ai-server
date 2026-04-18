@@ -3820,20 +3820,6 @@ return {
             </button>
           </div>
 
-          {/* BOTÕES DE FEEDBACK - FLUXO SEGURO */}
-          {!feedbackSent && r.source !== 'new_dish' && !showCorrectionFlow && (
-            <div className="feedback-section" data-testid="feedback-section">
-              <p className="feedback-question">Este reconhecimento está correto?</p>
-              <div className="feedback-btns">
-                <button className="fb-btn correct" onClick={sendFeedbackCorrect} data-testid="feedback-correct-btn">
-                  Sim, está correto
-                </button>
-                <button className="fb-btn incorrect" onClick={sendToModerationQueue} data-testid="feedback-incorrect-btn">
-                  Não, está errado
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* FLUXO DE CORREÇÃO - 3 opções */}
           {showCorrectionFlow && !feedbackSent && (
