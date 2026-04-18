@@ -386,6 +386,8 @@ if (!res.ok || !contentType.includes('audio')) {
   };
   
   const [premiumUser, setPremiumUser] = useState(null);
+  const isAdminUser = premiumUser?.is_admin === true;
+  const canShowAdminTools = isAdminUser && isCibiSana;
   const premiumUserRef = useRef(null);
   // Sync ref com state para evitar stale closure em callbacks memoizados
   useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser]);
@@ -3814,19 +3816,39 @@ return {
           })()}
 
           {/* BOTÕES DE AÇÃO - BUFFET */}
-          <div className="buffet-actions">
-            <button 
-              className="add-to-plate-btn"
-              onClick={() => setShowAddMore(true)}
-              data-testid="add-to-plate-btn"
-            >
-              ✓ Adicionar ao prato
-            </button>
-          </div>
+<div className="buffet-actions">
+  <button 
+    className="add-to-plate-btn"
+    onClick={() => setShowAddMore(true)}
+    data-testid="add-to-plate-btn"
+  >
+    ✓ Adicionar ao prato
+  </button>
+
+  {canShowAdminTools && !showCorrectionFlow && (
+    <button
+      type="button"
+      onClick={() => setShowCorrectionFlow(true)}
+      data-testid="admin-tools-btn"
+      style={{
+        marginTop: '10px',
+        background: 'transparent',
+        color: '#cbd5e1',
+        border: '1px solid rgba(255,255,255,0.14)',
+        borderRadius: '10px',
+        padding: '9px 12px',
+        fontSize: '13px',
+        width: '100%'
+      }}
+    >
+      Ferramentas do administrador
+    </button>
+  )}
+</div>
 
 
           {/* FLUXO DE CORREÇÃO - 3 opções */}
-          {showCorrectionFlow && !feedbackSent && (
+          {canShowAdminTools && showCorrectionFlow && !feedbackSent && (
             <div className="feedback-section correction-flow" data-testid="correction-flow">
               <p className="feedback-question">Qual é o prato correto?</p>
               
