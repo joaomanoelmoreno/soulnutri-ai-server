@@ -2950,13 +2950,16 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
                         {"$set": {"premium_ativo": False, "premium_expirado": True, "trial_expirado": True}}
                     )
                     logger.info(f"[PREMIUM] Trial expirado para {user.get('nome')}")
-            except Exception as e:
+                    except Exception as e:
                 logger.warning(f"[PREMIUM] Erro ao verificar expiracao: {e}")
-        
+
         user["premium_ativo"] = premium_ativo
         user["is_trial"] = is_trial
-        
+        user["is_admin"] = bool(user.get("is_admin", False))
+
         # Calcular dias restantes do trial
+        
+
         dias_restantes = None
         if premium_ativo and premium_expira_em:
             try:
