@@ -425,6 +425,16 @@ const safeText = (v) => {
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
   const isCibiSana = detectedRestaurant === 'cibi_sana';
   const canShowAdminTools = isAdminUser && isCibiSana;
+  const userAgent = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
+  const isAndroid = /Android/i.test(userAgent);
+  const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+  const shouldShowInstallBanner = !isInstalled && !isStandalone;
+  const shouldShowIOSInstallHelp = shouldShowInstallBanner && isIOS && isSafari;
+  const shouldShowAndroidInstallHelp = shouldShowInstallBanner && isAndroid;
 
   // Welcome popup com seleção de idioma
   const [showWelcome, setShowWelcome] = useState(() => {
@@ -2547,6 +2557,74 @@ return {
           <div style={{ fontSize: '13px', opacity: 0.9, marginTop: '4px' }}>
             🍽️ Aproveite sua refeição!
           </div>
+        </div>
+      )}
+
+      {shouldShowIOSInstallHelp && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '12px',
+            left: '12px',
+            right: '12px',
+            zIndex: 9998,
+            background: 'rgba(17, 24, 39, 0.96)',
+            color: '#fff',
+            borderRadius: '14px',
+            padding: '14px 16px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+            border: '1px solid rgba(255,255,255,0.12)'
+          }}
+        >
+          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px' }}>
+            📲 Instale o SoulNutri no iPhone
+          </div>
+          <div style={{ fontSize: '13px', lineHeight: 1.45, opacity: 0.95 }}>
+            Toque em <strong>Compartilhar</strong> no Safari e depois em <strong>Adicionar à Tela de Início</strong>.
+          </div>
+        </div>
+      )}
+
+      {shouldShowAndroidInstallHelp && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '12px',
+            left: '12px',
+            right: '12px',
+            zIndex: 9998,
+            background: 'rgba(17, 24, 39, 0.96)',
+            color: '#fff',
+            borderRadius: '14px',
+            padding: '14px 16px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+            border: '1px solid rgba(255,255,255,0.12)'
+          }}
+        >
+          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px' }}>
+            📲 Instale o app SoulNutri
+          </div>
+          {deferredPrompt ? (
+            <button
+              onClick={handleInstallApp}
+              style={{
+                marginTop: '8px',
+                background: '#10b981',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '10px',
+                padding: '10px 14px',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              Instalar SoulNutri
+            </button>
+          ) : (
+            <div style={{ fontSize: '13px', lineHeight: 1.45, opacity: 0.95 }}>
+              No Chrome, toque nos <strong>3 pontos</strong> e depois em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.
+            </div>
+          )}
         </div>
       )}
 
