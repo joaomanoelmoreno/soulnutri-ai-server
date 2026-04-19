@@ -387,7 +387,6 @@ if (!res.ok || !contentType.includes('audio')) {
   
   const [premiumUser, setPremiumUser] = useState(null);
   const isAdminUser = premiumUser?.is_admin === true;
-  const canShowAdminTools = isAdminUser && isCibiSana;
   const premiumUserRef = useRef(null);
   // Sync ref com state para evitar stale closure em callbacks memoizados
   useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser]);
@@ -424,6 +423,9 @@ const safeText = (v) => {
     return localStorage.getItem('soulnutri_restaurant') || null;
   });
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
+  const isCibiSana = detectedRestaurant === 'cibi_sana';
+  const canShowAdminTools = isAdminUser && isCibiSana;
+
   // Welcome popup com seleção de idioma
   const [showWelcome, setShowWelcome] = useState(() => {
     return !localStorage.getItem('soulnutri_welcomed');
@@ -511,9 +513,9 @@ const safeText = (v) => {
         );
         const accuracy = position.coords.accuracy || 0;
         const effectiveRadius = CIBI_SANA_RADIUS_METERS + Math.min(accuracy, 50);
-        const isCibiSana = dist <= effectiveRadius;
+        const isInsideCibiSanaZone = dist <= effectiveRadius;
         
-        const newRestaurant = isCibiSana ? 'cibi_sana' : 'external';
+        const newRestaurant = isInsideCibiSanaZone ? 'cibi_sana' : 'external';
         
         setDetectedRestaurant(prev => {
           if (prev && prev !== newRestaurant) {
