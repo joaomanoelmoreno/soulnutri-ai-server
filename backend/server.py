@@ -150,8 +150,9 @@ app = FastAPI(
 
 # Servir frontend buildado (inclui /.well-known/assetlinks.json e arquivos estáticos)
 frontend_path = Path(__file__).resolve().parent.parent / "frontend" / "build"
-if frontend_path.exists():
-    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+# MOUNT ANTIGO DESATIVADO: estava interceptando /api antes das rotas
+# if frontend_path.exists():
+#     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
 
 # Health check endpoint na RAIZ (para Kubernetes)
