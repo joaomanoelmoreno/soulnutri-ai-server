@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "br.com.soulnutri.app",
+      "sha256_cert_fingerprints": [
+        "F4:AE:7B:EC:AD:14:D8:8F:AE:27:78:02:E7:54:86:CA:A8:5B:51:B9:52:34:B7:36:8F:BE:77:4F:8F:72:C9:83"
+      ]
+    }
+  }
+]
