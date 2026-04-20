@@ -932,7 +932,7 @@ def buscar_dados_taco(ingrediente: str) -> dict:
     return None
 
 
-def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dict:
+def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_prato: str = "") -> dict:
     """Calcula a nutrição total de um prato baseado nos ingredientes.
     Usa proporções realistas de receitas comerciais (NÃO divide igualmente)."""
     if not ingredientes:
