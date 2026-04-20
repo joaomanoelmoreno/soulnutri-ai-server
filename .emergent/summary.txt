@@ -1,13 +1,19 @@
-<analysis>/ai/identify/ai/enrichgTTSpydubffmpegFormDataffmpegsw.jsno-cachesw.jsno-cache, no-store, must-revalidatesw.jsreg.update()index.jsffmpegTypeError: Cannot read properties of undefined (reading 'replace')emergent-main.jsApp.js/ai/enrich/ai/ttsserver.pyApp.jsgTTSupdate_manyFormDataos.makedirs
+<analysis>/api/ai/enrichuseEffectgTTSOpenAI TTSX-Admin-KeyAdmin.jsverify_admin_keyverify_admin_keyserver.pyAdmin.jsADMIN_SECRET_KEYlocalStorageX-Admin-Keyfetchverify_admin_keyserver.py/admin/*startCamera()useEffectsendFeedbackCorrectApp.jsstartCamerastopCameraInternalstreamRefgTTSOpenAIOPENAI_API_KEYOPENAI_API_KEYserver.pyApp.jssw.jsemergent-main.jsORT_DISABLE_ALLuseEffectRELATORIO_TECNICO_SOULNUTRI.md.docx.env.gitignore_build_dish_descriptiontts_service.py
 /app
 ├── backend/
-│   ├── ai/               # embedder.py, index.py (Trata buscas via ONNX)
-│   ├── services/         # gemini_flash_service.py (Enrich), tts_service.py (gTTS), notification_service.py
+│   ├── ai/               # embedder.py (ONNX otimizado - GraphOptimization desativado)
+│   ├── services/         # gemini_flash_service.py, tts_service.py, notification_service.py
 │   ├── data/             # taco_database.py
-│   └── server.py         # Endpoints FastAPI (EXTREMAMENTE GRANDE ~5700 linhas)
+│   ├── scripts/          # export_onnx.py (modificado para modo legacy, mas não executado mais no Docker)
+│   └── server.py         # Endpoints FastAPI (>5900 linhas, agora com bloqueios de upload 10MB)
 ├── frontend/
-│   ├── public/           # sw.js (V8 - anti cache), manifest.json
+│   ├── public/           # sw.js (Minimal v10), index.html (emergent-main.js condicional)
 │   └── src/
-│       ├── App.js        # React Principal (~4200 linhas)
-│       └── Admin.js      # Painel administrativo
-App.jsgTTSpydubffmpegLiteLLMusers{pin_hash, nome, premium_ativo, premium_expira_em}dishes{name, slug, ingredients, category}gTTSpydubffmpegDockerfile/app/backend/server.py/app/frontend/public/sw.js/app/backend/services/tts_service.py/app/backend/services/notification_service.py/app/backend/data/taco_database.py/app/Dockerfileapt-get install ffmpegApp.jsserver.pyPOST /api/ai/identifyPOST /api/ai/enrichPOST /api/ai/ttsgTTS/api/ai/enrichsw.jsCache-Control: no-cachesw.jssw.jsindex.jsTypeErrorffmpegjoaomanoelmorenoPqlamz01922212Joao Manoel App.jsTypeError/app/frontend/src/App.js/app/frontend/src/index.js/app/backend/server.pySPAStaticFiles/root/.emergent/automation_output/...TypeError: Cannot read properties of undefined (reading 'replace')emergent-main.js</analysis>
+│       ├── App.js        # React Principal (~4400 linhas)
+│       ├── Admin.js      # Painel administrativo
+│       └── NotificationPanel.jsx
+├── Dockerfile            # Agora baixa clip_visual_fp16.onnx do R2
+├── memory/
+│   ├── PRD.md
+│   └── REGRAS_IMUTAVEIS.md # Regras rígidas sobre arquitetura (CibiSana=ONNX apenas)
+ORT_DISABLE_ALLSegmentation Faultwgetusers{pin_hash, nome, premium_ativo}dishes{name, slug, ingredients, category}nutrition_sheetsOPENAI_API_KEY/app/frontend/src/App.js/app/backend/server.pyverify_admin_key/app/frontend/src/Admin.js/app/memory/REGRAS_IMUTAVEIS.md/app/RELATORIO_TECNICO_SOULNUTRI.mdApp.jsserver.pyAdmin.jsPOST /api/ai/identifyPOST /api/ai/enrichPOST /api/ai/ttspremium_tts/admin/*X-Admin-Keyintegration_playbook_expert_v2REGRAS_IMUTAVEIS.md.docx/app/RELATORIO_TECNICO_SOULNUTRI.docx/app/RELATORIO_TECNICO_SOULNUTRI.mdRELATORIO_TECNICO_SOULNUTRI.docxverify_admin_keyserver.pyOPENAI_API_KEY2212Joao Manoel verify_admin_keyX-Admin-KeyAdmin.js/app/frontend/src/Admin.jsadminKeyxhrGetfetchheaders: { 'X-Admin-Key': adminKey }/app/backend/server.pyverify_admin_keyX-Admin-KeyADMIN_SECRET_KEYreturn True</analysis>
