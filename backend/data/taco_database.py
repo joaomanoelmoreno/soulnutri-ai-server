@@ -990,19 +990,25 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dic
     for ing in ingredientes:
         ing_lower = ing.lower().strip()
         prop = 0.0
+
         # Buscar proporção mais específica primeiro
         for chave, valor in PROPORCOES.items():
             if chave in ing_lower or ing_lower in chave:
                 prop = valor
                 break
+
         if prop == 0:
-            # Fallback inteligente: proporção pequena para ingrediente desconhecido
-            # (não divide igual, preserva proporções dos ingredientes conhecidos)
-            prop = 0.10
+            prop = estimar_prop_por_classe(ing_lower, ingredientes, nome_prato)
+
+        if prop == 0:
+            prop = 0.03
+
         proporcoes.append(prop)
-    
-    # Normalizar proporções para somar 100%
+
     total_prop = sum(proporcoes)
+    if total_prop > 0:
+        proporcoes = [p / total_prop for p in proporcoes]
+
     if total_prop > 0:
         proporcoes = [p / total_prop for p in proporcoes]
     
