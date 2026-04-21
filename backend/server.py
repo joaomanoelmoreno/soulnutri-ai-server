@@ -916,7 +916,21 @@ async def identify_image(
         # Para modo externo (Gemini): queries rapidas em paralelo
         if is_cibi_sana:
             # CLIP retorna rapido - busca ingredientes + nutrition do MongoDB (query rapida ~10ms)
-            nutrition_data = decision.get('nutrition') or {}
+            nutrition_data = decision.get('nutrition')
+
+            # Corrigir caso de nutrition zerada (BUG)
+            if nutrition_data and isinstance(nutrition_data, dict):
+                zero_like = True
+                for k in ["calorias", "proteinas", "carboidratos", "gorduras"]:
+                    v = nutrition_data.get(k)
+                    if v not in (0, 0.0, "0", "0g", "0 kcal", None, ""):
+                        zero_like = False
+                        break
+                if zero_like:
+                    nutrition_data = None
+
+            if not nutrition_data:
+                nutrition_data = {}
             
             # Buscar ingredientes e nutrition sheet do MongoDB (1 query rapida)
             if decision.get('identified') and dish_display_name:
