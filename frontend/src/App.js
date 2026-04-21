@@ -1556,6 +1556,7 @@ const loadNotifCount = async (pin) => {
   const lastFrameDataRef = useRef(null);
   const scanningRef = useRef(false);
   const lastScanResultRef = useRef(null); // Cache do último resultado
+const scanInFlightRef = useRef(false);  // trava anti-reentrada do scanner
   const scanCooldownRef = useRef(false); // Cooldown entre scans
   
   // Função para calcular diferença entre frames
@@ -1577,7 +1578,12 @@ const loadNotifCount = async (pin) => {
 
   const performScan = useCallback(async () => {
     // Não escanear se já está escaneando, carregando, em cooldown, ou sem câmera
-    if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+    if (scanInFlightRef.current) return;
+if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+
+scanInFlightRef.current = true;
+
+try {
     
     const v = videoRef.current;
     const c = canvasRef.current;
@@ -1691,24 +1697,25 @@ const loadNotifCount = async (pin) => {
         ctx.clearRect(0, 0, w, h);
       }, 'image/jpeg', 0.70);
     }
+    } finally {
+      scanInFlightRef.current = false;
+    }
   }, [stream]);
 
-  // Loop de detecção de mudança (verifica a cada 1.5s se imagem mudou)
-  // Intervalo maior para reduzir requisições e dar tempo para IA processar
+  // Scanner NÃO pode ser disparado automaticamente por useEffect
   useEffect(() => {
-    if (scannerMode && stream && !result && !loading) {
-      scanIntervalRef.current = setInterval(performScan, 1500);
-      // Primeiro scan após 500ms
-      setTimeout(performScan, 500);
+    if (scannerMode && stream) {
+      // apenas garantir que a câmera/scanner está pronta
+      // NÃO executar performScan automaticamente
     }
-    
+
     return () => {
       if (scanIntervalRef.current) {
         clearInterval(scanIntervalRef.current);
         scanIntervalRef.current = null;
       }
     };
-  }, [scannerMode, stream, result, loading, performScan]);
+  }, [scannerMode, stream]);
 
   // Toque no overlay para ver detalhes completos
   const handleScannerTap = useCallback(() => {
