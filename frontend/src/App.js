@@ -1369,10 +1369,18 @@ const loadNotifCount = async (pin) => {
         dish: result.dish,
         dish_display: result.dish_display,
         category: result.category,
-        calorias: result.nutrition?.calorias || result.calorias_estimadas || '0 kcal',
-        proteinas: result.nutrition?.proteinas || '0g',
-        carboidratos: result.nutrition?.carboidratos || '0g',
-        gorduras: result.nutrition?.gorduras || '0g',
+        calorias: result.nutrition?.calorias 
+          ? result.nutrition.calorias 
+          : (result.calorias_estimadas || '—'),
+        proteinas: result.nutrition?.proteinas 
+          ? result.nutrition.proteinas 
+          : '—',
+        carboidratos: result.nutrition?.carboidratos 
+          ? result.nutrition.carboidratos 
+          : '—',
+        gorduras: result.nutrition?.gorduras 
+          ? result.nutrition.gorduras 
+          : '—',
         ingredientes: result.ingredientes || [],
         beneficios: result.beneficios || [],
         riscos: result.riscos || [],
