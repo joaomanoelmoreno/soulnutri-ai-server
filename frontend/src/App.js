@@ -1406,6 +1406,8 @@ const loadNotifCount = async (pin) => {
         noticias: result.noticias || []
       };
 
+      console.log('[CLASS_DEBUG] newItem montado:', newItem);
+
       setPlateItems(prev => {
         // Evitar duplicatas pelo nome do prato
         if (prev.some(item => item.dish_display === newItem.dish_display)) {
@@ -1448,6 +1450,7 @@ const loadNotifCount = async (pin) => {
     
     if (result?.ok && result?.identified) {
       // Adicionar último item se houver
+      console.log('[CLASS_DEBUG] result bruto:', result);
       const newItem = {
         id: Date.now(),
         dish: result.dish,
