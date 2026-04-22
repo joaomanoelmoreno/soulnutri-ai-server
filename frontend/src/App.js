@@ -450,6 +450,7 @@ const safeText = (v) => {
   const fileInputRef = useRef(null);
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
+  const premiumCycleBusyRef = useRef(false);
   const mountedRef = useRef(true);
   const lastTouchRef = useRef(0);
 
@@ -675,6 +676,10 @@ const safeText = (v) => {
     });
 
     setEnrichLoading(true);
+
+    if (premiumUser) {
+      premiumCycleBusyRef.current = true;
+    }
     console.log('[ENRICH] Iniciando para:', currentDishName, '| Premium:', currentUserName);
 
     fetch(`${API}/ai/enrich`, {
@@ -774,7 +779,11 @@ const safeText = (v) => {
         console.warn('[ENRICH] Erro:', err);
       })
       .finally(() => {
-        if (!cancelled) setEnrichLoading(false);
+        if (!cancelled) 
+
+      if (premiumUser) {
+        premiumCycleBusyRef.current = false;
+      }
       });
 
     return () => {
@@ -1242,6 +1251,15 @@ const loadNotifCount = async (pin) => {
   }, [multiMode]);
 
   const identifyImage = async (blob) => {
+
+  if (premiumUser && premiumCycleBusyRef.current) {
+    console.log('[FLOW_BLOCKED] ciclo premium ainda ativo');
+    return;
+  }
+
+  if (premiumUser) {
+    premiumCycleBusyRef.current = true;
+  }
     // Cancelar requisição anterior se existir
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -1371,7 +1389,11 @@ const loadNotifCount = async (pin) => {
 
     // 🔴 RESETAR FLAGS CRÍTICAS
     setLoading(false);
-    setEnrichLoading(false);
+    
+
+      if (premiumUser) {
+        premiumCycleBusyRef.current = false;
+      }
 
     // 🔴 LIMPAR ESTADOS RESIDUAIS
     setScannerResult(null);
