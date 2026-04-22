@@ -802,7 +802,43 @@ async def identify_image(
                 logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
                 
                 decision = clip_decision
-                decision['source'] = 'local_index'
+                decision["source"] = "local_index"
+
+                # 1. preservar se já existir
+                category = decision.get("category") or decision.get("categoria")
+
+                # 2. tentar obter do metadata/local payload
+                if not category:
+                    metadata = decision.get("metadata") or {}
+                    category = metadata.get("category") or metadata.get("categoria")
+
+                # 3. inferência simples e conservadora
+                def infer_category_from_keywords(name: str):
+                    if not name:
+                        return None
+
+                    n = name.lower()
+
+                    keyword_groups = [
+                        ("Proteína Animal", ["frango", "carne", "maminha", "panceta", "peixe", "atum", "camarao", "camarão"]),
+                        ("Vegetariano", ["queijo", "ovo", "omelete"]),
+                        ("Vegano", ["tofu", "lentilha", "legumes", "berinjela", "beterraba"]),
+                        ("Carboidrato", ["arroz", "massa", "batata", "mandioca", "polenta"]),
+                    ]
+
+                    for cat, keywords in keyword_groups:
+                        if any(k in n for k in keywords):
+                            return cat
+
+                    return None
+
+                if not category:
+                    category = infer_category_from_keywords(
+                        decision.get("dish_display") or decision.get("dish")
+                    )
+
+                # 4. fallback final
+                decision["category"] = category or "não classificado"
             else:
                 return IdentifyResponse(
                     ok=False,
