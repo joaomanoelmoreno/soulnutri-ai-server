@@ -1368,7 +1368,7 @@ const loadNotifCount = async (pin) => {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
-        category: result.category || result.categoria || 'N/A',
+        category: result.category,
         calorias: result.nutrition?.calorias 
           ? result.nutrition.calorias 
           : (result.calorias_estimadas || '—'),
@@ -1405,8 +1405,6 @@ const loadNotifCount = async (pin) => {
         alertas_personalizados: result.alertas_personalizados || [],
         noticias: result.noticias || []
       };
-
-      console.log('[CLASS_DEBUG] newItem montado:', newItem);
 
       setPlateItems(prev => {
         // Evitar duplicatas pelo nome do prato
@@ -1450,16 +1448,15 @@ const loadNotifCount = async (pin) => {
     
     if (result?.ok && result?.identified) {
       // Adicionar último item se houver
-      console.log('[CLASS_DEBUG] result bruto:', result);
       const newItem = {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
-        category: result.category || result.categoria || 'N/A',
-        calorias: result.nutrition?.calorias || result.calorias_estimadas || '—',
-        proteinas: result.nutrition?.proteinas || '—',
-        carboidratos: result.nutrition?.carboidratos || '—',
-        gorduras: result.nutrition?.gorduras || '—',
+        category: result.category,
+        calorias: result.nutrition?.calorias || result.calorias_estimadas || '0 kcal',
+        proteinas: result.nutrition?.proteinas || '0g',
+        carboidratos: result.nutrition?.carboidratos || '0g',
+        gorduras: result.nutrition?.gorduras || '0g',
         ingredientes: result.ingredientes || [],
         beneficios: result.beneficios || [],
         riscos: result.riscos || [],
@@ -1751,22 +1748,6 @@ try {
       if (typeof val === 'string') return parseFloat(val.replace(/[^\d.]/g, '')) || 0;
       return 0;
     };
-
-    // Item só é considerado válido se tiver pelo menos 1 valor nutricional plausível > 0
-    const isValidNutritionItem = (item) => {
-      if (!item) return false;
-
-      const values = [
-        parseNum(item.calorias),
-        parseNum(item.proteinas),
-        parseNum(item.carboidratos),
-        parseNum(item.gorduras)
-      ];
-
-      return values.some(v => v > 0);
-    };
-
-    const hasIncompleteNutrition = plateItems.some(item => !isValidNutritionItem(item));
     
     // Somar nutrientes
     const totals = plateItems.reduce((acc, item) => ({
@@ -1775,16 +1756,6 @@ try {
       carboidratos: acc.carboidratos + parseNum(item.carboidratos),
       gorduras: acc.gorduras + parseNum(item.gorduras)
     }), { calorias: 0, proteinas: 0, carboidratos: 0, gorduras: 0 });
-
-    const hasAnyPlausibleTotal = [
-      totals.calorias,
-      totals.proteinas,
-      totals.carboidratos,
-      totals.gorduras
-    ].some(v => v > 0);
-
-    const isCompleteNutrition = !hasIncompleteNutrition && hasAnyPlausibleTotal;
-    const nutritionStatus = isCompleteNutrition ? 'completa' : 'parcial';
     
     // Coletar todos os ingredientes únicos
     const allIngredientes = [...new Set(plateItems.flatMap(item => item.ingredientes || []))];
@@ -1831,9 +1802,6 @@ return {
     carboidratos: `${Math.round(totals.carboidratos)}g`,
     gorduras: `${Math.round(totals.gorduras)}g`
   },
-  isCompleteNutrition,
-  hasIncompleteNutrition,
-  nutritionStatus,
   ingredientes: allIngredientes,
   beneficios: allBeneficios,
       riscos: riscosNaoAlergenos.length > 0 ? riscosNaoAlergenos : allRiscos.slice(0, 2),
@@ -2316,13 +2284,10 @@ return {
       return true;
     });
     
-    const safeLower = (v) =>
-      typeof v === "string" ? v.toLowerCase() : "";
-
     return { 
       hasAllergens: true, 
       alerts: uniqueAlerts.map(risco => ({
-        type: safeLower(risco).includes('pode conter') ? 'possible' : 'definite',
+        type: risco.toLowerCase().includes('pode conter') ? 'possible' : 'definite',
         text: risco
       }))
     };
@@ -3021,21 +2986,6 @@ return {
           {/* FICHA NUTRICIONAL CONSOLIDADA */}
           <div className="mesa-nutrition">
             <h4>Ficha Nutricional (por 100g)</h4>
-            {!plateConsolidated?.isCompleteNutrition && (
-              <div style={{
-                marginBottom: '8px',
-                padding: '8px 10px',
-                borderRadius: '8px',
-                background: '#fff7ed',
-                color: '#9a3412',
-                fontSize: '13px',
-                fontWeight: 600
-              }}>
-                {plateConsolidated?.nutritionStatus === 'parcial'
-                  ? 'Ficha parcial • Nutrição incompleta'
-                  : 'Nutrição incompleta'}
-              </div>
-            )}
             <div className="nutr-grid">
               <div><b>{plateConsolidated?.nutrition?.calorias}</b><small>Calorias</small></div>
               <div><b>{plateConsolidated?.nutrition?.proteinas}</b><small>Proteinas</small></div>
