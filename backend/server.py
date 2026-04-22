@@ -1105,7 +1105,7 @@ async def identify_image(
             "confidence_level": confidence_level_msg,  # NOVO: Mensagem descritiva
             "score": decision['score'],
             "message": decision['message'],
-            "category": decision.get('category'),
+            "category": decision.get('category') or decision.get('categoria') or "não classificado",
             "category_emoji": decision.get('category_emoji'),
             "nutrition": nutrition_obj,
             "descricao": decision.get('descricao'),
@@ -1167,6 +1167,7 @@ async def identify_image(
                 "engine_used": engine
             })
         
+        print("FINAL CATEGORY:", response_data.get("category"))
         return response_data
         
     except Exception as e:
