@@ -1363,6 +1363,19 @@ const loadNotifCount = async (pin) => {
 
   // Fluxo Único: Adicionar item atual à lista e preparar para próximo
   const addItemToPlate = async () => {
+    // 🔴 CANCELAR REQUEST PENDENTE
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+
+    // 🔴 RESETAR FLAGS CRÍTICAS
+    setLoading(false);
+    setEnrichLoading(false);
+
+    // 🔴 LIMPAR ESTADOS RESIDUAIS
+    setScannerResult(null);
+
     if (result?.ok && result?.identified) {
       const newItem = {
         id: Date.now(),
