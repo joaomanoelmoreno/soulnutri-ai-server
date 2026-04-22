@@ -1368,7 +1368,7 @@ const loadNotifCount = async (pin) => {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
-        category: result.category,
+        category: result.category || result.categoria || 'N/A',
         calorias: result.nutrition?.calorias 
           ? result.nutrition.calorias 
           : (result.calorias_estimadas || '—'),
@@ -1452,7 +1452,7 @@ const loadNotifCount = async (pin) => {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
-        category: result.category,
+        category: result.category || result.categoria || 'N/A',
         calorias: result.nutrition?.calorias || result.calorias_estimadas || '—',
         proteinas: result.nutrition?.proteinas || '—',
         carboidratos: result.nutrition?.carboidratos || '—',
