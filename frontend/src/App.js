@@ -2361,10 +2361,13 @@ return {
       return true;
     });
     
+    const safeLower = (v) =>
+      typeof v === "string" ? v.toLowerCase() : "";
+
     return { 
       hasAllergens: true, 
       alerts: uniqueAlerts.map(risco => ({
-        type: risco.toLowerCase().includes('pode conter') ? 'possible' : 'definite',
+        type: safeLower(risco).includes('pode conter') ? 'possible' : 'definite',
         text: risco
       }))
     };
