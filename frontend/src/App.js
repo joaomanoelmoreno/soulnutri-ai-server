@@ -1250,6 +1250,48 @@ const loadNotifCount = async (pin) => {
     }, 'image/jpeg', 0.70);
   }, [multiMode]);
 
+  const normalizeResult = (raw) => {
+    if (!raw) return null;
+
+    return {
+      ...raw,
+
+      category:
+        raw.category ||
+        raw.categoria ||
+        "não classificado",
+
+      nutrition: raw.nutrition || null,
+
+      calorias:
+        raw.nutrition?.calorias ||
+        raw.calorias ||
+        null,
+
+      proteinas:
+        raw.nutrition?.proteinas ||
+        raw.proteinas ||
+        null,
+
+      carboidratos:
+        raw.nutrition?.carboidratos ||
+        raw.carboidratos ||
+        null,
+
+      gorduras:
+        raw.nutrition?.gorduras ||
+        raw.gorduras ||
+        null,
+
+      ingredientes: raw.ingredientes || [],
+      beneficios: raw.beneficios || [],
+      riscos: raw.riscos || [],
+
+      dish: raw.dish || "",
+      dish_display: raw.dish_display || raw.dish || ""
+    };
+  };
+
   const identifyImage = async (blob) => {
 
   if (premiumUser && premiumCycleBusyRef.current) {
@@ -1328,7 +1370,7 @@ const loadNotifCount = async (pin) => {
         setMultiResult({ ...data, totalTime: Date.now() - t });
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
-        setResult(resultWithTime);
+        setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
         
@@ -1764,11 +1806,11 @@ try {
   const handleScannerTap = useCallback(() => {
     if (scannerResult) {
       // Converter scanner result para result completo
-      setResult({
+      setResult(normalizeResult({
         ok: true,
         identified: true,
         ...scannerResult
-      });
+      }));
       setScannerResult(null);
     }
   }, [scannerResult]);
