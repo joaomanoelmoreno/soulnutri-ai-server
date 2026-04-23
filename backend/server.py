@@ -802,6 +802,7 @@ async def identify_image(
                 logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
                 
                 decision = clip_decision
+                print("DEBUG CLIP_DECISION:", decision)
                 decision["source"] = "local_index"
 
                 # 🔴 GARANTIR CATEGORY NO FLUXO LOCAL (CIBI SANA)
@@ -842,6 +843,7 @@ async def identify_image(
                     )
 
                 decision["category"] = category or "não classificado"
+                print("DEBUG CATEGORY_AFTER_FIX:", decision.get("category"))
 
                 # 1. preservar se já existir
                 category = decision.get("category") or decision.get("categoria")
@@ -1035,6 +1037,10 @@ async def identify_image(
                     ings = dish_doc.get('ingredients') or dish_doc.get('ingredientes') or []
                     if ings:
                         decision['ingredientes'] = ings
+
+                    # 🔴 CORREÇÃO CRÍTICA: USAR CATEGORY DO BANCO
+                    if dish_doc.get("category"):
+                        decision["category"] = dish_doc.get("category")
                 if sheet:
                     nutrition_data = sheet
             
@@ -1140,6 +1146,7 @@ async def identify_image(
         )
         
         # Montar resposta base
+        print("DEBUG BEFORE_RESPONSE:", decision)
         response_data = {
             "ok": True,
             "identified": decision['identified'],
@@ -1212,6 +1219,8 @@ async def identify_image(
             })
         
         print("FINAL CATEGORY:", response_data.get("category"))
+        print("DEBUG RESPONSE_DATA_CATEGORY:", response_data.get("category"))
+        print("DEBUG RESPONSE_DATA_KEYS:", list(response_data.keys()))
         return response_data
         
     except Exception as e:
