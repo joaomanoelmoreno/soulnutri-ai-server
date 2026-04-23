@@ -807,28 +807,33 @@ async def identify_image(
                 # 1. preservar se já existir
                 category = decision.get("category") or decision.get("categoria")
 
-                # 2. tentar obter do metadata/local payload
+                # 2. metadata/local payload
                 if not category:
                     metadata = decision.get("metadata") or {}
                     category = metadata.get("category") or metadata.get("categoria")
 
-                # 3. inferência simples e conservadora
+                # 3. inferência conservadora
                 def infer_category_from_keywords(name: str):
                     if not name:
                         return None
 
                     n = name.lower()
 
-                    keyword_groups = [
-                        ("Proteína Animal", ["frango", "carne", "maminha", "panceta", "peixe", "atum", "camarao", "camarão"]),
-                        ("Vegetariano", ["queijo", "ovo", "omelete"]),
-                        ("Vegano", ["tofu", "lentilha", "legumes", "berinjela", "beterraba"]),
-                        ("Carboidrato", ["arroz", "massa", "batata", "mandioca", "polenta"]),
-                    ]
+                    # Proteína Animal
+                    if any(k in n for k in ["frango", "carne", "maminha", "panceta", "peixe", "atum", "camarao", "camarão"]):
+                        return "Proteína Animal"
 
-                    for cat, keywords in keyword_groups:
-                        if any(k in n for k in keywords):
-                            return cat
+                    # Carboidrato
+                    if any(k in n for k in ["arroz", "massa", "batata", "mandioca", "polenta"]):
+                        return "Carboidrato"
+
+                    # Vegano
+                    if any(k in n for k in ["beterraba", "berinjela", "repolho", "mamão", "mamao", "legumes"]):
+                        return "Vegano"
+
+                    # Vegetariano
+                    if any(k in n for k in ["queijo", "ovo", "omelete"]):
+                        return "Vegetariano"
 
                     return None
 
