@@ -804,6 +804,45 @@ async def identify_image(
                 decision = clip_decision
                 decision["source"] = "local_index"
 
+                # 🔴 GARANTIR CATEGORY NO FLUXO LOCAL (CIBI SANA)
+
+                category = decision.get("category") or decision.get("categoria")
+
+                if not category:
+                    metadata = decision.get("metadata") or {}
+                    category = metadata.get("category") or metadata.get("categoria")
+
+                def infer_category_from_keywords(name: str):
+                    if not name:
+                        return None
+
+                    n = name.lower()
+
+                    # Proteína Animal
+                    if any(k in n for k in ["frango","carne","maminha","panceta","peixe","atum","camarao","camarão"]):
+                        return "Proteína Animal"
+
+                    # Carboidrato
+                    if any(k in n for k in ["arroz","massa","batata","mandioca","polenta"]):
+                        return "Carboidrato"
+
+                    # Vegano
+                    if any(k in n for k in ["beterraba","berinjela","repolho","mamão","mamao","legumes"]):
+                        return "Vegano"
+
+                    # Vegetariano
+                    if any(k in n for k in ["queijo","ovo","omelete"]):
+                        return "Vegetariano"
+
+                    return None
+
+                if not category:
+                    category = infer_category_from_keywords(
+                        decision.get("dish_display") or decision.get("dish")
+                    )
+
+                decision["category"] = category or "não classificado"
+
                 # 1. preservar se já existir
                 category = decision.get("category") or decision.get("categoria")
 
