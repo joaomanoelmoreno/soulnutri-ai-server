@@ -701,6 +701,84 @@ const safeText = (v) => {
           return;
         }
 
+        console.log('[PREMIUM_DEBUG] dish:', currentDishName);
+        console.log('[PREMIUM_DEBUG] enrich raw payload:', enrichData);
+
+        console.log('[PREMIUM_DEBUG] field-types:', {
+          descricao: typeof enrichData.descricao,
+          description: typeof enrichData.description,
+
+          ingredientes: Array.isArray(enrichData.ingredientes)
+            ? 'array'
+            : typeof enrichData.ingredientes,
+          ingredients: Array.isArray(enrichData.ingredients)
+            ? 'array'
+            : typeof enrichData.ingredients,
+
+          beneficios: Array.isArray(enrichData.beneficios)
+            ? 'array'
+            : typeof enrichData.beneficios,
+          benefits: Array.isArray(enrichData.benefits)
+            ? 'array'
+            : typeof enrichData.benefits,
+
+          riscos: Array.isArray(enrichData.riscos)
+            ? 'array'
+            : typeof enrichData.riscos,
+          risks: Array.isArray(enrichData.risks)
+            ? 'array'
+            : typeof enrichData.risks,
+
+          categoria: typeof enrichData.categoria,
+          category: typeof enrichData.category,
+        });
+
+        console.log('[PREMIUM_DEBUG] first-items:', {
+          ingredientes_0: Array.isArray(enrichData.ingredientes) ? enrichData.ingredientes[0] : null,
+          ingredients_0: Array.isArray(enrichData.ingredients) ? enrichData.ingredients[0] : null,
+          beneficios_0: Array.isArray(enrichData.beneficios) ? enrichData.beneficios[0] : null,
+          benefits_0: Array.isArray(enrichData.benefits) ? enrichData.benefits[0] : null,
+          riscos_0: Array.isArray(enrichData.riscos) ? enrichData.riscos[0] : null,
+          risks_0: Array.isArray(enrichData.risks) ? enrichData.risks[0] : null,
+        });
+
+        console.log('[PREMIUM_DEBUG] object-fields:', {
+          descricao_is_object:
+            enrichData.descricao !== null &&
+            typeof enrichData.descricao === 'object',
+          description_is_object:
+            enrichData.description !== null &&
+            typeof enrichData.description === 'object',
+
+          ingredientes_has_object:
+            Array.isArray(enrichData.ingredientes) &&
+            enrichData.ingredientes.some((v) => v && typeof v === 'object'),
+          ingredients_has_object:
+            Array.isArray(enrichData.ingredients) &&
+            enrichData.ingredients.some((v) => v && typeof v === 'object'),
+
+          beneficios_has_object:
+            Array.isArray(enrichData.beneficios) &&
+            enrichData.beneficios.some((v) => v && typeof v === 'object'),
+          benefits_has_object:
+            Array.isArray(enrichData.benefits) &&
+            enrichData.benefits.some((v) => v && typeof v === 'object'),
+
+          riscos_has_object:
+            Array.isArray(enrichData.riscos) &&
+            enrichData.riscos.some((v) => v && typeof v === 'object'),
+          risks_has_object:
+            Array.isArray(enrichData.risks) &&
+            enrichData.risks.some((v) => v && typeof v === 'object'),
+
+          categoria_is_object:
+            enrichData.categoria !== null &&
+            typeof enrichData.categoria === 'object',
+          category_is_object:
+            enrichData.category !== null &&
+            typeof enrichData.category === 'object',
+        });
+
         const enrichFields = {
           beneficios: enrichData.beneficios || [],
           riscos: enrichData.riscos || [],
