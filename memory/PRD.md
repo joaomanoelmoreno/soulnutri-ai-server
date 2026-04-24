@@ -53,6 +53,12 @@
 - Frontend: tela de login em /admin, todos os helpers XHR (xhrGet, xhrPost, xhrDelete, retryFetch, adminFetch) enviam X-Admin-Key
 - Key salva em localStorage sob: soulnutri_admin_key
 
+## Fichas Nutricionais (nutrition_sheets)
+- STATUS: **224 fichas já existem no MongoDB** — coleção `nutrition_sheets`
+- Lógica proporcional: `calcular_nutricao_prato()` em `taco_database.py` — PROPORCOES por tipo de ingrediente (arroz=50%, frango=30%, alho=2%, etc.)
+- CORREÇÃO APLICADA (v3.3): `query_taco()` em `nutrition_3sources.py` agora usa `calcular_nutricao_prato()` (antes usava divisão igual — violava REGRAS_IMUTAVEIS)
+- Para regenerar fichas existentes com proporções corretas: rodar `batch_all_nutrition.py` com force=True (TACO é local, sem créditos; USDA usa API key)
+
 ## Backlog Priorizado
 
 ### P0 - Urgente

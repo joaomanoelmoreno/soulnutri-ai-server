@@ -57,39 +57,39 @@ USDA_NUTRIENT_MAP = {
 
 
 # ============================================================
-# FONTE 1: TACO (Local - por ingredientes)
+# FONTE 1: TACO (Local - por ingredientes com PROPORÇÕES COMERCIAIS)
+# REGRA: NUNCA dividir igualmente — usar calcular_nutricao_prato()
 # ============================================================
 def query_taco(ingredientes: list) -> Optional[dict]:
-    """Busca na TACO por ingredientes com pesos proporcionais."""
-    from data.taco_database import buscar_dados_taco
+    """Busca na TACO por ingredientes com pesos proporcionais comerciais.
+    
+    USA calcular_nutricao_prato() da taco_database — NUNCA divisão igual.
+    Regra: arroz=50%, frango=30%, alho=2%, etc. (PROPORCOES comerciais reais)
+    """
+    from data.taco_database import calcular_nutricao_prato
 
     if not ingredientes:
         return None
 
-    n = len(ingredientes)
-    gramas_cada = 100 / n
-
-    totais = {k: 0.0 for k in NUTRIENT_KEYS}
-    encontrados = 0
-
-    for ing in ingredientes:
-        dados = buscar_dados_taco(ing)
-        if dados:
-            fator = gramas_cada / 100
-            totais["calorias_kcal"] += dados.get("calorias", 0) * fator
-            totais["proteinas_g"] += dados.get("proteinas", 0) * fator
-            totais["carboidratos_g"] += dados.get("carboidratos", 0) * fator
-            totais["gorduras_g"] += dados.get("gorduras", 0) * fator
-            totais["fibras_g"] += dados.get("fibras", 0) * fator
-            totais["sodio_mg"] += dados.get("sodio", 0) * fator
-            encontrados += 1
-
-    if encontrados == 0:
+    # Calcular por 100g de prato usando proporções comerciais reais
+    result = calcular_nutricao_prato(ingredientes, porcao_gramas=100)
+    if not result:
         return None
 
-    result = {k: round(v, 1) for k, v in totais.items()}
-    result["cobertura"] = round((encontrados / n) * 100)
-    return result
+    encontrados = result.get("ingredientes_encontrados", [])
+    if not encontrados:
+        return None
+
+    n = len(ingredientes)
+    return {
+        "calorias_kcal": round(result.get("calorias", 0), 1),
+        "proteinas_g": round(result.get("proteinas", 0), 1),
+        "carboidratos_g": round(result.get("carboidratos", 0), 1),
+        "gorduras_g": round(result.get("gorduras", 0), 1),
+        "fibras_g": round(result.get("fibras", 0), 1),
+        "sodio_mg": round(result.get("sodio", 0), 1),
+        "cobertura": round((len(encontrados) / n) * 100),
+    }
 
 
 # ============================================================
