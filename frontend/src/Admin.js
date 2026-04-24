@@ -4,12 +4,12 @@ import './Admin.css';
 const API = '/api';
 const BUILD_VERSION = 'v3.28-' + Date.now();
 
-// Admin auth key - enviada em todas as chamadas /admin/*
-const ADMIN_KEY = localStorage.getItem('soulnutri_admin_key') || '';
+// Admin auth key - variável mutável para permitir atualização após login
+let adminKeyCache = localStorage.getItem('soulnutri_admin_key') || '';
 
 // Helper para fetch com admin auth
 function adminFetch(url, opts = {}) {
-  opts.headers = { ...opts.headers, 'X-Admin-Key': ADMIN_KEY };
+  opts.headers = { ...opts.headers, 'X-Admin-Key': adminKeyCache };
   return fetch(url, opts);
 }
 
@@ -18,6 +18,7 @@ function xhrGet(url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
+    xhr.setRequestHeader('X-Admin-Key', adminKeyCache);
     xhr.timeout = 20000;
     xhr.onload = () => resolve({
       ok: xhr.status >= 200 && xhr.status < 300,
@@ -36,6 +37,7 @@ function xhrPost(url, body) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-Admin-Key', adminKeyCache);
     xhr.timeout = 30000;
     xhr.onload = () => resolve({
       ok: xhr.status >= 200 && xhr.status < 300,
@@ -53,6 +55,7 @@ function xhrDelete(url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('DELETE', url);
+    xhr.setRequestHeader('X-Admin-Key', adminKeyCache);
     xhr.timeout = 20000;
     xhr.onload = () => resolve({
       ok: xhr.status >= 200 && xhr.status < 300,
@@ -79,6 +82,7 @@ async function retryFetch(url, options, retries = 2) {
     }
   }
 }
+
 
 export default function Admin() {
   const [adminKey, setAdminKey] = useState(() => localStorage.getItem('soulnutri_admin_key') || '');
@@ -175,12 +179,30 @@ export default function Admin() {
   // Estado de erro global
   const [loadError, setLoadError] = useState(null);
 
-  // Carregar dados essenciais na montagem
+  // Login Admin
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    if (!adminKey.trim()) return;
+    // Atualizar variável de módulo (usada em todos os helpers XHR)
+    adminKeyCache = adminKey.trim();
+    localStorage.setItem('soulnutri_admin_key', adminKey.trim());
+    setAdminAuth(true);
+  };
+
+  const handleAdminLogout = () => {
+    adminKeyCache = '';
+    localStorage.removeItem('soulnutri_admin_key');
+    setAdminKey('');
+    setAdminAuth(false);
+  };
+
+  // Carregar dados essenciais na montagem (apenas se autenticado)
   useEffect(() => {
+    if (!adminAuth) return;
     loadDishes();
     loadStats();
     loadModerationCount();
-  }, []);
+  }, [adminAuth]);
 
   // Carregar dados ao trocar de aba
   useEffect(() => {
@@ -1182,6 +1204,53 @@ export default function Admin() {
     <div className="admin-container">
       {/* Versao visivel para debug */}
       <div data-testid="build-version" style={{position:'fixed',bottom:'4px',right:'8px',zIndex:9999,fontSize:'10px',color:'#666',opacity:0.6}}>{BUILD_VERSION}</div>
+
+      {/* TELA DE LOGIN - exibida quando não autenticado */}
+      {!adminAuth && (
+        <div style={{
+          position: 'fixed', inset: 0, background: '#111', zIndex: 10000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <form onSubmit={handleAdminLogin} style={{
+            background: '#1e1e1e', border: '1px solid #333', borderRadius: '12px',
+            padding: '40px', width: '320px', display: 'flex', flexDirection: 'column', gap: '16px'
+          }}>
+            <h2 style={{ color: '#fff', margin: 0, textAlign: 'center' }}>🔐 Admin SoulNutri</h2>
+            <p style={{ color: '#999', fontSize: '13px', margin: 0, textAlign: 'center' }}>
+              Digite a chave de acesso do administrador
+            </p>
+            <input
+              data-testid="admin-key-input"
+              type="password"
+              value={adminKey}
+              onChange={e => setAdminKey(e.target.value)}
+              placeholder="Chave de acesso"
+              autoFocus
+              style={{
+                padding: '12px', borderRadius: '8px', border: '1px solid #444',
+                background: '#2a2a2a', color: '#fff', fontSize: '14px', outline: 'none'
+              }}
+            />
+            <button
+              data-testid="admin-login-btn"
+              type="submit"
+              disabled={!adminKey.trim()}
+              style={{
+                padding: '12px', borderRadius: '8px', border: 'none',
+                background: adminKey.trim() ? '#16a34a' : '#333',
+                color: '#fff', fontSize: '15px', cursor: adminKey.trim() ? 'pointer' : 'default',
+                fontWeight: 600
+              }}
+            >
+              Entrar
+            </button>
+            <a href="/" style={{ color: '#666', fontSize: '12px', textAlign: 'center', textDecoration: 'none' }}>
+              ← Voltar ao App
+            </a>
+          </form>
+        </div>
+      )}
+
       {/* Notificação inline (substitui alert bloqueado no iframe) */}
       {notification && (
         <div 
@@ -1202,7 +1271,19 @@ export default function Admin() {
       )}
       <header className="admin-header">
         <h1>🍽️ SoulNutri Admin</h1>
-        <a href="/" className="back-link">← Voltar ao App</a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button
+            data-testid="admin-logout-btn"
+            onClick={handleAdminLogout}
+            style={{
+              padding: '6px 12px', borderRadius: '6px', border: '1px solid #555',
+              background: 'transparent', color: '#aaa', fontSize: '13px', cursor: 'pointer'
+            }}
+          >
+            Sair
+          </button>
+          <a href="/" className="back-link">← Voltar ao App</a>
+        </div>
       </header>
 
       {/* Tabs */}

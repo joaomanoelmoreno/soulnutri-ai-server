@@ -379,6 +379,8 @@ function App() {
   
   const [premiumUser, setPremiumUser] = useState(null);
   const premiumUserRef = useRef(null);
+  // Ref para rastrear pratos já enriquecidos (evita mutação direta de estado)
+  const enrichedDishesRef = useRef(new Set());
   // Sync ref com state para evitar stale closure em callbacks memoizados
   useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser]);
   const [dailySummary, setDailySummary] = useState(null);
@@ -624,9 +626,9 @@ function App() {
     const dishName = result.dish_display;
     if (!dishName) return;
 
-    // Evitar chamadas duplicadas para o mesmo prato ATIVO
-    if (result._enrichStarted) return;
-    result._enrichStarted = true;
+    // Evitar chamadas duplicadas para o mesmo prato (via ref — sem mutação de estado)
+    if (enrichedDishesRef.current.has(dishName)) return;
+    enrichedDishesRef.current.add(dishName);
 
     setEnrichLoading(true);
     console.log('[ENRICH] Iniciando para:', dishName, '| Premium:', premiumUser.nome);
@@ -757,11 +759,9 @@ function App() {
         }
       }
     } catch (e) {
-      console.error('Erro ao verificar sessão:', e);
-      // Em caso de erro de rede, limpar dados potencialmente corrompidos
-      localStorage.removeItem('soulnutri_pin');
-      localStorage.removeItem('soulnutri_nome');
-      localStorage.removeItem('soulnutri_user');
+      // Erro de rede transitório (timeout, AbortError, offline) — NÃO limpar sessão
+      // O usuário pode estar apenas com conexão instável; deslogar seria destrutivo
+      console.warn('[PREMIUM] Erro de rede ao verificar sessão (sessão mantida):', e.message || e);
     }
   };
 
@@ -1403,6 +1403,19 @@ function App() {
     setPreviewImageUrl(null);
     setShowAddMore(false);
     setScannerResult(null);
+    // Limpar estados residuais que persistiam após reset
+    setEnrichLoading(false);
+    setError(null);
+    setTtsLoading(false);
+    setTtsError(null);
+    setRadarInfo(null);
+    // Resetar controle de enrich para permitir re-scan do mesmo prato
+    enrichedDishesRef.current.clear();
+    if (ttsAudioRef.current) {
+      ttsAudioRef.current.pause();
+      ttsAudioRef.current = null;
+      setTtsPlaying(false);
+    }
     localStorage.removeItem('soulnutri_plate_items');
     localStorage.removeItem('soulnutri_view_mode');
   };

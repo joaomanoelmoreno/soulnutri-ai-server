@@ -4,6 +4,7 @@
 - Premium User: pin=2212, nome=Joao Manoel (DB has trailing space "Joao Manoel ")
 - Old test user (invalid): pin=1234, nome=Teste
 - Admin: joaomanoelmoreno / Pqlamz0192
+- Admin Panel Key: `833981109a436c46898a224bda0770c5273d5f2e48da8001` (localStorage key: soulnutri_admin_key)
 
 ## Environment Keys
 - EMERGENT_LLM_KEY: sk-emergent-06e1c5e5a3e1cEf36C

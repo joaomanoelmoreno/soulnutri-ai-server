@@ -64,8 +64,11 @@ import re
 ADMIN_SECRET_KEY = os.environ.get("ADMIN_SECRET_KEY", "")
 
 async def verify_admin_key(x_admin_key: str = Header(None)):
-    # TODO: Ativar quando Admin.js estiver atualizado para enviar X-Admin-Key
-    return True
+    if not ADMIN_SECRET_KEY:
+        # Sem ADMIN_SECRET_KEY configurada no ambiente: bloquear acesso
+        raise HTTPException(status_code=403, detail="Admin não configurado")
+    if x_admin_key != ADMIN_SECRET_KEY:
+        raise HTTPException(status_code=401, detail="Chave admin inválida")
 
 # Limite de upload: 10MB
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024

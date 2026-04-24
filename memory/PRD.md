@@ -1,20 +1,27 @@
 # SoulNutri - Product Requirements Document
 
-## Versao Atual: V3.2
+## Versao Atual: V3.3 (Estabilização)
 
 ## Stack
 - Frontend: React (PWA) | Backend: FastAPI, Motor (MongoDB async)
 - IA: OpenCLIP ViT-B-16 (ONNX pré-otimizado R2) | Gemini 2.5 Flash Lite (Emergent LLM Key)
-- TTS: OpenAI Shimmer (Emergent Key) com fallback gTTS | DB: MongoDB Atlas | Deploy: Render Standard 1GB
+- TTS: gTTS (GRATUITO, pt-BR) — REGRA IMUTÁVEL | DB: MongoDB Atlas | Deploy: Render Standard 1GB
 
 ## REGRAS IMUTÁVEIS → /app/memory/REGRAS_IMUTAVEIS.md
 
 ## Implementado
 
+### V3.3 (24/Abr/2026) — Estabilização
+- BUG CRÍTICO CORRIGIDO: Sessão Premium não é mais destruída por erro de rede transitório
+- BUG CRÍTICO CORRIGIDO: Mutação direta do objeto React state no enrich substituída por useRef (enrichedDishesRef)
+- Auth Admin completa: tela de login + XHR helpers enviam X-Admin-Key + verify_admin_key reativada no backend
+- Reset clearPlate completo: limpa enrichLoading, error, ttsLoading, ttsError, radarInfo, áudio TTS, enrichedDishesRef
+- Admin logout adicionado (botão "Sair" no header)
+
 ### V3.2 (13/Abr/2026)
 - Fontes (instituições reais) em benefícios, riscos, notícias e Verdade/Mito
 - Alertas nutricionais automáticos no scan (calorias, proteínas, gorduras, sódio, fibras, alérgenos) — zero créditos
-- TTS OpenAI Shimmer em tudo (voz consistente scan + prato completo)
+- TTS gTTS em tudo (REGRA: não usar OpenAI TTS)
 - Combinações incluídas no áudio TTS
 - Anti-duplicata de pratos no prato completo
 - Botão remover prato individual (X)
@@ -37,8 +44,14 @@
 ## Endpoints Principais
 - POST /ai/identify (CLIP + alertas automáticos)
 - POST /ai/enrich (Gemini: benefícios/riscos/curiosidades/combinações/notícias/mito com fontes)
-- POST /ai/tts (OpenAI Shimmer, fallback gTTS)
+- POST /ai/tts (gTTS gratuito, pt-BR)
 - GET /sw.js, /manifest.json (anti-cache)
+- GET/POST/PUT/DELETE /admin/* (requer header X-Admin-Key)
+
+## Admin Auth
+- Backend: verify_admin_key ativa — compara X-Admin-Key contra ADMIN_SECRET_KEY do .env
+- Frontend: tela de login em /admin, todos os helpers XHR (xhrGet, xhrPost, xhrDelete, retryFetch, adminFetch) enviam X-Admin-Key
+- Key salva em localStorage sob: soulnutri_admin_key
 
 ## Backlog Priorizado
 
@@ -46,23 +59,23 @@
 - (nenhum)
 
 ### P1 - Próximo
-- Verificação geral de ingredientes e tabela nutricional em todos os pratos (versão gratuita e premium)
+- Verificação geral de ingredientes e tabela nutricional em todos os pratos
 - Landing page premium com trial (aguardando mockup do usuário)
 - Integração Stripe para cobrança de assinaturas
-- Migração futura para key OpenAI própria (TTS) — em backlog até testes de voz
+- Fichas nutricionais em lote via admin (dados TACO/USDA, sem custo IA)
 
 ### P2 - Importante
 - Revisão ingredientes/descrição pratos F-Z (usuário inserindo via admin)
-- Fichas nutricionais automáticas após cadastro de ingredientes
-- Melhorar tempo CLIP de 2s para <500ms (testar ORT_ENABLE_BASIC com modelo pré-otimizado)
-- Notificações push: verificar se rotação diária funciona consistentemente
+- Melhorar tempo CLIP de 2s para <500ms
+- Notificações push: verificar rotação diária
 
 ### P3 - Futuro
 - Google Play (TWA) / Apple Store (Capacitor)
-- Refatorar server.py (~5800 linhas) e App.js (~4400 linhas)
+- Refatorar server.py (~5900 linhas) e App.js (~4400 linhas)
 - Limpeza imagens Jiló Empanado (fotos contaminadas com Quiabo)
 
 ## Problemas Conhecidos
-- Gemini pode gerar nomes de fontes imprecisos (mas não inventa URLs mais)
+- Gemini pode gerar nomes de fontes imprecisos
 - 3+ usuários duplicados "Joao Manoel" no DB (update_many mitiga)
 - Tempo CLIP no Render: ~2s (acima do ideal de 500ms, ORT_DISABLE_ALL necessário)
+- Câmera pode travar no mobile após limpeza de prato (ciclo de vida do stream)
