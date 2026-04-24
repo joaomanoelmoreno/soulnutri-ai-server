@@ -807,11 +807,24 @@ async def identify_image(
 
                 # 🔴 GARANTIR CATEGORY NO FLUXO LOCAL (CIBI SANA)
 
+                def is_invalid_category(value):
+                    if not value:
+                        return True
+                    if not isinstance(value, str):
+                        return False
+                    return value.strip().lower() in ["não classificado", "nao classificado"]
+
                 category = decision.get("category") or decision.get("categoria")
+
+                if is_invalid_category(category):
+                    category = None
 
                 if not category:
                     metadata = decision.get("metadata") or {}
                     category = metadata.get("category") or metadata.get("categoria")
+
+                if is_invalid_category(category):
+                    category = None
 
                 def infer_category_from_keywords(name: str):
                     if not name:
@@ -843,10 +856,19 @@ async def identify_image(
                     "category_before_infer": category,
                 })
 
+                canonical_name = decision.get("dish") or decision.get("dish_display")
+
                 if not category:
-                    category = infer_category_from_keywords(
-                        decision.get("dish_display") or decision.get("dish")
-                    )
+                    category = infer_category_from_keywords(canonical_name)
+
+                print("DEBUG CATEGORY_FIX:", {
+                    "source": decision.get("source"),
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "category_before": decision.get("category"),
+                    "canonical_name_used": canonical_name,
+                    "category_after": category,
+                })
 
                 decision["category"] = category or "não classificado"
 
@@ -1029,12 +1051,14 @@ async def identify_image(
             # Buscar ingredientes e nutrition sheet do MongoDB (1 query rapida)
             if decision.get('identified') and dish_display_name:
                 import asyncio as _asyncio
-                slug = dish_display_name.lower().replace(' ', '_').replace('-', '_')
-                print("DEBUG LOCAL_LOOKUP_INPUTS:", {
+                canonical_lookup_name = decision.get("dish") or dish_display_name
+                slug = canonical_lookup_name.lower().replace(' ', '_').replace('-', '_')
+                print("DEBUG LOCAL_LOOKUP_CANONICAL:", {
+                    "source": decision.get("source"),
                     "dish": decision.get("dish"),
                     "dish_display": decision.get("dish_display"),
-                    "dish_display_name": dish_display_name,
-                    "slug": slug,
+                    "canonical_name_used": canonical_lookup_name,
+                    "slug_used": slug,
                     "category_before_lookup": decision.get("category"),
                 })
                 
