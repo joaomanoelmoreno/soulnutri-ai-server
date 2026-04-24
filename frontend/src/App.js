@@ -3849,7 +3849,7 @@ return {
                   style={{ background: catStyle.bg, color: catStyle.color, border: catStyle.border || 'none' }}
                   data-testid="category-badge"
                 >
-                  {r.category_emoji} {r.category?.toUpperCase()}
+                  {r.category_emoji} {String(r.category ?? '').toUpperCase()}
                 </div>
               )}
             </>
