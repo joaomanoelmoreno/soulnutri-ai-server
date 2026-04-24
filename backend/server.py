@@ -837,12 +837,24 @@ async def identify_image(
 
                     return None
 
+                print("DEBUG CATEGORY_INPUTS:", {
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "category_before_infer": category,
+                })
+
                 if not category:
                     category = infer_category_from_keywords(
                         decision.get("dish_display") or decision.get("dish")
                     )
 
                 decision["category"] = category or "não classificado"
+
+                print("DEBUG CATEGORY_AFTER_INFER:", {
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "category": decision.get("category"),
+                })
                 print("DEBUG CATEGORY_AFTER_FIX:", decision.get("category"))
 
                 # 1. preservar se já existir
@@ -1018,6 +1030,13 @@ async def identify_image(
             if decision.get('identified') and dish_display_name:
                 import asyncio as _asyncio
                 slug = dish_display_name.lower().replace(' ', '_').replace('-', '_')
+                print("DEBUG LOCAL_LOOKUP_INPUTS:", {
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "dish_display_name": dish_display_name,
+                    "slug": slug,
+                    "category_before_lookup": decision.get("category"),
+                })
                 
                 parallel = {
                     'dish': db.dishes.find_one(
@@ -1032,6 +1051,12 @@ async def identify_image(
                 
                 dish_doc = resolved.get('dish') if not isinstance(resolved.get('dish'), Exception) else None
                 sheet = resolved.get('nutrition') if not isinstance(resolved.get('nutrition'), Exception) else None
+
+                print("DEBUG LOCAL_LOOKUP_RESULT:", {
+                    "dish_doc_found": bool(dish_doc),
+                    "dish_doc_category": dish_doc.get("category") if dish_doc else None,
+                    "dish_doc_keys": list(dish_doc.keys()) if dish_doc else None,
+                })
                 
                 if dish_doc:
                     ings = dish_doc.get('ingredients') or dish_doc.get('ingredientes') or []
