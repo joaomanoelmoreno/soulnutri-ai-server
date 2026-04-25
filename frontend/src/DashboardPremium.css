@@ -89,22 +89,30 @@
   gap: 4px;
   padding: 0 20px 12px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.dashboard-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .dashboard-tabs button {
-  flex: 1;
+  flex: 0 0 auto;
   background: transparent;
   border: none;
   color: rgba(255,255,255,0.5);
-  padding: 12px;
-  font-size: 0.85rem;
+  padding: 10px 14px;
+  font-size: 0.82rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   border-radius: 8px;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .dashboard-tabs button.active {
