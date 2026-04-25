@@ -456,8 +456,8 @@ export function PremiumEditProfile({ onSuccess, onCancel }) {
 
 // Componente de Login
 export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
-  const [nome, setNome] = useState('');
-  const [pin, setPin] = useState('');
+  const [nome, setNome] = useState(() => localStorage.getItem('soulnutri_nome') || '');
+  const [pin, setPin] = useState(() => localStorage.getItem('soulnutri_pin') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
