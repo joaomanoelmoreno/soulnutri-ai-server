@@ -59,30 +59,31 @@ const ProgressBar = ({ value, max, color, label, unit = '' }) => {
 
 // Gráfico de barras
 const BarChart = ({ data, label, color, maxValue: customMax }) => {
-  const maxValue = customMax || Math.max(...data.map(d => d.value || 0), 1);
-  
+  const dataMax = Math.max(...data.map(d => d.value || 0), 1);
+  const maxValue = customMax ? Math.max(customMax, dataMax) : dataMax * 1.15;
+
   return (
     <div className="bar-chart">
       <div className="bar-chart-header">
         <span className="bar-chart-label">{label}</span>
-        <span className="bar-chart-max">Máx: {maxValue.toFixed(0)}</span>
+        <span className="bar-chart-max">Máx: {dataMax.toFixed(0)}</span>
       </div>
       <div className="bar-chart-bars">
-        {data.map((d, i) => (
-          <div key={i} className="bar-chart-item">
-            <div className="bar-chart-bar-container">
-              <div 
-                className="bar-chart-bar"
-                style={{ 
-                  height: `${Math.max((d.value / maxValue) * 100, 2)}%`,
-                  backgroundColor: color 
-                }}
-                title={`${d.value?.toFixed(0) || 0}`}
-              />
+        {data.map((d, i) => {
+          const pct = Math.min(Math.max(((d.value || 0) / maxValue) * 100, 2), 100);
+          return (
+            <div key={i} className="bar-chart-item">
+              <span className="bar-chart-value">{d.value > 0 ? d.value.toFixed(0) : ''}</span>
+              <div className="bar-chart-bar-container">
+                <div
+                  className="bar-chart-bar"
+                  style={{ height: `${pct}%`, backgroundColor: color }}
+                />
+              </div>
+              <span className="bar-chart-day">{d.day}</span>
             </div>
-            <span className="bar-chart-day">{d.day}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
