@@ -597,6 +597,43 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
         <button className="logout-btn" onClick={onLogout}>Sair</button>
       </div>
 
+      {/* Botão Acessar Admin — visível SOMENTE para usuários com is_admin: true */}
+      {user?.is_admin && (
+        <div style={{ marginBottom: '12px', textAlign: 'center' }}>
+          <button
+            data-testid="btn-acessar-admin"
+            onClick={async () => {
+              try {
+                const pin = localStorage.getItem('soulnutri_pin');
+                const res = await fetch(`${API}/premium/admin-token?pin=${pin}`);
+                const data = await res.json();
+                if (data.ok) {
+                  localStorage.setItem('soulnutri_admin_key', data.admin_key);
+                  window.location.href = '/admin';
+                } else {
+                  alert('Acesso negado: ' + data.error);
+                }
+              } catch (e) {
+                alert('Erro ao acessar admin');
+              }
+            }}
+            style={{
+              padding: '8px 20px',
+              border: '1px solid rgba(212,175,55,0.35)',
+              borderRadius: '20px',
+              background: 'rgba(212,175,55,0.08)',
+              color: '#d4af37',
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontSize: '13px',
+              letterSpacing: '0.03em'
+            }}
+          >
+            Painel Admin
+          </button>
+        </div>
+      )}
+
       {/* Toggle Hoje/Semana/Perfil */}
       <div className="view-toggle-tabs" style={{
         display: 'flex',

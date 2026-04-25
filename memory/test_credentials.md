@@ -1,16 +1,20 @@
-# Test Credentials
+# Credenciais de Teste — SoulNutri
 
-## App Users
-- Premium User: pin=2212, nome=Joao Manoel (DB has trailing space "Joao Manoel ")
-- Old test user (invalid): pin=1234, nome=Teste
-- Admin: joaomanoelmoreno / Pqlamz0192
-- Admin Panel Key: `833981109a436c46898a224bda0770c5273d5f2e48da8001` (localStorage key: soulnutri_admin_key)
+## Usuário Premium (Admin)
+- PIN: 2212
+- Nome: Joao Manoel (com espaço final)
+- is_admin: true
+- Acesso: Premium ativo + Painel Admin via botão no dashboard
 
-## Environment Keys
-- EMERGENT_LLM_KEY: sk-emergent-06e1c5e5a3e1cEf36C
-- GOOGLE_API_KEY: AIzaSyBZAwyEEJFqzh6y8b0BmOZsXk_9s7y7PEk (may be 403 expired)
+## Admin (chave direta)
+- Chave: 833981109a436c46898a224bda0770c5273d5f2e48da8001
+- URL: /admin
+- Header: X-Admin-Key
 
-## Render Deploy
-- URL: https://soulnutri.app.br
-- Plan: Starter ($8/month, 512MB RAM)
-- Branch: main
+## Fluxo Admin via PIN
+1. Login com PIN 2212 no Premium
+2. Clicar em "Painel Admin" (visível somente para is_admin=true)
+3. Redirecionado para /admin já autenticado
+
+## Nota
+- Para designar outros admins: Admin → aba Premium → Buscar usuário → "Tornar Admin"

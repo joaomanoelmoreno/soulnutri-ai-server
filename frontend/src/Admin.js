@@ -127,6 +127,9 @@ export default function Admin() {
   const [premiumUsers, setPremiumUsers] = useState([]);
   const [premiumNome, setPremiumNome] = useState('');
   const [premiumDias, setPremiumDias] = useState(30);
+  const [premiumSearch, setPremiumSearch] = useState('');
+  const [premiumSearchResult, setPremiumSearchResult] = useState(null);
+  const [premiumSearching, setPremiumSearching] = useState(false);
   // Upload de fotos
   const [uploadStatus, setUploadStatus] = useState(null);
   const [uploadFiles, setUploadFiles] = useState(null);
@@ -590,6 +593,7 @@ export default function Admin() {
         notify(`✅ Premium liberado para ${premiumNome} por ${premiumDias} dias!`, 'success');
         setPremiumNome('');
         loadPremiumUsers();
+        setPremiumSearchResult(null);
       } else {
         notify('Erro: ' + data.error, 'error');
       }
@@ -613,11 +617,64 @@ export default function Admin() {
       if (data.ok) {
         notify(`✅ Premium bloqueado para ${nome}`, 'success');
         loadPremiumUsers();
+        setPremiumSearchResult(prev => prev?.nome === nome ? { ...prev, premium_ativo: false } : prev);
       } else {
         notify('Erro: ' + data.error, 'error');
       }
     } catch (e) {
       notify('Erro: ' + e.message, 'error');
+    }
+  };
+
+  const deletarUsuarioPremium = async (nome) => {
+    if (needsConfirm(`delete-premium-${nome}`)) return;
+    setPendingConfirm(null);
+    try {
+      const res = await fetch(`${API}/admin/premium/users/${encodeURIComponent(nome)}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.ok) {
+        notify(`🗑️ Usuário ${nome} deletado`, 'success');
+        loadPremiumUsers();
+        setPremiumSearchResult(null);
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
+  const toggleAdminPremium = async (nome, isAdmin) => {
+    try {
+      const res = await fetch(`${API}/admin/premium/toggle-admin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, is_admin: isAdmin })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        notify(isAdmin ? `Admin concedido para ${nome}` : `Admin revogado de ${nome}`, 'success');
+        loadPremiumUsers();
+        setPremiumSearchResult(prev => prev?.nome === nome ? { ...prev, is_admin: isAdmin } : prev);
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
+  const buscarUsuarioPremium = async () => {
+    if (!premiumSearch.trim()) return;
+    setPremiumSearching(true);
+    setPremiumSearchResult(null);
+    try {
+      const found = premiumUsers.find(u =>
+        u.nome?.toLowerCase().includes(premiumSearch.toLowerCase())
+      );
+      setPremiumSearchResult(found || 'nao_encontrado');
+    } finally {
+      setPremiumSearching(false);
     }
   };
 
@@ -2499,51 +2556,109 @@ export default function Admin() {
             </div>
           </div>
 
-          {/* Lista de usuários */}
+          {/* Busca de usuário */}
+          <div className="premium-form" style={{ marginTop: 0 }}>
+            <h3>🔍 Buscar Usuário</h3>
+            <div className="form-row">
+              <div className="form-group" style={{ flex: 1 }}>
+                <input
+                  value={premiumSearch}
+                  onChange={e => setPremiumSearch(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && buscarUsuarioPremium()}
+                  placeholder="Digite parte do nome..."
+                  data-testid="premium-search-input"
+                />
+              </div>
+              <button className="save-btn" onClick={buscarUsuarioPremium} disabled={premiumSearching} data-testid="premium-search-btn">
+                {premiumSearching ? '...' : 'Buscar'}
+              </button>
+            </div>
+
+            {premiumSearchResult === 'nao_encontrado' && (
+              <p style={{ color: '#f87171', marginTop: 8 }}>Nenhum usuário encontrado.</p>
+            )}
+
+            {premiumSearchResult && premiumSearchResult !== 'nao_encontrado' && (() => {
+              const u = premiumSearchResult;
+              return (
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(212,175,55,0.15)',
+                  borderRadius: 10,
+                  padding: '14px 16px',
+                  marginTop: 10
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8 }}>
+                    <div>
+                      <p style={{ margin: 0, fontWeight: 700, color: '#fff', fontSize: 15 }}>{u.nome}</p>
+                      <p style={{ margin: '4px 0 0', fontSize: 12, color: '#aaa' }}>
+                        {u.premium_ativo ? (u.is_trial ? '🕐 Trial ativo' : '✅ Premium ativo') : '🔒 Bloqueado/Inativo'}
+                        {u.premium_expira_em && ` · expira ${new Date(u.premium_expira_em).toLocaleDateString('pt-BR')}`}
+                        {u.is_admin && <span style={{ marginLeft: 8, color: '#d4af37' }}>⭐ Admin</span>}
+                      </p>
+                    </div>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                      {u.premium_ativo ? (
+                        <button className="delete-btn" style={{ fontSize: 12 }} onClick={() => bloquearPremium(u.nome)}>🔒 Bloquear</button>
+                      ) : (
+                        <>
+                          <button className="save-btn" style={{ fontSize: 12 }} onClick={() => { setPremiumNome(u.nome); setPremiumDias(30); }}>✅ Liberar</button>
+                          <button className="delete-btn" style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }} onClick={() => deletarUsuarioPremium(u.nome)}>🗑️ Deletar</button>
+                        </>
+                      )}
+                      <button
+                        style={{ fontSize: 12, padding: '4px 10px', borderRadius: 6, border: '1px solid rgba(212,175,55,0.3)', background: u.is_admin ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', color: u.is_admin ? '#d4af37' : '#aaa', cursor: 'pointer' }}
+                        onClick={() => toggleAdminPremium(u.nome, !u.is_admin)}
+                        data-testid={`toggle-admin-${u.nome}`}
+                      >
+                        {u.is_admin ? '⭐ Revogar Admin' : '⭐ Tornar Admin'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Lista de bloqueados — precisam atenção */}
           <div className="premium-users-list">
-            <h3>👥 Usuários Cadastrados ({premiumUsers.length})</h3>
-            
-            {premiumUsers.length === 0 ? (
-              <p className="no-items">Nenhum usuário cadastrado ainda.</p>
+            <h3>🔒 Bloqueados / Inativos ({premiumUsers.filter(u => !u.premium_ativo).length})</h3>
+            <p style={{ color: '#888', fontSize: 12, marginTop: -8, marginBottom: 12 }}>
+              Estes usuários estão sem acesso. Delete os que não precisam mais de conta.
+            </p>
+
+            {premiumUsers.filter(u => !u.premium_ativo).length === 0 ? (
+              <p className="no-items">Nenhum usuário bloqueado. Tudo limpo!</p>
             ) : (
               <table className="premium-table">
                 <thead>
                   <tr>
                     <th>Nome</th>
                     <th>Status</th>
-                    <th>Expira em</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {premiumUsers.map((user, i) => (
-                    <tr key={i} className={user.premium_ativo ? 'ativo' : 'inativo'}>
+                  {premiumUsers.filter(u => !u.premium_ativo).map((user, i) => (
+                    <tr key={i} className="inativo">
                       <td>{user.nome}</td>
                       <td>
-                        {user.premium_ativo ? (
-                          <span className="badge ativo">{user.is_trial ? '🕐 Trial' : '✅ Ativo'}</span>
-                        ) : (
-                          <span className="badge inativo">{user.trial_expirado ? '⏰ Expirado' : '🔒 Bloqueado'}</span>
-                        )}
+                        <span className="badge inativo">
+                          {user.trial_expirado ? '⏰ Trial expirado' : '🔒 Bloqueado'}
+                        </span>
                       </td>
-                      <td>
-                        {user.premium_expira_em 
-                          ? new Date(user.premium_expira_em).toLocaleDateString('pt-BR')
-                          : '-'}
-                      </td>
-                      <td>
-                        {user.premium_ativo ? (
-                          <button className="delete-btn" onClick={() => bloquearPremium(user.nome)}>
-                            🔒 Bloquear
-                          </button>
-                        ) : (
-                          <button className="save-btn" onClick={() => {
-                            setPremiumNome(user.nome);
-                            setPremiumDias(30);
-                          }}>
-                            ✅ Liberar
-                          </button>
-                        )}
+                      <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <button className="save-btn" style={{ fontSize: 12 }} onClick={() => { setPremiumNome(user.nome); setPremiumDias(30); }}>
+                          ✅ Liberar
+                        </button>
+                        <button
+                          className="delete-btn"
+                          style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }}
+                          onClick={() => deletarUsuarioPremium(user.nome)}
+                          data-testid={`delete-user-${user.nome}`}
+                        >
+                          🗑️ Deletar
+                        </button>
                       </td>
                     </tr>
                   ))}

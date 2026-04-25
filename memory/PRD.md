@@ -1,6 +1,6 @@
 # SoulNutri - Product Requirements Document
 
-## Versao Atual: V3.3 (Estabilização)
+## Versao Atual: V3.4 (Insights Premium + Admin por PIN)
 
 ## Stack
 - Frontend: React (PWA) | Backend: FastAPI, Motor (MongoDB async)
@@ -10,6 +10,16 @@
 ## REGRAS IMUTÁVEIS → /app/memory/REGRAS_IMUTAVEIS.md
 
 ## Implementado
+
+### V3.4 (25/Abr/2026) — Insights Premium + Admin por PIN
+- BUG CORRIGIDO: enrichLoading não resetava quando result = null (race condition) — patch `setEnrichLoading(false)` no early return
+- BUG CORRIGIDO: is_admin hardcoded como True para todos os Premium — corrigido para ler do MongoDB
+- Dashboard Premium redesenhado: 4 blocos de insight (status calórico textual, qualidade nutricional, alertas dedup, sugestões)
+- Tab "Hoje": greeting dinâmico ("Hoje você está indo bem 👍"), status calórico sem anel grande, macros em cards inline
+- Alertas deduplicados por nutriente (sem repetição de "prato leve 31 kcal")
+- Admin via PIN Premium: endpoint GET /premium/admin-token retorna chave ADMIN somente para is_admin=true
+- Admin.js — Aba Premium simplificada: só bloqueados aparecem por padrão, busca por nome, botão Deletar, botão Tornar/Revogar Admin
+- Novos endpoints backend: DELETE /admin/premium/users/{nome}, POST /admin/premium/toggle-admin, GET /premium/admin-token
 
 ### V3.3 (24/Abr/2026) — Estabilização
 - BUG CRÍTICO CORRIGIDO: Sessão Premium não é mais destruída por erro de rede transitório

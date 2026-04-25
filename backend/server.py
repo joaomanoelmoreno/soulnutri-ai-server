@@ -3145,7 +3145,7 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
 
         user["premium_ativo"] = premium_ativo
         user["is_trial"] = is_trial
-        user["is_admin"] = True
+        user["is_admin"] = user.get("is_admin", False)
 
         # Calcular dias restantes do trial
         dias_restantes = None
@@ -5585,6 +5585,58 @@ async def bloquear_premium(request: Request):
         if result.modified_count == 0:
             return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
         return {"ok": True, "message": f"Premium bloqueado para {nome} ({result.modified_count} registros)"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/premium/users/{nome}", dependencies=[Depends(verify_admin_key)])
+async def deletar_usuario_premium(nome: str):
+    """Deleta permanentemente um usuário bloqueado/inativo."""
+    try:
+        result = await db.users.delete_many(
+            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}, "premium_ativo": False}
+        )
+        if result.deleted_count == 0:
+            return {"ok": False, "error": "Usuário não encontrado ou ainda ativo"}
+        return {"ok": True, "message": f"{result.deleted_count} registro(s) deletado(s)"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/premium/toggle-admin", dependencies=[Depends(verify_admin_key)])
+async def toggle_admin_premium(request: Request):
+    """Concede ou revoga acesso admin para um usuário premium."""
+    try:
+        data = await request.json()
+        nome = data.get("nome", "").strip()
+        is_admin = bool(data.get("is_admin", False))
+        if not nome:
+            return {"ok": False, "error": "Nome é obrigatório"}
+        result = await db.users.update_many(
+            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"$set": {"is_admin": is_admin, "updated_at": datetime.now(timezone.utc).isoformat()}}
+        )
+        if result.modified_count == 0:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
+        acao = "concedido" if is_admin else "revogado"
+        return {"ok": True, "message": f"Acesso admin {acao} para {nome}"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.get("/premium/admin-token")
+async def get_admin_token(pin: str):
+    """Retorna o admin key apenas para usuários premium com is_admin=True."""
+    try:
+        import hashlib
+        pin_hash = hashlib.sha256(pin.encode()).hexdigest()
+        user = await db.users.find_one({"pin_hash": pin_hash, "is_admin": True}, {"_id": 0, "pin_hash": 0})
+        if not user:
+            return {"ok": False, "error": "PIN inválido ou sem permissão admin"}
+        key = os.environ.get("ADMIN_SECRET_KEY", "")
+        if not key:
+            return {"ok": False, "error": "Chave admin não configurada no servidor"}
+        return {"ok": True, "admin_key": key}
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
