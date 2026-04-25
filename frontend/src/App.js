@@ -411,7 +411,9 @@ const safeText = (v) => {
   const [notifUnread, setNotifUnread] = useState(0);
   const [mealRegistered, setMealRegistered] = useState(false); // Confirmação de registro
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [installBannerDismissed, setInstallBannerDismissed] = useState(
+    () => !!localStorage.getItem('soulnutri_install_dismissed')
+  );
   // Tela de permissões unificada
   const [showPermissions, setShowPermissions] = useState(() => {
     return !localStorage.getItem('soulnutri_permissions_granted');
@@ -434,7 +436,8 @@ const safeText = (v) => {
   const isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
     window.navigator.standalone === true;
-  const shouldShowInstallBanner = !isInstalled && !isStandalone;
+  const [isInstalled, setIsInstalled] = useState(false);
+  const shouldShowInstallBanner = !isInstalled && !isStandalone && !installBannerDismissed;
   const shouldShowIOSInstallHelp = shouldShowInstallBanner && isIOS && isSafari;
   const shouldShowAndroidInstallHelp = shouldShowInstallBanner && isAndroid;
 
@@ -2751,8 +2754,10 @@ return {
             border: '1px solid rgba(255,255,255,0.12)'
           }}
         >
-          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px' }}>
-            📲 Instale o SoulNutri no iPhone
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <div style={{ fontWeight: 700, fontSize: '15px' }}>📲 Instale o SoulNutri no iPhone</div>
+            <button onClick={() => { setInstallBannerDismissed(true); localStorage.setItem('soulnutri_install_dismissed', '1'); }}
+              style={{ background: 'none', border: 'none', color: '#aaa', fontSize: '20px', cursor: 'pointer', lineHeight: 1, padding: '0 4px' }}>✕</button>
           </div>
           <div style={{ fontSize: '13px', lineHeight: 1.45, opacity: 0.95 }}>
             Toque em <strong>Compartilhar</strong> no Safari e depois em <strong>Adicionar à Tela de Início</strong>.
@@ -2776,8 +2781,10 @@ return {
             border: '1px solid rgba(255,255,255,0.12)'
           }}
         >
-          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px' }}>
-            📲 Instale o app SoulNutri
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <div style={{ fontWeight: 700, fontSize: '15px' }}>📲 Instale o app SoulNutri</div>
+            <button onClick={() => { setInstallBannerDismissed(true); localStorage.setItem('soulnutri_install_dismissed', '1'); }}
+              style={{ background: 'none', border: 'none', color: '#aaa', fontSize: '20px', cursor: 'pointer', lineHeight: 1, padding: '0 4px' }}>✕</button>
           </div>
           {deferredPrompt ? (
             <button
