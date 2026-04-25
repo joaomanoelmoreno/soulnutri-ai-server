@@ -5603,6 +5603,59 @@ async def deletar_usuario_premium(nome: str):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.post("/admin/premium/buscar-por-pin", dependencies=[Depends(verify_admin_key)])
+async def buscar_por_pin(request: Request):
+    """Busca todas as contas com o mesmo PIN (pelo hash). Usado para gerenciar duplicatas."""
+    try:
+        import hashlib
+        data = await request.json()
+        pin = str(data.get("pin", "")).strip()
+        if not pin:
+            return {"ok": False, "error": "PIN é obrigatório"}
+        pin_hash = hashlib.sha256(pin.encode()).hexdigest()
+        users = []
+        async for u in db.users.find({"pin_hash": pin_hash}, {"_id": 0, "pin_hash": 0}).sort("created_at", -1):
+            users.append(u)
+        return {"ok": True, "users": users, "total": len(users)}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.post("/admin/premium/bloquear-por-pin", dependencies=[Depends(verify_admin_key)])
+async def bloquear_por_pin(request: Request):
+    """Bloqueia TODAS as contas com o mesmo PIN."""
+    try:
+        import hashlib
+        data = await request.json()
+        pin = str(data.get("pin", "")).strip()
+        if not pin:
+            return {"ok": False, "error": "PIN é obrigatório"}
+        pin_hash = hashlib.sha256(pin.encode()).hexdigest()
+        result = await db.users.update_many(
+            {"pin_hash": pin_hash, "premium_ativo": True},
+            {"$set": {"premium_ativo": False, "premium_bloqueado_por": "admin"}}
+        )
+        return {"ok": True, "message": f"{result.modified_count} conta(s) bloqueada(s)"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+@api_router.delete("/admin/premium/deletar-por-pin", dependencies=[Depends(verify_admin_key)])
+async def deletar_inativos_por_pin(request: Request):
+    """Deleta TODAS as contas inativas com o mesmo PIN."""
+    try:
+        import hashlib
+        data = await request.json()
+        pin = str(data.get("pin", "")).strip()
+        if not pin:
+            return {"ok": False, "error": "PIN é obrigatório"}
+        pin_hash = hashlib.sha256(pin.encode()).hexdigest()
+        result = await db.users.delete_many({"pin_hash": pin_hash, "premium_ativo": False})
+        return {"ok": True, "message": f"{result.deleted_count} conta(s) inativa(s) deletada(s)"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.post("/admin/premium/toggle-admin", dependencies=[Depends(verify_admin_key)])
 async def toggle_admin_premium(request: Request):
     """Concede ou revoga acesso admin para um usuário premium."""

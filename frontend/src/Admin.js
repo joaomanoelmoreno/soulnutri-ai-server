@@ -130,6 +130,9 @@ export default function Admin() {
   const [premiumSearch, setPremiumSearch] = useState('');
   const [premiumSearchResult, setPremiumSearchResult] = useState(null);
   const [premiumSearching, setPremiumSearching] = useState(false);
+  const [pinSearch, setPinSearch] = useState('');
+  const [pinResults, setPinResults] = useState(null);
+  const [pinSearching, setPinSearching] = useState(false);
   // Upload de fotos
   const [uploadStatus, setUploadStatus] = useState(null);
   const [uploadFiles, setUploadFiles] = useState(null);
@@ -675,6 +678,73 @@ export default function Admin() {
       setPremiumSearchResult(found || 'nao_encontrado');
     } finally {
       setPremiumSearching(false);
+    }
+  };
+
+  const buscarPorPin = async () => {
+    if (!pinSearch.trim()) return;
+    setPinSearching(true);
+    setPinResults(null);
+    try {
+      const res = await fetch(`${API}/admin/premium/buscar-por-pin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: pinSearch })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setPinResults(data.users);
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    } finally {
+      setPinSearching(false);
+    }
+  };
+
+  const bloquearPorPin = async () => {
+    if (!pinSearch.trim()) return;
+    if (!window.confirm(`Bloquear TODAS as contas com PIN ${pinSearch}?`)) return;
+    try {
+      const res = await fetch(`${API}/admin/premium/bloquear-por-pin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: pinSearch })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        notify(data.message, 'success');
+        buscarPorPin();
+        loadPremiumUsers();
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
+  const deletarInativosPorPin = async () => {
+    if (!pinSearch.trim()) return;
+    if (!window.confirm(`Deletar TODAS as contas inativas com PIN ${pinSearch}?`)) return;
+    try {
+      const res = await fetch(`${API}/admin/premium/deletar-por-pin`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: pinSearch })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        notify(data.message, 'success');
+        buscarPorPin();
+        loadPremiumUsers();
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
     }
   };
 
@@ -2556,9 +2626,90 @@ export default function Admin() {
             </div>
           </div>
 
-          {/* Busca de usuário */}
+          {/* Busca por PIN — gerencia duplicatas da mesma pessoa */}
           <div className="premium-form" style={{ marginTop: 0 }}>
-            <h3>🔍 Buscar Usuário</h3>
+            <h3>🔑 Buscar por PIN <span style={{ fontSize: 12, color: '#888', fontWeight: 400 }}>— vê todas as contas com o mesmo PIN</span></h3>
+            <div className="form-row">
+              <div className="form-group" style={{ flex: 1 }}>
+                <input
+                  type="password"
+                  inputMode="numeric"
+                  maxLength={6}
+                  value={pinSearch}
+                  onChange={e => setPinSearch(e.target.value.replace(/\D/g, ''))}
+                  onKeyDown={e => e.key === 'Enter' && buscarPorPin()}
+                  placeholder="Digite o PIN..."
+                  data-testid="pin-search-input"
+                />
+              </div>
+              <button className="save-btn" onClick={buscarPorPin} disabled={pinSearching || pinSearch.length < 4} data-testid="pin-search-btn">
+                {pinSearching ? '...' : 'Buscar'}
+              </button>
+            </div>
+
+            {pinResults !== null && (
+              <>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
+                  <span style={{ color: '#aaa', fontSize: 13, alignSelf: 'center' }}>
+                    {pinResults.length === 0 ? 'Nenhuma conta encontrada.' : `${pinResults.length} conta(s) com esse PIN:`}
+                  </span>
+                  {pinResults.length > 0 && (
+                    <>
+                      <button
+                        onClick={bloquearPorPin}
+                        style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.1)', color: '#f87171', cursor: 'pointer', fontSize: 12 }}
+                        data-testid="block-all-by-pin"
+                      >
+                        🔒 Bloquear todas
+                      </button>
+                      <button
+                        onClick={deletarInativosPorPin}
+                        style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.15)', color: '#fca5a5', cursor: 'pointer', fontSize: 12 }}
+                        data-testid="delete-inactive-by-pin"
+                      >
+                        🗑️ Deletar inativas
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {pinResults.map((u, i) => (
+                  <div key={i} style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    padding: '10px 14px', marginBottom: 8, borderRadius: 10,
+                    background: u.premium_ativo ? 'rgba(16,185,129,0.06)' : 'rgba(239,68,68,0.06)',
+                    border: `1px solid ${u.premium_ativo ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)'}`,
+                    flexWrap: 'wrap', gap: 8
+                  }}>
+                    <div>
+                      <span style={{ color: '#fff', fontWeight: 600, fontSize: 14 }}>{u.nome}</span>
+                      <span style={{ marginLeft: 10, fontSize: 12, color: u.premium_ativo ? '#10b981' : '#f87171' }}>
+                        {u.premium_ativo ? (u.is_trial ? '🕐 Trial' : '✅ Ativo') : '🔒 Bloqueado'}
+                      </span>
+                      {u.is_admin && <span style={{ marginLeft: 8, fontSize: 12, color: '#d4af37' }}>⭐ Admin</span>}
+                    </div>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      {u.premium_ativo ? (
+                        <button
+                          className="delete-btn" style={{ fontSize: 12 }}
+                          onClick={async () => { await bloquearPremium(u.nome); buscarPorPin(); }}
+                        >🔒 Bloquear</button>
+                      ) : (
+                        <button
+                          className="delete-btn" style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }}
+                          onClick={async () => { await deletarUsuarioPremium(u.nome); buscarPorPin(); }}
+                        >🗑️ Deletar</button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+
+          {/* Busca de usuário por nome */}
+          <div className="premium-form" style={{ marginTop: 0 }}>
+            <h3>🔍 Buscar por Nome</h3>
             <div className="form-row">
               <div className="form-group" style={{ flex: 1 }}>
                 <input
