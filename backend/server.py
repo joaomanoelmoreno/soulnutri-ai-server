@@ -1103,6 +1103,19 @@ async def identify_image(
                         decision["category"] = dish_doc.get("category")
                 if sheet:
                     nutrition_data = sheet
+                    # Converter campos numéricos para strings formatadas (igual ao caminho externo)
+                    if sheet.get('calorias_kcal') is not None:
+                        nutrition_data['calorias'] = f"{sheet['calorias_kcal']:.0f} kcal"
+                    if sheet.get('proteinas_g') is not None:
+                        nutrition_data['proteinas'] = f"{sheet['proteinas_g']:.1f}g"
+                    if sheet.get('carboidratos_g') is not None:
+                        nutrition_data['carboidratos'] = f"{sheet['carboidratos_g']:.1f}g"
+                    if sheet.get('gorduras_g') is not None:
+                        nutrition_data['gorduras'] = f"{sheet['gorduras_g']:.1f}g"
+                    if sheet.get('fibras_g') is not None:
+                        nutrition_data['fibras'] = f"{sheet['fibras_g']:.1f}g"
+                    if sheet.get('sodio_mg') is not None:
+                        nutrition_data['sodio'] = f"{sheet['sodio_mg']:.0f}mg"
             
             # Check premium apenas se credenciais enviadas (unica query)
             if pin and nome:
