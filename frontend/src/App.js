@@ -657,7 +657,7 @@ const safeText = (v) => {
   // Dispara quando um novo resultado é identificado E o user é premium
   // ═══════════════════════════════════════════════════════════════
   useEffect(() => {
-    if (!result?.ok || !result?.identified || !premiumUser) return;
+    if (!result?.ok || !result?.identified || !premiumUser) { setEnrichLoading(false); return; }
 
     const dishName = result.dish_display;
     if (!dishName) return;
