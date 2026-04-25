@@ -87,6 +87,8 @@ async function retryFetch(url, options, retries = 2) {
 export default function Admin() {
   const [adminKey, setAdminKey] = useState(() => localStorage.getItem('soulnutri_admin_key') || '');
   const [adminAuth, setAdminAuth] = useState(() => !!localStorage.getItem('soulnutri_admin_key'));
+  const [loginError, setLoginError] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -180,13 +182,27 @@ export default function Admin() {
   const [loadError, setLoadError] = useState(null);
 
   // Login Admin
-  const handleAdminLogin = (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
     if (!adminKey.trim()) return;
-    // Atualizar variável de módulo (usada em todos os helpers XHR)
-    adminKeyCache = adminKey.trim();
-    localStorage.setItem('soulnutri_admin_key', adminKey.trim());
-    setAdminAuth(true);
+    setLoginError('');
+    setLoginLoading(true);
+    try {
+      const res = await fetch(`${API}/admin/dishes`, {
+        headers: { 'X-Admin-Key': adminKey.trim() }
+      });
+      if (res.ok) {
+        adminKeyCache = adminKey.trim();
+        localStorage.setItem('soulnutri_admin_key', adminKey.trim());
+        setAdminAuth(true);
+      } else {
+        setLoginError('Chave incorreta. Tente novamente.');
+      }
+    } catch {
+      setLoginError('Erro de conexão. Tente novamente.');
+    } finally {
+      setLoginLoading(false);
+    }
   };
 
   const handleAdminLogout = () => {
@@ -1234,16 +1250,21 @@ export default function Admin() {
             <button
               data-testid="admin-login-btn"
               type="submit"
-              disabled={!adminKey.trim()}
+              disabled={!adminKey.trim() || loginLoading}
               style={{
                 padding: '12px', borderRadius: '8px', border: 'none',
-                background: adminKey.trim() ? '#16a34a' : '#333',
-                color: '#fff', fontSize: '15px', cursor: adminKey.trim() ? 'pointer' : 'default',
+                background: adminKey.trim() && !loginLoading ? '#16a34a' : '#333',
+                color: '#fff', fontSize: '15px', cursor: adminKey.trim() && !loginLoading ? 'pointer' : 'default',
                 fontWeight: 600
               }}
             >
-              Entrar
+              {loginLoading ? 'Verificando...' : 'Entrar'}
             </button>
+            {loginError && (
+              <p style={{ color: '#f87171', fontSize: '13px', margin: 0, textAlign: 'center' }}>
+                {loginError}
+              </p>
+            )}
             <a href="/" style={{ color: '#666', fontSize: '12px', textAlign: 'center', textDecoration: 'none' }}>
               ← Voltar ao App
             </a>
