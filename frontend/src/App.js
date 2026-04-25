@@ -690,6 +690,7 @@ const safeText = (v) => {
 
         if (!enrichData.ok) {
           console.warn('[ENRICH] Resposta não ok:', enrichData);
+          setEnrichLoading(false);
           return;
         }
 
@@ -849,11 +850,10 @@ const safeText = (v) => {
         console.warn('[ENRICH] Erro:', err);
       })
       .finally(() => {
-        if (!cancelled) 
-
-      if (premiumUser) {
-        premiumCycleBusyRef.current = false;
-      }
+        if (!cancelled) setEnrichLoading(false);
+        if (premiumUser) {
+          premiumCycleBusyRef.current = false;
+        }
       });
 
     return () => {
