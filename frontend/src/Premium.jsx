@@ -582,7 +582,18 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
   return (
     <div className="daily-counter expanded" data-testid="daily-counter">
       <div className="counter-header">
-        <h3>👋 Olá, {summary?.nome}</h3>
+        <div>
+          <h3>👋 {summary?.nome?.trim().split(' ')[0] || summary?.nome}</h3>
+          <p className="greeting-sub">{
+            !summary || (summary.percentual || 0) === 0
+              ? 'Adicione refeições para começar'
+              : (summary.percentual || 0) <= 90
+                ? 'Hoje você está indo bem 👍'
+                : (summary.percentual || 0) <= 110
+                  ? 'Você está quase na meta!'
+                  : 'Atenção à sua meta de hoje ⚠️'
+          }</p>
+        </div>
         <button className="logout-btn" onClick={onLogout}>Sair</button>
       </div>
 
@@ -671,87 +682,96 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
 
       {activeView === 'hoje' && (
         <>
-          {/* Anel de Calorias */}
-          <div className="calorie-ring">
-            <svg viewBox="0 0 100 100">
-              <circle className="ring-bg" cx="50" cy="50" r="45" />
-              <circle 
-                className="ring-progress" 
-                cx="50" cy="50" r="45"
-                style={{
-                  strokeDasharray: `${Math.min(percentual, 100) * 2.83} 283`,
-                  stroke: progressColor
-                }}
-              />
-            </svg>
-            <div className="ring-content">
-              <span className="consumed">{summary?.consumido?.toFixed(0) || 0}</span>
-              <span className="label">kcal</span>
-              <span className="meta">de {summary?.meta?.toFixed(0)} kcal</span>
+          {/* Status calórico interpretável */}
+          {summary && (
+            <div style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(212,175,55,0.12)',
+              borderRadius: '14px',
+              padding: '18px',
+              marginBottom: '16px'
+            }}>
+              {(() => {
+                const pct = summary.percentual || 0;
+                const cor = pct > 110 ? '#ef4444' : pct >= 90 ? '#10b981' : '#f59e0b';
+                const status = pct === 0 ? '— Registre sua primeira refeição'
+                  : pct > 110 ? `⚠️ ${(pct - 100).toFixed(0)}% acima da meta`
+                  : pct >= 90 ? '✔ Dentro da meta'
+                  : `⚠️ ${(100 - pct).toFixed(0)}% abaixo da meta`;
+                return (
+                  <>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '2.6rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>
+                        {summary.consumido?.toFixed(0) || 0}
+                      </span>
+                      <span style={{ color: '#bbb', fontSize: '1rem' }}>kcal</span>
+                      <span style={{ color: '#666', fontSize: '0.83rem', marginLeft: '4px' }}>/ {summary.meta?.toFixed(0)} meta</span>
+                    </div>
+                    <div style={{ height: '5px', background: 'rgba(255,255,255,0.07)', borderRadius: '3px', overflow: 'hidden', marginBottom: '9px' }}>
+                      <div style={{ height: '100%', width: `${Math.min(pct, 100)}%`, background: cor, borderRadius: '3px', transition: 'width 0.5s' }} />
+                    </div>
+                    <span style={{ color: cor, fontWeight: 600, fontSize: '0.88rem' }}>{status}</span>
+                  </>
+                );
+              })()}
             </div>
+          )}
+
+          {/* Macros em linha */}
+          <div style={{
+            display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '10px', marginBottom: '16px'
+          }}>
+            {[
+              { label: 'Proteínas', val: summary?.totais?.proteinas, unit: 'g', cor: '#e8d48b' },
+              { label: 'Carbos',    val: summary?.totais?.carboidratos, unit: 'g', cor: '#d4af37' },
+              { label: 'Gorduras',  val: summary?.totais?.gorduras, unit: 'g', cor: '#10b981' },
+            ].map(m => (
+              <div key={m.label} style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(212,175,55,0.08)',
+                borderRadius: '10px', padding: '12px', textAlign: 'center'
+              }}>
+                <p style={{ margin: 0, color: m.cor, fontWeight: 800, fontSize: '1.2rem' }}>{m.val?.toFixed(0) || 0}{m.unit}</p>
+                <p style={{ margin: '3px 0 0', color: '#888', fontSize: '0.72rem' }}>{m.label}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${Math.min(percentual, 100)}%`, background: progressColor }}
-            />
-          </div>
-          <p className="progress-text" style={{ color: progressColor }}>
-            {percentual >= 100 
-              ? '🚨 Meta atingida!' 
-              : `Restam ${summary?.restante?.toFixed(0)} kcal`}
-          </p>
-
-          {/* Macros */}
-          <div className="macro-grid">
-            <div className="macro-item">
-              <span className="macro-value">{summary?.totais?.proteinas?.toFixed(0) || 0}g</span>
-              <span className="macro-label">Proteínas</span>
-            </div>
-            <div className="macro-item">
-              <span className="macro-value">{summary?.totais?.carboidratos?.toFixed(0) || 0}g</span>
-              <span className="macro-label">Carbos</span>
-            </div>
-            <div className="macro-item">
-              <span className="macro-value">{summary?.totais?.gorduras?.toFixed(0) || 0}g</span>
-              <span className="macro-label">Gorduras</span>
-            </div>
-          </div>
-
-          {/* ALERTAS DO DIA */}
+          {/* ALERTAS DO DIA — deduplicados */}
           {fullAnalysis?.alertas?.length > 0 && (
             <div className="alerts-section" style={{
               marginTop: '16px',
               padding: '12px',
-              background: 'rgba(239, 68, 68, 0.1)',
+              background: 'rgba(239, 68, 68, 0.07)',
               borderRadius: '12px',
-              border: '1px solid rgba(239, 68, 68, 0.3)'
+              border: '1px solid rgba(239, 68, 68, 0.2)'
             }}>
               <h4 style={{ margin: '0 0 10px', color: '#fff', fontSize: '14px' }}>
                 ⚠️ Alertas de Hoje
               </h4>
-              {fullAnalysis.alertas.slice(0, 3).map((alerta, i) => (
+              {Array.from(
+                new Map(fullAnalysis.alertas.map(a => [a.nutriente?.toLowerCase() || a.mensagem, a])).values()
+              ).slice(0, 4).map((alerta, i) => (
                 <div key={i} style={{
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: '8px',
-                  padding: '8px',
+                  padding: '8px 10px',
                   marginBottom: '8px',
-                  background: alerta.nivel === 'alto' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(212, 175, 55, 0.1)',
+                  background: alerta.nivel === 'alto' ? 'rgba(239, 68, 68, 0.12)' : 'rgba(212, 175, 55, 0.08)',
+                  borderLeft: `3px solid ${alerta.nivel === 'alto' ? 'rgba(239,68,68,0.5)' : 'rgba(212,175,55,0.4)'}`,
                   borderRadius: '8px'
                 }}>
-                  <span style={{ fontSize: '20px' }}>{alerta.emoji}</span>
                   <div>
                     <p style={{ margin: 0, color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>
                       {alerta.nutriente}
                     </p>
-                    <p style={{ margin: '4px 0 0', color: '#ccc', fontSize: '12px' }}>
+                    <p style={{ margin: '3px 0 0', color: '#ccc', fontSize: '12px' }}>
                       {alerta.mensagem}
                     </p>
                     {alerta.dica && (
-                      <p style={{ margin: '4px 0 0', color: '#d4af37', fontSize: '11px' }}>
-                        💡 {alerta.dica}
+                      <p style={{ margin: '3px 0 0', color: '#d4af37', fontSize: '11px' }}>
+                        → {alerta.dica}
                       </p>
                     )}
                   </div>

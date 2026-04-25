@@ -157,6 +157,51 @@ const MetasModal = ({ metas, onSave, onClose }) => {
   );
 };
 
+// ─── HELPERS DE INSIGHT (só leitura de dados) ────────────────────────────────
+const getCalorieStatus = (atual, meta) => {
+  if (!meta || meta === 0) return { cor: '#d4af37', emoji: '—', texto: 'Defina sua meta calórica' };
+  const pct = ((atual - meta) / meta) * 100;
+  if (pct > 10) return { cor: '#ef4444', emoji: '⚠️', texto: `${pct.toFixed(0)}% acima da meta` };
+  if (pct < -10) return { cor: '#f59e0b', emoji: '⚠️', texto: `${Math.abs(pct).toFixed(0)}% abaixo da meta` };
+  return { cor: '#10b981', emoji: '✔', texto: 'Dentro da meta' };
+};
+
+const getMacroStatus = (atual, meta) => {
+  if (!meta || meta === 0) return { label: 'Sem meta', cor: '#666', icon: '—' };
+  const pct = (atual / meta) * 100;
+  if (pct < 70) return { label: 'Baixa', cor: '#f59e0b', icon: '⚠️' };
+  if (pct > 120) return { label: 'Alta', cor: '#ef4444', icon: '⚠️' };
+  return { label: 'Adequada', cor: '#10b981', icon: '✔' };
+};
+
+const getSugestoes = (hoje, metas) => {
+  const sugs = [];
+  const calPct  = metas.calorias     ? hoje.calorias     / metas.calorias     : 0;
+  const gorPct  = metas.gorduras     ? hoje.gorduras     / metas.gorduras     : 0;
+  const protPct = metas.proteinas    ? hoje.proteinas    / metas.proteinas    : 0;
+  const carbPct = metas.carboidratos ? hoje.carboidratos / metas.carboidratos : 0;
+  if (calPct > 1.1)  sugs.push('Prefira pratos leves na próxima refeição');
+  if (gorPct > 1.2)  sugs.push('Evite frituras e molhos gordurosos');
+  if (protPct < 0.7) sugs.push('Inclua proteína magra: frango, atum ou ovos');
+  if (carbPct > 1.3) sugs.push('Reduza carboidratos na próxima refeição');
+  if (carbPct < 0.5) sugs.push('Adicione grãos integrais ou tubérculos');
+  if (hoje.calorias < 500 && hoje.proteinas < 20) sugs.push('Continue escaneando para ver insights completos');
+  if (sugs.length === 0) sugs.push('Continue assim! Sua dieta está equilibrada hoje.');
+  return sugs;
+};
+
+const dedupeAlertas = (alertas) => {
+  if (!alertas || alertas.length === 0) return [];
+  const seen = new Set();
+  return alertas.filter(a => {
+    const key = (a.msg || String(a)).toLowerCase().trim();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function DashboardPremium({ user, onClose }) {
   const [loading, setLoading] = useState(true);
   const [dashData, setDashData] = useState(null);
@@ -309,100 +354,131 @@ export default function DashboardPremium({ user, onClose }) {
       <div className="dashboard-content">
         {activeTab === 'resumo' && (
           <>
-            {/* Card Consumo de Hoje */}
-            <div className="dashboard-card today-card">
-              <h3>🍽️ Consumo de Hoje</h3>
-              <div className="circular-grid">
-                <CircularProgress 
-                  value={hoje.calorias} 
-                  max={metas.calorias} 
-                  color="#d4af37" 
-                  label="kcal"
-                  icon={Flame}
-                />
-                <CircularProgress 
-                  value={hoje.proteinas} 
-                  max={metas.proteinas} 
-                  color="#ef4444" 
-                  label="Prot"
-                  icon={Beef}
-                />
-                <CircularProgress 
-                  value={hoje.carboidratos} 
-                  max={metas.carboidratos} 
-                  color="#d4af37" 
-                  label="Carb"
-                  icon={Wheat}
-                />
-                <CircularProgress 
-                  value={hoje.gorduras} 
-                  max={metas.gorduras} 
-                  color="#10b981" 
-                  label="Gord"
-                  icon={Droplets}
-                />
+            {/* BLOCO 1 — Status Calórico */}
+            {(() => {
+              const calStatus = getCalorieStatus(hoje.calorias, metas.calorias);
+              const barWidth = Math.min((hoje.calorias / (metas.calorias || 1)) * 100, 100);
+              return (
+                <div className="insight-card" data-testid="calorie-status">
+                  <div className="insight-card-label">
+                    <Flame size={14} color="#d4af37" />
+                    <span>Calorias de Hoje</span>
+                  </div>
+                  <div className="insight-cal-row">
+                    <span className="insight-cal-value">{hoje.calorias.toFixed(0)}</span>
+                    <span className="insight-cal-unit"> kcal</span>
+                    <span className="insight-cal-meta">/ {metas.calorias} meta</span>
+                  </div>
+                  <div className="insight-status-bar">
+                    <div className="insight-status-fill" style={{ width: `${barWidth}%`, backgroundColor: calStatus.cor }} />
+                  </div>
+                  <span className="insight-status-badge" style={{ color: calStatus.cor }}>
+                    {calStatus.emoji} {calStatus.texto}
+                  </span>
+                </div>
+              );
+            })()}
+
+            {/* BLOCO 2 — Qualidade Nutricional */}
+            <div className="insight-card" data-testid="macro-quality">
+              <div className="insight-card-label">
+                <Target size={14} color="#d4af37" />
+                <span>Qualidade Nutricional</span>
+              </div>
+              <div className="macro-quality-grid">
+                {[
+                  { label: 'Proteína',     value: hoje.proteinas,    meta: metas.proteinas,    icon: '💪', unit: 'g' },
+                  { label: 'Carboidratos', value: hoje.carboidratos, meta: metas.carboidratos, icon: '🍚', unit: 'g' },
+                  { label: 'Gordura',      value: hoje.gorduras,     meta: metas.gorduras,     icon: '🫒', unit: 'g' },
+                ].map(({ label, value, meta, icon, unit }) => {
+                  const st = getMacroStatus(value, meta);
+                  return (
+                    <div key={label} className="macro-quality-row">
+                      <span className="mq-icon">{icon}</span>
+                      <span className="mq-label">{label}</span>
+                      <span className="mq-val">{value.toFixed(0)}{unit}</span>
+                      <span className="mq-status" style={{ color: st.cor }}>{st.icon} {st.label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            
-            {/* Gráficos do Período */}
-            <div className="dashboard-card chart-card">
-              <h3>📊 {periodoLabels[periodo]}</h3>
-              {grafico.length > 0 ? (
+
+            {/* BLOCO 3 — Alertas Inteligentes (deduplicados) */}
+            {(() => {
+              const alertas = dedupeAlertas(dashData?.alertas);
+              return alertas.length > 0 ? (
+                <div className="insight-card insight-card--alert" data-testid="smart-alerts">
+                  <div className="insight-card-label">
+                    <span style={{ fontSize: '13px' }}>⚠️</span>
+                    <span>Alertas do Dia</span>
+                  </div>
+                  <ul className="insight-list">
+                    {alertas.map((a, i) => (
+                      <li key={i} className="insight-list-item insight-list-item--alert">
+                        {a.msg || String(a)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null;
+            })()}
+
+            {/* BLOCO 4 — Sugestões */}
+            <div className="insight-card insight-card--sug" data-testid="suggestions">
+              <div className="insight-card-label">
+                <TrendingUp size={14} color="#d4af37" />
+                <span>Sugestão para o Próximo Prato</span>
+              </div>
+              <ul className="insight-list">
+                {getSugestoes(hoje, metas).map((s, i) => (
+                  <li key={i} className="insight-list-item insight-list-item--sug">{s}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Stats resumidos */}
+            <div className="stats-mini-grid" data-testid="stats-mini">
+              <div className="stats-mini-item">
+                <Award size={18} color="#d4af37" />
+                <span className="stats-mini-val">{stats.streak || 0}</span>
+                <span className="stats-mini-lbl">Dias seguidos</span>
+              </div>
+              <div className="stats-mini-item">
+                <Calendar size={18} color="#d4af37" />
+                <span className="stats-mini-val">{stats.dias_registrados || 0}</span>
+                <span className="stats-mini-lbl">Dias registrados</span>
+              </div>
+              <div className="stats-mini-item">
+                <Flame size={18} color="#ef4444" />
+                <span className="stats-mini-val">{stats.media_calorias?.toFixed(0) || 0}</span>
+                <span className="stats-mini-lbl">Média kcal/dia</span>
+              </div>
+              <div className="stats-mini-item">
+                <TrendingUp size={18} color="#10b981" />
+                <span className="stats-mini-val">{stats.total_pratos || 0}</span>
+                <span className="stats-mini-lbl">Pratos registrados</span>
+              </div>
+            </div>
+
+            {/* Gráfico de tendência — mantido como referência secundária */}
+            {grafico.length > 0 && (
+              <div className="dashboard-card chart-card">
+                <h3>📊 Tendência — {periodoLabels[periodo]}</h3>
                 <div className="charts-grid">
-                  <BarChart 
-                    data={grafico.map(d => ({ day: d.dia, value: d.calorias }))} 
-                    label="Calorias (kcal)" 
+                  <BarChart
+                    data={grafico.map(d => ({ day: d.dia, value: d.calorias }))}
+                    label="Calorias (kcal)"
                     color="#d4af37"
                     maxValue={metas.calorias * 1.2}
                   />
-                  <BarChart 
-                    data={grafico.map(d => ({ day: d.dia, value: d.proteinas }))} 
-                    label="Proteínas (g)" 
+                  <BarChart
+                    data={grafico.map(d => ({ day: d.dia, value: d.proteinas }))}
+                    label="Proteínas (g)"
                     color="#ef4444"
                     maxValue={metas.proteinas * 1.5}
                   />
                 </div>
-              ) : (
-                <p className="empty-msg">Nenhum dado disponível para este período.</p>
-              )}
-            </div>
-            
-            {/* Estatísticas */}
-            <div className="dashboard-card stats-card">
-              <h3>📈 Estatísticas</h3>
-              <div className="stats-grid">
-                <div className="stat-item">
-                  <Award className="stat-icon" color="#d4af37" />
-                  <span className="stat-value">{stats.streak || 0}</span>
-                  <span className="stat-label">Dias seguidos</span>
-                </div>
-                <div className="stat-item">
-                  <Calendar className="stat-icon" color="#d4af37" />
-                  <span className="stat-value">{stats.dias_registrados || 0}</span>
-                  <span className="stat-label">Dias registrados</span>
-                </div>
-                <div className="stat-item">
-                  <Flame className="stat-icon" color="#ef4444" />
-                  <span className="stat-value">{stats.media_calorias?.toFixed(0) || 0}</span>
-                  <span className="stat-label">Média kcal/dia</span>
-                </div>
-                <div className="stat-item">
-                  <TrendingUp className="stat-icon" color="#10b981" />
-                  <span className="stat-value">{stats.total_pratos || 0}</span>
-                  <span className="stat-label">Pratos registrados</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Alertas */}
-            {dashData?.alertas?.length > 0 && (
-              <div className="dashboard-card alertas-card">
-                <h3>⚠️ Alertas</h3>
-                <ul className="alertas-list">
-                  {dashData.alertas.map((a, i) => (
-                    <li key={i} className={`alerta-item ${a.tipo}`}>{a.msg}</li>
-                  ))}
-                </ul>
               </div>
             )}
           </>

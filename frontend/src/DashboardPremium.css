@@ -1014,3 +1014,154 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ═══════════════════════════════════════════
+   INSIGHT CARDS — Dashboard orientado a decisão
+   ════════════════════════════════════════════ */
+.insight-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.insight-card-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #d4af37;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+/* Bloco Calórico */
+.insight-cal-row {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.insight-cal-value {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.insight-cal-unit {
+  font-size: 1rem;
+  color: #bbb;
+  font-weight: 500;
+}
+.insight-cal-meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-left: 4px;
+}
+.insight-status-bar {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.insight-status-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+.insight-status-badge {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Qualidade Nutricional */
+.macro-quality-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.macro-quality-row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+.mq-icon  { font-size: 1rem; }
+.mq-label { color: #ccc; font-size: 0.88rem; }
+.mq-val   { color: #888; font-size: 0.82rem; }
+.mq-status { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
+
+/* Alertas */
+.insight-card--alert {
+  border-color: rgba(239, 68, 68, 0.18);
+  background: rgba(239, 68, 68, 0.04);
+}
+/* Sugestões */
+.insight-card--sug {
+  border-color: rgba(212, 175, 55, 0.18);
+  background: rgba(212, 175, 55, 0.03);
+}
+/* Lista compartilhada */
+.insight-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.insight-list-item {
+  padding: 9px 13px;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.insight-list-item--alert {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border-left: 3px solid rgba(239, 68, 68, 0.45);
+  padding-left: 11px;
+}
+.insight-list-item--sug {
+  background: rgba(212, 175, 55, 0.08);
+  color: #e8d48b;
+  border-left: 3px solid rgba(212, 175, 55, 0.4);
+  padding-left: 11px;
+}
+
+/* Stats mini */
+.stats-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.stats-mini-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+  border-radius: 12px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+.stats-mini-val {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.stats-mini-lbl {
+  font-size: 0.72rem;
+  color: #888;
+}
+

@@ -280,6 +280,13 @@
 .counter-header h3 {
   font-size: 1.1rem;
   color: #e8d48b;
+  margin: 0;
+}
+
+.greeting-sub {
+  margin: 3px 0 0;
+  font-size: 0.82rem;
+  color: #aaa;
 }
 
 .logout-btn {
