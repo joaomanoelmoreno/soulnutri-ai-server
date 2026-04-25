@@ -606,19 +606,16 @@ export default function Admin() {
   };
 
   const bloquearPremium = async (nome) => {
-    if (needsConfirm(`block-premium-${nome}`)) return;
-    setPendingConfirm(null);
+    if (!window.confirm(`Bloquear acesso de "${nome}"?`)) return;
     try {
-      const formData = new FormData();
-      formData.append('nome', nome);
-      
-      const res = await fetch(`${API}/admin/premium/bloquear`, {
+      const res = await adminFetch(`${API}/admin/premium/bloquear`, {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome })
       });
       const data = await res.json();
       if (data.ok) {
-        notify(`✅ Premium bloqueado para ${nome}`, 'success');
+        notify(`Premium bloqueado para ${nome}`, 'success');
         loadPremiumUsers();
         setPremiumSearchResult(prev => prev?.nome === nome ? { ...prev, premium_ativo: false } : prev);
       } else {
@@ -630,15 +627,34 @@ export default function Admin() {
   };
 
   const deletarUsuarioPremium = async (nome) => {
-    if (needsConfirm(`delete-premium-${nome}`)) return;
-    setPendingConfirm(null);
+    if (!window.confirm(`Deletar permanentemente "${nome}"?`)) return;
     try {
-      const res = await fetch(`${API}/admin/premium/users/${encodeURIComponent(nome)}`, { method: 'DELETE' });
+      const res = await adminFetch(`${API}/admin/premium/users/${encodeURIComponent(nome)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
-        notify(`🗑️ Usuário ${nome} deletado`, 'success');
+        notify(`Usuário ${nome} deletado`, 'success');
         loadPremiumUsers();
         setPremiumSearchResult(null);
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
+  const liberarPremiumDireto = async (nome, dias = 30) => {
+    try {
+      const res = await adminFetch(`${API}/admin/premium/liberar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, dias })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        notify(`✅ Premium liberado para ${nome} por ${dias} dias!`, 'success');
+        loadPremiumUsers();
+        setPremiumSearchResult(prev => prev?.nome === nome ? { ...prev, premium_ativo: true } : prev);
       } else {
         notify('Erro: ' + data.error, 'error');
       }
@@ -686,7 +702,7 @@ export default function Admin() {
     setPinSearching(true);
     setPinResults(null);
     try {
-      const res = await fetch(`${API}/admin/premium/buscar-por-pin`, {
+      const res = await adminFetch(`${API}/admin/premium/buscar-por-pin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pin: pinSearch })
@@ -708,7 +724,7 @@ export default function Admin() {
     if (!pinSearch.trim()) return;
     if (!window.confirm(`Bloquear TODAS as contas com PIN ${pinSearch}?`)) return;
     try {
-      const res = await fetch(`${API}/admin/premium/bloquear-por-pin`, {
+      const res = await adminFetch(`${API}/admin/premium/bloquear-por-pin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pin: pinSearch })
@@ -730,7 +746,7 @@ export default function Admin() {
     if (!pinSearch.trim()) return;
     if (!window.confirm(`Deletar TODAS as contas inativas com PIN ${pinSearch}?`)) return;
     try {
-      const res = await fetch(`${API}/admin/premium/deletar-por-pin`, {
+      const res = await adminFetch(`${API}/admin/premium/deletar-por-pin`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pin: pinSearch })
@@ -2753,7 +2769,7 @@ export default function Admin() {
                         <button className="delete-btn" style={{ fontSize: 12 }} onClick={() => bloquearPremium(u.nome)}>🔒 Bloquear</button>
                       ) : (
                         <>
-                          <button className="save-btn" style={{ fontSize: 12 }} onClick={() => { setPremiumNome(u.nome); setPremiumDias(30); }}>✅ Liberar</button>
+                          <button className="save-btn" style={{ fontSize: 12 }} onClick={() => liberarPremiumDireto(u.nome, 30)}>✅ Liberar</button>
                           <button className="delete-btn" style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }} onClick={() => deletarUsuarioPremium(u.nome)}>🗑️ Deletar</button>
                         </>
                       )}
@@ -2799,7 +2815,7 @@ export default function Admin() {
                         </span>
                       </td>
                       <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                        <button className="save-btn" style={{ fontSize: 12 }} onClick={() => { setPremiumNome(user.nome); setPremiumDias(30); }}>
+                        <button className="save-btn" style={{ fontSize: 12 }} onClick={() => liberarPremiumDireto(user.nome, 30)}>
                           ✅ Liberar
                         </button>
                         <button
