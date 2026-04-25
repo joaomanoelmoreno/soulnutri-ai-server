@@ -4374,7 +4374,7 @@ async def admin_dish_images_list(slug: str):
 
 
 
-@api_router.get("/admin/dish-image/{slug}", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/dish-image/{slug}")
 async def admin_get_dish_image(slug: str, img: str = None, thumb: int = 0):
     """Retorna uma imagem de um prato. thumb=1 para thumbnail comprimido (rápido)."""
     from fastapi.responses import Response, FileResponse
