@@ -83,12 +83,7 @@ async function retryFetch(url, options, retries = 2) {
   }
 }
 
-
 export default function Admin() {
-  const [adminKey, setAdminKey] = useState(() => localStorage.getItem('soulnutri_admin_key') || '');
-  const [adminAuth, setAdminAuth] = useState(() => !!localStorage.getItem('soulnutri_admin_key'));
-  const [loginError, setLoginError] = useState('');
-  const [loginLoading, setLoginLoading] = useState(false);
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -181,7 +176,12 @@ export default function Admin() {
   // Estado de erro global
   const [loadError, setLoadError] = useState(null);
 
-  // Login Admin
+  // Admin Auth
+  const [adminKey, setAdminKey] = useState(() => localStorage.getItem('soulnutri_admin_key') || '');
+  const [adminAuth, setAdminAuth] = useState(() => !!localStorage.getItem('soulnutri_admin_key'));
+  const [loginError, setLoginError] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
+
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     if (!adminKey.trim()) return;
@@ -1221,20 +1221,12 @@ export default function Admin() {
       {/* Versao visivel para debug */}
       <div data-testid="build-version" style={{position:'fixed',bottom:'4px',right:'8px',zIndex:9999,fontSize:'10px',color:'#666',opacity:0.6}}>{BUILD_VERSION}</div>
 
-      {/* TELA DE LOGIN - exibida quando não autenticado */}
+      {/* TELA DE LOGIN */}
       {!adminAuth && (
-        <div style={{
-          position: 'fixed', inset: 0, background: '#111', zIndex: 10000,
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
-        }}>
-          <form onSubmit={handleAdminLogin} style={{
-            background: '#1e1e1e', border: '1px solid #333', borderRadius: '12px',
-            padding: '40px', width: '320px', display: 'flex', flexDirection: 'column', gap: '16px'
-          }}>
-            <h2 style={{ color: '#fff', margin: 0, textAlign: 'center' }}>🔐 Admin SoulNutri</h2>
-            <p style={{ color: '#999', fontSize: '13px', margin: 0, textAlign: 'center' }}>
-              Digite a chave de acesso do administrador
-            </p>
+        <div style={{position:'fixed',inset:0,background:'#111',zIndex:10000,display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <form onSubmit={handleAdminLogin} style={{background:'#1e1e1e',border:'1px solid #333',borderRadius:'12px',padding:'40px',width:'320px',display:'flex',flexDirection:'column',gap:'16px'}}>
+            <h2 style={{color:'#fff',margin:0,textAlign:'center'}}>🔐 Admin SoulNutri</h2>
+            <p style={{color:'#999',fontSize:'13px',margin:0,textAlign:'center'}}>Digite a chave de acesso do administrador</p>
             <input
               data-testid="admin-key-input"
               type="password"
@@ -1242,32 +1234,18 @@ export default function Admin() {
               onChange={e => setAdminKey(e.target.value)}
               placeholder="Chave de acesso"
               autoFocus
-              style={{
-                padding: '12px', borderRadius: '8px', border: '1px solid #444',
-                background: '#2a2a2a', color: '#fff', fontSize: '14px', outline: 'none'
-              }}
+              style={{padding:'12px',borderRadius:'8px',border:'1px solid #444',background:'#2a2a2a',color:'#fff',fontSize:'14px',outline:'none'}}
             />
             <button
               data-testid="admin-login-btn"
               type="submit"
               disabled={!adminKey.trim() || loginLoading}
-              style={{
-                padding: '12px', borderRadius: '8px', border: 'none',
-                background: adminKey.trim() && !loginLoading ? '#16a34a' : '#333',
-                color: '#fff', fontSize: '15px', cursor: adminKey.trim() && !loginLoading ? 'pointer' : 'default',
-                fontWeight: 600
-              }}
+              style={{padding:'12px',borderRadius:'8px',border:'none',background:adminKey.trim()&&!loginLoading?'#16a34a':'#333',color:'#fff',fontSize:'15px',cursor:adminKey.trim()&&!loginLoading?'pointer':'default',fontWeight:600}}
             >
               {loginLoading ? 'Verificando...' : 'Entrar'}
             </button>
-            {loginError && (
-              <p style={{ color: '#f87171', fontSize: '13px', margin: 0, textAlign: 'center' }}>
-                {loginError}
-              </p>
-            )}
-            <a href="/" style={{ color: '#666', fontSize: '12px', textAlign: 'center', textDecoration: 'none' }}>
-              ← Voltar ao App
-            </a>
+            {loginError && <p style={{color:'#f87171',fontSize:'13px',margin:0,textAlign:'center'}}>{loginError}</p>}
+            <a href="/" style={{color:'#666',fontSize:'12px',textAlign:'center',textDecoration:'none'}}>← Voltar ao App</a>
           </form>
         </div>
       )}
@@ -1292,14 +1270,11 @@ export default function Admin() {
       )}
       <header className="admin-header">
         <h1>🍽️ SoulNutri Admin</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
           <button
             data-testid="admin-logout-btn"
             onClick={handleAdminLogout}
-            style={{
-              padding: '6px 12px', borderRadius: '6px', border: '1px solid #555',
-              background: 'transparent', color: '#aaa', fontSize: '13px', cursor: 'pointer'
-            }}
+            style={{padding:'6px 12px',borderRadius:'6px',border:'1px solid #555',background:'transparent',color:'#aaa',fontSize:'13px',cursor:'pointer'}}
           >
             Sair
           </button>

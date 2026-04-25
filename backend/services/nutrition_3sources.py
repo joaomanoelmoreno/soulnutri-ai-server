@@ -57,12 +57,13 @@ USDA_NUTRIENT_MAP = {
 
 
 # ============================================================
+# ============================================================
 # FONTE 1: TACO (Local - por ingredientes com PROPORÇÕES COMERCIAIS)
 # REGRA: NUNCA dividir igualmente — usar calcular_nutricao_prato()
 # ============================================================
 def query_taco(ingredientes: list) -> Optional[dict]:
     """Busca na TACO por ingredientes com pesos proporcionais comerciais.
-    
+
     USA calcular_nutricao_prato() da taco_database — NUNCA divisão igual.
     Regra: arroz=50%, frango=30%, alho=2%, etc. (PROPORCOES comerciais reais)
     """
@@ -71,7 +72,6 @@ def query_taco(ingredientes: list) -> Optional[dict]:
     if not ingredientes:
         return None
 
-    # Calcular por 100g de prato usando proporções comerciais reais
     result = calcular_nutricao_prato(ingredientes, porcao_gramas=100)
     if not result:
         return None

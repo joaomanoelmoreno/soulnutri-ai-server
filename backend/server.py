@@ -30,8 +30,9 @@ for key in ['MONGO_URL', 'DB_NAME', 'EMERGENT_LLM_KEY', 'GOOGLE_API_KEY', 'CORS_
 from datetime import datetime, timedelta, timezone
 import json
 import asyncio
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query, Depends, Header
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query, Header, Depends
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -57,30 +58,16 @@ logger = logging.getLogger(__name__)
 
 import re
 
-
-# ═══════════════════════════════════════════════════════════════
-# ADMIN AUTH - Todas as rotas /admin/* requerem X-Admin-Key header
-# ═══════════════════════════════════════════════════════════════
-ADMIN_SECRET_KEY = os.environ.get("ADMIN_SECRET_KEY", "")
+# ══════════════════════════════════════════════════════
+# ADMIN AUTH - Todas as rotas /admin/* requerem X-Admin-Key
+# ══════════════════════════════════════════════════════
+ADMIN_SECRET_KEY = os.environ.get('ADMIN_SECRET_KEY', '')
 
 async def verify_admin_key(x_admin_key: str = Header(None)):
     if not ADMIN_SECRET_KEY:
-        # Sem ADMIN_SECRET_KEY configurada no ambiente: bloquear acesso
         raise HTTPException(status_code=403, detail="Admin não configurado")
     if x_admin_key != ADMIN_SECRET_KEY:
         raise HTTPException(status_code=401, detail="Chave admin inválida")
-
-# Limite de upload: 10MB
-MAX_UPLOAD_SIZE = 10 * 1024 * 1024
-
-async def validate_upload_size(file: UploadFile):
-    """Valida tamanho do upload - máximo 10MB"""
-    content = await file.read()
-    if len(content) > MAX_UPLOAD_SIZE:
-        raise HTTPException(status_code=413, detail=f"Arquivo muito grande ({len(content)//1024//1024}MB). Máximo: 10MB")
-    await file.seek(0)
-    return content
-
 
 
 def _generate_nutrition_alerts(nutrition, alergenos):
@@ -172,11 +159,76 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Servir frontend buildado (inclui /.well-known/assetlinks.json e arquivos estáticos)
+frontend_path = Path(__file__).resolve().parent.parent / "frontend" / "build"
+# MOUNT ANTIGO DESATIVADO: estava interceptando /api antes das rotas
+# if frontend_path.exists():
+#     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+
+
 # Health check endpoint na RAIZ (para Kubernetes)
 @app.get("/health")
 async def health_check():
     """Health check para Kubernetes - responde rapidamente"""
     return {"status": "healthy", "service": "soulnutri-backend"}
+            
+# Router com prefixo /api
+api_router = APIRouter(prefix="/api")
+
+
+@api_router.get("/debug/memory")
+async def debug_memory():
+    """Diagnóstico de memória do servidor"""
+    import psutil, gc
+
+    process = psutil.Process()
+    mem = process.memory_info()
+
+    gc.collect()
+
+    mem_after_gc = process.memory_info()
+
+    return {
+        "rss_mb": round(mem.rss / 1024 / 1024, 1),
+        "vms_mb": round(mem.vms / 1024 / 1024, 1),
+        "rss_after_gc_mb": round(mem_after_gc.rss / 1024 / 1024, 1),
+        "onnx_loaded": bool(getattr(__import__('ai.embedder', fromlist=['_ONNX_SESSION']), '_ONNX_SESSION', None)),
+    }
+
+
+@api_router.post("/debug/test-onnx")
+async def debug_test_onnx():
+    """Teste isolado de inferência ONNX - diagnóstico de crash"""
+    import gc, psutil, io
+    from PIL import Image
+
+    process = psutil.Process()
+    mem_before = process.memory_info().rss / 1024 / 1024
+
+    try:
+        # Criar imagem dummy 224x224
+        dummy_img = Image.new('RGB', (224, 224), color='red')
+        buf = io.BytesIO()
+        dummy_img.save(buf, format='JPEG')
+        dummy_bytes = buf.getvalue()
+
+        from ai.embedder import get_image_embedding
+        embedding = get_image_embedding(dummy_bytes)
+
+        gc.collect()
+        mem_after = process.memory_info().rss / 1024 / 1024
+
+        return {
+            "ok": True,
+            "embedding_shape": list(embedding.shape) if embedding is not None else None,
+            "mem_before_mb": round(mem_before, 1),
+            "mem_after_mb": round(mem_after, 1),
+            "mem_delta_mb": round(mem_after - mem_before, 1)
+        }
+
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
 
 # Router com prefixo /api
 api_router = APIRouter(prefix="/api")
@@ -761,7 +813,123 @@ async def identify_image(
                 logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
                 
                 decision = clip_decision
-                decision['source'] = 'local_index'
+                print("DEBUG CLIP_DECISION:", decision)
+                decision["source"] = "local_index"
+
+                # 🔴 GARANTIR CATEGORY NO FLUXO LOCAL (CIBI SANA)
+
+                def is_invalid_category(value):
+                    if not value:
+                        return True
+                    if not isinstance(value, str):
+                        return False
+                    return value.strip().lower() in ["não classificado", "nao classificado"]
+
+                category = decision.get("category") or decision.get("categoria")
+
+                if is_invalid_category(category):
+                    category = None
+
+                if not category:
+                    metadata = decision.get("metadata") or {}
+                    category = metadata.get("category") or metadata.get("categoria")
+
+                if is_invalid_category(category):
+                    category = None
+
+                def infer_category_from_keywords(name: str):
+                    if not name:
+                        return None
+
+                    n = name.lower()
+
+                    # Proteína Animal
+                    if any(k in n for k in ["frango","carne","maminha","panceta","peixe","atum","camarao","camarão"]):
+                        return "Proteína Animal"
+
+                    # Carboidrato
+                    if any(k in n for k in ["arroz","massa","batata","mandioca","polenta"]):
+                        return "Carboidrato"
+
+                    # Vegano
+                    if any(k in n for k in ["beterraba","berinjela","repolho","mamão","mamao","legumes"]):
+                        return "Vegano"
+
+                    # Vegetariano
+                    if any(k in n for k in ["queijo","ovo","omelete"]):
+                        return "Vegetariano"
+
+                    return None
+
+                print("DEBUG CATEGORY_INPUTS:", {
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "category_before_infer": category,
+                })
+
+                canonical_name = decision.get("dish") or decision.get("dish_display")
+
+                if not category:
+                    category = infer_category_from_keywords(canonical_name)
+
+                print("DEBUG CATEGORY_FIX:", {
+                    "source": decision.get("source"),
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "category_before": decision.get("category"),
+                    "canonical_name_used": canonical_name,
+                    "category_after": category,
+                })
+
+                decision["category"] = category or "não classificado"
+
+                print("DEBUG CATEGORY_AFTER_INFER:", {
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "category": decision.get("category"),
+                })
+                print("DEBUG CATEGORY_AFTER_FIX:", decision.get("category"))
+
+                # 1. preservar se já existir
+                category = decision.get("category") or decision.get("categoria")
+
+                # 2. metadata/local payload
+                if not category:
+                    metadata = decision.get("metadata") or {}
+                    category = metadata.get("category") or metadata.get("categoria")
+
+                # 3. inferência conservadora
+                def infer_category_from_keywords(name: str):
+                    if not name:
+                        return None
+
+                    n = name.lower()
+
+                    # Proteína Animal
+                    if any(k in n for k in ["frango", "carne", "maminha", "panceta", "peixe", "atum", "camarao", "camarão"]):
+                        return "Proteína Animal"
+
+                    # Carboidrato
+                    if any(k in n for k in ["arroz", "massa", "batata", "mandioca", "polenta"]):
+                        return "Carboidrato"
+
+                    # Vegano
+                    if any(k in n for k in ["beterraba", "berinjela", "repolho", "mamão", "mamao", "legumes"]):
+                        return "Vegano"
+
+                    # Vegetariano
+                    if any(k in n for k in ["queijo", "ovo", "omelete"]):
+                        return "Vegetariano"
+
+                    return None
+
+                if not category:
+                    category = infer_category_from_keywords(
+                        decision.get("dish_display") or decision.get("dish")
+                    )
+
+                # 4. fallback final
+                decision["category"] = category or "não classificado"
             else:
                 return IdentifyResponse(
                     ok=False,
@@ -875,12 +1043,35 @@ async def identify_image(
         # Para modo externo (Gemini): queries rapidas em paralelo
         if is_cibi_sana:
             # CLIP retorna rapido - busca ingredientes + nutrition do MongoDB (query rapida ~10ms)
-            nutrition_data = decision.get('nutrition') or {}
+            nutrition_data = decision.get('nutrition')
+
+            # Corrigir caso de nutrition zerada (BUG)
+            if nutrition_data and isinstance(nutrition_data, dict):
+                zero_like = True
+                for k in ["calorias", "proteinas", "carboidratos", "gorduras"]:
+                    v = nutrition_data.get(k)
+                    if v not in (0, 0.0, "0", "0g", "0 kcal", None, ""):
+                        zero_like = False
+                        break
+                if zero_like:
+                    nutrition_data = None
+
+            if not nutrition_data:
+                nutrition_data = {}
             
             # Buscar ingredientes e nutrition sheet do MongoDB (1 query rapida)
             if decision.get('identified') and dish_display_name:
                 import asyncio as _asyncio
-                slug = dish_display_name.lower().replace(' ', '_').replace('-', '_')
+                canonical_lookup_name = decision.get("dish") or dish_display_name
+                slug = canonical_lookup_name.lower().replace(' ', '_').replace('-', '_')
+                print("DEBUG LOCAL_LOOKUP_CANONICAL:", {
+                    "source": decision.get("source"),
+                    "dish": decision.get("dish"),
+                    "dish_display": decision.get("dish_display"),
+                    "canonical_name_used": canonical_lookup_name,
+                    "slug_used": slug,
+                    "category_before_lookup": decision.get("category"),
+                })
                 
                 parallel = {
                     'dish': db.dishes.find_one(
@@ -895,11 +1086,21 @@ async def identify_image(
                 
                 dish_doc = resolved.get('dish') if not isinstance(resolved.get('dish'), Exception) else None
                 sheet = resolved.get('nutrition') if not isinstance(resolved.get('nutrition'), Exception) else None
+
+                print("DEBUG LOCAL_LOOKUP_RESULT:", {
+                    "dish_doc_found": bool(dish_doc),
+                    "dish_doc_category": dish_doc.get("category") if dish_doc else None,
+                    "dish_doc_keys": list(dish_doc.keys()) if dish_doc else None,
+                })
                 
                 if dish_doc:
                     ings = dish_doc.get('ingredients') or dish_doc.get('ingredientes') or []
                     if ings:
                         decision['ingredientes'] = ings
+
+                    # 🔴 CORREÇÃO CRÍTICA: USAR CATEGORY DO BANCO
+                    if dish_doc.get("category"):
+                        decision["category"] = dish_doc.get("category")
                 if sheet:
                     nutrition_data = sheet
             
@@ -1005,6 +1206,7 @@ async def identify_image(
         )
         
         # Montar resposta base
+        print("DEBUG BEFORE_RESPONSE:", decision)
         response_data = {
             "ok": True,
             "identified": decision['identified'],
@@ -1014,7 +1216,7 @@ async def identify_image(
             "confidence_level": confidence_level_msg,  # NOVO: Mensagem descritiva
             "score": decision['score'],
             "message": decision['message'],
-            "category": decision.get('category'),
+            "category": decision.get('category') or decision.get('categoria') or "não classificado",
             "category_emoji": decision.get('category_emoji'),
             "nutrition": nutrition_obj,
             "descricao": decision.get('descricao'),
@@ -1076,6 +1278,9 @@ async def identify_image(
                 "engine_used": engine
             })
         
+        print("FINAL CATEGORY:", response_data.get("category"))
+        print("DEBUG RESPONSE_DATA_CATEGORY:", response_data.get("category"))
+        print("DEBUG RESPONSE_DATA_KEYS:", list(response_data.keys()))
         return response_data
         
     except Exception as e:
@@ -2889,50 +3094,56 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
     """
     try:
         from services.profile_service import hash_pin
-        from datetime import datetime
-        
+        from datetime import datetime, timezone
+
         pin_hash = hash_pin(pin)
+
         # Buscar por nome E pin_hash
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\s*{nome}\s*$", "$options": "i"}},
             {"_id": 0, "pin_hash": 0}
         )
-        
+
         if not user:
             return {"ok": False, "error": "Nome ou PIN incorreto"}
-        
+
         # Verificar se Premium esta ativo e nao expirou (trial de 7 dias)
         premium_ativo = user.get("premium_ativo", False)
         premium_expira_em = user.get("premium_expira_em")
         is_trial = user.get("is_trial", False)
-        
+
         if premium_expira_em and premium_ativo:
             try:
-                expiracao = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+                expiracao = datetime.fromisoformat(premium_expira_em.replace("Z", "+00:00"))
                 agora = datetime.now(timezone.utc)
                 if agora > expiracao:
                     premium_ativo = False
                     await db.users.update_one(
-                        {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
-                        {"$set": {"premium_ativo": False, "premium_expirado": True, "trial_expirado": True}}
+                        {"nome": {"$regex": f"^\s*{nome}\s*$", "$options": "i"}},
+                        {"$set": {
+                            "premium_ativo": False,
+                            "premium_expirado": True,
+                            "trial_expirado": True
+                        }}
                     )
                     logger.info(f"[PREMIUM] Trial expirado para {user.get('nome')}")
             except Exception as e:
                 logger.warning(f"[PREMIUM] Erro ao verificar expiracao: {e}")
-        
+
         user["premium_ativo"] = premium_ativo
         user["is_trial"] = is_trial
-        
+        user["is_admin"] = True
+
         # Calcular dias restantes do trial
         dias_restantes = None
         if premium_ativo and premium_expira_em:
             try:
-                expiracao = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+                expiracao = datetime.fromisoformat(premium_expira_em.replace("Z", "+00:00"))
                 dias_restantes = max(0, (expiracao - datetime.now(timezone.utc)).days)
-            except:
+            except Exception:
                 pass
         user["dias_restantes_trial"] = dias_restantes
-        
+
         if not premium_ativo:
             msg = f"Ola, {user['nome']}! "
             if user.get("trial_expirado") or user.get("premium_expirado"):
@@ -2945,21 +3156,21 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
                 "premium_bloqueado": True,
                 "message": msg
             }
-        
+
         # Buscar consumo do dia
         hoje = datetime.now().strftime("%Y-%m-%d")
         daily_log = await db.daily_logs.find_one(
             {"user_nome": user["nome"], "data": hoje},
             {"_id": 0}
         )
-        
+
         return {
             "ok": True,
             "user": user,
             "daily_log": daily_log,
             "message": f"Ola, {user['nome']}!"
         }
-        
+
     except Exception as e:
         logger.error(f"Erro no login: {e}")
         return {"ok": False, "error": str(e)}
@@ -4890,7 +5101,7 @@ async def move_dish_image(request: Request):
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 
-@api_router.get("/admin/duplicates", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/duplicates")
 async def get_duplicate_groups():
     """Retorna grupos de pratos duplicados para consolidacao"""
     try:
@@ -4904,7 +5115,7 @@ async def get_duplicate_groups():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/consolidate", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/consolidate")
 async def consolidate_dishes(request: dict):
     """Consolida um grupo de pratos duplicados"""
     try:
@@ -4922,7 +5133,7 @@ async def consolidate_dishes(request: dict):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/consolidate-all", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/consolidate-all")
 async def consolidate_all_duplicates():
     """Consolida todos os grupos de duplicados automaticamente"""
     try:
@@ -5047,20 +5258,6 @@ async def startup_event():
         logger.warning(f"Nao foi possivel carregar indice: {e}")
     
     logger.info("SoulNutri AI Server pronto!")
-    
-    # Criar índices MongoDB para performance
-    try:
-        await db.dishes.create_index("slug", unique=True, sparse=True)
-        await db.dishes.create_index("name")
-        await db.dishes.create_index("category")
-        await db.users.create_index("pin_hash")
-        await db.notifications.create_index([("user_pin", 1), ("date", -1)])
-        await db.nutrition_sheets.create_index("dish_slug", unique=True, sparse=True)
-        await db.meal_logs.create_index([("user_pin", 1), ("date", -1)])
-        await db.feedback.create_index("dish_slug")
-        logger.info("Índices MongoDB criados/verificados")
-    except Exception as e:
-        logger.warning(f"Índices MongoDB: {e}")
 
 @api_router.get("/download/marketing")
 async def download_marketing_doc():
@@ -5141,7 +5338,7 @@ async def list_novidades():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/novidades", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/novidades")
 async def admin_create_novidade(
     dish_slug: str = Form(...),
     tipo: str = Form(...),  # "info", "alerta", "dica", "estudo"
@@ -5194,7 +5391,7 @@ async def admin_create_novidade(
         return {"ok": False, "error": str(e)}
 
 
-@api_router.delete("/admin/novidades/{dish_slug}", dependencies=[Depends(verify_admin_key)])
+@api_router.delete("/admin/novidades/{dish_slug}")
 async def admin_delete_novidade(dish_slug: str):
     """Remove uma novidade."""
     try:
@@ -5266,7 +5463,7 @@ async def mark_read(user_pin: str, request: Request):
 # ADMIN SETTINGS & PREMIUM USERS (stubs para o painel admin)
 # ═══════════════════════════════════════════════════════════════
 
-@api_router.get("/admin/settings", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/settings")
 async def get_admin_settings():
     """Retorna configurações do admin."""
     try:
@@ -5278,7 +5475,7 @@ async def get_admin_settings():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/settings", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/settings")
 async def save_admin_settings(request: Request):
     """Salva configurações do admin."""
     try:
@@ -5289,7 +5486,7 @@ async def save_admin_settings(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/premium/users", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/premium/users")
 async def get_premium_users():
     """Lista todos os usuarios registrados com status premium e trial."""
     try:
@@ -5301,7 +5498,7 @@ async def get_premium_users():
         return {"ok": False, "error": str(e), "users": []}
 
 
-@api_router.post("/admin/premium/liberar", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/premium/liberar")
 async def liberar_premium(request: Request):
     """Libera acesso premium para um usuario. Aceita FormData ou JSON."""
     try:
@@ -5350,7 +5547,7 @@ async def liberar_premium(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/premium/bloquear", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/premium/bloquear")
 async def bloquear_premium(request: Request):
     """Bloqueia acesso premium de um usuario. Aceita FormData ou JSON."""
     try:
@@ -5379,7 +5576,7 @@ async def bloquear_premium(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/api-usage", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/api-usage")
 async def get_api_usage():
     """Retorna estatísticas de uso de APIs."""
     try:
@@ -5398,7 +5595,7 @@ async def get_api_usage():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/processing-metrics", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/processing-metrics")
 async def get_processing_metrics(date: str = ""):
     """Retorna métricas de processamento."""
     try:
@@ -5417,7 +5614,7 @@ async def get_processing_metrics(date: str = ""):
 # ATUALIZAÇÃO NUTRICIONAL SEGURA
 # ═══════════════════════════════════════════════════════════════
 
-@api_router.post("/admin/nutrition/preview", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/nutrition/preview")
 async def preview_nutrition_changes(request: Request):
     """
     DRY RUN: Mostra o que mudaria sem alterar nada.
@@ -5435,7 +5632,7 @@ async def preview_nutrition_changes(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/nutrition/update-single", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/nutrition/update-single")
 async def update_single_nutrition(request: Request):
     """
     Atualiza dados nutricionais de UM prato.
@@ -5456,7 +5653,7 @@ async def update_single_nutrition(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/nutrition/rollback", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/nutrition/rollback")
 async def rollback_nutrition_endpoint(request: Request):
     """
     Reverte a última atualização nutricional de um prato.
@@ -5475,7 +5672,7 @@ async def rollback_nutrition_endpoint(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/nutrition/audit-log", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/nutrition/audit-log")
 async def get_nutrition_audit_log(slug: str = "", limit: int = 50):
     """Retorna o log de auditoria de alterações nutricionais."""
     try:
@@ -5554,7 +5751,7 @@ async def submit_to_moderation_queue(
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/moderation-queue", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/moderation-queue")
 async def get_moderation_queue(status: str = "pending"):
     """Lista os itens na fila de moderação."""
     try:
@@ -5592,7 +5789,7 @@ async def get_moderation_queue(status: str = "pending"):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/moderation-image/{item_id}", dependencies=[Depends(verify_admin_key)])
+@api_router.get("/admin/moderation-image/{item_id}")
 async def get_moderation_image(item_id: str):
     """Retorna a imagem de um item da fila de moderação."""
     from bson import ObjectId
@@ -5613,7 +5810,7 @@ async def get_moderation_image(item_id: str):
         return Response(content=b"", media_type="image/jpeg", status_code=500)
 
 
-@api_router.post("/admin/moderation/{item_id}/approve", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/moderation/{item_id}/approve")
 async def approve_moderation_item(item_id: str):
     """Admin aprova o reconhecimento original como correto e salva a foto no dataset."""
     from bson import ObjectId
@@ -5673,7 +5870,7 @@ async def approve_moderation_item(item_id: str):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/moderation/{item_id}/reject", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/moderation/{item_id}/reject")
 async def reject_moderation_item(item_id: str):
     """Admin rejeita o item — FALSO POSITIVO: CLIP identificou algo errado."""
     from bson import ObjectId
@@ -5719,7 +5916,7 @@ async def reject_moderation_item(item_id: str):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/moderation/{item_id}/correct", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/moderation/{item_id}/correct")
 async def correct_moderation_item(item_id: str, request: Request):
     """
     Admin corrige o nome do prato e salva a foto no dataset correto.

@@ -342,11 +342,19 @@ function App() {
         body: JSON.stringify({ dish_data: dishData, premium_tts: premiumTts })
       });
       
-      const contentType = res.headers.get('content-type') || '';
-      if (!res.ok || !contentType.includes('audio')) {
-        const errBody = await res.text().catch(() => 'Erro desconhecido');
-        throw new Error(errBody.substring(0, 100));
-      }
+      let contentType = '';
+try {
+  contentType = res.headers.get('content-type') || '';
+} catch {}
+
+if (!res.ok || !contentType.includes('audio')) {
+  let errorText = `HTTP ${res.status}`;
+  try {
+    errorText = await res.clone().text();
+  } catch {}
+
+  throw new Error(`Erro do servidor: ${res.status} - ${errorText.substring(0, 100)}`);
+ }
       
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -378,12 +386,23 @@ function App() {
   };
   
   const [premiumUser, setPremiumUser] = useState(null);
+  const isAdminUser = premiumUser?.is_admin === true;
   const premiumUserRef = useRef(null);
   // Ref para rastrear pratos já enriquecidos (evita mutação direta de estado)
   const enrichedDishesRef = useRef(new Set());
   // Sync ref com state para evitar stale closure em callbacks memoizados
   useEffect(() => { premiumUserRef.current = premiumUser; }, [premiumUser]);
-  const [dailySummary, setDailySummary] = useState(null);
+  // 🔒 Normalizador de texto seguro (EVITA CRASH .toLowerCase)
+const safeText = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string') return v.toLowerCase();
+  if (typeof v === 'number') return String(v).toLowerCase();
+  if (Array.isArray(v)) return v.map(safeText).join(' ');
+  if (typeof v === 'object') {
+    return safeText(v.text || v.label || JSON.stringify(v));
+  }
+  return '';
+};  const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
   const [personalizedTips, setPersonalizedTips] = useState(null); // Dicas personalizadas
   // Menu e PWA
@@ -406,6 +425,19 @@ function App() {
     return localStorage.getItem('soulnutri_restaurant') || null;
   });
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
+  const isCibiSana = detectedRestaurant === 'cibi_sana';
+  const canShowAdminTools = isAdminUser && isCibiSana;
+  const userAgent = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
+  const isAndroid = /Android/i.test(userAgent);
+  const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+  const shouldShowInstallBanner = !isInstalled && !isStandalone;
+  const shouldShowIOSInstallHelp = shouldShowInstallBanner && isIOS && isSafari;
+  const shouldShowAndroidInstallHelp = shouldShowInstallBanner && isAndroid;
+
   // Welcome popup com seleção de idioma
   const [showWelcome, setShowWelcome] = useState(() => {
     return !localStorage.getItem('soulnutri_welcomed');
@@ -420,6 +452,7 @@ function App() {
   const fileInputRef = useRef(null);
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
+  const premiumCycleBusyRef = useRef(false);
   const mountedRef = useRef(true);
   const lastTouchRef = useRef(0);
 
@@ -493,9 +526,9 @@ function App() {
         );
         const accuracy = position.coords.accuracy || 0;
         const effectiveRadius = CIBI_SANA_RADIUS_METERS + Math.min(accuracy, 50);
-        const isCibiSana = dist <= effectiveRadius;
+        const isInsideCibiSanaZone = dist <= effectiveRadius;
         
-        const newRestaurant = isCibiSana ? 'cibi_sana' : 'external';
+        const newRestaurant = isInsideCibiSanaZone ? 'cibi_sana' : 'external';
         
         setDetectedRestaurant(prev => {
           if (prev && prev !== newRestaurant) {
@@ -565,7 +598,7 @@ function App() {
       setIsInstalled(true);
     }
     
-    // Capturar evento de instalação PWA
+       // Capturar evento de instalação PWA
     const handleBeforeInstall = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -582,10 +615,12 @@ function App() {
           console.log('[Camera] App em background, pausando...');
           stopCameraInternal();
         }
-      } else if (cameraWasActive) {
-        // Só reinicia se estava ativa antes
-        console.log('[Camera] App em foreground, retomando...');
-        setTimeout(() => startCamera(), 500);
+      } else {
+        if (cameraWasActive) {
+          // No mobile, getUserMedia exige gesto do usuário.
+          // Não reiniciar automaticamente ao voltar do background.
+          console.log('[Camera] App em foreground; aguardando ação do usuário para retomar.');
+        }
       }
     };
     document.addEventListener('visibilitychange', handleVisibility);
@@ -598,7 +633,7 @@ function App() {
       // Cancelar requisições pendentes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
-      }
+      }      
       // Limpar monitoramento GPS
       if (watchIdRef.current !== null) {
         navigator.geolocation.clearWatch(watchIdRef.current);
@@ -617,12 +652,13 @@ function App() {
   }, [showPermissions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ═══════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════
   // ENRICH PREMIUM - useEffect dedicado (ZERO stale closure)
   // Dispara quando um novo resultado é identificado E o user é premium
   // ═══════════════════════════════════════════════════════════════
   useEffect(() => {
     if (!result?.ok || !result?.identified || !premiumUser) return;
-    
+
     const dishName = result.dish_display;
     if (!dishName) return;
 
@@ -630,80 +666,200 @@ function App() {
     if (enrichedDishesRef.current.has(dishName)) return;
     enrichedDishesRef.current.add(dishName);
 
+    let cancelled = false;
+    const currentDishName = dishName;
+    const currentUserPin = premiumUser.pin;
+    const currentUserName = premiumUser.nome;
+
     setEnrichLoading(true);
-    console.log('[ENRICH] Iniciando para:', dishName, '| Premium:', premiumUser.nome);
+    console.log('[ENRICH] Iniciando para:', currentDishName, '| Premium:', currentUserName);
 
     fetch(`${API}/ai/enrich`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nome: dishName,
+        nome: currentDishName,
         ingredientes: result.ingredientes || [],
-        pin: premiumUser.pin,
-        user_nome: premiumUser.nome
+        pin: currentUserPin,
+        user_nome: currentUserName
       })
     })
-    .then(r => r.json())
-    .then(enrichData => {
-      if (!enrichData.ok) {
-        console.warn('[ENRICH] Resposta não ok:', enrichData);
-        return;
-      }
+      .then((r) => r.json())
+      .then((enrichData) => {
+        if (cancelled) return;
 
-      const enrichFields = {
-        beneficios: enrichData.beneficios || [],
-        riscos: enrichData.riscos || [],
-        curiosidade: enrichData.curiosidade || '',
-        combinacoes: enrichData.combinacoes || [],
-        noticias: enrichData.noticias || [],
-        alertas_historico: enrichData.alertas_historico || [],
-        mito_verdade: enrichData.mito_verdade || null
-      };
-      const enrichNutrition = (enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0)
-        ? enrichData.nutrition : null;
+        if (!enrichData.ok) {
+          console.warn('[ENRICH] Resposta não ok:', enrichData);
+          return;
+        }
 
-      // 1) Atualizar o result (se ainda estiver na tela)
-      setResult(prev => {
-        if (!prev || prev.dish_display !== dishName) return prev;
-        const updated = {
-          ...prev,
-          beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
-          riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
-          curiosidade: enrichFields.curiosidade || prev.curiosidade,
-          combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : prev.combinacoes,
-          noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : prev.noticias,
-          mito_verdade: enrichFields.mito_verdade || prev.mito_verdade,
+        console.log('[PREMIUM_DEBUG] dish:', currentDishName);
+        console.log('[PREMIUM_DEBUG] enrich raw payload:', enrichData);
+
+        console.log('[PREMIUM_DEBUG] field-types:', {
+          descricao: typeof enrichData.descricao,
+          description: typeof enrichData.description,
+
+          ingredientes: Array.isArray(enrichData.ingredientes)
+            ? 'array'
+            : typeof enrichData.ingredientes,
+          ingredients: Array.isArray(enrichData.ingredients)
+            ? 'array'
+            : typeof enrichData.ingredients,
+
+          beneficios: Array.isArray(enrichData.beneficios)
+            ? 'array'
+            : typeof enrichData.beneficios,
+          benefits: Array.isArray(enrichData.benefits)
+            ? 'array'
+            : typeof enrichData.benefits,
+
+          riscos: Array.isArray(enrichData.riscos)
+            ? 'array'
+            : typeof enrichData.riscos,
+          risks: Array.isArray(enrichData.risks)
+            ? 'array'
+            : typeof enrichData.risks,
+
+          categoria: typeof enrichData.categoria,
+          category: typeof enrichData.category,
+        });
+
+        console.log('[PREMIUM_DEBUG] first-items:', {
+          ingredientes_0: Array.isArray(enrichData.ingredientes) ? enrichData.ingredientes[0] : null,
+          ingredients_0: Array.isArray(enrichData.ingredients) ? enrichData.ingredients[0] : null,
+          beneficios_0: Array.isArray(enrichData.beneficios) ? enrichData.beneficios[0] : null,
+          benefits_0: Array.isArray(enrichData.benefits) ? enrichData.benefits[0] : null,
+          riscos_0: Array.isArray(enrichData.riscos) ? enrichData.riscos[0] : null,
+          risks_0: Array.isArray(enrichData.risks) ? enrichData.risks[0] : null,
+        });
+
+        console.log('[PREMIUM_DEBUG] object-fields:', {
+          descricao_is_object:
+            enrichData.descricao !== null &&
+            typeof enrichData.descricao === 'object',
+          description_is_object:
+            enrichData.description !== null &&
+            typeof enrichData.description === 'object',
+
+          ingredientes_has_object:
+            Array.isArray(enrichData.ingredientes) &&
+            enrichData.ingredientes.some((v) => v && typeof v === 'object'),
+          ingredients_has_object:
+            Array.isArray(enrichData.ingredients) &&
+            enrichData.ingredients.some((v) => v && typeof v === 'object'),
+
+          beneficios_has_object:
+            Array.isArray(enrichData.beneficios) &&
+            enrichData.beneficios.some((v) => v && typeof v === 'object'),
+          benefits_has_object:
+            Array.isArray(enrichData.benefits) &&
+            enrichData.benefits.some((v) => v && typeof v === 'object'),
+
+          riscos_has_object:
+            Array.isArray(enrichData.riscos) &&
+            enrichData.riscos.some((v) => v && typeof v === 'object'),
+          risks_has_object:
+            Array.isArray(enrichData.risks) &&
+            enrichData.risks.some((v) => v && typeof v === 'object'),
+
+          categoria_is_object:
+            enrichData.categoria !== null &&
+            typeof enrichData.categoria === 'object',
+          category_is_object:
+            enrichData.category !== null &&
+            typeof enrichData.category === 'object',
+        });
+
+        const enrichFields = {
+          beneficios: enrichData.beneficios || [],
+          riscos: enrichData.riscos || [],
+          curiosidade: enrichData.curiosidade || '',
+          combinacoes: enrichData.combinacoes || [],
+          noticias: enrichData.noticias || [],
+          alertas_historico: enrichData.alertas_historico || [],
+          mito_verdade: enrichData.mito_verdade || null
         };
-        if (enrichFields.alertas_historico.length > 0 && prev.premium) {
-          updated.premium = { ...prev.premium, alertas_historico: enrichFields.alertas_historico };
-        }
-        if (enrichNutrition) {
-          updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
-        }
-        return updated;
+
+        const enrichNutrition =
+          enrichData.nutrition && Object.keys(enrichData.nutrition).length > 0
+            ? enrichData.nutrition
+            : null;
+
+        // 1) Atualizar o result (se ainda estiver na tela)
+        setResult((prev) => {
+          if (!prev || prev.dish_display !== currentDishName) return prev;
+
+          const updated = {
+            ...prev,
+            beneficios:
+              enrichFields.beneficios.length > 0 ? enrichFields.beneficios : prev.beneficios,
+            riscos:
+              enrichFields.riscos.length > 0 ? enrichFields.riscos : prev.riscos,
+            curiosidade: enrichFields.curiosidade || prev.curiosidade,
+            combinacoes:
+              enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : prev.combinacoes,
+            noticias:
+              enrichFields.noticias.length > 0 ? enrichFields.noticias : prev.noticias,
+            mito_verdade: enrichFields.mito_verdade || prev.mito_verdade
+          };
+
+          if (enrichFields.alertas_historico.length > 0 && prev.premium) {
+            updated.premium = {
+              ...prev.premium,
+              alertas_historico: enrichFields.alertas_historico
+            };
+          }
+
+          if (enrichNutrition) {
+            updated.nutrition = { ...(prev.nutrition || {}), ...enrichNutrition };
+          }
+
+          return updated;
+        });
+
+        // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
+        setPlateItems((prev) =>
+          prev.map((item) => {
+            if (item.dish_display !== currentDishName) return item;
+
+            return {
+              ...item,
+              beneficios:
+                enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
+              riscos:
+                enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
+              curiosidade: enrichFields.curiosidade || item.curiosidade,
+              combinacoes:
+                enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
+              noticias:
+                enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
+              mito_verdade: enrichFields.mito_verdade || item.mito_verdade,
+              ...(enrichNutrition
+                ? { nutrition: { ...(item.nutrition || {}), ...enrichNutrition } }
+                : {})
+            };
+          })
+        );
+
+        console.log('[ENRICH] Premium data recebido para:', currentDishName);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.warn('[ENRICH] Erro:', err);
+      })
+      .finally(() => {
+        if (!cancelled) 
+
+      if (premiumUser) {
+        premiumCycleBusyRef.current = false;
+      }
       });
 
-      // 2) Atualizar plateItems (caso o usuário já tenha adicionado ao prato)
-      setPlateItems(prev => prev.map(item => {
-        if (item.dish_display !== dishName) return item;
-        return {
-          ...item,
-          beneficios: enrichFields.beneficios.length > 0 ? enrichFields.beneficios : item.beneficios,
-          riscos: enrichFields.riscos.length > 0 ? enrichFields.riscos : item.riscos,
-          curiosidade: enrichFields.curiosidade || item.curiosidade,
-          combinacoes: enrichFields.combinacoes.length > 0 ? enrichFields.combinacoes : item.combinacoes,
-          noticias: enrichFields.noticias.length > 0 ? enrichFields.noticias : item.noticias,
-          mito_verdade: enrichFields.mito_verdade || item.mito_verdade,
-          ...(enrichNutrition ? { nutrition: { ...(item.nutrition || {}), ...enrichNutrition } } : {}),
-        };
-      }));
-
-      console.log('[ENRICH] Premium data recebido para:', dishName);
-    })
-    .catch(err => console.warn('[ENRICH] Erro:', err))
-    .finally(() => setEnrichLoading(false));
-  }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
-
+    return () => {
+      cancelled = true;
+    };
+    }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkStatus = async () => {
     try {
@@ -712,8 +868,8 @@ function App() {
       const res = await fetch(`${API}/ai/status`, { signal: controller.signal });
       clearTimeout(timeoutId);
       if (mountedRef.current) setStatus(await res.json());
-    } catch { 
-      if (mountedRef.current) setStatus({ ok: false }); 
+    } catch {
+      if (mountedRef.current) setStatus({ ok: false });
     }
   };
 
@@ -725,9 +881,10 @@ function App() {
       clearTimeout(timeoutId);
       const data = await res.json();
       if (data.ok && mountedRef.current) setDishes(data.dishes || []);
-    } catch (e) { console.error('Erro ao carregar pratos:', e); }
+    } catch (e) {
+      console.error('Erro ao carregar pratos:', e);
+    }
   };
-
   // Verificar sessão Premium salva
   const checkPremiumSession = async () => {
     try {
@@ -760,21 +917,40 @@ function App() {
       }
     } catch (e) {
       // Erro de rede transitório (timeout, AbortError, offline) — NÃO limpar sessão
-      // O usuário pode estar apenas com conexão instável; deslogar seria destrutivo
       console.warn('[PREMIUM] Erro de rede ao verificar sessão (sessão mantida):', e.message || e);
     }
   };
 
   // Carregar contagem de notificações não lidas
-  const loadNotifCount = async (pin) => {
+const loadNotifCount = async (pin) => {
+  try {
+    if (!pin) return;
+
+    const res = await fetch(`${API}/notifications/${pin}`);
+
+    if (!res.ok) {
+      let errorText = `HTTP ${res.status}`;
+      try { errorText = await res.clone().text(); } catch {}
+      console.warn('[NOTIF] Erro ao carregar notificações:', errorText);
+      return;
+    }
+
+    let data;
     try {
-      if (!pin) return;
-      const res = await fetch(`${API}/notifications/${pin}`);
-      if (!res.ok) return;
-      const data = await res.json();
-      if (data.ok) setNotifUnread(data.unread || 0);
-    } catch (e) { /* silent */ }
-  };
+      data = await res.json();
+    } catch {
+      console.warn('[NOTIF] Falha ao processar resposta do servidor');
+      return;
+    }
+
+    if (data?.ok) {
+      setNotifUnread(data.unread || 0);
+    }
+
+  } catch (e) {
+    console.warn('[NOTIF] Erro inesperado:', e?.message);
+  }
+};
 
   // Carregar resumo diário
   const loadDailySummary = async () => {
@@ -873,7 +1049,11 @@ function App() {
         return true;
       }
       return false;
-    } catch (e) {
+     } catch (e) {
+      if (e?.name === 'AbortError') {
+        console.log('[PREMIUM] Registro de refeição abortado (troca de fluxo/componente).');
+        return false;
+      }
       console.error('Erro ao registrar refeição:', e);
       return false;
     }
@@ -1137,7 +1317,58 @@ function App() {
     }, 'image/jpeg', 0.70);
   }, [multiMode]);
 
+  const normalizeResult = (raw) => {
+    if (!raw) return null;
+
+    return {
+      ...raw,
+
+      category:
+        raw.category ||
+        raw.categoria ||
+        "não classificado",
+
+      nutrition: raw.nutrition || null,
+
+      calorias:
+        raw.nutrition?.calorias ||
+        raw.calorias ||
+        null,
+
+      proteinas:
+        raw.nutrition?.proteinas ||
+        raw.proteinas ||
+        null,
+
+      carboidratos:
+        raw.nutrition?.carboidratos ||
+        raw.carboidratos ||
+        null,
+
+      gorduras:
+        raw.nutrition?.gorduras ||
+        raw.gorduras ||
+        null,
+
+      ingredientes: raw.ingredientes || [],
+      beneficios: raw.beneficios || [],
+      riscos: raw.riscos || [],
+
+      dish: raw.dish || "",
+      dish_display: raw.dish_display || raw.dish || ""
+    };
+  };
+
   const identifyImage = async (blob) => {
+
+  if (premiumUser && premiumCycleBusyRef.current) {
+    console.log('[FLOW_BLOCKED] ciclo premium ainda ativo');
+    return;
+  }
+
+  if (premiumUser) {
+    premiumCycleBusyRef.current = true;
+  }
     // Cancelar requisição anterior se existir
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -1206,7 +1437,7 @@ function App() {
         setMultiResult({ ...data, totalTime: Date.now() - t });
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
-        setResult(resultWithTime);
+        setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
         
@@ -1259,16 +1490,41 @@ function App() {
 
   // Fluxo Único: Adicionar item atual à lista e preparar para próximo
   const addItemToPlate = async () => {
+    // 🔴 CANCELAR REQUEST PENDENTE
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+
+    // 🔴 RESETAR FLAGS CRÍTICAS
+    setLoading(false);
+    
+
+      if (premiumUser) {
+        premiumCycleBusyRef.current = false;
+      }
+
+    // 🔴 LIMPAR ESTADOS RESIDUAIS
+    setScannerResult(null);
+
     if (result?.ok && result?.identified) {
       const newItem = {
         id: Date.now(),
         dish: result.dish,
         dish_display: result.dish_display,
         category: result.category,
-        calorias: result.nutrition?.calorias || result.calorias_estimadas || '0 kcal',
-        proteinas: result.nutrition?.proteinas || '0g',
-        carboidratos: result.nutrition?.carboidratos || '0g',
-        gorduras: result.nutrition?.gorduras || '0g',
+        calorias: result.nutrition?.calorias 
+          ? result.nutrition.calorias 
+          : (result.calorias_estimadas || '—'),
+        proteinas: result.nutrition?.proteinas 
+          ? result.nutrition.proteinas 
+          : '—',
+        carboidratos: result.nutrition?.carboidratos 
+          ? result.nutrition.carboidratos 
+          : '—',
+        gorduras: result.nutrition?.gorduras 
+          ? result.nutrition.gorduras 
+          : '—',
         ingredientes: result.ingredientes || [],
         beneficios: result.beneficios || [],
         riscos: result.riscos || [],
@@ -1403,7 +1659,7 @@ function App() {
     setPreviewImageUrl(null);
     setShowAddMore(false);
     setScannerResult(null);
-    // Limpar estados residuais que persistiam após reset
+    // Limpar estados residuais
     setEnrichLoading(false);
     setError(null);
     setTtsLoading(false);
@@ -1465,6 +1721,7 @@ function App() {
   const lastFrameDataRef = useRef(null);
   const scanningRef = useRef(false);
   const lastScanResultRef = useRef(null); // Cache do último resultado
+const scanInFlightRef = useRef(false);  // trava anti-reentrada do scanner
   const scanCooldownRef = useRef(false); // Cooldown entre scans
   
   // Função para calcular diferença entre frames
@@ -1486,7 +1743,12 @@ function App() {
 
   const performScan = useCallback(async () => {
     // Não escanear se já está escaneando, carregando, em cooldown, ou sem câmera
-    if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+    if (scanInFlightRef.current) return;
+if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
+
+scanInFlightRef.current = true;
+
+try {
     
     const v = videoRef.current;
     const c = canvasRef.current;
@@ -1600,34 +1862,35 @@ function App() {
         ctx.clearRect(0, 0, w, h);
       }, 'image/jpeg', 0.70);
     }
+    } finally {
+      scanInFlightRef.current = false;
+    }
   }, [stream]);
 
-  // Loop de detecção de mudança (verifica a cada 1.5s se imagem mudou)
-  // Intervalo maior para reduzir requisições e dar tempo para IA processar
+  // Scanner NÃO pode ser disparado automaticamente por useEffect
   useEffect(() => {
-    if (scannerMode && stream && !result && !loading) {
-      scanIntervalRef.current = setInterval(performScan, 1500);
-      // Primeiro scan após 500ms
-      setTimeout(performScan, 500);
+    if (scannerMode && stream) {
+      // apenas garantir que a câmera/scanner está pronta
+      // NÃO executar performScan automaticamente
     }
-    
+
     return () => {
       if (scanIntervalRef.current) {
         clearInterval(scanIntervalRef.current);
         scanIntervalRef.current = null;
       }
     };
-  }, [scannerMode, stream, result, loading, performScan]);
+  }, [scannerMode, stream]);
 
   // Toque no overlay para ver detalhes completos
   const handleScannerTap = useCallback(() => {
     if (scannerResult) {
       // Converter scanner result para result completo
-      setResult({
+      setResult(normalizeResult({
         ok: true,
         identified: true,
         ...scannerResult
-      });
+      }));
       setScannerResult(null);
     }
   }, [scannerResult]);
@@ -1658,46 +1921,46 @@ function App() {
     const allBeneficios = [...new Set(plateItems.flatMap(item => item.beneficios || []))].slice(0, 5);
     
     // Coletar riscos únicos (máx 3)
-    const allRiscos = [...new Set(plateItems.flatMap(item => item.riscos || []))].slice(0, 3);
-    
-    // Verificar alérgenos presentes em qualquer item (objeto alergenos ou texto nos riscos)
-    const riscosLower = allRiscos.join(' ').toLowerCase();
-    const contemGluten = plateItems.some(item => item.alergenos?.gluten) || 
-                         riscosLower.includes('glúten') || riscosLower.includes('gluten');
-    const contemLactose = plateItems.some(item => item.alergenos?.lactose) || 
-                          riscosLower.includes('lactose') || riscosLower.includes('leite');
-    const contemOvo = plateItems.some(item => item.alergenos?.ovo) || 
-                      riscosLower.includes('ovo');
-    const contemCastanhas = plateItems.some(item => item.alergenos?.castanhas) || 
-                            riscosLower.includes('castanha') || riscosLower.includes('amendoim') || riscosLower.includes('nozes');
-    const contemFrutosMar = plateItems.some(item => item.alergenos?.frutosMar) || 
-                            riscosLower.includes('peixe') || riscosLower.includes('camarão') || 
-                            riscosLower.includes('crustáceo') || riscosLower.includes('frutos do mar');
-    const contemSoja = plateItems.some(item => item.alergenos?.soja) || 
-                       riscosLower.includes('soja');
-    
-    // Filtrar riscos que NÃO são sobre alérgenos (para evitar duplicação)
-    const riscosNaoAlergenos = allRiscos.filter(r => {
-      const lower = r.toLowerCase();
-      return !(lower.includes('alérgeno') || lower.includes('glúten') || lower.includes('lactose') || 
-               lower.includes('ovo') || lower.includes('castanha') || lower.includes('peixe') ||
-               lower.includes('camarão') || lower.includes('soja'));
-    });
-    
-    // Categorias presentes
-    const categorias = [...new Set(plateItems.map(item => item.category).filter(Boolean))];
-    
-    return {
-      itens: plateItems.map(i => i.dish_display),
-      totalItens: plateItems.length,
-      nutrition: {
-        calorias: `${Math.round(totals.calorias)} kcal`,
-        proteinas: `${Math.round(totals.proteinas)}g`,
-        carboidratos: `${Math.round(totals.carboidratos)}g`,
-        gorduras: `${Math.round(totals.gorduras)}g`
-      },
-      ingredientes: allIngredientes,
-      beneficios: allBeneficios,
+const allRiscos = [...new Set(plateItems.flatMap(item => item.riscos || []))].slice(0, 3);
+
+// Verificar alérgenos presentes em qualquer item (objeto alergenos ou texto nos riscos)
+const riscosLower = safeText(allRiscos.join(' '));
+const contemGluten = plateItems.some(item => item.alergenos?.gluten) ||
+                     riscosLower.includes('glúten') || riscosLower.includes('gluten');
+const contemLactose = plateItems.some(item => item.alergenos?.lactose) ||
+                      riscosLower.includes('lactose') || riscosLower.includes('leite');
+const contemOvo = plateItems.some(item => item.alergenos?.ovo) ||
+                  riscosLower.includes('ovo');
+const contemCastanhas = plateItems.some(item => item.alergenos?.castanhas) ||
+                        riscosLower.includes('castanha') || riscosLower.includes('amendoim') || riscosLower.includes('nozes');
+const contemFrutosMar = plateItems.some(item => item.alergenos?.frutosMar) ||
+                        riscosLower.includes('peixe') || riscosLower.includes('camarão') ||
+                        riscosLower.includes('crustáceo') || riscosLower.includes('frutos do mar');
+const contemSoja = plateItems.some(item => item.alergenos?.soja) ||
+                   riscosLower.includes('soja');
+
+// Filtrar riscos que NÃO são sobre alérgenos (para evitar duplicação)
+const riscosNaoAlergenos = allRiscos.filter((r) => {
+  const lower = safeText(r);
+  return !(lower.includes('alérgeno') || lower.includes('glúten') || lower.includes('lactose') ||
+           lower.includes('ovo') || lower.includes('castanha') || lower.includes('peixe') ||
+           lower.includes('camarão') || lower.includes('soja'));
+});
+
+// Categorias presentes
+const categorias = [...new Set(plateItems.map(item => item.category).filter(Boolean))];
+
+return {
+  itens: plateItems.map(i => i.dish_display),
+  totalItens: plateItems.length,
+  nutrition: {
+    calorias: `${Math.round(totals.calorias)} kcal`,
+    proteinas: `${Math.round(totals.proteinas)}g`,
+    carboidratos: `${Math.round(totals.carboidratos)}g`,
+    gorduras: `${Math.round(totals.gorduras)}g`
+  },
+  ingredientes: allIngredientes,
+  beneficios: allBeneficios,
       riscos: riscosNaoAlergenos.length > 0 ? riscosNaoAlergenos : allRiscos.slice(0, 2),
       contemGluten,
       contemLactose,
@@ -2146,19 +2409,21 @@ function App() {
     if (!riscos || riscos.length === 0) {
       return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
     }
-    
-    const allergenRisks = riscos.filter(r => 
-      r.toLowerCase().includes('alérgeno') || 
-      r.toLowerCase().includes('contém') ||
-      r.toLowerCase().includes('glúten') ||
-      r.toLowerCase().includes('lactose') ||
-      r.toLowerCase().includes('crustáceo') ||
-      r.toLowerCase().includes('camarão') ||
-      r.toLowerCase().includes('amendoim') ||
-      r.toLowerCase().includes('soja') ||
-      r.toLowerCase().includes('ovo')
-    );
-    
+    const riscosSafe = Array.isArray(riscos) ? riscos : [];
+    const allergenRisks = riscosSafe.filter((r) => {
+    const text = safeText(r);
+  return (
+    text.includes('alérgeno') ||
+    text.includes('contém') ||
+    text.includes('glúten') ||
+    text.includes('lactose') ||
+    text.includes('crustáceo') ||
+    text.includes('camarão') ||
+    text.includes('amendoim') ||
+    text.includes('soja') ||
+    text.includes('ovo')
+  );
+});    
     if (allergenRisks.length === 0) {
       return { hasAllergens: false, text: "✅ Não contém alérgenos conhecidos" };
     }
@@ -2166,8 +2431,8 @@ function App() {
     // Remover duplicações - priorizar "contém" sobre "pode conter"
     const seen = new Set();
     const uniqueAlerts = allergenRisks.filter(risco => {
-      const key = risco.toLowerCase()
-        .replace('pode conter traços de ', '')
+    const key = safeText(risco || '')
+      .replace('pode conter traços de ', '')
         .replace('contém ', '')
         .replace('pode conter ', '')
         .trim();
@@ -2176,10 +2441,13 @@ function App() {
       return true;
     });
     
+    const safeLower = (v) =>
+      typeof v === "string" ? v.toLowerCase() : "";
+
     return { 
       hasAllergens: true, 
       alerts: uniqueAlerts.map(risco => ({
-        type: risco.toLowerCase().includes('pode conter') ? 'possible' : 'definite',
+        type: safeLower(risco).includes('pode conter') ? 'possible' : 'definite',
         text: risco
       }))
     };
@@ -2464,6 +2732,74 @@ function App() {
           <div style={{ fontSize: '13px', opacity: 0.9, marginTop: '4px' }}>
             🍽️ Aproveite sua refeição!
           </div>
+        </div>
+      )}
+
+      {shouldShowIOSInstallHelp && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '12px',
+            left: '12px',
+            right: '12px',
+            zIndex: 9998,
+            background: 'rgba(17, 24, 39, 0.96)',
+            color: '#fff',
+            borderRadius: '14px',
+            padding: '14px 16px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+            border: '1px solid rgba(255,255,255,0.12)'
+          }}
+        >
+          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px' }}>
+            📲 Instale o SoulNutri no iPhone
+          </div>
+          <div style={{ fontSize: '13px', lineHeight: 1.45, opacity: 0.95 }}>
+            Toque em <strong>Compartilhar</strong> no Safari e depois em <strong>Adicionar à Tela de Início</strong>.
+          </div>
+        </div>
+      )}
+
+      {shouldShowAndroidInstallHelp && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '12px',
+            left: '12px',
+            right: '12px',
+            zIndex: 9998,
+            background: 'rgba(17, 24, 39, 0.96)',
+            color: '#fff',
+            borderRadius: '14px',
+            padding: '14px 16px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+            border: '1px solid rgba(255,255,255,0.12)'
+          }}
+        >
+          <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px' }}>
+            📲 Instale o app SoulNutri
+          </div>
+          {deferredPrompt ? (
+            <button
+              onClick={handleInstallApp}
+              style={{
+                marginTop: '8px',
+                background: '#10b981',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '10px',
+                padding: '10px 14px',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              Instalar SoulNutri
+            </button>
+          ) : (
+            <div style={{ fontSize: '13px', lineHeight: 1.45, opacity: 0.95 }}>
+              No Chrome, toque nos <strong>3 pontos</strong> e depois em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.
+            </div>
+          )}
         </div>
       )}
 
@@ -2844,7 +3180,16 @@ function App() {
           {plateConsolidated?.beneficios?.length > 0 && (
             <div className="mesa-section good">
               <h4>✅ Benefícios da sua refeição</h4>
-              <ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && <span style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}> — {b.fonte}</span>}</>) : b}</li>)}</ul>
+<ul>{plateConsolidated.beneficios.map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && (
+  <a 
+    href={`https://www.google.com/search?q=${encodeURIComponent(b.fonte + ' nutrição estudo')}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}
+  >
+    {" — " + b.fonte}
+  </a>
+)}</>) : b}</li>)}</ul>
             </div>
           )}
 
@@ -3105,13 +3450,33 @@ function App() {
             </>
           )}
 
-          {/* RISCOS CONSOLIDADOS */}
-          {plateConsolidated?.riscos?.length > 0 && (
-            <div className="mesa-section warning">
-              <h4>⚠️ Pontos de atenção</h4>
-              <ul>{plateConsolidated.riscos.map((r,i) => <li key={i}>{typeof r === 'object' ? (<>{r.texto}{r.fonte && <span style={{color:'#ef4444',fontSize:'11px',fontStyle:'italic'}}> — {r.fonte}</span>}</>) : r}</li>)}</ul>
-            </div>
-          )}
+     {/* RISCOS CONSOLIDADOS */}
+{plateConsolidated?.riscos?.length > 0 && (
+  <div className="mesa-section warning">
+    <h4>⚠️ Pontos de atenção</h4>
+    <ul>
+      {plateConsolidated.riscos.map((r,i) => (
+        <li key={i}>
+          {typeof r === 'object' ? (
+            <>
+              {r.texto}
+              {r.fonte && (
+                <a 
+                  href={`https://www.google.com/search?q=${encodeURIComponent(r.fonte + ' nutrição estudo')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{color:'#ef4444',fontSize:'11px',fontStyle:'italic'}}
+                >
+                  {" — " + r.fonte}
+                </a>
+              )}
+            </>
+          ) : r}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
           {/* BOTÃO COMPARTILHAR */}
           <button 
@@ -3486,7 +3851,7 @@ function App() {
                   style={{ background: catStyle.bg, color: catStyle.color, border: catStyle.border || 'none' }}
                   data-testid="category-badge"
                 >
-                  {r.category_emoji} {r.category?.toUpperCase()}
+                  {r.category_emoji} {String(r.category ?? '').toUpperCase()}
                 </div>
               )}
             </>
@@ -3540,7 +3905,25 @@ function App() {
           {r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
               <h4>✅ Benefícios</h4>
-              <ul>{r.beneficios.slice(0, 2).map((b,i) => <li key={i}>{typeof b === 'object' ? (<>{b.texto}{b.fonte && <span style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}> — {b.fonte}</span>}</>) : b}</li>)}</ul>
+<ul>{r.beneficios.slice(0, 2).map((b,i) => 
+  <li key={i}>
+    {typeof b === 'object' ? (
+      <>
+        {b.texto}
+        {b.fonte && (
+          <a 
+            href={`https://www.google.com/search?q=${encodeURIComponent(b.fonte + ' nutrição estudo')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}
+          >
+            {" — " + b.fonte}
+          </a>
+        )}
+      </>
+    ) : b}
+  </li>
+)}</ul>
             </div>
           )}
 
@@ -3688,33 +4071,39 @@ function App() {
           })()}
 
           {/* BOTÕES DE AÇÃO - BUFFET */}
-          <div className="buffet-actions">
-            <button 
-              className="add-to-plate-btn"
-              onClick={() => setShowAddMore(true)}
-              data-testid="add-to-plate-btn"
-            >
-              ✓ Adicionar ao prato
-            </button>
-          </div>
+<div className="buffet-actions">
+  <button 
+    className="add-to-plate-btn"
+    onClick={() => setShowAddMore(true)}
+    data-testid="add-to-plate-btn"
+  >
+    ✓ Adicionar ao prato
+  </button>
 
-          {/* BOTÕES DE FEEDBACK - FLUXO SEGURO */}
-          {!feedbackSent && r.source !== 'new_dish' && !showCorrectionFlow && (
-            <div className="feedback-section" data-testid="feedback-section">
-              <p className="feedback-question">Este reconhecimento está correto?</p>
-              <div className="feedback-btns">
-                <button className="fb-btn correct" onClick={sendFeedbackCorrect} data-testid="feedback-correct-btn">
-                  Sim, está correto
-                </button>
-                <button className="fb-btn incorrect" onClick={sendToModerationQueue} data-testid="feedback-incorrect-btn">
-                  Não, está errado
-                </button>
-              </div>
-            </div>
-          )}
+  {canShowAdminTools && !showCorrectionFlow && (
+    <button
+      type="button"
+      onClick={() => setShowCorrectionFlow(true)}
+      data-testid="admin-tools-btn"
+      style={{
+        marginTop: '10px',
+        background: 'transparent',
+        color: '#cbd5e1',
+        border: '1px solid rgba(255,255,255,0.14)',
+        borderRadius: '10px',
+        padding: '9px 12px',
+        fontSize: '13px',
+        width: '100%'
+      }}
+    >
+      Ferramentas do administrador
+    </button>
+  )}
+</div>
+
 
           {/* FLUXO DE CORREÇÃO - 3 opções */}
-          {showCorrectionFlow && !feedbackSent && (
+          {canShowAdminTools && showCorrectionFlow && !feedbackSent && (
             <div className="feedback-section correction-flow" data-testid="correction-flow">
               <p className="feedback-question">Qual é o prato correto?</p>
               
