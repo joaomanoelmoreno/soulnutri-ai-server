@@ -1,3 +1,142 @@
+
+
+def obter_teto_absoluto_ingrediente(ingrediente: str, nome_prato: str = ""):
+    ing = ingrediente.lower()
+    prato = (nome_prato or "").lower()
+
+    if any(t in ing for t in ["azeite","oleo","óleo","manteiga","banha"]):
+        return 8.0
+
+    if "acucar" in ing:
+        if any(t in prato for t in ["doce","sobremesa","banana","mousse","pudim"]):
+            return 15.0
+        return 3.0
+
+    if any(t in ing for t in ["canela","curry","tandori","paprica","pimenta"]):
+        return 2.0
+
+    if "alho" in ing:
+        return 12.0
+
+    if "cebola" in ing:
+        return 20.0
+
+    if any(t in ing for t in ["gergelim","castanha","nozes","amendoim"]):
+        return 6.0
+
+    if any(t in ing for t in ["shoyu","vinagre","limao","limão"]):
+        return 8.0
+
+    if any(t in ing for t in ["molho ingles","mostarda","ketchup"]):
+        return 10.0
+
+    return None
+
+
+
+
+def _normalizar_frase_taco(texto: str) -> str:
+    import unicodedata, re
+    texto = unicodedata.normalize('NFKD', texto.lower().strip())
+    texto = texto.encode('ASCII', 'ignore').decode('ASCII')
+    texto = re.sub(r'[^\w\s]', ' ', texto)
+    texto = re.sub(r'\s+', ' ', texto).strip()
+    return texto
+
+def _eh_match_parcial_seguro(ingrediente_norm: str, candidato_norm: str) -> bool:
+    ing_tokens = ingrediente_norm.split()
+    cand_tokens = candidato_norm.split()
+
+    if "molho" in ing_tokens and "batata" in cand_tokens:
+        return False
+
+    if len(ing_tokens) >= 2:
+        return all(tok in cand_tokens for tok in ing_tokens)
+
+    return ingrediente_norm in cand_tokens
+
+
+
+
+def _normalizar_texto_basico(texto: str) -> str:
+    if not texto:
+        return ""
+    import unicodedata, re
+    texto = unicodedata.normalize('NFKD', texto.lower().strip())
+    texto = texto.encode('ASCII', 'ignore').decode('ASCII')
+    texto = re.sub(r'[^\w\s]', ' ', texto)
+    texto = re.sub(r'\s+', ' ', texto).strip()
+    return texto
+
+
+def _is_sobremesa_contexto(nome_prato: str, ingredientes: list) -> bool:
+    contexto = " ".join([nome_prato or ""] + (ingredientes or []))
+    contexto = _normalizar_texto_basico(contexto)
+
+    sinais = [
+        "sobremesa","doce","mousse","gelatina","brigadeiro",
+        "chocolate","morango","figo","frutas vermelhas",
+        "leite condensado","creme","pudim"
+    ]
+    return any(s in contexto for s in sinais)
+
+
+def classificar_ingrediente_culinario(ingrediente: str, nome_prato: str = "") -> str:
+    ing = _normalizar_texto_basico(ingrediente)
+
+    if "acucar" in ing:
+        return "desconhecido"
+
+    if any(t in ing for t in ["sal","pimenta","alho","cebola","azeite","oleo"]):
+        return "desconhecido"
+
+    if any(t in ing for t in ["frango","carne","peixe","atum","salmao","sobrecoxa"]):
+        return "proteina_principal"
+
+    if any(t in ing for t in ["arroz","massa","macarrao","batata","cuscuz"]):
+        return "carboidrato_base"
+
+    if any(t in ing for t in ["abobrinha","berinjela","cenoura","brocolis"]):
+        return "vegetal_principal"
+
+    if any(t in ing for t in ["creme de leite","requeijao","maionese","queijo"]):
+        return "base_cremosa"
+
+    if any(t in ing for t in ["shoyu","vinagre","limao","molho"]):
+        return "base_liquida"
+
+    if any(t in ing for t in ["castanha","nozes","gergelim","queijo ralado"]):
+        return "finalizacao"
+
+    return "desconhecido"
+
+
+def estimar_prop_por_classe(ingrediente: str, ingredientes: list, nome_prato: str = "") -> float:
+    ing = _normalizar_texto_basico(ingrediente)
+
+    if "acucar" in ing:
+        if _is_sobremesa_contexto(nome_prato, ingredientes):
+            return 0.10
+        return 0.02
+
+    classe = classificar_ingrediente_culinario(ing, nome_prato)
+
+    if classe == "proteina_principal":
+        return 0.40
+    if classe == "carboidrato_base":
+        return 0.60
+    if classe == "vegetal_principal":
+        return 0.35
+    if classe == "base_cremosa":
+        return 0.20
+    if classe == "base_liquida":
+        return 0.10
+    if classe == "finalizacao":
+        return 0.03
+
+    return 0.03
+
+
 # -*- coding: utf-8 -*-
 """
 TABELA BRASILEIRA DE COMPOSIÇÃO DE ALIMENTOS (TACO)
@@ -904,35 +1043,30 @@ def buscar_dados_taco(ingrediente: str) -> dict:
         chave = INGREDIENTE_PARA_TACO[ingrediente_lower]
         return TACO_DATABASE.get(chave)
     
-    # 3. Busca parcial no mapeamento
+    # 3. Busca por frase completa normalizada
+    ingrediente_frase = _normalizar_frase_taco(ingrediente)
+
+    for taco_key, data in TACO_DATABASE.items():
+        taco_frase = _normalizar_frase_taco(taco_key.replace('_', ' '))
+        if ingrediente_frase == taco_frase:
+            return data
+
+    # 4. Busca parcial conservadora
     for termo, chave in INGREDIENTE_PARA_TACO.items():
-        if termo in ingrediente_lower or ingrediente_lower in termo:
+        termo_frase = _normalizar_frase_taco(termo)
+        if _eh_match_parcial_seguro(ingrediente_frase, termo_frase):
             return TACO_DATABASE.get(chave)
-    
-    # 4. Busca parcial direta no TACO_DATABASE (melhorada)
-    palavras = ingrediente_key.split('_')
-    for taco_key in TACO_DATABASE.keys():
-        # Busca se todas as palavras do ingrediente estão na chave TACO
-        if all(p in taco_key for p in palavras if len(p) > 2):
-            return TACO_DATABASE[taco_key]
-    
-    # 5. Busca por palavra principal (para carnes)
-    palavra_principal = max(palavras, key=len) if palavras else ''
-    if len(palavra_principal) >= 4:
-        for taco_key in TACO_DATABASE.keys():
-            if palavra_principal in taco_key:
-                # Preferir versão grelhada/cozida
-                if 'grelhad' in taco_key or 'cozid' in taco_key:
-                    return TACO_DATABASE[taco_key]
-        # Se não achou grelhada, pegar qualquer uma
-        for taco_key in TACO_DATABASE.keys():
-            if palavra_principal in taco_key:
-                return TACO_DATABASE[taco_key]
+
+    # 5. Busca parcial direta no TACO_DATABASE, sem substring fraca
+    for taco_key, data in TACO_DATABASE.items():
+        taco_frase = _normalizar_frase_taco(taco_key.replace('_', ' '))
+        if _eh_match_parcial_seguro(ingrediente_frase, taco_frase):
+            return data
     
     return None
 
 
-def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dict:
+def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_prato: str = "") -> dict:
     """Calcula a nutrição total de um prato baseado nos ingredientes.
     Usa proporções realistas de receitas comerciais (NÃO divide igualmente)."""
     if not ingredientes:
@@ -990,19 +1124,25 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dic
     for ing in ingredientes:
         ing_lower = ing.lower().strip()
         prop = 0.0
+
         # Buscar proporção mais específica primeiro
         for chave, valor in PROPORCOES.items():
             if chave in ing_lower or ing_lower in chave:
                 prop = valor
                 break
+
         if prop == 0:
-            # Fallback inteligente: proporção pequena para ingrediente desconhecido
-            # (não divide igual, preserva proporções dos ingredientes conhecidos)
-            prop = 0.10
+            prop = estimar_prop_por_classe(ing_lower, ingredientes, nome_prato)
+
+        if prop == 0:
+            prop = 0.03
+
         proporcoes.append(prop)
-    
-    # Normalizar proporções para somar 100%
+
     total_prop = sum(proporcoes)
+    if total_prop > 0:
+        proporcoes = [p / total_prop for p in proporcoes]
+
     if total_prop > 0:
         proporcoes = [p / total_prop for p in proporcoes]
     
@@ -1015,9 +1155,29 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200) -> dic
     
     for i, ingrediente in enumerate(ingredientes):
         dados = buscar_dados_taco(ingrediente)
+
+        gramas = porcao_gramas * proporcoes[i]
+
+        teto_abs = obter_teto_absoluto_ingrediente(ingrediente, nome_prato)
+        if teto_abs is not None:
+            gramas = min(gramas, teto_abs)
+
+        print("\n--- DEBUG INGREDIENTE ---")
+        print("Ingrediente:", ingrediente)
+        print("Classe:", classificar_ingrediente_culinario(ingrediente, nome_prato))
+        print("Proporcao:", proporcoes[i])
+        print("Gramas:", gramas)
+        print("Dados TACO encontrados:", dados)
+
         if dados:
-            gramas = porcao_gramas * proporcoes[i]
             fator = gramas / 100
+            print("Fator:", fator)
+            print("Contribuicao:")
+            print("  Calorias:", dados.get("calorias", 0) * fator)
+            print("  Proteinas:", dados.get("proteinas", 0) * fator)
+            print("  Carboidratos:", dados.get("carboidratos", 0) * fator)
+            print("  Gorduras:", dados.get("gorduras", 0) * fator)
+
             for key in ["calorias", "proteinas", "carboidratos", "gorduras", "fibras",
                        "sodio", "calcio", "ferro", "vitamina_a", "vitamina_c",
                        "vitamina_b12", "potassio", "zinco", "acucar"]:
