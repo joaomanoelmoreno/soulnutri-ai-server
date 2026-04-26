@@ -104,23 +104,16 @@ def _generate_nutrition_alerts(nutrition, alergenos):
 
 
 def format_dish_name(name: str) -> str:
-    """Formata nome do prato usando o mapeamento do policy.py.
-    Prioriza nomes definidos no DISH_NAMES (que refletem renomeacoes do Admin).
-    Se nao encontra, retorna o nome original formatado.
+    """Formata nome do prato de forma SEGURA (passthrough).
+
+    REGRA (protocolo de estabilização):
+    - NÃO reacentuar palavras (não reescrever 'Mongolia' → 'Mongólia').
+    - NÃO reconstruir/separar palavras coladas.
+    - O `dish_display` já é sanitizado em `analyze_result` via `safe_display`,
+      então aqui apenas devolvemos o input.
     """
     if not name:
         return name
-    
-    # Tentar lookup no policy.py (tem os nomes corretos/renomeados)
-    try:
-        from ai.policy import DISH_NAMES
-        slug = re.sub(r'[^a-zA-Z0-9]', '', name.lower())
-        if slug in DISH_NAMES:
-            return DISH_NAMES[slug]
-    except Exception:
-        pass
-    
-    # Fallback: retornar o nome original (ja vem formatado do indice)
     return name
 
 

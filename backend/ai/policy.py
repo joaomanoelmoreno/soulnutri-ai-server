@@ -1029,15 +1029,94 @@ def get_dish_name(slug: str) -> str:
 
 
 def format_dish_name_fallback(slug: str) -> str:
-    """Fallback para formatar nomes não mapeados"""
+    """Fallback SEGURO para nomes não mapeados.
+
+    REGRA (definida no protocolo de estabilização):
+    - NÃO fazer blind replace de 'ao'/'de'/'com'/'sem' (corrompe 'mamao'→'Mam Ao',
+      'madeira'→'Ma De Ira', 'limao'→'Lim Ao').
+    - NÃO tentar separar palavras coladas.
+    - Apenas trocar '_' por espaço e Title Case as palavras já existentes.
+    - Retorna o nome como veio (ele já é o folder canônico do índice).
+    """
     if not slug:
         return ''
-    
-    name = slug.replace('ao', ' ao ').replace('de', ' de ').replace('com', ' com ')
-    name = name.replace('sem', ' sem ').replace('_', ' ')
-    name = ' '.join(name.split()).title()
-    
-    return name
+
+    name = slug.replace('_', ' ').strip()
+    if not name:
+        return ''
+
+    # Title Case preservando partículas em minúsculo (ao, de, do, da, com, e, etc.)
+    lowercase = {'ao', 'a', 'o', 'de', 'do', 'da', 'dos', 'das',
+                 'com', 'sem', 'em', 'no', 'na', 'e', 'por'}
+    parts = name.split()
+    out = []
+    for i, w in enumerate(parts):
+        wl = w.lower()
+        if i > 0 and wl in lowercase:
+            out.append(wl)
+        else:
+            out.append(w[:1].upper() + w[1:].lower() if w else w)
+    return ' '.join(out)
+
+
+def is_display_suspicious(dish: str, dish_display: str) -> bool:
+    """Detecta se dish_display parece corrompido (split-word, camelCase espúrio etc.).
+
+    Critérios (sinais simples e conservadores):
+    - vazio ou None
+    - palavra de 1-2 letras no meio que NÃO seja preposição/artigo conhecida
+      (sinal de quebra como 'Mam Ao', 'Ma De Ira', 'Mel Ao')
+    - padrão camelCase 'aA' ou 'aAa' em palavra do meio (sinal de 'LimAo', 'MelAo')
+    - quando comparado a `dish` (canonical), apresenta tokens novos/quebrados
+    """
+    if not dish_display:
+        return True
+
+    import re as _re
+
+    words = dish_display.split()
+    allowed_short = {'ao', 'a', 'o', 'de', 'do', 'da', 'e',
+                     'em', 'no', 'na', 'com', 'sem', 'por'}
+    for i, w in enumerate(words):
+        if 0 < i < len(words) - 1 and len(w) <= 2 and w.lower() not in allowed_short:
+            return True
+
+    # Token capitalizado curto (ex.: 'Ao', 'De', 'A') — sinal de split corrupto
+    # ('Mam Ao', 'Ma De Ira', 'Mel Ao'). Em PT correto, 'ao'/'de' viriam minúsculos.
+    for w in words[1:]:  # ignora o primeiro (pode ser legítimo "A")
+        if len(w) <= 2 and w[:1].isupper() and w.lower() in allowed_short:
+            return True
+
+    # camelCase espúrio dentro de uma palavra: ex 'LimAo', 'MelAo', 'CamarAo'
+    if _re.search(r'[a-z][A-Z][a-z]?', dish_display):
+        return True
+
+    # Comparação com o canonical (dish): se ao remover espaços e acentos diferirem
+    # demais (ex.: 'Mam Ao' vs 'Mamao'), display é suspeito.
+    if dish:
+        import unicodedata as _ud
+
+        def _norm(s):
+            return _ud.normalize('NFKD', s or '').encode('ascii', 'ignore').decode().lower().replace(' ', '')
+
+        if _norm(dish) and _norm(dish_display) and _norm(dish) == _norm(dish_display):
+            # mesmas letras: se dish não tem espaço e display tem, é split corrupto
+            if ' ' not in (dish or '').strip() and ' ' in dish_display.strip():
+                return True
+
+    return False
+
+
+def safe_display(dish: str, dish_display: str) -> str:
+    """Garante um display estável e não corrompido.
+
+    Se `dish_display` for suspeito (vazio ou padrões de corrupção), retorna
+    o `dish` canônico (folder name, sem acento, já bem espaçado).
+    Caso contrário, retorna `dish_display` como está (sem reacentuar).
+    """
+    if is_display_suspicious(dish, dish_display):
+        return (dish or '').strip()
+    return dish_display
 
 
 def get_category(slug: str) -> str:
@@ -1125,6 +1204,8 @@ def analyze_result(results: List[Dict]) -> Dict:
     dish = top_result.get('dish', '')
     
     dish_display = get_dish_name(dish)
+    # Guardião: se display vier vazio/corrompido, usa o dish canônico (sem acento)
+    dish_display = safe_display(dish, dish_display)
     category = get_category(dish)
     category_emoji = get_category_emoji(category)
     dish_info = get_dish_info(dish)
@@ -1169,7 +1250,7 @@ def analyze_result(results: List[Dict]) -> Dict:
         }
     
     elif score >= 0.50:
-        alternatives = [get_dish_name(r['dish']) for r in results[1:4] if r.get('dish')]
+        alternatives = [safe_display(r['dish'], get_dish_name(r['dish'])) for r in results[1:4] if r.get('dish')]
         return {
             'identified': True,
             'dish': dish,
@@ -1190,7 +1271,7 @@ def analyze_result(results: List[Dict]) -> Dict:
         }
     
     else:
-        alternatives = [get_dish_name(r['dish']) for r in results[:5] if r.get('dish')]
+        alternatives = [safe_display(r['dish'], get_dish_name(r['dish'])) for r in results[:5] if r.get('dish')]
         return {
             'identified': False,
             'dish': dish,

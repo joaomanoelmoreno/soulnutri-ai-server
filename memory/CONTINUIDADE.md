@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://prato-loading-patch.preview.emergentagent.com
+**URL**: https://admin-pin-portal.preview.emergentagent.com
 
 ---
 

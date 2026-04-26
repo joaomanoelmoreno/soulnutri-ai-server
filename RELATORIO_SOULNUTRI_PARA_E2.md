@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://prato-loading-patch.preview.emergentagent.com
-- Admin: https://prato-loading-patch.preview.emergentagent.com/admin
-- Lista de Pratos: https://prato-loading-patch.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://admin-pin-portal.preview.emergentagent.com
+- Admin: https://admin-pin-portal.preview.emergentagent.com/admin
+- Lista de Pratos: https://admin-pin-portal.preview.emergentagent.com/lista-pratos.txt
 
 ---
 
