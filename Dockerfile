@@ -30,6 +30,7 @@ RUN pip install --no-cache-dir boto3 && \
     print(f'Modelo baixado: {os.path.getsize(\"/app/clip_visual_fp16.onnx\")/1024/1024:.1f} MB')"
 
 # ── Frontend build ──
+RUN echo "Frontend cache bust v3 - 2026-04-26-late"
 COPY frontend/package.json frontend/yarn.lock frontend/
 WORKDIR /app/frontend
 RUN yarn install --frozen-lockfile --production=false
