@@ -3318,10 +3318,10 @@ return {
                     const fonte = typeof noticia === 'object' ? (noticia?.fonte || noticia?.url || noticia?.link) : null;
                     return (
                       <div key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 8px', paddingLeft: '8px', borderLeft: '2px solid rgba(251, 191, 36, 0.3)' }}>
-                        <p style={{margin:0}}>{texto}</p>
+                        <p style={{margin:0}}>{renderTextSafe(texto)}</p>
                         {fonte && (
                           <span style={{color:'#fbbf24',fontSize:'11px',fontStyle:'italic',marginTop:'4px',display:'block'}}>
-                            Fonte: {fonte}
+                            Fonte: {renderTextSafe(fonte)}
                           </span>
                         )}
                       </div>
@@ -3373,16 +3373,16 @@ return {
                     <div key={i} style={{ marginBottom: '8px' }}>
                       {(mv.mito || mv.afirmacao) && (
                         <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>
-                          "{mv.mito || mv.afirmacao}"
+                          "{renderTextSafe(mv.mito || mv.afirmacao)}"
                         </p>
                       )}
                       {(mv.verdade || mv.resposta) && (
                         <p style={{ color: '#d1d5db', fontSize: '12px', margin: '0 0 4px' }}>
-                          {(mv.verdade || mv.resposta)}
+                          {renderTextSafe(mv.verdade || mv.resposta)}
                         </p>
                       )}
-                      {mv.explicacao && <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0, fontStyle: 'italic' }}>{mv.explicacao}</p>}
-                      {mv.fonte && <span style={{color:'#a855f7',fontSize:'11px',fontStyle:'italic',display:'block',marginTop:'4px'}}>Fonte: {mv.fonte}</span>}
+                      {mv.explicacao && <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0, fontStyle: 'italic' }}>{renderTextSafe(mv.explicacao)}</p>}
+                      {mv.fonte && <span style={{color:'#a855f7',fontSize:'11px',fontStyle:'italic',display:'block',marginTop:'4px'}}>Fonte: {renderTextSafe(mv.fonte)}</span>}
                     </div>
                   ))}
                 </div>
@@ -3414,7 +3414,7 @@ return {
                   <h4 style={{ color: '#f87171', marginBottom: '8px' }}>🔔 Alertas Personalizados</h4>
                   {plateConsolidated.alertas_personalizados.map((a, i) => (
                     <p key={i} style={{ color: '#d1d5db', fontSize: '13px', margin: '0 0 4px' }}>
-                      {typeof a === 'string' ? a : `${a.icone || '⚠️'} ${a.mensagem || a.texto || a}`}
+                      {typeof a === 'string' ? a : `${a.icone || '⚠️'} ${renderTextSafe(a.mensagem || a.texto || a)}`}
                     </p>
                   ))}
                 </div>
@@ -3462,7 +3462,7 @@ return {
                 }}>
                   <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Você sabia?</h4>
                   <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                    {radarInfo.voce_sabia}
+                    {renderTextSafe(radarInfo.voce_sabia)}
                   </p>
                 </div>
               )}
@@ -3478,19 +3478,19 @@ return {
         <li key={i}>
           {typeof r === 'object' ? (
             <>
-              {r.texto}
+              {renderTextSafe(r.texto)}
               {r.fonte && (
                 <a 
-                  href={`https://www.google.com/search?q=${encodeURIComponent(r.fonte + ' nutrição estudo')}`}
+                  href={`https://www.google.com/search?q=${encodeURIComponent(renderTextSafe(r.fonte) + ' nutrição estudo')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{color:'#ef4444',fontSize:'11px',fontStyle:'italic'}}
                 >
-                  {" — " + r.fonte}
+                  {" — " + renderTextSafe(r.fonte)}
                 </a>
               )}
             </>
-          ) : r}
+          ) : renderTextSafe(r)}
         </li>
       ))}
     </ul>
@@ -3806,7 +3806,7 @@ return {
                           color: '#92400e',
                           textAlign: 'center'
                         }}>
-                          {alt}
+                          {renderTextSafe(alt)}
                         </div>
                       ))}
                     </div>
@@ -3928,19 +3928,19 @@ return {
   <li key={i}>
     {typeof b === 'object' ? (
       <>
-        {b.texto}
+        {renderTextSafe(b.texto)}
         {b.fonte && (
           <a 
-            href={`https://www.google.com/search?q=${encodeURIComponent(b.fonte + ' nutrição estudo')}`}
+            href={`https://www.google.com/search?q=${encodeURIComponent(renderTextSafe(b.fonte) + ' nutrição estudo')}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{color:'#10b981',fontSize:'11px',fontStyle:'italic'}}
           >
-            {" — " + b.fonte}
+            {" — " + renderTextSafe(b.fonte)}
           </a>
         )}
       </>
-    ) : b}
+    ) : renderTextSafe(b)}
   </li>
 )}</ul>
             </div>
@@ -4289,7 +4289,7 @@ return {
             {multiResult.alertas_combinados?.length > 0 && (
               <div className="multi-alerts">
                 {multiResult.alertas_combinados.map((alert, i) => (
-                  <span key={i} className="alert-tag">⚠️ {alert}</span>
+                  <span key={i} className="alert-tag">⚠️ {renderTextSafe(alert)}</span>
                 ))}
               </div>
             )}
@@ -4383,7 +4383,7 @@ return {
                   </span>
                 </div>
                 <p style={{ color: '#fff', fontSize: '13px', margin: '8px 0 0', lineHeight: '1.4' }}>
-                  {radarInfo.message}
+                  {renderTextSafe(radarInfo.message)}
                 </p>
                 <p style={{ color: '#888', fontSize: '11px', margin: '6px 0 0' }}>
                   Toque para ver mais informações →
@@ -4455,14 +4455,14 @@ return {
                 marginBottom: '12px'
               }}>
                 <h4 style={{ color: '#22c55e', margin: '0 0 6px', fontSize: '14px' }}>
-                  {radarInfo.titulo}
+                  {renderTextSafe(radarInfo.titulo)}
                 </h4>
                 <p style={{ color: '#ccc', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>
-                  {radarInfo.message}
+                  {renderTextSafe(radarInfo.message)}
                 </p>
                 {radarInfo.fonte && (
                   <p style={{ color: '#888', fontSize: '11px', margin: '8px 0 0' }}>
-                    📚 Fonte: {radarInfo.fonte}
+                    📚 Fonte: {renderTextSafe(radarInfo.fonte)}
                   </p>
                 )}
               </div>
@@ -4481,7 +4481,7 @@ return {
                   💡 Você sabia?
                 </h4>
                 <p style={{ color: '#e0e0e0', fontSize: '12px', margin: 0, lineHeight: '1.5' }}>
-                  {radarInfo.voce_sabia}
+                  {renderTextSafe(radarInfo.voce_sabia)}
                 </p>
               </div>
             )}
@@ -4499,7 +4499,7 @@ return {
                 </h4>
                 {radarInfo.combinacoes.map((combo, i) => (
                   <p key={i} style={{ color: '#ccc', fontSize: '11px', margin: '4px 0', paddingLeft: '8px' }}>
-                    • {combo}
+                    • {renderTextSafe(combo)}
                   </p>
                 ))}
               </div>
@@ -4515,7 +4515,7 @@ return {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
                       <span>{grupo.emoji}</span>
                       <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '13px' }}>
-                        {grupo.ingrediente}
+                        {renderTextSafe(grupo.ingrediente)}
                       </span>
                     </div>
                     {grupo.voce_sabia && !radarInfo.voce_sabia && (
@@ -4525,7 +4525,7 @@ return {
                         margin: '0 0 6px',
                         paddingLeft: '22px'
                       }}>
-                        💡 {grupo.voce_sabia}
+                        💡 {renderTextSafe(grupo.voce_sabia)}
                       </p>
                     )}
                     {grupo.dica_rapida && (
@@ -4535,7 +4535,7 @@ return {
                         margin: '0 0 8px',
                         paddingLeft: '22px'
                       }}>
-                        ✓ {grupo.dica_rapida}
+                        ✓ {renderTextSafe(grupo.dica_rapida)}
                       </p>
                     )}
                     {grupo.fatos?.map((fato, j) => (
@@ -4556,13 +4556,13 @@ return {
                           fontWeight: 'bold', 
                           margin: '0 0 4px' 
                         }}>
-                          {fato.tipo === 'alerta' ? '⚠️ ' : fato.tipo === 'beneficio' ? '✅ ' : ''}{fato.titulo}
+                          {fato.tipo === 'alerta' ? '⚠️ ' : fato.tipo === 'beneficio' ? '✅ ' : ''}{renderTextSafe(fato.titulo)}
                         </p>
                         <p style={{ color: '#ccc', fontSize: '11px', margin: 0, lineHeight: '1.4' }}>
-                          {fato.resumo}
+                          {renderTextSafe(fato.resumo)}
                         </p>
                         <p style={{ color: '#666', fontSize: '10px', margin: '4px 0 0' }}>
-                          📚 {fato.fonte} • {fato.data}
+                          📚 {renderTextSafe(fato.fonte)} • {renderTextSafe(fato.data)}
                         </p>
                       </div>
                     ))}

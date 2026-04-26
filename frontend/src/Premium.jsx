@@ -4,6 +4,17 @@ import DashboardPremium from './DashboardPremium';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+// 🔒 Render-safe para JSX: garante que NUNCA renderizamos um objeto direto (React error #31)
+const renderTextSafe = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string' || typeof v === 'number') return String(v);
+  if (Array.isArray(v)) return v.map(renderTextSafe).filter(Boolean).join(', ');
+  if (typeof v === 'object') {
+    return v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || '';
+  }
+  return '';
+};
+
 // Componente de Registro
 export function PremiumRegister({ onSuccess, onCancel }) {
   const [form, setForm] = useState({
@@ -801,14 +812,14 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                 }}>
                   <div>
                     <p style={{ margin: 0, color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>
-                      {alerta.nutriente}
+                      {renderTextSafe(alerta.nutriente)}
                     </p>
                     <p style={{ margin: '3px 0 0', color: '#ccc', fontSize: '12px' }}>
-                      {alerta.mensagem}
+                      {renderTextSafe(alerta.mensagem)}
                     </p>
                     {alerta.dica && (
                       <p style={{ margin: '3px 0 0', color: '#d4af37', fontSize: '11px' }}>
-                        → {alerta.dica}
+                        → {renderTextSafe(alerta.dica)}
                       </p>
                     )}
                   </div>
@@ -893,7 +904,7 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                   {weeklyAnalysis.pontuacao}/100
                 </h3>
                 <p style={{ color: '#ccc', margin: 0 }}>
-                  {weeklyAnalysis.classificacao?.texto}
+                  {renderTextSafe(weeklyAnalysis.classificacao?.texto)}
                 </p>
                 <p style={{ color: '#888', fontSize: '12px', marginTop: '4px' }}>
                   {weeklyAnalysis.dias_registrados} dias registrados
@@ -916,17 +927,17 @@ export function DailyCounter({ user, onLogout, onClose, onEditProfile }) {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ fontSize: '18px' }}>{t.emoji}</span>
                         <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '13px' }}>
-                          {t.nutriente}
+                          {renderTextSafe(t.nutriente)}
                         </span>
                       </div>
                       <p style={{ color: '#ccc', fontSize: '12px', margin: '6px 0 0' }}>
-                        {t.mensagem}
+                        {renderTextSafe(t.mensagem)}
                       </p>
                       <p style={{ color: '#e8d48b', fontSize: '11px', margin: '4px 0 0' }}>
-                        ⚠️ {t.impacto}
+                        ⚠️ {renderTextSafe(t.impacto)}
                       </p>
                       <p style={{ color: '#d4af37', fontSize: '11px', margin: '4px 0 0' }}>
-                        💡 {t.sugestao}
+                        💡 {renderTextSafe(t.sugestao)}
                       </p>
                     </div>
                   ))}

@@ -8,6 +8,17 @@ import './DashboardPremium.css';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+// 🔒 Render-safe para JSX: garante que NUNCA renderizamos um objeto direto (React error #31)
+const renderTextSafe = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string' || typeof v === 'number') return String(v);
+  if (Array.isArray(v)) return v.map(renderTextSafe).filter(Boolean).join(', ');
+  if (typeof v === 'object') {
+    return v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || '';
+  }
+  return '';
+};
+
 // Componente de barra de progresso circular
 const CircularProgress = ({ value, max, color, label, icon: Icon }) => {
   const percent = Math.min((value / max) * 100, 100);
@@ -374,7 +385,7 @@ export default function DashboardPremium({ user, onClose }) {
                     <div className="insight-status-fill" style={{ width: `${barWidth}%`, backgroundColor: calStatus.cor }} />
                   </div>
                   <span className="insight-status-badge" style={{ color: calStatus.cor }}>
-                    {calStatus.emoji} {calStatus.texto}
+                    {calStatus.emoji} {renderTextSafe(calStatus.texto)}
                   </span>
                 </div>
               );
@@ -417,7 +428,7 @@ export default function DashboardPremium({ user, onClose }) {
                   <ul className="insight-list">
                     {alertas.map((a, i) => (
                       <li key={i} className="insight-list-item insight-list-item--alert">
-                        {a.msg || String(a)}
+                        {renderTextSafe(a.msg ?? a)}
                       </li>
                     ))}
                   </ul>
@@ -433,7 +444,7 @@ export default function DashboardPremium({ user, onClose }) {
               </div>
               <ul className="insight-list">
                 {getSugestoes(hoje, metas).map((s, i) => (
-                  <li key={i} className="insight-list-item insight-list-item--sug">{s}</li>
+                  <li key={i} className="insight-list-item insight-list-item--sug">{renderTextSafe(s)}</li>
                 ))}
               </ul>
             </div>
@@ -631,7 +642,7 @@ export default function DashboardPremium({ user, onClose }) {
                   <div className="score-number">{reportData.score}</div>
                   <div className="score-label">Score de Dieta</div>
                   <div className="score-text" style={{ color: reportData.classificacao.cor }}>
-                    {reportData.classificacao.texto}
+                    {renderTextSafe(reportData.classificacao.texto)}
                   </div>
                 </div>
 
