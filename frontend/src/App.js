@@ -402,7 +402,19 @@ const safeText = (v) => {
     return safeText(v.text || v.label || JSON.stringify(v));
   }
   return '';
-};  const [dailySummary, setDailySummary] = useState(null);
+};
+// 🔒 Render-safe para JSX: garante que NUNCA renderizamos um objeto direto (React error #31)
+// Aceita string/number normalmente; se for objeto, extrai 'texto'/'text'/'titulo'/etc.
+const renderTextSafe = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string' || typeof v === 'number') return String(v);
+  if (Array.isArray(v)) return v.map(renderTextSafe).filter(Boolean).join(', ');
+  if (typeof v === 'object') {
+    return v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || '';
+  }
+  return '';
+};
+  const [dailySummary, setDailySummary] = useState(null);
   const [showCheckin, setShowCheckin] = useState(false); // Check-in de refeição
   const [personalizedTips, setPersonalizedTips] = useState(null); // Dicas personalizadas
   // Menu e PWA
@@ -3266,12 +3278,12 @@ return {
                   <h4 style={{ color: '#60a5fa', marginBottom: '8px' }}>💡 Curiosidades</h4>
                   {plateConsolidated.curiosidades.map((c, i) => (
                     <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 6px' }}>
-                      {c}
+                      {renderTextSafe(c)}
                     </p>
                   ))}
                   {radarInfo?.voce_sabia && !plateConsolidated.curiosidades.some(c => c === radarInfo.voce_sabia) && (
                     <p style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                      {radarInfo.voce_sabia}
+                      {renderTextSafe(radarInfo.voce_sabia)}
                     </p>
                   )}
                 </div>
@@ -3287,7 +3299,7 @@ return {
                 }}>
                   <h4 style={{ color: '#22c55e', marginBottom: '8px' }}>🔗 Combinações que potencializam</h4>
                   {(plateConsolidated.combinacoes.length > 0 ? plateConsolidated.combinacoes : radarInfo?.combinacoes || []).map((combo, i) => (
-                    <p key={i} style={{ color: '#ccc', fontSize: '12px', margin: '4px 0' }}>• {combo}</p>
+                    <p key={i} style={{ color: '#ccc', fontSize: '12px', margin: '4px 0' }}>• {renderTextSafe(combo)}</p>
                   ))}
                 </div>
               )}
@@ -3328,7 +3340,7 @@ return {
                 }}>
                   <h4 style={{ color: '#34d399', marginBottom: '8px' }}>🌟 Benefício Principal</h4>
                   {plateConsolidated.beneficio_principal.map((b, i) => (
-                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{b}</p>
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{renderTextSafe(b)}</p>
                   ))}
                 </div>
               )}
@@ -3343,7 +3355,7 @@ return {
                 }}>
                   <h4 style={{ color: '#fbbf24', marginBottom: '8px' }}>⚠️ Alertas de Saúde</h4>
                   {plateConsolidated.alerta_saude.map((a, i) => (
-                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{a}</p>
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{renderTextSafe(a)}</p>
                   ))}
                 </div>
               )}
@@ -3386,7 +3398,7 @@ return {
                 }}>
                   <h4 style={{ color: '#fb923c', marginBottom: '8px' }}>👨‍🍳 Dica do Chef</h4>
                   {plateConsolidated.dicas_chef.map((d, i) => (
-                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{d}</p>
+                    <p key={i} style={{ color: '#d1d5db', fontSize: '13px', lineHeight: '1.5', margin: '0 0 4px' }}>{renderTextSafe(d)}</p>
                   ))}
                 </div>
               )}
