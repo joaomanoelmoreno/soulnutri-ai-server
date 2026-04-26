@@ -38,6 +38,7 @@ COPY frontend/ /app/frontend/
 
 # Build com URL vazia = paths relativos (funciona em qualquer dominio)
 ENV REACT_APP_BACKEND_URL=""
+# cache-bust: 2026-04-26-1
 RUN yarn build && test -f /app/frontend/build/index.html && echo "BUILD OK: index.html exists"
 
 # ── Backend + Datasets ──
