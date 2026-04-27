@@ -974,6 +974,9 @@ INGREDIENTE_PARA_TACO = {
     # Massas e pães
     "macarrão": "macarrao_trigo_cru", "macarrao": "macarrao_trigo_cru",
     "massa": "macarrao_trigo_cru",
+    "espaguete": "macarrao_trigo_cru", "espaguetti": "macarrao_trigo_cru",
+    "fettuccine": "macarrao_trigo_cru", "penne": "macarrao_trigo_cru",
+    "talharim": "macarrao_trigo_cru", "farfalle": "macarrao_trigo_cru",
     "lasanha": "lasanha_massa_fresca_cozida",
     "pão": "pao_trigo_frances", "pão francês": "pao_trigo_frances", "pao": "pao_trigo_frances",
     "pão integral": "pao_trigo_forma_integral",
@@ -1240,8 +1243,22 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
         "ingredientes_encontrados": [], "ingredientes_nao_encontrados": []
     }
     
+    # Import USDA fallback — lazy para não quebrar se serviço não estiver disponível
+    try:
+        from services.usda_fallback import buscar_dados_usda as _buscar_usda
+        _usda_disponivel = True
+    except Exception:
+        _usda_disponivel = False
+
     for i, ingrediente in enumerate(ingredientes):
         dados = buscar_dados_taco(ingrediente)
+
+        # Fallback USDA quando TACO não cobre o ingrediente
+        fonte = "TACO"
+        if dados is None and _usda_disponivel:
+            dados = _buscar_usda(ingrediente)
+            if dados:
+                fonte = "USDA"
 
         gramas = porcao_gramas * proporcoes[i]
 
@@ -1249,14 +1266,13 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
         if teto_abs is not None:
             gramas = min(gramas, teto_abs)
 
-
         if dados:
             fator = gramas / 100
             for key in ["calorias", "proteinas", "carboidratos", "gorduras", "fibras",
                        "sodio", "calcio", "ferro", "vitamina_a", "vitamina_c",
                        "vitamina_b12", "potassio", "zinco", "acucar"]:
                 totais[key] += dados.get(key, 0) * fator
-            totais["ingredientes_encontrados"].append(ingrediente)
+            totais["ingredientes_encontrados"].append(f"{ingrediente} [{fonte}]" if fonte == "USDA" else ingrediente)
         else:
             totais["ingredientes_nao_encontrados"].append(ingrediente)
     
