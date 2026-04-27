@@ -1050,7 +1050,29 @@ INGREDIENTE_PARA_TACO = {
     # Sobremesas
     "pudim": "leite_condensado", "bolo": "bolo_pronto_chocolate",
     "sorvete": "iogurte_natural",
-    # Gelatina: "gelatina" em receitas prontas → preparada (~70 kcal); pó seco mantido separado
+    # Panceta / toucinho / barriga suína
+    "barriga suina": "toucinho_cru",
+    "barriga suína": "toucinho_cru",
+    "panceta": "toucinho_cru",
+    "panceta pururuca": "toucinho_frito",
+    # Hambúrguer bovino → contra-filé com gordura (per consultor)
+    # Nota: TACO também tem hamburguer_bovino_grelhado (210 kcal) — mais preciso se necessário
+    "carne bovina do dianteiro": "carne_bovina_contra_file_com_gordura_grelhado",
+    "carne bovina (hamburguer)": "carne_bovina_contra_file_com_gordura_grelhado",
+    "hamburguer bovino": "carne_bovina_contra_file_com_gordura_grelhado",
+    # Kafta → contra-filé sem gordura (per consultor)
+    "carne moida bovina": "carne_bovina_contra_file_sem_gordura_grelhado",
+    "carne moída bovina": "carne_bovina_contra_file_sem_gordura_grelhado",
+    # Linguiça de Lombo → linguiça suína/porco (per consultor)
+    "carne suina": "linguica_porco_grelhada",
+    "carne suína": "linguica_porco_grelhada",
+    "linguica de lombo": "linguica_porco_grelhada",
+    "linguica suina": "linguica_porco_grelhada",
+    "paio": "linguica_porco_grelhada",
+    # Canelone — massa fresca
+    "massa de cannelloni": "lasanha_massa_fresca_cozida",
+    "massa fresca": "lasanha_massa_fresca_cozida",
+    "queijos": "queijo_prato",
     "gelatina": "gelatina_preparada_estimada",
     "gelatina pronta": "gelatina_preparada_estimada",
     "gelatina em po": "gelatina_sabores_variados_po",
