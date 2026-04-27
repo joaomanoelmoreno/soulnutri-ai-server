@@ -149,6 +149,18 @@ ZERO CRÉDITOS DE IA - 100% LOCAL
 
 TACO_DATABASE = {
     # ═══════════════════════════════════════════════════════════════
+    # ESTIMATIVAS PROVISÓRIAS (não são entradas TACO oficiais)
+    # Marcadas com sufixo _estimada — usar apenas quando não há TACO
+    # ═══════════════════════════════════════════════════════════════
+    "massa_folhada_estimada": {
+        "nome": "Massa folhada, assada (ESTIMADA — não TACO)",
+        "calorias": 450.0, "proteinas": 6.0, "carboidratos": 40.0,
+        "gorduras": 30.0, "fibras": 1.5, "sodio": 350.0,
+        "calcio": 15.0, "ferro": 1.5, "potassio": 80.0,
+        "zinco": 0.5, "colesterol": 45.0, "vitamina_c": 0,
+    },
+
+    # ═══════════════════════════════════════════════════════════════
     # ALIMENTOS PREPARADOS
     # ═══════════════════════════════════════════════════════════════
     "acaraje": {"nome": "Acarajé", "calorias": 289.0, "proteinas": 8.3, "carboidratos": 19.1, "gorduras": 19.9, "fibras": 9.4, "sodio": 305.0, "calcio": 124.0, "ferro": 1.9, "potassio": 354.0, "zinco": 1.2, "colesterol": 25.0, "vitamina_c": 0},
@@ -842,9 +854,9 @@ INGREDIENTE_PARA_TACO = {
     "filé mignon": "carne_bovina_file_mingnon_sem_gordura_grelhado",
     "file mignon": "carne_bovina_file_mingnon_sem_gordura_grelhado",
     "carne seca": "carne_bovina_seca_cozida", "charque": "carne_bovina_charque_cozido",
-    "entrecote": "carne_bovina_contra_file_sem_gordura_grelhado",
-    "entrecote bovino fresco": "carne_bovina_contra_file_sem_gordura_grelhado",
-    "entrecote grelhado": "carne_bovina_contra_file_sem_gordura_grelhado",
+    "entrecote": "carne_bovina_contra_file_com_gordura_grelhado",
+    "entrecote bovino fresco": "carne_bovina_contra_file_com_gordura_grelhado",
+    "entrecote grelhado": "carne_bovina_contra_file_com_gordura_grelhado",
     "frango/peixe/filé mignon": "frango_peito_sem_pele_grelhado",
     "frango/peixe/f mignon": "frango_peito_sem_pele_grelhado",
     
@@ -965,6 +977,20 @@ INGREDIENTE_PARA_TACO = {
     "alho organico": "alho_cru", "alho orgânico": "alho_cru",
     "alho em po": "alho_cru", "alho em pó": "alho_cru",
     "alho picado": "alho_cru",
+    # Tomates — variantes
+    "tomates cereja": "tomate_com_semente_cru",
+    "tomate cereja": "tomate_com_semente_cru",
+    "tomate sem pele": "tomate_com_semente_cru",
+    # Queijo gorgonzola — provisório (não há entrada TACO específica)
+    "queijo gorgonzola": "queijo_prato",
+    # Sobrecoxa inteira
+    "sobrecoxa de frango": "frango_sobrecoxa_sem_pele_assada",
+    "sobrecoxa de frango inteira": "frango_sobrecoxa_sem_pele_assada",
+    # Lulas (plural)
+    "lulas": "camarao_rio_grande_grande_cru",
+    # Massa folhada — entrada estimada provisória
+    "massa folhada": "massa_folhada_estimada",
+    "massa folhada assada": "massa_folhada_estimada",
     "gengibre": "gengibre_cru", "gengibre fresco": "gengibre_cru",
     "canela": "canela_em_po",
     "noz-moscada": "noz_crua", "noz moscada": "noz_crua",
