@@ -159,6 +159,15 @@ TACO_DATABASE = {
         "calcio": 15.0, "ferro": 1.5, "potassio": 80.0,
         "zinco": 0.5, "colesterol": 45.0, "vitamina_c": 0,
     },
+    # Gelatina preparada (diluída em água, pronta para consumo) ≠ pó seco
+    # Referência: USDA gelatins ready-to-eat ~60-80 kcal/100g
+    "gelatina_preparada_estimada": {
+        "nome": "Gelatina, preparada/pronta, sabores variados (ESTIMADA — não TACO)",
+        "calorias": 70.0, "proteinas": 1.5, "carboidratos": 16.0,
+        "gorduras": 0.0, "fibras": 0.0, "sodio": 55.0,
+        "calcio": 0.0, "ferro": 0.0, "potassio": 8.0,
+        "zinco": 0.0, "colesterol": 0.0, "vitamina_c": 0.0,
+    },
 
     # ═══════════════════════════════════════════════════════════════
     # ALIMENTOS PREPARADOS
@@ -1041,7 +1050,11 @@ INGREDIENTE_PARA_TACO = {
     # Sobremesas
     "pudim": "leite_condensado", "bolo": "bolo_pronto_chocolate",
     "sorvete": "iogurte_natural",
-    "gelatina": "gelatina_sabores_variados_po",
+    # Gelatina: "gelatina" em receitas prontas → preparada (~70 kcal); pó seco mantido separado
+    "gelatina": "gelatina_preparada_estimada",
+    "gelatina pronta": "gelatina_preparada_estimada",
+    "gelatina em po": "gelatina_sabores_variados_po",
+    "gelatina em pó": "gelatina_sabores_variados_po",
     
     # Bebidas
     "suco": "laranja_baia_suco", "café": "cafe_infusao_10",
