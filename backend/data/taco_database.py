@@ -842,6 +842,9 @@ INGREDIENTE_PARA_TACO = {
     "filé mignon": "carne_bovina_file_mingnon_sem_gordura_grelhado",
     "file mignon": "carne_bovina_file_mingnon_sem_gordura_grelhado",
     "carne seca": "carne_bovina_seca_cozida", "charque": "carne_bovina_charque_cozido",
+    "entrecote": "carne_bovina_contra_file_sem_gordura_grelhado",
+    "entrecote bovino fresco": "carne_bovina_contra_file_sem_gordura_grelhado",
+    "entrecote grelhado": "carne_bovina_contra_file_sem_gordura_grelhado",
     "frango/peixe/filé mignon": "frango_peito_sem_pele_grelhado",
     "frango/peixe/f mignon": "frango_peito_sem_pele_grelhado",
     
@@ -928,7 +931,7 @@ INGREDIENTE_PARA_TACO = {
     "vagem": "vagem_crua", "mandioca": "mandioca_cozida",
     "inhame": "inhame_cru", "cebola": "cebola_crua",
     "repolho": "repolho_branco_cru",
-    "mandioquinha": "batata_inglesa_cozida", "baroa": "batata_inglesa_cozida",
+    "mandioquinha": "batata_baroa_cozida", "baroa": "batata_baroa_cozida",
     "alho poro": "cebola_crua",
     "champignon": "cogumelo_champignon_conserva", "cogumelo": "cogumelo_champignon_conserva",
     "funghi secchi": "cogumelo_champignon_conserva",
@@ -959,6 +962,9 @@ INGREDIENTE_PARA_TACO = {
     
     # Temperos e condimentos
     "sal": "sal_grosso", "alho": "alho_cru", "alho ": "alho_cru",
+    "alho organico": "alho_cru", "alho orgânico": "alho_cru",
+    "alho em po": "alho_cru", "alho em pó": "alho_cru",
+    "alho picado": "alho_cru",
     "gengibre": "gengibre_cru", "gengibre fresco": "gengibre_cru",
     "canela": "canela_em_po",
     "noz-moscada": "noz_crua", "noz moscada": "noz_crua",
@@ -974,6 +980,9 @@ INGREDIENTE_PARA_TACO = {
     
     # Óleos e gorduras
     "azeite": "azeite_de_oliva", "azeite de oliva": "azeite_de_oliva",
+    "azeite extravirgem": "azeite_de_oliva_extra_virgem",
+    "azeite de oliva extra virgem": "azeite_de_oliva_extra_virgem",
+    "azeite de oliva extravirgem": "azeite_de_oliva_extra_virgem",
     "oleo vegetal": "oleo_de_soja", "oleo": "oleo_de_soja",
     "manteiga vegana": "margarina_com_oleo_interesterificado_com_sal_65_de_lipideos",
     "manteiga vegetal": "margarina_com_oleo_interesterificado_com_sal_65_de_lipideos",
@@ -1080,12 +1089,14 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
         "farofa": 0.40, "farinha": 0.20, "pao": 0.45, "cuscuz": 0.50,
         "feijao": 0.45, "lentilha": 0.45, "grao de bico": 0.45,
         "polenta": 0.50, "risoto": 0.45, "risone": 0.45,
+        "mandioquinha": 0.40,
         # Proteínas (25-35%)
         "frango": 0.30, "carne": 0.30, "boi": 0.30, "porco": 0.25,
         "peixe": 0.30, "file": 0.30, "maminha": 0.35, "costela": 0.35,
         "camarao": 0.25, "atum": 0.30, "salmao": 0.30, "bacalhau": 0.30,
         "ovo": 0.15, "sobrecoxa": 0.35, "linguica": 0.30,
         "kibe": 0.35, "almondega": 0.30, "milanesa": 0.30,
+        "entrecote": 0.85, "lula": 0.85,
         # Vegetais / Complementos (10-20%)
         "tomate": 0.10, "cebola": 0.08, "alho": 0.02, "pimentao": 0.08,
         "brocolis": 0.30, "abobrinha": 0.30, "beringela": 0.30,
@@ -1104,6 +1115,7 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
         "molho": 0.10, "shoyu": 0.03, "vinagre": 0.03,
         "limao": 0.03, "laranja": 0.08, "curry": 0.02,
         "gengibre": 0.02, "pesto": 0.08, "mostarda": 0.03,
+        "maionese": 0.30,
         # Cereais / Grãos
         "aveia": 0.20, "granola": 0.20, "quinoa": 0.25,
         # Frutas secas / Nozes
@@ -1120,19 +1132,36 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
     }
     
     # Calcular proporção para cada ingrediente
+    import unicodedata as _ud, re as _re
+
+    def _norm_prop(s: str) -> str:
+        """Normaliza para ASCII e tokeniza — sem acento, sem pontuação."""
+        s = _ud.normalize('NFKD', s.lower().strip()).encode('ASCII', 'ignore').decode('ASCII')
+        s = _re.sub(r'[^\w\s]', ' ', s)
+        return _re.sub(r'\s+', ' ', s).strip()
+
     proporcoes = []
     for ing in ingredientes:
-        ing_lower = ing.lower().strip()
+        ing_norm = _norm_prop(ing)
+        ing_tokens = set(ing_norm.split())
         prop = 0.0
 
-        # Buscar proporção mais específica primeiro
+        # Match por tokens inteiros — evita "sal" capturar "salmao"
         for chave, valor in PROPORCOES.items():
-            if chave in ing_lower or ing_lower in chave:
-                prop = valor
-                break
+            chave_tokens = chave.split()
+            if len(chave_tokens) > 1:
+                # Multi-token: todos os tokens da chave devem estar no ingrediente
+                if all(t in ing_tokens for t in chave_tokens):
+                    prop = valor
+                    break
+            else:
+                # Single-token: token exato no conjunto de tokens do ingrediente
+                if chave_tokens[0] in ing_tokens:
+                    prop = valor
+                    break
 
         if prop == 0:
-            prop = estimar_prop_por_classe(ing_lower, ingredientes, nome_prato)
+            prop = estimar_prop_por_classe(ing, ingredientes, nome_prato)
 
         if prop == 0:
             prop = 0.03
@@ -1140,9 +1169,6 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
         proporcoes.append(prop)
 
     total_prop = sum(proporcoes)
-    if total_prop > 0:
-        proporcoes = [p / total_prop for p in proporcoes]
-
     if total_prop > 0:
         proporcoes = [p / total_prop for p in proporcoes]
     
@@ -1162,22 +1188,9 @@ def calcular_nutricao_prato(ingredientes: list, porcao_gramas: int = 200, nome_p
         if teto_abs is not None:
             gramas = min(gramas, teto_abs)
 
-        print("\n--- DEBUG INGREDIENTE ---")
-        print("Ingrediente:", ingrediente)
-        print("Classe:", classificar_ingrediente_culinario(ingrediente, nome_prato))
-        print("Proporcao:", proporcoes[i])
-        print("Gramas:", gramas)
-        print("Dados TACO encontrados:", dados)
 
         if dados:
             fator = gramas / 100
-            print("Fator:", fator)
-            print("Contribuicao:")
-            print("  Calorias:", dados.get("calorias", 0) * fator)
-            print("  Proteinas:", dados.get("proteinas", 0) * fator)
-            print("  Carboidratos:", dados.get("carboidratos", 0) * fator)
-            print("  Gorduras:", dados.get("gorduras", 0) * fator)
-
             for key in ["calorias", "proteinas", "carboidratos", "gorduras", "fibras",
                        "sodio", "calcio", "ferro", "vitamina_a", "vitamina_c",
                        "vitamina_b12", "potassio", "zinco", "acucar"]:

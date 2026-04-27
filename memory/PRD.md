@@ -72,7 +72,7 @@
 ## Backlog Priorizado
 
 ### P0 - Urgente
-- (nenhum)
+- Rodar batch_all_nutrition.py force=True para regenerar as 188 fichas com o algoritmo corrigido (kcal_db estão com valores antigos e bugados no MongoDB)
 
 ### P1 - Próximo
 - Verificação geral de ingredientes e tabela nutricional em todos os pratos
