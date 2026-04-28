@@ -23,6 +23,14 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 
 ## Implementado
 
+### V3.5.1 (28/Abr/2026) — Fix React Error #31
+- `renderTextSafe` aplicado em `WeeklyReport.jsx` (16 pontos: ai.nota_geral, ai.titulo, periodo, dias_registrados, analise.detalhe, pontos_positivos, alertas, dicas, curiosidade, mensagem_motivacional, level.nome/xp/proximo_nivel, motivational_messages, next.nome/descricao, badges unlocked/locked)
+- `renderTextSafe` aplicado em `NotificationPanel.jsx` (6 pontos: n.title, n.message, n.date, ref.source, ref.title, dishes_context)
+- Função `renderTextSafe` declarada localmente em cada arquivo (mesmo padrão de App.js/DashboardPremium.jsx/Premium.jsx)
+- Lint ESLint OK em ambos os arquivos
+- Layout, lógica e estrutura de componentes inalterados
+- Aguardando deploy (push manual do usuário → auto-deploy Vercel)
+
 ### V3.5 (27/Abr/2026) — Migração DNS para arquitetura Split (Vercel + Render)
 - **Frontend migrado para Vercel** (`soulnutri-ai-server`), backend permanece no Render (`soulnutri-v3wd`)
 - DNS `soulnutri.app.br` repontado do Render para Vercel (A 216.198.79.1 / CNAME 4440d38797346d1a.vercel-dns-017.com)

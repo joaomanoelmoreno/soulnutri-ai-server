@@ -4,6 +4,18 @@ import { Bell, X, ExternalLink, ChevronRight, AlertTriangle, Leaf, CheckCircle, 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// 🔒 Render-safe para JSX: garante que NUNCA renderizamos um objeto direto (React error #31)
+// Aceita string/number normalmente; se for objeto, extrai 'texto'/'text'/'titulo'/etc.
+const renderTextSafe = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string' || typeof v === 'number') return String(v);
+  if (Array.isArray(v)) return v.map(renderTextSafe).filter(Boolean).join(', ');
+  if (typeof v === 'object') {
+    return v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || v.nome || '';
+  }
+  return '';
+};
+
 const ICON_MAP = {
   'alert-triangle': AlertTriangle,
   'leaf': Leaf,
@@ -226,7 +238,7 @@ export default function NotificationPanel({ userPin, userName, isVisible, onClos
                       fontWeight: 'bold',
                       fontFamily: 'DM Sans, sans-serif'
                     }}>
-                      {n.title}
+                      {renderTextSafe(n.title)}
                       {!n.read && (
                         <span style={{
                           width: '8px',
@@ -254,12 +266,12 @@ export default function NotificationPanel({ userPin, userName, isVisible, onClos
                     lineHeight: '1.5',
                     fontFamily: 'DM Sans, sans-serif'
                   }}>
-                    {n.message}
+                    {renderTextSafe(n.message)}
                   </p>
 
                   {/* Date */}
                   <div style={{ marginTop: '6px', color: '#64748b', fontSize: '11px' }}>
-                    {n.date || ''}
+                    {renderTextSafe(n.date)}
                   </div>
                 </div>
               </div>
@@ -297,10 +309,10 @@ export default function NotificationPanel({ userPin, userName, isVisible, onClos
                       <ExternalLink size={14} color="#10b981" style={{ flexShrink: 0 }} />
                       <div>
                         <div style={{ color: '#e2e8f0', fontSize: '12px', fontWeight: '600' }}>
-                          {ref.source}
+                          {renderTextSafe(ref.source)}
                         </div>
                         <div style={{ color: '#64748b', fontSize: '11px' }}>
-                          {ref.title}
+                          {renderTextSafe(ref.title)}
                         </div>
                       </div>
                     </a>
@@ -319,7 +331,7 @@ export default function NotificationPanel({ userPin, userName, isVisible, onClos
                       fontSize: '11px',
                       color: '#94a3b8'
                     }}>
-                      {dish}
+                      {renderTextSafe(dish)}
                     </span>
                   ))}
                 </div>

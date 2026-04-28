@@ -3,6 +3,18 @@ import './WeeklyReport.css';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+// 🔒 Render-safe para JSX: garante que NUNCA renderizamos um objeto direto (React error #31)
+// Aceita string/number normalmente; se for objeto, extrai 'texto'/'text'/'titulo'/etc.
+const renderTextSafe = (v) => {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string' || typeof v === 'number') return String(v);
+  if (Array.isArray(v)) return v.map(renderTextSafe).filter(Boolean).join(', ');
+  if (typeof v === 'object') {
+    return v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || v.nome || '';
+  }
+  return '';
+};
+
 const MACRO_STATUS_ICONS = {
   ok: { icon: '✓', color: '#22c55e', label: 'Adequado' },
   excesso: { icon: '↑', color: '#f59e0b', label: 'Excesso' },
@@ -108,9 +120,9 @@ function ReportTab({ report }) {
     <div className="wr-report">
       {/* Grade Card */}
       <div className="wr-grade-card" data-testid="report-grade">
-        <div className="wr-grade-badge">{ai.nota_geral || 'B'}</div>
-        <h3 className="wr-grade-title">{ai.titulo || 'Resumo da Semana'}</h3>
-        <p className="wr-grade-period">{report.periodo} | {report.dias_registrados} dias registrados</p>
+        <div className="wr-grade-badge">{renderTextSafe(ai.nota_geral) || 'B'}</div>
+        <h3 className="wr-grade-title">{renderTextSafe(ai.titulo) || 'Resumo da Semana'}</h3>
+        <p className="wr-grade-period">{renderTextSafe(report.periodo)} | {renderTextSafe(report.dias_registrados)} dias registrados</p>
       </div>
 
       {/* Macros Overview */}
@@ -143,7 +155,7 @@ function ReportTab({ report }) {
                     }}
                   />
                 </div>
-                {analise.detalhe && <p className="wr-macro-detail">{analise.detalhe}</p>}
+                {analise.detalhe && <p className="wr-macro-detail">{renderTextSafe(analise.detalhe)}</p>}
               </div>
             );
           })}
@@ -156,7 +168,7 @@ function ReportTab({ report }) {
           <h4 className="wr-section-title">Pontos Positivos</h4>
           <div className="wr-list-positive">
             {ai.pontos_positivos.map((p, i) => (
-              <div key={i} className="wr-list-item positive">{p}</div>
+              <div key={i} className="wr-list-item positive">{renderTextSafe(p)}</div>
             ))}
           </div>
         </div>
@@ -168,7 +180,7 @@ function ReportTab({ report }) {
           <h4 className="wr-section-title">Pontos de Atencao</h4>
           <div className="wr-list-alerts">
             {ai.alertas.map((a, i) => (
-              <div key={i} className="wr-list-item alert">{a}</div>
+              <div key={i} className="wr-list-item alert">{renderTextSafe(a)}</div>
             ))}
           </div>
         </div>
@@ -180,7 +192,7 @@ function ReportTab({ report }) {
           <h4 className="wr-section-title">Dicas para Voce</h4>
           <div className="wr-list-tips">
             {ai.dicas.map((d, i) => (
-              <div key={i} className="wr-list-item tip">{d}</div>
+              <div key={i} className="wr-list-item tip">{renderTextSafe(d)}</div>
             ))}
           </div>
         </div>
@@ -234,15 +246,15 @@ function AchievementsTab({ achievements }) {
           <span className="wr-level-num">{level.nivel}</span>
         </div>
         <div className="wr-level-info">
-          <h3 style={{ color: level.cor }}>{level.nome}</h3>
-          <p>{level.xp} XP</p>
+          <h3 style={{ color: level.cor }}>{renderTextSafe(level.nome)}</h3>
+          <p>{renderTextSafe(level.xp)} XP</p>
           <div className="wr-level-bar">
             <div 
               className="wr-level-bar-fill"
               style={{ width: `${level.progresso * 100}%`, backgroundColor: level.cor }}
             />
           </div>
-          <span className="wr-level-next">Proximo: {level.proximo_nivel}</span>
+          <span className="wr-level-next">Proximo: {renderTextSafe(level.proximo_nivel)}</span>
         </div>
       </div>
 
@@ -257,7 +269,7 @@ function AchievementsTab({ achievements }) {
       {messages.length > 0 && (
         <div className="wr-motivation-card">
           {messages.map((msg, i) => (
-            <p key={i}>{msg}</p>
+            <p key={i}>{renderTextSafe(msg)}</p>
           ))}
         </div>
       )}
@@ -269,8 +281,8 @@ function AchievementsTab({ achievements }) {
           <div className="wr-badge-preview">
             <div className="wr-badge-icon-locked">🔒</div>
             <div>
-              <strong>{next.nome}</strong>
-              <p>{next.descricao}</p>
+              <strong>{renderTextSafe(next.nome)}</strong>
+              <p>{renderTextSafe(next.descricao)}</p>
               <div className="wr-badge-progress-bar">
                 <div 
                   className="wr-badge-progress-fill"
@@ -291,8 +303,8 @@ function AchievementsTab({ achievements }) {
             {unlocked.map(badge => (
               <div key={badge.id} className="wr-badge unlocked" style={{ borderColor: badge.cor }}>
                 <span className="wr-badge-icon" style={{ color: badge.cor }}>⭐</span>
-                <span className="wr-badge-name">{badge.nome}</span>
-                <span className="wr-badge-desc">{badge.descricao}</span>
+                <span className="wr-badge-name">{renderTextSafe(badge.nome)}</span>
+                <span className="wr-badge-desc">{renderTextSafe(badge.descricao)}</span>
               </div>
             ))}
           </div>
@@ -307,8 +319,8 @@ function AchievementsTab({ achievements }) {
             {locked.map(badge => (
               <div key={badge.id} className="wr-badge locked">
                 <span className="wr-badge-icon">🔒</span>
-                <span className="wr-badge-name">{badge.nome}</span>
-                <span className="wr-badge-desc">{badge.descricao}</span>
+                <span className="wr-badge-name">{renderTextSafe(badge.nome)}</span>
+                <span className="wr-badge-desc">{renderTextSafe(badge.descricao)}</span>
                 <div className="wr-badge-mini-bar">
                   <div style={{ width: `${badge.progress * 100}%` }} />
                 </div>

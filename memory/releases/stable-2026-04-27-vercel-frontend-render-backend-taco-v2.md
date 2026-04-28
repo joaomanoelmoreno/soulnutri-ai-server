@@ -91,7 +91,7 @@ soulnutri.app.br  →  Vercel (frontend React PWA)
 - ✔ **Gelatina (pó vs preparado)** — aliases distintos no TACO
 - ✔ **Composição duplicada (atum/peixe)** — corrigido
 - ✔ **Inconsistência frontend/backend** — frontend Vercel consome backend Render explicitamente
-- ✔ **React Error #31** — não se manifesta nos fluxos principais validados pelo usuário
+- ✔ **React Error #31** — `renderTextSafe` aplicado em `WeeklyReport.jsx` (16 pontos) e `NotificationPanel.jsx` (6 pontos) em 28/Abr/2026 — aguardando deploy
 
 ---
 
@@ -100,7 +100,7 @@ soulnutri.app.br  →  Vercel (frontend React PWA)
 🟡 **P1 — Aliases adicionais em USDA fallback:** shoyu, sementes (abóbora/girassol/chia), ingredientes asiáticos e árabes (`TRADUCAO_PT_EN` em `usda_fallback.py`)
 🟡 **P1 — Cobertura TACO <50% em alguns pratos:** monitorar e expandir
 🟡 **P1 — Mix de Grãos:** 1 falha residual após batch
-🟡 **P1 — React Error #31 em `WeeklyReport.jsx` e `NotificationPanel.jsx`:** aplicar `renderTextSafe` (BLOQUEADO até autorização explícita do usuário)
+🟡 **P1 — React Error #31 em `WeeklyReport.jsx` e `NotificationPanel.jsx`:** ✅ CORRIGIDO em 28/Abr/2026 (renderTextSafe aplicado em 22 pontos críticos). Aguardando deploy para Vercel.
 🟡 **P1 — Substituir EMERGENT LLM KEY por chaves locais** (Gemini/OpenAI diretas)
 🟡 **P2 — Melhoria futura de confiança nutricional (UX):** indicador visual de fonte/qualidade do dado
 🟡 **P2 — Atualizar prompt Gemini para retornar macros estimados** (Camada 3 de fallback)
