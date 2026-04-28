@@ -806,7 +806,6 @@ async def identify_image(
                 logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
                 
                 decision = clip_decision
-                print("DEBUG CLIP_DECISION:", decision)
                 decision["source"] = "local_index"
 
                 # 🔴 GARANTIR CATEGORY NO FLUXO LOCAL (CIBI SANA)
@@ -854,34 +853,12 @@ async def identify_image(
 
                     return None
 
-                print("DEBUG CATEGORY_INPUTS:", {
-                    "dish": decision.get("dish"),
-                    "dish_display": decision.get("dish_display"),
-                    "category_before_infer": category,
-                })
-
                 canonical_name = decision.get("dish") or decision.get("dish_display")
 
                 if not category:
                     category = infer_category_from_keywords(canonical_name)
 
-                print("DEBUG CATEGORY_FIX:", {
-                    "source": decision.get("source"),
-                    "dish": decision.get("dish"),
-                    "dish_display": decision.get("dish_display"),
-                    "category_before": decision.get("category"),
-                    "canonical_name_used": canonical_name,
-                    "category_after": category,
-                })
-
                 decision["category"] = category or "não classificado"
-
-                print("DEBUG CATEGORY_AFTER_INFER:", {
-                    "dish": decision.get("dish"),
-                    "dish_display": decision.get("dish_display"),
-                    "category": decision.get("category"),
-                })
-                print("DEBUG CATEGORY_AFTER_FIX:", decision.get("category"))
 
                 # 1. preservar se já existir
                 category = decision.get("category") or decision.get("categoria")
@@ -1054,18 +1031,9 @@ async def identify_image(
             
             # Buscar ingredientes e nutrition sheet do MongoDB (1 query rapida)
             if decision.get('identified') and dish_display_name:
-                import asyncio as _asyncio
                 canonical_lookup_name = decision.get("dish") or dish_display_name
                 slug = canonical_lookup_name.lower().replace(' ', '_').replace('-', '_')
-                print("DEBUG LOCAL_LOOKUP_CANONICAL:", {
-                    "source": decision.get("source"),
-                    "dish": decision.get("dish"),
-                    "dish_display": decision.get("dish_display"),
-                    "canonical_name_used": canonical_lookup_name,
-                    "slug_used": slug,
-                    "category_before_lookup": decision.get("category"),
-                })
-                
+
                 parallel = {
                     'dish': db.dishes.find_one(
                         {"$or": [{"slug": slug}, {"name": {"$regex": f"^{dish_display_name}$", "$options": "i"}}]},
@@ -1074,18 +1042,12 @@ async def identify_image(
                     'nutrition': lookup_nutrition_sheet(dish_display_name)
                 }
                 keys = list(parallel.keys())
-                results = await _asyncio.gather(*parallel.values(), return_exceptions=True)
+                results = await asyncio.gather(*parallel.values(), return_exceptions=True)
                 resolved = dict(zip(keys, results))
-                
+
                 dish_doc = resolved.get('dish') if not isinstance(resolved.get('dish'), Exception) else None
                 sheet = resolved.get('nutrition') if not isinstance(resolved.get('nutrition'), Exception) else None
 
-                print("DEBUG LOCAL_LOOKUP_RESULT:", {
-                    "dish_doc_found": bool(dish_doc),
-                    "dish_doc_category": dish_doc.get("category") if dish_doc else None,
-                    "dish_doc_keys": list(dish_doc.keys()) if dish_doc else None,
-                })
-                
                 if dish_doc:
                     ings = dish_doc.get('ingredients') or dish_doc.get('ingredientes') or []
                     if ings:
@@ -1112,7 +1074,6 @@ async def identify_image(
             
             # Check premium apenas se credenciais enviadas (unica query)
             if pin and nome:
-                import asyncio as _asyncio
                 from services.profile_service import hash_pin
                 pin_hash = hash_pin(pin)
                 user_profile = await db.users.find_one(
@@ -1140,7 +1101,6 @@ async def identify_image(
                     }
         else:
             # Modo externo (Gemini): queries em paralelo
-            import asyncio as _asyncio
             parallel_tasks = {}
             
             if decision.get('identified') and dish_display_name:
@@ -1155,7 +1115,7 @@ async def identify_image(
             
             if parallel_tasks:
                 task_keys = list(parallel_tasks.keys())
-                results = await _asyncio.gather(*parallel_tasks.values(), return_exceptions=True)
+                results = await asyncio.gather(*parallel_tasks.values(), return_exceptions=True)
                 resolved = dict(zip(task_keys, results))
             else:
                 resolved = {}
@@ -1212,7 +1172,6 @@ async def identify_image(
         )
         
         # Montar resposta base
-        print("DEBUG BEFORE_RESPONSE:", decision)
         response_data = {
             "ok": True,
             "identified": decision['identified'],
@@ -1284,9 +1243,6 @@ async def identify_image(
                 "engine_used": engine
             })
         
-        print("FINAL CATEGORY:", response_data.get("category"))
-        print("DEBUG RESPONSE_DATA_CATEGORY:", response_data.get("category"))
-        print("DEBUG RESPONSE_DATA_KEYS:", list(response_data.keys()))
         return response_data
         
     except Exception as e:

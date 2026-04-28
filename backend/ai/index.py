@@ -252,7 +252,7 @@ class DishIndex:
                 adjusted_score = max(0, adjusted_score)
             
             confidence_level = self._get_confidence_level(adjusted_score)
-            logger.info(f"[CLIP] {dish_name} - Raw: {raw_score:.3f} Adj: {adjusted_score:.3f} Gap: {gap:.3f} Consist: {consistency_dishes} - {confidence_level}")
+            logger.debug(f"[CLIP] {dish_name} - Raw: {raw_score:.3f} Adj: {adjusted_score:.3f} Gap: {gap:.3f} Consist: {consistency_dishes} - {confidence_level}")
             results.append({
                 'dish': dish_name,
                 'score': round(adjusted_score, 4),
