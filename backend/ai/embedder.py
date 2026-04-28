@@ -156,8 +156,12 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     """Gera embedding de uma imagem a partir de bytes"""
     global _MODEL, _PREPROCESS, _USE_HF_API, _ONNX_SESSION, _USE_ONNX
     
-    import gc
-    gc.collect()  # Liberar memória antes de inferência
+    # Fase 2: gc.collect() removido do hot path. Manter atrás de flag para rollback.
+    # Se necessário reativar, definir SOULNUTRI_FORCE_GC=1 no ambiente.
+    _force_gc = os.environ.get("SOULNUTRI_FORCE_GC") == "1"
+    if _force_gc:
+        import gc
+        gc.collect()
     
     start = time.time()
     
@@ -192,13 +196,17 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
             if norm > 0:
                 embedding = embedding / norm
             
-            gc.collect()  # Liberar memória após inferência
+            if _force_gc:
+                import gc
+                gc.collect()
             logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms")
             return embedding
             
         except Exception as e:
             logger.error(f"[embedder] Erro ONNX: {e}")
-            gc.collect()
+            if _force_gc:
+                import gc
+                gc.collect()
             return None
     
     # ═══ MODO PYTORCH (dev local) ═══

@@ -228,13 +228,12 @@ api_router = APIRouter(prefix="/api")
 
 # Função auxiliar de configuração
 async def get_setting(key: str):
-    """Retorna configuração do banco ou False como default (com cache)"""
+    """Retorna configuração do banco ou False como default (com cache TTL 60s)"""
     if not hasattr(get_setting, '_cache'):
         get_setting._cache = {}
         get_setting._cache_time = {}
     
-    import time as _time
-    now = _time.time()
+    now = time.time()
     # Cache por 60 segundos
     if key in get_setting._cache and (now - get_setting._cache_time.get(key, 0)) < 60:
         return get_setting._cache[key]
@@ -853,52 +852,12 @@ async def identify_image(
 
                     return None
 
-                canonical_name = decision.get("dish") or decision.get("dish_display")
-
-                if not category:
-                    category = infer_category_from_keywords(canonical_name)
-
-                decision["category"] = category or "não classificado"
-
-                # 1. preservar se já existir
-                category = decision.get("category") or decision.get("categoria")
-
-                # 2. metadata/local payload
-                if not category:
-                    metadata = decision.get("metadata") or {}
-                    category = metadata.get("category") or metadata.get("categoria")
-
-                # 3. inferência conservadora
-                def infer_category_from_keywords(name: str):
-                    if not name:
-                        return None
-
-                    n = name.lower()
-
-                    # Proteína Animal
-                    if any(k in n for k in ["frango", "carne", "maminha", "panceta", "peixe", "atum", "camarao", "camarão"]):
-                        return "Proteína Animal"
-
-                    # Carboidrato
-                    if any(k in n for k in ["arroz", "massa", "batata", "mandioca", "polenta"]):
-                        return "Carboidrato"
-
-                    # Vegano
-                    if any(k in n for k in ["beterraba", "berinjela", "repolho", "mamão", "mamao", "legumes"]):
-                        return "Vegano"
-
-                    # Vegetariano
-                    if any(k in n for k in ["queijo", "ovo", "omelete"]):
-                        return "Vegetariano"
-
-                    return None
-
                 if not category:
                     category = infer_category_from_keywords(
-                        decision.get("dish_display") or decision.get("dish")
+                        decision.get("dish") or decision.get("dish_display")
                     )
 
-                # 4. fallback final
+                # fallback final
                 decision["category"] = category or "não classificado"
             else:
                 return IdentifyResponse(
