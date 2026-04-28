@@ -1,15 +1,46 @@
 # SoulNutri - Product Requirements Document
 
-## Versao Atual: V3.4 (Insights Premium + Admin por PIN)
+## Versao Atual: V3.5 (Arquitetura Split Vercel + Render + TACO v2 + USDA Fallback)
 
 ## Stack
-- Frontend: React (PWA) | Backend: FastAPI, Motor (MongoDB async)
+- Frontend: React (PWA) — **hospedado na Vercel** | Backend: FastAPI, Motor (MongoDB async) — **hospedado no Render Standard**
 - IA: OpenCLIP ViT-B-16 (ONNX pré-otimizado R2) | Gemini 2.5 Flash Lite (Emergent LLM Key)
-- TTS: gTTS (GRATUITO, pt-BR) — REGRA IMUTÁVEL | DB: MongoDB Atlas | Deploy: Render Standard 1GB
+- TTS: gTTS (GRATUITO, pt-BR) — REGRA IMUTÁVEL | DB: MongoDB Atlas
+
+## Arquitetura de Produção (27/Abr/2026)
+```
+soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
+                       │
+                       └─→ https://soulnutri-v3wd.onrender.com (FastAPI + MongoDB)
+```
+- DNS: Registro.br (NS: a/b/c.sec.dns.br)
+- Apex `soulnutri.app.br`: `A @ 216.198.79.1` → Vercel
+- `www.soulnutri.app.br`: `CNAME www 4440d38797346d1a.vercel-dns-017.com.` → Vercel
+- Backend Render custom domain `soulnutri.app.br` mantido como rollback (não removido)
+- SSL válido até Jul/2026 (auto-renew Let's Encrypt via Vercel)
 
 ## REGRAS IMUTÁVEIS → /app/memory/REGRAS_IMUTAVEIS.md
 
 ## Implementado
+
+### V3.5 (27/Abr/2026) — Migração DNS para arquitetura Split (Vercel + Render)
+- **Frontend migrado para Vercel** (`soulnutri-ai-server`), backend permanece no Render (`soulnutri-v3wd`)
+- DNS `soulnutri.app.br` repontado do Render para Vercel (A 216.198.79.1 / CNAME 4440d38797346d1a.vercel-dns-017.com)
+- SSL Let's Encrypt emitido automaticamente pela Vercel (válido 27/Abr/2026 → 26/Jul/2026)
+- CORS no backend Render validado para Origins `https://soulnutri.app.br` e `https://www.soulnutri.app.br`
+- Render custom domain mantido (rollback instantâneo se necessário)
+- Frontend bundle (`main.16845801.js`) com 10 chamadas para `https://soulnutri-v3wd.onrender.com` (REACT_APP_BACKEND_URL injetada em build time)
+- Backup DNS anterior: `A @ 216.24.57.1` / `CNAME www soulnutri-v3wd.onrender.com.`
+- Fluxos validados pelo usuário: identificação de prato, nutrição, ingredientes, alertas, categoria
+
+### V3.4.1 (27/Abr/2026) — Auditoria Nutricional Sistêmica + Fallback USDA
+- **taco_database.py refatorado**: loop de proporções migrado de substring match para token exact match (evita `"sal"` puxar valores de `"salmão"`)
+- **usda_fallback.py criado**: serviço que consulta USDA FoodData Central API quando ingrediente não está no TACO (pratos internacionais)
+- Dicionário `TRADUCAO_PT_EN` inicial para pratos internacionais (expandir conforme demanda)
+- Novos ingredientes/aliases adicionados ao TACO: maionese, lula, entrecote, gelatina preparada, etc.
+- Script `batch_force_taco.py` rodado em lote sobre os 188 pratos em `nutrition_sheets` — valores recalculados
+- Validação em produção: Frango Grelhado 143.7 kcal / Molho Tártaro 174.1 kcal (antes estavam com 53 kcal / 5 kcal respectivamente)
+- Deploy Render estava preso em cache Docker BuildKit — resolvido com "Clear Cache" no dashboard
 
 ### V3.4 (25/Abr/2026) — Insights Premium + Admin por PIN
 - BUG CORRIGIDO: enrichLoading não resetava quando result = null (race condition) — patch `setEnrichLoading(false)` no early return
@@ -72,9 +103,13 @@
 ## Backlog Priorizado
 
 ### P0 - Urgente
-- Rodar batch_all_nutrition.py force=True para regenerar as 188 fichas com o algoritmo corrigido (kcal_db estão com valores antigos e bugados no MongoDB)
+- (nenhum item P0 pendente no momento — migração DNS + auditoria nutricional concluídas em 27/Abr/2026)
 
 ### P1 - Próximo
+- React Error #31 em WeeklyReport.jsx e NotificationPanel.jsx (aplicar `renderTextSafe` — BLOQUEADO pelo usuário até autorização)
+- Substituir EMERGENT LLM KEY por chaves locais fornecidas pelo usuário
+- Expandir dicionário TRADUCAO_PT_EN em usda_fallback.py (culinárias asiática/árabe)
+- Atualizar prompt Gemini para retornar macros estimados (Camada 3 de fallback nutricional)
 - Verificação geral de ingredientes e tabela nutricional em todos os pratos
 - Landing page premium com trial (aguardando mockup do usuário)
 - Integração Stripe para cobrança de assinaturas
@@ -84,6 +119,8 @@
 - Revisão ingredientes/descrição pratos F-Z (usuário inserindo via admin)
 - Melhorar tempo CLIP de 2s para <500ms
 - Notificações push: verificar rotação diária
+- Migração final das imagens do Admin para Cloudflare R2 (erro 500 no upload em produção)
+- Remover custom domain `soulnutri.app.br` do Render **somente após** 7 dias de estabilidade Vercel (rollback seguro)
 
 ### P3 - Futuro
 - Google Play (TWA) / Apple Store (Capacitor)
