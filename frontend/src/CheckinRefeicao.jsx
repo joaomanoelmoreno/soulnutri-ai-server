@@ -20,6 +20,30 @@ export default function CheckinRefeicao({ pin, nome, onClose, onSuccess }) {
   const [mostrarCandidatos, setMostrarCandidatos] = useState(false);
   const [candidatos, setCandidatos] = useState([]);
 
+  // Normalizar imagem antes de enviar (R3: 512px max, JPEG 82%, alinhado App.js)
+  const normalizeImage = (file) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxSize = 512;
+        let w = img.width;
+        let h = img.height;
+        if (w > maxSize || h > maxSize) {
+          const ratio = Math.min(maxSize / w, maxSize / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        canvas.toBlob((blob) => resolve(blob || file), 'image/jpeg', 0.82);
+      };
+      img.onerror = () => resolve(file);
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
   // Identificar foto e mostrar candidatos
   const handleFoto = useCallback(async (e) => {
     const file = e.target.files?.[0];
@@ -30,8 +54,9 @@ export default function CheckinRefeicao({ pin, nome, onClose, onSuccess }) {
     setCandidatos([]);
 
     try {
+      const normalized = await normalizeImage(file);
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', normalized, 'photo.jpg');
 
       const res = await fetch(`${API}/api/ai/identify`, {
         method: 'POST',

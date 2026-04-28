@@ -1321,7 +1321,7 @@ const loadNotifCount = async (pin) => {
     ctx.drawImage(v, sx, sy, sw, sh, 0, 0, outW, outH);
     console.log(`[Capture] Crop: video(${v.videoWidth}x${v.videoHeight}) guide(${Math.round(sx)},${Math.round(sy)} ${Math.round(sw)}x${Math.round(sh)}) -> canvas(${outW}x${outH})`);
     
-    // Qualidade 70% - suficiente para IA, reduz upload significativamente
+    // Qualidade 82% - alinhado R3 (camera/scanner/galeria uniformizados)
     c.toBlob(b => {
       if (b && mountedRef.current) {
         setLastImageBlob(b);
@@ -1329,7 +1329,7 @@ const loadNotifCount = async (pin) => {
       }
       // Limpar canvas após uso
       ctx.clearRect(0, 0, outW, outH);
-    }, 'image/jpeg', 0.70);
+    }, 'image/jpeg', 0.82);
   }, [multiMode]);
 
   const normalizeResult = (raw) => {
@@ -1821,7 +1821,7 @@ try {
       c.height = h;
       ctx.drawImage(v, sX, sY, sW, sH, 0, 0, w, h);
       
-      // Qualidade 70% otimizada para IA
+      // Qualidade 82% alinhada R3 (uniformizada com camera/galeria)
       c.toBlob(async (blob) => {
         if (!blob || !mountedRef.current || scanningRef.current) return;
         
@@ -1875,7 +1875,7 @@ try {
         
         // Limpar canvas
         ctx.clearRect(0, 0, w, h);
-      }, 'image/jpeg', 0.70);
+      }, 'image/jpeg', 0.82);
     }
     } finally {
       scanInFlightRef.current = false;
@@ -2006,12 +2006,12 @@ return {
     itens: plateItems.length
   };
 
-  // Normalizar imagem para resolucao padrao (1024px max, JPEG 85%)
+  // Normalizar imagem para R3: 512px max, JPEG 82% (alinhado camera/scanner)
   const normalizeImage = (file) => {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
-        const maxSize = 1024;
+        const maxSize = 512;
         let w = img.width;
         let h = img.height;
         if (w > maxSize || h > maxSize) {
@@ -2026,7 +2026,7 @@ return {
         ctx.drawImage(img, 0, 0, w, h);
         canvas.toBlob((blob) => {
           resolve(blob || file);
-        }, 'image/jpeg', 0.85);
+        }, 'image/jpeg', 0.82);
       };
       img.onerror = () => resolve(file);
       img.src = URL.createObjectURL(file);
