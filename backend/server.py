@@ -58,6 +58,22 @@ logger = logging.getLogger(__name__)
 
 import re
 
+# ═══════════════════════════════════════════════════════
+# DEPLOY VERSION MARKERS — atualizar a cada nova fase para
+# permitir verificacao deterministica de qual codigo esta no ar.
+# ═══════════════════════════════════════════════════════
+DEPLOY_PHASE = "phase_2"
+DEPLOY_PHASE_DESCRIPTION = "Dedup category + gc.collect() conditional + time global"
+DEPLOY_PATCHES = [
+    "phase1_remove_debug_prints",
+    "phase1_logger_info_to_debug",
+    "phase1_remove_redundant_asyncio_imports",
+    "phase2_dedup_infer_category",
+    "phase2_gc_collect_conditional_flag",
+    "phase2_get_setting_use_global_time",
+]
+PROCESS_START_TIME = datetime.now(timezone.utc)
+
 # ══════════════════════════════════════════════════════
 # ADMIN AUTH - Todas as rotas /admin/* requerem X-Admin-Key
 # ══════════════════════════════════════════════════════
@@ -6059,6 +6075,27 @@ async def debug_deploy():
         "index_absolute": (abs_build / "index.html").exists(),
         "build_files": build_files,
         "sys_path": sys.path[:5],
+    }
+
+
+@app.get("/api/debug/version")
+async def debug_version():
+    """Marcador deterministico do codigo deployado.
+    
+    Use para confirmar qual versao/fase esta no ar apos deploy.
+    Atualize as constantes DEPLOY_PHASE / DEPLOY_PATCHES no topo
+    de server.py a cada nova fase.
+    """
+    git_commit = os.environ.get("RENDER_GIT_COMMIT") or os.environ.get("GIT_COMMIT") or "not-set"
+    return {
+        "phase": DEPLOY_PHASE,
+        "description": DEPLOY_PHASE_DESCRIPTION,
+        "patches": DEPLOY_PATCHES,
+        "git_commit": git_commit[:12] if git_commit and git_commit != "not-set" else "not-set",
+        "process_pid": os.getpid(),
+        "process_started_at": PROCESS_START_TIME.isoformat(),
+        "process_uptime_seconds": round((datetime.now(timezone.utc) - PROCESS_START_TIME).total_seconds(), 1),
+        "server_time_utc": datetime.now(timezone.utc).isoformat(),
     }
 
 # ═══════════════════════════════════════════════════════
