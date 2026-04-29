@@ -296,6 +296,23 @@ function App() {
   useEffect(() => {
     localStorage.setItem('soulnutri_view_mode', viewMode);
   }, [viewMode]);
+  // ───────────────────────────────────────────────────────────
+  // Warm-up silencioso do ONNX (P1)
+  // - 1x por sessao do browser (sessionStorage)
+  // - nao bloqueia UI, nao exibe erro, timeout curto
+  // - falha silenciosa (catch vazio)
+  // ───────────────────────────────────────────────────────────
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem('soulnutri_warmup_done') === '1') return;
+      const ctrl = new AbortController();
+      const timeoutId = setTimeout(() => ctrl.abort(), 4000);
+      fetch(`${API}/ai/warmup`, { method: 'GET', signal: ctrl.signal })
+        .then(() => { try { sessionStorage.setItem('soulnutri_warmup_done', '1'); } catch {} })
+        .catch(() => { /* silencioso */ })
+        .finally(() => clearTimeout(timeoutId));
+    } catch { /* silencioso */ }
+  }, []);
   // IA sob demanda
   const [loadingIA, setLoadingIA] = useState(false); // Carregando IA
   // Galeria de fotos capturadas

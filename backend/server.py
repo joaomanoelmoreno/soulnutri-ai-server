@@ -394,6 +394,64 @@ async def health():
     """Health check do servidor"""
     return {"ok": True, "service": "SoulNutri AI Server"}
 
+
+# ═══════════════════════════════════════════════════════
+# Warm-up silencioso do ONNX (P1)
+# Reduz lentidao do 1o scan apos restart/inatividade do Render.
+# - Inferencia dummy 224x224 em memoria.
+# - Idempotente: apos 1a chamada, responde rapido sem re-inferir.
+# - Zero persistencia, zero MongoDB.
+# ═══════════════════════════════════════════════════════
+_WARMED_UP = False
+_WARMUP_MS = None
+
+@api_router.get("/ai/warmup")
+async def ai_warmup():
+    """Aquece o runtime ONNX com uma inferencia dummy.
+    
+    Seguro chamar varias vezes: se ja aquecido, responde rapido.
+    Nao altera /api/ai/identify, nao toca DB.
+    """
+    global _WARMED_UP, _WARMUP_MS
+    
+    if _WARMED_UP:
+        return {
+            "ok": True,
+            "warmed": True,
+            "inference_ms": _WARMUP_MS,
+            "cached": True,
+        }
+    
+    try:
+        from ai.embedder import image_embedding_from_bytes
+        from PIL import Image
+        import io as _io
+        
+        # Imagem dummy 224x224 RGB (tamanho nativo CLIP, PNG ~300B)
+        dummy = Image.new("RGB", (224, 224), color=(128, 128, 128))
+        buf = _io.BytesIO()
+        dummy.save(buf, format="PNG")
+        image_bytes = buf.getvalue()
+        
+        t0 = time.perf_counter()
+        emb = image_embedding_from_bytes(image_bytes)
+        elapsed_ms = round((time.perf_counter() - t0) * 1000, 1)
+        
+        if emb is None:
+            return {"ok": False, "warmed": False, "inference_ms": elapsed_ms}
+        
+        _WARMED_UP = True
+        _WARMUP_MS = elapsed_ms
+        return {
+            "ok": True,
+            "warmed": True,
+            "inference_ms": elapsed_ms,
+            "cached": False,
+        }
+    except Exception as e:
+        logger.warning(f"[warmup] falhou: {e}")
+        return {"ok": False, "warmed": False, "error": str(e)[:120]}
+
 @api_router.get("/debug/memory")
 async def debug_memory():
     """Diagnóstico de memória do servidor"""
