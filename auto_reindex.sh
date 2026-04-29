@@ -2,7 +2,7 @@
 # SoulNutri - Atualização automática do dataset a cada 10 minutos
 # Para parar: kill $(cat /tmp/soulnutri_reindex.pid)
 
-API_URL="https://visual-families.preview.emergentagent.com"
+API_URL="https://onnx-timeout-fix.preview.emergentagent.com"
 LOG_FILE="/tmp/soulnutri_reindex.log"
 
 echo "$$" > /tmp/soulnutri_reindex.pid

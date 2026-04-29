@@ -19,6 +19,20 @@ _USE_HF_API = True
 _USE_ONNX = False  # True quando modelo ONNX esta disponivel
 _ONNX_SESSION = None
 
+# ═══════════════════════════════════════════════════════
+# Estado em memoria para diagnostico de performance
+# Acessado via get_performance_stats() para /api/debug/performance.
+# Zero persistencia. Zero MongoDB. Resetado a cada reboot.
+# ═══════════════════════════════════════════════════════
+_LAST_INFERENCE_MS = None
+_INFERENCE_COUNT = 0
+_TOTAL_INFERENCE_MS = 0.0
+_ONNX_CONFIG = {
+    "onnx_mode": None,
+    "inter_op_num_threads": None,
+    "intra_op_num_threads": None,
+}
+
 # Caminho do modelo ONNX (gerado no Docker build)
 ONNX_MODEL_PATH = "/app/clip_visual_fp16.onnx"
 
@@ -68,6 +82,12 @@ def _try_load_onnx_model():
         logger.info("[embedder] Carregando modelo CLIP via ONNX Runtime (deploy)...")
         start = time.time()
         
+        # ═══════════════════════════════════════════════════════
+        # CRITICAL:
+        # Nao alterar para ORT_DISABLE_ALL.
+        # Isso causa inferencia de 9-50 segundos no Render.
+        # Esta configuracao foi validada em producao em Abr/2026.
+        # ═══════════════════════════════════════════════════════
         opts = ort.SessionOptions()
         opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
         opts.inter_op_num_threads = 2
@@ -79,6 +99,11 @@ def _try_load_onnx_model():
         _USE_ONNX = True
         _USE_HF_API = False
         
+        _ONNX_CONFIG["onnx_mode"] = "ENABLE_BASIC"
+        _ONNX_CONFIG["inter_op_num_threads"] = 2
+        _ONNX_CONFIG["intra_op_num_threads"] = 2
+        
+        logger.info("[embedder] ONNX mode: ENABLE_BASIC / threads=2")
         logger.info(f"[embedder] Modelo ONNX carregado em {time.time()-start:.2f}s (~300MB RAM)")
         return True
         
@@ -169,27 +194,29 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     if _USE_ONNX and _ONNX_SESSION is not None:
         try:
             from PIL import ImageEnhance, ImageOps
+            global _LAST_INFERENCE_MS, _INFERENCE_COUNT, _TOTAL_INFERENCE_MS
             
+            # --- t_decode: decodificar bytes -> PIL.Image ---
+            t_decode_start = time.time()
             img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+            t_decode = (time.time() - t_decode_start) * 1000
             
-            # Mesmo pre-processamento que o modo PyTorch
+            # --- t_preprocess: enhance + resize + normalize (CLIP) ---
+            t_preprocess_start = time.time()
             img = ImageOps.autocontrast(img, cutoff=1)
             img = ImageEnhance.Sharpness(img).enhance(1.3)
             img = ImageEnhance.Color(img).enhance(1.1)
-            
-            # Preprocessing CLIP via numpy (sem torch)
             img_np = _preprocess_clip_numpy(img)
-            
-            # Liberar imagem PIL (não mais necessária)
             del img
+            t_preprocess = (time.time() - t_preprocess_start) * 1000
             
-            # Inferencia ONNX
+            # --- t_clip_inference: ONNX Runtime forward ---
+            t_clip_start = time.time()
             result = _ONNX_SESSION.run(None, {'image': img_np})[0]
-            
-            # Liberar input
+            t_clip_inference = (time.time() - t_clip_start) * 1000
             del img_np
             
-            # Normalizar
+            # Normalizar embedding (fora do timing de CLIP)
             embedding = result[0].astype(np.float32)
             del result
             norm = np.linalg.norm(embedding)
@@ -199,7 +226,26 @@ def get_image_embedding(image_bytes: bytes) -> np.ndarray:
             if _force_gc:
                 import gc
                 gc.collect()
-            logger.info(f"[embedder] ONNX: {(time.time()-start)*1000:.0f}ms")
+            
+            t_total = (time.time() - start) * 1000
+            
+            # --- Atualiza stats em memoria (para /api/debug/performance) ---
+            _LAST_INFERENCE_MS = round(t_clip_inference, 1)
+            _INFERENCE_COUNT += 1
+            _TOTAL_INFERENCE_MS += t_clip_inference
+            
+            # --- Log estruturado unico (1 linha por request) ---
+            logger.info(
+                f"[TIMING] decode={t_decode:.0f}ms preprocess={t_preprocess:.0f}ms "
+                f"clip={t_clip_inference:.0f}ms total={t_total:.0f}ms"
+            )
+            
+            # --- Detector de regressao ---
+            if t_clip_inference > 15000:
+                logger.error("[CRITICAL] inference_timeout_risk")
+            elif t_clip_inference > 5000:
+                logger.warning("[ALERT] slow_inference >5s")
+            
             return embedding
             
         except Exception as e:
@@ -259,6 +305,23 @@ def _get_embedding_via_api(image_bytes: bytes) -> np.ndarray:
     """DESABILITADO"""
     logger.error("[embedder] ERRO: API externa desabilitada")
     return None
+
+
+def get_performance_stats():
+    """Retorna stats em memoria para /api/debug/performance.
+    
+    Zero persistencia, zero MongoDB. Nao quebra se ainda nao houve scan.
+    """
+    avg = None
+    if _INFERENCE_COUNT > 0:
+        avg = round(_TOTAL_INFERENCE_MS / _INFERENCE_COUNT, 1)
+    return {
+        "onnx_mode": _ONNX_CONFIG.get("onnx_mode"),
+        "threads": _ONNX_CONFIG.get("inter_op_num_threads"),
+        "last_inference_ms": _LAST_INFERENCE_MS,
+        "avg_inference_ms": avg,
+        "inference_count": _INFERENCE_COUNT,
+    }
 
 
 def get_model_info():

@@ -6098,6 +6098,36 @@ async def debug_version():
         "server_time_utc": datetime.now(timezone.utc).isoformat(),
     }
 
+
+@app.get("/api/debug/performance")
+async def debug_performance():
+    """Diagnostico leve de performance do motor de IA (ONNX).
+    
+    - Somente memoria. Zero persistencia. Zero MongoDB.
+    - Nao quebra se ainda nao houve scan (last_inference_ms/avg sao None).
+    """
+    try:
+        from ai.embedder import get_performance_stats
+        stats = get_performance_stats()
+    except Exception as e:
+        logger.error(f"[debug_performance] erro ao ler stats: {e}")
+        stats = {
+            "onnx_mode": None,
+            "threads": None,
+            "last_inference_ms": None,
+            "avg_inference_ms": None,
+            "inference_count": 0,
+        }
+    uptime = (datetime.now(timezone.utc) - PROCESS_START_TIME).total_seconds()
+    return {
+        "onnx_mode": stats.get("onnx_mode"),
+        "threads": stats.get("threads"),
+        "last_inference_ms": stats.get("last_inference_ms"),
+        "avg_inference_ms": stats.get("avg_inference_ms"),
+        "inference_count": stats.get("inference_count", 0),
+        "uptime": round(uptime, 1),
+    }
+
 # ═══════════════════════════════════════════════════════
 # DEPLOY UNIFICADO: FastAPI serve o React Build (SPA)
 # ═══════════════════════════════════════════════════════

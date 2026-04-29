@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://visual-families.preview.emergentagent.com
-- Admin: https://visual-families.preview.emergentagent.com/admin
-- Lista de Pratos: https://visual-families.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://onnx-timeout-fix.preview.emergentagent.com
+- Admin: https://onnx-timeout-fix.preview.emergentagent.com/admin
+- Lista de Pratos: https://onnx-timeout-fix.preview.emergentagent.com/lista-pratos.txt
 
 ---
 
