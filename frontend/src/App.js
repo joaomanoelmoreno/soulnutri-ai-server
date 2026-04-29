@@ -422,6 +422,8 @@ const renderTextSafe = (v) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifUnread, setNotifUnread] = useState(0);
   const [mealRegistered, setMealRegistered] = useState(false); // Confirmação de registro
+  const [showFamilyConfirm, setShowFamilyConfirm] = useState(false); // Modal de confirmação de família visual
+  const [selectedSubitemIdx, setSelectedSubitemIdx] = useState(-1); // Índice do subitem selecionado
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [installBannerDismissed, setInstallBannerDismissed] = useState(
     () => !!localStorage.getItem('soulnutri_install_dismissed')
@@ -4093,7 +4095,14 @@ return {
 <div className="buffet-actions">
   <button 
     className="add-to-plate-btn"
-    onClick={() => setShowAddMore(true)}
+    onClick={() => {
+      if (result?.family_match?.require_confirmation) {
+        setSelectedSubitemIdx(-1);
+        setShowFamilyConfirm(true);
+      } else {
+        setShowAddMore(true);
+      }
+    }}
     data-testid="add-to-plate-btn"
   >
     ✓ Adicionar ao prato
@@ -4335,6 +4344,109 @@ return {
       })()}
 
       {/* MODAL "ADICIONAR MAIS ITENS?" - Fluxo Único Inteligente */}
+      {showFamilyConfirm && result?.family_match && (
+        <div className="modal-overlay" data-testid="family-confirm-modal" style={{ zIndex: 9999 }}
+          onClick={() => setShowFamilyConfirm(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{
+            maxWidth: '360px',
+            background: 'linear-gradient(160deg, #0f1923 0%, #1a2535 100%)',
+            border: '1px solid rgba(255,255,255,0.10)',
+            borderRadius: '16px',
+            padding: '24px 20px 20px',
+          }}>
+            <button className="modal-back-btn" onClick={() => setShowFamilyConfirm(false)}
+              style={{ position: 'absolute', top: '12px', left: '12px', fontSize: '12px', color: '#94a3b8', background: 'none', border: 'none', cursor: 'pointer' }}>
+              ← Voltar
+            </button>
+
+            <div style={{ textAlign: 'center', marginBottom: '16px', marginTop: '8px' }}>
+              <div style={{ fontSize: '28px', marginBottom: '6px' }}>🍽️</div>
+              <h3 style={{ color: '#f1f5f9', fontSize: '16px', margin: '0 0 4px', fontWeight: 700 }}>
+                {result.family_match.family_name}
+              </h3>
+              <p style={{ color: '#94a3b8', fontSize: '12px', margin: 0 }}>
+                Variação calórica:{' '}
+                <strong style={{ color: '#fbbf24' }}>
+                  {result.family_match.kcal_min}–{result.family_match.kcal_max} kcal/100g
+                </strong>
+                {result.family_match.kcal_estimated && (
+                  <span style={{ marginLeft: '6px', background: 'rgba(251,191,36,0.15)', color: '#fbbf24',
+                    fontSize: '10px', padding: '1px 6px', borderRadius: '8px' }}>estimado</span>
+                )}
+              </p>
+            </div>
+
+            <p style={{ color: '#cbd5e1', fontSize: '13px', marginBottom: '12px', textAlign: 'center' }}>
+              Para registrar corretamente, confirme o subtipo:
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
+              {result.family_match.subitems.map((sub, idx) => (
+                <button
+                  key={sub.dish_id}
+                  data-testid={`family-subitem-${idx}`}
+                  onClick={() => setSelectedSubitemIdx(idx)}
+                  style={{
+                    padding: '10px 14px',
+                    borderRadius: '10px',
+                    border: selectedSubitemIdx === idx
+                      ? '2px solid #22c55e'
+                      : '1px solid rgba(255,255,255,0.12)',
+                    background: selectedSubitemIdx === idx
+                      ? 'rgba(34,197,94,0.10)'
+                      : 'rgba(255,255,255,0.04)',
+                    color: selectedSubitemIdx === idx ? '#22c55e' : '#e2e8f0',
+                    fontSize: '13px',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'border 0.15s, background 0.15s',
+                  }}
+                >
+                  {selectedSubitemIdx === idx ? '✓ ' : '○ '}{sub.display_name}
+                </button>
+              ))}
+            </div>
+
+            <button
+              data-testid="family-confirm-btn"
+              disabled={selectedSubitemIdx < 0}
+              onClick={() => {
+                if (selectedSubitemIdx < 0) return;
+                const chosen = result.family_match.subitems[selectedSubitemIdx];
+                setResult(prev => ({
+                  ...prev,
+                  dish_display: chosen.display_name,
+                  dish: chosen.dish_id,
+                  family_match: null, // Confirmado — não mostrar novamente
+                }));
+                setShowFamilyConfirm(false);
+                setShowAddMore(true);
+              }}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '10px',
+                border: 'none',
+                background: selectedSubitemIdx >= 0 ? '#22c55e' : 'rgba(255,255,255,0.07)',
+                color: selectedSubitemIdx >= 0 ? '#fff' : '#64748b',
+                fontWeight: 700,
+                fontSize: '14px',
+                cursor: selectedSubitemIdx >= 0 ? 'pointer' : 'not-allowed',
+                transition: 'background 0.2s',
+              }}
+            >
+              {selectedSubitemIdx >= 0 ? '✓ Confirmar e Salvar' : 'Selecione o subtipo para continuar'}
+            </button>
+
+            {result.family_match.alergenos_consolidados?.length > 0 && (
+              <p style={{ color: '#94a3b8', fontSize: '11px', textAlign: 'center', marginTop: '10px' }}>
+                Alergênicos na família: {result.family_match.alergenos_consolidados.join(', ')}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       {showAddMore && result?.ok && result?.identified && (
         <div className="modal-overlay add-more-overlay" data-testid="add-more-modal">
           <div className="modal-content add-more-modal" onClick={e => e.stopPropagation()}>

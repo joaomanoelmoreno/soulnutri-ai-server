@@ -1,6 +1,12 @@
 # SoulNutri - Product Requirements Document
 
-## Versao Atual: V3.5 (Arquitetura Split Vercel + Render + TACO v2 + USDA Fallback)
+## Versao Atual: V3.6 (Famílias Visuais — Migration + Backend + Frontend)
+
+## Stack
+- Frontend: React (PWA) — **hospedado na Vercel** | Backend: FastAPI, Motor (MongoDB async) — **hospedado no Render Standard**
+- IA: OpenCLIP ViT-B-16 (ONNX pré-otimizado R2) | Gemini 2.5 Flash Lite (Emergent LLM Key)
+- TTS: gTTS (GRATUITO, pt-BR) — REGRA IMUTÁVEL | DB: MongoDB Atlas
+- **Famílias Visuais:** collection `families` (5 famílias) + campo `family_id` em `dishes`
 
 ## Stack
 - Frontend: React (PWA) — **hospedado na Vercel** | Backend: FastAPI, Motor (MongoDB async) — **hospedado no Render Standard**
@@ -22,6 +28,33 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 ## REGRAS IMUTÁVEIS → /app/memory/REGRAS_IMUTAVEIS.md
 
 ## Implementado
+
+### V3.6 (05/Fev/2026) — Famílias Visuais
+- **Migration script** `/app/backend/scripts/migrate_families_v1.py` — idempotente, já executado em produção
+- **5 famílias criadas** no MongoDB (`families` collection): Milanesa Animal, Parmegiana Animal, Lasanha Vegetariano, Risoto Vegetariano, Gratinado Animal
+- **12 dishes vinculados** com `family_id` (incluindo 5 placeholders criados: Frango à Milanesa, Filé Mignon à Milanesa, Peixe à Parmegiana, Filé Mignon à Parmegiana, Risoto Milanês)
+- **Backend** (`server.py`): lookup de família no `/api/ai/identify` — retorna `family_match` se prato pertencer a uma família
+- **Frontend** (`App.js`): `FamilyConfirmationModal` — dropdown obrigatório, bloqueia salvar sem confirmação, exibe faixa kcal e badge "estimado"
+- **ai/policy.py**: `quiaboempanado` corrigido para `vegano`
+- **ai/families.py**: Strogonoffs separados — animais (Frango/Carne) vs Vegano individual
+- **Validação de deploy**: `lasanha-de-espinafre` marcada como `nutricao_suspeita=true` (kcal=54 é erro grave)
+- Documento de validação: `/app/memory/diagnostics/visual_families_validation_2026-02-05.md`
+
+### P0 - Urgente
+- Deploy para Render/Vercel (usar "Save to Github" → auto-deploy) — verificar com `/api/debug/version`
+
+### P1
+- Performance Fase 3: Reativar flags ONNX Runtime em `embedder.py` (linhas 72-76)
+- Revisão nutricional de Lasanha de Espinafre (kcal=54 é erro — usar admin panel ou batch_force_taco.py)
+
+### P2
+- Criar fichas completas dos 5 dishes placeholder (fotos + nutrição real)
+- Migrar upload de imagens Admin para Cloudflare R2
+- Expandir `TRADUCAO_PT_EN` em `usda_fallback.py`
+
+### P3
+- Substituir EMERGENT LLM KEY por chaves próprias
+- Remover domínio `soulnutri.app.br` do Render (após estabilidade)
 
 ### V3.5.1 (28/Abr/2026) — Fix React Error #31
 - `renderTextSafe` aplicado em `WeeklyReport.jsx` (16 pontos: ai.nota_geral, ai.titulo, periodo, dias_registrados, analise.detalhe, pontos_positivos, alertas, dicas, curiosidade, mensagem_motivacional, level.nome/xp/proximo_nivel, motivational_messages, next.nome/descricao, badges unlocked/locked)

@@ -225,7 +225,7 @@ DISH_CATEGORIES = {
     'moquecadebanadaterra': 'proteína animal',
     'pancetapururuca': 'proteína animal',
     'pernildecordeiro': 'proteína animal',
-    'quiaboempanado': 'proteína animal',
+    'quiaboempanado': 'vegano',
     'rolinhovietnamita': 'proteína animal',
     'salpicaodefrango': 'proteína animal',
     'sobrecoxaaotandoori': 'proteína animal',

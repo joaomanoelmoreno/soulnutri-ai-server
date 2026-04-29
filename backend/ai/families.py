@@ -89,11 +89,11 @@ DISH_FAMILIES = {
         "Rolinho Vietnamita de Camarao",
         "Sushi Vietnamita",
     ],
-    "Strogonoffs": [
+    "Strogonoffs Animais": [
         "Estrogonofe de File Mignon",
-        "Strogonoff Vegano",
         "Strogonoff de File Mignon",
     ],
+    # Strogonoff Vegano mantido como dish individual (viola R1 — nao misturar vegano+animal)
     "Hamburgers": [
         "Hamburger Bovino",
         "Hamburger de Camarao com Pernil Suino",

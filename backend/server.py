@@ -363,6 +363,7 @@ class IdentifyResponse(BaseModel):
     curiosidade_cientifica: Optional[str] = None
     referencia_pesquisa: Optional[str] = None
     alerta_saude: Optional[str] = None
+    family_match: Optional[dict] = None
 
 class ReindexResponse(BaseModel):
     ok: bool
@@ -982,6 +983,7 @@ async def identify_image(
         is_premium = False
         user_profile = None
         premium_data = {}
+        family_match_data = None
         dish_display_name = format_dish_name(decision.get('dish_display', ''))
         
         # Para Cibi Sana: retorno imediato SEM queries MongoDB (velocidade <500ms)
@@ -1011,8 +1013,12 @@ async def identify_image(
 
                 parallel = {
                     'dish': db.dishes.find_one(
-                        {"$or": [{"slug": slug}, {"name": {"$regex": f"^{dish_display_name}$", "$options": "i"}}]},
-                        {"_id": 0, "ingredients": 1, "ingredientes": 1, "category": 1}
+                        {"$or": [
+                            {"slug": slug},
+                            {"slug": slug.replace('_', '-')},
+                            {"name": {"$regex": f"^{dish_display_name}$", "$options": "i"}}
+                        ]},
+                        {"_id": 0, "ingredients": 1, "ingredientes": 1, "category": 1, "family_id": 1}
                     ),
                     'nutrition': lookup_nutrition_sheet(dish_display_name)
                 }
@@ -1031,6 +1037,30 @@ async def identify_image(
                     # 🔴 CORREÇÃO CRÍTICA: USAR CATEGORY DO BANCO
                     if dish_doc.get("category"):
                         decision["category"] = dish_doc.get("category")
+
+                    # Lookup Família Visual (se dish vinculado a uma família)
+                    family_id = dish_doc.get("family_id")
+                    if family_id:
+                        family_doc = await db.families.find_one(
+                            {"family_id": family_id},
+                            {"_id": 0}
+                        )
+                        if family_doc and family_doc.get("require_confirmation"):
+                            subitems = []
+                            for did in family_doc.get("dish_ids", []):
+                                display = did.replace('_', ' ').replace('-', ' ').title()
+                                subitems.append({"dish_id": did, "display_name": display})
+                            family_match_data = {
+                                "family_id": family_doc["family_id"],
+                                "family_name": family_doc["family_name"],
+                                "category": family_doc.get("category", ""),
+                                "kcal_min": family_doc.get("kcal_min", 0),
+                                "kcal_max": family_doc.get("kcal_max", 0),
+                                "kcal_estimated": family_doc.get("kcal_estimated", True),
+                                "require_confirmation": True,
+                                "subitems": subitems,
+                                "alergenos_consolidados": family_doc.get("alergenos_consolidados", []),
+                            }
                 if sheet:
                     nutrition_data = sheet
                     # Converter campos numéricos para strings formatadas (igual ao caminho externo)
@@ -1195,6 +1225,8 @@ async def identify_image(
             "family_name": decision.get('family_name'),
             "family_candidates": decision.get('family_candidates', []),
             "family_candidates_detail": decision.get('family_candidates_detail', []),
+            # Família Visual confirmada pelo MongoDB
+            "family_match": family_match_data,
         }
         
         # ═══════════════════════════════════════════════════════════════════════
