@@ -111,7 +111,7 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 ## Backlog Priorizado
 
 ### P0 - Urgente
-- (nenhum item P0 pendente no momento — migração DNS + auditoria nutricional concluídas em 27/Abr/2026)
+- Implementar Famílias Visuais no backend + frontend (BLOQUEADO: aguarda resposta do usuário às 5 questões em aberto em `/app/memory/diagnostics/visual_families_validation_2026-02-05.md`, Parte 8)
 
 ### P1 - Próximo
 - React Error #31 em WeeklyReport.jsx e NotificationPanel.jsx (aplicar `renderTextSafe` — BLOQUEADO pelo usuário até autorização)
@@ -134,6 +134,10 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 - Google Play (TWA) / Apple Store (Capacitor)
 - Refatorar server.py (~5900 linhas) e App.js (~4400 linhas)
 - Limpeza imagens Jiló Empanado (fotos contaminadas com Quiabo)
+
+## Documentos de Diagnóstico
+- `/app/memory/diagnostics/family_grouping_study_2026-04-29.md` — Estudo de Famílias Visuais (análise do banco)
+- `/app/memory/diagnostics/visual_families_validation_2026-02-05.md` — Validação completa para implementação (JSON, conflitos, rollback, UX)
 
 ## Problemas Conhecidos
 - Gemini pode gerar nomes de fontes imprecisos
