@@ -409,37 +409,53 @@ _WARMUP_MS = None
 async def ai_warmup():
     """Aquece o runtime ONNX com uma inferencia dummy.
     
-    Seguro chamar varias vezes: se ja aquecido, responde rapido.
+    Seguro chamar varias vezes: se ja aquecido E ONNX em memoria, responde rapido.
+    Se _WARMED_UP=True mas ONNX foi perdido (ex: pressao de RAM, startup falhou),
+    descarta o cache e recarrega o modelo antes de responder.
     Nao altera /api/ai/identify, nao toca DB.
     """
     global _WARMED_UP, _WARMUP_MS
-    
-    if _WARMED_UP:
+
+    # ── Verificar se ONNX ainda esta realmente em memoria ──────────────────────
+    # Nao confiar somente em _WARMED_UP: o processo pode ter perdido a sessao
+    # por pressao de RAM ou falha silenciosa no startup_event.
+    try:
+        from ai.embedder import _ONNX_SESSION as _chk_session
+        onnx_in_memory = _chk_session is not None
+    except Exception:
+        onnx_in_memory = False
+
+    if _WARMED_UP and not onnx_in_memory:
+        logger.warning("[warmup] _WARMED_UP=True mas _ONNX_SESSION=None. "
+                       "Descartando cache e recarregando ONNX...")
+        _WARMED_UP = False  # forcar re-warmup real
+
+    if _WARMED_UP and onnx_in_memory:
         return {
             "ok": True,
             "warmed": True,
             "inference_ms": _WARMUP_MS,
             "cached": True,
         }
-    
+
     try:
         from ai.embedder import image_embedding_from_bytes
         from PIL import Image
         import io as _io
-        
+
         # Imagem dummy 224x224 RGB (tamanho nativo CLIP, PNG ~300B)
         dummy = Image.new("RGB", (224, 224), color=(128, 128, 128))
         buf = _io.BytesIO()
         dummy.save(buf, format="PNG")
         image_bytes = buf.getvalue()
-        
+
         t0 = time.perf_counter()
         emb = image_embedding_from_bytes(image_bytes)
         elapsed_ms = round((time.perf_counter() - t0) * 1000, 1)
-        
+
         if emb is None:
             return {"ok": False, "warmed": False, "inference_ms": elapsed_ms}
-        
+
         _WARMED_UP = True
         _WARMUP_MS = elapsed_ms
         return {
@@ -6213,12 +6229,19 @@ async def debug_performance():
             "inference_count": 0,
         }
     uptime = (datetime.now(timezone.utc) - PROCESS_START_TIME).total_seconds()
+    # Verificar se ONNX esta realmente em memoria (para validacao pos-warmup)
+    try:
+        from ai.embedder import _ONNX_SESSION as _perf_session
+        onnx_loaded = _perf_session is not None
+    except Exception:
+        onnx_loaded = False
     return {
         "onnx_mode": stats.get("onnx_mode"),
         "threads": stats.get("threads"),
         "last_inference_ms": stats.get("last_inference_ms"),
         "avg_inference_ms": stats.get("avg_inference_ms"),
         "inference_count": stats.get("inference_count", 0),
+        "onnx_loaded": onnx_loaded,
         "uptime": round(uptime, 1),
     }
 
