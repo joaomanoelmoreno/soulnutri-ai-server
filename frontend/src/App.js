@@ -485,6 +485,8 @@ const renderTextSafe = (v) => {
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
   const premiumCycleBusyRef = useRef(false);
+  const lastIdentifyTimestampRef = useRef(0);
+  const premiumWatchdogTimerRef = useRef(null);
   const mountedRef = useRef(true);
   const lastTouchRef = useRef(0);
 
@@ -706,6 +708,12 @@ const renderTextSafe = (v) => {
     setEnrichLoading(true);
     console.log('[ENRICH] Iniciando para:', currentDishName, '| Premium:', currentUserName);
 
+    // ─── ANDROID FIX (Fase 2.1): timeout duro de 10s para liberar conexão TCP ───
+    const enrichCtrl = new AbortController();
+    const enrichTimeoutId = setTimeout(() => {
+      try { enrichCtrl.abort(); } catch {}
+    }, 10000);
+
     fetch(`${API}/ai/enrich`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -714,7 +722,8 @@ const renderTextSafe = (v) => {
         ingredientes: result.ingredientes || [],
         pin: currentUserPin,
         user_nome: currentUserName
-      })
+      }),
+      signal: enrichCtrl.signal
     })
       .then((r) => r.json())
       .then((enrichData) => {
@@ -879,12 +888,21 @@ const renderTextSafe = (v) => {
       })
       .catch((err) => {
         if (cancelled) return;
-        console.warn('[ENRICH] Erro:', err);
+        if (err && err.name === 'AbortError') {
+          console.warn('[ENRICH] abort por timeout 10s (Android fix)');
+        } else {
+          console.warn('[ENRICH] Erro:', err);
+        }
       })
       .finally(() => {
+        clearTimeout(enrichTimeoutId);
         if (!cancelled) setEnrichLoading(false);
         if (premiumUser) {
           premiumCycleBusyRef.current = false;
+          if (premiumWatchdogTimerRef.current) {
+            clearTimeout(premiumWatchdogTimerRef.current);
+            premiumWatchdogTimerRef.current = null;
+          }
         }
       });
 
@@ -1393,6 +1411,21 @@ const loadNotifCount = async (pin) => {
 
   const identifyImage = async (blob) => {
 
+  // ─── ANDROID FIX (Fase 2.1): reset defensivo do gate Premium ───
+  // Se o flag está travado há mais de 10s (ex.: enrich morreu), libera.
+  if (
+    premiumCycleBusyRef.current &&
+    lastIdentifyTimestampRef.current > 0 &&
+    (Date.now() - lastIdentifyTimestampRef.current) > 10000
+  ) {
+    console.warn('[ANDROID_FIX] reset defensivo de premiumCycleBusyRef após >10s');
+    premiumCycleBusyRef.current = false;
+    if (premiumWatchdogTimerRef.current) {
+      clearTimeout(premiumWatchdogTimerRef.current);
+      premiumWatchdogTimerRef.current = null;
+    }
+  }
+
   if (premiumUser && premiumCycleBusyRef.current) {
     console.log('[FLOW_BLOCKED] ciclo premium ainda ativo');
     return;
@@ -1400,6 +1433,18 @@ const loadNotifCount = async (pin) => {
 
   if (premiumUser) {
     premiumCycleBusyRef.current = true;
+    lastIdentifyTimestampRef.current = Date.now();
+    // Watchdog: nunca trava o gate por mais de 8s
+    if (premiumWatchdogTimerRef.current) {
+      clearTimeout(premiumWatchdogTimerRef.current);
+    }
+    premiumWatchdogTimerRef.current = setTimeout(() => {
+      if (premiumCycleBusyRef.current) {
+        console.warn('[ANDROID_FIX] watchdog 8s liberou premiumCycleBusyRef');
+        premiumCycleBusyRef.current = false;
+      }
+      premiumWatchdogTimerRef.current = null;
+    }, 8000);
   }
     // Cancelar requisição anterior se existir
     if (abortControllerRef.current) {
