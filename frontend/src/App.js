@@ -1533,20 +1533,22 @@ const loadNotifCount = async (pin) => {
       const t = Date.now();
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
 
-      // ── ANDROID FIX 4.0: delay após abort do enrich para liberar conexão Cloudflare/HTTP2 ──
-      if (_hadEnrichAbort) {
-        console.log(`[ANDROID_DBG] FIX4.0: delay 500ms pós-abort-enrich para CF/HTTP2 scanId=${_dbgScanId}`);
-        await new Promise(resolve => setTimeout(resolve, 500));
+      // Fetch do identify com retry automático em erros de rede (não AbortError)
+      // Fix 4.0: recuperação silenciosa do RST_STREAM Cloudflare/HTTP2 após abort do enrich
+      let res;
+      try {
+        console.log(`[ANDROID_DBG] FETCH START endpoint=${endpoint} scanId=${_dbgScanId} T=${t}`);
+        res = await fetch(endpoint, { method: "POST", body: fd, signal: _localCtrl.signal });
+      } catch (fetchErr) {
+        if (fetchErr.name === 'AbortError') throw fetchErr;
+        // Erro de rede (não abort): aguarda 400ms e tenta uma vez mais
+        console.warn(`[ANDROID_DBG] FIX4.0 RETRY: erro de rede, aguardando 400ms scanId=${_dbgScanId} err="${fetchErr.message}"`);
+        await new Promise(resolve => setTimeout(resolve, 400));
         if (!mountedRef.current || _localCtrl.signal.aborted) { clearTimeout(timeoutId); return; }
-        console.log(`[ANDROID_DBG] FIX4.0: delay concluído, iniciando fetch scanId=${_dbgScanId}`);
+        console.log(`[ANDROID_DBG] FIX4.0 RETRY: tentando novamente scanId=${_dbgScanId}`);
+        res = await fetch(endpoint, { method: "POST", body: fd, signal: _localCtrl.signal });
       }
 
-      console.log(`[ANDROID_DBG] FETCH START endpoint=${endpoint} scanId=${_dbgScanId} T=${t}`);
-      const res = await fetch(endpoint, { 
-        method: "POST", 
-        body: fd,
-        signal: _localCtrl.signal
-      });
       clearTimeout(timeoutId);
       console.log(`[ANDROID_DBG] FETCH RESPONSE status=${res.status} elapsed=${Date.now()-t}ms scanId=${_dbgScanId}`);
       
