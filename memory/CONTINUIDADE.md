@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://onnx-timeout-fix.preview.emergentagent.com
+**URL**: https://clip-enrich-fix.preview.emergentagent.com
 
 ---
 

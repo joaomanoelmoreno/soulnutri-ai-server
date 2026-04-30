@@ -232,7 +232,7 @@ VALIDAÇÃO CRUZADA (Opcional):
 ## 10. CONTATOS E LINKS
 
 ### URL de Preview:
-https://onnx-timeout-fix.preview.emergentagent.com
+https://clip-enrich-fix.preview.emergentagent.com
 
 ### Arquivos Importantes:
 - /app/memory/PRD.md - Requisitos do produto
