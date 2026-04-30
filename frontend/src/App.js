@@ -18,7 +18,6 @@ const API = `${BACKEND_URL}/api`;
 
 // Timeout para requisições (evita travamentos)
 const REQUEST_TIMEOUT = 15000; // 15 segundos
-const BUILD_STAMP = new Date().toISOString().slice(0, 19); // ISO sem milissegundos
 
 // ═══════════════════════════════════════════════════════════════
 // GEOLOCALIZAÇÃO - Detecção Cibi Sana vs Externo
@@ -485,10 +484,7 @@ const renderTextSafe = (v) => {
   const fileInputRef = useRef(null);
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
-  const enrichAbortCtrlRef = useRef(null); // rastreia enrich em andamento para abortar ao novo scan
   const premiumCycleBusyRef = useRef(false);
-  const lastIdentifyTimestampRef = useRef(0);
-  const premiumWatchdogTimerRef = useRef(null);
   const mountedRef = useRef(true);
   const lastTouchRef = useRef(0);
 
@@ -570,7 +566,6 @@ const renderTextSafe = (v) => {
           if (prev && prev !== newRestaurant) {
             console.log(`[GPS] Local mudou: ${prev} → ${newRestaurant}. Nova refeição.`);
             setPlateItems([]);
-            console.log('[SCREEN_CLEAR_DBG] setResult(null) source=gps-change');
             setResult(null);
             setViewMode('camera');
           }
@@ -629,13 +624,7 @@ const renderTextSafe = (v) => {
     
     loadDishes();
     checkPremiumSession();
-
-    // ── ANDROID_DBG: identificar build ativo no console ──
-    console.log('[ANDROID_DBG] === BUILD STAMP:', BUILD_STAMP, '===');
-    console.log('[ANDROID_DBG] API:', API);
-    console.log('[ANDROID_DBG] isPWA:', window.matchMedia('(display-mode: standalone)').matches);
-    console.log('[ANDROID_DBG] UA:', navigator.userAgent.slice(0, 120));
-
+    
     // Detectar se já está instalado como PWA
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsInstalled(true);
@@ -674,9 +663,6 @@ const renderTextSafe = (v) => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
       document.removeEventListener('visibilitychange', handleVisibility);
       // Cancelar requisições pendentes
-      if (enrichAbortCtrlRef.current) {
-        enrichAbortCtrlRef.current.abort('unmount');
-      }
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }      
@@ -720,14 +706,6 @@ const renderTextSafe = (v) => {
     setEnrichLoading(true);
     console.log('[ENRICH] Iniciando para:', currentDishName, '| Premium:', currentUserName);
 
-    // ─── ANDROID FIX (Fase 2.1): timeout duro de 10s para liberar conexão TCP ───
-    const enrichCtrl = new AbortController();
-    enrichAbortCtrlRef.current = enrichCtrl; // ← ANDROID FIX 3.0: expõe o ctrl para cancelamento pelo próximo scan
-    const enrichTimeoutId = setTimeout(() => {
-      console.warn(`[ANDROID_DBG] ENRICH TIMEOUT 10s disparou para: ${currentDishName}`);
-      try { enrichCtrl.abort('enrich-timeout'); } catch {}
-    }, 10000);
-
     fetch(`${API}/ai/enrich`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -736,8 +714,7 @@ const renderTextSafe = (v) => {
         ingredientes: result.ingredientes || [],
         pin: currentUserPin,
         user_nome: currentUserName
-      }),
-      signal: enrichCtrl.signal
+      })
     })
       .then((r) => r.json())
       .then((enrichData) => {
@@ -902,28 +879,13 @@ const renderTextSafe = (v) => {
       })
       .catch((err) => {
         if (cancelled) return;
-        if (err && err.name === 'AbortError') {
-          console.warn(`[ANDROID_DBG] ENRICH ABORT para: ${currentDishName} | reason=${enrichCtrl.signal.reason || 'no-reason'}`);
-        } else {
-          console.warn('[ENRICH] Erro:', err);
-        }
+        console.warn('[ENRICH] Erro:', err);
       })
       .finally(() => {
-        clearTimeout(enrichTimeoutId);
         if (!cancelled) setEnrichLoading(false);
-        console.log(`[ANDROID_DBG] ENRICH FINALLY para: ${currentDishName} | premiumBusy antes=${premiumCycleBusyRef.current} | watchdogActive=${!!premiumWatchdogTimerRef.current}`);
         if (premiumUser) {
           premiumCycleBusyRef.current = false;
-          if (premiumWatchdogTimerRef.current) {
-            clearTimeout(premiumWatchdogTimerRef.current);
-            premiumWatchdogTimerRef.current = null;
-          }
         }
-        // Limpar ref do enrich em andamento
-        if (enrichAbortCtrlRef.current === enrichCtrl) {
-          enrichAbortCtrlRef.current = null;
-        }
-        console.log(`[ANDROID_DBG] ENRICH FINALLY complete: premiumBusy=${premiumCycleBusyRef.current}`);
       });
 
     return () => {
@@ -1431,63 +1393,14 @@ const loadNotifCount = async (pin) => {
 
   const identifyImage = async (blob) => {
 
-  // ── ANDROID_DBG: entrada da função ──
-  const _dbgScanId = Date.now();
-  console.log(`[ANDROID_DBG] identifyImage START scanId=${_dbgScanId} premiumBusy=${premiumCycleBusyRef.current} lastStamp=${lastIdentifyTimestampRef.current} elapsedSinceLast=${lastIdentifyTimestampRef.current > 0 ? (_dbgScanId - lastIdentifyTimestampRef.current) + 'ms' : 'n/a'} loadingRef=${loadingRef.current}`);
-
-  // ─── ANDROID FIX (Fase 2.1): reset defensivo do gate Premium ───
-  // Se o flag está travado há mais de 10s (ex.: enrich morreu), libera.
-  if (
-    premiumCycleBusyRef.current &&
-    lastIdentifyTimestampRef.current > 0 &&
-    (Date.now() - lastIdentifyTimestampRef.current) > 10000
-  ) {
-    console.warn('[ANDROID_FIX] reset defensivo de premiumCycleBusyRef após >10s');
-    premiumCycleBusyRef.current = false;
-    if (premiumWatchdogTimerRef.current) {
-      clearTimeout(premiumWatchdogTimerRef.current);
-      premiumWatchdogTimerRef.current = null;
-    }
-  }
-
   if (premiumUser && premiumCycleBusyRef.current) {
-    console.log(`[ANDROID_DBG] GATE BLOCKED scanId=${_dbgScanId} premiumBusy=${premiumCycleBusyRef.current}`);
     console.log('[FLOW_BLOCKED] ciclo premium ainda ativo');
     return;
   }
 
-  console.log(`[ANDROID_DBG] GATE PASSED scanId=${_dbgScanId}`);
-
   if (premiumUser) {
     premiumCycleBusyRef.current = true;
-    lastIdentifyTimestampRef.current = Date.now();
-    // Watchdog: nunca trava o gate por mais de 8s
-    if (premiumWatchdogTimerRef.current) {
-      clearTimeout(premiumWatchdogTimerRef.current);
-    }
-    premiumWatchdogTimerRef.current = setTimeout(() => {
-      if (premiumCycleBusyRef.current) {
-        console.warn('[ANDROID_FIX] watchdog 8s liberou premiumCycleBusyRef');
-        premiumCycleBusyRef.current = false;
-      }
-      premiumWatchdogTimerRef.current = null;
-    }, 8000);
   }
-
-    // ── ANDROID FIX 4.0: abortar enrich + aguardar limpeza HTTP/2 Cloudflare ──
-    // O abort() envia RST_STREAM ao Cloudflare. O CF precisa de ~300-500ms para
-    // processar o reset antes de aceitar um novo stream na mesma conexão TCP.
-    // Sem esse delay, o identify seguinte falha com "Failed to fetch" (conn em transição).
-    let _hadEnrichAbort = false;
-    if (enrichAbortCtrlRef.current) {
-      _hadEnrichAbort = true;
-      console.warn(`[ANDROID_DBG] ABORTING enrich + aguardando limpeza CF/HTTP2 scanId=${_dbgScanId}`);
-      enrichAbortCtrlRef.current.abort('new-scan');
-      enrichAbortCtrlRef.current = null;
-    }
-
-    // ── ANDROID_DBG: abortar controller anterior ──
-    console.log(`[ANDROID_DBG] prevController=${abortControllerRef.current ? 'EXISTS(aborted:' + abortControllerRef.current.signal.aborted + ')' : 'null'} scanId=${_dbgScanId}`);
     // Cancelar requisição anterior se existir
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -1495,7 +1408,6 @@ const loadNotifCount = async (pin) => {
     
     loadingRef.current = true;
     setLoading(true);
-    console.log(`[SCREEN_CLEAR_DBG] setResult(null) source=identifyImage scanId=${_dbgScanId}`);
     setResult(null);
     setMultiResult(null);
     setError(null);
@@ -1521,56 +1433,23 @@ const loadNotifCount = async (pin) => {
       console.warn('localStorage não disponível:', e);
     }
     
-    // Criar AbortController com timeout — capturar em VAR LOCAL para o timeout não abortar scan posterior
-    const _localCtrl = new AbortController();
-    abortControllerRef.current = _localCtrl;
-    let _timeoutFired = false;
+    // Criar AbortController com timeout
+    abortControllerRef.current = new AbortController();
     const timeoutId = setTimeout(() => {
-      _timeoutFired = true;
-      console.warn(`[ANDROID_DBG] REQUEST_TIMEOUT FIRED (${REQUEST_TIMEOUT}ms) scanId=${_dbgScanId}`);
-      _localCtrl.abort('timeout');
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
     }, REQUEST_TIMEOUT);
     
     try {
       const t = Date.now();
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
-
-      // Fetch do identify com retry automático em erros de rede (não AbortError)
-      // Fix 4.0: recuperação do RST_STREAM Cloudflare/HTTP2 após abort do enrich
-      let res;
-      try {
-        console.log(`[SCAN_DBG] identify_start scanId=${_dbgScanId} endpoint=${endpoint}`);
-        res = await fetch(endpoint, { method: "POST", body: fd, signal: _localCtrl.signal });
-        console.log(`[SCAN_DBG] identify_success_fetch scanId=${_dbgScanId} status=${res.status}`);
-      } catch (fetchErr) {
-        if (fetchErr.name === 'AbortError') throw fetchErr;
-        // Erro de rede (não abort): aguarda 400ms e tenta uma vez mais com FormData NOVA
-        // (fd pode ter body stream consumida após a primeira tentativa falhar)
-        console.warn(`[SCAN_DBG] retry_start scanId=${_dbgScanId} firstErr="${fetchErr.message}" firstErrName=${fetchErr.name}`);
-        await new Promise(resolve => setTimeout(resolve, 400));
-        if (!mountedRef.current || _localCtrl.signal.aborted) { clearTimeout(timeoutId); return; }
-        // Recriar FormData com o mesmo blob (blob é imutável, fd pode estar com stream locked)
-        const fd2 = new FormData();
-        fd2.append("file", blob, "photo.jpg");
-        fd2.append("country", "BR");
-        fd2.append("restaurant", getRestaurantValue());
-        try {
-          const pin = localStorage.getItem('soulnutri_pin');
-          const nome = localStorage.getItem('soulnutri_nome');
-          if (pin && nome && !multiMode) { fd2.append("pin", pin); fd2.append("nome", nome); }
-        } catch {}
-        console.log(`[SCAN_DBG] retry_fetch scanId=${_dbgScanId}`);
-        try {
-          res = await fetch(endpoint, { method: "POST", body: fd2, signal: _localCtrl.signal });
-          console.log(`[SCAN_DBG] retry_success scanId=${_dbgScanId} status=${res.status}`);
-        } catch (retryErr) {
-          console.error(`[SCAN_DBG] retry_error scanId=${_dbgScanId} err="${retryErr.message}" name=${retryErr.name}`);
-          throw retryErr;
-        }
-      }
-
+      const res = await fetch(endpoint, { 
+        method: "POST", 
+        body: fd,
+        signal: abortControllerRef.current.signal
+      });
       clearTimeout(timeoutId);
-      console.log(`[ANDROID_DBG] FETCH RESPONSE status=${res.status} elapsed=${Date.now()-t}ms scanId=${_dbgScanId}`);
       
       if (!mountedRef.current) return;
       
@@ -1590,8 +1469,6 @@ const loadNotifCount = async (pin) => {
         setMultiResult({ ...data, totalTime: Date.now() - t });
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
-        console.log(`[ANDROID_DBG] IDENTIFY OK dish=${resultWithTime.dish_display} score=${resultWithTime.score} totalTime=${resultWithTime.totalTime}ms scanId=${_dbgScanId}`);
-        console.log(`[SCAN_DBG] set_result_non_null dish=${resultWithTime.dish_display} scanId=${_dbgScanId}`);
         setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
@@ -1625,17 +1502,11 @@ const loadNotifCount = async (pin) => {
       if (!mountedRef.current) return;
       
       if (e.name === 'AbortError') {
-        // ── ANDROID_DBG: diagnóstico do motivo do abort ──
-        console.error(`[ANDROID_DBG] ABORT ERROR scanId=${_dbgScanId} timeoutFired=${_timeoutFired} ctrlAborted=${_localCtrl.signal.aborted} refMatchesLocal=${abortControllerRef.current === _localCtrl} reason=${_localCtrl.signal.reason || 'no-reason'}`);
-        console.log(`[SCAN_DBG] identify_error type=abort scanId=${_dbgScanId}`);
         setError('Tempo limite excedido. Tente novamente.');
-      } else if (e.message && e.message.includes('postMessage')) {
-        // Erro de script externo (emergent-main.js) — ignorar
-        console.warn(`[SCAN_DBG] identify_error type=external_script msg="${e.message}" scanId=${_dbgScanId} — SUPRIMIDO`);
+      } else if (e.message && (e.message.includes('postMessage') || e.message.includes('body stream'))) {
+        // Erro de script externo (emergent-main.js) - ignorar
+        console.warn('[IDENTIFY] Erro de script externo ignorado:', e.message);
       } else {
-        // Qualquer outro erro (rede, body stream, servidor) → mostrar na UI
-        console.error(`[SCAN_DBG] identify_error type=other scanId=${_dbgScanId} msg="${e.message}" name=${e.name}`);
-        console.log(`[SCREEN_CLEAR_DBG] setError source=identify_catch msg="${e.message}" scanId=${_dbgScanId}`);
         setError(e.message || 'Erro de conexão');
       }
     } finally { 
@@ -1646,17 +1517,12 @@ const loadNotifCount = async (pin) => {
           setLoading(false);
         }
       }
-      console.log(`[SCAN_DBG] cleanup_finally scanId=${_dbgScanId} premiumBusy=${premiumCycleBusyRef.current} loadingRef=${loadingRef.current}`);
     }
   };
 
   // Fluxo Único: Adicionar item atual à lista e preparar para próximo
   const addItemToPlate = async () => {
-    // 🔴 CANCELAR REQUEST PENDENTE (identify + enrich)
-    if (enrichAbortCtrlRef.current) {
-      enrichAbortCtrlRef.current.abort('add-to-plate');
-      enrichAbortCtrlRef.current = null;
-    }
+    // 🔴 CANCELAR REQUEST PENDENTE
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -1747,7 +1613,6 @@ const loadNotifCount = async (pin) => {
       }
     }
     setShowAddMore(false);
-    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=addItemToPlate');
     setResult(null);
     setPreviewImageUrl(null);
   };
@@ -1814,7 +1679,6 @@ const loadNotifCount = async (pin) => {
       }
     }
     setShowAddMore(false);
-    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=finishPlate');
     setResult(null);
     setViewMode('mesa'); // Mudar para vista consolidada
   };
@@ -1822,7 +1686,6 @@ const loadNotifCount = async (pin) => {
   // Fluxo Único: Limpar prato e começar novo
   const clearPlate = () => {
     setPlateItems([]);
-    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=clearPlate');
     setResult(null);
     setMultiResult(null);
     setPreviewImageUrl(null);
@@ -2200,17 +2063,19 @@ return {
   };
 
   const clearResult = () => {
-    // Cancelar requisições pendentes (identify + enrich)
-    if (enrichAbortCtrlRef.current) {
-      enrichAbortCtrlRef.current.abort('clear-result');
-      enrichAbortCtrlRef.current = null;
-    }
+    // Cancelar requisições pendentes
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
-    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=clearResult');
     setResult(null);
+    setMultiResult(null);
+    setError(null);
+    setShowFeedback(false);
+    setFeedbackSent(false);
+    setShowCorrectionFlow(false);
+    setCorrectionSearch('');
+    // Limpar preview da imagem
     if (previewImageUrl) {
       URL.revokeObjectURL(previewImageUrl);
       setPreviewImageUrl(null);
