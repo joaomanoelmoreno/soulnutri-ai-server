@@ -20,6 +20,69 @@ const API = `${BACKEND_URL}/api`;
 const REQUEST_TIMEOUT = 15000; // 15 segundos
 let _ROOT_SCAN_COUNTER = 0; // contador global de scans para diagnóstico
 
+// ─── PAINEL DE DIAGNÓSTICO VISUAL (ativo somente com ?debug=1 na URL) ─────────
+// Captura linhas [FINAL_PROOF] e exibe na tela — necessário pois chrome://inspect
+// não estava acessível no Android do usuário durante os testes anteriores.
+const _DEBUG_MODE = window.location.search.includes('debug=1');
+const _debugLines = []; // buffer global (max 30 linhas)
+if (_DEBUG_MODE) {
+  const _origLog = console.log.bind(console);
+  console.log = (...args) => {
+    _origLog(...args);
+    const line = args.join(' ');
+    if (line.includes('[FINAL_PROOF]') || line.includes('[ENRICH]')) {
+      _debugLines.push(`${new Date().toISOString().slice(11,23)} ${line}`);
+      if (_debugLines.length > 30) _debugLines.shift();
+      // Atualizar painel via evento customizado
+      window.dispatchEvent(new CustomEvent('_fp_log', { detail: line }));
+    }
+  };
+}
+
+function DebugPanel() {
+  const [lines, setLines] = React.useState([]);
+  const [visible, setVisible] = React.useState(true);
+  React.useEffect(() => {
+    const handler = (e) => setLines(prev => {
+      const next = [...prev, `${new Date().toISOString().slice(11,23)} ${e.detail}`];
+      return next.slice(-25);
+    });
+    window.addEventListener('_fp_log', handler);
+    return () => window.removeEventListener('_fp_log', handler);
+  }, []);
+  if (!visible) return (
+    <button onClick={() => setVisible(true)} style={{
+      position:'fixed',bottom:'4px',left:'4px',zIndex:99999,
+      background:'#111',color:'#0f0',border:'1px solid #0f0',
+      borderRadius:'4px',padding:'2px 6px',fontSize:'10px',cursor:'pointer'
+    }}>LOG</button>
+  );
+  return (
+    <div style={{
+      position:'fixed',bottom:0,left:0,right:0,zIndex:99999,
+      background:'rgba(0,0,0,0.92)',color:'#0f0',fontFamily:'monospace',
+      fontSize:'10px',maxHeight:'35vh',overflowY:'auto',padding:'4px',
+      borderTop:'1px solid #0f0'
+    }}>
+      <div style={{display:'flex',justifyContent:'space-between',marginBottom:'2px'}}>
+        <strong style={{color:'#ff0'}}>[ FINAL_PROOF DEBUG ]</strong>
+        <button onClick={() => setVisible(false)} style={{
+          background:'none',border:'none',color:'#f00',fontSize:'12px',cursor:'pointer'
+        }}>✕</button>
+      </div>
+      {lines.length === 0 && <div style={{color:'#888'}}>aguardando logs...</div>}
+      {lines.map((l, i) => (
+        <div key={i} style={{
+          color: l.includes('GATE_BLOCKED') ? '#f44' :
+                 l.includes('FETCH_START') ? '#4f4' :
+                 l.includes('FETCH_ERROR') ? '#fa0' : '#0f0',
+          borderBottom:'1px solid #222', padding:'1px 0'
+        }}>{l}</div>
+      ))}
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════
 // GEOLOCALIZAÇÃO - Detecção Cibi Sana vs Externo
 // ═══════════════════════════════════════════════════════════════
@@ -705,6 +768,7 @@ const renderTextSafe = (v) => {
     const currentUserName = premiumUser.nome;
 
     setEnrichLoading(true);
+    console.log(`[FINAL_PROOF] scan_id=${_ROOT_SCAN_COUNTER} ENRICH_START dish=${currentDishName}`);
     console.log('[ENRICH] Iniciando para:', currentDishName, '| Premium:', currentUserName);
 
     fetch(`${API}/ai/enrich`, {
@@ -1393,9 +1457,11 @@ const loadNotifCount = async (pin) => {
   };
 
   const identifyImage = async (blob) => {
+    const _scanId = ++_ROOT_SCAN_COUNTER;
+    console.log(`[FINAL_PROOF] scan_id=${_scanId} IDENTIFY_ENTER premiumBusy=${premiumCycleBusyRef.current} premiumUser=${!!premiumUser}`);
 
   if (premiumUser && premiumCycleBusyRef.current) {
-    console.log('[FLOW_BLOCKED] ciclo premium ainda ativo');
+    console.log(`[FINAL_PROOF] scan_id=${_scanId} GATE_BLOCKED before_fetch premiumBusy=true`);
     return;
   }
 
@@ -1445,12 +1511,14 @@ const loadNotifCount = async (pin) => {
     try {
       const t = Date.now();
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
+      console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_START identify`);
       const res = await fetch(endpoint, { 
         method: "POST", 
         body: fd,
         signal: abortControllerRef.current.signal
       });
       clearTimeout(timeoutId);
+      console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_RESPONSE status=${res.status}`);
       
       if (!mountedRef.current) return;
       
@@ -1501,6 +1569,7 @@ const loadNotifCount = async (pin) => {
     } catch (e) { 
       clearTimeout(timeoutId);
       if (!mountedRef.current) return;
+      console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_ERROR name=${e.name} message=${e.message}`);
       
       if (e.name === 'AbortError') {
         setError('Tempo limite excedido. Tente novamente.');
@@ -4842,6 +4911,9 @@ return {
       <footer className="footer">
         <small>Powered by Emergent</small>
       </footer>
+
+      {/* Painel de diagnóstico — visível APENAS com ?debug=1 na URL */}
+      {_DEBUG_MODE && <DebugPanel />}
     </div>
   );
 }
