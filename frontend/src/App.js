@@ -1473,10 +1473,14 @@ const loadNotifCount = async (pin) => {
     }, 8000);
   }
 
-    // ── ANDROID FIX 3.0: abortar enrich em andamento ANTES de criar novo identify ──
-    // Isso libera imediatamente a conexão TCP retida pelo enrich do scan anterior
+    // ── ANDROID FIX 4.0: abortar enrich + aguardar limpeza HTTP/2 Cloudflare ──
+    // O abort() envia RST_STREAM ao Cloudflare. O CF precisa de ~300-500ms para
+    // processar o reset antes de aceitar um novo stream na mesma conexão TCP.
+    // Sem esse delay, o identify seguinte falha com "Failed to fetch" (conn em transição).
+    let _hadEnrichAbort = false;
     if (enrichAbortCtrlRef.current) {
-      console.warn(`[ANDROID_DBG] ABORTING in-flight enrich before new scan scanId=${_dbgScanId}`);
+      _hadEnrichAbort = true;
+      console.warn(`[ANDROID_DBG] ABORTING enrich + aguardando limpeza CF/HTTP2 scanId=${_dbgScanId}`);
       enrichAbortCtrlRef.current.abort('new-scan');
       enrichAbortCtrlRef.current = null;
     }
@@ -1528,6 +1532,15 @@ const loadNotifCount = async (pin) => {
     try {
       const t = Date.now();
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
+
+      // ── ANDROID FIX 4.0: delay após abort do enrich para liberar conexão Cloudflare/HTTP2 ──
+      if (_hadEnrichAbort) {
+        console.log(`[ANDROID_DBG] FIX4.0: delay 500ms pós-abort-enrich para CF/HTTP2 scanId=${_dbgScanId}`);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        if (!mountedRef.current || _localCtrl.signal.aborted) { clearTimeout(timeoutId); return; }
+        console.log(`[ANDROID_DBG] FIX4.0: delay concluído, iniciando fetch scanId=${_dbgScanId}`);
+      }
+
       console.log(`[ANDROID_DBG] FETCH START endpoint=${endpoint} scanId=${_dbgScanId} T=${t}`);
       const res = await fetch(endpoint, { 
         method: "POST", 
