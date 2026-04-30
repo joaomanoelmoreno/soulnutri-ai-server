@@ -524,23 +524,59 @@ async def ai_status():
         )
 
 
+def _canonize_input(s: str) -> str:
+    """Canonização read-side da string que chega da IA / usuário.
+    Espelha as regras da Fase 1 sem alterar dados; usado APENAS para query.
+    Regras: strip_accents -> lower -> remove ( ) / , -  -> colapsar espaços.
+    """
+    import unicodedata, re as _re
+    if not s:
+        return ""
+    x = "".join(ch for ch in unicodedata.normalize("NFD", str(s)) if unicodedata.category(ch) != "Mn")
+    x = x.lower()
+    for ch in "()/,-":
+        x = x.replace(ch, " ")
+    x = _re.sub(r"\s+", " ", x).strip()
+    return x
+
+
 async def lookup_nutrition_sheet(dish_display: str) -> dict:
     """
     Busca ficha nutricional precisa na colecao nutrition_sheets.
-    Usa uma unica query $or para evitar round-trips sequenciais.
+    Ordem de prioridade (Fase 2 read-side):
+      1) canonical_name == canonical_input               (NOVO, principal)
+      2) slug_v2        == canonical_input.replace(" ","-") (NOVO)
+      3) nome exato                                       (legado)
+      4) slug legado / regex / nomes_alternativos         (legado)
+    Mantém todas as cláusulas legadas para garantir não-quebra.
     """
     if not dish_display:
         return {}
+    canonical_input = _canonize_input(dish_display)
+    slug_v2_input = canonical_input.replace(" ", "-")
     try:
-        sheet = await db.nutrition_sheets.find_one(
-            {"$or": [
-                {"nome": dish_display},
-                {"slug": dish_display},
-                {"nomes_alternativos": dish_display},
-                {"nome": {"$regex": f"^{dish_display}$", "$options": "i"}}
-            ]},
-            {"_id": 0}
-        )
+        sheet = None
+        # ── Prioridade 1: canonical_name (NOVO) ──
+        if canonical_input:
+            sheet = await db.nutrition_sheets.find_one(
+                {"canonical_name": canonical_input}, {"_id": 0}
+            )
+        # ── Prioridade 2: slug_v2 (NOVO) ──
+        if not sheet and slug_v2_input:
+            sheet = await db.nutrition_sheets.find_one(
+                {"slug_v2": slug_v2_input}, {"_id": 0}
+            )
+        # ── Prioridade 3 e 4: legado (nome exato + slug + alternativos + regex i) ──
+        if not sheet:
+            sheet = await db.nutrition_sheets.find_one(
+                {"$or": [
+                    {"nome": dish_display},
+                    {"slug": dish_display},
+                    {"nomes_alternativos": dish_display},
+                    {"nome": {"$regex": f"^{dish_display}$", "$options": "i"}}
+                ]},
+                {"_id": 0}
+            )
         if sheet:
             return {
                 "calorias_kcal": sheet.get("calorias_kcal"),
