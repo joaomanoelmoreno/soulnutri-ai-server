@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://clip-enrich-fix.preview.emergentagent.com
-- Admin: https://clip-enrich-fix.preview.emergentagent.com/admin
-- Lista de Pratos: https://clip-enrich-fix.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://nervous-germain-7.preview.emergentagent.com
+- Admin: https://nervous-germain-7.preview.emergentagent.com/admin
+- Lista de Pratos: https://nervous-germain-7.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

@@ -18,6 +18,7 @@ const API = `${BACKEND_URL}/api`;
 
 // Timeout para requisições (evita travamentos)
 const REQUEST_TIMEOUT = 15000; // 15 segundos
+let _ROOT_SCAN_COUNTER = 0; // contador global de scans para diagnóstico
 
 // ═══════════════════════════════════════════════════════════════
 // GEOLOCALIZAÇÃO - Detecção Cibi Sana vs Externo
