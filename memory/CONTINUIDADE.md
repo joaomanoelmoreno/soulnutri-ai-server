@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://nervous-germain-7.preview.emergentagent.com
+**URL**: https://pwa-performance-fix-1.preview.emergentagent.com
 
 ---
 

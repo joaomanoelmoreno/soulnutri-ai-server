@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://nervous-germain-7.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://pwa-performance-fix-1.preview.emergentagent.com
 ```
 
 ---
