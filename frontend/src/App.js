@@ -485,6 +485,7 @@ const renderTextSafe = (v) => {
   const fileInputRef = useRef(null);
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
+  const enrichAbortCtrlRef = useRef(null); // rastreia enrich em andamento para abortar ao novo scan
   const premiumCycleBusyRef = useRef(false);
   const lastIdentifyTimestampRef = useRef(0);
   const premiumWatchdogTimerRef = useRef(null);
@@ -672,6 +673,9 @@ const renderTextSafe = (v) => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
       document.removeEventListener('visibilitychange', handleVisibility);
       // Cancelar requisições pendentes
+      if (enrichAbortCtrlRef.current) {
+        enrichAbortCtrlRef.current.abort('unmount');
+      }
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }      
@@ -717,6 +721,7 @@ const renderTextSafe = (v) => {
 
     // ─── ANDROID FIX (Fase 2.1): timeout duro de 10s para liberar conexão TCP ───
     const enrichCtrl = new AbortController();
+    enrichAbortCtrlRef.current = enrichCtrl; // ← ANDROID FIX 3.0: expõe o ctrl para cancelamento pelo próximo scan
     const enrichTimeoutId = setTimeout(() => {
       console.warn(`[ANDROID_DBG] ENRICH TIMEOUT 10s disparou para: ${currentDishName}`);
       try { enrichCtrl.abort('enrich-timeout'); } catch {}
@@ -912,6 +917,10 @@ const renderTextSafe = (v) => {
             clearTimeout(premiumWatchdogTimerRef.current);
             premiumWatchdogTimerRef.current = null;
           }
+        }
+        // Limpar ref do enrich em andamento
+        if (enrichAbortCtrlRef.current === enrichCtrl) {
+          enrichAbortCtrlRef.current = null;
         }
         console.log(`[ANDROID_DBG] ENRICH FINALLY complete: premiumBusy=${premiumCycleBusyRef.current}`);
       });
@@ -1464,6 +1473,14 @@ const loadNotifCount = async (pin) => {
     }, 8000);
   }
 
+    // ── ANDROID FIX 3.0: abortar enrich em andamento ANTES de criar novo identify ──
+    // Isso libera imediatamente a conexão TCP retida pelo enrich do scan anterior
+    if (enrichAbortCtrlRef.current) {
+      console.warn(`[ANDROID_DBG] ABORTING in-flight enrich before new scan scanId=${_dbgScanId}`);
+      enrichAbortCtrlRef.current.abort('new-scan');
+      enrichAbortCtrlRef.current = null;
+    }
+
     // ── ANDROID_DBG: abortar controller anterior ──
     console.log(`[ANDROID_DBG] prevController=${abortControllerRef.current ? 'EXISTS(aborted:' + abortControllerRef.current.signal.aborted + ')' : 'null'} scanId=${_dbgScanId}`);
     // Cancelar requisição anterior se existir
@@ -1596,7 +1613,11 @@ const loadNotifCount = async (pin) => {
 
   // Fluxo Único: Adicionar item atual à lista e preparar para próximo
   const addItemToPlate = async () => {
-    // 🔴 CANCELAR REQUEST PENDENTE
+    // 🔴 CANCELAR REQUEST PENDENTE (identify + enrich)
+    if (enrichAbortCtrlRef.current) {
+      enrichAbortCtrlRef.current.abort('add-to-plate');
+      enrichAbortCtrlRef.current = null;
+    }
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -2137,7 +2158,11 @@ return {
   };
 
   const clearResult = () => {
-    // Cancelar requisições pendentes
+    // Cancelar requisições pendentes (identify + enrich)
+    if (enrichAbortCtrlRef.current) {
+      enrichAbortCtrlRef.current.abort('clear-result');
+      enrichAbortCtrlRef.current = null;
+    }
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
