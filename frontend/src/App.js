@@ -570,6 +570,7 @@ const renderTextSafe = (v) => {
           if (prev && prev !== newRestaurant) {
             console.log(`[GPS] Local mudou: ${prev} → ${newRestaurant}. Nova refeição.`);
             setPlateItems([]);
+            console.log('[SCREEN_CLEAR_DBG] setResult(null) source=gps-change');
             setResult(null);
             setViewMode('camera');
           }
@@ -1494,6 +1495,7 @@ const loadNotifCount = async (pin) => {
     
     loadingRef.current = true;
     setLoading(true);
+    console.log(`[SCREEN_CLEAR_DBG] setResult(null) source=identifyImage scanId=${_dbgScanId}`);
     setResult(null);
     setMultiResult(null);
     setError(null);
@@ -1534,19 +1536,37 @@ const loadNotifCount = async (pin) => {
       const endpoint = multiMode ? `${API}/ai/identify-multi` : `${API}/ai/identify`;
 
       // Fetch do identify com retry automático em erros de rede (não AbortError)
-      // Fix 4.0: recuperação silenciosa do RST_STREAM Cloudflare/HTTP2 após abort do enrich
+      // Fix 4.0: recuperação do RST_STREAM Cloudflare/HTTP2 após abort do enrich
       let res;
       try {
-        console.log(`[ANDROID_DBG] FETCH START endpoint=${endpoint} scanId=${_dbgScanId} T=${t}`);
+        console.log(`[SCAN_DBG] identify_start scanId=${_dbgScanId} endpoint=${endpoint}`);
         res = await fetch(endpoint, { method: "POST", body: fd, signal: _localCtrl.signal });
+        console.log(`[SCAN_DBG] identify_success_fetch scanId=${_dbgScanId} status=${res.status}`);
       } catch (fetchErr) {
         if (fetchErr.name === 'AbortError') throw fetchErr;
-        // Erro de rede (não abort): aguarda 400ms e tenta uma vez mais
-        console.warn(`[ANDROID_DBG] FIX4.0 RETRY: erro de rede, aguardando 400ms scanId=${_dbgScanId} err="${fetchErr.message}"`);
+        // Erro de rede (não abort): aguarda 400ms e tenta uma vez mais com FormData NOVA
+        // (fd pode ter body stream consumida após a primeira tentativa falhar)
+        console.warn(`[SCAN_DBG] retry_start scanId=${_dbgScanId} firstErr="${fetchErr.message}" firstErrName=${fetchErr.name}`);
         await new Promise(resolve => setTimeout(resolve, 400));
         if (!mountedRef.current || _localCtrl.signal.aborted) { clearTimeout(timeoutId); return; }
-        console.log(`[ANDROID_DBG] FIX4.0 RETRY: tentando novamente scanId=${_dbgScanId}`);
-        res = await fetch(endpoint, { method: "POST", body: fd, signal: _localCtrl.signal });
+        // Recriar FormData com o mesmo blob (blob é imutável, fd pode estar com stream locked)
+        const fd2 = new FormData();
+        fd2.append("file", blob, "photo.jpg");
+        fd2.append("country", "BR");
+        fd2.append("restaurant", getRestaurantValue());
+        try {
+          const pin = localStorage.getItem('soulnutri_pin');
+          const nome = localStorage.getItem('soulnutri_nome');
+          if (pin && nome && !multiMode) { fd2.append("pin", pin); fd2.append("nome", nome); }
+        } catch {}
+        console.log(`[SCAN_DBG] retry_fetch scanId=${_dbgScanId}`);
+        try {
+          res = await fetch(endpoint, { method: "POST", body: fd2, signal: _localCtrl.signal });
+          console.log(`[SCAN_DBG] retry_success scanId=${_dbgScanId} status=${res.status}`);
+        } catch (retryErr) {
+          console.error(`[SCAN_DBG] retry_error scanId=${_dbgScanId} err="${retryErr.message}" name=${retryErr.name}`);
+          throw retryErr;
+        }
       }
 
       clearTimeout(timeoutId);
@@ -1571,6 +1591,7 @@ const loadNotifCount = async (pin) => {
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
         console.log(`[ANDROID_DBG] IDENTIFY OK dish=${resultWithTime.dish_display} score=${resultWithTime.score} totalTime=${resultWithTime.totalTime}ms scanId=${_dbgScanId}`);
+        console.log(`[SCAN_DBG] set_result_non_null dish=${resultWithTime.dish_display} scanId=${_dbgScanId}`);
         setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
@@ -1606,12 +1627,15 @@ const loadNotifCount = async (pin) => {
       if (e.name === 'AbortError') {
         // ── ANDROID_DBG: diagnóstico do motivo do abort ──
         console.error(`[ANDROID_DBG] ABORT ERROR scanId=${_dbgScanId} timeoutFired=${_timeoutFired} ctrlAborted=${_localCtrl.signal.aborted} refMatchesLocal=${abortControllerRef.current === _localCtrl} reason=${_localCtrl.signal.reason || 'no-reason'}`);
+        console.log(`[SCAN_DBG] identify_error type=abort scanId=${_dbgScanId}`);
         setError('Tempo limite excedido. Tente novamente.');
-      } else if (e.message && (e.message.includes('postMessage') || e.message.includes('body stream'))) {
-        // Erro de script externo (emergent-main.js) - ignorar
-        console.warn('[IDENTIFY] Erro de script externo ignorado:', e.message);
+      } else if (e.message && e.message.includes('postMessage')) {
+        // Erro de script externo (emergent-main.js) — ignorar
+        console.warn(`[SCAN_DBG] identify_error type=external_script msg="${e.message}" scanId=${_dbgScanId} — SUPRIMIDO`);
       } else {
-        console.error(`[ANDROID_DBG] ERROR scanId=${_dbgScanId} msg=${e.message}`);
+        // Qualquer outro erro (rede, body stream, servidor) → mostrar na UI
+        console.error(`[SCAN_DBG] identify_error type=other scanId=${_dbgScanId} msg="${e.message}" name=${e.name}`);
+        console.log(`[SCREEN_CLEAR_DBG] setError source=identify_catch msg="${e.message}" scanId=${_dbgScanId}`);
         setError(e.message || 'Erro de conexão');
       }
     } finally { 
@@ -1622,7 +1646,7 @@ const loadNotifCount = async (pin) => {
           setLoading(false);
         }
       }
-      console.log(`[ANDROID_DBG] identifyImage FINALLY scanId=${_dbgScanId} premiumBusy=${premiumCycleBusyRef.current}`);
+      console.log(`[SCAN_DBG] cleanup_finally scanId=${_dbgScanId} premiumBusy=${premiumCycleBusyRef.current} loadingRef=${loadingRef.current}`);
     }
   };
 
@@ -1723,6 +1747,7 @@ const loadNotifCount = async (pin) => {
       }
     }
     setShowAddMore(false);
+    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=addItemToPlate');
     setResult(null);
     setPreviewImageUrl(null);
   };
@@ -1789,6 +1814,7 @@ const loadNotifCount = async (pin) => {
       }
     }
     setShowAddMore(false);
+    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=finishPlate');
     setResult(null);
     setViewMode('mesa'); // Mudar para vista consolidada
   };
@@ -1796,6 +1822,7 @@ const loadNotifCount = async (pin) => {
   // Fluxo Único: Limpar prato e começar novo
   const clearPlate = () => {
     setPlateItems([]);
+    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=clearPlate');
     setResult(null);
     setMultiResult(null);
     setPreviewImageUrl(null);
@@ -2182,14 +2209,8 @@ return {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
+    console.log('[SCREEN_CLEAR_DBG] setResult(null) source=clearResult');
     setResult(null);
-    setMultiResult(null);
-    setError(null);
-    setShowFeedback(false);
-    setFeedbackSent(false);
-    setShowCorrectionFlow(false);
-    setCorrectionSearch('');
-    // Limpar preview da imagem
     if (previewImageUrl) {
       URL.revokeObjectURL(previewImageUrl);
       setPreviewImageUrl(null);
