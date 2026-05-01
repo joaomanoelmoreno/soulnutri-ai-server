@@ -43,6 +43,7 @@ export function PremiumRegister({ onSuccess, onCancel }) {
       const data = await res.json();
       if (data.ok) {
         localStorage.setItem('soulnutri_pin', form.pin);
+        localStorage.setItem('soulnutri_nome', form.nome);
         localStorage.setItem('soulnutri_user', JSON.stringify(data));
         onSuccess(data);
       } else {
