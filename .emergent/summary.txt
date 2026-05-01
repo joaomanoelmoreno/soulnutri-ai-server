@@ -1,0 +1,154 @@
+<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. O objetivo principal era a resolução de um bug crítico de Tempo limite excedido no frontend Android (PWA) ao realizar múltiplos scans, exigindo uma análise técnica profunda baseada em provas (Autópsia), sem tentativas de tentativa e erro. 
+
+**User's preferred language**: Portuguese (Brasil)
+INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. Maintain a highly technical, objective, and precise tone. DO NOT propose patches without providing undeniable proof of the root cause first. The user is frustrated with side-effect bugs from previous patches.
+
+**what currently exists?**: O sistema opera com FastAPI (backend) no Render e React (frontend) na Vercel, suportado por MongoDB. O app possui duas rotas de IA: ONNX/CLIP (para usuários dentro do restaurante Cibi Sana) e Gemini API (para usuários externos). Foi diagnosticado e corrigido que a chave do Google Gemini estava revogada e causando delays de 17-50s via fallback, o que gerava os timeouts no Android. Foi também corrigido um bloqueio de Event Loop no backend. Contudo, **a produção atual está quebrada**, e o Premium não está funcionando.
+
+**Last working item**: 
+    - Last item agent was working: Investigação de **RCA (Root Cause Analysis)** solicitada pelo usuário sobre: POR QUE A PRODUÇÃO DIVERGE DO TESTE LOCAL?. O usuário relatou que o app travou em produção e o Premium parou de entrar, exigindo entender o porquê do ambiente live estar falhando (seja por falta de sincronia de deploy, variáveis de ambiente ou erro de rota) antes de cogitar um rollback total.
+    - Status: IN PROGRESS
+    - Agent Testing Done: Y (coleta de logs executada, mas resposta textual pendente)
+    - Which testing method agent to use?: manual testing by curl / python -c e bash logs
+    - User Testing Done: N/A
+
+**All Pending/In progress Issue list**:  
+  Issue 1: Produção Quebrada / Falha de Login Premium (P0)
+     - Attempted fixes: Nenhuma. Apenas levantamento de evidências.
+     - Next debug checklist: Responder ao prompt final do usuário usando os dados coletados (endpoints  retornando HTML do React e  retornando 405 Method Not Allowed). Investigar se o Vercel está falhando no roteamento para o Render, se o  sumiu do build, ou se o frontend desatualizou.
+     - Why fix this issue and what will be achieved with the fix?: O app está inoperante para clientes de teste.
+     - Status: IN PROGRESS
+     - Is recurring issue? N
+     - Should Test frontend/backend/both after fix?: both
+     - Blocked on other issue: N/A
+
+  Issue 2: Aumento do  no Frontend (P1)
+     - Attempted fixes: Identificou-se que o limite de 15s é arriscado para chamadas ao Gemini (external). A recomendação era subir para 25s ou 30s.
+     - Next debug checklist: Mudar  no .
+     - Why fix this issue and what will be achieved with the fix?: Evita falsos positivos de queda de conexão quando a API do Gemini atrasar.
+     - Status: NOT STARTED (Bloqueado pela quebra geral de produção P0)
+     - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix?: frontend
+     - Blocked on other issue: Issue 1
+
+**In progress Task List**: 
+  Task 1: Relatório de Divergência Produção vs Local (P0)
+     - Where to resume: O agente já rodou os testes com bash/curl no final da sessão. O próximo passo imediato é **escrever a resposta estruturada** exigida pelo prompt final do usuário analisando por que a produção falha.
+     - What will be achieved with this?: Provar ao usuário a causa da quebra de produção antes de aplicar rollback.
+     - Status: IN PROGRESS
+     - Should Test frontend/backend/both after fix?: backend/frontend
+     - Blocked on something: N/A
+
+  Task 2: Expansão da Fase 1 de Migração Canônica (P2)
+     - Where to resume: Aplicar script de  em  e .
+     - What will be achieved with this?: Padronização completa.
+     - Status: NOT STARTED
+     - Should Test frontend/backend/both after fix?: backend
+     - Blocked on something: Issue 1
+
+**Upcoming and Future Tasks**
+    Upcoming Tasks:
+    - (P1) Saneamento do campo  em  e .
+    
+    Future Tasks:
+    - (P2) Re-indexar imagens problemáticas no dataset CLIP (ex: Gelatina).
+    - (P2) Desenhar UX e Arquitetura da Famílias Visuais V2.
+    - (P2) Compressão de imagem R3 avançada no frontend.
+
+**Completed work in this session**
+- Autópsia Técnica e diagnóstico real do timeout do Android (Identificado timeout de 15s do frontend conflitando com atrasos de rede). (DONE)
+- Instrumentação de Logs de Diagnóstico  no  para entender comportamento em Runtime. (DONE)
+- Diagnóstico sobre API Gemini e troca da  revogada que forçava um fallback de 50s. (DONE)
+- Correção de evento bloqueante do Asyncio Event Loop () na rota . (DONE)
+
+**Earlier issues found/mentioned but not fixed**
+   Issue 1: Cleanup incompleto de erros na UI ()
+   - Debug checklist: O botão Voltar no fluxo de scanner não limpa estados residuais de erro de tela, o que faz erros antigos persistirem visualmente no próximo scan.
+   - Why to solve this issue and what will be achieved with this?: Melhor UX.
+   - Should Test frontend/backend/both after fix: frontend
+   - Is recurring issue? Y
+
+**Known issue recurrence from previous fork**
+  - Issue recurrence in previous fork: Correções pontuais no backend têm gerado efeitos colaterais sistêmicos (ex: consertar o warmup travou o event loop de todo o servidor; tentar consertar o timeout quebrou o ambiente de produção/Premium). O usuário está extremamente insatisfeito com métodos de tentativa e erro.
+  - Recurrence count: Alta.
+  - Status: IN PROGRESS
+
+**Code Architecture**
+/app
+├── backend/
+│   ├── ai/               (Embedder ONNX, index)
+│   ├── services/         (Gemini Flash Service)
+│   └── server.py         (API endpoints e controle do Warmup)
+├── frontend/
+│   └── src/
+│       └── App.js        (Frontend principal, instrumentado com FINAL_PROOF)
+
+**Key Technical Concepts**
+- : A rota  toma caminhos distintos com base no estado . Se , usa ONNX local rápido. Se  (default para Android via GPS), bate na API do Gemini.
+- : Operações pesadas (carregar ONNX na memória) não podem ser chamadas sincronicamente em endpoints assíncronos no FastAPI, exigindo .
+
+**key DB schema**
+  - Não houveram mudanças de schema nesta sessão.
+
+**changes in tech stack**
+Nenhuma alteração estrutural, mas a  foi atualizada no ambiente do Render.
+
+**All files of reference** 
+  -  (Alterado para ajustar o warmup e usar )
+  -  (Instrumentado com logs visuais e console logs).
+  -  (Funções do ONNX).
+
+**Areas that need refactoring**:
+- Separação da lógica de roteamento  que atualmente aglomera regras de negócio pesadas dentro do .
+
+**key api endpoints**
+  - 
+  - 
+  -  (Atualmente apresentando falhas no ambiente live)
+
+**Critical Info for New Agent** 
+- **O USUÁRIO ESTÁ EXTREMAMENTE FRUSTRADO COM SIDE-EFFECTS E ACHISMOS.** A quebra atual do Premium e o erro no servidor Live tornaram a situação insustentável. 
+- **NÃO APLIQUE NENHUM PATCH** antes de entregar o relatório final com a Root Cause solicitada na última mensagem. 
+- Pelos logs coletados no final da sessão anterior, os endpoints da API de auth no Live estão retornando o  do frontend React (Vercel catch-all) ao invés do JSON do backend (possível falta de configuração do  no Vercel ou rota perdida), ou . Sua primeira ação deve ser explicar isso detalhadamente.
+
+**documents and test reports created in this job** 
+Nenhum arquivo .md criado, análises restritas ao chat.
+
+**Last 10 User Messages and any pending HUMAN messages** 
+(Mais recente para a mais antiga)
+ 1. (User) Exige análise profunda do 1º PORQUÊ a produção diverge do teste local e porque o app Premium quebrou. PROÍBE PATCHES. (PENDING)
+ 2. (User) Relata que a produção está dando erro de conexão, servidor indisponível em todos os scans.
+ 3. (User) Pede confirmação se a nova GOOGLE_API_KEY está rodando no Render. (Concluído)
+ 4. (User) Pede explicação profunda (2º Porquê) sobre por que o Gemini demorou 17.7s agora. (Concluído: Chave Vazada)
+ 5. (User) Pede explicação (1º Porquê) sobre por que o Android envia . (Concluído: Comportamento GPS esperado).
+ 6. (User) Solicita Fix isolado 1: Warmup Honesto do ONNX. (Concluído com regressões de event loop fixadas em seguida).
+ 7. (User) Pede análise para provar se era Cold Start do Render ou Regressão Backend. (Concluído).
+ 8. (User) Pede instrumento final visual no Android para provar quem corta a conexão. (Concluído).
+
+- **PENDING HUMAN ACTION**: Nenhuma pendência do humano. O AGENTE deve responder imediatamente ao último prompt.
+
+**Project Health Check:**
+Broken: AMBIENTE DE PRODUÇÃO INOPERANTE. Login Premium falhando e conexões instáveis.
+Mocked: Nenhum.
+
+**3rd Party Integrations** 
+	 •	OpenAI/Gemini — uses Emergent LLM Key (Fallback lento)
+	 •	Google Gemini API Direta — Requer User API Key (Atualizada no Render)
+
+**Testing status**
+  - Testing agent used after significant changes: NO (Proibido pelo fluxo isolado do usuário).
+  - Troubleshoot agent used after agent stuck in loop: NO
+  - Test files created: None
+  - Known regressions: O fix do event loop e warmup afetaram o comportamento live. 
+
+**Credentials to test flow:**
+/app/memory/test_credentials.md
+
+**What agent forgot to execute**
+O agente processou os comandos bash no final para investigar o status do Live, mas não formulou a resposta de texto exigida pelo usuário, deixando o relatório de divergência Produção vs Local incompleto.
+
+**Debugging checklist for current issue**
+    Issue: App Live/Produção divergente, Premium quebrado.
+    Frontend files to check:  (Como as rotas API estão sendo chamadas, headers enviados)
+    Backend files to check: Logs do servidor ao rodar .
+    Terminal to check: Verificar chamadas cURL para identificar regras de proxying e CORS da Vercel para o Render. Retorno de  em chamadas  indica perda de URL de backend.</analysis>

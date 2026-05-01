@@ -15,7 +15,7 @@ import requests
 import os
 import time
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://pwa-performance-fix-1.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://premium-auth-fix.preview.emergentagent.com').rstrip('/')
 
 # Test credentials
 TEST_PIN = "1234"

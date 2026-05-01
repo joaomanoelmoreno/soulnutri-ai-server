@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://pwa-performance-fix-1.preview.emergentagent.com
-- Admin: https://pwa-performance-fix-1.preview.emergentagent.com/admin
-- Lista de Pratos: https://pwa-performance-fix-1.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://premium-auth-fix.preview.emergentagent.com
+- Admin: https://premium-auth-fix.preview.emergentagent.com/admin
+- Lista de Pratos: https://premium-auth-fix.preview.emergentagent.com/lista-pratos.txt
 
 ---
 
