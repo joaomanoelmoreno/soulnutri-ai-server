@@ -2,6 +2,16 @@
 
 ## Versao Atual: V3.6 (Famílias Visuais — Migration + Backend + Frontend)
 
+## Referências Críticas para Agentes
+| Arquivo | Propósito |
+|---------|-----------|
+| `/app/memory/STABLE_VERSION.md` | **LEIA PRIMEIRO** — commit estável, como verificar, problemas conhecidos, regras de patch |
+| `/app/memory/CHANGELOG.md` | Histórico de correções com RCA completo |
+| `/app/memory/REGRAS_IMUTAVEIS.md` | Regras que nunca devem ser alteradas |
+| `/app/memory/test_credentials.md` | Credenciais de teste (PIN, nome de usuário) |
+
+> **VERSÃO ESTÁVEL:** commit `5b03399` (2026-05-01) — fix do `premiumCycleBusyRef` travando scans após falha
+
 ## Stack
 - Frontend: React (PWA) — **hospedado na Vercel** | Backend: FastAPI, Motor (MongoDB async) — **hospedado no Render Standard**
 - IA: OpenCLIP ViT-B-16 (ONNX pré-otimizado R2) | Gemini 2.5 Flash Lite (Emergent LLM Key)
