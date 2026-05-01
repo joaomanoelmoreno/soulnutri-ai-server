@@ -1,47 +1,47 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. O objetivo principal era a resolução de um bug crítico de Tempo limite excedido no frontend Android (PWA) ao realizar múltiplos scans, exigindo uma análise técnica profunda baseada em provas (Autópsia), sem tentativas de tentativa e erro. 
+<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. O objetivo atual é corrigir bugs críticos de trava de interface (), garantir segurança dos endpoints administrativos, resolver persistência de sessão de trial premium, corrigir alucinações da IA (Feijão Carioca) e falhas no acionamento indevido do Gemini dentro do restaurante devido a travas na lógica do GPS.
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. Maintain a highly technical, objective, and precise tone. DO NOT propose patches without providing undeniable proof of the root cause first. The user is frustrated with side-effect bugs from previous patches.
+INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. O usuário é extremamente metódico e exige comprovação rigorosa (RCA) antes de qualquer implementação. Não faça tentativas de tentativa e erro.
 
-**what currently exists?**: O sistema opera com FastAPI (backend) no Render e React (frontend) na Vercel, suportado por MongoDB. O app possui duas rotas de IA: ONNX/CLIP (para usuários dentro do restaurante Cibi Sana) e Gemini API (para usuários externos). Foi diagnosticado e corrigido que a chave do Google Gemini estava revogada e causando delays de 17-50s via fallback, o que gerava os timeouts no Android. Foi também corrigido um bloqueio de Event Loop no backend. Contudo, **a produção atual está quebrada**, e o Premium não está funcionando.
+**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. O app possui duas rotas de IA: ONNX/CLIP (para usuários dentro do restaurante Cibi Sana) e Gemini API (para usuários externos). A produção foi recentemente estabilizada e bugs de App Congelado e segurança de endpoints administrativos foram sanados, tendo sido criados arquivos âncora de estabilidade ( e ).
 
 **Last working item**: 
-    - Last item agent was working: Investigação de **RCA (Root Cause Analysis)** solicitada pelo usuário sobre: POR QUE A PRODUÇÃO DIVERGE DO TESTE LOCAL?. O usuário relatou que o app travou em produção e o Premium parou de entrar, exigindo entender o porquê do ambiente live estar falhando (seja por falta de sincronia de deploy, variáveis de ambiente ou erro de rota) antes de cogitar um rollback total.
-    - Status: IN PROGRESS
-    - Agent Testing Done: Y (coleta de logs executada, mas resposta textual pendente)
-    - Which testing method agent to use?: manual testing by curl / python -c e bash logs
-    - User Testing Done: N/A
+    - Last item agent was working: Implementação do patch para o bug do GPS travado pela flag . O usuário enviou o prompt EXATO com a lógica substituta a ser aplicada no callback  em  para garantir que, se o GPS confirmar presença no Cibi Sana, a trava manual seja removida.
+    - Status: NOT STARTED (A sessão foi interrompida logo após a recepção do prompt).
+    - Agent Testing Done: N
+    - Which testing method agent to use?: manual testing by javascript execution/browser console / curl
+    - User Testing Done: N
 
 **All Pending/In progress Issue list**:  
-  Issue 1: Produção Quebrada / Falha de Login Premium (P0)
-     - Attempted fixes: Nenhuma. Apenas levantamento de evidências.
-     - Next debug checklist: Responder ao prompt final do usuário usando os dados coletados (endpoints  retornando HTML do React e  retornando 405 Method Not Allowed). Investigar se o Vercel está falhando no roteamento para o Render, se o  sumiu do build, ou se o frontend desatualizou.
-     - Why fix this issue and what will be achieved with the fix?: O app está inoperante para clientes de teste.
-     - Status: IN PROGRESS
-     - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: both
-     - Blocked on other issue: N/A
-
-  Issue 2: Aumento do  no Frontend (P1)
-     - Attempted fixes: Identificou-se que o limite de 15s é arriscado para chamadas ao Gemini (external). A recomendação era subir para 25s ou 30s.
-     - Next debug checklist: Mudar  no .
-     - Why fix this issue and what will be achieved with the fix?: Evita falsos positivos de queda de conexão quando a API do Gemini atrasar.
-     - Status: NOT STARTED (Bloqueado pela quebra geral de produção P0)
+  Issue 1: GPS Travado por  (P0 - HIGHEST)
+     - Attempted fixes: Diagnóstico concluído. A flag no  impede que o GPS atualize o status para  mesmo com a localização correta.
+     - Next debug checklist: Substituir o bloco  pelo código exato fornecido no último prompt do usuário no arquivo  (em torno da linha 613).
+     - Why fix this issue and what will be achieved with the fix?: Garante que usuários não fiquem permanentemente presos no modo Gemini/Externo dentro do restaurante, poupando custos de API e melhorando o tempo de resposta.
+     - Status: NOT STARTED
      - Is recurring issue? Y
      - Should Test frontend/backend/both after fix?: frontend
-     - Blocked on other issue: Issue 1
+     - Blocked on other issue: None
+
+  Issue 2: Alucinação Feijão Carioca no modo Gemini (P1)
+     - Attempted fixes: Investigação identificou que a label Feijão Carioca não existe no banco, mas o Gemini a inventa por falta de contexto e restrições no .
+     - Next debug checklist: Modificar o  (em  ou ) para injetar os nomes exatos de feijões do cardápio e evitar alucinações.
+     - Why fix this issue and what will be achieved with the fix?: Respostas mais precisas e aderentes ao cardápio real.
+     - Status: NOT STARTED
+     - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix?: backend
+
+  Issue 3: Identificação de pratos () ignora  expirado (P1)
+     - Attempted fixes: Identificou-se que a query do Mongo nas linhas 1176 e 1218 do  não filtra .
+     - Next debug checklist: Adicionar  à query de  no , igual é feito no . Em , no , verificar a propriedade  antes de setar o .
+     - Why fix this issue and what will be achieved with the fix?: Impede que trials vencidos continuem consumindo IA avançada de graça.
+     - Status: NOT STARTED
+     - Is recurring issue? N
+     - Should Test frontend/backend/both after fix?: both
 
 **In progress Task List**: 
-  Task 1: Relatório de Divergência Produção vs Local (P0)
-     - Where to resume: O agente já rodou os testes com bash/curl no final da sessão. O próximo passo imediato é **escrever a resposta estruturada** exigida pelo prompt final do usuário analisando por que a produção falha.
-     - What will be achieved with this?: Provar ao usuário a causa da quebra de produção antes de aplicar rollback.
-     - Status: IN PROGRESS
-     - Should Test frontend/backend/both after fix?: backend/frontend
-     - Blocked on something: N/A
-
-  Task 2: Expansão da Fase 1 de Migração Canônica (P2)
-     - Where to resume: Aplicar script de  em  e .
-     - What will be achieved with this?: Padronização completa.
+  Task 1: Expansão de Dataset e Reconstrução do Índice ONNX (P2)
+     - Where to resume: Adicionar mais fotos aos pratos que possuem < 5 imagens (ex: Feijao do Chef, que tem apenas 1 imagem e causa falsos positivos com Feijao Branco). Após isso, rodar reconstrução do índice.
+     - What will be achieved with this?: Melhorará a precisão do ONNX e acabará com as confusões no Cibi Sana.
      - Status: NOT STARTED
      - Should Test frontend/backend/both after fix?: backend
      - Blocked on something: Issue 1
@@ -49,106 +49,115 @@ INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. Maintain a highly
 **Upcoming and Future Tasks**
     Upcoming Tasks:
     - (P1) Saneamento do campo  em  e .
+    - (P2) Aplicar script de  na Fase 1 de Migração Canônica.
+    - (P2) Integrar o login do  com o endpoint  para que administradores entrem usando PIN, sem digitar a chave secret.
     
     Future Tasks:
-    - (P2) Re-indexar imagens problemáticas no dataset CLIP (ex: Gelatina).
-    - (P2) Desenhar UX e Arquitetura da Famílias Visuais V2.
-    - (P2) Compressão de imagem R3 avançada no frontend.
+    - (P2) Implementar roles de usuários (admin vs funcionário) no DB e interface do admin para permissões parciais.
+    - (P2) Adicionar mecanismo de keep-alive no frontend para evitar que o servidor Render sofra cold-start (OOM Kill / Sleep).
 
 **Completed work in this session**
-- Autópsia Técnica e diagnóstico real do timeout do Android (Identificado timeout de 15s do frontend conflitando com atrasos de rede). (DONE)
-- Instrumentação de Logs de Diagnóstico  no  para entender comportamento em Runtime. (DONE)
-- Diagnóstico sobre API Gemini e troca da  revogada que forçava um fallback de 50s. (DONE)
-- Correção de evento bloqueante do Asyncio Event Loop () na rota . (DONE)
+- Correção de travamento geral:  não resetava em cenários de erro e congelava o app (App.js). (DONE)
+- Proteção de segurança () para 3 endpoints administrativos abertos (server.py) e atualização das requests no Admin.js. (DONE)
+- Limpeza de usuários duplicados no MongoDB e ativação do botão Deletar para contas ativas na view do Admin. (DONE)
+- Correção do  que não passava Header de autorização. (DONE)
+- Fix P0 de persistência de sessão de trial: Adicionado  durante registro. (DONE)
+- Criação dos documentos de controle:  e . (DONE)
+- RCAs finalizados e entregues sobre Feijão Carioca Fantasma e Travamento GPS. (DONE)
 
 **Earlier issues found/mentioned but not fixed**
    Issue 1: Cleanup incompleto de erros na UI ()
-   - Debug checklist: O botão Voltar no fluxo de scanner não limpa estados residuais de erro de tela, o que faz erros antigos persistirem visualmente no próximo scan.
+   - Debug checklist: O botão Voltar no fluxo de scanner não limpa estados residuais de erro de tela.
    - Why to solve this issue and what will be achieved with this?: Melhor UX.
    - Should Test frontend/backend/both after fix: frontend
    - Is recurring issue? Y
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: Correções pontuais no backend têm gerado efeitos colaterais sistêmicos (ex: consertar o warmup travou o event loop de todo o servidor; tentar consertar o timeout quebrou o ambiente de produção/Premium). O usuário está extremamente insatisfeito com métodos de tentativa e erro.
-  - Recurrence count: Alta.
-  - Status: IN PROGRESS
+  - Issue recurrence in previous fork: Bug do frontend  travando/congelando silenciosamente resolvido com precisão sem side-effects. 
+  - Recurrence count: 0 (A metodologia rigorosa adotada funcionou perfeitamente).
+  - Status: RESOLVED
 
 **Code Architecture**
 /app
 ├── backend/
 │   ├── ai/               (Embedder ONNX, index)
 │   ├── services/         (Gemini Flash Service)
-│   └── server.py         (API endpoints e controle do Warmup)
+│   └── server.py         (API endpoints e controle principal)
 ├── frontend/
 │   └── src/
-│       └── App.js        (Frontend principal, instrumentado com FINAL_PROOF)
+│       ├── App.js        (Frontend principal, fluxo de Câmera/GPS/Premium)
+│       ├── Admin.js      (Painel administrativo separado)
+│       └── Premium.jsx   (Componentes de cadastro e perfil Premium)
 
 **Key Technical Concepts**
-- : A rota  toma caminhos distintos com base no estado . Se , usa ONNX local rápido. Se  (default para Android via GPS), bate na API do Gemini.
-- : Operações pesadas (carregar ONNX na memória) não podem ser chamadas sincronicamente em endpoints assíncronos no FastAPI, exigindo .
+- **Bifurcação de IA**: O GPS () define se o usuário está no  (usa rede neural local rápida ONNX) ou  (usa Gemini Flash, gasta API).
+- **GPS Drift**: O App possui um override manual da localização. Quando acionado, grava  e o watchPosition do GPS é ignorado. 
 
 **key DB schema**
-  - Não houveram mudanças de schema nesta sessão.
+  - : , , , , , . (O sistema não possui o conceito de  ainda, só  booleano).
 
 **changes in tech stack**
-Nenhuma alteração estrutural, mas a  foi atualizada no ambiente do Render.
+Nenhuma alteração.
 
 **All files of reference** 
-  -  (Alterado para ajustar o warmup e usar )
-  -  (Instrumentado com logs visuais e console logs).
-  -  (Funções do ONNX).
+  -  (Onde você DEVE aplicar o patch da Issue 1 imediatamente).
+  - 
+  -  (LEIA ESTE ARQUIVO, possui diretrizes e configs estáveis).
+  - 
 
 **Areas that need refactoring**:
-- Separação da lógica de roteamento  que atualmente aglomera regras de negócio pesadas dentro do .
+- Separação da lógica de roteamento de IA monstruosa centralizada dentro do .
 
 **key api endpoints**
   - 
   - 
-  -  (Atualmente apresentando falhas no ambiente live)
+  - 
+  -  (Todos agora protegidos por ).
 
 **Critical Info for New Agent** 
-- **O USUÁRIO ESTÁ EXTREMAMENTE FRUSTRADO COM SIDE-EFFECTS E ACHISMOS.** A quebra atual do Premium e o erro no servidor Live tornaram a situação insustentável. 
-- **NÃO APLIQUE NENHUM PATCH** antes de entregar o relatório final com a Root Cause solicitada na última mensagem. 
-- Pelos logs coletados no final da sessão anterior, os endpoints da API de auth no Live estão retornando o  do frontend React (Vercel catch-all) ao invés do JSON do backend (possível falta de configuração do  no Vercel ou rota perdida), ou . Sua primeira ação deve ser explicar isso detalhadamente.
+- **⚠️ REGRA DE OURO:** O usuário exige comprovação e investigação (RCA - Root Cause Analysis) antes de aplicar patches. A ÚNICA exceção é o **Patch do GPS no App.js**, pois o usuário já aprovou a RCA e **forneceu o código exato a ser colado** no último prompt. Execute este passo imadiatamente.
+- A chave administrativa de testes é .
+- Leia o arquivo  antes de interagir de forma arquitetônica com o sistema. 
 
 **documents and test reports created in this job** 
-Nenhum arquivo .md criado, análises restritas ao chat.
+  - /app/memory/STABLE_VERSION.md
+  - /app/memory/CHANGELOG.md
+  - /app/memory/PRD.md (atualizado)
 
 **Last 10 User Messages and any pending HUMAN messages** 
-(Mais recente para a mais antiga)
- 1. (User) Exige análise profunda do 1º PORQUÊ a produção diverge do teste local e porque o app Premium quebrou. PROÍBE PATCHES. (PENDING)
- 2. (User) Relata que a produção está dando erro de conexão, servidor indisponível em todos os scans.
- 3. (User) Pede confirmação se a nova GOOGLE_API_KEY está rodando no Render. (Concluído)
- 4. (User) Pede explicação profunda (2º Porquê) sobre por que o Gemini demorou 17.7s agora. (Concluído: Chave Vazada)
- 5. (User) Pede explicação (1º Porquê) sobre por que o Android envia . (Concluído: Comportamento GPS esperado).
- 6. (User) Solicita Fix isolado 1: Warmup Honesto do ONNX. (Concluído com regressões de event loop fixadas em seguida).
- 7. (User) Pede análise para provar se era Cold Start do Render ou Regressão Backend. (Concluído).
- 8. (User) Pede instrumento final visual no Android para provar quem corta a conexão. (Concluído).
-
-- **PENDING HUMAN ACTION**: Nenhuma pendência do humano. O AGENTE deve responder imediatamente ao último prompt.
+ 1. (User) **[PENDING HUMAN MESSAGE]** Fornece o patch exato para o Bug do GPS P0 (soulnutri_location_manual) e pede para ser aplicado no .
+ 2. (User) Discute a regra de tolerância do raio do GPS (decidiu-se por manter restrição forte para evitar vizinhos a < 100m). (Concluído)
+ 3. (User) Informa que experienciou o GPS mudando para modo externo mesmo estando dentro do Cibi Sana. (Investigado e respondido).
+ 4. (User) Pede para investigar o acionamento do Gemini dentro do Cibi Sana (Root cause descoberta: flag manual travava e race condition no GPS).
+ 5. (User) Pede RCA da alucinação do Gemini criando o Feijão Carioca. (Investigado e respondido).
+ 6. (User) Reporta bug no botão de tornar admin e duplicatas no Banco (Ambos consertados).
+ 7. (User) Solicita a inserção da lista geral de usuários visível no Admin.js para edição (Concluído).
+ 8. (User) Autoriza o P0 Fix de persistência de sessão de trial premium. (Concluído).
+ 9. (User) Pede validação do fluxo do trial de 7 dias e diagnóstico do que falta. (Relatório detalhado providenciado).
+ 10. (User) Solicita chave de admin do Preview, pois login com PIN não conectava (Chave providenciada).
 
 **Project Health Check:**
-Broken: AMBIENTE DE PRODUÇÃO INOPERANTE. Login Premium falhando e conexões instáveis.
-Mocked: Nenhum.
+Broken: GPS  bug in frontend freezes location to external locking out ONNX/CLIP AI functionality.
+Mocked: None
 
 **3rd Party Integrations** 
-	 •	OpenAI/Gemini — uses Emergent LLM Key (Fallback lento)
-	 •	Google Gemini API Direta — Requer User API Key (Atualizada no Render)
+	 •	OpenAI/Gemini — uses Emergent LLM Key (via gemini-2.0-flash-lite/gemini-2.5)
+	 •	Google Gemini API Direta — Requer User API Key
 
 **Testing status**
-  - Testing agent used after significant changes: NO (Proibido pelo fluxo isolado do usuário).
+  - Testing agent used after significant changes: NO (Proibido pelo fluxo isolado exigido pelo usuário).
   - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: O fix do event loop e warmup afetaram o comportamento live. 
+  - Known regressions: Nenhuma conhecida, documentações estáveis geradas com sucesso.
 
 **Credentials to test flow:**
-/app/memory/test_credentials.md
+Consulte:  (A  do ambiente é )
 
 **What agent forgot to execute**
-O agente processou os comandos bash no final para investigar o status do Live, mas não formulou a resposta de texto exigida pelo usuário, deixando o relatório de divergência Produção vs Local incompleto.
+O agente não conseguiu aplicar o patch do GPS detalhado na última mensagem do usuário (Bug do ), provavelmente por término da janela de contexto. Ele deve ser a **sua primeira ação direta**.
 
 **Debugging checklist for current issue**
-    Issue: App Live/Produção divergente, Premium quebrado.
-    Frontend files to check:  (Como as rotas API estão sendo chamadas, headers enviados)
-    Backend files to check: Logs do servidor ao rodar .
-    Terminal to check: Verificar chamadas cURL para identificar regras de proxying e CORS da Vercel para o Render. Retorno de  em chamadas  indica perda de URL de backend.</analysis>
+    Issue: GPS do Frontend Travado.
+    Frontend files to check:  (Nas linhas 609-655, dentro de ).
+    Ação: Substituir a checagem que tem um mero  pelo código enviado pelo usuário, de modo que a posição correta  remova o trava .
+    Database to check: None.</analysis>

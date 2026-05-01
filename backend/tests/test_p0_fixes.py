@@ -23,7 +23,7 @@ import json
 # Get backend URL from environment
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 if not BASE_URL:
-    BASE_URL = "https://premium-auth-fix.preview.emergentagent.com"
+    BASE_URL = "https://gps-fix-deploy.preview.emergentagent.com"
 
 print(f"[TEST] Using BASE_URL: {BASE_URL}")
 

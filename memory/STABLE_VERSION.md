@@ -103,7 +103,7 @@ grep -n "premiumCycleBusyRef.current = false" /app/frontend/src/App.js
 ### Ambientes
 | Ambiente | URL | Observação |
 |----------|-----|------------|
-| Preview (este fork) | `https://premium-auth-fix.preview.emergentagent.com` | Descarte a cada novo fork |
+| Preview (este fork) | `https://gps-fix-deploy.preview.emergentagent.com` | Descarte a cada novo fork |
 | Produção Frontend | `https://soulnutri.app.br` | Vercel — auto-deploy via GitHub push |
 | Produção Backend | `https://soulnutri-v3wd.onrender.com` | Render — auto-deploy via GitHub push |
 | MongoDB | via `MONGO_URL` no `.env` | Atlas — compartilhado entre local e produção |
