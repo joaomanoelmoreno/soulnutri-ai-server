@@ -2787,48 +2787,113 @@ export default function Admin() {
             })()}
           </div>
 
-          {/* Lista de bloqueados — precisam atenção */}
+          {/* Lista completa de usuários */}
           <div className="premium-users-list">
-            <h3>🔒 Bloqueados / Inativos ({premiumUsers.filter(u => !u.premium_ativo).length})</h3>
-            <p style={{ color: '#888', fontSize: 12, marginTop: -8, marginBottom: 12 }}>
-              Estes usuários estão sem acesso. Delete os que não precisam mais de conta.
-            </p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <h3 style={{ margin: 0 }}>
+                Todos os Usuários
+                <span style={{ marginLeft: 10, fontSize: 13, fontWeight: 400, color: '#888' }}>
+                  ({premiumUsers.length} total · {premiumUsers.filter(u => u.premium_ativo).length} ativos · {premiumUsers.filter(u => !u.premium_ativo).length} bloqueados)
+                </span>
+              </h3>
+              <button
+                onClick={loadPremiumUsers}
+                style={{ fontSize: 12, padding: '4px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#aaa', cursor: 'pointer' }}
+                data-testid="refresh-users-btn"
+              >
+                ↻ Atualizar
+              </button>
+            </div>
 
-            {premiumUsers.filter(u => !u.premium_ativo).length === 0 ? (
-              <p className="no-items">Nenhum usuário bloqueado. Tudo limpo!</p>
+            {premiumUsers.length === 0 ? (
+              <p className="no-items">Nenhum usuário cadastrado.</p>
             ) : (
               <table className="premium-table">
                 <thead>
                   <tr>
                     <th>Nome</th>
                     <th>Status</th>
+                    <th>Expira em</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {premiumUsers.filter(u => !u.premium_ativo).map((user, i) => (
-                    <tr key={i} className="inativo">
-                      <td>{user.nome}</td>
-                      <td>
-                        <span className="badge inativo">
-                          {user.trial_expirado ? '⏰ Trial expirado' : '🔒 Bloqueado'}
-                        </span>
-                      </td>
-                      <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                        <button className="save-btn" style={{ fontSize: 12 }} onClick={() => liberarPremiumDireto(user.nome, 30)}>
-                          ✅ Liberar
-                        </button>
-                        <button
-                          className="delete-btn"
-                          style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }}
-                          onClick={() => deletarUsuarioPremium(user.nome)}
-                          data-testid={`delete-user-${user.nome}`}
-                        >
-                          🗑️ Deletar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {[...premiumUsers]
+                    .sort((a, b) => {
+                      // Ordem: ativos não-trial → trial → bloqueados/expirados
+                      const rank = u => u.premium_ativo ? (u.is_trial ? 1 : 0) : 2;
+                      return rank(a) - rank(b);
+                    })
+                    .map((user, i) => {
+                      const expirado = !user.premium_ativo;
+                      const isTrial = user.is_trial && user.premium_ativo;
+                      const diasRestantes = (() => {
+                        if (!user.premium_expira_em) return null;
+                        const diff = Math.ceil((new Date(user.premium_expira_em) - Date.now()) / 86400000);
+                        return diff;
+                      })();
+
+                      return (
+                        <tr key={i} className={expirado ? 'inativo' : ''}>
+                          <td>
+                            <span style={{ fontWeight: 600 }}>{user.nome}</span>
+                            {user.is_admin && <span style={{ marginLeft: 8, fontSize: 11, color: '#d4af37' }}>⭐ Admin</span>}
+                          </td>
+                          <td>
+                            {isTrial ? (
+                              <span className="badge" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.25)' }}>
+                                🕐 Trial {diasRestantes != null ? `· ${diasRestantes}d restantes` : ''}
+                              </span>
+                            ) : expirado ? (
+                              <span className="badge inativo">
+                                {user.trial_expirado ? '⏰ Trial expirado' : '🔒 Bloqueado'}
+                              </span>
+                            ) : (
+                              <span className="badge" style={{ background: 'rgba(16,185,129,0.12)', color: '#10b981', border: '1px solid rgba(16,185,129,0.25)' }}>
+                                ✅ Ativo
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ fontSize: 12, color: '#888' }}>
+                            {user.premium_expira_em
+                              ? new Date(user.premium_expira_em).toLocaleDateString('pt-BR')
+                              : <span style={{ color: '#555' }}>—</span>
+                            }
+                          </td>
+                          <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                            {user.premium_ativo ? (
+                              <button
+                                className="delete-btn"
+                                style={{ fontSize: 12 }}
+                                onClick={() => bloquearPremium(user.nome)}
+                                data-testid={`block-user-${user.nome}`}
+                              >
+                                🔒 Bloquear
+                              </button>
+                            ) : (
+                              <>
+                                <button
+                                  className="save-btn"
+                                  style={{ fontSize: 12 }}
+                                  onClick={() => liberarPremiumDireto(user.nome, 30)}
+                                  data-testid={`liberar-user-${user.nome}`}
+                                >
+                                  ✅ Liberar
+                                </button>
+                                <button
+                                  className="delete-btn"
+                                  style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }}
+                                  onClick={() => deletarUsuarioPremium(user.nome)}
+                                  data-testid={`delete-user-${user.nome}`}
+                                >
+                                  🗑️ Deletar
+                                </button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             )}
