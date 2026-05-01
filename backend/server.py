@@ -439,7 +439,6 @@ async def ai_warmup():
         }
 
     try:
-        import asyncio as _asyncio
         from ai.embedder import image_embedding_from_bytes
         from PIL import Image
         import io as _io
@@ -454,8 +453,12 @@ async def ai_warmup():
         # image_embedding_from_bytes chama ONNX de forma sincrona (~17s no cold).
         # Sem executor, BLOQUEIA todas as requisicoes durante o carregamento.
         t0 = time.perf_counter()
-        loop = _asyncio.get_event_loop()
-        emb = await loop.run_in_executor(None, image_embedding_from_bytes, image_bytes)
+        loop = asyncio.get_running_loop()
+        emb = await loop.run_in_executor(
+            None,
+            image_embedding_from_bytes,
+            image_bytes
+        )
         elapsed_ms = round((time.perf_counter() - t0) * 1000, 1)
 
         if emb is None:
