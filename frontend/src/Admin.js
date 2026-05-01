@@ -587,7 +587,7 @@ export default function Admin() {
       formData.append('nome', premiumNome);
       formData.append('dias', premiumDias);
       
-      const res = await fetch(`${API}/admin/premium/liberar`, {
+      const res = await adminFetch(`${API}/admin/premium/liberar`, {
         method: 'POST',
         body: formData
       });

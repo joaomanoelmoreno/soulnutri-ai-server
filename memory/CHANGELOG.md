@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-05-01 — Proteção de 3 endpoints admin sem autenticação
+
+**Arquivos:** `backend/server.py` (3 linhas) + `frontend/src/Admin.js` (1 linha)
+
+### Problema
+Três endpoints `/admin/*` estavam sem `dependencies=[Depends(verify_admin_key)]`:
+- `GET /admin/premium/users` — listava todos os 14 usuários sem auth
+- `POST /admin/premium/liberar` — qualquer pessoa podia autopromover-se a premium
+- `POST /admin/premium/bloquear` — qualquer pessoa podia bloquear outros usuários
+
+### Fix aplicado
+```python
+# server.py — adicionado dependencies=[Depends(verify_admin_key)] nos 3 decoradores
+@api_router.get("/admin/premium/users", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/premium/liberar", dependencies=[Depends(verify_admin_key)])
+@api_router.post("/admin/premium/bloquear", dependencies=[Depends(verify_admin_key)])
+```
+```javascript
+// Admin.js linha 590 — liberarPremium() trocou fetch() por adminFetch()
+// (adminFetch injeta X-Admin-Key: adminKeyCache automaticamente)
+const res = await adminFetch(`${API}/admin/premium/liberar`, { ... });
+```
+
+### Validação
+- Sem X-Admin-Key: todos retornam **HTTP 401** ✅
+- Com X-Admin-Key válido: todos retornam **HTTP 200 + dados corretos** ✅
+- Admin.js aba Premium: **carregou 14 usuários, formulários funcionando** ✅
+
+---
+
 ## 2026-05-01 — Fix crítico: App congelado no Premium após scan com falha
 
 **Commit:** `5b03399`

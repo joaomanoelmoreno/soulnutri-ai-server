@@ -5541,7 +5541,7 @@ async def save_admin_settings(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.get("/admin/premium/users")
+@api_router.get("/admin/premium/users", dependencies=[Depends(verify_admin_key)])
 async def get_premium_users():
     """Lista todos os usuarios registrados com status premium e trial."""
     try:
@@ -5553,7 +5553,7 @@ async def get_premium_users():
         return {"ok": False, "error": str(e), "users": []}
 
 
-@api_router.post("/admin/premium/liberar")
+@api_router.post("/admin/premium/liberar", dependencies=[Depends(verify_admin_key)])
 async def liberar_premium(request: Request):
     """Libera acesso premium para um usuario. Aceita FormData ou JSON."""
     try:
@@ -5602,7 +5602,7 @@ async def liberar_premium(request: Request):
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/admin/premium/bloquear")
+@api_router.post("/admin/premium/bloquear", dependencies=[Depends(verify_admin_key)])
 async def bloquear_premium(request: Request):
     """Bloqueia acesso premium de um usuario. Aceita FormData ou JSON."""
     try:
