@@ -891,7 +891,7 @@ async def identify_image(
         # CACHE: Verificar se ja identificamos esta imagem antes
         # ═══════════════════════════════════════════════════════════════════════
         from services.cache_service import get_cached_result, cache_result
-        cached = get_cached_result(content)
+        cached = get_cached_result(content, restaurant=restaurant or '')
         if cached:
             elapsed_ms = (time.time() - start_time) * 1000
             cached['search_time_ms'] = round(elapsed_ms, 2)
@@ -1319,7 +1319,7 @@ async def identify_image(
         # CACHE: Salvar resultado para futuras consultas
         # ═══════════════════════════════════════════════════════════════════════
         if response_data.get('identified'):
-            cache_result(content, response_data, ttl_seconds=3600)  # 1 hora de cache
+            cache_result(content, response_data, restaurant=restaurant or '', ttl_seconds=3600)  # 1 hora de cache
         
         # ═══════════════════════════════════════════════════════════════════════
         # MÉTRICAS DE PROCESSAMENTO (condicional)

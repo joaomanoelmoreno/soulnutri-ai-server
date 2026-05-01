@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-05-02 — Fix P0: Cache de identificação separado por `restaurant`
+
+**Arquivos:** `backend/services/cache_service.py` + `backend/server.py` (2 call sites)
+
+### Problema
+`get_cached_result()` usava `MD5(image_bytes)` como chave — sem incluir `restaurant`. Um resultado Gemini gerado com `restaurant=external` era retornado diretamente para `restaurant=cibi_sana` como cache hit, antes da bifurcação ONNX/Gemini (linha 920 do `server.py`). O Gemini era usado dentro do Cibi Sana mesmo com GPS correto.
+
+### Fix aplicado
+```python
+# cache_service.py — chave agora inclui restaurant normalizado
+def get_image_hash(image_bytes: bytes, restaurant: str = '') -> str:
+    restaurant_key = (restaurant or '').strip().lower()
+    return hashlib.md5(image_bytes + restaurant_key.encode()).hexdigest()
+
+# server.py — 2 call sites atualizados
+cached = get_cached_result(content, restaurant=restaurant or '')
+cache_result(content, response_data, restaurant=restaurant or '', ttl_seconds=3600)
+```
+
+### Validação (curl com imagem real do dataset)
+| Teste | restaurant | source | from_cache | Resultado |
+|-------|-----------|--------|------------|-----------|
+| 1 | external | gemini_flash | False | Gemini chamado, cache salvo ✅ |
+| 2 | cibi_sana (mesma imagem) | local_index | False | **Sem cache external, ONNX executado** ✅ |
+| 3 | cibi_sana (2º scan) | local_index_cached | True | Cache cibi_sana usado ✅ |
+| 4 | external (repetido) | gemini_flash_cached | True | Cache external preservado ✅ |
+
+---
+
 ## 2026-05-02 — Fix P0: GPS travado por `soulnutri_location_manual`
 
 **Arquivo:** `frontend/src/App.js`, linhas 613-633

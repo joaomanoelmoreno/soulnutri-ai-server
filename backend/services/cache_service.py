@@ -75,14 +75,19 @@ class LRUCache:
 _dish_cache = LRUCache(max_size=500)
 
 
-def get_image_hash(image_bytes: bytes) -> str:
-    """Gera hash MD5 da imagem para identificação única."""
-    return hashlib.md5(image_bytes).hexdigest()
+def get_image_hash(image_bytes: bytes, restaurant: str = '') -> str:
+    """Gera hash MD5 da imagem + restaurant para identificação única.
+    
+    A chave inclui o restaurant normalizado para evitar que resultados
+    Gemini (external) sejam reutilizados dentro do Cibi Sana (ONNX/CLIP).
+    """
+    restaurant_key = (restaurant or '').strip().lower()
+    return hashlib.md5(image_bytes + restaurant_key.encode()).hexdigest()
 
 
-def get_cached_result(image_bytes: bytes) -> Optional[dict]:
-    """Busca resultado em cache baseado no hash da imagem."""
-    image_hash = get_image_hash(image_bytes)
+def get_cached_result(image_bytes: bytes, restaurant: str = '') -> Optional[dict]:
+    """Busca resultado em cache baseado no hash da imagem + restaurant."""
+    image_hash = get_image_hash(image_bytes, restaurant)
     result = _dish_cache.get(image_hash)
     
     if result:
@@ -90,20 +95,20 @@ def get_cached_result(image_bytes: bytes) -> Optional[dict]:
         result_copy = {k: v for k, v in result.items() if not k.startswith('_')}
         result_copy['source'] = result.get('source', 'unknown') + '_cached'
         result_copy['from_cache'] = True
-        logger.info(f"[CACHE] ✓ Hit! Prato: {result_copy.get('dish_display', 'N/A')}")
+        logger.info(f"[CACHE] ✓ Hit! Prato: {result_copy.get('dish_display', 'N/A')} (restaurant={restaurant or 'external'})")
         return result_copy
     
     return None
 
 
-def cache_result(image_bytes: bytes, result: dict, ttl_seconds: int = 3600):
-    """Salva resultado no cache."""
+def cache_result(image_bytes: bytes, result: dict, restaurant: str = '', ttl_seconds: int = 3600):
+    """Salva resultado no cache keyed por imagem + restaurant."""
     if not result.get('ok') or not result.get('identified'):
         return  # Não cachear erros ou não identificados
     
-    image_hash = get_image_hash(image_bytes)
+    image_hash = get_image_hash(image_bytes, restaurant)
     _dish_cache.set(image_hash, result.copy(), ttl_seconds)
-    logger.info(f"[CACHE] + Salvo: {result.get('dish_display', 'N/A')} (TTL: {ttl_seconds}s)")
+    logger.info(f"[CACHE] + Salvo: {result.get('dish_display', 'N/A')} (restaurant={restaurant or 'external'}, TTL: {ttl_seconds}s)")
 
 
 def get_cache_stats() -> dict:
