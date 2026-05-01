@@ -610,12 +610,6 @@ const renderTextSafe = (v) => {
       (position) => {
         clearTimeout(fallbackTimer);
         
-        // Se seleção manual está ativa, NÃO sobrescrever
-        if (localStorage.getItem('soulnutri_location_manual') === 'true') {
-          setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
-          return;
-        }
-        
         const dist = haversineDistance(
           position.coords.latitude, position.coords.longitude,
           CIBI_SANA_LAT, CIBI_SANA_LNG
@@ -625,6 +619,18 @@ const renderTextSafe = (v) => {
         const isInsideCibiSanaZone = dist <= effectiveRadius;
         
         const newRestaurant = isInsideCibiSanaZone ? 'cibi_sana' : 'external';
+        
+        const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
+        
+        if (isManual) {
+          // Se GPS confirma Cibi Sana, força correção e remove trava
+          if (newRestaurant === 'cibi_sana') {
+            localStorage.removeItem('soulnutri_location_manual');
+            setDetectedRestaurant('cibi_sana');
+            localStorage.setItem('soulnutri_restaurant', 'cibi_sana');
+          }
+          return;
+        }
         
         setDetectedRestaurant(prev => {
           if (prev && prev !== newRestaurant) {

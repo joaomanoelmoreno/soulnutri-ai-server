@@ -2,6 +2,50 @@
 
 ---
 
+## 2026-05-02 — Fix P0: GPS travado por `soulnutri_location_manual`
+
+**Arquivo:** `frontend/src/App.js`, linhas 613-633
+
+### Problema
+No callback `watchPosition`, havia um `return` prematuro quando `soulnutri_location_manual === 'true'`, executado ANTES do cálculo de distância. Isso impedia que o GPS corrigisse o modo mesmo quando o usuário estava fisicamente dentro do Cibi Sana.
+
+### Causa raiz
+A flag de override manual foi criada para preservar escolhas manuais do usuário (ex: selecionar "external" quando dentro do restaurante). Porém o `return` incondicional bloqueava também o caminho legítimo `external → cibi_sana`, impedindo a correção automática quando o usuário entrava no restaurante após uma seleção manual anterior.
+
+### Fix aplicado
+```javascript
+// ANTES — return prematuro bloqueava tudo
+if (localStorage.getItem('soulnutri_location_manual') === 'true') {
+  setPermissionsStatus(prev => ({ ...prev, location: 'granted' }));
+  return;  // ← bloqueava mesmo dentro do Cibi Sana
+}
+// cálculo de distância vinha depois...
+
+// DEPOIS — distância calculada ANTES, trava só bloqueia external → external
+const dist = haversineDistance(...);
+// ... cálculo ...
+const newRestaurant = isInsideCibiSanaZone ? 'cibi_sana' : 'external';
+
+const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
+if (isManual) {
+  if (newRestaurant === 'cibi_sana') {
+    // GPS confirma presença no Cibi Sana → remove trava e corrige
+    localStorage.removeItem('soulnutri_location_manual');
+    setDetectedRestaurant('cibi_sana');
+    localStorage.setItem('soulnutri_restaurant', 'cibi_sana');
+  }
+  return;  // ← fora do Cibi Sana: mantém escolha manual
+}
+```
+
+### Resultado
+- Impossível ficar travado em "external" dentro do Cibi Sana
+- GPS corrige automaticamente na próxima leitura de posição
+- Gemini nunca mais acionado dentro do restaurante por causa desta trava
+- Raio, cálculo de distância e backend: **inalterados**
+
+---
+
 ## 2026-05-01 — Proteção de 3 endpoints admin sem autenticação
 
 **Arquivos:** `backend/server.py` (3 linhas) + `frontend/src/Admin.js` (1 linha)
