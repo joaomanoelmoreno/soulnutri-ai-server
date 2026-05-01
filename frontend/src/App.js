@@ -1587,6 +1587,9 @@ const loadNotifCount = async (pin) => {
           setLoading(false);
         }
       }
+      // Reset do guard premium em TODOS os caminhos (sucesso, erro, timeout, abort)
+      // Sem este reset, qualquer scan com falha trava permanentemente o próximo scan
+      premiumCycleBusyRef.current = false;
     }
   };
 
