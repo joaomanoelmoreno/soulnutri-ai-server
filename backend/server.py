@@ -5633,13 +5633,13 @@ async def bloquear_premium(request: Request):
 
 @api_router.delete("/admin/premium/users/{nome}", dependencies=[Depends(verify_admin_key)])
 async def deletar_usuario_premium(nome: str):
-    """Deleta permanentemente um usuário bloqueado/inativo."""
+    """Deleta permanentemente um usuário (ativo ou bloqueado)."""
     try:
         result = await db.users.delete_many(
-            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}, "premium_ativo": False}
+            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}}
         )
         if result.deleted_count == 0:
-            return {"ok": False, "error": "Usuário não encontrado ou ainda ativo"}
+            return {"ok": False, "error": "Usuário não encontrado"}
         return {"ok": True, "message": f"{result.deleted_count} registro(s) deletado(s)"}
     except Exception as e:
         return {"ok": False, "error": str(e)}

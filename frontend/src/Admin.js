@@ -665,7 +665,7 @@ export default function Admin() {
 
   const toggleAdminPremium = async (nome, isAdmin) => {
     try {
-      const res = await fetch(`${API}/admin/premium/toggle-admin`, {
+      const res = await adminFetch(`${API}/admin/premium/toggle-admin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, is_admin: isAdmin })
@@ -2862,14 +2862,24 @@ export default function Admin() {
                           </td>
                           <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                             {user.premium_ativo ? (
-                              <button
-                                className="delete-btn"
-                                style={{ fontSize: 12 }}
-                                onClick={() => bloquearPremium(user.nome)}
-                                data-testid={`block-user-${user.nome}`}
-                              >
-                                🔒 Bloquear
-                              </button>
+                              <>
+                                <button
+                                  className="delete-btn"
+                                  style={{ fontSize: 12 }}
+                                  onClick={() => bloquearPremium(user.nome)}
+                                  data-testid={`block-user-${user.nome}`}
+                                >
+                                  🔒 Bloquear
+                                </button>
+                                <button
+                                  className="delete-btn"
+                                  style={{ fontSize: 12, background: 'rgba(239,68,68,0.2)' }}
+                                  onClick={() => { if (window.confirm(`Deletar "${user.nome}" permanentemente?`)) deletarUsuarioPremium(user.nome); }}
+                                  data-testid={`delete-user-${user.nome}`}
+                                >
+                                  🗑️ Deletar
+                                </button>
+                              </>
                             ) : (
                               <>
                                 <button
