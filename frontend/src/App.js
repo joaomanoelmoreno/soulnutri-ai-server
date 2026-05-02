@@ -392,6 +392,7 @@ function App() {
   const scanIntervalRef = useRef(null);
   // Premium states
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard', 'profile'
+  const [premiumBlockedMsg, setPremiumBlockedMsg] = useState('');
   
   // Radar de Notícias - Fatos sobre alimentos
   const [radarInfo, setRadarInfo] = useState(null); // {has_alert, message, facts}
@@ -1007,6 +1008,15 @@ const renderTextSafe = (v) => {
         clearTimeout(timeoutId);
         const data = await res.json();
         if (data.ok && mountedRef.current) {
+          if (data.premium_bloqueado) {
+            // Usuário existe mas está bloqueado/expirado — limpar sessão e mostrar mensagem
+            localStorage.removeItem('soulnutri_pin');
+            localStorage.removeItem('soulnutri_nome');
+            localStorage.removeItem('soulnutri_user');
+            setPremiumBlockedMsg(data.message || 'Acesso Premium bloqueado.');
+            setShowPremium('login');
+            return;
+          }
           setPremiumUser({ ...data.user, pin });
           loadDailySummary();
           loadNotifCount(pin);
@@ -4802,7 +4812,17 @@ return {
           <div className="modal-content premium-modal" onClick={e => e.stopPropagation()}>
             {showPremium === 'login' && (
               <PremiumLogin 
+                initialError={premiumBlockedMsg}
                 onSuccess={(data) => {
+                  if (data.premium_bloqueado) {
+                    // Defesa belt-and-suspenders (PremiumLogin já deve ter bloqueado)
+                    localStorage.removeItem('soulnutri_pin');
+                    localStorage.removeItem('soulnutri_nome');
+                    localStorage.removeItem('soulnutri_user');
+                    setPremiumBlockedMsg(data.message || 'Acesso bloqueado.');
+                    return;
+                  }
+                  setPremiumBlockedMsg('');
                   const user = { ...data.user, pin: localStorage.getItem('soulnutri_pin') };
                   setPremiumUser(user);
                   loadDailySummary();

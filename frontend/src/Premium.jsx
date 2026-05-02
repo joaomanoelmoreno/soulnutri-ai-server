@@ -468,11 +468,11 @@ export function PremiumEditProfile({ onSuccess, onCancel }) {
 }
 
 // Componente de Login
-export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
+export function PremiumLogin({ onSuccess, onRegister, onCancel, initialError = '' }) {
   const [nome, setNome] = useState(() => localStorage.getItem('soulnutri_nome') || '');
   const [pin, setPin] = useState(() => localStorage.getItem('soulnutri_pin') || '');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(initialError);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -487,6 +487,15 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
       const data = await res.json();
       
       if (data.ok) {
+        if (data.premium_bloqueado) {
+          // Usuário bloqueado/expirado — não entrar, mostrar motivo
+          localStorage.removeItem('soulnutri_pin');
+          localStorage.removeItem('soulnutri_nome');
+          localStorage.removeItem('soulnutri_user');
+          setError(data.message || 'Acesso Premium bloqueado.');
+          setLoading(false);
+          return;
+        }
         localStorage.setItem('soulnutri_pin', pin);
         localStorage.setItem('soulnutri_nome', nome);
         localStorage.setItem('soulnutri_user', JSON.stringify(data.user));
