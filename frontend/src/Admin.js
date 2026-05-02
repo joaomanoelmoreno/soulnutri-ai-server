@@ -815,7 +815,7 @@ export default function Admin() {
   const fixDishWithAI = async (slug) => {
     setFixingSlug(slug);
     try {
-      const res = await fetch(`${API}/admin/audit/fix-single/${encodeURIComponent(slug)}`, { method: 'POST' });
+      const res = await adminFetch(`${API}/admin/audit/fix-single/${encodeURIComponent(slug)}`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         notify(`✅ Prato "${slug}" corrigido com sucesso!`, 'success');
@@ -956,7 +956,7 @@ export default function Admin() {
         
         setLoteProgress(prev => ({ ...prev, atual: i }));
         
-        const res = await fetch(`${API}/admin/revisar-lote-ia`, {
+        const res = await adminFetch(`${API}/admin/revisar-lote-ia`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ slugs: lote, max_pratos: loteSize })
@@ -1110,7 +1110,7 @@ export default function Admin() {
       // Remover campos que não devem ser enviados ao backend
       const { all_images, first_image, image_count, ...dishData } = dish;
       
-      const res = await fetch(`${API}/admin/dishes/${encodeURIComponent(dish.slug)}`, {
+      const res = await adminFetch(`${API}/admin/dishes/${encodeURIComponent(dish.slug)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dishData)
@@ -1193,7 +1193,7 @@ export default function Admin() {
     
     setRevisandoIA(true);
     try {
-      const res = await fetch(`${API}/admin/revisar-prato-taco`, {
+      const res = await adminFetch(`${API}/admin/revisar-prato-taco`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1260,7 +1260,7 @@ export default function Admin() {
     
     setRevisandoIA(true);
     try {
-      const res = await fetch(`${API}/admin/revisar-prato-ia`, {
+      const res = await adminFetch(`${API}/admin/revisar-prato-ia`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
