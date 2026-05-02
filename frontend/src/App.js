@@ -4823,7 +4823,8 @@ return {
             {showPremium === 'register' && (
               <PremiumRegister 
                 onSuccess={(data) => {
-                  setPremiumUser({ nome: data.nome, pin: data.pin, meta_calorica: data.meta_calorica });
+                  const pin = localStorage.getItem('soulnutri_pin');
+                  setPremiumUser({ nome: data.nome, pin, meta_calorica: data.meta_calorica });
                   setDailySummary({ nome: data.nome, meta: data.meta_calorica.meta_sugerida, consumido: 0, restante: data.meta_calorica.meta_sugerida, percentual: 0, pratos: [] });
                   // Ir direto para o dashboard - dados já foram coletados no registro
                   setShowPremium('dashboard');
