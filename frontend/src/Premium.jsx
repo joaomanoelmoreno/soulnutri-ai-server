@@ -85,7 +85,7 @@ export function PremiumRegister({ onSuccess, onCancel }) {
         Consulte sempre um especialista para dietas específicas ou condições de saúde.
       </div>
       
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <div className="form-group">
           <label>PIN de Acesso (4-6 dígitos)</label>
           <input 
@@ -95,6 +95,7 @@ export function PremiumRegister({ onSuccess, onCancel }) {
             placeholder="••••••"
             value={form.pin}
             onChange={e => setForm({...form, pin: e.target.value.replace(/\D/g, '')})}
+            autoComplete="new-password"
             required
           />
         </div>
@@ -504,7 +505,7 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
       <h2>🔐 Entrar</h2>
       <p className="subtitle">Digite seu nome e PIN</p>
       
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} autoComplete="off">
         <div className="form-group">
           <label>Seu nome</label>
           <input 
@@ -512,6 +513,7 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
             placeholder="Como você se cadastrou?"
             value={nome}
             onChange={e => setNome(e.target.value)}
+            autoComplete="off"
             autoFocus
           />
         </div>
@@ -525,6 +527,7 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel }) {
             placeholder="••••••"
             value={pin}
             onChange={e => setPin(e.target.value.replace(/\D/g, ''))}
+            autoComplete="new-password"
             className="pin-input-small"
           />
         </div>
