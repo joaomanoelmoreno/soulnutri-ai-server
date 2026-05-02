@@ -1,50 +1,49 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. O objetivo atual é corrigir bugs críticos de trava de interface (), garantir segurança dos endpoints administrativos, resolver persistência de sessão de trial premium, corrigir alucinações da IA (Feijão Carioca) e falhas no acionamento indevido do Gemini dentro do restaurante devido a travas na lógica do GPS.
+<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. O objetivo atual é corrigir bugs críticos de trava de interface, garantir segurança dos endpoints administrativos, resolver persistência de sessão de trial premium, corrigir alucinações da IA e falhas no acionamento indevido do Gemini dentro do restaurante devido a travas na lógica do GPS. 
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. O usuário é extremamente metódico e exige comprovação rigorosa (RCA) antes de qualquer implementação. Não faça tentativas de tentativa e erro.
+INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. O usuário é extremamente metódico e exige comprovação rigorosa (RCA - Root Cause Analysis) antes de qualquer implementação. Trabalhe com UMA MICROAÇÃO POR VEZ. Economize créditos maximizando a eficiência dos comandos no terminal (use , evite checagens redundantes).
 
-**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. O app possui duas rotas de IA: ONNX/CLIP (para usuários dentro do restaurante Cibi Sana) e Gemini API (para usuários externos). A produção foi recentemente estabilizada e bugs de App Congelado e segurança de endpoints administrativos foram sanados, tendo sido criados arquivos âncora de estabilidade ( e ).
+**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. A arquitetura de IA é bifurcada: ONNX/CLIP para usuários no restaurante (via GPS) e Gemini API para usuários externos.
 
 **Last working item**: 
-    - Last item agent was working: Implementação do patch para o bug do GPS travado pela flag . O usuário enviou o prompt EXATO com a lógica substituta a ser aplicada no callback  em  para garantir que, se o GPS confirmar presença no Cibi Sana, a trava manual seja removida.
-    - Status: NOT STARTED (A sessão foi interrompida logo após a recepção do prompt).
-    - Agent Testing Done: N
-    - Which testing method agent to use?: manual testing by javascript execution/browser console / curl
+    - Last item agent was working: Reconstrução do índice vetorial da IA (ONNX/CLIP) via . O reindex foi concluído com sucesso no background, mas o resultado logado mostrou uma possível duplicata nas labels (gerou embeddings tanto para a pasta  quanto para ).
+    - Status: IN PROGRESS
+    - Agent Testing Done: Y
+    - Which testing method agent to use?: manual testing by python -c / bash (grep, logs)
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:  
-  Issue 1: GPS Travado por  (P0 - HIGHEST)
-     - Attempted fixes: Diagnóstico concluído. A flag no  impede que o GPS atualize o status para  mesmo com a localização correta.
-     - Next debug checklist: Substituir o bloco  pelo código exato fornecido no último prompt do usuário no arquivo  (em torno da linha 613).
-     - Why fix this issue and what will be achieved with the fix?: Garante que usuários não fiquem permanentemente presos no modo Gemini/Externo dentro do restaurante, poupando custos de API e melhorando o tempo de resposta.
-     - Status: NOT STARTED
-     - Is recurring issue? Y
-     - Should Test frontend/backend/both after fix?: frontend
+  Issue 1: Duplicidade de label no índice após reindex (P0 - HIGHEST)
+     - Attempted fixes: O reindex acabou de rodar, mas o log acusou  no índice.
+     - Next debug checklist: Listar os diretórios em  para ver se o upload via Admin recriou a pasta com o slug antigo (). Em seguida, propor como consolidar.
+     - Why fix this issue and what will be achieved with the fix?: Evita que a IA classifique o prato com o slug ao invés do nome correto.
+     - Status: IN PROGRESS
+     - Is recurring issue? N
+     - Should Test frontend/backend/both after fix?: backend
      - Blocked on other issue: None
 
-  Issue 2: Alucinação Feijão Carioca no modo Gemini (P1)
-     - Attempted fixes: Investigação identificou que a label Feijão Carioca não existe no banco, mas o Gemini a inventa por falta de contexto e restrições no .
-     - Next debug checklist: Modificar o  (em  ou ) para injetar os nomes exatos de feijões do cardápio e evitar alucinações.
-     - Why fix this issue and what will be achieved with the fix?: Respostas mais precisas e aderentes ao cardápio real.
-     - Status: NOT STARTED
+  Issue 2: Exclusão de pratos no Admin deixa imagens órfãs no R2 (P1)
+     - Attempted fixes: Identificado que a rota  apaga do Mongo e do disco local, mas NÃO remove os objetos do bucket R2 Cloudflare. O usuário instruiu a não mexer nisso por enquanto.
+     - Next debug checklist: Adicionar a lógica de exclusão do R2 no endpoint  ().
+     - Why fix this issue and what will be achieved with the fix?: Economiza custos de storage e mantém integridade dos dados.
+     - Status: BLOCKED (Adiado pelo usuário para etapa posterior).
      - Is recurring issue? Y
      - Should Test frontend/backend/both after fix?: backend
 
-  Issue 3: Identificação de pratos () ignora  expirado (P1)
-     - Attempted fixes: Identificou-se que a query do Mongo nas linhas 1176 e 1218 do  não filtra .
-     - Next debug checklist: Adicionar  à query de  no , igual é feito no . Em , no , verificar a propriedade  antes de setar o .
-     - Why fix this issue and what will be achieved with the fix?: Impede que trials vencidos continuem consumindo IA avançada de graça.
-     - Status: NOT STARTED
-     - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: both
-
 **In progress Task List**: 
-  Task 1: Expansão de Dataset e Reconstrução do Índice ONNX (P2)
-     - Where to resume: Adicionar mais fotos aos pratos que possuem < 5 imagens (ex: Feijao do Chef, que tem apenas 1 imagem e causa falsos positivos com Feijao Branco). Após isso, rodar reconstrução do índice.
-     - What will be achieved with this?: Melhorará a precisão do ONNX e acabará com as confusões no Cibi Sana.
-     - Status: NOT STARTED
+  Task 1: Atualizar slug do DB para a Cebola (P2)
+     - Where to resume: Atualizar o documento da Cebola no DB para .
+     - What will be achieved with this?: Alinha o slug com o novo nome canônico.
+     - Status: BLOCKED (Usuário pediu para não alterar o slug agora devido ao risco de quebrar URLs de imagem no R2).
+     - Should Test frontend/backend/both after fix?: both
+     - Blocked on something: Necessidade de migrar objetos no R2.
+
+  Task 2: Fotografar Lasanha de Berinjela e indexar (P2)
+     - Where to resume: Aguardar usuário confirmar upload das fotos.
+     - What will be achieved with this?: Inclusão correta do prato na família Gratinados e no índice da IA.
+     - Status: BLOCKED (Aguardando fotos do usuário).
      - Should Test frontend/backend/both after fix?: backend
-     - Blocked on something: Issue 1
+     - Blocked on something: User action.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
@@ -53,111 +52,114 @@ INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. O usuário é ext
     - (P2) Integrar o login do  com o endpoint  para que administradores entrem usando PIN, sem digitar a chave secret.
     
     Future Tasks:
-    - (P2) Implementar roles de usuários (admin vs funcionário) no DB e interface do admin para permissões parciais.
-    - (P2) Adicionar mecanismo de keep-alive no frontend para evitar que o servidor Render sofra cold-start (OOM Kill / Sleep).
+    - (P2) Implementar roles de usuários (admin vs funcionário) no DB e interface do admin.
+    - (P2) Adicionar mecanismo de keep-alive no frontend para evitar que o servidor Render sofra cold-start.
 
 **Completed work in this session**
-- Correção de travamento geral:  não resetava em cenários de erro e congelava o app (App.js). (DONE)
-- Proteção de segurança () para 3 endpoints administrativos abertos (server.py) e atualização das requests no Admin.js. (DONE)
-- Limpeza de usuários duplicados no MongoDB e ativação do botão Deletar para contas ativas na view do Admin. (DONE)
-- Correção do  que não passava Header de autorização. (DONE)
-- Fix P0 de persistência de sessão de trial: Adicionado  durante registro. (DONE)
-- Criação dos documentos de controle:  e . (DONE)
-- RCAs finalizados e entregues sobre Feijão Carioca Fantasma e Travamento GPS. (DONE)
+- Patch P0: Fix do GPS  travado por  em  (DONE).
+- Patch P0: Fix do Cache Gemini sendo acionado dentro do Cibi Sana. Separado por  no  (DONE).
+- RCA + Fix: Botão de deletar pratos não funcionava (401 silencioso) —  convertido para  em chamadas protegidas do  (DONE).
+- Fix Frontend: Formulários de login Premium auto-preenchiam senhas velhas do celular — adicionado  (DONE).
+- Fix Sessão: Usuário recém-cadastrado no Premium ficava com PIN vazio. (DONE).
+- Fix Frontend: Tratamento correto de acesso bloqueado  via frontend (DONE).
+- Feature Admin: Endpoint e Modal de alterar PIN de usuários Premium esquecidos (DONE).
+- Limpeza Dataset: Remoção de pastas vazias, correção de typo no nome da Cebola com Frutos Secos e limpeza da Lasanha de Espinafre (DONE).
 
 **Earlier issues found/mentioned but not fixed**
-   Issue 1: Cleanup incompleto de erros na UI ()
-   - Debug checklist: O botão Voltar no fluxo de scanner não limpa estados residuais de erro de tela.
-   - Why to solve this issue and what will be achieved with this?: Melhor UX.
-   - Should Test frontend/backend/both after fix: frontend
+   Issue 1: Usuários duplicados por causa de acentos ( vs )
+   - Debug checklist: Padronizar e ignorar acentos na hora do login ou cadastro no .
+   - Why to solve this issue and what will be achieved with this?: Evita que o usuário crie múltiplas contas ou não consiga logar devido ao auto-corretor do celular.
+   - Should Test frontend/backend/both after fix: backend
    - Is recurring issue? Y
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: Bug do frontend  travando/congelando silenciosamente resolvido com precisão sem side-effects. 
-  - Recurrence count: 0 (A metodologia rigorosa adotada funcionou perfeitamente).
+  - Issue recurrence in previous fork: Uso indevido de  em vez de  no Admin para endpoints seguros gerando erros 401 silenciosos.
+  - Recurrence count: 1 (Identificado e fixado nesta sessão em 6 métodos).
   - Status: RESOLVED
 
 **Code Architecture**
 /app
 ├── backend/
-│   ├── ai/               (Embedder ONNX, index)
-│   ├── services/         (Gemini Flash Service)
-│   └── server.py         (API endpoints e controle principal)
+│   ├── ai/               (families.py, index.py, ONNX Embedder)
+│   ├── services/         (cache_service.py, image_service.py, profile_service.py)
+│   └── server.py         (API principal e roteamento IA)
 ├── frontend/
 │   └── src/
-│       ├── App.js        (Frontend principal, fluxo de Câmera/GPS/Premium)
-│       ├── Admin.js      (Painel administrativo separado)
-│       └── Premium.jsx   (Componentes de cadastro e perfil Premium)
+│       ├── App.js        (PWA, Câmera, IA)
+│       ├── Admin.js      (Painel Administrativo protegido por X-Admin-Key)
+│       └── Premium.jsx   (Componentes Auth Premium)
+└── datasets/             (dish_index.json, npy files, organized folders)
 
 **Key Technical Concepts**
-- **Bifurcação de IA**: O GPS () define se o usuário está no  (usa rede neural local rápida ONNX) ou  (usa Gemini Flash, gasta API).
-- **GPS Drift**: O App possui um override manual da localização. Quando acionado, grava  e o watchPosition do GPS é ignorado. 
+- **IA Híbrida**: O GPS determina o modo. Se  do restaurante = CLIP ONNX local (rápido e grátis). Fora do raio = Gemini Flash (pago).
+- **Tratamento de Estado Premium**: O status de bloqueio depende não apenas de , mas do frontend ativamente rejeitar tokens de bloqueados baseados na flag .
 
 **key DB schema**
-  - : , , , , , . (O sistema não possui o conceito de  ainda, só  booleano).
+  - : , , , 
+  - : , , 
+  - : Armazena referência de imagens salvas no R2 e associa a um .
+  - : Dados nutricionais detalhados associados ao nome do prato.
 
 **changes in tech stack**
-Nenhuma alteração.
+Nenhuma.
 
 **All files of reference** 
-  -  (Onde você DEVE aplicar o patch da Issue 1 imediatamente).
-  - 
-  -  (LEIA ESTE ARQUIVO, possui diretrizes e configs estáveis).
-  - 
+  -  (Modificado para resolver GPS e login bloqueado)
+  -  (Modificado para alterar PIN e corrigir auth do fetch)
+  -  (Modificado block autofill e restrição visual de bloqueados)
+  -  (Modificado para adicionar rota de Change PIN)
+  -  (Cache separado por )
 
 **Areas that need refactoring**:
-- Separação da lógica de roteamento de IA monstruosa centralizada dentro do .
+- Rotas do Admin no  poderiam ser movidas para um router separado (), arquivo atual passa de 6000 linhas.
 
 **key api endpoints**
-  - 
-  - 
-  - 
-  -  (Todos agora protegidos por ).
+  -  (Gera o índice ONNX em background)
+  -  (Deleta prato local/DB mas não R2)
+  -  (Novo endpoint para reset de PIN)
 
 **Critical Info for New Agent** 
-- **⚠️ REGRA DE OURO:** O usuário exige comprovação e investigação (RCA - Root Cause Analysis) antes de aplicar patches. A ÚNICA exceção é o **Patch do GPS no App.js**, pois o usuário já aprovou a RCA e **forneceu o código exato a ser colado** no último prompt. Execute este passo imadiatamente.
-- A chave administrativa de testes é .
-- Leia o arquivo  antes de interagir de forma arquitetônica com o sistema. 
+- **⚠️ REGRA ABSOLUTA DO USUÁRIO:** ECONOMIZE CRÉDITOS. Não faça scripts longos. Não faça chamadas de bash redundantes. Encadeie comandos (ex: ). 
+- **O USUÁRIO EXIGE MICROAÇÕES.** Você NÃO DEVE APLICAR PATCHES antes de enviar um relatório investigativo. Sempre faça UMA alteração por vez e peça permissão.
+- As imagens estão integradas simultaneamente no R2 e no disco local. Modificar  afeta o R2. 
+- A chave de admin do ambiente atual é .
 
 **documents and test reports created in this job** 
-  - /app/memory/STABLE_VERSION.md
-  - /app/memory/CHANGELOG.md
-  - /app/memory/PRD.md (atualizado)
+  - O agente foi terminantemente proibido pelo usuário de rodar agentes de testes para não gastar créditos. Verificações foram feitas via bash localmente.
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) **[PENDING HUMAN MESSAGE]** Fornece o patch exato para o Bug do GPS P0 (soulnutri_location_manual) e pede para ser aplicado no .
- 2. (User) Discute a regra de tolerância do raio do GPS (decidiu-se por manter restrição forte para evitar vizinhos a < 100m). (Concluído)
- 3. (User) Informa que experienciou o GPS mudando para modo externo mesmo estando dentro do Cibi Sana. (Investigado e respondido).
- 4. (User) Pede para investigar o acionamento do Gemini dentro do Cibi Sana (Root cause descoberta: flag manual travava e race condition no GPS).
- 5. (User) Pede RCA da alucinação do Gemini criando o Feijão Carioca. (Investigado e respondido).
- 6. (User) Reporta bug no botão de tornar admin e duplicatas no Banco (Ambos consertados).
- 7. (User) Solicita a inserção da lista geral de usuários visível no Admin.js para edição (Concluído).
- 8. (User) Autoriza o P0 Fix de persistência de sessão de trial premium. (Concluído).
- 9. (User) Pede validação do fluxo do trial de 7 dias e diagnóstico do que falta. (Relatório detalhado providenciado).
- 10. (User) Solicita chave de admin do Preview, pois login com PIN não conectava (Chave providenciada).
+ 1. (User) APROVADO — MICROAÇÃO 2: Corrigir somente chamadas protegidas do Admin.js... (Concluído)
+ 2. (User) **[RECLAMAÇÃO CRÍTICA DE CUSTOS]** Preciso que vc economize creditos, na primeira microacao foram gastos 40 creditos!!! (Atendido, fluxo restrito adotado).
+ 3. (User) INVESTIGAÇÃO — FAMÍLIA GRATINADOS... (Investigado, concluído que estava correto).
+ 4. (User) Lasanha de berinjela esta no cardapio Cibi Sana sim, preciso mandar as fotos depois. (Adiado).
+ 5. (User) INVESTIGAÇÃO — CEBOLA COM FRUTOS SECOS... (Respondido).
+ 6. (User) INVESTIGAÇÃO — INTEGRAÇÃO CEBOLA COM FRUTOS SECOS (Respondido).
+ 7. (User) APROVADO — MICROAÇÃO DB 1: Atualizar o name/display da Cebola. (Concluído).
+ 8. (User) LOTE CONTROLADO 2: Cebola com Frutos e Família Gratinados. (Concluído).
+ 9. (User) Ja enviei (as fotos da Cebola) no Admin, confira... (Concluído, reindex autorizado).
+ 10. (User) **[PENDING HUMAN VERIFICATION]** sim (autorizando o reindex). O agente iniciou o reindex que foi finalizado, mas o log mostrou duplicação de label: . **O NEXT AGENT DEVE REPORTAR ESTE RESULTADO.**
 
 **Project Health Check:**
-Broken: GPS  bug in frontend freezes location to external locking out ONNX/CLIP AI functionality.
+Broken: Nenhuma funcionalidade quebrada severa. Duplicata menor gerada no índice recém construído.
 Mocked: None
 
 **3rd Party Integrations** 
-	 •	OpenAI/Gemini — uses Emergent LLM Key (via gemini-2.0-flash-lite/gemini-2.5)
-	 •	Google Gemini API Direta — Requer User API Key
+	 •	OpenAI/Gemini — uses Emergent LLM Key 
 
 **Testing status**
-  - Testing agent used after significant changes: NO (Proibido pelo fluxo isolado exigido pelo usuário).
+  - Testing agent used after significant changes: NO (Proibido pelo usuário para poupar créditos).
   - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: Nenhuma conhecida, documentações estáveis geradas com sucesso.
+  - Known regressions: Possível duplicidade de indexação da Cebola criada durante o Lote Controlado 2.
 
 **Credentials to test flow:**
-Consulte:  (A  do ambiente é )
+Admin X-Admin-Key: 
+Test Premium:  PIN 
 
 **What agent forgot to execute**
-O agente não conseguiu aplicar o patch do GPS detalhado na última mensagem do usuário (Bug do ), provavelmente por término da janela de contexto. Ele deve ser a **sua primeira ação direta**.
+O agente finalizou o reindex mas o contexto acabou antes de ele analisar e comunicar ao usuário a duplicata gerada no JSON de status do índice ( indexou junto com o nome correto).
 
 **Debugging checklist for current issue**
-    Issue: GPS do Frontend Travado.
-    Frontend files to check:  (Nas linhas 609-655, dentro de ).
-    Ação: Substituir a checagem que tem um mero  pelo código enviado pelo usuário, de modo que a posição correta  remova o trava .
-    Database to check: None.</analysis>
+    Issue: Investigar por que o reindex indexou cebola-co-frutos-secos (slug antigo) além do nome correto.
+    Backend files to check: Checar listar os diretórios de . Provavelmente o upload de imagens via Frontend usando o Slug recriou a pasta antiga fisicamente no container.
+    Ação sugerida: Remover a pasta do slug antigo e reportar ao usuário, antes de fazer um novo reindex final de limpeza. Não proponha código antes de diagnosticar com bash.</analysis>

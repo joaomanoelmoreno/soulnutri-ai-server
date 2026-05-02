@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://gps-fix-deploy.preview.emergentagent.com
-- Admin: https://gps-fix-deploy.preview.emergentagent.com/admin
-- Lista de Pratos: https://gps-fix-deploy.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://soulnutri-ai-fix.preview.emergentagent.com
+- Admin: https://soulnutri-ai-fix.preview.emergentagent.com/admin
+- Lista de Pratos: https://soulnutri-ai-fix.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

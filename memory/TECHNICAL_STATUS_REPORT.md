@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://gps-fix-deploy.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://soulnutri-ai-fix.preview.emergentagent.com
 ```
 
 ---

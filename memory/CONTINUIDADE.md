@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://gps-fix-deploy.preview.emergentagent.com
+**URL**: https://soulnutri-ai-fix.preview.emergentagent.com
 
 ---
 
