@@ -837,7 +837,7 @@ export default function Admin() {
     setPendingConfirm(null);
     
     try {
-      const res = await fetch(`${API}/admin/dishes/${encodeURIComponent(slug)}`, { method: 'DELETE' });
+      const res = await adminFetch(`${API}/admin/dishes/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.ok) {
         loadDishes();
