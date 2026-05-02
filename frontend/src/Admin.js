@@ -133,6 +133,8 @@ export default function Admin() {
   const [pinSearch, setPinSearch] = useState('');
   const [pinResults, setPinResults] = useState(null);
   const [pinSearching, setPinSearching] = useState(false);
+  const [pinChangeNome, setPinChangeNome] = useState(null);
+  const [pinChangeInput, setPinChangeInput] = useState('');
   // Upload de fotos
   const [uploadStatus, setUploadStatus] = useState(null);
   const [uploadFiles, setUploadFiles] = useState(null);
@@ -675,6 +677,31 @@ export default function Admin() {
         notify(isAdmin ? `Admin concedido para ${nome}` : `Admin revogado de ${nome}`, 'success');
         loadPremiumUsers();
         setPremiumSearchResult(prev => prev?.nome === nome ? { ...prev, is_admin: isAdmin } : prev);
+      } else {
+        notify('Erro: ' + data.error, 'error');
+      }
+    } catch (e) {
+      notify('Erro: ' + e.message, 'error');
+    }
+  };
+
+  const alterarPin = async () => {
+    const pin = pinChangeInput.trim();
+    if (!/^\d{4,6}$/.test(pin)) {
+      notify('PIN deve ter entre 4 e 6 dígitos numéricos', 'error');
+      return;
+    }
+    try {
+      const res = await adminFetch(`${API}/admin/premium/change-pin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome: pinChangeNome, new_pin: pin })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        notify(`✅ PIN alterado para ${pinChangeNome}`, 'success');
+        setPinChangeNome(null);
+        setPinChangeInput('');
       } else {
         notify('Erro: ' + data.error, 'error');
       }
@@ -1653,6 +1680,53 @@ export default function Admin() {
       )}
 
       {/* Modal Criar Novo Prato */}
+      {pinChangeNome && (
+        <div className="modal-overlay" onClick={() => { setPinChangeNome(null); setPinChangeInput(''); }}>
+          <div className="edit-modal-full" onClick={e => e.stopPropagation()} style={{ maxWidth: '380px' }}>
+            <div className="modal-header">
+              <h2>🔑 Alterar PIN</h2>
+              <button className="close-btn" onClick={() => { setPinChangeNome(null); setPinChangeInput(''); }}>✕</button>
+            </div>
+            <div className="modal-body" style={{ padding: '20px' }}>
+              <p style={{ color: '#aaa', marginBottom: 16, fontSize: 14 }}>
+                Usuário: <strong style={{ color: '#fff' }}>{pinChangeNome}</strong>
+              </p>
+              <div className="form-group">
+                <label>Novo PIN (4–6 dígitos):</label>
+                <input
+                  type="password"
+                  inputMode="numeric"
+                  maxLength={6}
+                  value={pinChangeInput}
+                  onChange={e => setPinChangeInput(e.target.value.replace(/\D/g, ''))}
+                  placeholder="Digite o novo PIN"
+                  autoFocus
+                  onKeyDown={e => e.key === 'Enter' && alterarPin()}
+                  style={{ width: '100%', marginTop: 8, fontSize: 18, letterSpacing: 4 }}
+                  data-testid="pin-change-input"
+                />
+              </div>
+              <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
+                <button
+                  onClick={alterarPin}
+                  disabled={pinChangeInput.length < 4}
+                  style={{ flex: 1, background: pinChangeInput.length >= 4 ? '#22c55e' : '#555', color: '#fff', border: 'none', padding: '12px', borderRadius: '8px', cursor: pinChangeInput.length >= 4 ? 'pointer' : 'not-allowed', fontWeight: 'bold' }}
+                  data-testid="pin-change-confirm"
+                >
+                  ✅ Confirmar
+                </button>
+                <button
+                  onClick={() => { setPinChangeNome(null); setPinChangeInput(''); }}
+                  style={{ flex: 1, background: 'rgba(255,255,255,0.06)', color: '#aaa', border: '1px solid rgba(255,255,255,0.1)', padding: '12px', borderRadius: '8px', cursor: 'pointer' }}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showNewDishModal && (
         <div className="modal-overlay" onClick={() => setShowNewDishModal(false)}>
           <div className="edit-modal-full" onClick={e => e.stopPropagation()} style={{ maxWidth: '500px' }}>
@@ -2780,6 +2854,13 @@ export default function Admin() {
                       >
                         {u.is_admin ? '⭐ Revogar Admin' : '⭐ Tornar Admin'}
                       </button>
+                      <button
+                        style={{ fontSize: 12, padding: '4px 10px', borderRadius: 6, border: '1px solid rgba(99,179,237,0.3)', background: 'rgba(99,179,237,0.08)', color: '#63b3ed', cursor: 'pointer' }}
+                        onClick={() => { setPinChangeNome(u.nome); setPinChangeInput(''); }}
+                        data-testid={`change-pin-${u.nome}`}
+                      >
+                        🔑 PIN
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -2900,6 +2981,13 @@ export default function Admin() {
                                 </button>
                               </>
                             )}
+                            <button
+                              style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, border: '1px solid rgba(99,179,237,0.3)', background: 'rgba(99,179,237,0.08)', color: '#63b3ed', cursor: 'pointer' }}
+                              onClick={() => { setPinChangeNome(user.nome); setPinChangeInput(''); }}
+                              data-testid={`change-pin-table-${user.nome}`}
+                            >
+                              🔑 PIN
+                            </button>
                           </td>
                         </tr>
                       );

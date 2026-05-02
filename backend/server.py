@@ -5719,6 +5719,33 @@ async def toggle_admin_premium(request: Request):
         return {"ok": False, "error": str(e)}
 
 
+@api_router.post("/admin/premium/change-pin", dependencies=[Depends(verify_admin_key)])
+async def change_user_pin(request: Request):
+    """Altera o PIN de um usuário Premium. Requer X-Admin-Key."""
+    try:
+        data = await request.json()
+        nome = data.get("nome", "").strip()
+        new_pin = str(data.get("new_pin", "")).strip()
+
+        if not nome:
+            return {"ok": False, "error": "Nome é obrigatório"}
+        if not new_pin.isdigit() or not (4 <= len(new_pin) <= 6):
+            return {"ok": False, "error": "PIN deve ter entre 4 e 6 dígitos numéricos"}
+
+        from services.profile_service import hash_pin
+        new_hash = hash_pin(new_pin)
+
+        result = await db.users.update_many(
+            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"$set": {"pin_hash": new_hash, "updated_at": datetime.now(timezone.utc).isoformat()}}
+        )
+        if result.modified_count == 0:
+            return {"ok": False, "error": f"Usuário '{nome}' não encontrado"}
+        return {"ok": True, "message": f"PIN alterado para {nome} ({result.modified_count} registro(s))"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
 @api_router.get("/premium/admin-token")
 async def get_admin_token(pin: str):
     """Retorna o admin key apenas para usuários premium com is_admin=True."""

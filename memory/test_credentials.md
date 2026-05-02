@@ -2,7 +2,7 @@
 
 ## Usuário Premium (Admin)
 - PIN: 2212
-- Nome: Joao Manoel (com espaço final)
+- Nome: Joao Manoel (sem acento, sem espaço final)
 - is_admin: true
 - Acesso: Premium ativo + Painel Admin via botão no dashboard
 
@@ -18,3 +18,4 @@
 
 ## Nota
 - Para designar outros admins: Admin → aba Premium → Buscar usuário → "Tornar Admin"
+- Para alterar PIN: Admin → aba Premium → Buscar usuário → botão "🔑 PIN"
