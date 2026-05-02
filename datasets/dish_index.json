@@ -1712,16 +1712,6 @@
     "Vol Au Vent",
     "Vol Au Vent",
     "Vol Au Vent",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
-    "cebola-co-frutos-secos",
     "vagem",
     "vagem",
     "vagem",
@@ -3824,7 +3814,7 @@
       1710,
       1711
     ],
-    "cebola-co-frutos-secos": [
+    "vagem": [
       1712,
       1713,
       1714,
@@ -3835,18 +3825,6 @@
       1719,
       1720,
       1721
-    ],
-    "vagem": [
-      1722,
-      1723,
-      1724,
-      1725,
-      1726,
-      1727,
-      1728,
-      1729,
-      1730,
-      1731
     ]
   },
   "metadata": {
@@ -4996,7 +4974,7 @@
     },
     "Cebola com Frutos Secos": {
       "image_count": 10,
-      "total_available": 26
+      "total_available": 36
     },
     "cebola-co-frutos-secos": {
       "image_count": 10,
@@ -5004,6 +4982,6 @@
     }
   },
   "version": "1.0",
-  "total_items": 1732,
-  "total_dishes": 191
+  "total_items": 1722,
+  "total_dishes": 190
 }
