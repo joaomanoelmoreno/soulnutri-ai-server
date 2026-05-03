@@ -492,7 +492,8 @@ const renderTextSafe = (v) => {
   if (typeof v === 'string' || typeof v === 'number') return String(v);
   if (Array.isArray(v)) return v.map(renderTextSafe).filter(Boolean).join(', ');
   if (typeof v === 'object') {
-    return v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || '';
+    const extracted = v.texto || v.text || v.titulo || v.title || v.mensagem || v.message || v.descricao || v.description || '';
+    return renderTextSafe(extracted);
   }
   return '';
 };
@@ -3049,7 +3050,7 @@ return {
                 <span className="scanner-badge gluten-free">Sem gluten</span>
               )}
               {scannerResult.riscos?.length > 0 && (
-                <span className="scanner-badge warning">{scannerResult.riscos[0]}</span>
+                <span className="scanner-badge warning">{renderTextSafe(scannerResult.riscos[0])}</span>
               )}
               {/* ALERTAS PREMIUM - destaque visual para decidir */}
               {scannerResult.premium?.alertas_alergenos?.length > 0 && (
@@ -3060,7 +3061,7 @@ return {
                 }}>
                   {scannerResult.premium.alertas_alergenos.map((al, i) => (
                     <div key={i} style={{color:'#fca5a5',fontWeight:'bold',fontSize:'14px',padding:'2px 0'}}>
-                      {al.icone} {al.mensagem}
+                      {renderTextSafe(al.icone)} {renderTextSafe(al.mensagem)}
                     </div>
                   ))}
                 </div>
@@ -3288,7 +3289,7 @@ return {
             )}
             {plateConsolidated?.nutrition?.fonte && (
               <div style={{fontSize: '11px', color: '#94a3b8', marginTop: '6px', textAlign: 'right'}}>
-                Fonte: {plateConsolidated.nutrition.fonte}
+                Fonte: {renderTextSafe(plateConsolidated.nutrition.fonte)}
               </div>
             )}
           </div>
@@ -3545,12 +3546,12 @@ return {
                       {fato.fatos?.slice(0, 1).map((f, j) => (
                         <div key={j}>
                           <p style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold', margin: '0 0 4px' }}>
-                            {fato.emoji} {f.titulo}
+                            {renderTextSafe(fato.emoji)} {renderTextSafe(f.titulo)}
                           </p>
                           <p style={{ color: '#ccc', fontSize: '12px', margin: '0 0 4px', lineHeight: '1.4' }}>
-                            {f.resumo}
+                            {renderTextSafe(f.resumo)}
                           </p>
-                          <small style={{ color: '#888', fontSize: '10px' }}>Fonte: {f.fonte}</small>
+                          <small style={{ color: '#888', fontSize: '10px' }}>Fonte: {renderTextSafe(f.fonte)}</small>
                         </div>
                       ))}
                     </div>
@@ -3769,7 +3770,7 @@ return {
             }}>
               {r.premium.alertas_alergenos.map((al, i) => (
                 <div key={i} style={{color:'#fca5a5',fontWeight:'bold',fontSize:'15px',padding:'4px 0'}}>
-                  {al.icone} {al.mensagem}
+                  {renderTextSafe(al.icone)} {renderTextSafe(al.mensagem)}
                 </div>
               ))}
             </div>
@@ -3783,7 +3784,7 @@ return {
             }}>
               {r.premium.alertas_historico.map((al, i) => (
                 <div key={i} style={{color:'#fcd34d',fontSize:'14px',padding:'2px 0'}}>
-                  {al.alerta_breve || al.mensagem || JSON.stringify(al)}
+                  {renderTextSafe(al.alerta_breve || al.mensagem || al.texto || al)}
                 </div>
               ))}
             </div>
