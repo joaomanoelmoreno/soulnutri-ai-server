@@ -5288,31 +5288,43 @@ async def translate_text_endpoint(
 async def shutdown_db_client():
     client.close()
 
-# Evento de startup - pre-carregar modelo
+# Evento de startup - pre-carregar modelo e indice com warm-up completo
 @app.on_event("startup")
 async def startup_event():
-    logger.info("SoulNutri AI Server iniciando...")
-    
-    # Pre-carregar o modelo CLIP (importante para performance!)
+    import time as _time
+    _t0 = _time.time()
+    logger.info("[STARTUP] SoulNutri AI Server iniciando...")
+
+    # 1. Carregar modelo ONNX
     try:
-        from ai.embedder import preload_model
+        logger.info("[STARTUP] Loading model...")
+        from ai.embedder import preload_model, warmup_inference
         preload_model()
-        logger.info("Modelo CLIP pre-carregado!")
+        logger.info("[STARTUP] Model loaded")
     except Exception as e:
-        logger.warning(f"Nao foi possivel pre-carregar modelo: {e}")
-    
-    # Tentar pre-carregar o indice (se existir)
+        logger.warning(f"[STARTUP] Model load failed: {e}")
+
+    # 2. Warm-up inference (elimina JIT delay na primeira requisicao)
     try:
+        warmup_inference()
+    except Exception as e:
+        logger.warning(f"[STARTUP] Warm-up skipped: {e}")
+
+    # 3. Carregar indice
+    try:
+        logger.info("[STARTUP] Loading index...")
         from ai.index import get_index
         index = get_index()
         if index.is_ready():
-            logger.info(f"Índice carregado: {index.get_stats()}")
+            stats = index.get_stats()
+            logger.info(f"[STARTUP] Index loaded — {stats['total_embeddings']} embeddings, {stats['total_dishes']} dishes")
         else:
-            logger.info("Índice nao encontrado. Execute /api/ai/reindex para criar.")
+            logger.warning("[STARTUP] Index not ready. Run /api/ai/reindex to build it.")
     except Exception as e:
-        logger.warning(f"Nao foi possivel carregar indice: {e}")
-    
-    logger.info("SoulNutri AI Server pronto!")
+        logger.warning(f"[STARTUP] Index load failed: {e}")
+
+    elapsed = _time.time() - _t0
+    logger.info(f"[STARTUP] SoulNutri AI Server ready in {elapsed:.1f}s — all assets in memory")
 
 @api_router.get("/download/marketing")
 async def download_marketing_doc():

@@ -177,6 +177,28 @@ def preload_model():
     return True
 
 
+def warmup_inference():
+    """Executa uma inferencia dummy para forcar JIT compilation do ONNX Runtime.
+    Elimina o delay na primeira requisicao real do usuario.
+    Deve ser chamado uma unica vez no startup, apos preload_model().
+    """
+    global _ONNX_SESSION, _USE_ONNX
+    if not (_USE_ONNX and _ONNX_SESSION is not None):
+        return False
+    try:
+        logger.info("[STARTUP] Running warm-up inference (eliminating first-request JIT delay)...")
+        start = time.time()
+        # Imagem dummy 224x224 RGB (zeros normalizado)
+        dummy = np.zeros((1, 3, 224, 224), dtype=np.float32)
+        _ONNX_SESSION.run(None, {'image': dummy})
+        elapsed = (time.time() - start) * 1000
+        logger.info(f"[STARTUP] Warm-up inference complete in {elapsed:.0f}ms — first request will be fast")
+        return True
+    except Exception as e:
+        logger.warning(f"[STARTUP] Warm-up inference failed (non-critical): {e}")
+        return False
+
+
 def get_image_embedding(image_bytes: bytes) -> np.ndarray:
     """Gera embedding de uma imagem a partir de bytes"""
     global _MODEL, _PREPROCESS, _USE_HF_API, _ONNX_SESSION, _USE_ONNX
