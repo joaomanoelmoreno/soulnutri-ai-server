@@ -45,6 +45,9 @@ function DebugPanel() {
   const [versionInfo, setVersionInfo] = React.useState(null);
   const BACKEND_URL_LOCAL = process.env.REACT_APP_BACKEND_URL || '';
   const API_LOCAL = `${BACKEND_URL_LOCAL}/api`;
+  // Hash do bundle frontend atual (muda a cada build/deploy)
+  const frontendHash = document.querySelector('script[src*="/static/js/main."]')
+    ?.src?.match(/main\.([a-f0-9]+)\.js/)?.[1] || 'unknown';
 
   React.useEffect(() => {
     const handler = (e) => setLines(prev => {
@@ -82,6 +85,7 @@ function DebugPanel() {
       {/* Bloco de versão: prova qual backend o celular está usando */}
       <div style={{background:'#001',borderBottom:'1px solid #040',padding:'3px 4px',marginBottom:'4px',color:'#4f4'}}>
         <div><b style={{color:'#ff0'}}>BACKEND:</b> {BACKEND_URL_LOCAL || '(vazio)'}</div>
+        <div><b style={{color:'#ff0'}}>FRONTEND_HASH:</b> <span style={{color:'#4ff'}}>{frontendHash}</span></div>
         {versionInfo && !versionInfo.error && (<>
           <div><b style={{color:'#ff0'}}>GIT_COMMIT:</b> <span style={{color:'#f90'}}>{versionInfo.git_commit || 'N/A'}</span></div>
           <div><b style={{color:'#ff0'}}>STARTED:</b> {versionInfo.process_started_at?.slice(0,19) || 'N/A'}</div>
