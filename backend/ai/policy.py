@@ -76,7 +76,6 @@ DISH_NAMES = {
     'espaguete': 'Espaguete',
     'farofadebacon': 'Farofa de Bacon',
     'farofadebananadaterra': 'Farofa de Banana da Terra',
-    'feijaocariocasemcarne': 'Feijão Carioca sem Carne',
     'feijaopretocomcarne': 'Feijão Preto com Carne',
     'feijaopretosemcarne': 'Feijão Preto sem Carne',
     'feijaotropeiro': 'Feijão Tropeiro',
@@ -93,7 +92,7 @@ DISH_NAMES = {
     'graodebicotomatesecoespinafre': 'Grão de Bico com Tomate Seco e Espinafre',
     'hamburgerdecarne': 'Hambúrguer de Carne',
     'hamburguervegano': 'Hambúrguer Vegano',
-    'jiloempanado': 'Jiló Empanado',
+    'jiloempanado': 'Jiló ou Quiabo Empanado',
     'kibe': 'Kibe',
     'lasanhadeespinafre': 'Lasanha de Espinafre',
     'lasanhadeportobello': 'Lasanha de Portobello',
@@ -1006,10 +1005,20 @@ def get_dish_name(slug: str) -> str:
     """Retorna o nome correto do prato lendo do dish_info.json"""
     import os
     import json
-    
-    # Primeiro tenta do dicionário em memória
+    import unicodedata
+
+    def _normalize_key(s):
+        s = unicodedata.normalize('NFKD', s or '').encode('ascii', 'ignore').decode()
+        return s.lower().replace(' ', '').replace('-', '').replace('_', '')
+
+    # Primeiro tenta do dicionário em memória (chave exata)
     if slug in DISH_NAMES:
         return DISH_NAMES[slug]
+
+    # Tenta com chave normalizada (ex: "Jilo Empanado" → "jiloempanado")
+    slug_norm = _normalize_key(slug)
+    if slug_norm in DISH_NAMES:
+        return DISH_NAMES[slug_norm]
     
     # Se não encontrar, tenta ler do dish_info.json
     info_path = f"/app/datasets/organized/{slug}/dish_info.json"
@@ -1075,7 +1084,7 @@ def is_display_suspicious(dish: str, dish_display: str) -> bool:
     import re as _re
 
     words = dish_display.split()
-    allowed_short = {'ao', 'a', 'o', 'de', 'do', 'da', 'e',
+    allowed_short = {'ao', 'a', 'o', 'de', 'do', 'da', 'e', 'ou',
                      'em', 'no', 'na', 'com', 'sem', 'por'}
     for i, w in enumerate(words):
         if 0 < i < len(words) - 1 and len(w) <= 2 and w.lower() not in allowed_short:
