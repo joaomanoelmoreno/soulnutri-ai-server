@@ -76,9 +76,12 @@ DISH_NAMES = {
     'espaguete': 'Espaguete',
     'farofadebacon': 'Farofa de Bacon',
     'farofadebananadaterra': 'Farofa de Banana da Terra',
-    'feijaopretocomcarne': 'Feijão Preto com Carne',
-    'feijaopretosemcarne': 'Feijão Preto sem Carne',
-    'feijaotropeiro': 'Feijão Tropeiro',
+    'feijaobranco': 'Feijão (s/ carne)',
+    'feijaocariocasemcarne': 'Feijão (s/ carne)',
+    'feijaodochef': 'Feijão do Chef',
+    'feijaopretocomcarne': 'Feijão do Chef',
+    'feijaopretosemcarne': 'Feijão (s/ carne)',
+    'feijaotropeiro': 'Feijão do Chef',
     'figadoacebolado': 'Fígado Acebolado',
     'filedefrangoaparmegiana': 'Filé de Frango à Parmegiana',
     'filedepeixeaomisso': 'Filé de Peixe ao Missô',
@@ -1123,6 +1126,9 @@ def safe_display(dish: str, dish_display: str) -> str:
     o `dish` canônico (folder name, sem acento, já bem espaçado).
     Caso contrário, retorna `dish_display` como está (sem reacentuar).
     """
+    # Mapeamento explícito em DISH_NAMES é sempre confiável
+    if dish_display in DISH_NAMES.values():
+        return dish_display
     if is_display_suspicious(dish, dish_display):
         return (dish or '').strip()
     return dish_display
