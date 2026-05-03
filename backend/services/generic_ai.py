@@ -19,7 +19,7 @@ load_dotenv()
 SYSTEM_PROMPT_IDENTIFY = """Identifique o prato na imagem.
 
 CONTEXTO: Este é um buffet de restaurante brasileiro. Os pratos comuns incluem:
-- Arroz (branco, integral, 7 grãos), Feijão (preto, carioca)
+- Arroz (branco, integral, 7 grãos), Feijão (c/ e s/ carnes)
 - Espaguete, Lasanha, Canelone, Macarrão
 - Frango grelhado, Frango à parmegiana, Filé mignon, Maminha
 - Peixe, Salmão, Atum, Bacalhau (à brás, com natas, à gomes de sá)
