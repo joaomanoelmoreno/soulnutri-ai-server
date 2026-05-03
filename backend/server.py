@@ -870,7 +870,16 @@ async def identify_image(
     perf_start = time.perf_counter()
     
     logger.info(f"[IDENTIFY] Iniciando identificacao - restaurant={restaurant}, country={country}")
-    
+
+    # ── DIAGNÓSTICO: confirmar se modelo ONNX está warm neste request ──────────
+    try:
+        from ai.embedder import _ONNX_SESSION as _req_session
+        _onnx_warm = _req_session is not None
+    except Exception:
+        _onnx_warm = False
+    logger.info(f"[IDENTIFY] onnx_warm={_onnx_warm} _WARMED_UP={_WARMED_UP} ts={time.strftime('%H:%M:%S')}")
+    # ── FIM DIAGNÓSTICO ─────────────────────────────────────────────────────────
+
     try:
         # Ler imagem
         t0 = time.perf_counter()

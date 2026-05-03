@@ -42,14 +42,23 @@ if (_DEBUG_MODE) {
 function DebugPanel() {
   const [lines, setLines] = React.useState([]);
   const [visible, setVisible] = React.useState(true);
+  const [versionInfo, setVersionInfo] = React.useState(null);
+  const BACKEND_URL_LOCAL = process.env.REACT_APP_BACKEND_URL || '';
+  const API_LOCAL = `${BACKEND_URL_LOCAL}/api`;
+
   React.useEffect(() => {
     const handler = (e) => setLines(prev => {
       const next = [...prev, `${new Date().toISOString().slice(11,23)} ${e.detail}`];
       return next.slice(-25);
     });
     window.addEventListener('_fp_log', handler);
+    // Buscar versão do servidor ao montar
+    fetch(`${API_LOCAL}/debug/version`)
+      .then(r => r.json())
+      .then(d => setVersionInfo(d))
+      .catch(() => setVersionInfo({ error: 'NAO_ACESSIVEL' }));
     return () => window.removeEventListener('_fp_log', handler);
-  }, []);
+  }, [API_LOCAL]);
   if (!visible) return (
     <button onClick={() => setVisible(true)} style={{
       position:'fixed',bottom:'4px',left:'4px',zIndex:99999,
@@ -69,6 +78,17 @@ function DebugPanel() {
         <button onClick={() => setVisible(false)} style={{
           background:'none',border:'none',color:'#f00',fontSize:'12px',cursor:'pointer'
         }}>✕</button>
+      </div>
+      {/* Bloco de versão: prova qual backend o celular está usando */}
+      <div style={{background:'#001',borderBottom:'1px solid #040',padding:'3px 4px',marginBottom:'4px',color:'#4f4'}}>
+        <div><b style={{color:'#ff0'}}>BACKEND:</b> {BACKEND_URL_LOCAL || '(vazio)'}</div>
+        {versionInfo && !versionInfo.error && (<>
+          <div><b style={{color:'#ff0'}}>GIT_COMMIT:</b> <span style={{color:'#f90'}}>{versionInfo.git_commit || 'N/A'}</span></div>
+          <div><b style={{color:'#ff0'}}>STARTED:</b> {versionInfo.process_started_at?.slice(0,19) || 'N/A'}</div>
+          <div><b style={{color:'#ff0'}}>UPTIME:</b> {Math.round((versionInfo.process_uptime_seconds||0)/60)}min</div>
+        </>)}
+        {versionInfo?.error && <div style={{color:'#f44'}}>BACKEND INACEISSÍVEL: {versionInfo.error}</div>}
+        {!versionInfo && <div style={{color:'#888'}}>carregando versão...</div>}
       </div>
       {lines.length === 0 && <div style={{color:'#888'}}>aguardando logs...</div>}
       {lines.map((l, i) => (
@@ -1540,7 +1560,8 @@ const loadNotifCount = async (pin) => {
         signal: abortControllerRef.current.signal
       });
       clearTimeout(timeoutId);
-      console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_RESPONSE status=${res.status}`);
+      const reqMs = Date.now() - t;
+      console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_RESPONSE status=${res.status} time=${reqMs}ms restaurant=${fd.get('restaurant')} backend=${API}`);
       
       if (!mountedRef.current) return;
       
@@ -1560,6 +1581,8 @@ const loadNotifCount = async (pin) => {
         setMultiResult({ ...data, totalTime: Date.now() - t });
       } else {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
+        // [AUDITORIA] Log completo do payload real para confirmar dish_display no celular
+        console.log(`[FINAL_PROOF] scan_id=${_scanId} DISH_DISPLAY="${data.dish_display}" dish_raw="${data.dish}" identified=${data.identified} source=${data.source} total_ms=${resultWithTime.totalTime}`);
         setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
