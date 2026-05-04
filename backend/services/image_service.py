@@ -71,17 +71,23 @@ def _find_local_folder(slug: str) -> Optional[Path]:
             count += len(list(folder.glob(ext)))
         return count
     
+    if not LOCAL_DATASET_DIR.exists():
+        return None
+
     slug_norm = _normalize(slug)
     best_folder = None
     best_count = 0
-    
+
     # Check ALL matching folders and pick the one with most images
-    for folder in LOCAL_DATASET_DIR.iterdir():
-        if folder.is_dir() and _normalize(folder.name) == slug_norm:
-            count = _count_images(folder)
-            if count > best_count:
-                best_count = count
-                best_folder = folder
+    try:
+        for folder in LOCAL_DATASET_DIR.iterdir():
+            if folder.is_dir() and _normalize(folder.name) == slug_norm:
+                count = _count_images(folder)
+                if count > best_count:
+                    best_count = count
+                    best_folder = folder
+    except OSError:
+        return None
     
     if best_folder:
         return best_folder
