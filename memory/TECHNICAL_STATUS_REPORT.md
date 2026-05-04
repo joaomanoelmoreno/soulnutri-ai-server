@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://resto-ai-test.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://soulnutri-pwa-test.preview.emergentagent.com
 ```
 
 ---

@@ -1,160 +1,157 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. O objetivo atual é corrigir bugs críticos de trava de interface, garantir segurança dos endpoints administrativos, resolver persistência de sessão de trial premium, corrigir alucinações da IA e falhas no acionamento indevido do Gemini dentro do restaurante devido a travas na lógica do GPS.
+<analysis><handoff summary>
+**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir bugs de cache no frontend (PWA desatualizado), delay de inicialização percebido pelo usuário e falha no carregamento de imagens no painel Admin em produção (integração R2).
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: Next agent MUST respond in Portuguese (Brasil) only. O usuário exige comunicação rigorosa, comprovação via bash antes de alterações em arquivos, e extremo controle sobre os créditos. Realize uma microação por vez e valide antes de avançar.
+INSTRUCT: O próximo agente DEVE responder APENAS em Portuguese (Brasil). O usuário exige comunicação baseada em evidências absolutas (via bash, curl, logs), comprovação antes de aplicar patches e abordagens conservadoras de alteração de código. Faça microações, use  após cada descoberta.
 
-**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. A arquitetura de IA é híbrida: ONNX/CLIP para usuários dentro do restaurante (modo  detectado por GPS/fallback) e Gemini Flash para uso externo. O sistema agora está configurado para o plano  no Render para evitar cold starts.
+**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend), MongoDB e Cloudflare R2 (para armazenamento de imagens). Arquitetura de IA híbrida (ONNX/CLIP para uso interno, Gemini Flash bloqueado via fallback ). O PWA agora usa Service Worker v11 (Network First para HTML) para contornar problemas agressivos de cache HTTP de mobile. O ambiente de produção roda no Render (plano Standard, sem cold start natural) e o frontend no Vercel.
 
 **Last working item**: 
-    - Last item agent was working: Correção do uso indevido do Gemini quando o GPS está carregando e remoção do termo carioca no prompt da IA ().
-    - Status: USER VERIFICATION PENDING (Agent já implementou o patch, mas aguarda o usuário clicar em Save to Github para que o deploy no Render seja realizado e testado em produção).
-    - Agent Testing Done: Y
-    - Which testing method agent to use?: manual testing by python -c / bash (grep, logs).
+    - Last item agent was working: Investigação de erro  (Imagem não encontrada) no endpoint . O agente corrigiu o crash inicial ( no Render pela ausência da pasta ), mas a etapa seguinte, que deveria buscar a imagem via Cloudflare R2 no , está falhando.
+    - Status: IN PROGRESS
+    - Agent Testing Done: Y (via curl e scripts em python localmente)
+    - Which testing method agent to use?: manual testing by python -c / curl / logs do uvicorn
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:  
-  Issue 1: Exclusão de pratos no Admin deixa imagens órfãs no R2 (P1)
-     - Attempted fixes: A rota  apaga dados locais e do MongoDB, mas não remove do R2.
-     - Next debug checklist: Adicionar a lógica de exclusão do R2 no endpoint  integrando o .
-     - Why fix this issue and what will be achieved with the fix?: Evita custos com storage desnecessário.
-     - Status: BLOCKED (Adiado pelo usuário).
+  Issue 1: Admin sem imagens - R2 retornando erro 404 internamente (P0)
+     - Attempted fixes: Corrigida a função  com um  para não explodir quando a pasta de datasets não existe no Render. No entanto, o fallback para o R2 no  não está conseguindo mapear ou baixar os bytes com a chave .
+     - Next debug checklist: Depurar  em . A função extrai o  (ex: ), mas a leitura subsequente via  pode estar falhando (verificar como o prefixo  é limpo e passado ao S3, e se há exceções sendo silenciadas que resultam no retorno ).
+     - Why fix this issue and what will be achieved with the fix?: O painel do administrador em produção está sem exibir as fotos de pratos, pois todas foram migradas para o R2.
+     - Status: IN PROGRESS
      - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix?: backend (via curl endpoint)
+     - Blocked on other issue: N/A
+
+  Issue 2: Sobrescrita silenciosa de Rotas () no FastAPI (P1)
+     - Attempted fixes: Descoberto durante auditoria, patch pendente.
+     - Next debug checklist: Em ,  é declarado na linha 185 e RE-DECLARADO na linha 243. Remover a linha 243.
+     - Why fix this issue and what will be achieved with the fix?: Rotas definidas entre as duas linhas (como  e ) são deletadas e retornam erro 404/405.
+     - Status: NOT STARTED
+     - Is recurring issue? N
      - Should Test frontend/backend/both after fix?: backend
-     - Blocked on other issue: Aguardando momento oportuno definido pelo usuário.
+     - Blocked on other issue: N/A
+
+  Issue 3: Exclusão de pratos no Admin deixa imagens órfãs no R2 (P2)
+     - Attempted fixes: Rota apaga DB, mas não deleta a chave real no R2.
+     - Status: BLOCKED (Usuário informou para deixar para o final, no handoff anterior).
 
 **In progress Task List**: 
   Task 1: Atualizar slug do DB para a Cebola (P2)
      - Where to resume: Mudar  para  no DB.
-     - What will be achieved with this?: Alinhamento de nomes canônicos.
-     - Status: BLOCKED (Usuário vetou para não quebrar URLs do R2).
-     - Should Test frontend/backend/both after fix?: both
-     - Blocked on something: Precisa alinhar migração do R2 antes de trocar slugs.
+     - Status: BLOCKED (Adiado para evitar quebra de URLs do R2).
 
   Task 2: Fotografar pratos com < 5 embeddings (P2)
-     - Where to resume: Aguardar upload das fotos (Creme de Milho, Polenta com Ragu, Risoto de Alho Poró, Espaguete de Abobrinha ao Pesto, Maminha ao Molho Gorgonzola, Lasanha de Berinjela).
-     - What will be achieved with this?: Melhorar precisão do modelo CLIP.
-     - Status: BLOCKED (Usuário está gerando/enviando as fotos).
-     - Should Test frontend/backend/both after fix?: backend
-     - Blocked on something: Ação manual do usuário.
+     - Status: BLOCKED (Aguardando ação física do usuário).
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
     - (P1) Saneamento do campo  em  e .
-    - (P2) Aplicar script de  na Fase 1 de Migração Canônica.
     - (P2) Integrar o login do  com o endpoint  para que administradores entrem usando PIN.
     
     Future Tasks:
-    - (P2) Implementar roles de usuários (admin vs funcionário) no DB e interface do admin.
-    - (P2) Implementar endpoint  para baixar relatórios de auditoria/arquivos temporários () direto do servidor sem depender de volumes temporários (como ).
+    - (P2) Implementar endpoint  para relatórios gerados via background.
+    - (P2) Roles de admin vs funcionário.
 
 **Completed work in this session**
-- Lote Controlado 22 pratos + Extração ZIP (DONE)
-- Reindex Intermediário gerando 1803 embeddings e 190 pratos (DONE)
-- Correção de erro Objects are not valid as a React child em campos Premium com  recursivo no  (DONE)
-- Correção de Cold Start no Render (Mudança de  para  no ) (DONE)
-- Warm-up do modelo ONNX no  ( e ) reduzindo timeout no 1º request (DONE)
-- Correção de nomes Jiló Empanado e Feijão mapeando no  (DONE)
-- Correção do vazamento Gemini no Cibi Sana alterando fallback de  em  e prompt em  (DONE)
+- Auditoria do App PWA cacheando Vercel bundle desatualizado (DONE)
+- Atualização do Service Worker para V11 () impedindo cache HTTP nativo do PWA (DONE)
+- Adição de  garantindo headers  para  e  (DONE)
+- Implementação de Painel de Debug () visível para mapear backend URL e commit hash no Frontend (DONE)
+- Auditoria da tela wake up server de 15s revelando que o usuário instalou acidentalmente o PWA do ambiente Preview Emergent (DONE)
+- Correção de exceção fatal  no Render ao acessar as pastas de imagens em  ausentes no container (DONE)
 
 **Earlier issues found/mentioned but not fixed**
    Issue 1: Usuários duplicados por causa de acentos ( vs )
-   - Debug checklist: Padronizar e ignorar acentos na hora do login ou cadastro no .
-   - Why to solve this issue and what will be achieved with this?: Evita múltiplas contas para a mesma pessoa causadas pelo corretor do celular.
+   - Debug checklist: Padronizar/remover acentos ao criar chaves únicas no DB.
+   - Why to solve this issue and what will be achieved with this?: Consolidação da base de usuários Premium.
    - Should Test frontend/backend/both after fix: backend
    - Is recurring issue? Y
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: O Gemini disparava indevidamente no restaurante por falha do GPS que forçava external.
-  - Recurrence count: 2 (Mapeado e mitigado alterando  padrão para bloquear Gemini se GPS pendente).
-  - Status: RESOLVED (Localmente, pendente aprovação no deploy).
+  - Issue recurrence in previous fork: App do celular não refletia as mudanças pós-deploy.
+  - Recurrence count: 3
+  - Status: RESOLVED (PWA cache rules fixadas, e usuário orientado a reinstalar apontando pro domínio correto de Produção e não Preview).
 
 **Code Architecture**
 /app
 ├── backend/
-│   ├── ai/               (policy.py, embedder.py, index.py, families.py)
-│   ├── services/         (generic_ai.py, cache_service.py)
-│   └── server.py         (API principal com startup events)
+│   ├── ai/               (policy.py, embedder.py, index.py)
+│   ├── services/         (generic_ai.py, image_service.py [R2/boto3 config])
+│   └── server.py         (API principal com startup events de 14s pro ONNX)
 ├── frontend/
 │   └── src/
-│       ├── App.js        (PWA, UI Principal, )
-│       └── Admin.js      (Painel Administrativo protegido)
-├── datasets/             (dish_index.json, dish_index_embeddings.npy)
-└── render.yaml           (Configurações de infraestrutura e deploy)
+│       ├── App.js        (Debug Panel adicionado, SW network-first)
+│       └── Admin.js      (Rotas protegidas com )
+├── datasets/             (Somente índices .npy e .json, sem fotos nativas)
+└── render.yaml           (standard plan)
 
 **Key Technical Concepts**
-- **IA Híbrida**: O GPS determina o modo. Se falhar ou estiver indefinido, o fallback atualiza para bloqueio local (cibi_sana) por segurança contra custos excessivos de API externa.
-- **ONNX Warm-up**: A inferência (JIT) do PyTorch/ONNX deve ocorrer em  para evitar delay no primeiro request em produção.
-- **Render Deployment**: A branch  só reflete no ambiente do cliente quando o botão Save to Github (push) é ativado.
+- **Arquitetura de imagens**: O diretório  possui 3.3GB e não existe no Render. Imagens em produção dependem puramente da integração Cloudflare R2 listada no  via .
+- **PWA Service Worker**: A versão v11 do  agora obriga navegação   resolvendo a anomalia do frontend congelado numa build velha.
+- **Identificação de URL/Problema do Usuário**: A tela wake up server descrita pelo usuário pertence à infraestrutura interna da Emergent (ambiente preview) que suspende apps ociosos. O usuário estava testando um PWA instalado através de uma preview URL em vez do domínio oficial de produção.
 
 **key DB schema**
-  - : , , , 
-  - : , , 
-  - : Refs ao bucket R2 Cloudflare.
-  - : Dados nutricionais vinculados.
+  - : Documento 
 
 **changes in tech stack**
-- Mudança na infra Render: O plano no  foi subido de  (Free, que suspende) para  (always-on) com .
+- Headers do Vercel foram radicalmente alterados com um  na raiz do frontend.
 
 **All files of reference** 
-  -  (Modificado extensamente com  e controle de GPS / )
-  -  (Modificado para resolver falsos positivos em pratos e normalizar mapeamentos como feijão e jiló)
-  -  (Modificado para remover prato específico - carioca - do prompt)
-  -  &  (Modificados para fazer warm-up JIT local no init)
-  -  (Modificado o  e adicionado )
-  -  &  (Novos reíndices comitados)
+  -  (Novo SW v11)
+  -  (Regras estritas de )
+  -  (Adição de debug logs)
+  -  (Modificado para evitar crash no iterdir; foco atual para debugar fallback R2)
+  -  (Atenção ao router overwrite e rota )
 
 **Areas that need refactoring**:
-- Rotas do Admin no  precisam ser isoladas em .
+- Em , corrigir duplicação de .
 
 **key api endpoints**
-  -  (Identifica prato, bifurca entre CLIP local e Flash Externo)
-  -  (Busca dados premium via Gemini/local cache)
-  -  (Gera o índice ONNX em background - ATUALMENTE PROIBIDO USO AUTOMÁTICO)
+  -  (Em foco. Falhando 404 em produção R2)
 
 **Critical Info for New Agent** 
-- ⚠️ **NUNCA FAÇA REINDEX AUTOMÁTICO OU EM BACKGROUND.** O usuário vetou qualquer reindex a menos que explicitamente instruído ao fim de um grande lote. Os créditos/processamento estão escassos.
-- ⚠️ Cuidado ao tentar validar em produção. O ambiente de preview da Emergent NÃO É o mesmo ambiente Render (). O Render só será atualizado se o usuário fizer push via Save to Github.
-- Os problemas de crash React () foram mitigados forçando a recursividade da  no frontend.
-- Se o usuário reportar que a versão em produção não tem as mudanças, instrua-o a fazer Save to Github novamente, aguardar o build no Render e fechar/reabrir o app.
+- ⚠️ NUNCA assuma que testes locais com arquivos no disco equivalem ao comportamento em produção. A produção roda no Render e **NÃO** tem as imagens do HD, forçando sempre o uso do Cloudflare R2.
+- ⚠️ Sempre peça autorização explícita com o  antes de mudar o comportamento de  no tocante ao acesso S3.
+- O endpoint Admin retorna um HTTP 404 text/html quando interceptado pelo fallback global do frontend. Verifique rigidamente as exceções silenciadas () em .
 
 **documents and test reports created in this job** 
-  - 
-  - 
+- N/A (Edições cirúrgicas na API e frontend PWA manifest/SW).
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Organizou as pastas de acordo com os nomes? (Agent: Não precisa, a tradução ocorre no DISH_NAMES)
- 2. (User) Nos testes e apos o deploy ainda esta aparecendo jilo empanado e feijao carioca... (Agent explicou que push foi defasado)
- 3. (User) eu ja tinha feito o push, vou fazer de novo. Por que sera que isso aconteceu?
- 4. (User) Ok, vou testar. O app ainda nao abre na hora. wake uo server precisa ser ativado e demora mais de 15 segundos para esquentar. (Agent alterou  para plano  e aguardou aval)
- 5. (User) pode fazer (Aprovou alteração no render.yaml)
- 6. (User) AUDITORIA CRÍTICA — PATCH NÃO REFLETIU NO FRONTEND. Investigar com evidência no DEPLOY / PRODUÇÃO.
- 7. (User) RESPOSTA INSUFICIENTE — PRECISA PROVAR EM PRODUÇÃO. O diagnóstico não pode terminar em “causa provável”.
- 8. (User) Gemini no Cibi saba é proibido e ja foi travado! Por que nao esta funcionando??
- 9. (User) PATCH CONTROLADO — BLOQUEIO GEMINI / RESTAURANT MODE / FEIJÃO CARIOCA... Aplicar correções controladas (Frontend  fallback para  e Backend  remover carioca).
- 10. **[PENDING HUMAN VERIFICATION]** Agent aplicou as regras no  e , aguardando que o usuário dispare o Save to Github e valide a UX com o novo fallback.
+ 1. (User) Reportou que Jiló Empanado e delay de 15s persistiam. Pediu prova definitiva em produção.
+ 2. (Agent) Provou via Render e código bundle que a produção estava atualizada e atribuiu o problema ao cache do celular.
+ 3. (User) Exigiu provas do frontend NO CELULAR e não prováveis asserções.
+ 4. (Agent) Adicionou instrumentação  no app exibindo logs do bundle ativo, confirmando que o backend de fato era carregado rápido mas o React usava um bundle Vercel de horas antes.
+ 5. (User) Pediu intervenção forçada (SW skip/no-store) para o celular carregar código novo.
+ 6. (Agent) Atualizou  (v11) e  configurando .
+ 7. (User) Informou que chuva azul e wake up server de 15s persistiam na abertura do PWA.
+ 8. (Agent) Auditou evidências e diagnosticou: tela de chuva azul provém exclusivamente da *infraestrutura de Preview Emergent*. O usuário havia instalado a URL preview no celular e não a produção Render.
+ 9. (User) Reportou que para o Admin estava pedindo chave, e carregava o conteúdo inteiro *SEM FOTOS*.
+ 10. **[PENDING HUMAN VERIFICATION]** (Agent) Depurou 404 do Admin, consertou o crash  (diretório local que não vai pro Render), e estava debugando o motivo da recuperação via S3/R2 no  estar agora retornando um JSON 404.
 
 **Project Health Check:**
-Broken: Não há funcionalidades severamente quebradas, apenas pendência de sincronia entre os commits do repositório GitHub e o Render de produção do usuário.
+Broken:  falhando silenciosamente no S3 fallback. Bug no  re-declarando .
 Mocked: None
 
 **3rd Party Integrations** 
-	 •	OpenAI/Gemini — uses Emergent LLM Key (Restrito no modo cibi_sana)
-	 •	Cloudflare R2 (Armazenamento de imagens) — User API Key
+  - Cloudflare R2 (Armazenamento de imagens, foco do issue atual) — User API Key
+  - OpenAI/Gemini — Emergent LLM Key
 
 **Testing status**
-  - Testing agent used after significant changes: NO (Proibido pelo usuário para evitar gastos).
-  - Troubleshoot agent used after agent stuck in loop: NO
+  - Testing agent used after significant changes: NO (Proibido pelo usuário)
   - Test files created: None
-  - Known regressions: Possível confusão temporal entre builds no Render dependendo do momento do Push.
+  - Known regressions: R2 endpoint integration falhando no admin-dish-image
 
 **Credentials to test flow:**
 Admin X-Admin-Key: 
-Test Premium:  PIN 
+(Envie  nos cabeçalhos curl para acessar rotas de imagens)
 
 **What agent forgot to execute**
-O agente completou o patch, mas não criou o endpoint de  mencionado durante a criação do relatório em  para download.
+O agente não conseguiu concluir a depuração do bug interno de leitura no bucket R2 do .
 
 **Debugging checklist for current issue**
-    Issue: O deploy do usuário no Render não reflete o comportamento local.
-    Backend files to check: Revisar log do Render Dashboard.
-    Ação sugerida: Se o usuário apontar que o Feijão Carioca ou o Gemini dentro do restaurante ainda persistem, verificar a versão exata do app cacheada no celular do usuário ou orientá-lo a fazer push e rebuild limpo no provedor Render. Em último caso, criar endpoint de Version Check se ele solicitar, para provar qual bundle o backend e frontend estão rodando.</analysis>
+    Issue: Imagens não carregam via R2, retornando HTTP 404 no Render.
+    Backend files to check:  (métodos ,  e ).
+    Ação sugerida: Executar  acessando diretamente  e printando erros  silenciados durante o . Consertar bug onde  é sobrescrito na linha 243 de .
+</handoff summary></analysis>

@@ -232,7 +232,7 @@ VALIDAÇÃO CRUZADA (Opcional):
 ## 10. CONTATOS E LINKS
 
 ### URL de Preview:
-https://resto-ai-test.preview.emergentagent.com
+https://soulnutri-pwa-test.preview.emergentagent.com
 
 ### Arquivos Importantes:
 - /app/memory/PRD.md - Requisitos do produto
