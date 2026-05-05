@@ -4504,6 +4504,7 @@ async def admin_list_dishes():
                 "category_emoji": dish_doc.get("category_emoji", ""),
                 "ingredientes": dish_doc.get("ingredientes", []),
                 "descricao": dish_doc.get("descricao", ""),
+                "family": dish_doc.get("family", None),
                 "image_count": image_counts.get(n, 0)
             }
             dishes.append(dish_data)
@@ -4600,6 +4601,7 @@ async def admin_list_dishes_full():
                 "contem_peixe": meta.get("contem_peixe", None),
                 "is_vegan": meta.get("is_vegan", None),
                 "tecnica": meta.get("tecnica", ""),
+                "family": meta.get("family", None),
                 "image_count": img_data["count"],
                 "first_image": img_data["first_image"],
             }
@@ -4623,6 +4625,7 @@ async def admin_list_dishes_full():
                     "nutricao": meta.get("nutrition", meta.get("nutricao", {})) or {},
                     "contem_gluten": meta.get("has_gluten", None),
                     "is_vegan": meta.get("is_vegan", None),
+                    "family": meta.get("family", None),
                     "image_count": 0,
                     "first_image": None,
                 })
@@ -4761,7 +4764,8 @@ async def admin_update_dish(slug: str, dish_data: dict):
             "contem_castanhas": dish_data.get("contem_castanhas", existing_info.get("contem_castanhas", False)),
             "contem_frutos_mar": dish_data.get("contem_frutos_mar", existing_info.get("contem_frutos_mar", False)),
             "contem_soja": dish_data.get("contem_soja", existing_info.get("contem_soja", False)),
-            "tecnica": dish_data.get("tecnica", existing_info.get("tecnica", ""))
+            "tecnica": dish_data.get("tecnica", existing_info.get("tecnica", "")),
+            "family": dish_data.get("family", existing_info.get("family", None))
         })
         
         # Definir emoji baseado na categoria
