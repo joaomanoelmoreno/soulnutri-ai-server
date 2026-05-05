@@ -1273,6 +1273,42 @@ async def identify_image(
             decision['confidence']
         )
         
+        # ═══════════════════════════════════════════════════════════════════════
+        # ENRIQUECIMENTO INTERNO DE FAMÍLIA (não altera resposta ainda)
+        # ═══════════════════════════════════════════════════════════════════════
+        if decision.get('identified') and decision.get('dish'):
+            try:
+                dish_slug_norm = decision['dish'].replace('_', '-').lower().strip()
+                dish_doc = await db.dishes.find_one(
+                    {"slug": dish_slug_norm},
+                    {"_id": 0, "family": 1}
+                )
+                family_tag = dish_doc.get("family") if dish_doc else None
+                if family_tag:
+                    family_slug = family_tag.lower().strip()
+                    family_doc = await db.dish_families.find_one(
+                        {"slug": family_slug},
+                        {"_id": 0}
+                    )
+                    if family_doc:
+                        decision["family_name"] = family_doc.get("name")
+                        decision["family_slug"] = family_doc.get("slug")
+                        decision["family_candidates"] = family_doc.get("members_display", [])
+                        decision["family_ingredients_union"] = family_doc.get("ingredientes_uniao", [])
+                        decision["family_allergens_union"] = {
+                            "contem_gluten":   family_doc.get("contem_gluten"),
+                            "contem_lactose":  family_doc.get("contem_lactose"),
+                            "contem_ovo":      family_doc.get("contem_ovo"),
+                            "contem_peixe":    family_doc.get("contem_peixe"),
+                            "contem_soja":     family_doc.get("contem_soja"),
+                        }
+                        logger.info(
+                            f"[FAMILY] {dish_slug_norm} → família '{decision['family_name']}' "
+                            f"| candidatos: {decision['family_candidates']}"
+                        )
+            except Exception as e_fam:
+                logger.warning(f"[FAMILY] Enriquecimento falhou para '{decision.get('dish')}': {e_fam}")
+
         # Montar resposta base
         response_data = {
             "ok": True,
