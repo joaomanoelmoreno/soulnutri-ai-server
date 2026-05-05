@@ -3829,8 +3829,8 @@ return {
             </div>
           )}
           
-          {/* FAMILIA DE PRATOS - quando há ambiguidade */}
-          {r.family_candidates && r.family_candidates.length > 0 ? (
+          {/* FAMILIA DE PRATOS - bloco de substituicao desativado; exibicao complementar abaixo */}
+          {false ? (
             <div className="family-ambiguity-box" data-testid="family-ambiguity-box" style={{
               background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.08))',
               border: '2px solid rgba(245, 158, 11, 0.4)',
@@ -4031,6 +4031,38 @@ return {
               </div>
             )}
           </div>
+
+          {/* FAMÍLIA DE PRATOS — bloco complementar */}
+          {r.family_name && r.family_candidates?.length > 0 && (
+            <div
+              data-testid="family-block"
+              style={{
+                background: 'rgba(251, 191, 36, 0.08)',
+                border: '1px solid rgba(251, 191, 36, 0.35)',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                marginTop: '10px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <span style={{ fontSize: '15px' }}>⚠️</span>
+                <span data-testid="family-name-label" style={{ fontSize: '13px', fontWeight: '700', color: '#fbbf24' }}>
+                  Família identificada: {r.family_name}
+                </span>
+              </div>
+              <p style={{ fontSize: '12px', color: '#94a3b8', margin: '0 0 8px 0', lineHeight: '1.5' }}>
+                Este prato pertence a uma família visualmente parecida. Confirme o nome na plaquinha ou com o atendente.
+              </p>
+              <p style={{ fontSize: '12px', color: '#cbd5e1', margin: '0 0 4px 0', fontWeight: '600' }}>
+                Pode ser:
+              </p>
+              <ul data-testid="family-candidates-list" style={{ margin: '0', padding: '0 0 0 16px', fontSize: '12px', color: '#94a3b8', lineHeight: '1.8' }}>
+                {r.family_candidates.map((c, i) => (
+                  <li key={i} data-testid={`family-candidate-${i}`}>{c}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* DICAS PERSONALIZADAS - Baseadas no perfil do usuário Premium */}
           {premiumUser?.perfil && (() => {
