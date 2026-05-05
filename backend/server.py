@@ -408,6 +408,8 @@ async def health():
 # ═══════════════════════════════════════════════════════
 _WARMED_UP = False
 _WARMUP_MS = None
+# Semaforo: apenas 1 identify ONNX por vez (evita bloquear event loop com 2 inferencias paralelas)
+_identify_semaphore = asyncio.Semaphore(1)
 
 @api_router.get("/ai/warmup")
 async def ai_warmup():
@@ -873,7 +875,15 @@ async def identify_image(
     start_time = time.time()
     perf_start = time.perf_counter()
     
-    logger.info(f"[IDENTIFY] Iniciando identificacao - restaurant={restaurant}, country={country}")
+    logger.info(f"[IDENTIFY_START] scan_id={_ROOT_SCAN_COUNTER} ts={time.strftime('%H:%M:%S')}")
+
+    # CONCORRÊNCIA: rejeitar imediatamente se ONNX já está rodando
+    if is_cibi_sana and not _identify_semaphore._value:
+        logger.warning(f"[IDENTIFY] Semaforo ocupado — rejeitando request concorrente")
+        return IdentifyResponse(
+            ok=False, identified=False, confidence="baixa", score=0.0,
+            message="Servidor ocupado processando outro scan. Aguarde 1 segundo e tente novamente."
+        )
 
     # ── DIAGNÓSTICO: confirmar se modelo ONNX está warm neste request ──────────
     try:
@@ -943,10 +953,13 @@ async def identify_image(
             
             if index.is_ready():
                 t_clip = time.perf_counter()
-                results = index.search(content, top_k=5)
+                # CRITICO: ONNX bloqueia o event loop — usar semaforo + to_thread
+                async with _identify_semaphore:
+                    logger.info(f"[IDENTIFY] ONNX adquiriu semaforo ts={time.strftime('%H:%M:%S')}")
+                    results = await asyncio.to_thread(index.search, content, 5)
                 t_clip_ms = (time.perf_counter() - t_clip) * 1000
                 logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
-                clip_decision = analyze_result(results)
+                clip_decision = await asyncio.to_thread(analyze_result, results)
                 clip_score = clip_decision.get('score', 0.0)
                 
                 logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
@@ -1313,6 +1326,12 @@ async def identify_image(
             except Exception as e_fam:
                 logger.warning(f"[FAMILY] Enriquecimento falhou para '{decision.get('dish')}': {e_fam}")
 
+        elapsed_ms = (time.time() - start_time) * 1000
+        logger.info(
+            f"[IDENTIFY_END] scan_id={_ROOT_SCAN_COUNTER} dish={decision.get('dish_display','?')} "
+            f"conf={decision.get('confidence','?')} total={elapsed_ms:.0f}ms ts={time.strftime('%H:%M:%S')}"
+        )
+
         # Montar resposta base
         response_data = {
             "ok": True,
@@ -1438,6 +1457,7 @@ async def enrich_dish(request: Request):
         from services.gemini_flash_service import enrich_dish_gemini
         from services.alerts_service import generate_food_alert
         
+        logger.info(f"[ENRICH_START] nome='{nome}' ts={time.strftime('%H:%M:%S')}")
         logger.info(f"[Enrich] Chamando enrich + alertas + nutrition em paralelo para '{nome}'")
         
         enrich_task = enrich_dish_gemini(nome, ingredientes)
@@ -1491,6 +1511,7 @@ async def enrich_dish(request: Request):
                 nutrition_formatted['sodio'] = f"{nutrition_sheet['sodio_mg']:.0f}mg"
         
         logger.info(f"[Enrich] Enrichment: {list(enrichment.keys()) if enrichment else 'vazio'}, Alertas: {len(alertas_historico)}, Nutrition: {bool(nutrition_formatted)}")
+        logger.info(f"[ENRICH_END] nome='{nome}' ts={time.strftime('%H:%M:%S')}")
         
         return {
             "ok": bool(enrichment) or bool(alertas_historico) or bool(nutrition_formatted),
