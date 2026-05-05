@@ -1957,6 +1957,26 @@ async def list_dishes_combined():
         )
 
 
+@api_router.get("/families")
+async def list_families():
+    """Lista todas as familias de pratos cadastradas (somente leitura)."""
+    try:
+        fields = {
+            "_id": 0,
+            "slug": 1, "name": 1, "descricao": 1,
+            "members_display": 1, "members_slugs": 1, "pending_members": 1,
+            "ingredientes_uniao": 1, "alerta_alergenos": 1,
+            "contem_gluten": 1, "contem_lactose": 1, "contem_ovo": 1,
+            "contem_peixe": 1, "contem_soja": 1,
+        }
+        families = []
+        async for doc in db.dish_families.find({}, fields):
+            families.append(doc)
+        return {"ok": True, "families": families, "total": len(families)}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
 @api_router.post("/ai/learn")
 async def learn_new_dish(
     dish_name: str,
