@@ -363,6 +363,10 @@ class IdentifyResponse(BaseModel):
     curiosidade_cientifica: Optional[str] = None
     referencia_pesquisa: Optional[str] = None
     alerta_saude: Optional[str] = None
+    # Familia de pratos (resultado de enriquecimento pos-scan)
+    family_name: Optional[str] = None
+    family_candidates: List[str] = []
+    family_candidates_detail: List[dict] = []
 
 class ReindexResponse(BaseModel):
     ok: bool
