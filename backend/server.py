@@ -1443,10 +1443,20 @@ async def enrich_dish(request: Request):
         enrich_task = enrich_dish_gemini(nome, ingredientes)
         alert_task = generate_food_alert(nome, ingredientes, db=db, user_nome=user_nome)
         nutrition_task = lookup_nutrition_sheet(nome)
-        
-        enrichment, alert_data, nutrition_sheet = await _asyncio.gather(
-            enrich_task, alert_task, nutrition_task, return_exceptions=True
-        )
+
+        try:
+            enrichment, alert_data, nutrition_sheet = await _asyncio.wait_for(
+                _asyncio.gather(
+                    enrich_task, alert_task, nutrition_task, return_exceptions=True
+                ),
+                timeout=20.0
+            )
+        except _asyncio.TimeoutError:
+            logger.warning(f"[Enrich] Timeout 20s para '{nome}' — retornando fallback")
+            return JSONResponse(
+                status_code=200,
+                content={"ok": False, "error": "enrich_timeout", "fallback": True}
+            )
         
         # Tratar exceções do gather
         if isinstance(enrichment, Exception):
@@ -1497,7 +1507,10 @@ async def enrich_dish(request: Request):
         import traceback
         tb = traceback.format_exc()
         logger.error(f"[Enrich] Erro: {e}\n{tb}")
-        return {"ok": False, "error": str(e)}
+        return JSONResponse(
+            status_code=200,
+            content={"ok": False, "error": "enrich_failed", "fallback": True}
+        )
 
 @api_router.post("/ai/identify-with-ai")
 async def identify_with_ai(
