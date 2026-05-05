@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://soulnutri-pwa-test.preview.emergentagent.com
-- Admin: https://soulnutri-pwa-test.preview.emergentagent.com/admin
-- Lista de Pratos: https://soulnutri-pwa-test.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://dish-identify-api.preview.emergentagent.com
+- Admin: https://dish-identify-api.preview.emergentagent.com/admin
+- Lista de Pratos: https://dish-identify-api.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

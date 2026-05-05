@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://soulnutri-pwa-test.preview.emergentagent.com
+**URL**: https://dish-identify-api.preview.emergentagent.com
 
 ---
 

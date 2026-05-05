@@ -17,7 +17,7 @@ import time
 # Get backend URL from environment
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 if not BASE_URL:
-    BASE_URL = "https://soulnutri-pwa-test.preview.emergentagent.com"
+    BASE_URL = "https://dish-identify-api.preview.emergentagent.com"
 
 print(f"[TEST] Using BASE_URL: {BASE_URL}")
 
