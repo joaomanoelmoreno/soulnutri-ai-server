@@ -410,6 +410,8 @@ _WARMED_UP = False
 _WARMUP_MS = None
 # Semaforo: apenas 1 identify ONNX por vez (evita bloquear event loop com 2 inferencias paralelas)
 _identify_semaphore = asyncio.Semaphore(1)
+# Contador global de scans (para log de diagnóstico)
+_ROOT_SCAN_COUNTER = 0
 
 @api_router.get("/ai/warmup")
 async def ai_warmup():
@@ -874,25 +876,9 @@ async def identify_image(
     """
     start_time = time.time()
     perf_start = time.perf_counter()
-    
+    global _ROOT_SCAN_COUNTER
+    _ROOT_SCAN_COUNTER += 1
     logger.info(f"[IDENTIFY_START] scan_id={_ROOT_SCAN_COUNTER} ts={time.strftime('%H:%M:%S')}")
-
-    # CONCORRÊNCIA: rejeitar imediatamente se ONNX já está rodando
-    if is_cibi_sana and not _identify_semaphore._value:
-        logger.warning(f"[IDENTIFY] Semaforo ocupado — rejeitando request concorrente")
-        return IdentifyResponse(
-            ok=False, identified=False, confidence="baixa", score=0.0,
-            message="Servidor ocupado processando outro scan. Aguarde 1 segundo e tente novamente."
-        )
-
-    # ── DIAGNÓSTICO: confirmar se modelo ONNX está warm neste request ──────────
-    try:
-        from ai.embedder import _ONNX_SESSION as _req_session
-        _onnx_warm = _req_session is not None
-    except Exception:
-        _onnx_warm = False
-    logger.info(f"[IDENTIFY] onnx_warm={_onnx_warm} _WARMED_UP={_WARMED_UP} ts={time.strftime('%H:%M:%S')}")
-    # ── FIM DIAGNÓSTICO ─────────────────────────────────────────────────────────
 
     try:
         # Ler imagem
@@ -941,7 +927,24 @@ async def identify_image(
         
         decision = None
         is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
-        
+
+        # ── DIAGNÓSTICO: confirmar se modelo ONNX está warm neste request ──────
+        try:
+            from ai.embedder import _ONNX_SESSION as _req_session
+            _onnx_warm = _req_session is not None
+        except Exception:
+            _onnx_warm = False
+        logger.info(f"[IDENTIFY] onnx_warm={_onnx_warm} is_cibi_sana={is_cibi_sana} ts={time.strftime('%H:%M:%S')}")
+
+        # CONCORRÊNCIA: rejeitar imediatamente se ONNX já está rodando
+        if is_cibi_sana and not _identify_semaphore._value:
+            logger.warning("[IDENTIFY] Semaforo ocupado — rejeitando request concorrente")
+            return JSONResponse(status_code=200, content={
+                "ok": False, "identified": False, "confidence": "baixa",
+                "score": 0.0, "message": "Servidor ocupado. Aguarde 1s e tente novamente.",
+                "alternatives": []
+            })
+
         if is_cibi_sana:
             # ══════════════════════════════════════════════════════════════════
             # MODO CIBI SANA: CLIP ONLY (HARD LOCK - Gemini bloqueado)
@@ -1407,17 +1410,19 @@ async def identify_image(
         return response_data
         
     except Exception as e:
-        logger.error(f"Erro na identificacao: {e}")
+        import traceback
         elapsed_ms = (time.time() - start_time) * 1000
-        
-        return IdentifyResponse(
-            ok=False,
-            identified=False,
-            confidence="baixa",
-            score=0.0,
-            message=f"Erro ao processar imagem: {str(e)}",
-            search_time_ms=round(elapsed_ms, 2)
-        )
+        logger.exception(f"[IDENTIFY_ERROR] scan_id={_ROOT_SCAN_COUNTER} elapsed={elapsed_ms:.0f}ms erro={e}")
+        return JSONResponse(status_code=200, content={
+            "ok": False,
+            "identified": False,
+            "confidence": "baixa",
+            "score": 0.0,
+            "message": f"Erro interno: {str(e)}",
+            "error": type(e).__name__,
+            "alternatives": [],
+            "search_time_ms": round(elapsed_ms, 2)
+        })
 
 
 
