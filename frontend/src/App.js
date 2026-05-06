@@ -492,8 +492,10 @@ if (!res.ok || !contentType.includes('audio')) {
   };
   
   const [premiumUser, setPremiumUser] = useState(null);
+  const [premiumSessionStatus, setPremiumSessionStatus] = useState(null); // null | 'verified' | 'pending_recheck' | 'invalid'
   const isAdminUser = premiumUser?.is_admin === true;
   const premiumUserRef = useRef(null);
+  const sessionRetryRef = useRef(null); // timeout handle para retry controlado
   // Ref para rastrear pratos já enriquecidos (evita mutação direta de estado)
   const enrichedDishesRef = useRef(new Set());
   // Sync ref com state para evitar stale closure em callbacks memoizados
@@ -766,7 +768,11 @@ const renderTextSafe = (v) => {
       // Cancelar requisições pendentes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
-      }      
+      }
+      // Cancelar retry de sessão pendente
+      if (sessionRetryRef.current) {
+        clearTimeout(sessionRetryRef.current);
+      }
       // Limpar monitoramento GPS
       if (watchIdRef.current !== null) {
         navigator.geolocation.clearWatch(watchIdRef.current);
@@ -1019,50 +1025,108 @@ const renderTextSafe = (v) => {
       console.error('Erro ao carregar pratos:', e);
     }
   };
-  // Verificar sessão Premium salva
-  const checkPremiumSession = async () => {
+  // ─────────────────────────────────────────────────────────────
+  // PREMIUM SESSION GUARD
+  // Regra: SOMENTE "Nome ou PIN incorreto" limpa sessão.
+  // Tudo mais (500, 502, timeout, rede) → mantém usuário logado.
+  // ─────────────────────────────────────────────────────────────
+  const checkPremiumSession = async (retryCount = 0) => {
+    const pin  = localStorage.getItem('soulnutri_pin');
+    const nome = localStorage.getItem('soulnutri_nome');
+
+    if (!pin || !nome) return;
+
+    // AÇÃO 4: Restaurar usuário do cache IMEDIATAMENTE — não bloqueia UI
+    const cachedRaw = localStorage.getItem('soulnutri_user');
+    if (cachedRaw && !premiumUserRef.current) {
+      try {
+        const cachedUser = JSON.parse(cachedRaw);
+        if (mountedRef.current) {
+          setPremiumUser({ ...cachedUser, pin });
+          setPremiumSessionStatus('pending_recheck');
+          console.log('[PREMIUM_SESSION] cached_user_restored attempt=' + retryCount);
+        }
+      } catch (_) {}
+    }
+
     try {
-      const pin = localStorage.getItem('soulnutri_pin');
-      const nome = localStorage.getItem('soulnutri_nome');
-      if (pin && nome) {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-        const fd = new FormData();
-        fd.append('pin', pin);
-        fd.append('nome', nome);
-        const res = await fetch(`${API}/premium/login`, { 
-          method: 'POST', 
-          body: fd,
-          signal: controller.signal 
-        });
-        clearTimeout(timeoutId);
-        const data = await res.json();
-        if (data.ok && mountedRef.current) {
-          if (data.premium_bloqueado) {
-            // Usuário existe mas está bloqueado/expirado — limpar sessão e mostrar mensagem
-            localStorage.removeItem('soulnutri_pin');
-            localStorage.removeItem('soulnutri_nome');
-            localStorage.removeItem('soulnutri_user');
-            setPremiumBlockedMsg(data.message || 'Acesso Premium bloqueado.');
-            setShowPremium('login');
-            return;
-          }
-          setPremiumUser({ ...data.user, pin });
-          loadDailySummary();
-          loadNotifCount(pin);
-        } else if (data.error === 'Nome ou PIN incorreto') {
-          // Credenciais definitivamente inválidas — limpar sessão
-          console.warn('[PREMIUM] Credenciais inválidas, limpando localStorage');
+      const controller = new AbortController();
+      // 10s timeout — cobre cold start do Render (~8s típico)
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const fd = new FormData();
+      fd.append('pin',  pin);
+      fd.append('nome', nome);
+
+      const res = await fetch(`${API}/premium/login`, {
+        method: 'POST',
+        body: fd,
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      let data;
+      try { data = await res.json(); }
+      catch (_) {
+        // Resposta não-JSON (HTML de erro, 502 etc.) — erro temporário
+        throw new Error('invalid_json_response');
+      }
+
+      if (!mountedRef.current) return;
+
+      if (data.ok) {
+        if (data.premium_bloqueado) {
+          // Conta existe mas bloqueada/expirada → única exceção que força logout
           localStorage.removeItem('soulnutri_pin');
           localStorage.removeItem('soulnutri_nome');
           localStorage.removeItem('soulnutri_user');
+          setPremiumUser(null);
+          setPremiumSessionStatus('invalid');
+          setPremiumBlockedMsg(data.message || 'Acesso Premium bloqueado.');
+          setShowPremium('login');
+          console.log('[PREMIUM_SESSION] invalid_credentials_clear (bloqueado)');
+          return;
         }
-        // Outros erros (servidor ocupado, MongoDB cold start, etc.) → manter sessão para tentar depois
+        // Sucesso: atualizar cache e estado
+        localStorage.setItem('soulnutri_user', JSON.stringify(data.user));
+        setPremiumUser({ ...data.user, pin });
+        setPremiumSessionStatus('verified');
+        console.log('[PREMIUM_SESSION] valid nome=' + data.user?.nome);
+        loadDailySummary();
+        loadNotifCount(pin);
+
+      } else if (data.error === 'Nome ou PIN incorreto') {
+        // ÚNICA situação que confirma credenciais inválidas
+        localStorage.removeItem('soulnutri_pin');
+        localStorage.removeItem('soulnutri_nome');
+        localStorage.removeItem('soulnutri_user');
+        setPremiumUser(null);
+        setPremiumSessionStatus('invalid');
+        console.warn('[PREMIUM_SESSION] invalid_credentials_clear error=' + data.error);
+
+      } else {
+        // Qualquer outro ok:false (erro de servidor, DB ocupado etc.) → temporário
+        setPremiumSessionStatus('pending_recheck');
+        console.warn('[PREMIUM_SESSION] temporary_error_keep_session error=' + (data.error || 'unknown'));
+        _scheduleSessionRetry(retryCount);
       }
+
     } catch (e) {
-      // Erro de rede transitório (timeout, AbortError, offline) — NÃO limpar sessão
-      console.warn('[PREMIUM] Erro de rede ao verificar sessão (sessão mantida):', e.message || e);
+      if (!mountedRef.current) return;
+      // Rede, timeout, AbortError, JSON inválido — temporário
+      setPremiumSessionStatus('pending_recheck');
+      console.warn('[PREMIUM_SESSION] temporary_error_keep_session network=' + (e.message || e));
+      _scheduleSessionRetry(retryCount);
     }
+  };
+
+  const _scheduleSessionRetry = (retryCount) => {
+    if (retryCount >= 2) return; // máx 2 tentativas (5s e 15s)
+    const delay = retryCount === 0 ? 5000 : 15000;
+    console.log('[PREMIUM_SESSION] retry_scheduled delay=' + delay + 'ms attempt=' + (retryCount + 1));
+    if (sessionRetryRef.current) clearTimeout(sessionRetryRef.current);
+    sessionRetryRef.current = setTimeout(() => {
+      if (mountedRef.current) checkPremiumSession(retryCount + 1);
+    }, delay);
   };
 
   // Carregar contagem de notificações não lidas
@@ -4872,6 +4936,21 @@ return {
         data-testid="premium-button"
       >
         {premiumUser ? 'Dieta' : 'Premium'}
+        {premiumSessionStatus === 'pending_recheck' && (
+          <span
+            data-testid="session-pending-dot"
+            title="Conexão temporariamente indisponível. Mantendo sua sessão."
+            style={{
+              display: 'inline-block',
+              width: '7px', height: '7px',
+              borderRadius: '50%',
+              background: '#fbbf24',
+              marginLeft: '5px',
+              verticalAlign: 'middle',
+              animation: 'pulse 1.5s ease-in-out infinite',
+            }}
+          />
+        )}
       </button>
 
       {/* PREMIUM - Modal */}
