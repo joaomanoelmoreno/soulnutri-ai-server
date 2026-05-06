@@ -1050,13 +1050,14 @@ const renderTextSafe = (v) => {
           setPremiumUser({ ...data.user, pin });
           loadDailySummary();
           loadNotifCount(pin);
-        } else {
-          // PIN obsoleto ou invalido - limpar sessao para evitar loop
-          console.warn('[PREMIUM] Sessao invalida, limpando localStorage');
+        } else if (data.error === 'Nome ou PIN incorreto') {
+          // Credenciais definitivamente inválidas — limpar sessão
+          console.warn('[PREMIUM] Credenciais inválidas, limpando localStorage');
           localStorage.removeItem('soulnutri_pin');
           localStorage.removeItem('soulnutri_nome');
           localStorage.removeItem('soulnutri_user');
         }
+        // Outros erros (servidor ocupado, MongoDB cold start, etc.) → manter sessão para tentar depois
       }
     } catch (e) {
       // Erro de rede transitório (timeout, AbortError, offline) — NÃO limpar sessão
