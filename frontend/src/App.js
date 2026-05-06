@@ -3829,65 +3829,97 @@ return {
             </div>
           )}
           
-          {/* FAMILIA DE PRATOS - bloco de substituicao desativado; exibicao complementar abaixo */}
-          {false ? (
-            <div className="family-ambiguity-box" data-testid="family-ambiguity-box" style={{
-              background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.08))',
-              border: '2px solid rgba(245, 158, 11, 0.4)',
+          {/* FAMILIA DE PRATOS — resultado principal quando family_name existe */}
+          {r.family_name ? (
+            <div className="family-result-box" data-testid="family-result-box" style={{
+              background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.06))',
+              border: '2px solid rgba(245, 158, 11, 0.45)',
               borderRadius: '16px',
               padding: '20px',
               margin: '8px 0 16px',
-              textAlign: 'center'
             }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>&#x26A0;&#xFE0F;</div>
-              {r.family_name ? (
-                <h2 className="dish-name" data-testid="dish-name" style={{ fontSize: '18px', margin: '0 0 8px' }}>
-                  Familia: {r.family_name}
-                </h2>
-              ) : (
-                <h2 className="dish-name" data-testid="dish-name" style={{ fontSize: '18px', margin: '0 0 8px' }}>
-                  Prato nao identificado com certeza
-                </h2>
-              )}
-              <p style={{ fontSize: '13px', color: '#b45309', margin: '0 0 12px', fontWeight: '500' }}>
-                Pratos visualmente similares detectados. Pode ser:
-              </p>
-              <div data-testid="family-candidates-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(r.family_candidates_detail || r.family_candidates.map(c => ({ nome: c }))).map((candidate, i) => (
-                  <div key={i} data-testid={`family-candidate-${i}`} style={{
-                    background: 'rgba(255,255,255,0.85)',
-                    borderRadius: '12px',
-                    padding: '12px 16px',
-                    textAlign: 'left',
-                    border: '1px solid rgba(245, 158, 11, 0.25)'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: candidate.ingredientes?.length ? '6px' : '0' }}>
-                      <span style={{ fontSize: '15px', fontWeight: '700', color: '#92400e' }}>
-                        {candidate.categoria_emoji || ''} {candidate.nome || candidate}
-                      </span>
-                      {candidate.categoria && (
-                        <span style={{ fontSize: '10px', color: '#a16207', background: 'rgba(245,158,11,0.15)', padding: '2px 8px', borderRadius: '8px', fontWeight: '600', textTransform: 'uppercase' }}>
-                          {candidate.categoria}
-                        </span>
-                      )}
-                    </div>
-                    {candidate.ingredientes && candidate.ingredientes.length > 0 && (
-                      <div style={{ fontSize: '12px', color: '#78716c', lineHeight: '1.4' }}>
-                        {candidate.ingredientes.slice(0, 5).join(', ')}
-                        {candidate.ingredientes.length > 5 ? '...' : ''}
-                      </div>
-                    )}
-                    {candidate.descricao && (
-                      <div style={{ fontSize: '11px', color: '#a8a29e', marginTop: '4px', fontStyle: 'italic' }}>
-                        {candidate.descricao.length > 80 ? candidate.descricao.substring(0, 80) + '...' : candidate.descricao}
-                      </div>
-                    )}
-                  </div>
-                ))}
+              {/* Título principal */}
+              <div style={{ fontSize: '12px', color: '#b45309', marginBottom: '4px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                Família identificada
               </div>
-              <p style={{ fontSize: '12px', color: '#78716c', margin: '12px 0 0', fontStyle: 'italic' }}>
-                Confirme pela plaquinha ou com o atendente
+              <h2 className="dish-name" data-testid="dish-name" style={{ margin: '0 0 10px', fontSize: '22px', color: '#92400e' }}>
+                {r.family_name}
+              </h2>
+
+              {/* Subtexto obrigatório */}
+              <p style={{ fontSize: '13px', color: '#a16207', margin: '0 0 14px', lineHeight: '1.5' }}>
+                Pratos visualmente semelhantes. Confirme o nome na plaquinha ou com o atendente.
               </p>
+
+              {/* Leitura inicial — opcional, visual secundário */}
+              {r.dish_display && (
+                <div style={{ fontSize: '11px', color: '#78716c', marginBottom: '12px', fontStyle: 'italic' }}>
+                  Possível leitura inicial: {r.dish_display}
+                </div>
+              )}
+
+              {/* Lista de opções com acentos corretos (members_display) */}
+              {r.family_candidates?.length > 0 && (
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ fontSize: '12px', color: '#92400e', fontWeight: '700', marginBottom: '8px' }}>
+                    Pode ser:
+                  </div>
+                  <ul data-testid="family-candidates-list" style={{ margin: '0', padding: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {r.family_candidates.map((c, i) => (
+                      <li key={i} data-testid={`family-candidate-${i}`} style={{
+                        background: 'rgba(255,255,255,0.75)',
+                        borderRadius: '10px',
+                        padding: '9px 14px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#92400e',
+                        border: '1px solid rgba(245, 158, 11, 0.3)'
+                      }}>
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Alerta de alérgenos — segurança alimentar */}
+              {r.family_alerta_alergenos && (
+                <div data-testid="family-allergen-alert" style={{
+                  background: 'rgba(239, 68, 68, 0.07)',
+                  border: '1px solid rgba(239, 68, 68, 0.25)',
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  fontSize: '12px',
+                  color: '#dc2626',
+                  marginBottom: '12px',
+                  lineHeight: '1.5'
+                }}>
+                  {r.family_alerta_alergenos}
+                </div>
+              )}
+
+              {/* Ficha nutricional estimada */}
+              {r.nutrition?.calorias && (
+                <div data-testid="family-nutrition" style={{
+                  background: 'rgba(251, 191, 36, 0.08)',
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  fontSize: '12px',
+                  color: '#a16207',
+                }}>
+                  <div style={{ fontWeight: '700', marginBottom: '4px', fontSize: '14px' }}>
+                    {r.nutrition.calorias}
+                  </div>
+                  <div style={{ color: '#78716c' }}>
+                    {r.nutrition.proteinas && `Proteínas: ${r.nutrition.proteinas}`}
+                    {r.nutrition.carboidratos && ` • Carb: ${r.nutrition.carboidratos}`}
+                    {r.nutrition.gorduras && ` • Gord: ${r.nutrition.gorduras}`}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#a8a29e', marginTop: '4px', fontStyle: 'italic' }}>
+                    Valores nutricionais estimados para a família do prato.
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <>
@@ -4032,37 +4064,7 @@ return {
             )}
           </div>
 
-          {/* FAMÍLIA DE PRATOS — bloco complementar */}
-          {r.family_name && r.family_candidates?.length > 0 && (
-            <div
-              data-testid="family-block"
-              style={{
-                background: 'rgba(251, 191, 36, 0.08)',
-                border: '1px solid rgba(251, 191, 36, 0.35)',
-                borderRadius: '12px',
-                padding: '12px 16px',
-                marginTop: '10px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                <span style={{ fontSize: '15px' }}>⚠️</span>
-                <span data-testid="family-name-label" style={{ fontSize: '13px', fontWeight: '700', color: '#fbbf24' }}>
-                  Família identificada: {r.family_name}
-                </span>
-              </div>
-              <p style={{ fontSize: '12px', color: '#94a3b8', margin: '0 0 8px 0', lineHeight: '1.5' }}>
-                Este prato pertence a uma família visualmente parecida. Confirme o nome na plaquinha ou com o atendente.
-              </p>
-              <p style={{ fontSize: '12px', color: '#cbd5e1', margin: '0 0 4px 0', fontWeight: '600' }}>
-                Pode ser:
-              </p>
-              <ul data-testid="family-candidates-list" style={{ margin: '0', padding: '0 0 0 16px', fontSize: '12px', color: '#94a3b8', lineHeight: '1.8' }}>
-                {r.family_candidates.map((c, i) => (
-                  <li key={i} data-testid={`family-candidate-${i}`}>{c}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {/* FAMÍLIA DE PRATOS — bloco complementar (removido: coberto pelo bloco principal acima) */}
 
           {/* DICAS PERSONALIZADAS - Baseadas no perfil do usuário Premium */}
           {premiumUser?.perfil && (() => {
