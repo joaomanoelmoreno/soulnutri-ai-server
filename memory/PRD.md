@@ -182,6 +182,9 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 - `/app/memory/diagnostics/family_grouping_study_2026-04-29.md` — Estudo de Famílias Visuais (análise do banco)
 - `/app/memory/diagnostics/visual_families_validation_2026-02-05.md` — Validação completa para implementação (JSON, conflitos, rollback, UX)
 
+## Bugs Corrigidos (06/Mai/2026)
+- **BUG CRÍTICO CORRIGIDO** (`server.py` L.1308): `dish_slug_norm` não convertia espaços em hífens. `decision['dish']` retorna `"Lasanha de Espinafre"` (com espaços), mas o slug real no MongoDB é `"lasanha-de-espinafre"` (com hífens). Lookup de família sempre falhava silenciosamente. Fix: `.replace(' ', '-')` adicionado antes do `.lower()`.
+
 ## Bugs Corrigidos (01/Mai/2026)
 - **BUG CRÍTICO CORRIGIDO** (`App.js` L.1592): `premiumCycleBusyRef.current` não era resetado no `finally` de `identifyImage`. Qualquer scan com falha (timeout, AbortError, network error, HTTP !ok) travava permanentemente todos os scans seguintes para usuário Premium (GATE_BLOCKED silencioso). Fix: `premiumCycleBusyRef.current = false` adicionado ao `finally`.
 

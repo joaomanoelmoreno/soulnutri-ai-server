@@ -1305,7 +1305,7 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         if decision.get('identified') and decision.get('dish'):
             try:
-                dish_slug_norm = decision['dish'].replace('_', '-').lower().strip()
+                dish_slug_norm = decision['dish'].replace('_', '-').replace(' ', '-').lower().strip()
                 dish_doc = await db.dishes.find_one(
                     {"slug": dish_slug_norm},
                     {"_id": 0, "family": 1}
