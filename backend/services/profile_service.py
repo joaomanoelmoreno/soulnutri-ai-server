@@ -7,6 +7,7 @@ from datetime import datetime, timezone, timedelta
 from typing import Optional, List
 from pydantic import BaseModel
 import hashlib
+import unicodedata
 
 # =====================
 # MODELS
@@ -170,6 +171,10 @@ def calcular_meta_calorica(tmb: float, nivel_atividade: str, objetivo: str) -> d
 def hash_pin(pin: str) -> str:
     """Cria hash seguro do PIN"""
     return hashlib.sha256(pin.encode()).hexdigest()
+
+def normalize_nome(nome: str) -> str:
+    """Remove acentos do nome para comparacao robusta (teclado mobile adiciona acentos)"""
+    return unicodedata.normalize('NFD', nome).encode('ascii', 'ignore').decode('ascii').strip()
 
 def verificar_pin(pin: str, pin_hash: str) -> bool:
     """Verifica se o PIN está correto"""

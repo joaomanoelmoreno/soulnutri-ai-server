@@ -57,6 +57,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 import re
+import unicodedata
+
+def _norm_nome(nome: str) -> str:
+    """Remove acentos do nome para lookup robusto (teclado mobile adiciona acento automaticamente)."""
+    return unicodedata.normalize('NFD', nome or '').encode('ascii', 'ignore').decode('ascii').strip()
 
 # ═══════════════════════════════════════════════════════
 # DEPLOY VERSION MARKERS — atualizar a cada nova fase para
@@ -1057,7 +1062,7 @@ async def identify_image(
                 from services.profile_service import hash_pin
                 pin_hash = hash_pin(pin)
                 flash_profile = await db.users.find_one(
-                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
                     {"_id": 0}
                 )
             
@@ -1201,7 +1206,7 @@ async def identify_image(
                 from services.profile_service import hash_pin
                 pin_hash = hash_pin(pin)
                 user_profile = await db.users.find_one(
-                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
                     {"_id": 0}
                 )
                 is_premium = user_profile is not None
@@ -1233,7 +1238,7 @@ async def identify_image(
                 from services.profile_service import hash_pin
                 pin_hash = hash_pin(pin)
                 parallel_tasks['user'] = db.users.find_one(
-                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+                    {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
                     {"_id": 0}
                 )
             
@@ -2275,7 +2280,7 @@ async def identify_with_gemini_flash(
             from services.profile_service import hash_pin
             pin_hash = hash_pin(pin)
             user_profile = await db.users.find_one(
-                {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
                 {"_id": 0}
             )
         
@@ -3268,7 +3273,7 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
 
         # Buscar por nome E pin_hash
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^\s*{nome}\s*$", "$options": "i"}},
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\s*{_norm_nome(nome)}\s*$", "$options": "i"}},
             {"_id": 0, "pin_hash": 0}
         )
 
@@ -3287,7 +3292,7 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
                 if agora > expiracao:
                     premium_ativo = False
                     await db.users.update_one(
-                        {"nome": {"$regex": f"^\s*{nome}\s*$", "$options": "i"}},
+                        {"nome": {"$regex": f"^\s*{_norm_nome(nome)}\s*$", "$options": "i"}},
                         {"$set": {
                             "premium_ativo": False,
                             "premium_expirado": True,
@@ -3369,7 +3374,7 @@ async def get_user_profile(pin: str, nome: str):
         
         pin_hash = hash_pin(pin)
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
             {"_id": 0, "pin_hash": 0}
         )
         
@@ -3419,7 +3424,7 @@ async def update_user_profile(
         
         pin_hash = hash_pin(pin)
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}}
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}}
         )
         
         if not user:
@@ -3473,7 +3478,7 @@ async def save_premium_profile(request: ProfileRequest):
         
         pin_hash = hash_pin(request.pin)
         user = await db.users.find_one(
-            {"pin_hash": pin_hash, "nome": {"$regex": f"^{request.nome}$", "$options": "i"}}
+            {"pin_hash": pin_hash, "nome": {"$regex": f"^{_norm_nome(request.nome)}$", "$options": "i"}}
         )
         
         if not user:
@@ -5715,7 +5720,7 @@ async def liberar_premium(request: Request):
             update_fields["premium_expira_em"] = None
         
         result = await db.users.update_many(
-            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
             {"$set": update_fields}
         )
         if result.modified_count == 0:
@@ -5746,7 +5751,7 @@ async def bloquear_premium(request: Request):
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
         result = await db.users.update_many(
-            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
             {"$set": {
                 "premium_ativo": False,
                 "premium_bloqueado_por": "admin",
@@ -5765,7 +5770,7 @@ async def deletar_usuario_premium(nome: str):
     """Deleta permanentemente um usuário (ativo ou bloqueado)."""
     try:
         result = await db.users.delete_many(
-            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}}
+            {"nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}}
         )
         if result.deleted_count == 0:
             return {"ok": False, "error": "Usuário não encontrado"}
@@ -5837,7 +5842,7 @@ async def toggle_admin_premium(request: Request):
         if not nome:
             return {"ok": False, "error": "Nome é obrigatório"}
         result = await db.users.update_many(
-            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
             {"$set": {"is_admin": is_admin, "updated_at": datetime.now(timezone.utc).isoformat()}}
         )
         if result.modified_count == 0:
@@ -5865,7 +5870,7 @@ async def change_user_pin(request: Request):
         new_hash = hash_pin(new_pin)
 
         result = await db.users.update_many(
-            {"nome": {"$regex": f"^\\s*{nome}\\s*$", "$options": "i"}},
+            {"nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
             {"$set": {"pin_hash": new_hash, "updated_at": datetime.now(timezone.utc).isoformat()}}
         )
         if result.modified_count == 0:
