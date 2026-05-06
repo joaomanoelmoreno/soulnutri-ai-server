@@ -1,148 +1,158 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos (ex: Milanesas, Gratinados). Resolver erros críticos de Failed to fetch e 502 Bad Gateway em produção causados por gargalos e travamentos na inferência da IA (ONNX bloqueando o event loop e timeouts na LLM).
+<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos (ex: Milanesas, Gratinados). Resolver erros críticos de Failed to fetch e 502 Bad Gateway em produção causados por gargalos e travamentos na inferência da IA.
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: O próximo agente DEVE responder APENAS em Portuguese (Brasil). O usuário exige comunicação extremamente objetiva, baseada em evidências e logs (bash, curl). Não faça suposições, não aplique patches sem provar o problema antes, e responda exatamente o que for perguntado no fluxo de debug passo-a-passo.
+INSTRUCT: The next agent MUST respond in Portuguese (Brasil) ONLY. O usuário é extremamente técnico, pragmático e frequentemente exige diagnósticos puros (sem alteração de código) antes de qualquer patch. Siga as ordens de bloqueio de código à risca.
 
-**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend), MongoDB e Cloudflare R2 (para armazenamento de imagens). O backend agora possui uma coleção  e um endpoint . A lógica de IA enriquece o prato com informações da família, visível no frontend. O endpoint  agora possui um timeout rigoroso de 20s retornando JSON fallback (200 OK). A inferência ONNX no  roda em  junto com um  para evitar bloqueio do event loop do servidor.
+**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. A arquitetura de IA em produção agora utiliza  e  para evitar bloqueios do servidor. O fluxo de login Premium possui proteção (Session Guard) contra falhas de rede (cold starts do Render) e lida corretamente com inputs acentuados. A estrutura de Dish Families foi expandida para 11 famílias e a interface do usuário exibe um alerta de agrupamento genérico ao invés de cravar o prato exato quando este pertence a uma família.
 
-**Last working item**: 
-    - Last item agent was working: Sincronização do ambiente de Produção (Render). O usuário identificou que o servidor Render de produção está rodando um commit antigo () que não possui os fixes recentes de infraestrutura (ONNX em , , e timeouts do enrich) presentes no HEAD atual (). O foco agora é instruir e garantir que o deploy do commit correto ocorra no Render.
+**Last working item**:
+    - Last item agent was working: Diagnóstico de regressão nas classificações de IA. Após as atualizações das famílias visuais, o usuário identificou que o modelo está retornando cruzamentos bizarros (ex: Tortilha Espanhola de Batata não retorna a família GRATINADOS, e Lasanha de Espinafre retorna Filé de Peixe ao Missô). Sob ordens estritas do usuário para **NÃO alterar código**, o agente estava cruzando os nomes e embeddings existentes no  e  (datados de 2 de Maio) contra a lógica de parsing em  para descobrir a causa raiz.
     - Status: IN PROGRESS
-    - Agent Testing Done: N (aguardando deploy e validação remota)
-    - Which testing method agent to use?: manual testing by python -c / curl
-    - User Testing Done: N
+    - Agent Testing Done: N
+    - Which testing method agent to use?: manual testing by python -c (modo somente leitura)
+    - User Testing Done: Y
 
-**All Pending/In progress Issue list**:  
-  Issue 1: Render rodando commit desatualizado (P0)
-     - Attempted fixes: O agente verificou os logs do Git e constatou que as alterações estão no HEAD atual (), mas não no servidor remoto.
-     - Next debug checklist: Instruir o usuário a fazer o deploy via Save to Github (que aciona o deploy do Render) ou verificar se há necessidade de forçar o git push. Após o deploy, validar o endpoint  (se existir) para confirmar a atualização do .
-     - Why fix this issue and what will be achieved with the fix?: Sem essa atualização, o servidor de produção continuará caindo (502 Bad Gateway) porque a inferência síncrona do ONNX bloqueia o health check do Render.
+**All Pending/In progress Issue list**:
+  Issue 1: Reconhecimento da IA retornando classes erradas após introdução das famílias (P0)
+     - Attempted fixes: O agente estava rastreando os arquivos do índice de embeddings local e o banco de dados. Constatou que o índice ( e ) não é atualizado desde 2 de Maio. Estava parando para responder às 7 perguntas do usuário.
+     - Next debug checklist: 
+       - O usuário exigiu respostas diretas para 7 perguntas (Top 5 scores dos pratos reportados, slugs reais identificados, se o slug tem family tag, se o índice foi regenerado, etc).
+       - Revisar  e verificar como  (linha 1308) é construído a partir de . A inconsistência entre o output do ONNX (com espaços) e o banco MongoDB (slugs) pode ser a falha de lookup.
+     - Why fix this issue and what will be achieved with the fix?: Sem isso, o aplicativo identifica as comidas erroneamente, o que inutiliza a feature principal e expõe o usuário a perigos de alérgenos incorretos.
      - Status: IN PROGRESS
      - Is recurring issue? N
      - Should Test frontend/backend/both after fix?: backend
 
   Issue 2: Imagens do Admin retornando 404 em produção (P1)
-     - Attempted fixes: O problema foi isolado. A integração R2 estava falhando silenciosamente porque as variáveis de ambiente  (estava com typo no Render),  e  estavam incorretas ou ausentes no painel de Environment do Render.
-     - Next debug checklist: Aguardar o usuário corrigir as variáveis no Render Dashboard e testar novamente a rota de imagens via painel Admin.
+     - Attempted fixes: Identificado em sessão anterior que o Render continha erro de typo nas variáveis de ambiente.
+     - Next debug checklist: Confirmar com o usuário se as variáveis  foram ajustadas no painel do Render.
      - Why fix this issue and what will be achieved with the fix?: Fazer as imagens aparecerem no painel Admin.
      - Status: USER VERIFICATION PENDING
      - Is recurring issue? Y
      - Should Test frontend/backend/both after fix?: frontend/backend
 
-**In progress Task List**: 
-  Task 1: Cadastrar membros pendentes de Famílias (P2)
-     - Where to resume: Pratos como Lasanha Bolonhesa, File de Peixe a Milanesa, File Mignon a Milanesa foram listados como  nas famílias, pois ainda não têm slugs criados na coleção .
-     - What will be achieved with this?: Base de dados completa de pratos para as famílias recém-criadas.
-     - Status: BLOCKED (Aguardando criação dos pratos pelo usuário/cadastro de fotos).
+**In progress Task List**:
+  Task 1: Responder relatório diagnóstico exigido pelo usuário (P0)
+     - Where to resume: Continuar de onde a mensagem atual parou. Criar um mock em  apontando para o  com as três imagens com falha e levantar o , ou cruzar strings em  vs . 
+     - What will be achieved with this?: Aprovação do usuário para aplicar a correção correta.
+     - Status: IN PROGRESS
      - Should Test frontend/backend/both after fix?: backend
+     - Blocked on something: Necessita formulação da resposta baseada nos logs gerados no final do histórico.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - (P1) Calcular/Integrar ingredientes e alérgenos usando a união de famílias na UI principal (quando OCR for implementado).
     - (P1) Implementar OCR/Plaquinha recognition para desambiguar pratos dentro de uma família identificada visualmente.
+    - (P1) Calcular/Integrar ingredientes e alérgenos usando a união de famílias na UI principal (quando OCR for implementado).
     
     Future Tasks:
-    - (P2) Consolidar e limpar o redirecionamento global no .
+    - (P2) Consolidar e limpar o redirecionamento global (duplicação do objeto ) no .
 
 **Completed work in this session**
-- Diagnóstico conclusivo do erro 404 em imagens R2 devido a erro de Environment variables no Render (DONE)
-- Inserção de campo opcional  na estrutura dos pratos (DONE)
-- Criação e preenchimento da coleção MongoDB  (GRATINADOS e MILANESA) (DONE)
-- Implementação do endpoint  (DONE)
-- Enriquecimento da decisão IA com os dados da respectiva família, adicionando campos no  (DONE)
-- Atualização do UI () para mostrar Família identificada sem substituir o nome original do prato detectado (DONE)
-- Correção de erro 502 no endpoint  implementando  (20s timeout) e retornando um fallback JSON encapsulado com CORS headers (DONE)
-- Estabilização do serviço contra crashes de bloqueio do Event Loop, movendo a inferência ONNX () para  e incluindo um  para evitar chamadas simultâneas (DONE)
+- Deploy validado no Render contendo correções de concorrência ( / Semaphore) (DONE)
+- Correção de bug (HTTP 500) em  gerado por  de escopo ( e ) (DONE)
+- Mapeamento e criação de 9 novas Dish Families (como Strogonoff, Maminhas, Pastéis, etc) no banco de dados (DONE)
+- Atualização do Frontend UI e resposta do Backend para ocultar o palpite de prato exato e renderizar a família genérica mais os candidatos possíveis e a união de seus alérgenos (DONE)
+- Correção de erro de login (Nome ou PIN incorreto) devido à acentuação injetada pelo teclado mobile (João), adicionando sanitização  no  e  (DONE)
+- Blindagem de UI (Premium Session Guard) implementada em  para não invalidar/deslogar o usuário em caso de  provindo de instabilidades temporárias do backend (Cold Starts do Render) (DONE)
 
 **Earlier issues found/mentioned but not fixed**
    Issue 1: Sobrescrita silenciosa de Rotas () no FastAPI (P2)
-   - Debug checklist: Em ,  é declarado e logo depois re-declarado, apagando rotas intermediárias.
-   - Why to solve this issue and what will be achieved with this?: Evitar que rotas de debug/health fiquem inacessíveis. 
+   - Debug checklist: Em ,  é declarado repetidas vezes, apagando algumas rotas intermediárias.
+   - Why to solve this issue and what will be achieved with this?: Evitar que rotas de debug/health fiquem inacessíveis.
    - Should Test frontend/backend/both after fix: backend
    - Is recurring issue? N
-   - *Nota: O usuário bloqueou expressamente essa limpeza de código para focar na correção do erro 502 atual.*
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: R2 Images 404.
-  - Recurrence count: 2
-  - Status: USER VERIFICATION PENDING (Causa raiz no Render dashboard encontrada).
+  - Issue recurrence in previous fork: Falhas de instabilidade no endpoint  (502 / 500).
+  - Recurrence count: 3
+  - Status: RESOLVED (Foi blindado via frontend com session timeouts maiores e retries, e no backend com async threading e correções lógicas)
 
 **Code Architecture**
 /app
 ├── backend/
-│   ├── ai/               (embedder.py, index.py - Inferência ONNX migrada para threads)
-│   ├── services/         
-│   └── server.py         (API principal atualizada com Semaphore e timeouts)
+│   ├── ai/               (index.py, embedder.py, policy.py - processamento onnx)
+│   ├── services/         (profile_service.py)
+│   └── server.py         (Rotas FastAPI, Lookup Mongo, Login Premium)
 ├── frontend/
 │   └── src/
-│       ├── App.js        (Renderiza  e )
+│       ├── App.js        (Estado principal da câmera, UI de famílias, Session Guard)
+│       └── Premium.jsx
+├── datasets/             (dish_index.json, dish_index_embeddings.npy)
 
 **Key Technical Concepts**
-- **Arquitetura Async/FastAPI**: Uvicorn roda com . O ONNX estava bloqueando a única thread do loop assíncrono, causando 502 do proxy reverso. Foi mitigado enviando tarefas bloqueantes para .
-- **Coleção Dish Families**: A IA devolve uma família agregada quando não consegue desambiguar visualmente. O objeto de resposta agora acopla a união de alérgenos aos resultados.
-- **Frontend Fetch Timeouts**: Frontend utiliza  de 15s. O backend responde apropriadamente antes de causar timeouts opacos.
+- **Arquitetura Assíncrona FastAPI**: Identificação de IA em thread pool paralela para não travar conexões ativas.
+- **Normalização de Input de Usuário**: O backend roda limpeza de diacríticos () em todas as rotas Premium para lidar com teclados mobile que completam nomes (ex: Joao vs João).
+- **Cold Start Protection (Session Guard)**: Frontend não descarta  se a API falhar. Ele entra no estado  e faz retries automáticos escalonados (5s, 15s).
+- **IA e Dish Families**: A IA identifica um prato base, a API checa se esse prato pertence a uma  no banco. Se sim, exibe os atributos genéricos dessa família sobrepondo o prato em si.
 
 **key DB schema**
   - : 
-  - : Adicionado opcionalmente o campo .
+  - : 
+  -  (Premium): 
 
 **changes in tech stack**
-- Nenhuma alteração de bibliotecas, porém alteração forte de design assíncrono interno em FastAPI.
+- Nenhuma adição, apenas refatoração interna intensa.
 
 **All files of reference** 
-  -  (Arquitetura de processamento e endpoints novos)
-  -  (UI blocks para exibir as famílias)
-  - 
+  -  (Lógica central, lookup Premium)
+  -  (Utilitários de segurança do PIN/Nome)
+  -  (Componente visual raiz modificado extensivamente)
+  -  (Script alvo do diagnóstico atual do usuário)
+  -  (Necessário para a auditoria que o usuário solicitou)
 
 **Areas that need refactoring**:
 - Limpeza dos routers repetidos em .
 
 **key api endpoints**
-  -  (Semáforo de concorrência habilitado e to_thread inserido)
-  -  (Timeouts controlados de 20s aplicados)
-  -  (Novo)
+  - 
+  - 
+  - 
 
 **Critical Info for New Agent** 
-- ⚠️ **NÃO APLIQUE NOVOS PATCHES AGORA.** A ordem expressa do usuário na última mensagem foi: Não aplicar novo patch. Apenas garantir que o Render está rodando o commit correto.
-- O frontend em produção aponta corretamente para a URL do Render, mas o Render não possui os commits das horas mais recentes aplicados nele. 
-- O frontend tem controle agressivo de requisições abortadas. Não altere os tempos de  do React.
+- ⚠️ **PARE E LEIA: A ORDEM FINAL DO USUÁRIO FOI ESTRITA**. Não aplicar patch. Não mexer em frontend. Não mexer em Premium. Não mexer em famílias. Não fazer rollback ainda.
+- Seu PRIMEIRO passo deve ser responder textualmente às 7 perguntas propostas pelo usuário usando a ferramenta de bash/python-c estritamente como **Somente Leitura** para cruzar informações entre o banco,  e a política de .
+- O index () tem a data de *02 de Maio*. As famílias foram feitas hoje (06 de Maio). O usuário precisa que você documente se isso é a causa do erro.
+- A função auxiliar  agora existe em  para remoção de acentos em queries do MongoDB.
 
 **documents and test reports created in this job** 
-- Nenhum.
+- Nenhum report oficial criado.
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Pediu criação da coleção de famílias no DB.
- 2. (Agent) Criou  no MongoDB.
- 3. (User) Pediu novo endpoint .
- 4. (Agent) Criou o endpoint.
- 5. (User) Pediu o enriquecimento interno do decision mapping dish -> family.
- 6. (Agent) Atualizou processamento pós-IA do  no .
- 7. (User) Pediu UI no Frontend para Famílias sem sobrescrever o prato original.
- 8. (Agent) Atualizou .
- 9. (User) Reportou 502/Failed to Fetch no enrich, pediu timeout handler seguro.
- 10. **[PENDING HUMAN MESSAGE]** (User) Confirmou que o Render estava retornando um erro 502 generalizado por travamento. O Agente identificou que o ONNX estava bloqueando a thread e consertou. Na última mensagem, o usuário verificou que o Render de Produção está rodando o commit antigo () em vez do HEAD com os fixes (). Pede para garantir que o Render pegue o commit mais novo.
+ 1. (User) Pediu o mapeamento de 9 novas famílias.
+ 2. (Agent) Cadastrou as 9 famílias e atrelou 14 pratos no BD.
+ 3. (User) Reportou bug onde não conseguia logar com PIN correto via celular.
+ 4. (Agent) Descobriu que João estava sendo enviado ao invés de Joao, aplicou regex norm nas requisições.
+ 5. (User) Relatou que mesmo assim, a sessão continuava quebrando.
+ 6. (Agent) Encontrou erro de lógica no Cold Start (). Limpava o  no caso de um 502/500 do Render. Fixou com Retry e Session Guard.
+ 7. **[PENDING HUMAN MESSAGE]** (User) Ordenou PARAR TODAS AS ALTERAÇÕES. Reportou que o reconhecimento visual está retornando classes erradas bizarramente após a feature das famílias. Exigiu diagnóstico estrito de 7 pontos analisando se é falha de dados velhos, embeddings, ou campo mal mapeado.
 
 **Project Health Check:**
-Broken: Produção remotamente desatualizada com relação ao HEAD, causando 502 em produção real devido ao ambiente sem o patch.
+Broken: Classificação da IA () está retornando classes erradas para pratos recém agrupados.
 Mocked: Nenhum.
 
 **3rd Party Integrations** 
-  - Cloudflare R2 (Armazenamento) — User API Key
-  - Gemini/OpenAI (LLM / Enrich) — Emergent LLM Key
+  - Cloudflare R2 (Storage) — User API Key
+  - Gemini/OpenAI (LLM / Enrich via Audio TTS) — Emergent LLM Key
 
 **Testing status**
-  - Testing agent used after significant changes: NO
+  - Testing agent used after significant changes: NO (Proibido temporariamente pelo diagnóstico pendente).
+  - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: Nenhuma conhecida localmente.
+  - Known regressions: Falhas de predição do modelo ONNX e cruzamento de slugs após alterações no DB.
 
 **Credentials to test flow:**
-Admin X-Admin-Key: 
+  - Admin Premium (Acesso principal): Nome , PIN 
+  - Admin Header (): 
 
 **What agent forgot to execute**
-O agente executou tudo como ordenado. O bloqueio atual é a implantação do código via Render/Git.
+O agente parou exatamente no meio do diagnóstico de resposta às 7 exigências do usuário.
 
 **Debugging checklist for current issue**
-    Issue: Sincronização do ambiente Render (Produção rodando commit velho).
-    Frontend files to check: Não aplicável (Frontend já está ok e buildando no Vercel).
-    Backend files to check: Não aplicar mudanças. O foco é orientar o deploy remoto.
-    Ação sugerida: Informar ao usuário que, para o Render absorver as mudanças locais feitas pelo Emergent, ele precisa forçar o Save to Github na UI do Emergent para disparar o Webhook de deploy do Render (caso tenha CI/CD configurado), ou realizar deploy manual se o link auto-deploy estiver desligado no Render. Validar através da checagem da URL de  ou debug habilitada se o GIT_COMMIT atualizou para o novo.</analysis>
+    Issue: Regressão de identificação / Pratos retornando cruzas irreais (ex: Lasanha dando Match com Peixe ao Missô).
+    Backend files to check: 
+      -  vs  vs banco de dados de dishes.
+    Ações Imediatas:
+      - Rode um script python puro via bash que instancie a IA localmente e simule um identify para obter a distância do top 5.
+      - Cruze o  (output) com os slugs reais salvos.
+      - Entregue o relatório formatado ao usuário.
+      - **NÃO** escreva em nenhum arquivo até o usuário dar a ordem Pode consertar.</analysis>

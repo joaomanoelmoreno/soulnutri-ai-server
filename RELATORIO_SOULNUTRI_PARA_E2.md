@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://dish-identify-api.preview.emergentagent.com
-- Admin: https://dish-identify-api.preview.emergentagent.com/admin
-- Lista de Pratos: https://dish-identify-api.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://nutri-familia.preview.emergentagent.com
+- Admin: https://nutri-familia.preview.emergentagent.com/admin
+- Lista de Pratos: https://nutri-familia.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

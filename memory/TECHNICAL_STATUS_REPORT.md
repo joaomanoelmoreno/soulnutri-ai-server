@@ -118,7 +118,7 @@ EMERGENT_LLM_KEY=sk-emergent-...     # Fallback apenas
 
 ### Frontend (/app/frontend/.env)
 ```
-REACT_APP_BACKEND_URL=https://dish-identify-api.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://nutri-familia.preview.emergentagent.com
 ```
 
 ---
