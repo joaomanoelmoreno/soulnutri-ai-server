@@ -372,8 +372,6 @@ class IdentifyResponse(BaseModel):
     family_name: Optional[str] = None
     family_candidates: List[str] = []
     family_candidates_detail: List[dict] = []
-    family_allergens_union: Optional[dict] = None
-    family_alerta_alergenos: Optional[str] = None
 
 class ReindexResponse(BaseModel):
     ok: bool
@@ -1305,7 +1303,7 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         if decision.get('identified') and decision.get('dish'):
             try:
-                dish_slug_norm = decision['dish'].replace('_', '-').replace(' ', '-').lower().strip()
+                dish_slug_norm = decision['dish'].replace('_', '-').lower().strip()
                 dish_doc = await db.dishes.find_one(
                     {"slug": dish_slug_norm},
                     {"_id": 0, "family": 1}
@@ -1322,7 +1320,6 @@ async def identify_image(
                         decision["family_slug"] = family_doc.get("slug")
                         decision["family_candidates"] = family_doc.get("members_display", [])
                         decision["family_ingredients_union"] = family_doc.get("ingredientes_uniao", [])
-                        decision["family_alerta_alergenos"] = family_doc.get("alerta_alergenos")
                         decision["family_allergens_union"] = {
                             "contem_gluten":   family_doc.get("contem_gluten"),
                             "contem_lactose":  family_doc.get("contem_lactose"),
@@ -1392,8 +1389,6 @@ async def identify_image(
             "family_name": decision.get('family_name'),
             "family_candidates": decision.get('family_candidates', []),
             "family_candidates_detail": decision.get('family_candidates_detail', []),
-            "family_allergens_union": decision.get('family_allergens_union'),
-            "family_alerta_alergenos": decision.get('family_alerta_alergenos'),
         }
         
         # ═══════════════════════════════════════════════════════════════════════
