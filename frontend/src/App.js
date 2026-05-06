@@ -1952,8 +1952,11 @@ const scanInFlightRef = useRef(false);  // trava anti-reentrada do scanner
   };
 
   const performScan = useCallback(async () => {
+    // FLAG: auto-scan desativado temporariamente para isolamento de diagnóstico
+    // Apenas scan manual (captureManual) gera resultado. Não remover este bloco.
+    return; // AUTOSCAN_DISABLED
     // Não escanear se já está escaneando, carregando, em cooldown, ou sem câmera
-    if (scanInFlightRef.current) return;
+    if (scanInFlightRef.current) return; // eslint-disable-line no-unreachable
 if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
 
 scanInFlightRef.current = true;
