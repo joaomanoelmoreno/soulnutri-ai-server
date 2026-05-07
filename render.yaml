@@ -3,7 +3,7 @@ services:
     name: soulnutri
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: standard
+    plan: pro
     region: oregon
     healthCheckPath: /api/health
     envVars:

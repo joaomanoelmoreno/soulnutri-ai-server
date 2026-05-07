@@ -1,153 +1,152 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos. Resolver erros críticos em produção causados por gargalos e travamentos na inferência da IA. Meta imediata atual: Resolver crash crítico no frontend (ErrorBoundary disparando reload) ao clicar em Adicionar ao prato.
+<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos. Resolver erros críticos em produção causados por gargalos e travamentos na inferência da IA. Meta recente: Resolver crash crítico no frontend ao clicar em Adicionar ao prato e resolver gargalo P0 de latência severa e bloqueio (Servidor Ocupado) ao usar o sistema no buffet.
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: The next agent MUST respond in Portuguese (Brasil) ONLY. O usuário é extremamente técnico, pragmático e exige **estritamente diagnósticos puros (apenas leitura)** antes de ser submetido qualquer patch para aprovação. Siga as ordens NÃO aplicar patch ainda rigorosamente.
+INSTRUCT: The next agent MUST respond in Portuguese (Brasil) ONLY. O usuário é extremamente técnico, controlador sobre o escopo e exige **estritamente diagnósticos puros e apresentação de diffs** antes de ser submetido qualquer patch para aprovação. Siga as ordens NÃO aplicar patch ainda rigorosamente e JAMAIS tente refatorar ou deletar blocos grandes de código sem ordem explícita.
 
-**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. O ambiente conta com Session Guard Premium e features visuais robustas no React (), incluindo o gerenciamento do prato () salvo em . A IA usa ONNX CLIP local, com um índice recarregado via  que ajusta nomes e mapeia categorias. Um diagnóstico de integridade no dataset foi feito (salvo na memória). O recurso de  de câmera foi desativado temporariamente via flag para isolar erros.
+**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. O ambiente conta com identificação via modelo local ONNX CLIP (FP16 CPU) para os pratos. Um sistema de concorrência com  controla a IA para não travar a CPU inteira. Um cache () e pré-compressão de upload de imagem () foram recém-adicionados para acelerar rescans.
 
 **Last working item**:
-    - Last item agent was working: Diagnóstico do P1 Crítico (Crash na UX). O usuário reportou que após o scan, ao clicar em Adicionar ao prato, uma exceção React dispara a tela de ErrorBoundary (Erro na Câmera / Recarregar Página), forçando a perda do estado. O agente realizou buscas por , ,  e  no arquivo  para encontrar o ponto exato da quebra (provavelmente uma propriedade indefinida no objeto sendo espalhado). O agente estava prestes a redigir o relatório diagnóstico exigido.
-    - Status: IN PROGRESS
-    - Agent Testing Done: N
-    - Which testing method agent to use?: manual testing by python -c (modo somente leitura / grep em arquivos)
+    - Last item agent was working: Tuning final da concorrência ONNX ( e  em ) e preparação do upgrade de infraestrutura ( no ) para viabilizar 2 vCPUs, resolvendo o gargalo físico de CPU. O diff foi aplicado, a performance foi medida via terminal (3 scans simultâneos renderam resultados satisfatórios), e o agente parou aguardando autorização.
+    - Status: USER VERIFICATION PENDING
+    - Agent Testing Done: Y
+    - Which testing method agent to use?: manual testing by python -c / bash logs.
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-  Issue 1: Botão Adicionar ao prato disparando ErrorBoundary / recarregamento (P0)
-     - Attempted fixes: Nenhum ainda. Apenas leitura e rastreamento em  das funções de adição e renderização.
-     - Next debug checklist: 
-       - Compilar e entregar o relatório para o usuário informando exatamente qual função quebra. 
-       - Avaliar se o erro ocorre dentro de  (ex: acessar propriedade ausente de  ao copiar para o array) ou na renderização do .
-       - Apontar que o ErrorBoundary (linhas 130-136) pega esse erro não tratado e exibe o botão de forçar reload, causando perda do  caso o  falhe.
-       - Propor a correção cirúrgica sem aplicá-la ainda.
-     - Why fix this issue and what will be achieved with the fix?: Erro gravíssimo de UX que impede o usuário de compor a lista final de pratos, inutilizando a experiência principal do app.
-     - Status: IN PROGRESS
-     - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: frontend
-
-  Issue 2: Auditoria e limpeza do dataset contaminado (P1)
-     - Attempted fixes: Auditoria completa rodada. Foi criado  com comandos exatos de purga de imagens.
-     - Next debug checklist: Aguardar o usuário pedir a continuação do saneamento do dataset de pratos com problemas de pastas/contaminação (Ceviche vs Moqueca).
-     - Why fix this issue and what will be achieved with the fix?: Impedir que o CLIP treine com fotos contaminadas.
-     - Status: BLOCKED (Aguardando usuário focar nisso após resolver o crash do frontend)
+  Issue 1: Auditoria e limpeza do dataset contaminado (P1)
+     - Attempted fixes: Auditoria rodada na memória (), comandos de purga documentados mas não executados.
+     - Next debug checklist: Aguardar usuário focar nisso. Necessário deletar fotos erradas listadas no markdown e rebuildar .
+     - Why fix this issue and what will be achieved with the fix?: Impedir que o CLIP use fotos de pratos misturados como referência, melhorando acurácia.
+     - Status: BLOCKED
      - Is recurring issue? Y
      - Should Test frontend/backend/both after fix?: backend
 
 **In progress Task List**:
-  Task 1: Redigir e enviar diagnóstico de Crash em Adicionar ao prato (P0)
-     - Where to resume: Com base no LLM history e logs capturados, apresentar ao usuário as repostas às 7 perguntas exigidas (função chamada, onde é salvo, presença de  no , e qual a causa exata da exceção React).
-     - What will be achieved with this?: O usuário avaliará a proposta e autorizará a modificação no arquivo .
-     - Status: IN PROGRESS
-     - Should Test frontend/backend/both after fix?: frontend
-     - Blocked on something: Precisa de resposta manual do assistente.
+  Task 1: Efetivar deploy (Save to Github) das modificações de tuning e infra (P0)
+     - Where to resume: Aguardar a ordem do usuário Autorizado Save to Github (ou equivalente) para enviar o diff final com as mudanças em  e .
+     - What will be achieved with this?: Melhorar as capacidades de CPU e paralelismo da IA no servidor de produção (Render).
+     - Status: USER VERIFICATION PENDING
+     - Should Test frontend/backend/both after fix?: backend
+     - Blocked on something: Autorização explícita do usuário.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - (P1) Reativar o modo  do frontend. Atualmente há um  na função  no  que precisa ser removido após a fase atual de estabilização.
-    - (P1) Executar os comandos de limpeza documentados em  seguidos da reconstrução do arquivo de índice de IA ().
+    - (P1) Reativar o modo  do frontend (atualmente desativado cirurgicamente com  em  no ).
+    - (P1) Executar os comandos de limpeza documentados em  seguidos da reconstrução do arquivo de índice de IA.
+    - (P2) Criar endpoint alternativo de fast-lookup por nome ou implementar seleção manual prévia para pular totalmente a inferência do CLIP no buffet.
     - (P2) Implementar reconhecimento OCR via plaquinhas para diferenciar famílias idênticas.
-    - (P2) Calcular macro/micronutrientes a partir da composição de múltiplos pratos.
     
     Future Tasks:
-    - (P3) Refatorar e remover declarações duplicadas e sobrescritas perigosas do  no .
+    - (P3) Refatorar e quebrar arquivos gigantes ( com ~6500 linhas e  com ~5000 linhas).
+    - (P3) Excluir  do  para reduzir Cold Starts.
 
 **Completed work in this session**
-- Diagnóstico em  que erroneamente mapeava Feijão Tropeiro para Feijão do Chef corrigido; remoção de acentos realizada e validada. (DONE)
-- Auditoria do dataset gerando . (DONE)
-- Reintrodução milimétrica de normalização de acentos () em 14 queries MongoDB no  após o rollback forçado no ambiente Render. (DONE)
-- Reintrodução milimétrica do Premium Session Guard no  para não deslogar usuários em caso de erro 502/timeout. (DONE)
-- Desativação cirúrgica do fluxo auto-scan no frontend para depuração de UX. (DONE)
+- Bug Fix P0 (Crash Adicionar ao Prato): Corrigido TypeError no ErrorBoundary do React manipulando validações estritas de alergias (, , blindagem glúten/lactose) em  e . (DONE)
+- Reversão de erro do agente: Agente havia acidentalmente deletado 237 linhas do autoscan ao invés de usar uma feature flag. Código revertido perfeitamente ao status seguro pelo SHA do git (). (DONE)
+- Remoção do Fast-Reject da IA e alteração para , permitindo fila natural e não disparando falsos erros pro usuário. (DONE)
+- Implementação de  para dar bypass no MongoDB em re-scans do mesmo prato. (DONE)
+- Otimização Frontend:  da imagem capturada reduzida de 512px para 224px economizando latência de rede. (DONE)
+- Diagnóstico técnico do : Concluído que taxa de sucesso <2% não vale a pena ser inserido no fluxo da aplicação atual. (DONE)
+- Alteração no  () e ONNX tuning ( e ) para ganho final de latência. (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-   Issue 1: Sobrescrita de  em 
-   - Debug checklist: Verificar linhas onde  é instanciado múltiplas vezes no mesmo arquivo.
-   - Why to solve this issue and what will be achieved with this?: Previne rotas de serem subscritas e sumirem do build final, garantindo API consistente.
+   Issue 1: Sobrescrita e redundância excessiva no 
+   - Debug checklist: Código maciço sem divisões. Analisar instâncias do APIRouter e regras de negócios no mesmo entrypoint.
+   - Why to solve this issue and what will be achieved with this?: Melhor manutenibilidade e prevenção de bugs silenciosos nas rotas.
    - Should Test frontend/backend/both after fix: backend
    - Is recurring issue? N
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: Falhas de instabilidade no endpoint  e deslogue no login premium devido à acentuação.
-  - Recurrence count: 3
-  - Status: RESOLVED (Blindados através de retries no FE e  flexível com unicodedata no BE).
+  - Issue recurrence in previous fork: Agentes alterando arquivos massivamente ao invés de buscar soluções early return com 1 linha. Houve uma remoção de 237 linhas não autorizada que gerou muito estresse ao usuário.
+  - Recurrence count: 1
+  - Status: RESOLVED (Código revertido via Git e instruções re-alinhadas).
 
 **Code Architecture**
 /app
 ├── backend/
-│   ├── ai/               (index.py, embedder.py, policy.py)
+│   ├── ai/               (index.py, embedder.py, hash_index.py, policy.py)
 │   ├── services/         (profile_service.py, cache_service.py)
-│   └── server.py         (Rotas FastAPI, endpoints vitais)
+│   └── server.py         (Entrypoint FastAPI)
 ├── frontend/
 │   └── src/
-│       ├── App.js        (Core do frontend, Câmera, IA, Estados pesados, alvo do CRASH atual)
-│       └── Premium.jsx
-├── datasets/             (dish_index.json, dish_index_embeddings.npy, organized/)
-├── memory/               (AUDIT_DATASET.md, PRD.md)
+│       ├── App.js        (Core do FE, Camera, Estados, Scanner)
+│       └── PremiumProfile.jsx
+├── datasets/             (dish_index_embeddings.npy, etc)
+└── render.yaml           (Configurações de ambiente de prod para Render)
 
 **Key Technical Concepts**
-- **ErrorBoundary**: O app usa  na classe topo de linha em  para renderizar uma tela com botão de reload global sempre que um componente falha durante re-render.
-- **Auto-scan Disabled**: Uma feature de escaneamento automático por polling de mudança em frame de vídeo está temporariamente ignorada com return em .
-- **FastAPI Cache local**: Requisições de scan da mesma foto consultam cache via MD5 em memória () para pular latência do modelo.
+- **ONNX Local AI**: Avaliação do CLIP FP16 sem uso de GPU. É o gargalo crítico e inelástico. Tempo limite é ~300ms no melhor cenário.
+- **Fast-Reject desativado**:  segura requisições simultâneas sem rejeitá-las logo de cara, aumentando percepção de resiliência.
+- **Cache**:  guarda a predição e o retorno montado na memória do Python para evitar latência extra do MongoDB.
+- **Frontend Strict Payload**: Frontend agora reduz payload localmente para 224px.
 
 **key DB schema**
   - : 
-  -  (Premium): 
+  - : 
 
 **changes in tech stack**
-- Nenhuma.
+- Adição de  no arquivo  (Aguardando Deploy).
 
 **All files of reference** 
-  -  (Onde o usuário reportou a perda de estado e quebra de UI)
-  -  (Lógica de identificação com diagnósticos via logs )
-  -  (Onde mappings de dishes são regulados;  atualizado)
-  -  (Para ser usado posteriormente na limpeza)
+  -  (Crash resolvido; maxSize = 224px)
+  -  (Semáforo atualizado, Cache implementado)
+  -  (Tuning ONNX threads=2)
+  -  (Blindagens de typeof)
+  -  (Upgrade infra)
 
 **Areas that need refactoring**:
-- O  tem +5000 linhas; extrema interdependência de ref/state para gerenciar UI, hardware e fluxo de IA.
+-  e  possuem tamanho excessivo, dificultando inserções de paralelismo local. Não refatore até ordem expressa.
 
 **key api endpoints**
-  - 
+  -  (Centro dos diagnósticos de gargalo recentes)
   - 
 
 **Critical Info for New Agent** 
-- ⚠️ **NUNCA ESCREVA OU ALTERE CÓDIGO** antes de propor um relatório de diagnóstico limpo para o usuário, indicando a linha e o motivo da falha, e ele responder Autorizado ou Aplicar patch.
-- No contexto de React/App.js, tela de recarregar câmera/página significa que um **Erro Crítico de React (Uncaught TypeError/Render Error)** foi pego pelo , que englobou a quebra da árvore de componentes.
-- Foque agora: ,  e interações de  após a identificação para entender qual variável gera TypeError na montagem da UI de pratos selecionados.
+- **O USUÁRIO NÃO TOLERA ALTERAÇÕES NÃO AUTORIZADAS, REFATORAÇÕES SILENCIOSAS OU EXCLUSÃO DE BLOCOS**. Você deve **sempre** redigir sua análise (ou diff) e usar o  para solicitar Posso aplicar?, a menos que seja algo minúsculo e inofensivo.
+- A lógica do modelo de IA (, *embeddings*, , *policy*) **JAMAIS PODE SER MUDADA**. O usuário vetou qualquer tentativa de alterar a forma como o reconhecimento visual ocorre, limitando as estratégias de performance à otimização de CPU/Threading e infra.
+- Se o usuário pedir diagnóstico, apenas forneça as respostas consultando logs / scripts  locais e NÃO insira a correção sem avisá-lo previamente.
 
 **documents and test reports created in this job** 
-- 
--  atualizado marginalmente.
+- Nenhum doc permanente novo. Muitas queries em bash para testar latência e concorrência que estão disponíveis em seu contexto histórico.
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Pediu log detalhado sobre scan não logando no Frontend/Backend.
- 2. (Agent) Mostrou log e pipeline de fluxo e evidência de falha em .
- 3. (User) Autorizou fix cirúrgico em  ().
- 4. (Agent) Realizou o fix e confirmou deploy com normalização de acentos.
- 5. **[PENDING HUMAN MESSAGE]** (User) Ordenou ATUAR COMO EXECUTOR TÉCNICO DIAGNÓSTICO. Reportou P1 Crítico: clicar em Adicionar ao prato na UI joga a pessoa pra tela Recarregar câmera/página (ErrorBoundary disparado). Pediu a linha exata da falha, logs propostos, análise se o erro reseta estado, como a persistência de  funciona e proposta de fix, MAS proibindo qualquer fix no momento. O LLM interrompeu bem na formulação desta resposta após rodar comandos bash/grep.
+1. (User) Pediu P0 para latência: investigar motivo da mensagem Servidor Ocupado.
+2. (Agent) Diagnosticou que o  rejeitava excesso com fast-reject. Sugeriu Opção A.
+3. (User) Aprovou opção A (Semaphore(2)).
+4. (Agent) Aplicou e testou os fluxos concorrentes.
+5. (User) Pediu opções de Cache e reduções pois ainda estava lento. 
+6. (Agent) Listou alternativas de infra.
+7. (User) Escolheu Cache por  e imagem .
+8. (Agent) Implementou ambas, mas detectou que o ONNX continuava gargalando.
+9. (User) Solicitou diagnósticos do Render, Hash_index e Options de Infra.
+10. **[PENDING HUMAN MESSAGE]** (User) Aprovou tuning final (,  no Render.yaml) e requereu o diff validado. O agente obedeceu e parou, esperando a ordem oficial de aprovação para rodar a Tool Save to Github (commit e push).
 
 **Project Health Check:**
-Broken: Fluxo Adicionar ao prato quebrando UX Frontend com erro grave em renderização/estado pego pelo ErrorBoundary do React.
-Mocked: Nenhum.
+- Broken: Nenhum. 
+- Mocked: Nenhum.
 
 **3rd Party Integrations** 
   - Cloudflare R2 (Storage) — User API Key
   - Gemini/OpenAI (LLM / Enrich) — Emergent LLM Key
 
 **Testing status**
-  - Testing agent used after significant changes: NO (Proibido temporariamente pelo diagnóstico pendente).
+  - Testing agent used after significant changes: NO (Proibido neste ticket focado em debugging crítico isolado).
   - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: Crash na manipulação do objeto do prato escaneado na UI.
+  - Known regressions: O Patch experimental (threads=4) engasgou o processo, por isso threads=2 foi restaurado em definitivo.
 
 **Credentials to test flow:**
-  - Admin Premium (Acesso principal): Nome , PIN 
+  - Admin Premium: Nome , PIN 
+  - Chave de Admin isolada: 
 
 **What agent forgot to execute**
-O agente parou de redigir o relatório diagnóstico final do React ErrorBoundary /  no meio da coleta das referências. Falta consolidar a resposta e entregar o diagnóstico pro usuário autorizar.
+O agente atual fez tudo o que foi solicitado. A tarefa repousa na mesa do usuário, aguardando a mensagem: Pode salvar/deployar. Não chame git de forma não solicitada.
 
+<example>
 **Debugging checklist for current issue**
-    Issue: Adicionar ao prato causou ErrorBoundary UI e Perda do plateItems.
+    Issue: Finalizar a implantação das alterações de concorrência aprovadas (Render.yaml e Embedder).
     Frontend files to check: 
-    Ações imediatas:
-    - Analise  e como  compila o novo array usando o objeto  corrente.
-    - Analise o JSX das linhas 4315~4636, e veja como  interage com o DOM. Existe alguma chamada assíncrona ou propriedade  não garantida (como ) causando TypeError na renderização dessa lista?
-    - Entregue o relatório formatado sem gravar no disco, seguindo as diretrizes das mensagens do usuário (Passos 1 ao 7).</analysis>
+    Backend files to check:  (Linha 6: plan pro),  (threads=2)
+    Database to check: 
+    Ação: Aguarde o usuário confirmar. Uma vez que ele diga que o diff está correto e peça para dar deploy, invoque a tool Finish / Save to Github.
+</example></analysis>
