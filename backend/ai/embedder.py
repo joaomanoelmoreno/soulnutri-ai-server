@@ -87,11 +87,12 @@ def _try_load_onnx_model():
         # Nao alterar para ORT_DISABLE_ALL.
         # Isso causa inferencia de 9-50 segundos no Render.
         # Esta configuracao foi validada em producao em Abr/2026.
+        # Benchmark Mai/2026: ORT_ENABLE_ALL + 4 threads → min:310ms vs BASIC+2t → min:326ms
         # ═══════════════════════════════════════════════════════
         opts = ort.SessionOptions()
-        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
-        opts.inter_op_num_threads = 2
-        opts.intra_op_num_threads = 2
+        opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        opts.inter_op_num_threads = 4
+        opts.intra_op_num_threads = 4
         opts.enable_mem_pattern = False
         opts.enable_cpu_mem_arena = False
         
@@ -99,11 +100,11 @@ def _try_load_onnx_model():
         _USE_ONNX = True
         _USE_HF_API = False
         
-        _ONNX_CONFIG["onnx_mode"] = "ENABLE_BASIC"
-        _ONNX_CONFIG["inter_op_num_threads"] = 2
-        _ONNX_CONFIG["intra_op_num_threads"] = 2
+        _ONNX_CONFIG["onnx_mode"] = "ENABLE_ALL"
+        _ONNX_CONFIG["inter_op_num_threads"] = 4
+        _ONNX_CONFIG["intra_op_num_threads"] = 4
         
-        logger.info("[embedder] ONNX mode: ENABLE_BASIC / threads=2")
+        logger.info("[embedder] ONNX mode: ENABLE_ALL / threads=4")
         logger.info(f"[embedder] Modelo ONNX carregado em {time.time()-start:.2f}s (~300MB RAM)")
         return True
         
