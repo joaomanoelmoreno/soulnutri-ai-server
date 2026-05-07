@@ -409,11 +409,7 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [showGalleryView, setShowGalleryView] = useState(false); // Modal galeria
-  // Modo Scanner Contínuo para Buffet (DESATIVADO - usando modo foto simples)
-  const [scannerMode, setScannerMode] = useState(false); // Desativado por padrão
-  const [lastScanTime, setLastScanTime] = useState(0);
-  const [scannerResult, setScannerResult] = useState(null); // Resultado do scanner (overlay)
-  const scanIntervalRef = useRef(null);
+  // (auto-scan removido)
   // Premium states
   const [showPremium, setShowPremium] = useState(null); // null, 'login', 'register', 'dashboard', 'profile'
   const [premiumBlockedMsg, setPremiumBlockedMsg] = useState('');
@@ -1714,9 +1710,6 @@ const loadNotifCount = async (pin) => {
         premiumCycleBusyRef.current = false;
       }
 
-    // 🔴 LIMPAR ESTADOS RESIDUAIS
-    setScannerResult(null);
-
     if (result?.ok && result?.identified) {
       const newItem = {
         id: Date.now(),
@@ -1924,186 +1917,6 @@ const loadNotifCount = async (pin) => {
     }
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // MODO SCANNER CONTÍNUO - Detecta mudança de imagem e identifica
-  // ═══════════════════════════════════════════════════════════════
-  
-  const lastFrameDataRef = useRef(null);
-  const scanningRef = useRef(false);
-  const lastScanResultRef = useRef(null); // Cache do último resultado
-const scanInFlightRef = useRef(false);  // trava anti-reentrada do scanner
-  const scanCooldownRef = useRef(false); // Cooldown entre scans
-  
-  // Função para calcular diferença entre frames
-  const calculateFrameDifference = (currentData, previousData) => {
-    if (!previousData || currentData.length !== previousData.length) return 1;
-    
-    let diff = 0;
-    const sampleSize = Math.min(1000, currentData.length / 4); // Amostra de pixels
-    const step = Math.floor(currentData.length / 4 / sampleSize);
-    
-    for (let i = 0; i < currentData.length; i += step * 4) {
-      diff += Math.abs(currentData[i] - previousData[i]); // R
-      diff += Math.abs(currentData[i + 1] - previousData[i + 1]); // G
-      diff += Math.abs(currentData[i + 2] - previousData[i + 2]); // B
-    }
-    
-    return diff / (sampleSize * 3 * 255); // Normalizado 0-1
-  };
-
-  const performScan = useCallback(async () => {
-    // Não escanear se já está escaneando, carregando, em cooldown, ou sem câmera
-    if (scanInFlightRef.current) return;
-if (scanningRef.current || loadingRef.current || scanCooldownRef.current || !videoRef.current || !canvasRef.current || !stream) return;
-
-scanInFlightRef.current = true;
-
-try {
-    
-    const v = videoRef.current;
-    const c = canvasRef.current;
-    
-    // Verificar se o vídeo está pronto
-    if (v.videoWidth === 0 || v.videoHeight === 0) return;
-    
-    // Tamanho pequeno para detecção de mudança (rápido)
-    const detectSize = 160;
-    c.width = detectSize;
-    c.height = detectSize;
-    const ctx = c.getContext('2d');
-    ctx.drawImage(v, 0, 0, detectSize, detectSize);
-    
-    // Obter dados do frame atual
-    const imageData = ctx.getImageData(0, 0, detectSize, detectSize);
-    const currentData = imageData.data;
-    
-    // Calcular diferença com frame anterior
-    const difference = calculateFrameDifference(currentData, lastFrameDataRef.current);
-    
-    // Se mudança significativa (> 30%), fazer reconhecimento
-    // Threshold maior = menos scans desnecessários
-    if (difference > 0.30) {
-      // Salvar frame atual
-      lastFrameDataRef.current = new Uint8ClampedArray(currentData);
-      
-      // Ativar cooldown (evita múltiplos scans seguidos)
-      scanCooldownRef.current = true;
-      setTimeout(() => { scanCooldownRef.current = false; }, 2000);
-      
-      // ═══ CROP: Capturar apenas area da guide-frame ═══
-      const guideW = 0.55, guideH = 0.90;
-      const rect = v.getBoundingClientRect();
-      const cW = rect.width, cH = rect.height;
-      const vAR = v.videoWidth / v.videoHeight;
-      const cAR = cW / cH;
-      let dW, dH, oX, oY;
-      if (vAR < cAR) { dW = cW; dH = cW / vAR; oX = 0; oY = (dH - cH) / 2; }
-      else { dH = cH; dW = cH * vAR; oX = (dW - cW) / 2; oY = 0; }
-      const sX = ((cW * (1 - guideW) / 2) + oX) * (v.videoWidth / dW);
-      const sY = ((cH * (1 - guideH) / 2) + oY) * (v.videoHeight / dH);
-      const sW = (cW * guideW) * (v.videoWidth / dW);
-      const sH = (cH * guideH) * (v.videoHeight / dH);
-      
-      const scanSize = 512;
-      let w = sW, h = sH;
-      if (w > scanSize || h > scanSize) {
-        const ratio = Math.min(scanSize / w, scanSize / h);
-        w = Math.round(w * ratio);
-        h = Math.round(h * ratio);
-      }
-      
-      c.width = w;
-      c.height = h;
-      ctx.drawImage(v, sX, sY, sW, sH, 0, 0, w, h);
-      
-      // Qualidade 82% alinhada R3 (uniformizada com camera/galeria)
-      c.toBlob(async (blob) => {
-        if (!blob || !mountedRef.current || scanningRef.current) return;
-        
-        scanningRef.current = true;
-        
-        try {
-          const fd = new FormData();
-          fd.append("file", blob, "scan.jpg");
-          fd.append("country", "BR");
-          fd.append("restaurant", getRestaurantValue());
-          
-          const res = await fetch(`${API}/ai/identify`, {
-            method: "POST",
-            body: fd
-          });
-          
-          if (!mountedRef.current) return;
-          
-          let data;
-          try { data = await res.json(); } catch { return; }
-          
-          // Só mostrar se score >= 0.7 (mais confiável)
-          if (data.ok && data.identified && data.score >= 0.7) {
-            // Verificar se é diferente do último resultado (evita repetições)
-            const newDish = data.dish_display;
-            if (newDish !== lastScanResultRef.current) {
-              lastScanResultRef.current = newDish;
-              setScannerResult({
-                dish: data.dish,
-                dish_display: data.dish_display,
-                categoria: data.category || data.categoria,
-                calorias: data.nutrition?.calorias || '~150 kcal',
-                score: data.score,
-                confidence: data.confidence,
-                beneficios: data.beneficios || [],
-                riscos: data.riscos || [],
-                contem_gluten: data.contem_gluten,
-                timestamp: Date.now()
-              });
-            }
-          } else if (difference > 0.5) {
-            // Mudança muito grande mas não identificado - limpar resultado anterior
-            setScannerResult(null);
-            lastScanResultRef.current = null;
-          }
-        } catch (e) {
-          console.warn('Scanner error:', e);
-        } finally {
-          scanningRef.current = false;
-        }
-        
-        // Limpar canvas
-        ctx.clearRect(0, 0, w, h);
-      }, 'image/jpeg', 0.82);
-    }
-    } finally {
-      scanInFlightRef.current = false;
-    }
-  }, [stream]);
-
-  // Scanner NÃO pode ser disparado automaticamente por useEffect
-  useEffect(() => {
-    if (scannerMode && stream) {
-      // apenas garantir que a câmera/scanner está pronta
-      // NÃO executar performScan automaticamente
-    }
-
-    return () => {
-      if (scanIntervalRef.current) {
-        clearInterval(scanIntervalRef.current);
-        scanIntervalRef.current = null;
-      }
-    };
-  }, [scannerMode, stream]);
-
-  // Toque no overlay para ver detalhes completos
-  const handleScannerTap = useCallback(() => {
-    if (scannerResult) {
-      // Converter scanner result para result completo
-      setResult(normalizeResult({
-        ok: true,
-        identified: true,
-        ...scannerResult
-      }));
-      setScannerResult(null);
-    }
-  }, [scannerResult]);
 
   // Calcular dados CONSOLIDADOS do prato (para vista "mesa")
   const plateConsolidated = useMemo(() => {
@@ -3118,54 +2931,6 @@ return {
           </div>
         )}
 
-        {/* SCANNER OVERLAY - Mostra info em tempo real */}
-        {scannerResult && !loading && !r && (
-          <div 
-            className="scanner-overlay" 
-            onClick={handleScannerTap}
-            data-testid="scanner-overlay"
-          >
-            <div className="scanner-result">
-              <div className="scanner-header">
-                <span className="scanner-icon">✅</span>
-                <span className="scanner-dish">{scannerResult.dish_display}</span>
-              </div>
-              <div className="scanner-info">
-                <span className="scanner-cal">{scannerResult.calorias}</span>
-                <span className="scanner-cat">{scannerResult.categoria}</span>
-              </div>
-              {scannerResult.contem_gluten === false && (
-                <span className="scanner-badge gluten-free">Sem gluten</span>
-              )}
-              {scannerResult.riscos?.length > 0 && (
-                <span className="scanner-badge warning">{renderTextSafe(scannerResult.riscos[0])}</span>
-              )}
-              {/* ALERTAS PREMIUM - destaque visual para decidir */}
-              {scannerResult.premium?.alertas_alergenos?.length > 0 && (
-                <div data-testid="scanner-allergen-alerts" style={{
-                  margin: '8px 0', padding: '8px 12px',
-                  background: 'rgba(239,68,68,0.25)', border: '2px solid rgba(239,68,68,0.6)',
-                  borderRadius: '10px', animation: 'pulse 1.5s infinite'
-                }}>
-                  {scannerResult.premium.alertas_alergenos.map((al, i) => (
-                    <div key={i} style={{color:'#fca5a5',fontWeight:'bold',fontSize:'14px',padding:'2px 0'}}>
-                      {renderTextSafe(al.icone)} {renderTextSafe(al.mensagem)}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {/* Alergenos detectados */}
-              {scannerResult.alergenos && Object.entries(scannerResult.alergenos).filter(([,v])=>v).length > 0 && !scannerResult.premium?.alertas_alergenos?.length && (
-                <div style={{margin:'4px 0',display:'flex',gap:'4px',flexWrap:'wrap'}}>
-                  {Object.entries(scannerResult.alergenos).filter(([,v])=>v).map(([k]) => (
-                    <span key={k} className="scanner-badge warning" style={{fontSize:'11px'}}>{k}</span>
-                  ))}
-                </div>
-              )}
-              <p className="scanner-tap">Toque para mais detalhes</p>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Botões de ação */}
