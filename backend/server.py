@@ -900,7 +900,21 @@ async def identify_image(
                 score=0.0,
                 message="Arquivo de imagem vazio"
             )
-        
+
+        # ── [IDENTIFY_DIAG] MD5 + tamanho + dimensões ──────────────────────────
+        import hashlib as _hlib
+        _diag_md5  = _hlib.md5(content).hexdigest()
+        _diag_size = len(content)
+        try:
+            from PIL import Image as _PILImage
+            import io as _io
+            _img_obj   = _PILImage.open(_io.BytesIO(content))
+            _diag_dims = f"{_img_obj.width}x{_img_obj.height}"
+        except Exception:
+            _diag_dims = "unknown"
+        logger.info(f"[IDENTIFY_DIAG] md5={_diag_md5} size={_diag_size}B dims={_diag_dims} restaurant={restaurant!r}")
+        # ────────────────────────────────────────────────────────────────────────
+
         # ═══════════════════════════════════════════════════════════════════════
         # CACHE: Verificar se ja identificamos esta imagem antes
         # ═══════════════════════════════════════════════════════════════════════
@@ -910,6 +924,7 @@ async def identify_image(
             elapsed_ms = (time.time() - start_time) * 1000
             cached['search_time_ms'] = round(elapsed_ms, 2)
             logger.info(f"[CACHE] ⚡ Resposta do cache em {elapsed_ms:.0f}ms")
+            logger.info(f"[IDENTIFY_DIAG] source=cache dish={cached.get('dish_display')} score={cached.get('score')}")
             if await get_setting("ENABLE_PROCESSING_METRICS"):
                 total_ms = (time.perf_counter() - perf_start) * 1000
                 source = cached.get('source', '')
@@ -967,6 +982,18 @@ async def identify_image(
                     results = await asyncio.to_thread(index.search, content, 5)
                 t_clip_ms = (time.perf_counter() - t_clip) * 1000
                 logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
+
+                # ── [IDENTIFY_DIAG] top_5 real + gap ────────────────────────────
+                if results:
+                    _top = results[:5]
+                    _scores = [r.get('score', 0) for r in _top]
+                    _names  = [r.get('dish', r.get('dish_display', '?')) for r in _top]
+                    for _rank, (_n, _s) in enumerate(zip(_names, _scores), 1):
+                        logger.info(f"[IDENTIFY_DIAG] top{_rank} score={_s:.4f} dish={_n!r}")
+                    _gap = (_scores[0] - _scores[1]) if len(_scores) >= 2 else 0
+                    logger.info(f"[IDENTIFY_DIAG] gap_top1_top2={_gap:.4f} source=local_index")
+                # ────────────────────────────────────────────────────────────────
+
                 clip_decision = await asyncio.to_thread(analyze_result, results)
                 clip_score = clip_decision.get('score', 0.0)
                 
