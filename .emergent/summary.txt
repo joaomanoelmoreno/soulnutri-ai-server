@@ -1,158 +1,153 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos (ex: Milanesas, Gratinados). Resolver erros críticos de Failed to fetch e 502 Bad Gateway em produção causados por gargalos e travamentos na inferência da IA.
+<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos. Resolver erros críticos em produção causados por gargalos e travamentos na inferência da IA. Meta imediata atual: Resolver crash crítico no frontend (ErrorBoundary disparando reload) ao clicar em Adicionar ao prato.
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: The next agent MUST respond in Portuguese (Brasil) ONLY. O usuário é extremamente técnico, pragmático e frequentemente exige diagnósticos puros (sem alteração de código) antes de qualquer patch. Siga as ordens de bloqueio de código à risca.
+INSTRUCT: The next agent MUST respond in Portuguese (Brasil) ONLY. O usuário é extremamente técnico, pragmático e exige **estritamente diagnósticos puros (apenas leitura)** antes de ser submetido qualquer patch para aprovação. Siga as ordens NÃO aplicar patch ainda rigorosamente.
 
-**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. A arquitetura de IA em produção agora utiliza  e  para evitar bloqueios do servidor. O fluxo de login Premium possui proteção (Session Guard) contra falhas de rede (cold starts do Render) e lida corretamente com inputs acentuados. A estrutura de Dish Families foi expandida para 11 famílias e a interface do usuário exibe um alerta de agrupamento genérico ao invés de cravar o prato exato quando este pertence a uma família.
+**what currently exists?**: O sistema é Full-Stack: FastAPI (Backend), React PWA (Frontend) e MongoDB. O ambiente conta com Session Guard Premium e features visuais robustas no React (), incluindo o gerenciamento do prato () salvo em . A IA usa ONNX CLIP local, com um índice recarregado via  que ajusta nomes e mapeia categorias. Um diagnóstico de integridade no dataset foi feito (salvo na memória). O recurso de  de câmera foi desativado temporariamente via flag para isolar erros.
 
 **Last working item**:
-    - Last item agent was working: Diagnóstico de regressão nas classificações de IA. Após as atualizações das famílias visuais, o usuário identificou que o modelo está retornando cruzamentos bizarros (ex: Tortilha Espanhola de Batata não retorna a família GRATINADOS, e Lasanha de Espinafre retorna Filé de Peixe ao Missô). Sob ordens estritas do usuário para **NÃO alterar código**, o agente estava cruzando os nomes e embeddings existentes no  e  (datados de 2 de Maio) contra a lógica de parsing em  para descobrir a causa raiz.
+    - Last item agent was working: Diagnóstico do P1 Crítico (Crash na UX). O usuário reportou que após o scan, ao clicar em Adicionar ao prato, uma exceção React dispara a tela de ErrorBoundary (Erro na Câmera / Recarregar Página), forçando a perda do estado. O agente realizou buscas por , ,  e  no arquivo  para encontrar o ponto exato da quebra (provavelmente uma propriedade indefinida no objeto sendo espalhado). O agente estava prestes a redigir o relatório diagnóstico exigido.
     - Status: IN PROGRESS
     - Agent Testing Done: N
-    - Which testing method agent to use?: manual testing by python -c (modo somente leitura)
-    - User Testing Done: Y
+    - Which testing method agent to use?: manual testing by python -c (modo somente leitura / grep em arquivos)
+    - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-  Issue 1: Reconhecimento da IA retornando classes erradas após introdução das famílias (P0)
-     - Attempted fixes: O agente estava rastreando os arquivos do índice de embeddings local e o banco de dados. Constatou que o índice ( e ) não é atualizado desde 2 de Maio. Estava parando para responder às 7 perguntas do usuário.
+  Issue 1: Botão Adicionar ao prato disparando ErrorBoundary / recarregamento (P0)
+     - Attempted fixes: Nenhum ainda. Apenas leitura e rastreamento em  das funções de adição e renderização.
      - Next debug checklist: 
-       - O usuário exigiu respostas diretas para 7 perguntas (Top 5 scores dos pratos reportados, slugs reais identificados, se o slug tem family tag, se o índice foi regenerado, etc).
-       - Revisar  e verificar como  (linha 1308) é construído a partir de . A inconsistência entre o output do ONNX (com espaços) e o banco MongoDB (slugs) pode ser a falha de lookup.
-     - Why fix this issue and what will be achieved with the fix?: Sem isso, o aplicativo identifica as comidas erroneamente, o que inutiliza a feature principal e expõe o usuário a perigos de alérgenos incorretos.
+       - Compilar e entregar o relatório para o usuário informando exatamente qual função quebra. 
+       - Avaliar se o erro ocorre dentro de  (ex: acessar propriedade ausente de  ao copiar para o array) ou na renderização do .
+       - Apontar que o ErrorBoundary (linhas 130-136) pega esse erro não tratado e exibe o botão de forçar reload, causando perda do  caso o  falhe.
+       - Propor a correção cirúrgica sem aplicá-la ainda.
+     - Why fix this issue and what will be achieved with the fix?: Erro gravíssimo de UX que impede o usuário de compor a lista final de pratos, inutilizando a experiência principal do app.
      - Status: IN PROGRESS
      - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: backend
+     - Should Test frontend/backend/both after fix?: frontend
 
-  Issue 2: Imagens do Admin retornando 404 em produção (P1)
-     - Attempted fixes: Identificado em sessão anterior que o Render continha erro de typo nas variáveis de ambiente.
-     - Next debug checklist: Confirmar com o usuário se as variáveis  foram ajustadas no painel do Render.
-     - Why fix this issue and what will be achieved with the fix?: Fazer as imagens aparecerem no painel Admin.
-     - Status: USER VERIFICATION PENDING
+  Issue 2: Auditoria e limpeza do dataset contaminado (P1)
+     - Attempted fixes: Auditoria completa rodada. Foi criado  com comandos exatos de purga de imagens.
+     - Next debug checklist: Aguardar o usuário pedir a continuação do saneamento do dataset de pratos com problemas de pastas/contaminação (Ceviche vs Moqueca).
+     - Why fix this issue and what will be achieved with the fix?: Impedir que o CLIP treine com fotos contaminadas.
+     - Status: BLOCKED (Aguardando usuário focar nisso após resolver o crash do frontend)
      - Is recurring issue? Y
-     - Should Test frontend/backend/both after fix?: frontend/backend
+     - Should Test frontend/backend/both after fix?: backend
 
 **In progress Task List**:
-  Task 1: Responder relatório diagnóstico exigido pelo usuário (P0)
-     - Where to resume: Continuar de onde a mensagem atual parou. Criar um mock em  apontando para o  com as três imagens com falha e levantar o , ou cruzar strings em  vs . 
-     - What will be achieved with this?: Aprovação do usuário para aplicar a correção correta.
+  Task 1: Redigir e enviar diagnóstico de Crash em Adicionar ao prato (P0)
+     - Where to resume: Com base no LLM history e logs capturados, apresentar ao usuário as repostas às 7 perguntas exigidas (função chamada, onde é salvo, presença de  no , e qual a causa exata da exceção React).
+     - What will be achieved with this?: O usuário avaliará a proposta e autorizará a modificação no arquivo .
      - Status: IN PROGRESS
-     - Should Test frontend/backend/both after fix?: backend
-     - Blocked on something: Necessita formulação da resposta baseada nos logs gerados no final do histórico.
+     - Should Test frontend/backend/both after fix?: frontend
+     - Blocked on something: Precisa de resposta manual do assistente.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - (P1) Implementar OCR/Plaquinha recognition para desambiguar pratos dentro de uma família identificada visualmente.
-    - (P1) Calcular/Integrar ingredientes e alérgenos usando a união de famílias na UI principal (quando OCR for implementado).
+    - (P1) Reativar o modo  do frontend. Atualmente há um  na função  no  que precisa ser removido após a fase atual de estabilização.
+    - (P1) Executar os comandos de limpeza documentados em  seguidos da reconstrução do arquivo de índice de IA ().
+    - (P2) Implementar reconhecimento OCR via plaquinhas para diferenciar famílias idênticas.
+    - (P2) Calcular macro/micronutrientes a partir da composição de múltiplos pratos.
     
     Future Tasks:
-    - (P2) Consolidar e limpar o redirecionamento global (duplicação do objeto ) no .
+    - (P3) Refatorar e remover declarações duplicadas e sobrescritas perigosas do  no .
 
 **Completed work in this session**
-- Deploy validado no Render contendo correções de concorrência ( / Semaphore) (DONE)
-- Correção de bug (HTTP 500) em  gerado por  de escopo ( e ) (DONE)
-- Mapeamento e criação de 9 novas Dish Families (como Strogonoff, Maminhas, Pastéis, etc) no banco de dados (DONE)
-- Atualização do Frontend UI e resposta do Backend para ocultar o palpite de prato exato e renderizar a família genérica mais os candidatos possíveis e a união de seus alérgenos (DONE)
-- Correção de erro de login (Nome ou PIN incorreto) devido à acentuação injetada pelo teclado mobile (João), adicionando sanitização  no  e  (DONE)
-- Blindagem de UI (Premium Session Guard) implementada em  para não invalidar/deslogar o usuário em caso de  provindo de instabilidades temporárias do backend (Cold Starts do Render) (DONE)
+- Diagnóstico em  que erroneamente mapeava Feijão Tropeiro para Feijão do Chef corrigido; remoção de acentos realizada e validada. (DONE)
+- Auditoria do dataset gerando . (DONE)
+- Reintrodução milimétrica de normalização de acentos () em 14 queries MongoDB no  após o rollback forçado no ambiente Render. (DONE)
+- Reintrodução milimétrica do Premium Session Guard no  para não deslogar usuários em caso de erro 502/timeout. (DONE)
+- Desativação cirúrgica do fluxo auto-scan no frontend para depuração de UX. (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-   Issue 1: Sobrescrita silenciosa de Rotas () no FastAPI (P2)
-   - Debug checklist: Em ,  é declarado repetidas vezes, apagando algumas rotas intermediárias.
-   - Why to solve this issue and what will be achieved with this?: Evitar que rotas de debug/health fiquem inacessíveis.
+   Issue 1: Sobrescrita de  em 
+   - Debug checklist: Verificar linhas onde  é instanciado múltiplas vezes no mesmo arquivo.
+   - Why to solve this issue and what will be achieved with this?: Previne rotas de serem subscritas e sumirem do build final, garantindo API consistente.
    - Should Test frontend/backend/both after fix: backend
    - Is recurring issue? N
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: Falhas de instabilidade no endpoint  (502 / 500).
+  - Issue recurrence in previous fork: Falhas de instabilidade no endpoint  e deslogue no login premium devido à acentuação.
   - Recurrence count: 3
-  - Status: RESOLVED (Foi blindado via frontend com session timeouts maiores e retries, e no backend com async threading e correções lógicas)
+  - Status: RESOLVED (Blindados através de retries no FE e  flexível com unicodedata no BE).
 
 **Code Architecture**
 /app
 ├── backend/
-│   ├── ai/               (index.py, embedder.py, policy.py - processamento onnx)
-│   ├── services/         (profile_service.py)
-│   └── server.py         (Rotas FastAPI, Lookup Mongo, Login Premium)
+│   ├── ai/               (index.py, embedder.py, policy.py)
+│   ├── services/         (profile_service.py, cache_service.py)
+│   └── server.py         (Rotas FastAPI, endpoints vitais)
 ├── frontend/
 │   └── src/
-│       ├── App.js        (Estado principal da câmera, UI de famílias, Session Guard)
+│       ├── App.js        (Core do frontend, Câmera, IA, Estados pesados, alvo do CRASH atual)
 │       └── Premium.jsx
-├── datasets/             (dish_index.json, dish_index_embeddings.npy)
+├── datasets/             (dish_index.json, dish_index_embeddings.npy, organized/)
+├── memory/               (AUDIT_DATASET.md, PRD.md)
 
 **Key Technical Concepts**
-- **Arquitetura Assíncrona FastAPI**: Identificação de IA em thread pool paralela para não travar conexões ativas.
-- **Normalização de Input de Usuário**: O backend roda limpeza de diacríticos () em todas as rotas Premium para lidar com teclados mobile que completam nomes (ex: Joao vs João).
-- **Cold Start Protection (Session Guard)**: Frontend não descarta  se a API falhar. Ele entra no estado  e faz retries automáticos escalonados (5s, 15s).
-- **IA e Dish Families**: A IA identifica um prato base, a API checa se esse prato pertence a uma  no banco. Se sim, exibe os atributos genéricos dessa família sobrepondo o prato em si.
+- **ErrorBoundary**: O app usa  na classe topo de linha em  para renderizar uma tela com botão de reload global sempre que um componente falha durante re-render.
+- **Auto-scan Disabled**: Uma feature de escaneamento automático por polling de mudança em frame de vídeo está temporariamente ignorada com return em .
+- **FastAPI Cache local**: Requisições de scan da mesma foto consultam cache via MD5 em memória () para pular latência do modelo.
 
 **key DB schema**
-  - : 
   - : 
   -  (Premium): 
 
 **changes in tech stack**
-- Nenhuma adição, apenas refatoração interna intensa.
+- Nenhuma.
 
 **All files of reference** 
-  -  (Lógica central, lookup Premium)
-  -  (Utilitários de segurança do PIN/Nome)
-  -  (Componente visual raiz modificado extensivamente)
-  -  (Script alvo do diagnóstico atual do usuário)
-  -  (Necessário para a auditoria que o usuário solicitou)
+  -  (Onde o usuário reportou a perda de estado e quebra de UI)
+  -  (Lógica de identificação com diagnósticos via logs )
+  -  (Onde mappings de dishes são regulados;  atualizado)
+  -  (Para ser usado posteriormente na limpeza)
 
 **Areas that need refactoring**:
-- Limpeza dos routers repetidos em .
+- O  tem +5000 linhas; extrema interdependência de ref/state para gerenciar UI, hardware e fluxo de IA.
 
 **key api endpoints**
   - 
   - 
-  - 
 
 **Critical Info for New Agent** 
-- ⚠️ **PARE E LEIA: A ORDEM FINAL DO USUÁRIO FOI ESTRITA**. Não aplicar patch. Não mexer em frontend. Não mexer em Premium. Não mexer em famílias. Não fazer rollback ainda.
-- Seu PRIMEIRO passo deve ser responder textualmente às 7 perguntas propostas pelo usuário usando a ferramenta de bash/python-c estritamente como **Somente Leitura** para cruzar informações entre o banco,  e a política de .
-- O index () tem a data de *02 de Maio*. As famílias foram feitas hoje (06 de Maio). O usuário precisa que você documente se isso é a causa do erro.
-- A função auxiliar  agora existe em  para remoção de acentos em queries do MongoDB.
+- ⚠️ **NUNCA ESCREVA OU ALTERE CÓDIGO** antes de propor um relatório de diagnóstico limpo para o usuário, indicando a linha e o motivo da falha, e ele responder Autorizado ou Aplicar patch.
+- No contexto de React/App.js, tela de recarregar câmera/página significa que um **Erro Crítico de React (Uncaught TypeError/Render Error)** foi pego pelo , que englobou a quebra da árvore de componentes.
+- Foque agora: ,  e interações de  após a identificação para entender qual variável gera TypeError na montagem da UI de pratos selecionados.
 
 **documents and test reports created in this job** 
-- Nenhum report oficial criado.
+- 
+-  atualizado marginalmente.
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. (User) Pediu o mapeamento de 9 novas famílias.
- 2. (Agent) Cadastrou as 9 famílias e atrelou 14 pratos no BD.
- 3. (User) Reportou bug onde não conseguia logar com PIN correto via celular.
- 4. (Agent) Descobriu que João estava sendo enviado ao invés de Joao, aplicou regex norm nas requisições.
- 5. (User) Relatou que mesmo assim, a sessão continuava quebrando.
- 6. (Agent) Encontrou erro de lógica no Cold Start (). Limpava o  no caso de um 502/500 do Render. Fixou com Retry e Session Guard.
- 7. **[PENDING HUMAN MESSAGE]** (User) Ordenou PARAR TODAS AS ALTERAÇÕES. Reportou que o reconhecimento visual está retornando classes erradas bizarramente após a feature das famílias. Exigiu diagnóstico estrito de 7 pontos analisando se é falha de dados velhos, embeddings, ou campo mal mapeado.
+ 1. (User) Pediu log detalhado sobre scan não logando no Frontend/Backend.
+ 2. (Agent) Mostrou log e pipeline de fluxo e evidência de falha em .
+ 3. (User) Autorizou fix cirúrgico em  ().
+ 4. (Agent) Realizou o fix e confirmou deploy com normalização de acentos.
+ 5. **[PENDING HUMAN MESSAGE]** (User) Ordenou ATUAR COMO EXECUTOR TÉCNICO DIAGNÓSTICO. Reportou P1 Crítico: clicar em Adicionar ao prato na UI joga a pessoa pra tela Recarregar câmera/página (ErrorBoundary disparado). Pediu a linha exata da falha, logs propostos, análise se o erro reseta estado, como a persistência de  funciona e proposta de fix, MAS proibindo qualquer fix no momento. O LLM interrompeu bem na formulação desta resposta após rodar comandos bash/grep.
 
 **Project Health Check:**
-Broken: Classificação da IA () está retornando classes erradas para pratos recém agrupados.
+Broken: Fluxo Adicionar ao prato quebrando UX Frontend com erro grave em renderização/estado pego pelo ErrorBoundary do React.
 Mocked: Nenhum.
 
 **3rd Party Integrations** 
   - Cloudflare R2 (Storage) — User API Key
-  - Gemini/OpenAI (LLM / Enrich via Audio TTS) — Emergent LLM Key
+  - Gemini/OpenAI (LLM / Enrich) — Emergent LLM Key
 
 **Testing status**
   - Testing agent used after significant changes: NO (Proibido temporariamente pelo diagnóstico pendente).
   - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: Falhas de predição do modelo ONNX e cruzamento de slugs após alterações no DB.
+  - Known regressions: Crash na manipulação do objeto do prato escaneado na UI.
 
 **Credentials to test flow:**
   - Admin Premium (Acesso principal): Nome , PIN 
-  - Admin Header (): 
 
 **What agent forgot to execute**
-O agente parou exatamente no meio do diagnóstico de resposta às 7 exigências do usuário.
+O agente parou de redigir o relatório diagnóstico final do React ErrorBoundary /  no meio da coleta das referências. Falta consolidar a resposta e entregar o diagnóstico pro usuário autorizar.
 
 **Debugging checklist for current issue**
-    Issue: Regressão de identificação / Pratos retornando cruzas irreais (ex: Lasanha dando Match com Peixe ao Missô).
-    Backend files to check: 
-      -  vs  vs banco de dados de dishes.
-    Ações Imediatas:
-      - Rode um script python puro via bash que instancie a IA localmente e simule um identify para obter a distância do top 5.
-      - Cruze o  (output) com os slugs reais salvos.
-      - Entregue o relatório formatado ao usuário.
-      - **NÃO** escreva em nenhum arquivo até o usuário dar a ordem Pode consertar.</analysis>
+    Issue: Adicionar ao prato causou ErrorBoundary UI e Perda do plateItems.
+    Frontend files to check: 
+    Ações imediatas:
+    - Analise  e como  compila o novo array usando o objeto  corrente.
+    - Analise o JSX das linhas 4315~4636, e veja como  interage com o DOM. Existe alguma chamada assíncrona ou propriedade  não garantida (como ) causando TypeError na renderização dessa lista?
+    - Entregue o relatório formatado sem gravar no disco, seguindo as diretrizes das mensagens do usuário (Passos 1 ao 7).</analysis>

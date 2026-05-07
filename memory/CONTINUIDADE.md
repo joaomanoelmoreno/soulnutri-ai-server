@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://nutri-familia.preview.emergentagent.com
+**URL**: https://nutriscanner-uifix.preview.emergentagent.com
 
 ---
 

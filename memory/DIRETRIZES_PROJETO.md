@@ -232,7 +232,7 @@ VALIDAÇÃO CRUZADA (Opcional):
 ## 10. CONTATOS E LINKS
 
 ### URL de Preview:
-https://nutri-familia.preview.emergentagent.com
+https://nutriscanner-uifix.preview.emergentagent.com
 
 ### Arquivos Importantes:
 - /app/memory/PRD.md - Requisitos do produto
