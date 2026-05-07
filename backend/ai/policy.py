@@ -81,7 +81,7 @@ DISH_NAMES = {
     'feijaodochef': 'Feijão do Chef',
     'feijaopretocomcarne': 'Feijão do Chef',
     'feijaopretosemcarne': 'Feijão (s/ carne)',
-    'feijaotropeiro': 'Feijão do Chef',
+    'feijaotropeiro': 'Feijão Tropeiro',
     'figadoacebolado': 'Fígado Acebolado',
     'filedefrangoaparmegiana': 'Filé de Frango à Parmegiana',
     'filedepeixeaomisso': 'Filé de Peixe ao Missô',
