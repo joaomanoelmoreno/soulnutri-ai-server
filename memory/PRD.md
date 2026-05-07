@@ -182,6 +182,9 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 - `/app/memory/diagnostics/family_grouping_study_2026-04-29.md` — Estudo de Famílias Visuais (análise do banco)
 - `/app/memory/diagnostics/visual_families_validation_2026-02-05.md` — Validação completa para implementação (JSON, conflitos, rollback, UX)
 
+## Bugs Corrigidos (Fev/2026 — atual fork)
+- **BUG CRÍTICO CORRIGIDO P0** (`App.js` L.2664 + L.4084, `PremiumProfile.jsx` L.265+L.273): Após enrich, `result.riscos` tornava-se `Array<Object>` (`{texto,fonte}`). `getAllergenDisplay` colocava o objeto cru em `alert.text`; JSX renderizava `{alert.text}` → React Error #31 → `CameraErrorBoundary` disparava "Erro na Câmera" ao clicar "Adicionar ao prato". Fix cirúrgico: extração de texto em `getAllergenDisplay`, `renderTextSafe` no render, e normalização `typeof r === 'string'` no `generatePersonalizedTip`.
+
 ## Bugs Corrigidos (06/Mai/2026)
 - **BUG CRÍTICO CORRIGIDO** (`server.py` L.1308): `dish_slug_norm` não convertia espaços em hífens. `decision['dish']` retorna `"Lasanha de Espinafre"` (com espaços), mas o slug real no MongoDB é `"lasanha-de-espinafre"` (com hífens). Lookup de família sempre falhava silenciosamente. Fix: `.replace(' ', '-')` adicionado antes do `.lower()`.
 

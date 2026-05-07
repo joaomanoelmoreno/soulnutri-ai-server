@@ -262,7 +262,7 @@ export function generatePersonalizedTip(prato, perfil) {
     });
   }
   
-  if (restricoes.includes('sem_gluten') && prato.riscos?.some(r => r.toLowerCase().includes('glúten'))) {
+  if (restricoes.includes('sem_gluten') && prato.riscos?.some(r => (typeof r === 'string' ? r : (r?.texto || r?.text || '')).toLowerCase().includes('glúten'))) {
     tips.push({
       tipo: 'alerta',
       icone: '🌾',
@@ -270,7 +270,7 @@ export function generatePersonalizedTip(prato, perfil) {
     });
   }
   
-  if (restricoes.includes('sem_lactose') && prato.riscos?.some(r => r.toLowerCase().includes('lactose'))) {
+  if (restricoes.includes('sem_lactose') && prato.riscos?.some(r => (typeof r === 'string' ? r : (r?.texto || r?.text || '')).toLowerCase().includes('lactose'))) {
     tips.push({
       tipo: 'alerta',
       icone: '🥛',

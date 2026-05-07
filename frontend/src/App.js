@@ -2661,7 +2661,7 @@ return {
       hasAllergens: true, 
       alerts: uniqueAlerts.map(risco => ({
         type: safeLower(risco).includes('pode conter') ? 'possible' : 'definite',
-        text: risco
+        text: typeof risco === 'object' ? (risco.texto || risco.text || '') : risco
       }))
     };
   };
@@ -4081,7 +4081,7 @@ return {
             {allergenInfo.hasAllergens ? (
               allergenInfo.alerts.map((alert, i) => (
                 <div key={i} className={`alert-item ${alert.type}`}>
-                  ⚠️ {alert.text}
+                  ⚠️ {renderTextSafe(alert.text)}
                 </div>
               ))
             ) : (
