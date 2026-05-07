@@ -1489,8 +1489,8 @@ const loadNotifCount = async (pin) => {
     const sw = gWidth * scaleX;
     const sh = gHeight * scaleY;
     
-    // Canvas de saida: max 512px, proporcional a guide-frame
-    const maxSize = 512;
+    // Canvas de saida: 224px (nativo do CLIP — servidor redimensiona para 224 internamente)
+    const maxSize = 224;
     let outW = sw, outH = sh;
     if (outW > maxSize || outH > maxSize) {
       const ratio = Math.min(maxSize / outW, maxSize / outH);
@@ -2209,7 +2209,7 @@ return {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
-        const maxSize = 512;
+        const maxSize = 224; // CLIP nativo (servidor redimensiona para 224 internamente)
         let w = img.width;
         let h = img.height;
         if (w > maxSize || h > maxSize) {

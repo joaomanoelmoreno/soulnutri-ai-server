@@ -417,6 +417,9 @@ _WARMUP_MS = None
 _identify_semaphore = asyncio.Semaphore(2)
 # Contador global de scans (para log de diagnóstico)
 _ROOT_SCAN_COUNTER = 0
+# Cache por nome do prato (pós-ONNX): evita MongoDB para pratos já identificados
+# chave: (dish_name_lower, restaurant)  |  TTL: 5 minutos (300s)
+_dish_name_cache: dict = {}
 
 @api_router.get("/ai/warmup")
 async def ai_warmup():
@@ -1153,7 +1156,21 @@ async def identify_image(
         user_profile = None
         premium_data = {}
         dish_display_name = format_dish_name(decision.get('dish_display', ''))
-        
+
+        # DISH-NAME CACHE CHECK: pula MongoDB se prato ja identificado recentemente (TTL 5min)
+        _dish_key = (dish_display_name.lower(), restaurant or '')
+        _now = time.time()
+        if dish_display_name and decision.get('identified') and decision.get('confidence') != 'baixa' and not (pin and nome):
+            _cached = _dish_name_cache.get(_dish_key)
+            if _cached and _cached['exp'] > _now:
+                logger.info(f"[DISH_CACHE] ✓ Hit: {dish_display_name}")
+                resp = dict(_cached['data'])
+                resp['score'] = decision.get('score', resp.get('score', 0.0))
+                resp['source'] = decision.get('source', resp.get('source', 'local_index'))
+                resp['from_dish_cache'] = True
+                cache_result(content, resp, restaurant=restaurant or '', ttl_seconds=3600)
+                return resp
+
         # Para Cibi Sana: retorno imediato SEM queries MongoDB (velocidade <500ms)
         # Para modo externo (Gemini): queries rapidas em paralelo
         if is_cibi_sana:
@@ -1413,7 +1430,14 @@ async def identify_image(
         # CACHE: Salvar resultado para futuras consultas
         # ═══════════════════════════════════════════════════════════════════════
         if response_data.get('identified'):
-            cache_result(content, response_data, restaurant=restaurant or '', ttl_seconds=3600)  # 1 hora de cache
+            cache_result(content, response_data, restaurant=restaurant or '', ttl_seconds=3600)
+
+        # DISH-NAME CACHE STORE (nao-premium, confidence != baixa, TTL 5min)
+        if (response_data.get('identified') and
+                response_data.get('confidence') != 'baixa' and
+                not is_premium):
+            _dish_name_cache[_dish_key] = {'data': dict(response_data), 'exp': _now + 300}
+            logger.info(f"[DISH_CACHE] + Salvo: {dish_display_name} (TTL: 300s)")  # 1 hora de cache
         
         # ═══════════════════════════════════════════════════════════════════════
         # MÉTRICAS DE PROCESSAMENTO (condicional)
