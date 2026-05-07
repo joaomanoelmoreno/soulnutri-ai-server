@@ -413,8 +413,8 @@ async def health():
 # ═══════════════════════════════════════════════════════
 _WARMED_UP = False
 _WARMUP_MS = None
-# Semaforo: apenas 1 identify ONNX por vez (evita bloquear event loop com 2 inferencias paralelas)
-_identify_semaphore = asyncio.Semaphore(1)
+# Semaforo: ate 2 identify ONNX simultaneos (fila natural, sem rejeicao)
+_identify_semaphore = asyncio.Semaphore(2)
 # Contador global de scans (para log de diagnóstico)
 _ROOT_SCAN_COUNTER = 0
 
@@ -955,15 +955,6 @@ async def identify_image(
         except Exception:
             _onnx_warm = False
         logger.info(f"[IDENTIFY] onnx_warm={_onnx_warm} is_cibi_sana={is_cibi_sana} ts={time.strftime('%H:%M:%S')}")
-
-        # CONCORRÊNCIA: rejeitar imediatamente se ONNX já está rodando
-        if is_cibi_sana and not _identify_semaphore._value:
-            logger.warning("[IDENTIFY] Semaforo ocupado — rejeitando request concorrente")
-            return JSONResponse(status_code=200, content={
-                "ok": False, "identified": False, "confidence": "baixa",
-                "score": 0.0, "message": "Servidor ocupado. Aguarde 1s e tente novamente.",
-                "alternatives": []
-            })
 
         if is_cibi_sana:
             # ══════════════════════════════════════════════════════════════════
