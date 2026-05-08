@@ -30,13 +30,7 @@ RUN pip install --no-cache-dir boto3 && \
     print(f'Modelo baixado: {os.path.getsize(\"/app/clip_visual_fp16.onnx\")/1024/1024:.1f} MB')"
 
 # ── Validar integridade do modelo ONNX — falha o build se ausente ou truncado ──
-RUN python3 -c "\
-import os,sys; \
-p='/app/clip_visual_fp16.onnx'; \
-mb=os.path.getsize(p)/1024/1024 if os.path.exists(p) else 0.0; \
-print(f'[ONNX VALIDATE] {p}: {mb:.1f} MB'); \
-sys.exit(0) if mb >= 100 else \
-(print(f'[BUILD FAIL] ONNX ausente ou truncado: {mb:.1f} MB < 100 MB — abortando build') or sys.exit(1))"
+RUN python3 -c "import os,sys; p='/app/clip_visual_fp16.onnx'; mb=os.path.getsize(p)/1024/1024 if os.path.exists(p) else 0.0; print(f'[ONNX VALIDATE] {p}: {mb:.1f} MB'); sys.exit(0) if mb >= 100 else (print(f'[BUILD FAIL] ONNX ausente ou truncado: {mb:.1f} MB < 100 MB — abortando build') or sys.exit(1))"
 
 # ── Frontend build ──
 RUN echo "Frontend cache bust v3 - 2026-04-26-late"
