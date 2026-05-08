@@ -6441,6 +6441,20 @@ async def debug_performance():
         onnx_loaded = _perf_session is not None
     except Exception:
         onnx_loaded = False
+    # Detectar backend ativo — somente leitura, nao altera logica de inferencia
+    try:
+        from ai.embedder import _USE_ONNX as _b_onnx, _MODEL as _b_model, _USE_HF_API as _b_hf
+        if _b_onnx and onnx_loaded:
+            embedding_backend = "onnx"
+        elif _b_model is not None:
+            embedding_backend = "pytorch"
+        elif _b_hf:
+            embedding_backend = "hf_api"
+        else:
+            embedding_backend = "none"
+    except Exception:
+        embedding_backend = "unknown"
+    degraded_mode = embedding_backend != "onnx"
     return {
         "onnx_mode": stats.get("onnx_mode"),
         "threads": stats.get("threads"),
@@ -6448,6 +6462,8 @@ async def debug_performance():
         "avg_inference_ms": stats.get("avg_inference_ms"),
         "inference_count": stats.get("inference_count", 0),
         "onnx_loaded": onnx_loaded,
+        "embedding_backend": embedding_backend,
+        "degraded_mode": degraded_mode,
         "uptime": round(uptime, 1),
     }
 
