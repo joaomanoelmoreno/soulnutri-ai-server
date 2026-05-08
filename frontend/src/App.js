@@ -4092,36 +4092,42 @@ return {
           </div>
 
           {/* FAMÍLIA DE PRATOS — bloco complementar */}
-          {r.family_name && r.family_candidates?.length > 0 && (
-            <div
-              data-testid="family-block"
-              style={{
-                background: 'rgba(251, 191, 36, 0.08)',
-                border: '1px solid rgba(251, 191, 36, 0.35)',
-                borderRadius: '12px',
-                padding: '12px 16px',
-                marginTop: '10px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                <span style={{ fontSize: '15px' }}>⚠️</span>
-                <span data-testid="family-name-label" style={{ fontSize: '13px', fontWeight: '700', color: '#fbbf24' }}>
-                  Família identificada: {r.family_name}
-                </span>
+          {(() => {
+            const familySlugs = r.family_members_slugs || [];
+            const filteredCandidates = (r.family_candidates || []).filter(c => {
+              const slug = c.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+              return familySlugs.includes(slug);
+            });
+            if (!r.family_name || filteredCandidates.length === 0) return null;
+            return (
+              <div
+                data-testid="family-block"
+                style={{
+                  background: 'rgba(251, 191, 36, 0.08)',
+                  border: '1px solid rgba(251, 191, 36, 0.35)',
+                  borderRadius: '12px',
+                  padding: '12px 16px',
+                  marginTop: '10px',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <span data-testid="family-name-label" style={{ fontSize: '13px', fontWeight: '700', color: '#fbbf24' }}>
+                    Família visual: {r.family_name}
+                  </span>
+                </div>
+                <p style={{ fontSize: '12px', color: '#94a3b8', margin: '0 0 4px 0', lineHeight: '1.5' }}>
+                  Pratos visualmente semelhantes no buffet:
+                </p>
+                <ul data-testid="family-candidates-list" style={{ margin: '0', padding: '0 0 0 16px', fontSize: '12px', color: '#94a3b8', lineHeight: '1.8' }}>
+                  {filteredCandidates.map((c, i) => (
+                    <li key={i} data-testid={`family-candidate-${i}`}>{c}</li>
+                  ))}
+                </ul>
               </div>
-              <p style={{ fontSize: '12px', color: '#94a3b8', margin: '0 0 8px 0', lineHeight: '1.5' }}>
-                Este prato pertence a uma família visualmente parecida. Confirme o nome na plaquinha ou com o atendente.
-              </p>
-              <p style={{ fontSize: '12px', color: '#cbd5e1', margin: '0 0 4px 0', fontWeight: '600' }}>
-                Pode ser:
-              </p>
-              <ul data-testid="family-candidates-list" style={{ margin: '0', padding: '0 0 0 16px', fontSize: '12px', color: '#94a3b8', lineHeight: '1.8' }}>
-                {r.family_candidates.map((c, i) => (
-                  <li key={i} data-testid={`family-candidate-${i}`}>{c}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+            );
+          })()}
 
           {/* DICAS PERSONALIZADAS - Baseadas no perfil do usuário Premium */}
           {premiumUser?.perfil && (() => {
