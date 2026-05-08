@@ -1354,6 +1354,7 @@ async def identify_image(
                         decision["family_name"] = family_doc.get("name")
                         decision["family_slug"] = family_doc.get("slug")
                         decision["family_candidates"] = family_doc.get("members_display", [])
+                        decision["family_members_slugs"] = family_doc.get("members_slugs", [])
                         decision["family_ingredients_union"] = family_doc.get("ingredientes_uniao", [])
                         decision["family_allergens_union"] = {
                             "contem_gluten":   family_doc.get("contem_gluten"),
@@ -1422,8 +1423,9 @@ async def identify_image(
             "noticias": decision.get('noticias', []) if is_premium else [],
             # Familias de Pratos - honestidade
             "family_name": decision.get('family_name'),
+            "family_slug": decision.get('family_slug'),
             "family_candidates": decision.get('family_candidates', []),
-            "family_candidates_detail": decision.get('family_candidates_detail', []),
+            "family_members_slugs": decision.get('family_members_slugs', []),
         }
         
         # ═══════════════════════════════════════════════════════════════════════
