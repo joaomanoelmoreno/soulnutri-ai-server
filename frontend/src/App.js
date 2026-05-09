@@ -4095,6 +4095,11 @@ return {
                         <li key={i} data-testid={`family-candidate-${i}`}>{c}</li>
                       ))}
                     </ul>
+                    {familySlugs.includes('pastel') && (
+                      <p data-testid="family-pastel-note" style={{ fontSize: '12px', color: '#fbbf24', margin: '6px 0 0 0', lineHeight: '1.5', fontStyle: 'italic' }}>
+                        Pode ser de carne, frango, queijo ou pizza. Confirme o recheio na plaquinha ou com o atendente.
+                      </p>
+                    )}
                   </div>
                 );
               })()}
