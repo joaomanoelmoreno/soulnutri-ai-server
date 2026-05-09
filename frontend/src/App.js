@@ -3987,7 +3987,7 @@ return {
                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
                     </div>
                   </div>
-                  {r.alternatives && r.alternatives.length > 0 && (
+                  {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
                       <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
                         Tambem pode ser:
@@ -4098,6 +4098,31 @@ return {
                   </div>
                 );
               })()}
+
+              {/* ALTERNATIVAS — exibir após família quando family_name presente */}
+              {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
+               r.alternatives && r.alternatives.length > 0 && (
+                <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
+                  <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
+                    Tambem pode ser:
+                  </div>
+                  {r.alternatives.slice(0, 2).map((alt, i) => (
+                    <div key={i} data-testid={`alternative-${i}`} style={{
+                      background: 'rgba(245, 158, 11, 0.08)',
+                      border: '1px solid rgba(245, 158, 11, 0.2)',
+                      borderRadius: '10px',
+                      padding: '8px 14px',
+                      marginBottom: '4px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#92400e',
+                      textAlign: 'center'
+                    }}>
+                      {renderTextSafe(alt)}
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* CATEGORIA - não mostrar na baixa */}
               {r.confidence !== 'baixa' && (
