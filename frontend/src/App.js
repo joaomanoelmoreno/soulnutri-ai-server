@@ -4013,55 +4013,10 @@ return {
               ) : (
                 <>
                   <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
-              
-                  {/* CALORIAS - Destaque principal */}
-                  {(r.nutrition?.calorias || r.calorias_estimadas) && (
-                    <div 
-                      className="calories-highlight" 
-                      data-testid="calories-highlight"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1))',
-                        borderRadius: '12px',
-                        padding: '12px 20px',
-                        margin: '8px 0 12px',
-                        textAlign: 'center'
-                      }}
-                    >
-                      <span style={{ fontSize: '28px', fontWeight: 'bold', color: '#f59e0b' }}>
-                        {r.nutrition?.calorias || r.calorias_estimadas}
-                      </span>
-                      <div style={{ fontSize: '11px', color: '#888', marginTop: '2px' }}>
-                        {r.nutrition?.proteinas && `P: ${r.nutrition.proteinas}`}
-                        {r.nutrition?.carboidratos && ` • C: ${r.nutrition.carboidratos}`}
-                        {r.nutrition?.gorduras && ` • G: ${r.nutrition.gorduras}`}
-                      </div>
-                    </div>
-                  )}
                 </>
               )}
               
-              {/* NÍVEL DE CONFIANÇA - Sistema de 3 níveis */}
-              {r.confidence_level && r.confidence !== 'baixa' && (
-                <div 
-                  className={`confidence-level-badge ${r.confidence}`}
-                  style={{ 
-                    background: confData.bg, 
-                    color: confData.color,
-                    border: `1px solid ${confData.color}`,
-                    padding: '8px 16px',
-                    borderRadius: '20px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    margin: '8px 0',
-                    textAlign: 'center'
-                  }}
-                  data-testid="confidence-level-badge"
-                >
-                  {r.confidence_level} ({Math.round(r.score * 100)}%)
-                </div>
-              )}
-              
-              {/* FAMÍLIA DE PRATOS — logo após confiança, antes da categoria */}
+              {/* FAMÍLIA DE PRATOS — imediatamente após resultado principal (ordem global) */}
               {(() => {
                 const familySlugs = r.family_members_slugs || [];
                 const filteredCandidates = (r.family_candidates || []).filter(c => {
@@ -4103,6 +4058,52 @@ return {
                   </div>
                 );
               })()}
+
+              {/* NÍVEL DE CONFIANÇA - Sistema de 3 níveis */}
+              {r.confidence_level && r.confidence !== 'baixa' && (
+                <div 
+                  className={`confidence-level-badge ${r.confidence}`}
+                  style={{ 
+                    background: confData.bg, 
+                    color: confData.color,
+                    border: `1px solid ${confData.color}`,
+                    padding: '8px 16px',
+                    borderRadius: '20px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    margin: '8px 0',
+                    textAlign: 'center'
+                  }}
+                  data-testid="confidence-level-badge"
+                >
+                  {r.confidence_level} ({Math.round(r.score * 100)}%)
+                </div>
+              )}
+
+              {/* CALORIAS — após family-block e confidence-badge (hierarquia global) */}
+              {r.confidence !== 'baixa' && r.confidence !== 'média' && r.confidence !== 'media' &&
+               (r.nutrition?.calorias || r.calorias_estimadas) && (
+                <div 
+                  className="calories-highlight" 
+                  data-testid="calories-highlight"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1))',
+                    borderRadius: '12px',
+                    padding: '12px 20px',
+                    margin: '8px 0 12px',
+                    textAlign: 'center'
+                  }}
+                >
+                  <span style={{ fontSize: '28px', fontWeight: 'bold', color: '#f59e0b' }}>
+                    {r.nutrition?.calorias || r.calorias_estimadas}
+                  </span>
+                  <div style={{ fontSize: '11px', color: '#888', marginTop: '2px' }}>
+                    {r.nutrition?.proteinas && `P: ${r.nutrition.proteinas}`}
+                    {r.nutrition?.carboidratos && ` • C: ${r.nutrition.carboidratos}`}
+                    {r.nutrition?.gorduras && ` • G: ${r.nutrition.gorduras}`}
+                  </div>
+                </div>
+              )}
 
               {/* ALTERNATIVAS — exibir após família quando family_name presente */}
               {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
