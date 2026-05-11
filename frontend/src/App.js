@@ -702,15 +702,15 @@ const renderTextSafe = (v) => {
   // Valor do restaurant para enviar na API
   // Checa React state + localStorage para nunca perder cibi_sana
   const getRestaurantValue = () => {
-    // Retorna 'external' SOMENTE com confirmação explícita do GPS.
-    // Em qualquer estado indefinido (GPS carregando, negado, drift),
-    // usa modo seguro local → bloqueia Gemini por padrão.
     if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
     const stored = localStorage.getItem('soulnutri_restaurant');
     if (stored === 'cibi_sana') return 'cibi_sana';
     if (detectedRestaurant === 'external' || stored === 'external') return 'external';
-    // GPS pendente / negado / incerto → modo seguro (bloqueia Gemini)
-    return 'cibi_sana';
+    // Segurança:
+    // nunca assumir Cibi Sana por default.
+    // Sem GPS, seleção manual ou localStorage válido,
+    // usar external/Gemini.
+    return 'external';
   };
 
   useEffect(() => { 
