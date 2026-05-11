@@ -1,231 +1,15 @@
 <analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos. Resolver erros críticos em produção causados por gargalos e travamentos na inferência da IA.
 
 **User's preferred language**: Portuguese (Brasil)
-INSTRUCT: O próximo agente DEVE responder APENAS em Português (Brasil). O usuário é extremamente metódico, técnico e exige controle absoluto (além de se preocupar em economizar créditos). **REGRA DE OURO:** JAMAIS aplique um patch, faça commit, altere lógicas de reconhecimento de IA (CLIP, ONNX, embeddings, thresholds, score, policy) ou execute deploy/Save to Github sem a autorização EXPLÍCITA do usuário. Sempre forneça relatórios (diffs e diagnósticos) detalhados, indo direto ao ponto, antes de agir.
+INSTRUCT: O próximo agente DEVE responder APENAS em Português (Brasil). O usuário é extremamente metódico, técnico e exige controle absoluto (além de se preocupar em economizar créditos). **REGRA DE OURO:** JAMAIS aplique um patch, faça commit, altere lógicas de reconhecimento de IA ou execute deploy/Save to Github sem a autorização EXPLÍCITA do usuário. Seja direto e evite tool calls redundantes para economizar créditos. **NUNCA MAIS USE **, pois isso causou a atual divergência do histórico.
 
-**what currently exists?**: App Full-Stack (FastAPI + React PWA + MongoDB). O sistema de reconhecimento roda localmente via modelo ONNX (ViT-B-16). O backend () possui uma correção de normalização robusta de slugs ( com conversão de espaços para hífens) para realizar o lookup de famílias no MongoDB. O índice local ( e ) teve Bacalhau com Natas adicionado via *append incremental* (10 imagens baixadas do R2) subindo seu rank para #1. O frontend () possui ajustes visuais de fontes, e o bloco de Famílias, bem como o Também pode ser, foi reorganizado hierarquicamente.
+**what currently exists?**: App Full-Stack (FastAPI + React PWA + MongoDB). IA roda com ONNX (ViT-B-16) para 'cibi_sana' e faz fallback para Gemini Flash 1.5 para pratos externos. Banco MongoDB possui as collections  e . As famílias PASTEL e MILANESA foram recém-normalizadas no banco utilizando *aliases* nos  para evitar a criação de pratos fantasmas. O  sofreu ajustes hierárquicos globais em sua exibição de resultados, renderizando agora: Nome -> Ficha Nutricional (Calorias/Proteínas) -> Família Visual -> Badge de Confiança -> Alternativas (Também pode ser) -> Categoria/Alergênicos. 
 
 **Last working item**:
-    - Last item agent was working: O agente aplicou o patch da ETAPA 11B (), que reposiciona o bloco de alternativas (Também pode ser) para aparecer *depois* do bloco da Família visual (quando a família existir), mantendo-o no lugar atual caso a família não exista. O sistema auto-commitou as alterações. O usuário enviou uma mensagem final (Msg 375) exigindo o diff e 5 confirmações explícitas da ordem visual no preview antes de liberar o Save to Github.
-    - Status: USER VERIFICATION PENDING
-    - Agent Testing Done: Y (Screenshot com preview feito e validado localmente)
-    - Which testing method agent to use?: bash (commit cdc9a35794412bc32ce72d1460a0f07fdd0e86c6
-Author: emergent-agent-e1 <github@emergent.sh>
-Date:   Sat May 9 14:08:58 2026 +0000
-
-    auto-commit for a731f8f0-0b2e-4407-ba16-566d3cfea289
-
-diff --git a/frontend/src/App.js b/frontend/src/App.js
-index 2d60456..7b684c0 100644
---- a/frontend/src/App.js
-+++ b/frontend/src/App.js
-@@ -3987,7 +3987,7 @@ return {
-                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
-                     </div>
-                   </div>
--                  {r.alternatives && r.alternatives.length > 0 && (
-+                  {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
-                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-                       <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-                         Tambem pode ser:
-@@ -4099,6 +4099,31 @@ return {
-                 );
-               })()}
- 
-+              {/* ALTERNATIVAS — exibir após família quando family_name presente */}
-+              {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
-+               r.alternatives && r.alternatives.length > 0 && (
-+                <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-+                  <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-+                    Tambem pode ser:
-+                  </div>
-+                  {r.alternatives.slice(0, 2).map((alt, i) => (
-+                    <div key={i} data-testid={`alternative-${i}`} style={{
-+                      background: 'rgba(245, 158, 11, 0.08)',
-+                      border: '1px solid rgba(245, 158, 11, 0.2)',
-+                      borderRadius: '10px',
-+                      padding: '8px 14px',
-+                      marginBottom: '4px',
-+                      fontSize: '14px',
-+                      fontWeight: '500',
-+                      color: '#92400e',
-+                      textAlign: 'center'
-+                    }}>
-+                      {renderTextSafe(alt)}
-+                    </div>
-+                  ))}
-+                </div>
-+              )}
-+
-               {/* CATEGORIA - não mostrar na baixa */}
-               {r.confidence !== 'baixa' && (
-                 <div ) para capturar as mudanças commitadas.
-    - User Testing Done: N
-
-**All Pending/In progress Issue list**:
-  Issue 1: Fornecer Diff e confirmar respostas da ETAPA 11B (P0)
-     - Attempted fixes: O patch visual no  foi aplicado via  e testado com screenshots, mas foi incorporado pela plataforma em um auto-commit recente.
-     - Next debug checklist: Obter o diff da última alteração (commit cdc9a35794412bc32ce72d1460a0f07fdd0e86c6
-Author: emergent-agent-e1 <github@emergent.sh>
-Date:   Sat May 9 14:08:58 2026 +0000
-
-    auto-commit for a731f8f0-0b2e-4407-ba16-566d3cfea289
-
-diff --git a/frontend/src/App.js b/frontend/src/App.js
-index 2d60456..7b684c0 100644
---- a/frontend/src/App.js
-+++ b/frontend/src/App.js
-@@ -3987,7 +3987,7 @@ return {
-                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
-                     </div>
-                   </div>
--                  {r.alternatives && r.alternatives.length > 0 && (
-+                  {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
-                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-                       <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-                         Tambem pode ser:
-@@ -4099,6 +4099,31 @@ return {
-                 );
-               })()}
- 
-+              {/* ALTERNATIVAS — exibir após família quando family_name presente */}
-+              {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
-+               r.alternatives && r.alternatives.length > 0 && (
-+                <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-+                  <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-+                    Tambem pode ser:
-+                  </div>
-+                  {r.alternatives.slice(0, 2).map((alt, i) => (
-+                    <div key={i} data-testid={`alternative-${i}`} style={{
-+                      background: 'rgba(245, 158, 11, 0.08)',
-+                      border: '1px solid rgba(245, 158, 11, 0.2)',
-+                      borderRadius: '10px',
-+                      padding: '8px 14px',
-+                      marginBottom: '4px',
-+                      fontSize: '14px',
-+                      fontWeight: '500',
-+                      color: '#92400e',
-+                      textAlign: 'center'
-+                    }}>
-+                      {renderTextSafe(alt)}
-+                    </div>
-+                  ))}
-+                </div>
-+              )}
-+
-               {/* CATEGORIA - não mostrar na baixa */}
-               {r.confidence !== 'baixa' && (
-                 <div  ou equivalente), e responder meticulosamente as 5 perguntas da mensagem 375 do usuário: 1) Onde estava o bloco; 2) Onde ficou; 3) A ordem exata renderizada; 4) A manutenção do comportamento para prato sem família; 5) A confirmação de que *não* houve deploy.
-     - Why fix this issue and what will be achieved with the fix?: Concluirá os aprimoramentos de UI solicitados, liberando o usuário para autorizar o Save to Github e o deploy em produção.
-     - Status: USER VERIFICATION PENDING
-     - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: NA
-     - Blocked on other issue: Bloqueado no fornecimento de resposta (assistente).
-
-  Issue 2: Auditoria e Limpeza do Dataset Contaminado (P1)
-     - Attempted fixes: Identificado e documentado (pratos como Tortilha Espanhola de Batata têm apenas 8 imagens locais).
-     - Next debug checklist: Aguardar instrução. Quando autorizado, será necessário limpar lixo e possivelmente adicionar/reindexar outros pratos deficitários do dataset.
-     - Why fix this issue and what will be achieved with the fix?: Melhorará as margens de classificação da IA, eliminando conflitos estruturais residuais (Ex: Brocolis Gratinado x Bacalhau com Natas).
-     - Status: BLOCKED
-     - Is recurring issue? Y
-     - Should Test frontend/backend/both after fix?: backend
-
-**In progress Task List**:
-  Task 1: Relatório Final da ETAPA 11B (P0)
-     - Where to resume: O agente deve enviar a mensagem de resposta abordando estritamente os comandos e validações pedidos na Message 375. (Nota: avise o usuário que o  retornará vazio devido ao auto-commit, apresentando em vez disso o commit cdc9a35794412bc32ce72d1460a0f07fdd0e86c6
-Author: emergent-agent-e1 <github@emergent.sh>
-Date:   Sat May 9 14:08:58 2026 +0000
-
-    auto-commit for a731f8f0-0b2e-4407-ba16-566d3cfea289
-
-diff --git a/frontend/src/App.js b/frontend/src/App.js
-index 2d60456..7b684c0 100644
---- a/frontend/src/App.js
-+++ b/frontend/src/App.js
-@@ -3987,7 +3987,7 @@ return {
-                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
-                     </div>
-                   </div>
--                  {r.alternatives && r.alternatives.length > 0 && (
-+                  {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
-                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-                       <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-                         Tambem pode ser:
-@@ -4099,6 +4099,31 @@ return {
-                 );
-               })()}
- 
-+              {/* ALTERNATIVAS — exibir após família quando family_name presente */}
-+              {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
-+               r.alternatives && r.alternatives.length > 0 && (
-+                <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-+                  <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-+                    Tambem pode ser:
-+                  </div>
-+                  {r.alternatives.slice(0, 2).map((alt, i) => (
-+                    <div key={i} data-testid={`alternative-${i}`} style={{
-+                      background: 'rgba(245, 158, 11, 0.08)',
-+                      border: '1px solid rgba(245, 158, 11, 0.2)',
-+                      borderRadius: '10px',
-+                      padding: '8px 14px',
-+                      marginBottom: '4px',
-+                      fontSize: '14px',
-+                      fontWeight: '500',
-+                      color: '#92400e',
-+                      textAlign: 'center'
-+                    }}>
-+                      {renderTextSafe(alt)}
-+                    </div>
-+                  ))}
-+                </div>
-+              )}
-+
-               {/* CATEGORIA - não mostrar na baixa */}
-               {r.confidence !== 'baixa' && (
-                 <div  do último hash).
-     - What will be achieved with this?: Confiança e autorização do usuário para concluir os passos do Git.
-     - Status: IN PROGRESS
-     - Should Test frontend/backend/both after fix?: frontend
-     - Blocked on something: Elaboração da resposta.
-
-**Upcoming and Future Tasks**
-    Upcoming Tasks:
-    - (P1) Cadastrar o prato Lasanha Bolonhesa no banco  e ajustar a família  removendo-o de  (aguarda upload de fotos no Admin).
-    - (P1) Reativar o modo  do frontend (atualmente desativado no  com ).
-    - (P1) Executar os comandos de limpeza documentados em .
-    - (P2) Criar endpoint alternativo de fast-lookup por nome ou seleção manual prévia para pular totalmente a inferência do CLIP no buffet.
-    - (P2) Implementar reconhecimento OCR via plaquinhas para diferenciar famílias idênticas.
-    
-    Future Tasks:
-    - (P3) Expandir o índice (append) com as restantes 25 fotos de Bacalhau com Natas para isolar ainda mais as inferências.
-    - (P3) Refatorar  e  (Apenas quando explicitamente autorizado).
-    - (P3) Excluir  do  para reduzir Cold Starts em Deploy.
-
-**Completed work in this session**
-- Isolamento de commit no Git (ETAPA 6) retirando arquivos de relatório e auto-commits do frontend (DONE).
-- Correção de Lookup no  (ETAPA 9): normalização higiênica e defensiva da string ( com substituição de espaços para hífen) sem quebrar slugs legados (DONE).
-- Diagnóstico técnico do desaparecimento do Bacalhau com Natas: identificado que as fotos viviam no Cloudflare R2 e não existiam no disco local no momento do  (DONE).
-- Append Incremental do ONNX Index (ETAPA 10): Download de 10 fotos do R2 para , extração dos embeddings em memória e adição controlada no shape  ->  para contornar o longo processo de reconstrução do  (DONE).
-- Limpeza dos metadados de backup  do diretório via git após auto-commit indevido da plataforma (DONE).
-- Ajustes de UI no  (ETAPA 11 e 11B): Ajuste de tamanho de fontes ( -> 15px) e reordenamento condicional do bloco de Famílias em cenários de Média confiança (DONE).
-
-**Earlier issues found/mentioned but not fixed**
-   Issue 1: Lasanha Bolonhesa pendente.
-   - Debug checklist: A família gratinados tem Lasanha Bolonhesa em . Não existe o prato na tabela .
-   - Why to solve this issue and what will be achieved with this?: Alinhamento de todos os itens do painel admin com o frontend e IA.
-   - Should Test frontend/backend/both after fix: backend
-   - Is recurring issue? N
-
-   Issue 2: Overlap Estrutural entre pratos (Bacalhau com Natas e Brocolis Gratinado)
-   - Debug checklist: O ViT-B-16 frequentemente confunde pratos gratinados que estão apresentados no mesmo formato retangular/circular.
-   - Why to solve this issue and what will be achieved with this?: Pode gerar falsos positivos se a iluminação variar. Requer aumento seguro e limpeza de datasets para separar as features visuais.
-   - Should Test frontend/backend/both after fix: backend
-   - Is recurring issue? Y
-
-**Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: Plataforma gerando auto-commits de arquivos de metadados, relatórios ou de estado (ex:  ou ), bagunçando o histórico limpo que o usuário requisita.
-  - Recurrence count: 3
-  - Status: IN PROGRESS (O agente atual tem conseguido identificar os auto-commits e alertar o usuário, mas continue atento: SEMPRE leia o On branch main
+    - Last item agent was working: Sincronização do Git local com o remoto sem perda de dados e sem exigir Force Push. O usuário está frustrado porque a plataforma gera commits automáticos e o uso indiscriminado de  em sessões anteriores deixou o histórico local divergente, forçando o uso de Force Push ou cópias manuais para o GitHub Web. O assistente recém modificou o  para corrigir a Ficha Nutricional e agora precisa submeter as alterações limpas.
+    - Status: IN PROGRESS
+    - Agent Testing Done: Y (Modificações no App.js já feitas em backend local e analisadas por bash)
+    - Which testing method agent to use?: bash (On branch main
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	logs/
@@ -235,117 +19,121 @@ Untracked files:
 	migration_output2.log
 	yarn.lock
 
-nothing added to commit but untracked files present (use "git add" to track) e evite dar Save to Github se o working tree tiver lixo incluído inadvertidamente).
+nothing added to commit but untracked files present (use "git add" to track), comandos não-destrutivos do git para sincronizar com origin sem perder as alterações unstaged/recentes no ).
+    - User Testing Done: N
+
+**All Pending/In progress Issue list**:
+  Issue 1: Resolver a divergência de histórico Git sem usar Force Push (P0)
+     - Attempted fixes: Agente anterior tentou dar  repetidas vezes, o que apenas apagou os commits automáticos da plataforma localmente, gerando conflitos de ancestry (diverged branches) no momento de dar Save to Github.
+     - Next debug checklist: Usar comandos Git seguros (ex: stashing das mudanças de , dar pull/rebase do  remoto para alinhar o histórico da plataforma, dar pop no stash e comitar limpo). Explicar de forma sucinta a estratégia para o usuário aprovar. 
+     - Why fix this issue and what will be achieved with the fix?: Permitirá que o usuário salve os patches mais recentes (Ficha Nutricional) clicando em Save to Github normalmente, sem conflitos ou necessidade de colar código manualmente.
+     - Status: IN PROGRESS
+     - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix?: bash/git
+     - Blocked on other issue: N/A
+
+  Issue 2: Auditoria e Limpeza do Dataset Contaminado (P1)
+     - Attempted fixes: Diagnóstico parcial feito em forks passados.
+     - Next debug checklist: Aguardar instrução. Quando autorizado, será necessário limpar lixo e possivelmente adicionar/reindexar outros pratos deficitários do dataset.
+     - Why fix this issue and what will be achieved with the fix?: Melhorará as margens de classificação da IA.
+     - Status: BLOCKED
+     - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix?: backend
+
+**In progress Task List**:
+  Task 1: Relatório de Resolução do Git (P0)
+     - Where to resume: Responder a mensagem final do usuário (Resolve isso de alguma forma para evitar processos manuais...). Propor e aplicar o alinhamento definitivo da branch local com a remota, mantendo o  com a Ficha Nutricional.
+     - What will be achieved with this?: O usuário poderá dar Save to Github do patch atual com tranquilidade.
+     - Status: IN PROGRESS
+     - Should Test frontend/backend/both after fix?: bash (git log)
+     - Blocked on something: N/A
+
+**Upcoming and Future Tasks**
+    Upcoming Tasks:
+    - (P1) Cadastrar o prato Lasanha Bolonhesa no banco  e ajustar a família  removendo-o de .
+    - (P1) Reativar o modo  do frontend (atualmente desativado no  com ).
+    - (P1) Executar os comandos de limpeza documentados em .
+    - (P2) Criar endpoint alternativo de fast-lookup por nome ou seleção manual prévia para pular totalmente a inferência do CLIP no buffet.
+    - (P2) Implementar reconhecimento OCR via plaquinhas para diferenciar famílias idênticas.
+    
+    Future Tasks:
+    - (P3) Expandir o índice (append) com as restantes fotos para isolar pratos confusos.
+    - (P3) Refatorar  e  (APENAS QUANDO EXPLICITAMENTE AUTORIZADO).
+    - (P3) Excluir  do  para reduzir Cold Starts em Deploy.
+
+**Completed work in this session**
+- Relatório final e validação da ETAPA 11B (Ordem Também pode ser) (DONE)
+- Diagnóstico da família PASTEL e normalização no MongoDB via alias, tornando-a prato genérico único (ETAPA 12B) (DONE)
+- Modificação no frontend para exibir nota específica de recheios caso a família seja pastel (ETAPA 12C) (DONE)
+- Diagnóstico da família MILANESA e normalização no MongoDB via alias de whitelist (ETAPA 13) (DONE)
+- Reorganização de layout global no frontend:  movido para cima (ETAPA 14) (DONE)
+- Correção de bug crítico de Roteamento:  no  ajustado de  para  quando sem GPS, resolvendo bloqueio do Gemini (DONE)
+- Correção visual Ficha Nutricional: Realocado o destaque de Calorias e Proteínas no  para renderizar tanto em alta quanto em média confiança, posicionado imediatamente abaixo do nome/família (ETAPA 14B) (DONE)
+
+**Earlier issues found/mentioned but not fixed**
+   Issue 1: Lasanha Bolonhesa pendente.
+   - Debug checklist: A família gratinados tem Lasanha Bolonhesa em . Não existe o prato na tabela .
+   - Why to solve this issue and what will be achieved with this?: Alinhamento de todos os itens do painel admin com o frontend e IA.
+   - Should Test frontend/backend/both after fix: backend
+   - Is recurring issue? N
+
+**Known issue recurrence from previous fork**
+  - Issue recurrence in previous fork: Plataforma gerando auto-commits de arquivos de metadados, relatórios ou de estado (ex: , ). Os agentes estavam tentando remover isso com , criando divergências catastróficas de ancestry entre a branch local e o GitHub. 
+  - Recurrence count: 5+
+  - Status: IN PROGRESS (O agente *NÃO PODE* usar . Aceite os auto-commits de metadados como parte da plataforma ou faça pull do remoto antes de dar commit no trabalho funcional).
 
 **Code Architecture**
 /app
 ├── backend/
-│   ├── ai/               (index.py, embedder.py, families.py, policy.py)
-│   ├── services/         (r2_service.py, image_service.py)
-│   └── server.py         (Entrypoint FastAPI)
+│   ├── ai/               
+│   ├── services/         
+│   └── server.py         
 ├── frontend/
 │   └── src/
-│       ├── App.js        (Core FE - alterado na UI e layout familiar)
+│       ├── App.js        (Centraliza quase todas as regras de visualização do Buffet)
 ├── datasets/             
-│   ├── dish_index.json   (Atualizado com BCN)
-│   └── dish_index_embeddings.npy (Atualizado: 1813 embeddings)
-└── render.yaml           (Deploy configurations)
+└── render.yaml           
 
 **Key Technical Concepts**
-- **ONNX Local AI Append**: Para não incorrer no altíssimo custo (tempo) de refazer todos os embeddings, operou-se um append nos matrizes de forma isolada, concatenando as 10 amostras do R2 e salvando diretamente sobre os .
-- **Slug Normalization Mismatch**: A coleção MongoDB opera nativamente em kebab-case. O modelo devolve dados nominais humanizados.  unifica isso via  no momento em que invoca dados complementares de famílias.
+- **Normalização de Famílias Genéricas via Alias**: No MongoDB, famílias como PASTEL e MILANESA armazenam no  um alias virtual (ex: ) para não obrigar a criação de múltiplos pratos fantasmas idênticos visualmente no DB, passando tranquilamente pelo filtro de exibição do frontend.
+- **Roteamento Cibi Sana x Gemini**: Mutuamente exclusivo. O CLIP ONNX só é ativado se for passado explicitamente . O default passou a ser  para não bloquear reconhecimento de outros restaurantes na IA Gemini.
 
 **key DB schema**
   - : 
   - : 
-  - : 
 
 **changes in tech stack**
-  - Nenhuma adição de biblioteca; Apenas manipulações controladas em scripts internos e numpy.
+  - None
 
 **All files of reference** 
-  -  (Adicionado normalização defensiva e unificação de slugs via unicodedata)
-  -  (Formato alterado para suportar novo prato)
-  -  (Registros recém incrementados)
-  -  (Blocos JSX re-ordenados)
+  -  (O arquivo chave em todo o processo de frontend - modificado recentemente para exibir Ficha Nutricional, Badge de Confiança, Bloco de Família e Corrigir o GPS)
+  - 
 
 **Areas that need refactoring**:
-- A base do  encontra-se excessivamente volumosa. O usuário estritamente PROIBIU refatorações sem consentimento.
+-  está monolítico. O usuário estritamente PROIBIU refatorações sem consentimento. Não toque para refatorar!
 
 **key api endpoints**
-  -  (Principal funil de detecção de imagem)
-  -  (Jamais o invoque por conta própria, reconstrói o banco)
+  - 
 
 **Critical Info for New Agent** 
-- **ECONOMIA DE CRÉDITOS**: O usuário explicitou que seus créditos estão acabando. Responda o estritamente necessário. Não processe dados extras. Evite tools desnecessárias ou redundantes.
-- O seu status no momento é responder à . Você sabe que o  retornará vazio devido a um auto-commit ( ou mais recente). Comunique esse detalhe com clareza (ex: através de commit cdc9a35794412bc32ce72d1460a0f07fdd0e86c6
-Author: emergent-agent-e1 <github@emergent.sh>
-Date:   Sat May 9 14:08:58 2026 +0000
-
-    auto-commit for a731f8f0-0b2e-4407-ba16-566d3cfea289
-
-diff --git a/frontend/src/App.js b/frontend/src/App.js
-index 2d60456..7b684c0 100644
---- a/frontend/src/App.js
-+++ b/frontend/src/App.js
-@@ -3987,7 +3987,7 @@ return {
-                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
-                     </div>
-                   </div>
--                  {r.alternatives && r.alternatives.length > 0 && (
-+                  {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
-                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-                       <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-                         Tambem pode ser:
-@@ -4099,6 +4099,31 @@ return {
-                 );
-               })()}
- 
-+              {/* ALTERNATIVAS — exibir após família quando family_name presente */}
-+              {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
-+               r.alternatives && r.alternatives.length > 0 && (
-+                <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-+                  <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-+                    Tambem pode ser:
-+                  </div>
-+                  {r.alternatives.slice(0, 2).map((alt, i) => (
-+                    <div key={i} data-testid={`alternative-${i}`} style={{
-+                      background: 'rgba(245, 158, 11, 0.08)',
-+                      border: '1px solid rgba(245, 158, 11, 0.2)',
-+                      borderRadius: '10px',
-+                      padding: '8px 14px',
-+                      marginBottom: '4px',
-+                      fontSize: '14px',
-+                      fontWeight: '500',
-+                      color: '#92400e',
-+                      textAlign: 'center'
-+                    }}>
-+                      {renderTextSafe(alt)}
-+                    </div>
-+                  ))}
-+                </div>
-+              )}
-+
-               {/* CATEGORIA - não mostrar na baixa */}
-               {r.confidence !== 'baixa' && (
-                 <div ) respondendo as 5 perguntas de verificação e libere a requisição de Save to Github.
-- O Render possui a funcionalidade de auto-deploy desligada.
+- **ECONOMIA DE CRÉDITOS**: O usuário reclamou VÁRIAS vezes sobre desperdício de créditos! Vá direto ao ponto, não use ferramentas (view_file, etc.) se já souber a resposta ou possuir o contexto. Evite saídas verbosas.
+- **DIVERGÊNCIA GIT:** NÃO aplique  ou force push sem um plano infalível para alinhar a HEAD da máquina local ao  da Vercel/GitHub. O usuário deseja clicar em Save to Github sem sofrer erro de ancestry de novo. Sua primeira ação deve ser alinhar o branch local de maneira natural (fetch/pull/stash).
+- O Render possui a funcionalidade de auto-deploy desligada, porém o Vercel possui auto-deploy ativado acompanhando o  do GitHub.
 
 **documents and test reports created in this job** 
 - N/A
 
 **Last 10 User Messages and any pending HUMAN messages** 
-(O histórico acima engloba as transições de ajustes visuais (ETAPA 11) e controle do ONNX via numpy (ETAPA 10))
-1. (User) Pediu auditoria das divergências entre Admin e Índice (ETAPA 8).
-2. (User) Aprovou micro-ajuste no parser de slugs em  e pediu diff completo (ETAPA 9).
-3. (User) Pediu plano para indexar Bacalhau com Natas sem rebuild completo (ETAPA 10).
-4. (User) Autorizou execução das etapas A a D (download, extração ONNX in-memory).
-5. (User) Pediu ETAPA E (salvar índice validando regressões e verificando top-10).
-6. (User) Orientou limpeza cirúrgica de arquivos  inseridos inadvertidamente pelo auto-commit.
-7. (User) Solicitou que gerasse testes de imagem no preview de Staging com as tags .
-8. (User) Pediu ajustes na UI do App.js (tamanho das letras e mover família pra cima da categoria) - ETAPA 11.
-9. (User) Reportou bug de hierarquia e pediu ETAPA 11B (Bloco Também pode ser após Família Visual).
-10. **[PENDING HUMAN MESSAGE]** (User) Interrompeu o Save to Github. Solicitou estritamente que você emita o relatório respondendo a 5 perguntas vitais de validação, fornecendo o diff para certificar que o app renderiza a hierarquia final pretendida, sem ter feito deploy algum.
+1. (User) Pediu o deploy manual / Save to Github para a Etapa 12C e 14.
+2. (User) Reclamou que gerou conflito de PR e PR sujo devido ao .
+3. (User) Para contornar, o usuário optou por copiar e colar todo o App.js via GitHub Web Editor para limpar a divergência na mão. Reclamou dos custos e do tempo gasto.
+4. (User) Fez diagnóstico externo: Identificou bug grave onde pratos de fora do Cibi Sana não estavam ativando o Gemini Flash.
+5. (User) O agente corrigiu o  no App.js mudando de  para  (Bug Routing Fixed).
+6. (User) Reclamou novamente da tela de Force Push anyway da plataforma Emergent (Por que está acontecendo esse problema de novo?). O agente justificou usar force push e deu autorização.
+7. (User) Identificou que as alterações da ETAPA 14 sumiram com a ficha nutricional resumida em média confiança e pediu diagnóstico.
+8. (User) Confirmou a intenção de restaurar a ordem no App.js (Nome -> ficha -> family -> badge).
+9. O Agente aplicou a modificação em App.js localmente, com sucesso.
+10. **[PENDING HUMAN MESSAGE]** (User) Agora fica pedindo force push toda vez e nao quero forçar pois há riscos. Resolve isso de alguma forma para evitar processos manuais de copiar e colar esses arquivos. -> **Você precisa alinhar a árvore Git local ao Remoto para que o usuário possa fazer o Save to Github normal, com a alteração do App.js atualizada, sem Force Push.**
 
 **Project Health Check:**
 - Broken: Nenhum.
@@ -354,73 +142,22 @@ index 2d60456..7b684c0 100644
 **3rd Party Integrations**
 - Cloudflare R2 (Storage Imagens) — User API Key
 - Gemini (LLM) — Emergent LLM Key
-- Render (Deploy / Cloud env)
+- Render (Backend Deploy) / Vercel (Frontend Deploy)
 
 **Testing status**
-  - Testing agent used after significant changes: NO. (Desativado pelo usuário).
-  - Troubleshoot agent used after agent stuck in loop: NO.
+  - Testing agent used after significant changes: NO. (Desativado pelo usuário por causa dos créditos).
+  - Troubleshoot agent used: NO.
   - Test files created: None.
-  - Known regressions: Tortilha Espanhola/Bacalhau podem oscilar com baixas margens estruturais em media confidence dependendo da iluminação da foto, o que é um comportamento residual aceito.
+  - Known regressions: O usuário foi afetado pelo Git divergente;
 
 **Credentials to test flow:**
 - App/Dashboard Admin: , PIN 
 
 **What agent forgot to execute**
-O agente estava perfeitamente alinhado, entretanto, após o replace via bash da ETAPA 11B, a máquina auto-commitou as ações no . O Agente não pôde prover a resposta solicitada pela mensagem 375 ainda. 
+O agente consertou o código do App.js, mas não estabilizou o repositório Git local em relação ao GitHub antes de deixar para o próximo turno. 
 
 <example>
 **Debugging checklist for current issue**
-    Issue: Finalizar Resposta da ETAPA 11B (Message 375)
-    Frontend files to check: Não precisa editar mais o frontend.  
-    Ação Imediata: O usuário quer um comprovativo. Faça o commit cdc9a35794412bc32ce72d1460a0f07fdd0e86c6
-Author: emergent-agent-e1 <github@emergent.sh>
-Date:   Sat May 9 14:08:58 2026 +0000
-
-    auto-commit for a731f8f0-0b2e-4407-ba16-566d3cfea289
-
-diff --git a/frontend/src/App.js b/frontend/src/App.js
-index 2d60456..7b684c0 100644
---- a/frontend/src/App.js
-+++ b/frontend/src/App.js
-@@ -3987,7 +3987,7 @@ return {
-                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
-                     </div>
-                   </div>
--                  {r.alternatives && r.alternatives.length > 0 && (
-+                  {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
-                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-                       <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-                         Tambem pode ser:
-@@ -4099,6 +4099,31 @@ return {
-                 );
-               })()}
- 
-+              {/* ALTERNATIVAS — exibir após família quando family_name presente */}
-+              {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
-+               r.alternatives && r.alternatives.length > 0 && (
-+                <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
-+                  <div style={{ fontSize: '12px', color: '#888', marginBottom: '6px', textAlign: 'center' }}>
-+                    Tambem pode ser:
-+                  </div>
-+                  {r.alternatives.slice(0, 2).map((alt, i) => (
-+                    <div key={i} data-testid={`alternative-${i}`} style={{
-+                      background: 'rgba(245, 158, 11, 0.08)',
-+                      border: '1px solid rgba(245, 158, 11, 0.2)',
-+                      borderRadius: '10px',
-+                      padding: '8px 14px',
-+                      marginBottom: '4px',
-+                      fontSize: '14px',
-+                      fontWeight: '500',
-+                      color: '#92400e',
-+                      textAlign: 'center'
-+                    }}>
-+                      {renderTextSafe(alt)}
-+                    </div>
-+                  ))}
-+                </div>
-+              )}
-+
-               {/* CATEGORIA - não mostrar na baixa */}
-               {r.confidence !== 'baixa' && (
-                 <div  para mostrar o que foi inserido, em seguida escreva o texto formatado listando as posições exatas do React Node que renderiza . Finalize pedindo se pode realizar o Save to Github.
+    Issue: Git diverged branches impedindo Save to Github natural.
+    Ação Imediata: O usuário não quer usar Force Push. Você deve usar No local changes to save para salvar as modificações do App.js (Ficha nutricional e fallback routing), alinhar a branch principal ( se aplicável), e aplicar o stash (). Comunique isso ao usuário de forma super compacta para não gastar créditos e peça para ele dar o Save to Github via plataforma.
 </example></analysis>
