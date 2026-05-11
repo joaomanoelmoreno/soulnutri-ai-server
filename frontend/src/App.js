@@ -700,16 +700,18 @@ const renderTextSafe = (v) => {
   };
 
   // Valor do restaurant para enviar na API
-  // Checa React state + localStorage para nunca perder cibi_sana
+  // Prioridade: GPS ativo > seleção manual explícita > external
   const getRestaurantValue = () => {
-    if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
-    const stored = localStorage.getItem('soulnutri_restaurant');
-    if (stored === 'cibi_sana') return 'cibi_sana';
-    if (detectedRestaurant === 'external' || stored === 'external') return 'external';
-    // Segurança:
-    // nunca assumir Cibi Sana por default.
-    // Sem GPS, seleção manual ou localStorage válido,
-    // usar external/Gemini.
+    // P1: GPS ativamente confirmando cibi_sana neste render
+    if (detectedRestaurant === 'cibi_sana' && permissionsStatus?.location === 'granted') {
+      return 'cibi_sana';
+    }
+    // P2: Seleção manual explícita de cibi_sana (flag soulnutri_location_manual)
+    const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
+    if (isManual && localStorage.getItem('soulnutri_restaurant') === 'cibi_sana') {
+      return 'cibi_sana';
+    }
+    // P3: GPS external / GPS negado / GPS pendente / localStorage antigo → external
     return 'external';
   };
 
