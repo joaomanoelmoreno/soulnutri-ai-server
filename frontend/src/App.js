@@ -3986,6 +3986,12 @@ return {
                     <div style={{ fontSize: '13px', color: '#a16207' }}>
                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
                     </div>
+                    {(r.nutrition?.calorias || r.calorias_estimadas) && (
+                      <div data-testid="calories-highlight" style={{ fontSize: '12px', color: '#92400e', marginTop: '6px', fontWeight: '500' }}>
+                        {r.nutrition?.calorias || r.calorias_estimadas}
+                        {r.nutrition?.proteinas && ` • P: ${r.nutrition.proteinas}`}
+                      </div>
+                    )}
                   </div>
                   {!r.family_name && r.alternatives && r.alternatives.length > 0 && (
                     <div data-testid="alternatives-list" style={{ margin: '8px 0' }}>
@@ -4013,6 +4019,28 @@ return {
               ) : (
                 <>
                   <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
+                  {(r.nutrition?.calorias || r.calorias_estimadas) && (
+                    <div
+                      className="calories-highlight"
+                      data-testid="calories-highlight"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1))',
+                        borderRadius: '12px',
+                        padding: '12px 20px',
+                        margin: '8px 0 4px',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <span style={{ fontSize: '28px', fontWeight: 'bold', color: '#f59e0b' }}>
+                        {r.nutrition?.calorias || r.calorias_estimadas}
+                      </span>
+                      <div style={{ fontSize: '11px', color: '#888', marginTop: '2px' }}>
+                        {r.nutrition?.proteinas && `P: ${r.nutrition.proteinas}`}
+                        {r.nutrition?.carboidratos && ` • C: ${r.nutrition.carboidratos}`}
+                        {r.nutrition?.gorduras && ` • G: ${r.nutrition.gorduras}`}
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
               
@@ -4077,31 +4105,6 @@ return {
                   data-testid="confidence-level-badge"
                 >
                   {r.confidence_level} ({Math.round(r.score * 100)}%)
-                </div>
-              )}
-
-              {/* CALORIAS — após family-block e confidence-badge (hierarquia global) */}
-              {r.confidence !== 'baixa' && r.confidence !== 'média' && r.confidence !== 'media' &&
-               (r.nutrition?.calorias || r.calorias_estimadas) && (
-                <div 
-                  className="calories-highlight" 
-                  data-testid="calories-highlight"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1))',
-                    borderRadius: '12px',
-                    padding: '12px 20px',
-                    margin: '8px 0 12px',
-                    textAlign: 'center'
-                  }}
-                >
-                  <span style={{ fontSize: '28px', fontWeight: 'bold', color: '#f59e0b' }}>
-                    {r.nutrition?.calorias || r.calorias_estimadas}
-                  </span>
-                  <div style={{ fontSize: '11px', color: '#888', marginTop: '2px' }}>
-                    {r.nutrition?.proteinas && `P: ${r.nutrition.proteinas}`}
-                    {r.nutrition?.carboidratos && ` • C: ${r.nutrition.carboidratos}`}
-                    {r.nutrition?.gorduras && ` • G: ${r.nutrition.gorduras}`}
-                  </div>
                 </div>
               )}
 
