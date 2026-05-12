@@ -655,6 +655,11 @@ const renderTextSafe = (v) => {
             localStorage.removeItem('soulnutri_location_manual');
             setDetectedRestaurant('cibi_sana');
             localStorage.setItem('soulnutri_restaurant', 'cibi_sana');
+          } else {
+            // GPS confirma saída da zona → respeitar GPS, remover trava manual
+            localStorage.removeItem('soulnutri_location_manual');
+            setDetectedRestaurant('external');
+            localStorage.setItem('soulnutri_restaurant', 'external');
           }
           return;
         }
