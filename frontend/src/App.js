@@ -543,9 +543,7 @@ const renderTextSafe = (v) => {
     location: 'pending'
   });
   // Detecção de localização (Cibi Sana vs Externo)
-  const [detectedRestaurant, setDetectedRestaurant] = useState(() => {
-    return localStorage.getItem('soulnutri_restaurant') || null;
-  });
+  const [detectedRestaurant, setDetectedRestaurant] = useState(null);
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
   const isCibiSana = detectedRestaurant === 'cibi_sana';
   const canShowAdminTools = isAdminUser && isCibiSana;
@@ -700,18 +698,16 @@ const renderTextSafe = (v) => {
   };
 
   // Valor do restaurant para enviar na API
-  // Prioridade: GPS ativo > seleção manual explícita > external
+  // Prioridade: detectedRestaurant (GPS/manual) > seleção manual explícita > external
   const getRestaurantValue = () => {
-    // P1: GPS ativamente confirmando cibi_sana neste render
-    if (detectedRestaurant === 'cibi_sana' && permissionsStatus?.location === 'granted') {
-      return 'cibi_sana';
-    }
-    // P2: Seleção manual explícita de cibi_sana (flag soulnutri_location_manual)
+    // P1: detectedRestaurant confirmado por GPS ou selectLocationManual()
+    if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
+    if (detectedRestaurant === 'external') return 'external';
+    // P2: detectedRestaurant=null (GPS pendente/negado, nunca disparou)
+    // Consultar SOMENTE seleção manual explícita com flag persistente
     const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
-    if (isManual && localStorage.getItem('soulnutri_restaurant') === 'cibi_sana') {
-      return 'cibi_sana';
-    }
-    // P3: GPS external / GPS negado / GPS pendente / localStorage antigo → external
+    if (isManual && localStorage.getItem('soulnutri_restaurant') === 'cibi_sana') return 'cibi_sana';
+    // Sem confirmação de localização → external
     return 'external';
   };
 
