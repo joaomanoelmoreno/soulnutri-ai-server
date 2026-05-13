@@ -37,6 +37,19 @@ soulnutri.app.br  →  Vercel (React PWA, SSL Let's Encrypt)
 
 ## REGRAS IMUTÁVEIS → /app/memory/REGRAS_IMUTAVEIS.md
 
+## BASELINE LOTE 1 (13/Mai/2026 — APROVADO SEM REGRESSÃO)
+| Métrica | Valor |
+|---|---|
+| Total embeddings | **1832** |
+| Total pratos (dish_to_idx) | **191** |
+| Embedding dim | 512 |
+| Ceviche de Banana da Terra | 10 emb (substituídos — fotos contaminadas removidas) |
+| Espaguete de Abobrinha ao Pesto | 10 emb (reforço de 1→10) |
+| Bacalhau com Natas | 20 emb (10 órfãos históricos + 10 novos — **inconsistência tolerada**, reconhecimento funcional sim=1.0) |
+| Ceviche / Ceviche de Manga | 10 emb cada — **PROTEGIDOS, intactos** |
+| Backups em | `/tmp/lote1_backup_PRE/` |
+| Próximo lote autorizado | **NÃO definido** — aguardar instrução |
+
 ## Implementado
 
 ### V3.6 (05/Fev/2026) — Famílias Visuais
