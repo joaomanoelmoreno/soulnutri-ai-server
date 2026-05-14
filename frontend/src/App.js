@@ -1733,7 +1733,10 @@ const loadNotifCount = async (pin) => {
           window._soulnutriDebug = {...window._soulnutriDebug, lastSource: data.source || '–'};
           window.dispatchEvent(new CustomEvent('_state_update'));
         }
-        if (debugMode) setDebugInfo(prev => ({...prev, lastSource: data.source || '–'}));
+        if (_DEBUG_MODE) {
+          window._soulnutriDebug = {...window._soulnutriDebug, lastSource: data.source || '–'};
+          window.dispatchEvent(new CustomEvent('_state_update'));
+        }
         setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
