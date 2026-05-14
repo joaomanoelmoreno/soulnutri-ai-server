@@ -29,11 +29,11 @@ if (_DEBUG_MODE) {
   const _origLog = console.log.bind(console);
   console.log = (...args) => {
     _origLog(...args);
-    const line = args.join(' ');
-    if (line.includes('[FINAL_PROOF]') || line.includes('[ENRICH]')) {
+    const line = args.map(a => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' ');
+    if (line.includes('[FINAL_PROOF]') || line.includes('[ENRICH]') ||
+        line.includes('[GPS_DEBUG]') || line.includes('[getRestaurantValue]') || line.includes('[STATE]')) {
       _debugLines.push(`${new Date().toISOString().slice(11,23)} ${line}`);
-      if (_debugLines.length > 30) _debugLines.shift();
-      // Atualizar painel via evento customizado
+      if (_debugLines.length > 40) _debugLines.shift();
       window.dispatchEvent(new CustomEvent('_fp_log', { detail: line }));
     }
   };
@@ -43,25 +43,32 @@ function DebugPanel() {
   const [lines, setLines] = React.useState([]);
   const [visible, setVisible] = React.useState(true);
   const [versionInfo, setVersionInfo] = React.useState(null);
+  const [stateSnap, setStateSnap] = React.useState({});
   const BACKEND_URL_LOCAL = process.env.REACT_APP_BACKEND_URL || '';
   const API_LOCAL = `${BACKEND_URL_LOCAL}/api`;
-  // Hash do bundle frontend atual (muda a cada build/deploy)
   const frontendHash = document.querySelector('script[src*="/static/js/main."]')
     ?.src?.match(/main\.([a-f0-9]+)\.js/)?.[1] || 'unknown';
 
   React.useEffect(() => {
-    const handler = (e) => setLines(prev => {
-      const next = [...prev, `${new Date().toISOString().slice(11,23)} ${e.detail}`];
-      return next.slice(-25);
-    });
+    const handler = (e) => {
+      const line = typeof e.detail === 'string' ? e.detail : JSON.stringify(e.detail);
+      setLines(prev => [...prev, `${new Date().toISOString().slice(11,23)} ${line}`].slice(-30));
+    };
+    const stateHandler = () => {
+      if (window._soulnutriDebug) setStateSnap({...window._soulnutriDebug});
+    };
     window.addEventListener('_fp_log', handler);
-    // Buscar versão do servidor ao montar
+    window.addEventListener('_state_update', stateHandler);
     fetch(`${API_LOCAL}/debug/version`)
       .then(r => r.json())
       .then(d => setVersionInfo(d))
       .catch(() => setVersionInfo({ error: 'NAO_ACESSIVEL' }));
-    return () => window.removeEventListener('_fp_log', handler);
+    return () => {
+      window.removeEventListener('_fp_log', handler);
+      window.removeEventListener('_state_update', stateHandler);
+    };
   }, [API_LOCAL]);
+
   if (!visible) return (
     <button onClick={() => setVisible(true)} style={{
       position:'fixed',bottom:'4px',left:'4px',zIndex:99999,
@@ -69,38 +76,70 @@ function DebugPanel() {
       borderRadius:'4px',padding:'2px 6px',fontSize:'10px',cursor:'pointer'
     }}>LOG</button>
   );
+
+  const s = stateSnap;
+  const rowStyle = {borderBottom:'1px solid #222', padding:'1px 2px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'};
+
   return (
     <div style={{
       position:'fixed',bottom:0,left:0,right:0,zIndex:99999,
-      background:'rgba(0,0,0,0.92)',color:'#0f0',fontFamily:'monospace',
-      fontSize:'10px',maxHeight:'35vh',overflowY:'auto',padding:'4px',
-      borderTop:'1px solid #0f0'
+      background:'rgba(0,0,0,0.93)',color:'#0f0',fontFamily:'monospace',
+      fontSize:'10px',maxHeight:'55vh',overflowY:'auto',padding:'4px',
+      borderTop:'2px solid #0f0'
     }}>
       <div style={{display:'flex',justifyContent:'space-between',marginBottom:'2px'}}>
-        <strong style={{color:'#ff0'}}>[ FINAL_PROOF DEBUG ]</strong>
+        <strong style={{color:'#ff0'}}>[ GPS/ROUTING DEBUG ]</strong>
         <button onClick={() => setVisible(false)} style={{
           background:'none',border:'none',color:'#f00',fontSize:'12px',cursor:'pointer'
         }}>✕</button>
       </div>
-      {/* Bloco de versão: prova qual backend o celular está usando */}
-      <div style={{background:'#001',borderBottom:'1px solid #040',padding:'3px 4px',marginBottom:'4px',color:'#4f4'}}>
-        <div><b style={{color:'#ff0'}}>BACKEND:</b> {BACKEND_URL_LOCAL || '(vazio)'}</div>
-        <div><b style={{color:'#ff0'}}>FRONTEND_HASH:</b> <span style={{color:'#4ff'}}>{frontendHash}</span></div>
-        {versionInfo && !versionInfo.error && (<>
-          <div><b style={{color:'#ff0'}}>GIT_COMMIT:</b> <span style={{color:'#f90'}}>{versionInfo.git_commit || 'N/A'}</span></div>
-          <div><b style={{color:'#ff0'}}>STARTED:</b> {versionInfo.process_started_at?.slice(0,19) || 'N/A'}</div>
-          <div><b style={{color:'#ff0'}}>UPTIME:</b> {Math.round((versionInfo.process_uptime_seconds||0)/60)}min</div>
-        </>)}
-        {versionInfo?.error && <div style={{color:'#f44'}}>BACKEND INACEISSÍVEL: {versionInfo.error}</div>}
-        {!versionInfo && <div style={{color:'#888'}}>carregando versão...</div>}
+
+      {/* Bloco 1: Estado GPS e roteamento */}
+      <div style={{background:'#001a00',border:'1px solid #0a0',padding:'3px',marginBottom:'3px'}}>
+        <div style={{color:'#ff0',marginBottom:'2px'}}>▶ ESTADO ATUAL</div>
+        <div style={rowStyle}>detectedRestaurant: <span style={{color:'#4ff'}}>{s.detectedRestaurant ?? '–'}</span></div>
+        <div style={rowStyle}>ls_restaurant: <span style={{color:'#4ff'}}>{s.lsRestaurant ?? '–'}</span></div>
+        <div style={rowStyle}>ls_manual: <span style={{color:'#4ff'}}>{s.lsManual ?? '–'}</span></div>
+        <div style={rowStyle}>permLoc: <span style={{color:'#4ff'}}>{s.permLoc ?? '–'}</span></div>
+        <div style={rowStyle}>getRestaurantValue(): <span style={{color: s.computed === 'cibi_sana' ? '#0f0' : '#f44'}}>{s.computed ?? '–'}</span></div>
       </div>
-      {lines.length === 0 && <div style={{color:'#888'}}>aguardando logs...</div>}
+
+      {/* Bloco 2: Último payload enviado */}
+      <div style={{background:'#001a10',border:'1px solid #0a4',padding:'3px',marginBottom:'3px'}}>
+        <div style={{color:'#ff0',marginBottom:'2px'}}>▶ ÚLTIMO PAYLOAD</div>
+        <div style={rowStyle}>restaurant enviado: <span style={{color: s.lastRestaurant === 'cibi_sana' ? '#0f0' : '#f44'}}>{s.lastRestaurant ?? '–'}</span></div>
+        <div style={rowStyle}>source retornado: <span style={{color:'#4ff'}}>{s.lastSource ?? '–'}</span></div>
+      </div>
+
+      {/* Bloco 3: Último GPS */}
+      <div style={{background:'#0a0a00',border:'1px solid #aa0',padding:'3px',marginBottom:'3px'}}>
+        <div style={{color:'#ff0',marginBottom:'2px'}}>▶ ÚLTIMO GPS</div>
+        <div style={rowStyle}>dist: <span style={{color:'#4ff'}}>{s.gpsDist != null ? `${s.gpsDist}m` : '–'}</span></div>
+        <div style={rowStyle}>accuracy: <span style={{color:'#4ff'}}>{s.gpsAccuracy != null ? `${s.gpsAccuracy}m` : '–'}</span></div>
+        <div style={rowStyle}>newRestaurant: <span style={{color: s.gpsNew === 'cibi_sana' ? '#0f0' : '#f44'}}>{s.gpsNew ?? '–'}</span></div>
+      </div>
+
+      {/* Bloco 4: Versão backend */}
+      <div style={{background:'#001',border:'1px solid #040',padding:'3px 4px',marginBottom:'4px'}}>
+        <div><b style={{color:'#ff0'}}>BACKEND:</b> {BACKEND_URL_LOCAL || '(vazio)'}</div>
+        <div><b style={{color:'#ff0'}}>FRONTEND:</b> <span style={{color:'#4ff'}}>{frontendHash}</span></div>
+        {versionInfo && !versionInfo.error && (
+          <div><b style={{color:'#ff0'}}>GIT:</b> <span style={{color:'#f90'}}>{versionInfo.git_commit || 'N/A'}</span></div>
+        )}
+        {versionInfo?.error && <div style={{color:'#f44'}}>{versionInfo.error}</div>}
+      </div>
+
+      {/* Logs temporais */}
+      <div style={{color:'#666',marginBottom:'2px'}}>▼ LOGS</div>
+      {lines.length === 0 && <div style={{color:'#555'}}>aguardando logs...</div>}
       {lines.map((l, i) => (
         <div key={i} style={{
-          color: l.includes('GATE_BLOCKED') ? '#f44' :
-                 l.includes('FETCH_START') ? '#4f4' :
-                 l.includes('FETCH_ERROR') ? '#fa0' : '#0f0',
-          borderBottom:'1px solid #222', padding:'1px 0'
+          color: l.includes('cibi_sana') ? '#0f0' :
+                 l.includes('external') ? '#f44' :
+                 l.includes('GPS_DEBUG') ? '#ff0' :
+                 l.includes('getRestaurantValue') ? '#4ff' :
+                 l.includes('STATE') ? '#f90' : '#0c0',
+          borderBottom:'1px solid #1a1a1a', padding:'1px 0', fontSize:'9px'
         }}>{l}</div>
       ))}
     </div>
@@ -577,6 +616,26 @@ const renderTextSafe = (v) => {
   const mountedRef = useRef(true);
   const lastTouchRef = useRef(0);
 
+  // Publicar estado no window para o DebugPanel (sem impacto em produção)
+  useEffect(() => {
+    if (!_DEBUG_MODE) return;
+    const computed = (() => {
+      if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
+      if (detectedRestaurant === 'external') return 'external';
+      const m = localStorage.getItem('soulnutri_location_manual') === 'true';
+      return (m && localStorage.getItem('soulnutri_restaurant') === 'cibi_sana') ? 'cibi_sana' : 'external';
+    })();
+    window._soulnutriDebug = {
+      ...window._soulnutriDebug,
+      detectedRestaurant: detectedRestaurant ?? 'null',
+      lsRestaurant: localStorage.getItem('soulnutri_restaurant') ?? 'null',
+      lsManual: localStorage.getItem('soulnutri_location_manual') ?? 'null',
+      permLoc: permissionsStatus.location,
+      computed,
+    };
+    window.dispatchEvent(new CustomEvent('_state_update'));
+  }, [detectedRestaurant, permissionsStatus.location]);
+
   // Função para solicitar todas as permissões de uma vez
   const requestAllPermissions = async () => {
     let cameraGranted = false;
@@ -652,6 +711,13 @@ const renderTextSafe = (v) => {
           stored: localStorage.getItem('soulnutri_restaurant'),
           isManual: localStorage.getItem('soulnutri_location_manual')
         });
+        if (_DEBUG_MODE) {
+          window._soulnutriDebug = {
+            ...window._soulnutriDebug,
+            gpsDist: Math.round(dist), gpsAccuracy: Math.round(accuracy), gpsNew: newRestaurant,
+          };
+          window.dispatchEvent(new CustomEvent('_state_update'));
+        }
         
         const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
         
@@ -1638,6 +1704,10 @@ const loadNotifCount = async (pin) => {
       clearTimeout(timeoutId);
       const reqMs = Date.now() - t;
       console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_RESPONSE status=${res.status} time=${reqMs}ms restaurant=${fd.get('restaurant')} backend=${API}`);
+      if (_DEBUG_MODE) {
+        window._soulnutriDebug = {...window._soulnutriDebug, lastRestaurant: fd.get('restaurant')};
+        window.dispatchEvent(new CustomEvent('_state_update'));
+      }
       
       if (!mountedRef.current) return;
       
@@ -1659,6 +1729,11 @@ const loadNotifCount = async (pin) => {
         const resultWithTime = { ...data, totalTime: Date.now() - t };
         // [AUDITORIA] Log completo do payload real para confirmar dish_display no celular
         console.log(`[FINAL_PROOF] scan_id=${_scanId} DISH_DISPLAY="${data.dish_display}" dish_raw="${data.dish}" identified=${data.identified} source=${data.source} total_ms=${resultWithTime.totalTime}`);
+        if (_DEBUG_MODE) {
+          window._soulnutriDebug = {...window._soulnutriDebug, lastSource: data.source || '–'};
+          window.dispatchEvent(new CustomEvent('_state_update'));
+        }
+        if (debugMode) setDebugInfo(prev => ({...prev, lastSource: data.source || '–'}));
         setResult(normalizeResult(resultWithTime));
         setLoading(false); // Mostrar resultado IMEDIATAMENTE
         loadingRef.current = false;
