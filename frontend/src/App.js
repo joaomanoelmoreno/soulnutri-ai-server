@@ -1596,7 +1596,7 @@ const loadNotifCount = async (pin) => {
       // Limpar canvas após uso
       ctx.clearRect(0, 0, outW, outH);
     }, 'image/jpeg', 0.82);
-  }, [multiMode]);
+  }, [multiMode, detectedRestaurant]);
 
   const normalizeResult = (raw) => {
     if (!raw) return null;
