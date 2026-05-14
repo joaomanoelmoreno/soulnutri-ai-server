@@ -645,6 +645,14 @@ const renderTextSafe = (v) => {
         
         const newRestaurant = isInsideCibiSanaZone ? 'cibi_sana' : 'external';
         
+        console.log('[GPS_DEBUG]', {
+          dist: Math.round(dist),
+          accuracy: Math.round(accuracy),
+          newRestaurant,
+          stored: localStorage.getItem('soulnutri_restaurant'),
+          isManual: localStorage.getItem('soulnutri_location_manual')
+        });
+        
         const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
         
         if (isManual) {
@@ -711,6 +719,11 @@ const renderTextSafe = (v) => {
     // P2: detectedRestaurant=null (GPS pendente/negado, nunca disparou)
     // Consultar SOMENTE seleção manual explícita com flag persistente
     const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
+    console.log('[getRestaurantValue]', {
+      detectedRestaurant,
+      stored: localStorage.getItem('soulnutri_restaurant'),
+      isManual: localStorage.getItem('soulnutri_location_manual')
+    });
     if (isManual && localStorage.getItem('soulnutri_restaurant') === 'cibi_sana') return 'cibi_sana';
     // Sem confirmação de localização → external
     return 'external';
