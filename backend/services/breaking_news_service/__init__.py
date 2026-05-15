@@ -21,4 +21,5 @@ Uso:
 
 from .api import get_breaking_news
 
+# PR #1 — FASE 1 (infra backend). Snapshot bump para sincronizacao GitHub.
 __all__ = ["get_breaking_news"]
