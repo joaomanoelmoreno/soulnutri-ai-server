@@ -124,6 +124,28 @@ def _generate_nutrition_alerts(nutrition, alergenos):
     return alerts
 
 
+async def _safe_get_breaking_news(dish_slug, family_slug, ingredientes, category):
+    """
+    Wrapper resiliente para o breaking_news_service (Camada 1 - PREMIUM ONLY).
+
+    Falhas neste servico NUNCA devem impactar o endpoint principal /ai/identify.
+    Retorna None silenciosamente em caso de qualquer erro (import, runtime, IO).
+
+    Gate Premium e' aplicado no chamador.
+    """
+    try:
+        from services.breaking_news_service import get_breaking_news
+        return await get_breaking_news(
+            dish_slug=dish_slug,
+            family_slug=family_slug,
+            ingredientes=ingredientes,
+            category=category,
+        )
+    except Exception as e:
+        logger.warning(f"[BREAKING_NEWS] safe_wrapper engoliu erro: {e}")
+        return None
+
+
 def format_dish_name(name: str) -> str:
     """Formata nome do prato de forma SEGURA (passthrough).
 
@@ -1401,8 +1423,8 @@ async def identify_image(
             "descricao": decision.get('descricao'),
             "ingredientes": decision.get('ingredientes'),
             "tecnica": decision.get('tecnica'),
-            "beneficios": decision.get('beneficios'),
-            "riscos": decision.get('riscos'),
+            "beneficios": decision.get('beneficios', []) if is_premium else [],
+            "riscos": decision.get('riscos', []) if is_premium else [],
             "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
             "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
             "search_time_ms": round(elapsed_ms, 2),
@@ -1422,14 +1444,26 @@ async def identify_image(
             "ia_disponivel": decision.get('ia_disponivel', False),
             # Novos campos do Gemini Flash
             "alergenos": decision.get('alergenos', {}),
-            "dica_nutricional": decision.get('dica_nutricional'),
-            "alertas_personalizados": decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {})),
+            "dica_nutricional": decision.get('dica_nutricional') if is_premium else None,
+            "alertas_personalizados": (decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {}))) if is_premium else [],
             "tempo_ia_ms": decision.get('tempo_ia_ms'),
             # Curiosidade e combinacoes (Gemini ou local)
             "curiosidade": decision.get('curiosidade') if is_premium else None,
             "combinacoes": decision.get('combinacoes', []) if is_premium else [],
             # Noticias e alertas sobre ingredientes (Gemini)
             "noticias": decision.get('noticias', []) if is_premium else [],
+            # ────────────────────────────────────────────────────────────
+            # CAMADA 1 — Breaking News Contextual (PREMIUM ONLY)
+            # Silencio (None) quando nada relevante. Frontend ainda nao consome.
+            # ────────────────────────────────────────────────────────────
+            "contextual_breaking_news": (
+                await _safe_get_breaking_news(
+                    dish_slug=decision.get('dish'),
+                    family_slug=decision.get('family_slug'),
+                    ingredientes=decision.get('ingredientes') or [],
+                    category=decision.get('category'),
+                ) if is_premium else None
+            ),
             # Familias de Pratos - honestidade
             "family_name": decision.get('family_name'),
             "family_slug": decision.get('family_slug'),
