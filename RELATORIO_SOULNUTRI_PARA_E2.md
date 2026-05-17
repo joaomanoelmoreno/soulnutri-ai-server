@@ -16,9 +16,9 @@
 - Dados: Filesystem (`/app/datasets/organized/[slug]/dish_info.json`)
 
 **URLs:**
-- Preview: https://clip-staging.preview.emergentagent.com
-- Admin: https://clip-staging.preview.emergentagent.com/admin
-- Lista de Pratos: https://clip-staging.preview.emergentagent.com/lista-pratos.txt
+- Preview: https://premium-gates-app.preview.emergentagent.com
+- Admin: https://premium-gates-app.preview.emergentagent.com/admin
+- Lista de Pratos: https://premium-gates-app.preview.emergentagent.com/lista-pratos.txt
 
 ---
 

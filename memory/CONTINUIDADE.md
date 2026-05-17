@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://clip-staging.preview.emergentagent.com
+**URL**: https://premium-gates-app.preview.emergentagent.com
 
 ---
 
