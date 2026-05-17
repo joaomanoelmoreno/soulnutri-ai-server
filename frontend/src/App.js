@@ -4133,7 +4133,7 @@ return {
           )}
 
           {/* Referências e Fontes */}
-          {r.confidence !== 'baixa' && (
+          {premiumUser && r.confidence !== 'baixa' && (
             <div className="info-box" data-testid="nutrition-references" style={{
               background: 'rgba(124, 58, 237, 0.08)',
               border: '1px solid rgba(124, 58, 237, 0.2)',
