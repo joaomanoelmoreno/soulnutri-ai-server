@@ -1423,8 +1423,8 @@ async def identify_image(
             "descricao": decision.get('descricao'),
             "ingredientes": decision.get('ingredientes'),
             "tecnica": decision.get('tecnica'),
-            "beneficios": decision.get('beneficios'),
-            "riscos": decision.get('riscos'),
+            "beneficios": decision.get('beneficios', []) if is_premium else [],
+            "riscos": decision.get('riscos', []) if is_premium else [],
             "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
             "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
             "search_time_ms": round(elapsed_ms, 2),
@@ -1444,8 +1444,8 @@ async def identify_image(
             "ia_disponivel": decision.get('ia_disponivel', False),
             # Novos campos do Gemini Flash
             "alergenos": decision.get('alergenos', {}),
-            "dica_nutricional": decision.get('dica_nutricional'),
-            "alertas_personalizados": decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {})),
+            "dica_nutricional": decision.get('dica_nutricional') if is_premium else None,
+            "alertas_personalizados": (decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {}))) if is_premium else [],
             "tempo_ia_ms": decision.get('tempo_ia_ms'),
             # Curiosidade e combinacoes (Gemini ou local)
             "curiosidade": decision.get('curiosidade') if is_premium else None,
