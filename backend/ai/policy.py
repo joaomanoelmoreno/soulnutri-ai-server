@@ -1011,8 +1011,9 @@ def get_dish_name(slug: str) -> str:
     import unicodedata
 
     def _normalize_key(s):
-        s = unicodedata.normalize('NFKD', s or '').encode('ascii', 'ignore').decode()
-        return s.lower().replace(' ', '').replace('-', '').replace('_', '')
+        # Usa to_canonical_slug para garantir identidade com Camada 1
+        from services.slug_service import to_canonical_slug
+        return to_canonical_slug(s or '').replace('_', '')
 
     # Primeiro tenta do dicionário em memória (chave exata)
     if slug in DISH_NAMES:
@@ -1037,7 +1038,11 @@ def get_dish_name(slug: str) -> str:
         except:
             pass
     
-    return format_dish_name_fallback(slug)
+    # Fallback final — Camada 2: sem acento, Title Case, sem underscore
+    from services.slug_service import to_display_name
+    return to_display_name(slug)
+
+
 
 
 def format_dish_name_fallback(slug: str) -> str:
