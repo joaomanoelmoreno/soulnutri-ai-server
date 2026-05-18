@@ -826,10 +826,9 @@ async def add_to_index(
     try:
         content = await file.read()
         
-        # Normalizar nome do prato para diretorio
-        dish_slug = dish_name.lower().strip()
-        dish_slug = dish_slug.replace(" ", "_").replace("-", "_")
-        dish_slug = ''.join(c for c in dish_slug if c.isalnum() or c == '_')
+        # Normalizar nome do prato para diretorio — Camada 1 (slug canonico)
+        from services.slug_service import to_canonical_slug
+        dish_slug = to_canonical_slug(dish_name)
         
         # Gerar nome unico para o arquivo
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -2046,6 +2045,7 @@ async def list_dishes_combined():
     try:
         from ai.index import get_index
         from ai.policy import get_dish_name, get_category, get_category_emoji
+        from services.slug_service import to_canonical_slug, to_display_name
         
         index = get_index()
         seen_slugs = set()
@@ -2055,23 +2055,24 @@ async def list_dishes_combined():
         for dish_slug, data in index.metadata.items():
             dishes.append({
                 'slug': dish_slug,
-                'name': get_dish_name(dish_slug),
+                'name': to_display_name(dish_slug),          # Camada 2
                 'category': get_category(dish_slug),
                 'category_emoji': get_category_emoji(get_category(dish_slug)),
                 'image_count': data.get('image_count', 0)
             })
-            seen_slugs.add(dish_slug.lower().replace(' ', '_').replace('-', '_'))
+            seen_slugs.add(to_canonical_slug(dish_slug))     # Camada 1 — dedup
         
         # 2. Pratos do MongoDB que nao estao no indice
         async for doc in db.dishes.find({}, {"_id": 0, "slug": 1, "nome": 1, "name": 1, "categoria": 1, "category_emoji": 1}):
             slug = doc.get("slug", "")
             if not slug:
                 continue
-            norm_slug = slug.lower().replace(' ', '_').replace('-', '_')
+            norm_slug = to_canonical_slug(slug)              # Camada 1 — dedup
             if norm_slug in seen_slugs:
                 continue
             seen_slugs.add(norm_slug)
-            name = doc.get("nome") or doc.get("name") or slug.replace("_", " ").title()
+            nome_raw = doc.get("nome") or doc.get("name")
+            name = to_display_name(slug, nome_from_db=nome_raw)  # Camada 2
             dishes.append({
                 "slug": slug,
                 "name": name,
@@ -2133,9 +2134,9 @@ async def learn_new_dish(
     import shutil
     
     try:
-        # Converter nome para slug
-        slug = dish_name.lower().strip()
-        slug = re.sub(r'[^a-z0-9]+', '', slug)
+        # Converter nome para slug — Camada 1 (slug canonico)
+        from services.slug_service import to_canonical_slug
+        slug = to_canonical_slug(dish_name)
         
         if not slug:
             return JSONResponse(
@@ -2451,10 +2452,9 @@ async def create_new_dish(
         
         content = await file.read()
         
-        # Gerar slug do nome fornecido
-        slug = dish_name.lower().strip()
-        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
-        slug = slug.replace(' ', '_')
+        # Gerar slug do nome fornecido — Camada 1 (slug canonico)
+        from services.slug_service import to_canonical_slug
+        slug = to_canonical_slug(dish_name)
         
         # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO (MongoDB)
         existing_match = None
@@ -2618,10 +2618,9 @@ async def create_dish_local(
         
         content = await file.read()
         
-        # Gerar slug do nome fornecido
-        slug = dish_name.lower().strip()
-        slug = ''.join(c for c in slug if c.isalnum() or c == ' ')
-        slug = slug.replace(' ', '_')
+        # Gerar slug do nome fornecido — Camada 1 (slug canonico)
+        from services.slug_service import to_canonical_slug
+        slug = to_canonical_slug(dish_name)
         
         # VERIFICAR SE JÁ EXISTE PRATO SIMILAR NO BANCO (MongoDB)
         existing_match = None
@@ -6307,11 +6306,9 @@ async def correct_moderation_item(item_id: str, request: Request):
         if doc["status"] != "pending":
             return {"ok": False, "error": "Item já foi processado"}
 
-        # Gerar slug do nome correto
-        import re as _re
-        correct_slug = correct_name.lower().strip()
-        correct_slug = correct_slug.replace(" ", "_").replace("-", "_")
-        correct_slug = ''.join(c for c in correct_slug if c.isalnum() or c == '_')
+        # Gerar slug do nome correto — Camada 1 (slug canonico)
+        from services.slug_service import to_canonical_slug
+        correct_slug = to_canonical_slug(correct_name)
 
         # Salvar imagem no dataset do prato correto
         if doc.get("image_path"):

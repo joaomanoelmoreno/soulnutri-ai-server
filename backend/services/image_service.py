@@ -255,8 +255,10 @@ def _resolve_canonical_slug(slug: str) -> str:
         if folder.is_dir() and _normalize(folder.name) == slug_norm:
             return folder.name
     
-    # 4. Fallback: slug original
-    return slug
+    # 4. Fallback: canonizar o slug de entrada (Camada 1)
+    #    Garante que novos documentos em dish_storage usem formato canonico.
+    from services.slug_service import to_canonical_slug
+    return to_canonical_slug(slug)
 
 
 def delete_dish_image_from_storage(slug: str, filename: str) -> dict:
