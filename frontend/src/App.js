@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo, Component } from "react";
+import { useVersionCheck } from "./hooks/useVersionCheck";
 import "./App.css";
 import "./Premium.css";
 import "./PremiumProfile.css";
@@ -249,6 +250,7 @@ function ScannerTutorial({ onClose }) {
 
 function App() {
   const { t, currentLang } = useI18n();
+  const { hasUpdate, serverVersion, triggerHardUpdate } = useVersionCheck();
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -2604,6 +2606,35 @@ return {
 
   return (
     <div className={`app${premiumUser ? ' premium-active' : ''}`}>
+      {/* Banner de atualização disponível */}
+      {hasUpdate && (
+        <div
+          data-testid="update-banner"
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99999,
+            background: 'linear-gradient(90deg, #f59e0b, #d97706)',
+            color: '#1a1a1a', padding: '10px 16px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)', fontFamily: 'sans-serif',
+          }}
+        >
+          <span style={{ fontSize: 14, fontWeight: 600 }}>
+            Nova versão disponível
+          </span>
+          <button
+            data-testid="update-app-btn"
+            onClick={triggerHardUpdate}
+            style={{
+              background: '#1a1a1a', color: '#f59e0b',
+              border: 'none', borderRadius: 20,
+              padding: '6px 16px', fontSize: 13, fontWeight: 700,
+              cursor: 'pointer', whiteSpace: 'nowrap',
+            }}
+          >
+            Atualizar aplicativo
+          </button>
+        </div>
+      )}
       {/* Tela de Permissões Unificada */}
       {showPermissions && (
         <div className="permissions-screen" style={{
@@ -4133,7 +4164,7 @@ return {
           )}
 
           {/* Referências e Fontes */}
-          {premiumUser && r.confidence !== 'baixa' && (
+          {r.confidence !== 'baixa' && (
             <div className="info-box" data-testid="nutrition-references" style={{
               background: 'rgba(124, 58, 237, 0.08)',
               border: '1px solid rgba(124, 58, 237, 0.2)',
