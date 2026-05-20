@@ -1,6 +1,45 @@
 # SoulNutri — Changelog
 
 ---
+## 2026-02-20 — P0: Radar Alimentar (Breaking News Camada 1) + Telemetria
+
+**Arquivos:** `backend/server.py` (`_safe_get_breaking_news` + caller @ `/api/ai/identify`) · `frontend/src/App.js` (state, plate mapping, `<RadarAlimentarStrip>`, modal)
+
+### Backend — Telemetria estruturada `[BREAKING_NEWS]`
+- `_safe_get_breaking_news()` agora emite logs estruturados em todos os caminhos:
+  - `[BREAKING_NEWS] entry dish=... family=... category=... ingredientes_count=N`
+  - `[BREAKING_NEWS] result dish=... origem=... polaridade=... tier=... titulo=...`
+  - `[BREAKING_NEWS] none_found dish=... family=...`
+  - `[BREAKING_NEWS] error dish=... exception=ClassName: msg` (não mais engole exceção silenciosamente)
+- Caller dentro de `/api/ai/identify` foi refatorado: o valor é computado antes do `response_data` para podermos logar a decisão de render:
+  - `[BREAKING_NEWS] render dish=... will_render=True|False` (premium)
+  - `[BREAKING_NEWS] skip dish=... reason=not_premium` (free)
+
+### Frontend — `<RadarAlimentarStrip>` (faixa headline)
+- Capturado `result.contextual_breaking_news` e propagado em `plateItems[]` (addItemToPlate + finishPlate) + agregado em `plateConsolidated.contextual_breaking_news_items`.
+- Nova faixa compacta renderizada DENTRO do `add-more-modal` (Camada 1 — decisão no buffet), ANTES do bloco `radarInfo` legado (não destrutivo):
+  - Headline em até 2 linhas (`-webkit-line-clamp: 2`)
+  - Paleta dinâmica por polaridade (alerta=vermelho, beneficio=verde, neutro=âmbar)
+  - Chip "RADAR ALIMENTAR" + label da polaridade
+  - Mostra fonte abreviada na faixa
+  - `data-testid="radar-alimentar-strip"` / `radar-alimentar-headline`
+- Novo modal `radar-alimentar-modal` ao clicar: título completo, fonte, data, origem+tier, `tags_matched` ("por que isso apareceu pra você"), link externo opcional, botão Entendi. Preserva blocos `radarInfo` (Camada 2 enrich) e `mesa-noticias` intactos.
+
+### Validação
+- Lint JS: ✅ sem issues novos.
+- Lint Python: erros pré-existentes (não introduzidos).
+- Wrapper executado direto: emite `entry`, `none_found`, `result` corretamente (curated provider OK).
+- App carrega sem erro de runtime na home.
+
+### Não executado nesta fase (proibido pelo usuário)
+- Mitigação do cache `conf=media` (TTL 3600).
+- Migração MongoDB de slugs legados.
+- Hard Gates Premium PR #2.
+- Ativação `dynamic_health_news` em runtime (PR #4b).
+
+---
+
+
 
 ## 2026-05-02 — Fix P0: Cache de identificação separado por `restaurant`
 
