@@ -336,6 +336,10 @@ function App() {
   // Radar de Notícias - Fatos sobre alimentos
   const [radarInfo, setRadarInfo] = useState(null); // {has_alert, message, facts}
   const [showRadarDetails, setShowRadarDetails] = useState(false); // Modal com fatos detalhados
+
+  // Radar Alimentar - Breaking News Contextual (Camada 1, Premium only)
+  // Origem: result.contextual_breaking_news vindo de /api/ai/identify
+  const [breakingNewsModal, setBreakingNewsModal] = useState(null); // item completo ou null
   
   // TTS - Acessibilidade
   const [ttsPlaying, setTtsPlaying] = useState(false);
@@ -917,6 +921,24 @@ const renderTextSafe = (v) => {
       cancelled = true;
     };
     }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ──────────────────────────────────────────────────────────────────────
+  // Telemetria simétrica do Radar Alimentar (Camada 1, Breaking News).
+  // Casa com o log backend `[BREAKING_NEWS] render` em /api/ai/identify.
+  // Sem dados sensíveis: somente titulo (truncado), polaridade, origem, tier.
+  // ──────────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const bn = result?.contextual_breaking_news;
+    if (!bn) return;
+    const titulo = (bn.titulo || '').slice(0, 80);
+    // eslint-disable-next-line no-console
+    console.log(
+      `[RADAR_ALIMENTAR] rendered dish=${result?.dish || ''} ` +
+      `polaridade=${bn.polaridade || 'neutro'} ` +
+      `origem=${bn.origem || ''} tier=${bn.tier || ''} ` +
+      `titulo=${JSON.stringify(titulo)}`
+    );
+  }, [result?.contextual_breaking_news, result?.dish]);
 
   const checkStatus = async () => {
     try {
@@ -1675,7 +1697,8 @@ const loadNotifCount = async (pin) => {
         dica_chef: result.dica_chef || '',
         premium: result.premium || null,
         alertas_personalizados: result.alertas_personalizados || [],
-        noticias: result.noticias || []
+        noticias: result.noticias || [],
+        contextual_breaking_news: result.contextual_breaking_news || null,
       };
 
       setPlateItems(prev => {
@@ -1751,7 +1774,8 @@ const loadNotifCount = async (pin) => {
         dica_chef: result.dica_chef || '',
         premium: result.premium || null,
         alertas_personalizados: result.alertas_personalizados || [],
-        noticias: result.noticias || []
+        noticias: result.noticias || [],
+        contextual_breaking_news: result.contextual_breaking_news || null,
       };
 
       setPlateItems(prev => {
@@ -2112,6 +2136,9 @@ return {
       alertas_personalizados: plateItems.flatMap(item => item.alertas_personalizados || [])
         .filter((a, i, arr) => arr.findIndex(x => (x.mensagem || x) === (a.mensagem || a)) === i),
       noticias: [...new Set(plateItems.flatMap(item => item.noticias || []))],
+      contextual_breaking_news_items: plateItems
+        .map(item => item.contextual_breaking_news)
+        .filter(Boolean),
       premiumData: plateItems.map(item => item.premium).filter(Boolean)
     };
   }, [plateItems]);
@@ -4571,7 +4598,84 @@ return {
                  result.confidence === 'media' ? '👍 Boa confiança' : '🤔 Verificar'}
               </p>
             </div>
-            
+
+            {/* ──────────────────────────────────────────────────────────────
+                RADAR ALIMENTAR — Camada 1 / Breaking News Contextual (PREMIUM)
+                Origem: result.contextual_breaking_news (vindo de /api/ai/identify)
+                Headline-style, max 2 linhas, clique abre modal de detalhes.
+                ────────────────────────────────────────────────────────────── */}
+            {result?.contextual_breaking_news && (() => {
+              const bn = result.contextual_breaking_news;
+              const pol = bn.polaridade || 'neutro';
+              const palette = pol === 'alerta'
+                ? { bg: 'rgba(239, 68, 68, 0.12)', border: 'rgba(239, 68, 68, 0.45)', chip: '#ef4444', icon: '⚠️', label: 'ALERTA' }
+                : pol === 'beneficio'
+                  ? { bg: 'rgba(34, 197, 94, 0.12)', border: 'rgba(34, 197, 94, 0.45)', chip: '#22c55e', icon: '🟢', label: 'BENEFÍCIO' }
+                  : { bg: 'rgba(251, 191, 36, 0.12)', border: 'rgba(251, 191, 36, 0.45)', chip: '#fbbf24', icon: '📡', label: 'RADAR' };
+              return (
+                <button
+                  type="button"
+                  data-testid="radar-alimentar-strip"
+                  aria-label="Abrir Radar Alimentar"
+                  onClick={() => setBreakingNewsModal(bn)}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    background: palette.bg,
+                    border: `1px solid ${palette.border}`,
+                    borderLeft: `4px solid ${palette.chip}`,
+                    borderRadius: '12px',
+                    padding: '10px 12px',
+                    marginBottom: '12px',
+                    cursor: 'pointer',
+                    color: '#fff',
+                    transition: 'transform 120ms ease, box-shadow 120ms ease',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span style={{ fontSize: '16px' }}>{palette.icon}</span>
+                    <span style={{
+                      fontSize: '10px',
+                      letterSpacing: '0.6px',
+                      fontWeight: 800,
+                      background: palette.chip,
+                      color: '#0b0b0b',
+                      padding: '2px 8px',
+                      borderRadius: '999px',
+                    }}>
+                      RADAR ALIMENTAR
+                    </span>
+                    <span style={{ fontSize: '10px', color: '#aaa', marginLeft: 'auto' }}>
+                      {palette.label}
+                    </span>
+                  </div>
+                  <p
+                    data-testid="radar-alimentar-headline"
+                    style={{
+                      margin: 0,
+                      fontSize: '13.5px',
+                      lineHeight: '1.35',
+                      fontWeight: 600,
+                      color: '#fff',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {renderTextSafe(bn.titulo || 'Atualização sobre este alimento')}
+                  </p>
+                  <p style={{ margin: '6px 0 0', fontSize: '10.5px', color: '#9ca3af' }}>
+                    {bn.fonte ? `${renderTextSafe(bn.fonte)} · ` : ''}Toque para ver detalhes →
+                  </p>
+                </button>
+              );
+            })()}
+
             {/* RADAR DE NOTÍCIAS - Fatos sobre o alimento */}
             {radarInfo?.has_alert && (
               <div 
@@ -4807,6 +4911,158 @@ return {
           </div>
         </div>
       )}
+
+      {/* ════════════════════════════════════════════════════════════════════
+          MODAL — RADAR ALIMENTAR (Breaking News Contextual, Camada 1 Premium)
+          Abre ao tocar na faixa <RadarAlimentarStrip>
+          ════════════════════════════════════════════════════════════════════ */}
+      {breakingNewsModal && (() => {
+        const bn = breakingNewsModal;
+        const pol = bn.polaridade || 'neutro';
+        const palette = pol === 'alerta'
+          ? { chip: '#ef4444', icon: '⚠️', label: 'Alerta' }
+          : pol === 'beneficio'
+            ? { chip: '#22c55e', icon: '🟢', label: 'Benefício' }
+            : { chip: '#fbbf24', icon: '📡', label: 'Informativo' };
+        return (
+          <div
+            className="modal-overlay"
+            data-testid="radar-alimentar-modal"
+            onClick={() => setBreakingNewsModal(null)}
+          >
+            <div
+              className="modal-content radar-details"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                maxWidth: '420px',
+                background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                borderRadius: '16px',
+                padding: '20px',
+                position: 'relative',
+              }}
+            >
+              <button
+                className="modal-back-btn"
+                onClick={() => setBreakingNewsModal(null)}
+                data-testid="radar-alimentar-modal-close"
+                style={{ position: 'absolute', top: '10px', left: '10px' }}
+              >
+                ← Voltar
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: '20px', marginBottom: '16px' }}>
+                <span style={{ fontSize: '32px' }}>{palette.icon}</span>
+                <h3 style={{ color: '#fff', margin: '8px 0 4px' }}>Radar Alimentar</h3>
+                <span style={{
+                  display: 'inline-block',
+                  fontSize: '11px',
+                  letterSpacing: '0.5px',
+                  fontWeight: 800,
+                  background: palette.chip,
+                  color: '#0b0b0b',
+                  padding: '3px 10px',
+                  borderRadius: '999px',
+                }}>
+                  {palette.label.toUpperCase()}
+                </span>
+              </div>
+
+              <div style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: `1px solid ${palette.chip}33`,
+                borderLeft: `4px solid ${palette.chip}`,
+                padding: '14px',
+                borderRadius: '12px',
+                marginBottom: '14px',
+              }}>
+                <h4 style={{ color: '#fff', margin: '0 0 8px', fontSize: '15px', lineHeight: '1.35' }}>
+                  {renderTextSafe(bn.titulo || 'Atualização sobre este alimento')}
+                </h4>
+                {bn.fonte && (
+                  <p style={{ color: '#cbd5e1', fontSize: '12px', margin: '0 0 6px' }}>
+                    📚 Fonte: {renderTextSafe(bn.fonte)}
+                  </p>
+                )}
+                {bn.data && (
+                  <p style={{ color: '#94a3b8', fontSize: '11px', margin: 0 }}>
+                    🗓️ {renderTextSafe(bn.data)}
+                  </p>
+                )}
+                {bn.origem && (
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: '6px 0 0', fontStyle: 'italic' }}>
+                    origem: {renderTextSafe(bn.origem)}{bn.tier ? ` · tier ${renderTextSafe(String(bn.tier))}` : ''}
+                  </p>
+                )}
+              </div>
+
+              {Array.isArray(bn.tags_matched) && bn.tags_matched.length > 0 && (
+                <div style={{ marginBottom: '14px' }}>
+                  <p style={{ color: '#94a3b8', fontSize: '11px', margin: '0 0 6px' }}>
+                    Por que isso apareceu para você:
+                  </p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    {bn.tags_matched.map((tag, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          fontSize: '10.5px',
+                          background: 'rgba(255,255,255,0.07)',
+                          color: '#e2e8f0',
+                          padding: '3px 8px',
+                          borderRadius: '999px',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                        }}
+                      >
+                        {renderTextSafe(tag)}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {bn.url && (
+                <a
+                  href={bn.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="radar-alimentar-link"
+                  style={{
+                    display: 'block',
+                    textAlign: 'center',
+                    width: '100%',
+                    padding: '10px 12px',
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    color: '#e2e8f0',
+                    borderRadius: '10px',
+                    fontSize: '13px',
+                    textDecoration: 'none',
+                    marginBottom: '10px',
+                  }}
+                >
+                  Abrir matéria original ↗
+                </a>
+              )}
+
+              <button
+                onClick={() => setBreakingNewsModal(null)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: palette.chip,
+                  color: '#0b0b0b',
+                  border: 'none',
+                  borderRadius: '10px',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                }}
+              >
+                Entendi
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* MODAL DE CORREÇÃO MULTI */}
       {showMultiCorrection && (

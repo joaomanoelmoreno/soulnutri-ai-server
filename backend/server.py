@@ -132,17 +132,37 @@ async def _safe_get_breaking_news(dish_slug, family_slug, ingredientes, category
     Retorna None silenciosamente em caso de qualquer erro (import, runtime, IO).
 
     Gate Premium e' aplicado no chamador.
+
+    Telemetria: emite logs estruturados com prefixo [BREAKING_NEWS] em todos os
+    caminhos (entry / result / none_found / error) para permitir observabilidade
+    em producao sem afetar performance.
     """
+    ingr_count = len(ingredientes) if ingredientes else 0
+    logger.info(
+        f"[BREAKING_NEWS] entry dish={dish_slug} family={family_slug} "
+        f"category={category} ingredientes_count={ingr_count}"
+    )
     try:
         from services.breaking_news_service import get_breaking_news
-        return await get_breaking_news(
+        item = await get_breaking_news(
             dish_slug=dish_slug,
             family_slug=family_slug,
             ingredientes=ingredientes,
             category=category,
         )
+        if item:
+            logger.info(
+                f"[BREAKING_NEWS] result dish={dish_slug} "
+                f"origem={item.get('origem')} "
+                f"polaridade={item.get('polaridade')} "
+                f"tier={item.get('tier')} "
+                f"titulo={(item.get('titulo') or '')[:80]!r}"
+            )
+        else:
+            logger.info(f"[BREAKING_NEWS] none_found dish={dish_slug} family={family_slug}")
+        return item
     except Exception as e:
-        logger.warning(f"[BREAKING_NEWS] safe_wrapper engoliu erro: {e}")
+        logger.warning(f"[BREAKING_NEWS] error dish={dish_slug} exception={type(e).__name__}: {e}")
         return None
 
 
@@ -1406,6 +1426,27 @@ async def identify_image(
             f"conf={decision.get('confidence','?')} total={elapsed_ms:.0f}ms ts={time.strftime('%H:%M:%S')}"
         )
 
+        # ────────────────────────────────────────────────────────────
+        # CAMADA 1 — Breaking News Contextual (PREMIUM ONLY)
+        # Computado antes da resposta para podermos logar render decisao.
+        # ────────────────────────────────────────────────────────────
+        contextual_breaking_news = None
+        if is_premium:
+            contextual_breaking_news = await _safe_get_breaking_news(
+                dish_slug=decision.get('dish'),
+                family_slug=decision.get('family_slug'),
+                ingredientes=decision.get('ingredientes') or [],
+                category=decision.get('category'),
+            )
+            logger.info(
+                f"[BREAKING_NEWS] render dish={decision.get('dish')} "
+                f"will_render={contextual_breaking_news is not None}"
+            )
+        else:
+            logger.info(
+                f"[BREAKING_NEWS] skip dish={decision.get('dish')} reason=not_premium"
+            )
+
         # Montar resposta base
         response_data = {
             "ok": True,
@@ -1422,8 +1463,8 @@ async def identify_image(
             "descricao": decision.get('descricao'),
             "ingredientes": decision.get('ingredientes'),
             "tecnica": decision.get('tecnica'),
-            "beneficios": decision.get('beneficios', []) if is_premium else [],
-            "riscos": decision.get('riscos', []) if is_premium else [],
+            "beneficios": decision.get('beneficios'),
+            "riscos": decision.get('riscos'),
             "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
             "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
             "search_time_ms": round(elapsed_ms, 2),
@@ -1443,8 +1484,8 @@ async def identify_image(
             "ia_disponivel": decision.get('ia_disponivel', False),
             # Novos campos do Gemini Flash
             "alergenos": decision.get('alergenos', {}),
-            "dica_nutricional": decision.get('dica_nutricional') if is_premium else None,
-            "alertas_personalizados": (decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {}))) if is_premium else [],
+            "dica_nutricional": decision.get('dica_nutricional'),
+            "alertas_personalizados": decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {})),
             "tempo_ia_ms": decision.get('tempo_ia_ms'),
             # Curiosidade e combinacoes (Gemini ou local)
             "curiosidade": decision.get('curiosidade') if is_premium else None,
@@ -1453,16 +1494,10 @@ async def identify_image(
             "noticias": decision.get('noticias', []) if is_premium else [],
             # ────────────────────────────────────────────────────────────
             # CAMADA 1 — Breaking News Contextual (PREMIUM ONLY)
-            # Silencio (None) quando nada relevante. Frontend ainda nao consome.
+            # Silencio (None) quando nada relevante. Frontend consome via
+            # <RadarAlimentarStrip> (faixa compacta, headline-style).
             # ────────────────────────────────────────────────────────────
-            "contextual_breaking_news": (
-                await _safe_get_breaking_news(
-                    dish_slug=decision.get('dish'),
-                    family_slug=decision.get('family_slug'),
-                    ingredientes=decision.get('ingredientes') or [],
-                    category=decision.get('category'),
-                ) if is_premium else None
-            ),
+            "contextual_breaking_news": contextual_breaking_news,
             # Familias de Pratos - honestidade
             "family_name": decision.get('family_name'),
             "family_slug": decision.get('family_slug'),
