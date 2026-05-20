@@ -922,6 +922,24 @@ const renderTextSafe = (v) => {
     };
     }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // ──────────────────────────────────────────────────────────────────────
+  // Telemetria simétrica do Radar Alimentar (Camada 1, Breaking News).
+  // Casa com o log backend `[BREAKING_NEWS] render` em /api/ai/identify.
+  // Sem dados sensíveis: somente titulo (truncado), polaridade, origem, tier.
+  // ──────────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const bn = result?.contextual_breaking_news;
+    if (!bn) return;
+    const titulo = (bn.titulo || '').slice(0, 80);
+    // eslint-disable-next-line no-console
+    console.log(
+      `[RADAR_ALIMENTAR] rendered dish=${result?.dish || ''} ` +
+      `polaridade=${bn.polaridade || 'neutro'} ` +
+      `origem=${bn.origem || ''} tier=${bn.tier || ''} ` +
+      `titulo=${JSON.stringify(titulo)}`
+    );
+  }, [result?.contextual_breaking_news, result?.dish]);
+
   const checkStatus = async () => {
     try {
       const controller = new AbortController();
