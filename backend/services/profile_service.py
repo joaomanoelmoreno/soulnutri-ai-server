@@ -55,34 +55,78 @@ def verificar_premium_ativo(user: dict) -> dict:
     """
     Verifica se o usuário tem Premium ativo e válido.
     Retorna status e informações.
+
+    Aceita DOIS schemas:
+      A) Novo (profile_service nativo): {plano, premium_ate}
+      B) Produção atual (server.py /premium/register): {premium_ativo, premium_expira_em, is_trial}
+
+    Para B, `premium_expira_em` ausente + `premium_ativo=True` = vitalício (admin).
+    Para B, `premium_expira_em` no passado = expirado (mesmo se `premium_ativo=True`).
     """
     if not user:
         return {"ativo": False, "motivo": "Usuário não encontrado"}
-    
+
+    # ─── Compat schema B (produção atual) ─────────────────────────────
+    if "premium_ativo" in user or "premium_expira_em" in user:
+        premium_ativo_flag = bool(user.get("premium_ativo"))
+        premium_expira_em = user.get("premium_expira_em")
+
+        if not premium_ativo_flag:
+            return {"ativo": False, "motivo": "Premium desativado"}
+
+        # Vitalício (sem data de expiração)
+        if not premium_expira_em:
+            return {"ativo": True, "plano": "premium", "expira": None, "motivo": "Premium vitalício"}
+
+        # Tem data: validar
+        if isinstance(premium_expira_em, str):
+            try:
+                premium_expira_em = datetime.fromisoformat(premium_expira_em.replace('Z', '+00:00'))
+            except Exception:
+                return {"ativo": False, "motivo": "Data de expiração inválida"}
+
+        agora = datetime.now(timezone.utc)
+        if premium_expira_em > agora:
+            dias_restantes = (premium_expira_em - agora).days
+            return {
+                "ativo": True,
+                "plano": "premium_trial" if user.get("is_trial") else "premium",
+                "expira": premium_expira_em.isoformat(),
+                "dias_restantes": dias_restantes,
+                "motivo": f"Premium válido por mais {dias_restantes} dias",
+            }
+        return {
+            "ativo": False,
+            "plano": "premium_trial" if user.get("is_trial") else "premium",
+            "expirou_em": premium_expira_em.isoformat(),
+            "motivo": "Premium expirado",
+        }
+
+    # ─── Schema A (legacy plano/premium_ate) ──────────────────────────
     plano = user.get("plano", "free")
     premium_ate = user.get("premium_ate")
-    
+
     # Se não tem plano premium
     if plano == "free":
         return {"ativo": False, "motivo": "Plano gratuito"}
-    
+
     # Se é premium sem data de expiração (vitalício)
     if plano == "premium" and not premium_ate:
         return {
-            "ativo": True, 
+            "ativo": True,
             "plano": "premium",
             "expira": None,
             "motivo": "Premium vitalício"
         }
-    
+
     # Verificar se não expirou
     if premium_ate:
         # Converter string para datetime se necessário
         if isinstance(premium_ate, str):
             premium_ate = datetime.fromisoformat(premium_ate.replace('Z', '+00:00'))
-        
+
         agora = datetime.now(timezone.utc)
-        
+
         if premium_ate > agora:
             dias_restantes = (premium_ate - agora).days
             return {
@@ -99,7 +143,7 @@ def verificar_premium_ativo(user: dict) -> dict:
                 "expirou_em": premium_ate.isoformat(),
                 "motivo": "Premium expirado"
             }
-    
+
     return {"ativo": False, "motivo": "Status indefinido"}
 
 

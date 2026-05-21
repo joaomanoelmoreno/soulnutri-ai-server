@@ -903,6 +903,53 @@ async def add_to_index(
             content={"ok": False, "error": str(e)}
         )
 
+# ════════════════════════════════════════════════════════════════════════
+# FASE 2A — Hard Gate Backend
+# Fonte unica de verdade dos campos Premium-only.
+# Free/trial expirado recebem o MESMO shape, com defaults vazios/null,
+# para evitar crash em frontend que itera/acessa sem optional chain.
+# ════════════════════════════════════════════════════════════════════════
+PREMIUM_FIELD_DEFAULTS = {
+    # listas → []
+    "beneficios": [],
+    "riscos": [],
+    "alertas_personalizados": [],
+    "noticias": [],
+    "combinacoes": [],
+    # dicts → {}
+    "alergenos": {},
+    # null → None
+    "premium": None,
+    "contextual_breaking_news": None,
+    "curiosidade": None,
+    "dica_nutricional": None,
+    "aviso_cibi_sana": None,
+    "beneficio_principal": None,
+    "curiosidade_cientifica": None,
+    "referencia_pesquisa": None,
+    "alerta_saude": None,
+    "voce_sabia": None,
+    "dica_chef": None,
+    "mito_verdade": None,
+    "tempo_ia_ms": None,
+}
+PREMIUM_ONLY_FIELDS = frozenset(PREMIUM_FIELD_DEFAULTS.keys())
+
+
+def _strip_premium_fields(payload: dict) -> dict:
+    """Reset campos Premium-only para defaults seguros. Idempotente."""
+    if not payload:
+        return payload
+    for k, default in PREMIUM_FIELD_DEFAULTS.items():
+        if isinstance(default, list):
+            payload[k] = []
+        elif isinstance(default, dict):
+            payload[k] = {}
+        else:
+            payload[k] = None
+    return payload
+
+
 @api_router.post("/ai/identify")
 async def identify_image(
     file: UploadFile = File(...),
@@ -980,6 +1027,23 @@ async def identify_image(
                     "confidence_score": cached.get('score', 0),
                     "engine_used": f"{engine} (cache)"
                 })
+            # FASE 2A — Hard Gate pos-cache: cache pode ter sido populado por scan Premium
+            _cache_is_premium = False
+            if pin and nome:
+                try:
+                    from services.profile_service import hash_pin, verificar_premium_ativo
+                    _ph = hash_pin(pin)
+                    _u = await db.users.find_one({"pin_hash": _ph, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}}, {"_id": 0})
+                    _cache_is_premium = verificar_premium_ativo(_u)["ativo"] if _u else False
+                except Exception as _e:
+                    logger.warning(f"[PREMIUM_GATE] erro check cache: {_e}")
+                    _cache_is_premium = False
+            if not _cache_is_premium:
+                _strip_premium_fields(cached)
+                cached["is_premium"] = False
+                logger.info(f"[PREMIUM_GATE] cache stripped dish={cached.get('dish_display')}")
+            else:
+                cached["is_premium"] = True
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
@@ -1209,7 +1273,7 @@ async def identify_image(
                 resp['score'] = decision.get('score', resp.get('score', 0.0))
                 resp['source'] = decision.get('source', resp.get('source', 'local_index'))
                 resp['from_dish_cache'] = True
-                cache_result(content, resp, restaurant=restaurant or '', ttl_seconds=3600)
+                # Fase 2A: nao escrever cache aqui (fast-path Free) para nao contaminar cache de imagem.
                 return resp
 
         # Para Cibi Sana: retorno imediato SEM queries MongoDB (velocidade <500ms)
@@ -1277,13 +1341,16 @@ async def identify_image(
             
             # Check premium apenas se credenciais enviadas (unica query)
             if pin and nome:
-                from services.profile_service import hash_pin
+                from services.profile_service import hash_pin, verificar_premium_ativo
                 pin_hash = hash_pin(pin)
                 user_profile = await db.users.find_one(
                     {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
                     {"_id": 0}
                 )
-                is_premium = user_profile is not None
+                _premium_status = verificar_premium_ativo(user_profile) if user_profile else {"ativo": False}
+                is_premium = _premium_status.get("ativo", False)
+                if not is_premium and user_profile:
+                    logger.info(f"[PREMIUM_GATE] /identify nego dish={dish_display_name} nome={nome} motivo={_premium_status.get('motivo')}")
                 if is_premium:
                     alertas_alergenos = []
                     restricoes = user_profile.get("restricoes", [])
@@ -1325,7 +1392,11 @@ async def identify_image(
             
             sheet_data = resolved.get('nutrition') if not isinstance(resolved.get('nutrition'), Exception) else None
             user_profile = resolved.get('user') if not isinstance(resolved.get('user'), Exception) else None
-            is_premium = user_profile is not None
+            from services.profile_service import verificar_premium_ativo as _verificar_premium_ativo
+            _premium_status = _verificar_premium_ativo(user_profile) if user_profile else {"ativo": False}
+            is_premium = _premium_status.get("ativo", False)
+            if not is_premium and user_profile:
+                logger.info(f"[PREMIUM_GATE] /identify(gemini) nego dish={dish_display_name} nome={nome} motivo={_premium_status.get('motivo')}")
             
             nutrition_data = decision.get('nutrition') or {}
             if sheet_data:
@@ -1447,14 +1518,18 @@ async def identify_image(
                 f"[BREAKING_NEWS] skip dish={decision.get('dish')} reason=not_premium"
             )
 
-        # Montar resposta base
+        # ════════════════════════════════════════════════════════════════
+        # PAYLOAD BUILDER — Fase 2A Hard Gate
+        # Cache armazena sempre versao Premium full; strip pos-cache filtra.
+        # ════════════════════════════════════════════════════════════════
+        # Base Free (sempre devolvido se identificado)
         response_data = {
             "ok": True,
             "identified": decision['identified'],
             "dish": decision.get('dish'),
             "dish_display": dish_display_name,
             "confidence": decision['confidence'],
-            "confidence_level": confidence_level_msg,  # NOVO: Mensagem descritiva
+            "confidence_level": confidence_level_msg,
             "score": decision['score'],
             "message": decision['message'],
             "category": decision.get('category') or decision.get('categoria') or "não classificado",
@@ -1463,13 +1538,39 @@ async def identify_image(
             "descricao": decision.get('descricao'),
             "ingredientes": decision.get('ingredientes'),
             "tecnica": decision.get('tecnica'),
-            "beneficios": decision.get('beneficios'),
-            "riscos": decision.get('riscos'),
-            "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
             "alternatives": [format_dish_name(a) for a in decision.get('alternatives', [])],
             "search_time_ms": round(elapsed_ms, 2),
             "source": decision.get('source', 'local_index'),
-            # Dados cientificos - movidos para /ai/enrich (velocidade)
+            "ia_disponivel": decision.get('ia_disponivel', False),
+            "is_premium": is_premium,
+            "family_name": decision.get('family_name'),
+            "family_slug": decision.get('family_slug'),
+            "family_candidates": decision.get('family_candidates', []),
+            "family_members_slugs": decision.get('family_members_slugs', []),
+        }
+
+        # Camada PREMIUM — SEMPRE construida para alimentar cache full.
+        response_data.update({
+            "beneficios": decision.get('beneficios'),
+            "riscos": decision.get('riscos'),
+            "aviso_cibi_sana": decision.get('aviso_cibi_sana'),
+            "alergenos": decision.get('alergenos', {}),
+            "dica_nutricional": decision.get('dica_nutricional'),
+            "alertas_personalizados": (
+                decision.get('alertas_personalizados', [])
+                + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {}))
+            ),
+            "tempo_ia_ms": decision.get('tempo_ia_ms'),
+            "curiosidade": decision.get('curiosidade'),
+            "combinacoes": decision.get('combinacoes', []),
+            "noticias": decision.get('noticias', []),
+            "premium": premium_data,
+            "contextual_breaking_news": await _safe_get_breaking_news(
+                dish_slug=decision.get('dish'),
+                family_slug=decision.get('family_slug'),
+                ingredientes=decision.get('ingredientes') or [],
+                category=decision.get('category'),
+            ),
             "beneficio_principal": None,
             "curiosidade_cientifica": None,
             "referencia_pesquisa": None,
@@ -1477,39 +1578,19 @@ async def identify_image(
             "voce_sabia": None,
             "dica_chef": None,
             "mito_verdade": None,
-            # Dados Premium extras
-            "premium": premium_data if is_premium else None,
-            "is_premium": is_premium,
-            # Flag para indicar se IA poderia melhorar o resultado (sem gastar creditos automaticamente)
-            "ia_disponivel": decision.get('ia_disponivel', False),
-            # Novos campos do Gemini Flash
-            "alergenos": decision.get('alergenos', {}),
-            "dica_nutricional": decision.get('dica_nutricional'),
-            "alertas_personalizados": decision.get('alertas_personalizados', []) + _generate_nutrition_alerts(nutrition_obj, decision.get('alergenos', {})),
-            "tempo_ia_ms": decision.get('tempo_ia_ms'),
-            # Curiosidade e combinacoes (Gemini ou local)
-            "curiosidade": decision.get('curiosidade') if is_premium else None,
-            "combinacoes": decision.get('combinacoes', []) if is_premium else [],
-            # Noticias e alertas sobre ingredientes (Gemini)
-            "noticias": decision.get('noticias', []) if is_premium else [],
-            # ────────────────────────────────────────────────────────────
-            # CAMADA 1 — Breaking News Contextual (PREMIUM ONLY)
-            # Silencio (None) quando nada relevante. Frontend consome via
-            # <RadarAlimentarStrip> (faixa compacta, headline-style).
-            # ────────────────────────────────────────────────────────────
-            "contextual_breaking_news": contextual_breaking_news,
-            # Familias de Pratos - honestidade
-            "family_name": decision.get('family_name'),
-            "family_slug": decision.get('family_slug'),
-            "family_candidates": decision.get('family_candidates', []),
-            "family_members_slugs": decision.get('family_members_slugs', []),
-        }
-        
-        # ═══════════════════════════════════════════════════════════════════════
-        # CACHE: Salvar resultado para futuras consultas
-        # ═══════════════════════════════════════════════════════════════════════
+        })
+        if is_premium:
+            logger.info(f"[PREMIUM_GATE] /identify libera dish={dish_display_name}")
+        else:
+            logger.info(f"[PREMIUM_GATE] /identify base Free dish={dish_display_name}")
+
+        # CACHE: Salvar resultado COMPLETO (versao Premium); strip pos-cache filtra.
         if response_data.get('identified'):
             cache_result(content, response_data, restaurant=restaurant or '', ttl_seconds=3600)
+
+        # FASE 2A — Strip Premium para requests Free / trial expirado
+        if not is_premium:
+            _strip_premium_fields(response_data)
 
         # DISH-NAME CACHE STORE (nao-premium, confidence != baixa, TTL 5min)
         if (response_data.get('identified') and
@@ -1570,16 +1651,17 @@ async def enrich_dish(request: Request):
         if not nome:
             return {"ok": False, "error": "Nome do prato é obrigatório"}
         
-        # Verificar se é Premium
+        # Verificar se é Premium (Hard Gate Fase 2A: respeita expiracao do trial)
         is_premium = False
         if pin:
             import hashlib
+            from services.profile_service import verificar_premium_ativo
             pin_hash = hashlib.sha256(pin.encode()).hexdigest()
-            user = await db.users.find_one(
-                {"pin_hash": pin_hash, "premium_ativo": True},
-                {"_id": 0}
-            )
-            is_premium = user is not None
+            user = await db.users.find_one({"pin_hash": pin_hash}, {"_id": 0})
+            _premium_status = verificar_premium_ativo(user) if user else {"ativo": False}
+            is_premium = _premium_status.get("ativo", False)
+            if not is_premium and user:
+                logger.info(f"[PREMIUM_GATE] /enrich nego nome={user.get('nome')} motivo={_premium_status.get('motivo')}")
         
         if not is_premium:
             return {"ok": False, "error": "Acesso Premium necessário"}
