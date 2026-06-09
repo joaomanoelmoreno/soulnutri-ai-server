@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-05-30T17:32:14.883557+00:00",
+  "output_version": "v_t8",
+  "intent": "new",
+  "status": "aborted",
+  "slugs_ok": [],
+  "slugs_failed": [
+    {
+      "slug": "prato_fail",
+      "stage": "quarantine",
+      "reason": "fotos insuficientes"
+    }
+  ]
+}
