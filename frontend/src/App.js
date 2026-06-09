@@ -616,16 +616,11 @@ const renderTextSafe = (v) => {
   };
 
   // Valor do restaurant para enviar na API
-  // Prioridade: detectedRestaurant (GPS/manual) > seleção manual explícita > external
+  // Modo emergencial Google Play: cibi_sana somente com seleção manual explícita.
+  // GPS automático NÃO autoriza cibi_sana — evita uso indevido do CLIP Cibi Sana.
   const getRestaurantValue = () => {
-    // P1: detectedRestaurant confirmado por GPS ou selectLocationManual()
-    if (detectedRestaurant === 'cibi_sana') return 'cibi_sana';
-    if (detectedRestaurant === 'external') return 'external';
-    // P2: detectedRestaurant=null (GPS pendente/negado, nunca disparou)
-    // Consultar SOMENTE seleção manual explícita com flag persistente
     const isManual = localStorage.getItem('soulnutri_location_manual') === 'true';
     if (isManual && localStorage.getItem('soulnutri_restaurant') === 'cibi_sana') return 'cibi_sana';
-    // Sem confirmação de localização → external
     return 'external';
   };
 
