@@ -15,7 +15,7 @@ def is_gemini_flash_available() -> bool:
 def get_gemini_flash_status() -> dict:
     """Retorna status do Gemini Flash"""
     available = is_gemini_flash_available()
-    return {"available": available, "model": "gemini-2.0-flash-lite" if available else None}
+    return {"available": available, "model": "gemini-2.5-flash-lite" if available else None}
 
 """
 OBJETIVO: Identificar pratos com alta precisão e retornar dados completos
@@ -167,7 +167,7 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                 
                 api_start = time.time()
                 response = client.models.generate_content(
-                    model='gemini-2.0-flash-lite',
+                    model='gemini-2.5-flash-lite',
                     contents=[
                         prompt,
                         genai.types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg")
@@ -209,7 +209,7 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                             api_key=emergent_key,
                             session_id=f"sn-{int(time.time())}",
                             system_message=SYSTEM_PROMPT_FLASH
-                        ).with_model("gemini", "gemini-2.0-flash-lite")
+                        ).with_model("gemini", "gemini-2.5-flash")
                         
                         image_file = FileContentWithMimeType(
                             file_path=tmp_path,
@@ -370,7 +370,7 @@ async def enrich_dish_gemini(nome: str, ingredientes: list) -> Dict:
             from google import genai
             client = genai.Client(api_key=google_key)
             response = client.models.generate_content(
-                model='gemini-2.0-flash-lite',
+                model='gemini-2.5-flash-lite',
                 contents=[prompt]
             )
             response_text = response.text.strip()
@@ -387,7 +387,7 @@ async def enrich_dish_gemini(nome: str, ingredientes: list) -> Dict:
                     api_key=emergent_key,
                     session_id=f"enrich-{int(_time.time())}",
                     system_message="Retorne apenas JSON válido."
-                ).with_model("gemini", "gemini-2.0-flash-lite")
+                ).with_model("gemini", "gemini-2.5-flash")
                 msg = UserMessage(text=prompt)
                 resp = await chat.send_message(msg)
                 response_text = resp.strip() if resp else None
