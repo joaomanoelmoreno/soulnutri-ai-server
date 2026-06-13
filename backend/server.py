@@ -427,6 +427,33 @@ async def health():
 
 
 # ═══════════════════════════════════════════════════════
+# FASE 1 / BLOCO 3A — Observabilidade de Providers
+# Endpoints apenas observacionais. Não alteram produção.
+# ═══════════════════════════════════════════════════════
+
+@api_router.get("/health/providers", dependencies=[Depends(verify_admin_key)])
+async def health_providers():
+    """
+    Valida chamada real a todos os providers configurados.
+    Não retorna 200 por simples ping — testa se o modelo responde.
+    """
+    from services.provider_health_service import run_provider_health_check
+    result = await run_provider_health_check()
+    return result
+
+
+@api_router.get("/admin/providers/status", dependencies=[Depends(verify_admin_key)])
+async def admin_providers_status():
+    """
+    Endpoint administrativo: testa providers com chamada real mínima.
+    Requer header X-Admin-Key.
+    """
+    from services.provider_health_service import run_provider_health_check
+    result = await run_provider_health_check()
+    return result
+
+
+# ═══════════════════════════════════════════════════════
 # Warm-up silencioso do ONNX (P1)
 # Reduz lentidao do 1o scan apos restart/inatividade do Render.
 # - Inferencia dummy 224x224 em memoria.

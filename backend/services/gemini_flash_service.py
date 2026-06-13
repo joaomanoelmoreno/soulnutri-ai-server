@@ -178,9 +178,18 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                 response_text = response.text.strip()
                 source_used = "google_api"
                 logger.info(f"[GeminiFlash] ✅ GOOGLE API respondeu em {api_time_ms:.0f}ms")
+                logger.info("[PROVIDER] %s", __import__('json').dumps({
+                    "provider": "google", "model": "gemini-2.5-flash-lite",
+                    "success": True, "latency_ms": round(api_time_ms)
+                }))
                 
             except Exception as e:
                 error_str = str(e)
+                _ec = "429" if ('429' in error_str or 'quota' in error_str.lower()) else "error"
+                logger.info("[PROVIDER] %s", __import__('json').dumps({
+                    "provider": "google", "model": "gemini-2.5-flash-lite",
+                    "success": False, "error_code": _ec, "latency_ms": round((time.time()-api_start)*1000)
+                }))
                 if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
                     logger.warning(f"[GeminiFlash] ⚠️ Cota Google ESGOTADA - usando fallback Emergent...")
                 else:
@@ -228,12 +237,20 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                         response_text = response.strip()
                         source_used = "emergent_fallback"
                         logger.info(f"[GeminiFlash] ⚠️ EMERGENT FALLBACK respondeu em {api_time_ms:.0f}ms (mais lento)")
+                        logger.info("[PROVIDER] %s", __import__('json').dumps({
+                            "provider": "emergent", "model": "gemini-2.5-flash",
+                            "fallback": True, "success": True, "latency_ms": round(api_time_ms)
+                        }))
                     finally:
                         if os.path.exists(tmp_path):
                             os.remove(tmp_path)
                             
                 except Exception as e:
                     logger.error(f"[GeminiFlash] Emergent LLM também falhou: {e}")
+                    logger.info("[PROVIDER] %s", __import__('json').dumps({
+                        "provider": "emergent", "model": "gemini-2.5-flash",
+                        "fallback": True, "success": False, "reason": str(e)[:80]
+                    }))
         
         if response_text is None:
             return {"ok": False, "error": "Todos os serviços de IA indisponíveis"}
@@ -269,6 +286,16 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
         # EXPANDIR RESULTADO COMPACTO
         # {"nome":"X","cat":"p","kcal":300,"prot":25,"carb":10,"gord":15,"alerg":["gluten"]}
         # ═══════════════════════════════════════════════════════════════════
+        # Verificar se Gemini indicou ausência de prato (score=0.0 ou nome negativo)
+        gemini_score = result.get("score", 1.0)
+        nome_lower = result.get("nome", "").lower()
+        nao_identificado = gemini_score <= 0.05 or any(
+            k in nome_lower for k in ["nenhum", "não identif", "nao identif", "sem prato", "no food"]
+        )
+        if nao_identificado:
+            logger.info(f"[GeminiFlash] Prato não visível detectado: '{result.get('nome')}' score={gemini_score}")
+            return {"ok": False, "error": "Prato não visível na imagem", "nome": result.get("nome")}
+
         cat_expand = {"v": "vegano", "veg": "vegetariano", "p": "proteína animal"}
         
         expanded = {
