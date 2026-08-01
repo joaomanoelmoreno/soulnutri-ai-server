@@ -1449,7 +1449,7 @@ const loadNotifCount = async (pin) => {
     c.toBlob(b => {
       if (b && mountedRef.current) {
         setLastImageBlob(b);
-        identifyImage(b);
+        identifyImage(b, { width: outW, height: outH });
       }
       // Limpar canvas após uso
       ctx.clearRect(0, 0, outW, outH);
@@ -1498,9 +1498,15 @@ const loadNotifCount = async (pin) => {
     };
   };
 
-  const identifyImage = async (blob) => {
+  const identifyImage = async (blob, imgDims = null) => {
     const _scanId = ++_ROOT_SCAN_COUNTER;
     console.log(`[FINAL_PROOF] scan_id=${_scanId} IDENTIFY_ENTER premiumBusy=${premiumCycleBusyRef.current} premiumUser=${!!premiumUser}`);
+
+    // ── DIAGNÓSTICO (read-only, não altera lógica funcional) ──────────────
+    const DIAG = process.env.REACT_APP_DIAG_LOGS === 'true';
+    const _requestId = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
   if (premiumUser && premiumCycleBusyRef.current) {
     console.log(`[FINAL_PROOF] scan_id=${_scanId} GATE_BLOCKED before_fetch premiumBusy=true`);
@@ -1528,7 +1534,32 @@ const loadNotifCount = async (pin) => {
     const fd = new FormData(); 
     fd.append("file", blob, "photo.jpg");
     fd.append("country", "BR");
-    fd.append("restaurant", getRestaurantValue());
+    const restaurantValue = getRestaurantValue(); // chamada única, reutilizada abaixo
+    fd.append("restaurant", restaurantValue);
+
+    // ── DIAGNÓSTICO: headers de correlação (gated, sem PII/GPS) ───────────
+    let _restaurantSource = 'default';
+    if (detectedRestaurant === 'cibi_sana' || detectedRestaurant === 'external') {
+      _restaurantSource = 'gps';
+    } else if (localStorage.getItem('soulnutri_location_manual') === 'true') {
+      _restaurantSource = 'manual';
+    }
+    const _clientMode = isStandalone ? 'standalone' : 'browser';
+    const diagHeaders = { 'X-Request-ID': _requestId };
+    if (DIAG) {
+      diagHeaders['X-Client-Mode'] = _clientMode;
+      diagHeaders['X-Client-Version'] = process.env.REACT_APP_BUILD_ID || 'unknown';
+      diagHeaders['X-Restaurant-Raw'] = String(detectedRestaurant);
+      diagHeaders['X-Restaurant-Normalized'] = restaurantValue;
+      diagHeaders['X-Restaurant-Source'] = _restaurantSource;
+      diagHeaders['X-Image-Mime'] = blob.type || 'unknown';
+      diagHeaders['X-Image-Bytes'] = String(blob.size || 0);
+      if (imgDims && imgDims.width && imgDims.height) {
+        diagHeaders['X-Image-Width'] = String(imgDims.width);
+        diagHeaders['X-Image-Height'] = String(imgDims.height);
+      }
+      console.log(`[SCAN_START] request_id=${_requestId} client_mode=${_clientMode} client_version=${process.env.REACT_APP_BUILD_ID || 'unknown'} restaurant=${restaurantValue} restaurant_source=${_restaurantSource} blob_type=${blob.type} blob_size=${blob.size} dims=${imgDims ? `${imgDims.width}x${imgDims.height}` : 'n/a'}`);
+    }
     
     // Se for Premium, enviar credenciais para receber dados exclusivos
     try {
@@ -1557,11 +1588,15 @@ const loadNotifCount = async (pin) => {
       const res = await fetch(endpoint, { 
         method: "POST", 
         body: fd,
-        signal: abortControllerRef.current.signal
+        signal: abortControllerRef.current.signal,
+        headers: diagHeaders
       });
       clearTimeout(timeoutId);
       const reqMs = Date.now() - t;
       console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_RESPONSE status=${res.status} time=${reqMs}ms restaurant=${fd.get('restaurant')} backend=${API}`);
+      if (DIAG) {
+        console.log(`[SCAN_RESPONSE] request_id=${_requestId} status=${res.status} content_type=${res.headers.get('content-type')} duration_ms=${reqMs}`);
+      }
       
       if (!mountedRef.current) return;
       
@@ -1575,6 +1610,10 @@ const loadNotifCount = async (pin) => {
         data = await res.json();
       } catch {
         throw new Error('Servidor reiniciando. Aguarde e tente novamente.');
+      }
+      
+      if (DIAG) {
+        console.log(`[SCAN_RESPONSE] request_id=${_requestId} ok=${data.ok} identified=${data.identified} confidence=${data.confidence} source=${data.source} reason=${data.message || 'n/a'}`);
       }
       
       if (multiMode) {
@@ -1615,6 +1654,9 @@ const loadNotifCount = async (pin) => {
       clearTimeout(timeoutId);
       if (!mountedRef.current) return;
       console.log(`[FINAL_PROOF] scan_id=${_scanId} FETCH_ERROR name=${e.name} message=${e.message}`);
+      if (DIAG) {
+        console.log(`[SCAN_ERROR] request_id=${_requestId} error_name=${e.name} error_message=${e.message} step=fetch_or_parse abort=${e.name === 'AbortError'}`);
+      }
       
       if (e.name === 'AbortError') {
         setError('Tempo limite excedido. Tente novamente.');

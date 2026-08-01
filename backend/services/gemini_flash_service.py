@@ -103,7 +103,8 @@ RETORNE JSON:
 async def identify_dish_gemini_flash(
     image_bytes: bytes,
     user_profile: Optional[Dict] = None,
-    restaurant: Optional[str] = None
+    restaurant: Optional[str] = None,
+    request_id: Optional[str] = None
 ) -> Dict:
     """
     Identifica um prato usando Gemini Flash.
@@ -118,6 +119,7 @@ async def identify_dish_gemini_flash(
     import io
     
     start_time = time.time()
+    _diag_on = os.environ.get("IDENTIFY_DEBUG_LOGS", "false").lower() == "true"
     
     try:
         # ═══════════════════════════════════════════════════════════════════
@@ -125,6 +127,17 @@ async def identify_dish_gemini_flash(
         # Imagem menor = upload mais rápido = resposta mais rápida
         # ═══════════════════════════════════════════════════════════════════
         img = Image.open(io.BytesIO(image_bytes))
+        
+        if _diag_on:
+            try:
+                _exif_orientation = img.getexif().get(274, 'n/a')
+            except Exception:
+                _exif_orientation = 'n/a'
+            logger.info(
+                f"[IDENTIFY_GEMINI] request_id={request_id} etapa=image_open "
+                f"formato_detectado={img.format} mode={img.mode} size={img.size} "
+                f"bytes_recebidos={len(image_bytes)} exif_orientation={_exif_orientation}"
+            )
         
         # 384px é suficiente para identificação e mais rápido que 512px
         max_size = 384
@@ -142,6 +155,8 @@ async def identify_dish_gemini_flash(
         
         prep_time = (time.time() - start_time) * 1000
         logger.info(f"[GeminiFlash] Imagem preparada em {prep_time:.0f}ms ({len(img_bytes)/1024:.1f}KB)")
+        if _diag_on:
+            logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} etapa=image_prepared bytes_apos_resize={len(img_bytes)} prep_ms={prep_time:.0f}")
         
         # ═══════════════════════════════════════════════════════════════════
         # CHAMAR GEMINI - Google API primeiro (rápido), Emergent como fallback
@@ -178,9 +193,14 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                 response_text = response.text.strip()
                 source_used = "google_api"
                 logger.info(f"[GeminiFlash] ✅ GOOGLE API respondeu em {api_time_ms:.0f}ms")
+                if _diag_on:
+                    logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} provider=google_api etapa=response_ok latency_ms={api_time_ms:.0f}")
                 
             except Exception as e:
                 error_str = str(e)
+                if _diag_on:
+                    _ec = "429" if ('429' in error_str or 'quota' in error_str.lower()) else "error"
+                    logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} provider=google_api etapa=exception error_class={type(e).__name__} error_code={_ec}")
                 if '429' in error_str or 'RESOURCE_EXHAUSTED' in error_str or 'quota' in error_str.lower():
                     logger.warning(f"[GeminiFlash] ⚠️ Cota Google ESGOTADA - usando fallback Emergent...")
                 else:
@@ -228,14 +248,20 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
                         response_text = response.strip()
                         source_used = "emergent_fallback"
                         logger.info(f"[GeminiFlash] ⚠️ EMERGENT FALLBACK respondeu em {api_time_ms:.0f}ms (mais lento)")
+                        if _diag_on:
+                            logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} provider=emergent_fallback etapa=response_ok latency_ms={api_time_ms:.0f}")
                     finally:
                         if os.path.exists(tmp_path):
                             os.remove(tmp_path)
                             
                 except Exception as e:
                     logger.error(f"[GeminiFlash] Emergent LLM também falhou: {e}")
+                    if _diag_on:
+                        logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} provider=emergent_fallback etapa=exception error_class={type(e).__name__}")
         
         if response_text is None:
+            if _diag_on:
+                logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} etapa=no_provider_available")
             return {"ok": False, "error": "Todos os serviços de IA indisponíveis"}
         
         logger.info(f"[GeminiFlash] Resposta via {source_used}: {response_text[:200]}...")
@@ -259,6 +285,8 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
         except json.JSONDecodeError as e:
             logger.error(f"[GeminiFlash] Erro ao parsear JSON: {e}")
             logger.error(f"[GeminiFlash] Resposta raw: {response_text[:500]}")
+            if _diag_on:
+                logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} etapa=parser_error error_class=JSONDecodeError")
             return {
                 "ok": False,
                 "error": "Erro ao processar resposta da IA",
@@ -333,6 +361,8 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
         
     except Exception as e:
         logger.error(f"[GeminiFlash] Erro geral: {e}")
+        if _diag_on:
+            logger.info(f"[IDENTIFY_GEMINI] request_id={request_id} etapa=exception_geral error_class={type(e).__name__}")
         return {"ok": False, "error": str(e)}
 
 
