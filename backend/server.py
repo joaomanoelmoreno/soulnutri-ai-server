@@ -952,6 +952,7 @@ def _strip_premium_fields(payload: dict) -> dict:
 
 @api_router.post("/ai/identify")
 async def identify_image(
+    request: Request,
     file: UploadFile = File(...),
     pin: Optional[str] = Form(None),
     nome: Optional[str] = Form(None),
@@ -974,7 +975,16 @@ async def identify_image(
     perf_start = time.perf_counter()
     global _ROOT_SCAN_COUNTER
     _ROOT_SCAN_COUNTER += 1
+    _diag_on = os.environ.get("IDENTIFY_DEBUG_LOGS", "false").lower() == "true"
+    _req_id = request.headers.get("X-Request-ID") or f"srv-{_ROOT_SCAN_COUNTER}-{int(time.time()*1000)}"
     logger.info(f"[IDENTIFY_START] scan_id={_ROOT_SCAN_COUNTER} ts={time.strftime('%H:%M:%S')}")
+    if _diag_on:
+        logger.info(
+            f"[IDENTIFY_START] request_id={_req_id} "
+            f"user_agent={request.headers.get('user-agent', 'n/a')[:150]} "
+            f"content_type={request.headers.get('content-type', 'n/a')[:60]} "
+            f"filename={file.filename!r} file_content_type={file.content_type!r}"
+        )
 
     try:
         # Ler imagem
@@ -1005,6 +1015,21 @@ async def identify_image(
             _diag_dims = "unknown"
         logger.info(f"[IDENTIFY_DIAG] md5={_diag_md5} size={_diag_size}B dims={_diag_dims} restaurant={restaurant!r}")
         # ────────────────────────────────────────────────────────────────────────
+
+        if _diag_on:
+            logger.info(
+                f"[IDENTIFY_CONTEXT] request_id={_req_id} restaurant_recebido={restaurant!r} "
+                f"client_mode={request.headers.get('X-Client-Mode', 'n/a')} "
+                f"client_version={request.headers.get('X-Client-Version', 'n/a')} "
+                f"restaurant_client_raw={request.headers.get('X-Restaurant-Raw', 'n/a')} "
+                f"restaurant_client_normalized={request.headers.get('X-Restaurant-Normalized', 'n/a')} "
+                f"restaurant_source={request.headers.get('X-Restaurant-Source', 'n/a')} "
+                f"image_mime_client={request.headers.get('X-Image-Mime', 'n/a')} "
+                f"image_bytes_client={request.headers.get('X-Image-Bytes', 'n/a')} "
+                f"image_width_client={request.headers.get('X-Image-Width', 'n/a')} "
+                f"image_height_client={request.headers.get('X-Image-Height', 'n/a')} "
+                f"image_dims_server={_diag_dims}"
+            )
 
         # ═══════════════════════════════════════════════════════════════════════
         # CACHE: Verificar se ja identificamos esta imagem antes
@@ -1055,6 +1080,14 @@ async def identify_image(
         
         decision = None
         is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+
+        if _diag_on:
+            logger.info(
+                f"[IDENTIFY_ROUTE] request_id={_req_id} restaurant_normalized={restaurant!r} "
+                f"selected_pipeline={'cibi_local' if is_cibi_sana else 'external_gemini'} "
+                f"openclip_executed={is_cibi_sana} gemini_executed={not is_cibi_sana} "
+                f"motivo={'restaurant==cibi_sana' if is_cibi_sana else 'restaurant!=cibi_sana (default externo)'}"
+            )
 
         # ── DIAGNÓSTICO: confirmar se modelo ONNX está warm neste request ──────
         try:
@@ -1154,6 +1187,8 @@ async def identify_image(
                 # fallback final
                 decision["category"] = category or "não classificado"
             else:
+                if _diag_on:
+                    logger.info(f"[IDENTIFY_RESULT] request_id={_req_id} ok=False identified=False pipeline=cibi_local reason=index_not_ready")
                 return IdentifyResponse(
                     ok=False,
                     identified=False,
@@ -1173,6 +1208,8 @@ async def identify_image(
             )
             
             if not is_gemini_flash_available():
+                if _diag_on:
+                    logger.info(f"[IDENTIFY_RESULT] request_id={_req_id} ok=False identified=False pipeline=external_gemini reason=gemini_unavailable")
                 return IdentifyResponse(
                     ok=False,
                     identified=False,
@@ -1190,7 +1227,7 @@ async def identify_image(
                     {"_id": 0}
                 )
             
-            flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant)
+            flash_result = await identify_dish_gemini_flash(content, flash_profile, restaurant=restaurant, request_id=_req_id if _diag_on else None)
             
             if flash_result.get('ok'):
                 decision = {
@@ -1214,6 +1251,8 @@ async def identify_image(
                 }
                 logger.info(f"[EXTERNO | GEMINI] {decision.get('dish_display', 'N/A')} - Score: {decision.get('score', 0):.2%}")
             else:
+                if _diag_on:
+                    logger.info(f"[IDENTIFY_RESULT] request_id={_req_id} ok=False identified=False pipeline=external_gemini reason={str(flash_result.get('error', 'n/a'))[:120]}")
                 return IdentifyResponse(
                     ok=False,
                     identified=False,
@@ -1614,12 +1653,23 @@ async def identify_image(
                 "engine_used": engine
             })
         
+        if _diag_on:
+            _total_ms = (time.perf_counter() - perf_start) * 1000
+            logger.info(
+                f"[IDENTIFY_RESULT] request_id={_req_id} ok={response_data.get('ok')} "
+                f"identified={response_data.get('identified')} confidence={response_data.get('confidence')} "
+                f"dish_name={response_data.get('dish_display')!r} provider={response_data.get('source')} "
+                f"duration_ms={_total_ms:.0f}"
+            )
+        
         return response_data
         
     except Exception as e:
         import traceback
         elapsed_ms = (time.time() - start_time) * 1000
-        logger.exception(f"[IDENTIFY_ERROR] scan_id={_ROOT_SCAN_COUNTER} elapsed={elapsed_ms:.0f}ms erro={e}")
+        logger.exception(f"[IDENTIFY_ERROR] scan_id={_ROOT_SCAN_COUNTER} request_id={locals().get('_req_id', 'n/a')} elapsed={elapsed_ms:.0f}ms erro={e}")
+        if locals().get('_diag_on'):
+            logger.info(f"[IDENTIFY_ERROR] request_id={locals().get('_req_id', 'n/a')} error_class={type(e).__name__} etapa=identify_pipeline")
         return JSONResponse(status_code=200, content={
             "ok": False,
             "identified": False,
