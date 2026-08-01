@@ -2,7 +2,7 @@
 
 **Data**: Janeiro 2026
 **Projeto**: SoulNutri - Agente de Nutrição Virtual
-**URL**: https://premium-gates-app.preview.emergentagent.com
+**URL**: https://compress-mime-trace.preview.emergentagent.com
 
 ---
 

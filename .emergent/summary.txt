@@ -1,167 +1,118 @@
-<analysis>**original_problem_statement**: Consolidar o aplicativo SoulNutri no ambiente de produção. PRODUCT REQUIREMENTS: PWA Instalável, IA via OpenCLIP, Trial Premium. Corrigir falha no carregamento de imagens no painel Admin em produção (integração R2). Adicionar suporte a famílias de pratos para agrupar pratos visualmente parecidos. Resolver erros críticos em produção causados por gargalos e travamentos na inferência da IA.
+<analysis>**original_problem_statement**: Diagnosticar uma divergência no fluxo de reconhecimento de pratos externos. O envio de fotos funciona corretamente no Desktop (Chrome), mas falha no Android (Chrome) retornando Prato não reconhecido. PRODUCT REQUIREMENTS: O objetivo atual é preparar e aprovar um plano de observabilidade detalhado (7 pontos) focado no payload da imagem (resize, compressão, MIME) no endpoint , sem alterar o comportamento funcional ou os modelos. 
 
-**User's preferred language**: Portuguese (Brasil)
-INSTRUCT: O próximo agente DEVE responder APENAS em Português (Brasil). O usuário é estritamente controlador, metódico e extremamente focado em economizar créditos. Vá direto ao ponto, não use ferramentas redundantes. **REGRA DE OURO:** NUNCA faça commits, não aplique patches complexos e NUNCA execute Save to Github sem autorização PRÉVIA E EXPLÍCITA. Forneça sempre o diagnóstico e aguarde aprovação.
+**User's preferred language**: Portuguese - Brasil (INSTRUCT next agent to respond ONLY in Portuguese - Brasil. **CRITICAL:** O usuário exige o Modo Econômico Extremo — as respostas DEVEM ter no máximo 10-15 linhas, diretas, estritamente formatadas, sem cordialidades, sem explicações não solicitadas. NUNCA diga Entendi/Compreendi).
 
-**what currently exists?**: App Full-Stack (FastAPI + React PWA + MongoDB). IA roda com ONNX (local_index) para o restaurante 'cibi_sana' e Gemini Flash 1.5 para pratos externos (). Toda a lógica de roteamento e renderização de frontend reside no arquivo monolítico , que recebeu ajustes locais recentes para parar de depender de um localStorage estático, corrigindo o vazamento do Gemini dentro da zona do Cibi Sana.
+**what currently exists?**: 
+App em testes no Google Play. O backend processa o upload de imagens via  e repassa para . Modelos atualizados recentemente para . Existe uma falha grave apenas no envio de imagens capturadas/enviadas via Android Chrome comparado ao Desktop Chrome.
 
-**Last working item**:
-    - Last item agent was working: Auditoria segura de novas fotos hospedadas no Google Drive (P0), com objetivo de inventariar, contar e classificar riscos visuais ANTES de qualquer indexação (embeddings não autorizados).
-    - Status: BLOCKED
-    - Agent Testing Done: Y (Tentativa via  falhou. Script Python local gerou KeyError).
-    - Which testing method agent to use?: bash / python -c
+**Last working item**: 
+    - Last item agent was working: O agente leu os arquivos  e  e enviou o diagnóstico estruturado de 7 pontos via  para aprovação do usuário.
+    - Status: USER VERIFICATION PENDING
+    - Agent Testing Done: N
+    - Which testing method agent to use?: NA (Apenas planejamento no momento; Logs após aprovação)
     - User Testing Done: N
 
-**All Pending/In progress Issue list**:
-  Issue 1: Bloqueio na leitura do Google Drive (P0 - Last Working Item)
-     - Attempted fixes: Agente utilizou  na URL fornecida, mas foi bloqueado pela tela de login/reCAPTCHA do Google Drive. Em seguida, tentou ler  via Python, mas o script gerou um .
-     - Next debug checklist: Informar IMEDIATAMENTE ao usuário que o Google Drive exigiu verificação/reCAPTCHA e falhou. Sugerir que o usuário suba a pasta descompactada para dentro do container (ex: ) para que você possa rodar o script de inventário em segurança. Corrigir o script bash/Python de leitura.
-     - Why fix this issue and what will be achieved with the fix?: Para garantir a integridade do índice CLIP, separando duplicatas e pratos conflitantes antes de contaminar os embeddings em produção.
-     - Status: BLOCKED
-     - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: bash / python -c
-     - Blocked on other issue: Acesso negado aos arquivos (reCAPTCHA).
-
-  Issue 2: Promover patches locais de App.js para Vercel / Save to Github (P0)
-     - Attempted fixes: O agente já corrigiu localmente os bugs de  (remoção do hook viciado de localStorage e correção do  early return) e também já possui a ETAPA 14B (calorias inline abaixo do nome).
-     - Next debug checklist: Aguardar que o usuário termine de testar o preview. Quando o usuário mandar, apenas orientar ou acionar o Save to Github do código local, que atualmente está limpo e pronto.
-     - Why fix this issue and what will be achieved with the fix?: Restaurará a estabilidade do roteamento Gemini vs Cibi Sana em produção, além de devolver a ficha nutricional resumida.
+**All Pending/In progress Issue list**:  
+  Issue 1: Bug de Reconhecimento no Android Chrome (P0)
+     - Attempted fixes: O agente não implementou código ainda, apenas coletou dados de  e  para submeter o plano de observabilidade.
+     - Next debug checklist: Aguardar o usuário responder ao . Se o plano for aprovado, injetar blocos condicionais () em  e  para logar o MIME type, tamanho, metadados EXIF e dimensões da imagem antes de acionar a IA. Não alterar o comportamento funcional da rota.
+     - Why fix this issue and what will be achieved with the fix?: Permite descobrir a causa-raiz (divergência de payload) que está bloqueando o uso do app em dispositivos Android durante os testes do Google Play.
      - Status: USER VERIFICATION PENDING
-     - Is recurring issue? Y
-     - Should Test frontend/backend/both after fix?: frontend
-     - Blocked on other issue: Aguardando testes manuais do usuário.
-
-  Issue 3: Implementar controle de versão no PWA (Banner de Update) (P1)
-     - Attempted fixes: Diagnóstico já concluído. Diff desenhado para  (remover auto-reload) e  (adicionar banner customizado ), mas NÃO APLICADO por falta de ordem.
-     - Next debug checklist: Quando autorizado, aplicar os hunks propostos no  e .
-     - Why fix this issue and what will be achieved with the fix?: Previne que usuários de iOS/PWA fiquem presos num bundle antigo devido à agressividade de cache do Service Worker.
-     - Status: NOT STARTED
      - Is recurring issue? N
-     - Should Test frontend/backend/both after fix?: frontend
+     - Should Test frontend/backend/both after fix?: Backend (Logs)
      - Blocked on other issue: N/A
 
-**In progress Task List**:
-  Task 1: Inventário e Relatório das Fotos (P0)
-     - Where to resume: Após o usuário fornecer as fotos do GDrive (via upload local ou outra via), rodar script Python para mapear duplicidade, baixa resolução e conflito.
-     - What will be achieved with this?: Relatório seguro para decidir quais pratos sobem pro CLIP.
-     - Status: BLOCKED
-     - Should Test frontend/backend/both after fix?: backend (python bash)
-     - Blocked on something: GDrive Auth.
+**In progress Task List**: 
+Nenhuma task de código em progresso; ambiente aguardando aprovação da auditoria.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - (P1) Aplicar painel de debug  no  (código já proposto, aguardando aprovação).
-    - (P1) Aplicar banner de atualização do Service Worker PWA (código proposto, aguardando aprovação).
-    - (P2) Reativar auto-scan no  (atualmente com ).
-    - (P2) Cadastrar o prato Lasanha Bolonhesa no banco  (família gratinados).
-    - (P2) Limpar / auditar o dataset antigo documentado em .
-    
+    - (P0) Implementar a observabilidade de imagem via variável  no backend assim que o relatório for aprovado.
+    - (P1) Coletar os logs pós-deploy com o usuário simulando uploads no Android para identificar a divergência real.
     Future Tasks:
-    - (P3) Criar endpoint alternativo de fast-lookup manual para evitar inferência pesada.
-    - (P3) Adicionar OCR via plaquinhas para diferenciar famílias idênticas.
+    - (P2) PATCH A: Aplicar correção de  (bug do GPS no Frontend/) em produção (congelado por ora).
+    - (P2) Reindexação (Fases 3, 4, 5 e 6): Retomar pipeline atômica de ingestão de imagens de quarentena.
 
 **Completed work in this session**
-- Correção micro-cirúrgica do roteamento em : Substituído o uso de estado viciado de localStorage que mantinha o app preso em Cibi Sana (DONE)
-- Correção do early return do GPS em : Se  mas GPS detectar externo, agora ele remove a trava manual e respeita o GPS (DONE)
-- Auditoria do deploy da Vercel: Verificado que a ETAPA 14B sumiu devido a um rollback da Vercel, explicando a ausência da ficha nutricional no live (DONE)
-- Normalização de Mongo: File de Frango à Milanesa inserido via script  no  e  da collection  (DONE)
-- Auditoria da arquitetura de Service Worker e PWA: Verificado bug de concorrência que prende o cache no iOS e desenhada a solução de banner (DONE)
+- Substituição controlada dos modelos para  e  (DONE)
+- Adição de endpoints protegidos (, ) (DONE)
+- Correção do bug de cache que salvava falso-positivos (DONE)
+- Registro e geração de documento de acesso para a usuária GRAZI (DONE)
+- Formulação e envio do diagnóstico inicial de 7 pontos via ask_human (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-   Issue 1: Lasanha Bolonhesa pendente no dataset antigo.
-   - Debug checklist: Família gratinados tem o prato em , mas ele não existe em .
-   - Why to solve this issue and what will be achieved with this?: Consistência entre frontend, DB e IA.
-   - Should Test frontend/backend/both after fix: backend
-   - Is recurring issue? N
+   Issue 1:  enviando 
+   - Debug checklist: Aplicar  no remoto.
+   - Why to solve this issue and what will be achieved with this?: Resolve bypass de GPS.
+   - Should Test frontend/backend/both after fix: Frontend
+   - Is recurring issue? N (Congelado propositalmente pelo gestor).
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: Roteamento hibrido Gemini x Cibi Sana falhando de forma inconsistente entre preview e PWA real.
-  - Recurrence count: 5+
-  - Status: RESOLVED (Correções feitas localmente no . Falta apenas o Save to Github pós-teste do usuário).
-  - Note: Não se desespere ou faça re-arquiteturas caso o usuário reclame do roteamento. O usuário sabe que o Vercel atual não tem os patches locais. Acompanhe a cadência dele.
+  - Issue recurrence in previous fork: Agente fornecendo respostas longas e sugerindo mudanças destrutivas.
+  - Recurrence count: Alta
+  - Status: IN PROGRESS (LEMBRETE: Modo Economia Extrema ativo. Nunca proponha fixes de comportamento até o diagnóstico via log estar pronto).
 
 **Code Architecture**
-/app
-├── backend/
-│   ├── ai/               
-│   ├── services/         
-│   └── server.py         
-├── frontend/
-│   ├── public/
-│   │   ├── sw.js         (Service Worker: Network First para navegação HTML)
-│   │   └── manifest.json 
-│   └── src/
-│       ├── App.js        (Centro nervoso global. Lida com GPS, Câmera, IA)
-│       └── index.js      (Registra o SW e dispara force reloads)
-└── datasets/             
+- : Controlador (). Recebe multipart/form-data.
+- : Tratamento com PIL e comunicação com Gemini.
 
 **Key Technical Concepts**
-- **Roteamento Híbrido Cibi Sana / External:**  decide o valor da prop . Se 'cibi_sana', a FastAPI usa o CLIP. Se 'external', usa Gemini.
-- **Service Worker / Cache:** Atualizações da interface dependem do  no , que faz .
+Fallback em cascata (OpenCLIP -> Gemini AI -> Emergent). Imagens tratadas como .
 
 **key DB schema**
-  - : 
-  - : 
+  - Premium users: , , , .
 
 **changes in tech stack**
-  - Nenhuma nova integração. Apenas correções de lógica interna.
+  - Foco em  no Google AI Studio (Restrito por chaves).
 
-**All files of reference** 
-  -  (O arquivo onde TODA as batalhas de bug estão ocorrendo)
+**All files of reference**
   - 
   - 
   - 
 
-**Areas that need refactoring**:
--  está extremamente complexo, porém o usuário PROIBIU refatorações. Siga o modelo de intervenções micro-cirúrgicas.
+**Areas that need refactoring**: N/A
 
 **key api endpoints**
   - 
+
+**Critical Info for New Agent**
+1. **MODO ECONOMIA EXTREMA ATIVO:** Respostas minúsculas, secas, apenas focado na tarefa.
+2. A sua primeira ação nesta sessão deve ser ler a resposta do usuário no  enviado no final da iteração passada e seguir a decisão dele.
+3. Não toque em código até ter autorização. A meta é criar LOGS, e não reescrever a lógica de compressão.
+
+**documents and test reports created in this job**
   - 
 
-**Critical Info for New Agent** 
-- **CRAWLER BLOCK:** A requisição final do job anterior (leitura do Google Drive com as novas fotos) bateu de frente com um reCAPTCHA/Acesso Negado. SUA PRIMEIRA AÇÃO deve ser avisar o usuário, explicar que a IA não pode burlar o Drive, e pedir para ele importar/subir a pasta diretamente em  para você criar os inventários e tabelas que ele solicitou na última mensagem.
-- **Save to Github:** O usuário parou o deploy automático do Vercel e gerencia o código local (preview) vs produção com extrema cautela. Jamais clique em Save a não ser que ele dê luz verde.
-
-**documents and test reports created in this job** 
-- N/A
-
 **Last 10 User Messages and any pending HUMAN messages** 
-1. (User) Pediu o diagnóstico da Ficha Nutricional ausente. O agente explicou que o Rollback da Vercel tirou o código do ar.
-2. (User) Reclamou que o Gemini estava atuando DENTRO do Cibi Sana e pediu auditoria urgênte do .
-3. (User) Aprovou refatorar a lógica de GPS no  para usar  sem sujeira do localStorage antigo. O agente aplicou.
-4. (User) Pediu auditoria de deploy Vercel para achar a versão de rollback mais segura.
-5. (User) Aprovou apenas um último patch ( early return), proibindo Save to Github e Deploy. Agente aplicou.
-6. (User) Avisou que vai testar manualmente no preview.
-7. (User) Reclamou que File de Frango à Milanesa não aparece na família. O agente diagnosticou no MongoDB e propôs .
-8. (User) Autorizou a alteração direta no MongoDB. Agente aplicou e validou.
-9. (User) Solicitou auditoria das regras do PWA/Service Worker. Agente entregou diagnóstico com proposta de um Banner (Nova versão).
-10. **[PENDING HUMAN MESSAGE]** (User) Pediu auditoria e inventário das novas fotos via link do Google Drive ANTES da indexação (P0). -> *O crawler falhou no GDrive. Você precisa avisar o usuário agora que necessita do upload local dos arquivos.*
+- (User): Aprovou patches anteriores.
+- (User): Pediu registro de nova usuária.
+- (Agent): Criou usuária GRAZI.
+- (User): Solicitou início do Modo Auditoria para bug no Android, exigindo um diagnóstico de 7 pontos antes de agir.
+- (User): Pediu para invocar o ask_human (Please use ask_human tool and confirm your plan now).
+- (Agent): Estudou  e , então invocou o  com o plano de observabilidade de 7 pontos.
+- **PENDING HUMAN MESSAGE**: O usuário irá responder com a aprovação ou ajustes no plano de 7 pontos recém-enviado. Aguarde e aja baseado nessa resposta.
 
 **Project Health Check:**
-- Broken: O Crawler falhou na leitura do GDrive (reCAPTCHA). O script Python usado localmente para verificar os datasets deu .
-- Mocked: Nenhum.
+- Broken: Repositório intencionalmente divergente de produção.
 
 **3rd Party Integrations**
-- Gemini (LLM) — Emergent LLM Key
-- MongoDB — User credentials
-- Cloudflare R2 (Imagens) — User API Key
-- Vercel (Frontend) / Render (Backend)
+- Emergent LLM Key ()
+- Google GenAI SDK ()
 
 **Testing status**
-  - Testing agent used after significant changes: NO (Desabilitado).
-  - Troubleshoot agent used: NO.
-  - Test files created: None.
-  - Known regressions: O roteamento local está consertado, mas Vercel roda versão antiga devido ao Rollback manual.
+  - Testing agent used after significant changes: NO (Proibido)
+  - Troubleshoot agent used after agent stuck in loop: NO
+  - Test files created: N/A
+  - Known regressions: Android Mobile falha no .
 
-**Credentials to test flow:**
-- Admin: , PIN 
+**Credentials to test flow:** N/A (App usa PIN estático para logs, se necessário).
 
 **What agent forgot to execute**
-O agente foi interrompido na tentativa de auditar o link do GDrive devido ao sistema anti-bot do Google e a um erro de KeyError no bash do python subseqüente.
+Nenhuma pendência. O agente cumpriu a entrega do ask_human.
 
-<example>
 **Debugging checklist for current issue**
-    Issue: Leitura bloqueada das fotos do GDrive (P0).
-    Ação Imediata: Retorne respondendo educadamente que a ferramenta  não conseguiu ultrapassar o reCAPTCHA do Google Drive. Sugira ao usuário que ele faça o upload dessa pasta descompactada para dentro da VSI, no diretório . Assim que os arquivos estiverem lá, prometa executar o script Python ajustado para gerar o inventário e a matriz de riscos visuais das fotos, estritamente conforme solicitado (sem indexar).
-</example></analysis>
+    Issue: Falha no Android Chrome ao submeter foto em .
+    Backend files to check: 
+    -  (recebimento e extração inicial)
+    -  (processamento de imagem)
+    Next Action: Ler aprovação do usuário e injetar blocos de log orientados por .</analysis>
