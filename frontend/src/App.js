@@ -3997,7 +3997,9 @@ return {
                       Parece ser:
                     </div>
                     <h2 className="dish-name" data-testid="dish-name" style={{ margin: '0 0 8px', fontSize: '24px' }}>
-                      {r.dish_display}
+                      {r.family_name && ['milanesa', 'batata', 'sobrecoxa'].includes((r.family_slug || '').toLowerCase())
+                        ? r.family_name
+                        : r.dish_display}
                     </h2>
                     <div style={{ fontSize: '13px', color: '#a16207' }}>
                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
@@ -4034,7 +4036,11 @@ return {
                 </div>
               ) : (
                 <>
-                  <h2 className="dish-name" data-testid="dish-name">{r.dish_display}</h2>
+                  <h2 className="dish-name" data-testid="dish-name">
+                    {r.family_name && ['milanesa', 'batata', 'sobrecoxa'].includes((r.family_slug || '').toLowerCase())
+                      ? r.family_name
+                      : r.dish_display}
+                  </h2>
                   {(r.nutrition?.calorias || r.calorias_estimadas) && (
                     <div
                       className="calories-highlight"
@@ -4626,7 +4632,11 @@ return {
             
             <div className="add-more-success">
               <span className="add-more-emoji">✅</span>
-              <h3>{result.dish_display}</h3>
+              <h3>
+                {result.family_name && ['milanesa', 'batata', 'sobrecoxa'].includes((result.family_slug || '').toLowerCase())
+                  ? result.family_name
+                  : result.dish_display}
+              </h3>
               <p className="add-more-confidence">
                 {result.confidence === 'alta' ? '🎯 Alta confiança' : 
                  result.confidence === 'media' ? '👍 Boa confiança' : '🤔 Verificar'}
