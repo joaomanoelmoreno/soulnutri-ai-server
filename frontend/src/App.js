@@ -4062,13 +4062,7 @@ return {
               
               {/* FAMÍLIA DE PRATOS — imediatamente após resultado principal (ordem global) */}
               {(() => {
-                const familySlugs = r.family_members_slugs || [];
-                const filteredCandidates = (r.family_candidates || []).filter(c => {
-                  const slug = c.toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-                  return familySlugs.includes(slug);
-                });
+                const filteredCandidates = r.family_candidates || [];
                 if (!r.family_name || filteredCandidates.length === 0) return null;
                 return (
                   <div
