@@ -2674,7 +2674,10 @@ return {
   };
 
   return (
-    <div className={`app${premiumUser ? ' premium-active' : ''}`}>
+    <div
+      className={`app${premiumUser ? ' premium-active' : ''}`}
+      data-auto-update-test="v1"
+    >
       {/* Banner de atualização disponível */}
       {hasUpdate && (
         <div
