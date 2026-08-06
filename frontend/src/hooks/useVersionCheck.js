@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 const API = `${process.env.REACT_APP_BACKEND_URL || ''}/api`;
 const LS_VERSION_KEY = 'soulnutri_backend_version';
+const LS_FRONTEND_VERSION_KEY = 'soulnutri_frontend_version';
 
 // Keys criticas que NUNCA sao apagadas no hard update
 const CRITICAL_KEYS = [
@@ -59,7 +60,44 @@ export function useVersionCheck() {
   useEffect(() => {
     let cancelled = false;
 
+    async function checkFrontendVersion() {
+      try {
+        const res = await fetch(`/asset-manifest.json?t=${Date.now()}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+          },
+        });
+
+        if (!res.ok || cancelled) return;
+
+        const manifest = await res.json();
+        const latestFrontend = manifest?.files?.['main.js'];
+
+        if (!latestFrontend) return;
+
+        const storedFrontend = localStorage.getItem(LS_FRONTEND_VERSION_KEY);
+
+        if (!storedFrontend) {
+          localStorage.setItem(LS_FRONTEND_VERSION_KEY, latestFrontend);
+          return;
+        }
+
+        if (storedFrontend !== latestFrontend) {
+          // Gravar antes do reload impede ciclo infinito.
+          localStorage.setItem(LS_FRONTEND_VERSION_KEY, latestFrontend);
+          window.location.reload();
+        }
+      } catch (_) {
+        // Falha silenciosa: o app continua operando normalmente.
+      }
+    }
+
     async function check() {
+      await checkFrontendVersion();
+
+      if (cancelled) return;
+
       try {
         const res = await fetch(`${API}/debug/version`, {
           cache: 'no-store',
@@ -78,7 +116,9 @@ export function useVersionCheck() {
           return;
         }
         if (stored !== latest) {
-          setHasUpdate(true);
+          // Mudanças exclusivamente no backend já entram em vigor nas próximas
+          // chamadas de API e não exigem atualização manual do aplicativo.
+          localStorage.setItem(LS_VERSION_KEY, latest);
         }
       } catch (_) {
         // Silencioso — nao exibir banner se API estiver fora
@@ -86,7 +126,25 @@ export function useVersionCheck() {
     }
 
     check();
-    return () => { cancelled = true; };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        checkFrontendVersion();
+      }
+    };
+
+    const handleFocus = () => {
+      checkFrontendVersion();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      cancelled = true;
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   return { hasUpdate, serverVersion, triggerHardUpdate };
