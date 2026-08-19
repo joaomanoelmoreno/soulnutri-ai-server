@@ -489,6 +489,7 @@ const renderTextSafe = (v) => {
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const cameraReadyAtRef = useRef(0);
   const fileInputRef = useRef(null);
   const loadingRef = useRef(false);
   const abortControllerRef = useRef(null);
@@ -1314,6 +1315,7 @@ const loadNotifCount = async (pin) => {
         videoRef.current.srcObject = s;
         // Aguardar video estar pronto
         videoRef.current.onloadedmetadata = () => {
+          cameraReadyAtRef.current = Date.now();
           console.log('[Camera] Video conectado e pronto');
         };
       }
@@ -1383,6 +1385,14 @@ const loadNotifCount = async (pin) => {
       console.warn('Vídeo ainda não está pronto');
       return;
     }
+
+    // R1 reconhecimento:
+    // aguardar autofocus/exposição estabilizarem antes da primeira captura.
+    const cameraAgeMs = Date.now() - cameraReadyAtRef.current;
+    if (!cameraReadyAtRef.current || cameraAgeMs < 1200) {
+      console.warn(`[Camera] Aguardando estabilização: ${cameraAgeMs}ms`);
+      return;
+    }
     
     // ═══════════════════════════════════════════════════════════════
     // CROP: Capturar APENAS a area dentro da guide-frame (55% x 90%)
@@ -1429,8 +1439,10 @@ const loadNotifCount = async (pin) => {
     const sw = gWidth * scaleX;
     const sh = gHeight * scaleY;
     
-    // Canvas de saida: 224px (nativo do CLIP — servidor redimensiona para 224 internamente)
-    const maxSize = 224;
+    // R1 reconhecimento:
+    // preservar mais detalhe visual no envio.
+    // O backend faz o preprocessing final do CLIP em 224x224.
+    const maxSize = 768;
     let outW = sw, outH = sh;
     if (outW > maxSize || outH > maxSize) {
       const ratio = Math.min(maxSize / outW, maxSize / outH);
@@ -1453,7 +1465,7 @@ const loadNotifCount = async (pin) => {
       }
       // Limpar canvas após uso
       ctx.clearRect(0, 0, outW, outH);
-    }, 'image/jpeg', 0.82);
+    }, 'image/jpeg', 0.92);
   }, [multiMode, detectedRestaurant]);
 
   const normalizeResult = (raw) => {

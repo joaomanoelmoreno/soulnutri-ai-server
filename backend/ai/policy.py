@@ -1253,7 +1253,7 @@ def analyze_result(results: List[Dict]) -> Dict:
         top1_score = results[0].get('score', 0)
         top2_score = results[1].get('score', 0)
         gap = top1_score - top2_score
-        if gap < 0.02:
+        if gap < 0.04:
             return {
                 'identified': False,
                 'dish': dish,
@@ -1293,7 +1293,7 @@ def analyze_result(results: List[Dict]) -> Dict:
             'alternatives': []
         }
     
-    elif score >= 0.50:
+    elif score >= 0.72:
         alternatives = [safe_display(r['dish'], get_dish_name(r['dish'])) for r in results[1:4] if r.get('dish')]
         return {
             'identified': True,
