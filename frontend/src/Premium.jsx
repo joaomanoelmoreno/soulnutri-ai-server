@@ -4,6 +4,119 @@ import DashboardPremium from './DashboardPremium';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+const GOOGLE_PLAY_BILLING_METHOD = "https://play.google.com/billing";
+const GOOGLE_PLAY_PREMIUM_PRODUCT_ID = "soulnutri_premium";
+
+async function loadGooglePlayPremiumProduct() {
+  if (!("getDigitalGoodsService" in window)) {
+    throw new Error(
+      "Google Play Billing não está disponível neste ambiente. Abra o SoulNutri pelo aplicativo instalado pela Google Play."
+    );
+  }
+
+  if (!("PaymentRequest" in window)) {
+    throw new Error("Payment Request API não está disponível neste dispositivo.");
+  }
+
+  const service = await window.getDigitalGoodsService(
+    GOOGLE_PLAY_BILLING_METHOD
+  );
+
+  const productDetails = await service.getDetails([
+    GOOGLE_PLAY_PREMIUM_PRODUCT_ID
+  ]);
+
+  if (!productDetails || productDetails.length === 0) {
+    throw new Error("Assinatura SoulNutri Premium não encontrada na Google Play.");
+  }
+
+  return (
+    productDetails.find(
+      item => item.itemId === GOOGLE_PLAY_PREMIUM_PRODUCT_ID
+    ) || productDetails[0]
+  );
+}
+
+async function purchaseGooglePlayPremium({ nome, pin, product }) {
+  const paymentMethods = [{
+    supportedMethods: GOOGLE_PLAY_BILLING_METHOD,
+    data: {
+      sku: GOOGLE_PLAY_PREMIUM_PRODUCT_ID
+    }
+  }];
+
+  const currency = product?.price?.currency || "BRL";
+  const value = String(product?.price?.value ?? "0");
+
+  const paymentDetails = {
+    total: {
+      label: "SoulNutri Premium",
+      amount: {
+        currency,
+        value
+      }
+    }
+  };
+
+  const request = new PaymentRequest(paymentMethods, paymentDetails);
+
+  // IMPORTANTE: show() é chamado antes de qualquer await nesta função.
+  const paymentPromise = request.show();
+
+  let paymentResponse = null;
+
+  try {
+    paymentResponse = await paymentPromise;
+
+    const purchaseToken = paymentResponse?.details?.purchaseToken;
+
+    if (!purchaseToken) {
+      await paymentResponse.complete("fail");
+      throw new Error("A Google Play não retornou o token da compra.");
+    }
+
+    const fd = new FormData();
+    fd.append("nome", nome);
+    fd.append("pin", pin);
+    fd.append("purchase_token", purchaseToken);
+
+    const verifyResponse = await fetch(
+      `${API}/premium/google-play/verify`,
+      {
+        method: "POST",
+        body: fd
+      }
+    );
+
+    const verifyData = await verifyResponse.json();
+
+    if (!verifyResponse.ok || !verifyData.ok) {
+      await paymentResponse.complete("fail");
+      throw new Error(
+        verifyData.error || "Não foi possível validar a assinatura."
+      );
+    }
+
+    await paymentResponse.complete("success");
+
+    return {
+      ...verifyData,
+      purchaseToken,
+      product
+    };
+  } catch (error) {
+    if (paymentResponse && error?.name !== "AbortError") {
+      try {
+        await paymentResponse.complete("fail");
+      } catch (_) {
+        // A resposta pode já ter sido concluída.
+      }
+    }
+
+    throw error;
+  }
+}
+
 // 🔒 Render-safe para JSX: garante que NUNCA renderizamos um objeto direto (React error #31)
 const renderTextSafe = (v) => {
   if (v === null || v === undefined) return '';
@@ -23,35 +136,82 @@ export function PremiumRegister({ onSuccess, onCancel }) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [registeredData, setRegisteredData] = useState(null);
+  const [billingProduct, setBillingProduct] = useState(null);
+  const [billingReady, setBillingReady] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    const fd = new FormData();
-    Object.keys(form).forEach(key => {
-      if (key === 'restricoes') {
-        fd.append(key, form[key].join(','));
-      } else {
-        fd.append(key, form[key]);
-      }
-    });
-
     try {
-      const res = await fetch(`${API}/premium/register`, { method: 'POST', body: fd });
+      const product = await loadGooglePlayPremiumProduct();
+
+      const fd = new FormData();
+      Object.keys(form).forEach(key => {
+        if (key === 'restricoes') {
+          fd.append(key, form[key].join(','));
+        } else {
+          fd.append(key, form[key]);
+        }
+      });
+
+      const res = await fetch(`${API}/premium/register`, {
+        method: 'POST',
+        body: fd
+      });
+
       const data = await res.json();
+
       if (data.ok) {
-        localStorage.setItem('soulnutri_pin', form.pin);
-        localStorage.setItem('soulnutri_nome', form.nome);
-        localStorage.setItem('soulnutri_user', JSON.stringify(data));
-        onSuccess(data);
+        setRegisteredData(data);
+        setBillingProduct(product);
+        setBillingReady(true);
       } else {
         setError(data.error);
       }
     } catch (e) {
-      setError('Erro de conexão');
+      setError(e?.message || 'Erro de conexão');
     }
+
+    setLoading(false);
+  };
+
+  const handlePurchase = async () => {
+    if (!registeredData || !billingProduct) {
+      setError('Assinatura ainda não está pronta. Tente novamente.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const billingData = await purchaseGooglePlayPremium({
+        nome: form.nome,
+        pin: form.pin,
+        product: billingProduct
+      });
+
+      const premiumData = {
+        ...registeredData,
+        ...billingData
+      };
+
+      localStorage.setItem('soulnutri_pin', form.pin);
+      localStorage.setItem('soulnutri_nome', form.nome);
+      localStorage.setItem('soulnutri_user', JSON.stringify(premiumData));
+
+      onSuccess(premiumData);
+    } catch (e) {
+      if (e?.name === 'AbortError') {
+        setError('Compra cancelada. Seu perfil foi criado, mas o Premium ainda não foi liberado.');
+      } else {
+        setError(e?.message || 'Não foi possível concluir a assinatura.');
+      }
+    }
+
     setLoading(false);
   };
 
@@ -85,6 +245,7 @@ export function PremiumRegister({ onSuccess, onCancel }) {
         Consulte sempre um especialista para dietas específicas ou condições de saúde.
       </div>
       
+      {!billingReady ? (
       <form onSubmit={handleSubmit} autoComplete="off">
         <div className="form-group">
           <label>PIN de Acesso (4-6 dígitos)</label>
@@ -248,6 +409,48 @@ export function PremiumRegister({ onSuccess, onCancel }) {
           ← Voltar
         </button>
       </form>
+      ) : (
+        <div className="premium-billing-step">
+          <h3>Seu perfil foi criado</h3>
+          <p>
+            Para liberar o SoulNutri® Premium, conclua sua assinatura mensal pela Google Play.
+          </p>
+
+          <div style={{ margin: '18px 0', fontSize: '14px' }}>
+            <strong>
+              {billingProduct?.price
+                ? `${new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: billingProduct.price.currency
+                  }).format(Number(billingProduct.price.value))}/mês`
+                : 'Preço pela Google Play'}
+            </strong>
+            <div style={{ marginTop: '6px', fontSize: '12px', opacity: 0.8 }}>
+              Renovação automática. Cancele pela Google Play quando desejar.
+            </div>
+          </div>
+
+          {error && <div className="error-msg">{error}</div>}
+
+          <button
+            type="button"
+            className="submit-btn"
+            disabled={loading}
+            onClick={handlePurchase}
+          >
+            {loading ? '⏳ Abrindo Google Play...' : 'Assinar SoulNutri® Premium'}
+          </button>
+
+          <button
+            type="button"
+            className="cancel-btn"
+            disabled={loading}
+            onClick={onCancel}
+          >
+            ← Voltar
+          </button>
+        </div>
+      )}
     </div>
   );
 }

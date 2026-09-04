@@ -1286,3 +1286,10 @@ credentials.json
 *.pem
 *.key
 .credentials
+
+# SoulNutri quarantine photos - local only
+datasets/quarantine/
+datasets/quarantine_canon/
+
+# Credenciais privadas - nunca versionar
+backend/secrets/

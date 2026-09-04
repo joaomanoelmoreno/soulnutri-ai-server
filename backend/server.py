@@ -3463,13 +3463,41 @@ async def register_user(
         if not pin.isdigit():
             return {"ok": False, "error": "PIN deve conter apenas numeros"}
         
+        pin_hash = hash_pin(pin)
+
+        # Recuperar cadastro já iniciado com o mesmo Nome + PIN.
+        # Evita criar perfis duplicados quando o usuário cancela o checkout
+        # e depois tenta concluir a assinatura novamente.
+        existing_user = await db.users.find_one(
+            {
+                "pin_hash": pin_hash,
+                "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}
+            }
+        )
+
+        if existing_user:
+            if existing_user.get("premium_ativo", False):
+                return {
+                    "ok": False,
+                    "error": "Este perfil já possui acesso Premium. Entre pela tela de login."
+                }
+
+            return {
+                "ok": True,
+                "user_id": str(existing_user["_id"]),
+                "nome": existing_user.get("nome", nome),
+                "meta_calorica": existing_user.get("meta_calorica"),
+                "cadastro_existente": True,
+                "message": "Perfil existente recuperado. Conclua a assinatura para liberar o Premium."
+            }
+
         # Calcular meta calorica
         tmb = calcular_tmb(peso, altura, idade, sexo)
         meta_info = calcular_meta_calorica(tmb, nivel_atividade, objetivo)
         
         # Criar perfil
         perfil = {
-            "pin_hash": hash_pin(pin),
+            "pin_hash": pin_hash,
             "nome": nome,
             "peso": peso,
             "altura": altura,
@@ -3480,10 +3508,11 @@ async def register_user(
             "alergias": [a.strip() for a in alergias.split(",") if a.strip()],
             "restricoes": [r.strip() for r in restricoes.split(",") if r.strip()],
             "meta_calorica": meta_info,
-            "premium_ativo": True,
-            "is_trial": True,
-            "premium_trial_start": datetime.now(timezone.utc).isoformat(),
-            "premium_expira_em": (datetime.now(timezone.utc) + timedelta(days=7)).isoformat(),
+            "premium_ativo": False,
+            "is_trial": False,
+            "premium_expirado": False,
+            "trial_expirado": False,
+            "premium_expira_em": None,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc)
         }
@@ -3528,26 +3557,95 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
         if not user:
             return {"ok": False, "error": "Nome ou PIN incorreto"}
 
+        # Sincronizar assinatura Google Play antes de avaliar expiração local.
+        # Em falha transitória/inconclusiva da Google, preservar temporariamente
+        # o estado atual em vez de bloquear um assinante potencialmente válido.
+        google_play_sync_inconclusive = False
+
+        if (
+            user.get("premium_liberado_por") == "google_play"
+            and user.get("google_play_purchase_token")
+        ):
+            sync_result = await verify_google_play_subscription(
+                nome=nome,
+                pin=pin,
+                purchase_token=user["google_play_purchase_token"]
+            )
+
+            user = await db.users.find_one(
+                {"pin_hash": pin_hash, "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}},
+                {"_id": 0, "pin_hash": 0}
+            )
+
+            if not user:
+                return {"ok": False, "error": "Usuário não encontrado após sincronização"}
+
+            if (
+                not sync_result.get("ok")
+                and not sync_result.get("subscription_state")
+            ):
+                last_checked = user.get("google_play_checked_at")
+                last_checked_dt = None
+
+                if isinstance(last_checked, datetime):
+                    last_checked_dt = last_checked
+                elif isinstance(last_checked, str):
+                    try:
+                        last_checked_dt = datetime.fromisoformat(
+                            last_checked.replace("Z", "+00:00")
+                        )
+                    except Exception:
+                        last_checked_dt = None
+
+                if last_checked_dt:
+                    if last_checked_dt.tzinfo is None:
+                        last_checked_dt = last_checked_dt.replace(tzinfo=timezone.utc)
+
+                    age_seconds = (
+                        datetime.now(timezone.utc) - last_checked_dt
+                    ).total_seconds()
+
+                    google_play_sync_inconclusive = (
+                        0 <= age_seconds <= 24 * 60 * 60
+                    )
+
+                logger.warning(
+                    f"[PLAY_BILLING] Sincronização inconclusiva no login "
+                    f"nome={user.get('nome')} "
+                    f"grace_24h={google_play_sync_inconclusive}"
+                )
+
         # Verificar se Premium esta ativo e nao expirou (trial de 7 dias)
         premium_ativo = user.get("premium_ativo", False)
         premium_expira_em = user.get("premium_expira_em")
         is_trial = user.get("is_trial", False)
 
-        if premium_expira_em and premium_ativo:
+        if premium_expira_em and premium_ativo and not google_play_sync_inconclusive:
             try:
                 expiracao = datetime.fromisoformat(premium_expira_em.replace("Z", "+00:00"))
                 agora = datetime.now(timezone.utc)
                 if agora > expiracao:
                     premium_ativo = False
+
+                    expiracao_update = {
+                        "premium_ativo": False,
+                        "premium_expirado": True
+                    }
+
+                    if user.get("is_trial", False):
+                        expiracao_update["trial_expirado"] = True
+
                     await db.users.update_one(
                         {"nome": {"$regex": f"^\s*{_norm_nome(nome)}\s*$", "$options": "i"}},
-                        {"$set": {
-                            "premium_ativo": False,
-                            "premium_expirado": True,
-                            "trial_expirado": True
-                        }}
+                        {"$set": expiracao_update}
                     )
-                    logger.info(f"[PREMIUM] Trial expirado para {user.get('nome')}")
+
+                    if user.get("premium_liberado_por") == "google_play":
+                        logger.info(f"[PREMIUM] Assinatura Google Play expirada para {user.get('nome')}")
+                    elif user.get("is_trial", False):
+                        logger.info(f"[PREMIUM] Trial expirado para {user.get('nome')}")
+                    else:
+                        logger.info(f"[PREMIUM] Premium expirado para {user.get('nome')}")
             except Exception as e:
                 logger.warning(f"[PREMIUM] Erro ao verificar expiracao: {e}")
 
@@ -3567,8 +3665,13 @@ async def login_user(pin: str = Form(...), nome: str = Form(...)):
 
         if not premium_ativo:
             msg = f"Ola, {user['nome']}! "
-            if user.get("trial_expirado") or user.get("premium_expirado"):
+
+            if user.get("premium_liberado_por") == "google_play":
+                msg += "Sua assinatura SoulNutri Premium pela Google Play não está ativa."
+            elif user.get("trial_expirado"):
                 msg += "Seu periodo de teste expirou. Entre em contato para ativar o Premium."
+            elif user.get("premium_expirado"):
+                msg += "Seu acesso Premium expirou. Entre em contato para ativacao."
             else:
                 msg += "Seu acesso Premium ainda nao foi liberado. Entre em contato para ativacao."
             return {
@@ -3610,6 +3713,274 @@ class ProfileRequest(BaseModel):
     nome: str
     pin: str
     perfil: PerfilUsuario
+
+
+
+@api_router.post("/premium/google-play/verify")
+async def verify_google_play_subscription(
+    nome: str = Form(...),
+    pin: str = Form(...),
+    purchase_token: str = Form(...)
+):
+    """
+    Valida uma assinatura SoulNutri Premium diretamente na Google Play.
+    Só ativa o Premium quando a compra for confirmada pelo Google.
+    """
+    try:
+        import os
+        import json
+        import requests
+        from google.oauth2 import service_account
+        from google.auth.transport.requests import Request as GoogleAuthRequest
+        from services.profile_service import hash_pin
+        from datetime import datetime, timezone
+
+        PACKAGE_NAME = "br.com.soulnutri.app"
+        PRODUCT_ID = "soulnutri_premium"
+        SCOPES = ["https://www.googleapis.com/auth/androidpublisher"]
+
+        # Confirmar usuário local
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one(
+            {
+                "pin_hash": pin_hash,
+                "nome": {"$regex": f"^\\s*{_norm_nome(nome)}\\s*$", "$options": "i"}
+            }
+        )
+
+        if not user:
+            return {"ok": False, "error": "Nome ou PIN incorreto"}
+
+        # Credencial: produção via variável de ambiente; local via arquivo protegido
+        credentials_json = os.getenv("GOOGLE_PLAY_BILLING_CREDENTIALS_JSON")
+
+        if credentials_json:
+            info = json.loads(credentials_json)
+            credentials = service_account.Credentials.from_service_account_info(
+                info, scopes=SCOPES
+            )
+        else:
+            credentials_path = os.path.join(
+                os.path.dirname(__file__),
+                "secrets",
+                "google-play-billing.json"
+            )
+            credentials = service_account.Credentials.from_service_account_file(
+                credentials_path, scopes=SCOPES
+            )
+
+        credentials.refresh(GoogleAuthRequest())
+
+        url = (
+            "https://androidpublisher.googleapis.com/androidpublisher/v3/"
+            f"applications/{PACKAGE_NAME}/purchases/subscriptionsv2/tokens/{purchase_token}"
+        )
+
+        resp = requests.get(
+            url,
+            headers={
+                "Authorization": f"Bearer {credentials.token}",
+                "Accept": "application/json"
+            },
+            timeout=15
+        )
+
+        if resp.status_code != 200:
+            logger.warning(
+                f"[PLAY_BILLING] Falha validacao status={resp.status_code} body={resp.text[:500]}"
+            )
+            return {
+                "ok": False,
+                "error": "Não foi possível validar a assinatura no Google Play."
+            }
+
+        purchase = resp.json()
+        subscription_state = purchase.get("subscriptionState")
+        acknowledgement_state = purchase.get("acknowledgementState")
+        line_items = purchase.get("lineItems") or []
+
+        product_ids = {
+            item.get("productId")
+            for item in line_items
+            if item.get("productId")
+        }
+
+        if PRODUCT_ID not in product_ids:
+            return {
+                "ok": False,
+                "error": "A compra não corresponde ao SoulNutri Premium."
+            }
+
+        # Impedir reutilização do mesmo purchase token em outro usuário.
+        token_owner = await db.users.find_one(
+            {
+                "google_play_purchase_token": purchase_token,
+                "_id": {"$ne": user["_id"]}
+            },
+            {"_id": 1, "nome": 1}
+        )
+
+        if token_owner:
+            logger.warning(
+                f"[PLAY_BILLING] Purchase token já associado a outro usuário "
+                f"owner={token_owner.get('nome')}"
+            )
+            return {
+                "ok": False,
+                "error": "Esta compra já está vinculada a outro perfil."
+            }
+
+        # Estados com direito de acesso.
+        # CANCELED pode continuar válido até expiryTime, então é tratado abaixo.
+        entitled_states = {
+            "SUBSCRIPTION_STATE_ACTIVE",
+            "SUBSCRIPTION_STATE_IN_GRACE_PERIOD"
+        }
+
+        now = datetime.now(timezone.utc)
+        expiry_times = []
+
+        for item in line_items:
+            if item.get("productId") != PRODUCT_ID:
+                continue
+
+            expiry_raw = item.get("expiryTime")
+            if expiry_raw:
+                try:
+                    expiry_times.append(
+                        datetime.fromisoformat(expiry_raw.replace("Z", "+00:00"))
+                    )
+                except Exception:
+                    pass
+
+        latest_expiry = max(expiry_times) if expiry_times else None
+
+        entitled = subscription_state in entitled_states
+
+        # Assinatura cancelada pelo usuário continua válida até o fim do período pago.
+        if (
+            subscription_state == "SUBSCRIPTION_STATE_CANCELED"
+            and latest_expiry
+            and latest_expiry > now
+        ):
+            entitled = True
+
+        if not entitled:
+            # Só desativar Premium se este mesmo token Google já estiver
+            # vinculado ao próprio usuário. Uma tentativa com outro token
+            # não deve derrubar Premium concedido por admin/trial/outra origem.
+            same_google_subscription = (
+                user.get("google_play_purchase_token") == purchase_token
+            )
+
+            if same_google_subscription:
+                await db.users.update_one(
+                    {"_id": user["_id"]},
+                    {
+                        "$set": {
+                            "premium_ativo": False,
+                            "premium_expirado": True,
+                            "google_play_subscription_state": subscription_state,
+                            "google_play_checked_at": now,
+                            "updated_at": now
+                        }
+                    }
+                )
+
+            return {
+                "ok": False,
+                "premium_ativo": (
+                    False
+                    if same_google_subscription
+                    else bool(user.get("premium_ativo", False))
+                ),
+                "subscription_state": subscription_state,
+                "error": "Assinatura Premium não está ativa."
+            }
+
+        # Compras com novo purchase token precisam ser reconhecidas.
+        # Se já estiver reconhecida, não repetir o POST.
+        if acknowledgement_state == "ACKNOWLEDGEMENT_STATE_PENDING":
+            acknowledge_url = (
+                "https" + "://" +
+                "androidpublisher.googleapis.com/androidpublisher/v3/"
+                f"applications/{PACKAGE_NAME}/purchases/subscriptions/"
+                f"{PRODUCT_ID}/tokens/{purchase_token}:acknowledge"
+            )
+
+            acknowledge_resp = requests.post(
+                acknowledge_url,
+                headers={
+                    "Authorization": f"Bearer {credentials.token}",
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                json={},
+                timeout=15
+            )
+
+            if acknowledge_resp.status_code not in (200, 204):
+                logger.warning(
+                    f"[PLAY_BILLING] Falha acknowledge "
+                    f"status={acknowledge_resp.status_code} "
+                    f"body={acknowledge_resp.text[:500]}"
+                )
+                return {
+                    "ok": False,
+                    "premium_ativo": bool(user.get("premium_ativo", False)),
+                    "subscription_state": subscription_state,
+                    "error": "Compra válida, mas não foi possível concluir a confirmação no Google Play."
+                }
+
+            acknowledgement_state = "ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED"
+
+        update_data = {
+            "premium_ativo": True,
+            "is_trial": False,
+            "premium_expirado": False,
+            "trial_expirado": False,
+            "premium_liberado_por": "google_play",
+            "google_play_product_id": PRODUCT_ID,
+            "google_play_purchase_token": purchase_token,
+            "google_play_subscription_state": subscription_state,
+            "google_play_acknowledgement_state": acknowledgement_state,
+            "google_play_checked_at": now,
+            "updated_at": now
+        }
+
+        if latest_expiry:
+            update_data["premium_expira_em"] = latest_expiry.isoformat()
+
+        await db.users.update_one(
+            {"_id": user["_id"]},
+            {"$set": update_data}
+        )
+
+        logger.info(
+            f"[PLAY_BILLING] Premium validado nome={user.get('nome')} state={subscription_state}"
+        )
+
+        return {
+            "ok": True,
+            "premium_ativo": True,
+            "subscription_state": subscription_state,
+            "premium_expira_em": (
+                latest_expiry.isoformat() if latest_expiry else None
+            )
+        }
+
+    except FileNotFoundError:
+        logger.error("[PLAY_BILLING] Credencial Google Play não encontrada")
+        return {
+            "ok": False,
+            "error": "Configuração de faturamento indisponível."
+        }
+    except Exception as e:
+        logger.exception(f"[PLAY_BILLING] Erro inesperado: {e}")
+        return {
+            "ok": False,
+            "error": "Erro ao validar assinatura Premium."
+        }
 
 
 @api_router.get("/premium/get-profile")
