@@ -128,6 +128,74 @@ const renderTextSafe = (v) => {
   return '';
 };
 
+async function recoverExistingGooglePlayPremium({ nome, pin }) {
+  if (!("getDigitalGoodsService" in window)) {
+    return { recovered: false, reason: "digital_goods_unavailable" };
+  }
+
+  try {
+    const service = await window.getDigitalGoodsService(
+      GOOGLE_PLAY_BILLING_METHOD
+    );
+
+    const purchases = await service.listPurchases();
+
+    if (!Array.isArray(purchases) || purchases.length === 0) {
+      return { recovered: false, reason: "no_purchases" };
+    }
+
+    const purchase = purchases.find(item =>
+      (item?.id === GOOGLE_PLAY_PREMIUM_PRODUCT_ID ||
+       item?.itemId === GOOGLE_PLAY_PREMIUM_PRODUCT_ID) &&
+      item?.purchaseToken
+    );
+
+    if (!purchase?.purchaseToken) {
+      return { recovered: false, reason: "premium_purchase_not_found" };
+    }
+
+    const fd = new FormData();
+    fd.append("nome", nome);
+    fd.append("pin", pin);
+    fd.append("purchase_token", purchase.purchaseToken);
+
+    const res = await fetch(
+      `${API}/premium/google-play/verify`,
+      {
+        method: "POST",
+        body: fd
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok || !data.ok) {
+      return {
+        recovered: false,
+        reason: "verify_failed",
+        error: data?.error || "Não foi possível validar a assinatura."
+      };
+    }
+
+    return {
+      recovered: true,
+      data
+    };
+  } catch (e) {
+    console.error(
+      "[PLAY_BILLING] Falha ao recuperar assinatura existente:",
+      e
+    );
+
+    return {
+      recovered: false,
+      reason: "recovery_error",
+      error: e?.message
+    };
+  }
+}
+
+
 // Componente de Registro
 export function PremiumRegister({ onSuccess, onCancel }) {
   const [form, setForm] = useState({
@@ -690,22 +758,75 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel, initialError = '
       const data = await res.json();
       
       if (data.ok) {
+        let loginData = data;
+
         if (data.premium_bloqueado) {
-          // Usuário bloqueado/expirado — não entrar, mostrar motivo
-          localStorage.removeItem('soulnutri_pin');
-          localStorage.removeItem('soulnutri_nome');
-          localStorage.removeItem('soulnutri_user');
-          setError(data.message || 'Acesso Premium bloqueado.');
-          setLoading(false);
-          return;
+          // Antes de bloquear, consultar compras já existentes na Google Play.
+          // Isso recupera uma assinatura paga quando o retorno do checkout
+          // foi interrompido, ficou em processamento ou o app foi fechado.
+          const recovery = await recoverExistingGooglePlayPremium({
+            nome,
+            pin
+          });
+
+          if (recovery.recovered) {
+            // O backend acabou de validar/vincular a assinatura.
+            // Refazer o login para receber o perfil Premium atualizado.
+            const retryFd = new FormData();
+            retryFd.append('nome', nome);
+            retryFd.append('pin', pin);
+
+            const retryRes = await fetch(
+              `${API}/premium/login`,
+              {
+                method: 'POST',
+                body: retryFd
+              }
+            );
+
+            loginData = await retryRes.json();
+
+            if (
+              !retryRes.ok ||
+              !loginData.ok ||
+              loginData.premium_bloqueado
+            ) {
+              setError(
+                loginData.message ||
+                loginData.error ||
+                'A assinatura foi encontrada, mas o acesso Premium ainda não pôde ser liberado.'
+              );
+              setLoading(false);
+              return;
+            }
+          } else {
+            localStorage.removeItem('soulnutri_pin');
+            localStorage.removeItem('soulnutri_nome');
+            localStorage.removeItem('soulnutri_user');
+
+            setError(
+              recovery.error ||
+              data.message ||
+              'Acesso Premium bloqueado.'
+            );
+
+            setLoading(false);
+            return;
+          }
         }
+
         localStorage.setItem('soulnutri_pin', pin);
         localStorage.setItem('soulnutri_nome', nome);
-        localStorage.setItem('soulnutri_user', JSON.stringify(data.user));
-        onSuccess(data);
+        localStorage.setItem(
+          'soulnutri_user',
+          JSON.stringify(loginData.user)
+        );
+
+        onSuccess(loginData);
       } else {
         setError(data.error);
       }
+
     } catch (e) {
       setError('Erro de conexão');
     }
