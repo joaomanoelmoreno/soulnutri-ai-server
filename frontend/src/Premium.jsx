@@ -290,11 +290,20 @@ export function PremiumRegister({ onSuccess, onCancel }) {
 
       onSuccess(premiumData);
     } catch (e) {
-      if (e?.name === 'AbortError') {
-        setError('Compra cancelada. Seu perfil foi criado, mas o Premium ainda não foi liberado.');
-      } else {
-        setError(e?.message || 'Não foi possível concluir a assinatura.');
-      }
+      console.error(
+        '[PLAY_BILLING][PURCHASE]',
+        {
+          name: e?.name,
+          message: e?.message,
+          stack: e?.stack
+        }
+      );
+
+      setError(
+        `Falha no checkout Google Play. ` +
+        `[diag: ${e?.name || 'unknown'}] ` +
+        `${e?.message || 'sem mensagem'}`
+      );
     }
 
     setLoading(false);
