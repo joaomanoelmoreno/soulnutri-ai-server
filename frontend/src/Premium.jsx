@@ -140,9 +140,26 @@ async function recoverExistingGooglePlayPremium({ nome, pin }) {
 
     const purchases = await service.listPurchases();
 
+    console.log(
+      "[PLAY_BILLING][RECOVERY] listPurchases result:",
+      purchases
+    );
+
     if (!Array.isArray(purchases) || purchases.length === 0) {
+      console.warn(
+        "[PLAY_BILLING][RECOVERY] nenhuma compra encontrada"
+      );
       return { recovered: false, reason: "no_purchases" };
     }
+
+    console.log(
+      "[PLAY_BILLING][RECOVERY] compras recebidas:",
+      purchases.map(item => ({
+        id: item?.id,
+        itemId: item?.itemId,
+        hasPurchaseToken: Boolean(item?.purchaseToken)
+      }))
+    );
 
     const purchase = purchases.find(item =>
       (item?.id === GOOGLE_PLAY_PREMIUM_PRODUCT_ID ||
@@ -805,9 +822,11 @@ export function PremiumLogin({ onSuccess, onRegister, onCancel, initialError = '
             localStorage.removeItem('soulnutri_user');
 
             setError(
-              recovery.error ||
-              data.message ||
-              'Acesso Premium bloqueado.'
+              `${
+                recovery.error ||
+                data.message ||
+                'Acesso Premium bloqueado.'
+              } [diag: ${recovery.reason || 'unknown'}]`
             );
 
             setLoading(false);
