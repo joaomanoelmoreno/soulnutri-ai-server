@@ -22,7 +22,7 @@ os.environ["FORCE_CPU"] = "1"
 
 # Limpar newlines/espacos de TODAS as env vars (problema comum ao colar no Render)
 for key in ['MONGO_URL', 'DB_NAME', 'EMERGENT_LLM_KEY', 'GOOGLE_API_KEY', 'CORS_ORIGINS',
-            'USDA_API_KEY', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_ENDPOINT', 'R2_BUCKET']:
+            'USDA_API_KEY', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_ENDPOINT', 'R2_BUCKET', 'PERPLEXITY_API_KEY']:
     val = os.environ.get(key)
     if val:
         os.environ[key] = val.replace('\n', '').replace('\r', '').strip()
@@ -288,6 +288,107 @@ async def debug_test_onnx():
 
 # Router com prefixo /api
 api_router = APIRouter(prefix="/api")
+
+# ══════════════════════════════════════════════════════
+# PERPLEXITY PREVIEW — DRY RUN ADMINISTRATIVO
+# ══════════════════════════════════════════════════════
+
+@api_router.post("/admin/perplexity/preview", dependencies=[Depends(verify_admin_key)])
+async def preview_perplexity_content(request: Request):
+    """Prévia administrativa; não grava no MongoDB e não participa do escaneamento."""
+    try:
+        body = await request.json()
+        food = str(body.get("food") or "").strip()
+        aliases = body.get("aliases") or []
+        use_agent = bool(body.get("use_agent", False))
+
+        if not food:
+            return {"ok": False, "error": "food obrigatório"}
+
+        if not isinstance(aliases, list):
+            return {"ok": False, "error": "aliases deve ser uma lista"}
+
+        from services.perplexity_food_content_service import search_food_content
+
+        return await search_food_content(
+            food,
+            aliases=aliases[:10],
+            use_agent=use_agent,
+        )
+    except Exception as e:
+        logger.error(f"[PERPLEXITY_PREVIEW] Erro: {e}")
+        return {"ok": False, "error": str(e), "dry_run": True}
+
+
+@api_router.post("/admin/perplexity/stage", dependencies=[Depends(verify_admin_key)])
+async def stage_perplexity_content(request: Request):
+    """Armazena candidato para revisão, sempre inicialmente inativo."""
+    try:
+        body = await request.json()
+        item = body.get("item") if isinstance(body, dict) else None
+
+        if not isinstance(item, dict):
+            return {"ok": False, "error": "item obrigatório"}
+
+        titulo = str(item.get("titulo") or "").strip()
+        url = str(item.get("url") or "").strip()
+        fonte = str(item.get("fonte") or "").strip()
+        data_raw = str(item.get("data") or "").strip()
+        tags = item.get("tags") or []
+
+        if not titulo or not url or not fonte or not data_raw:
+            return {
+                "ok": False,
+                "error": "titulo, url, fonte e data são obrigatórios",
+            }
+
+        if not isinstance(tags, list) or not tags:
+            return {"ok": False, "error": "tags deve ser uma lista não vazia"}
+
+        from datetime import datetime, timezone
+        import hashlib
+
+        data = datetime.fromisoformat(data_raw.replace("Z", "+00:00"))
+        if data.tzinfo is None:
+            data = data.replace(tzinfo=timezone.utc)
+
+        doc_id = hashlib.sha256(url.encode("utf-8")).hexdigest()[:24]
+        documento = {
+            "id": doc_id,
+            "titulo": titulo,
+            "url": url,
+            "fonte": fonte,
+            "polaridade": str(item.get("polaridade") or "neutro"),
+            "data": data,
+            "tags": [str(tag).strip().lower() for tag in tags if str(tag).strip()],
+            "ativo": False,
+            "origem": "perplexity_search_agent",
+            "resumo": str(item.get("resumo") or "").strip(),
+            "categoria": str(item.get("categoria") or "").strip(),
+        }
+
+        if not documento["tags"]:
+            return {"ok": False, "error": "tags não podem ficar vazias"}
+
+        result = await db.contextual_breaking_news.update_one(
+            {"id": doc_id},
+            {"$set": documento},
+            upsert=True,
+        )
+
+        return {
+            "ok": True,
+            "staged": True,
+            "ativo": False,
+            "id": doc_id,
+            "matched": result.matched_count,
+            "modified": result.modified_count,
+            "upserted": bool(result.upserted_id),
+        }
+    except Exception as e:
+        logger.error(f"[PERPLEXITY_STAGE] Erro: {e}")
+        return {"ok": False, "error": str(e), "staged": False}
+
 
 # Função auxiliar de configuração
 async def get_setting(key: str):
