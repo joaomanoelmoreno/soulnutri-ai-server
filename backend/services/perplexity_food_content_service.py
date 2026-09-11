@@ -218,6 +218,15 @@ def _domain(url: str) -> str:
     return host[4:] if host.startswith("www.") else host
 
 
+def normalize_url(value: Any) -> str:
+    """Converte URL Markdown da Search API para URL direta."""
+    raw = str(value or "").strip()
+    match = re.fullmatch(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", raw)
+    if match:
+        return match.group(2).strip()
+    return raw
+
+
 def _trusted_domain(domain: str) -> Optional[str]:
     for trusted in TRUSTED_DOMAINS:
         if domain == trusted or domain.endswith("." + trusted):
@@ -322,7 +331,7 @@ def _prefilter_for_food(
     for raw in raw_results:
         if not isinstance(raw, dict):
             continue
-        url = str(raw.get("url") or "").strip()
+        url = normalize_url(raw.get("url"))
         title = str(raw.get("title") or "").strip()
         snippet = str(raw.get("snippet") or "").strip()
         reasons = validate_direct_url(url)
@@ -365,7 +374,7 @@ def evaluate_result(
 
     title = str(raw.get("title") or "").strip()
     snippet = str(raw.get("snippet") or "").strip()
-    url = str(raw.get("url") or "").strip()
+    url = normalize_url(raw.get("url"))
     published_at = parse_publication_date(raw.get("date"))
     category = classify_content(title, snippet)
     reasons = validate_direct_url(url)
@@ -522,7 +531,7 @@ async def classify_results_with_agent(
     for raw in raw_results:
         if not isinstance(raw, dict):
             continue
-        url = str(raw.get("url") or "").strip()
+        url = normalize_url(raw.get("url"))
         title = str(raw.get("title") or "").strip()
         snippet = str(raw.get("snippet") or "").strip()
         published = parse_publication_date(raw.get("date"))
@@ -743,7 +752,7 @@ async def classify_results_in_batches(
                 batch_errors += 1
                 agent_calls += 1
                 for raw in batch:
-                    url = str(raw.get("url") or "").strip()
+                    url = normalize_url(raw.get("url"))
                     rejected.append({
                         "id": _candidate_id(url) if url else None,
                         "titulo": str(raw.get("title") or "").strip(),
@@ -924,7 +933,7 @@ async def search_food_content(
     for raw in response_data.get("results", []):
         if not isinstance(raw, dict):
             continue
-        url = str(raw.get("url") or "").strip()
+        url = normalize_url(raw.get("url"))
         if url and url not in unique_results:
             unique_results[url] = raw
 
