@@ -27,6 +27,7 @@ PERPLEXITY_ALERT_MODEL = "openai/gpt-5.6-luna"
 REQUEST_TIMEOUT_SECONDS = 12.0
 AGENT_TIMEOUT_SECONDS = 60.0
 AGENT_BATCH_SIZE = 2
+MAX_RESULTS_PER_SOURCE_DOMAIN = 2
 
 # Limite oficial da Search API: no maximo 20 dominios por allowlist.
 TRUSTED_DOMAINS = (
@@ -88,7 +89,7 @@ CATEGORY_MAX_AGE_DAYS = {
 
 ALERT_TERMS = (
     "alert", "warning", "recall", "recalled", "outbreak", "contamination",
-    "contaminated", "listeria", "salmonella", "e. coli", "mercury",
+    "contaminated", "listeria", "salmonella", "e. coli",
     "food poisoning", "alergeno nao declarado", "alérgeno não declarado",
     "recolhimento", "contaminacao", "contaminação", "surto", "intoxicacao",
     "intoxicação",
@@ -110,8 +111,8 @@ COMBINATION_TERMS = (
 )
 RISK_TERMS = (
     "risk", "adverse", "harm", "caution", "contraindication", "excess",
-    "risco", "efeito adverso", "cuidado", "contraindicacao", "contraindicação",
-    "excesso",
+    "mercury", "risco", "efeito adverso", "cuidado", "contraindicacao",
+    "contraindicação", "excesso",
 )
 BENEFIT_TERMS = (
     "benefit", "improve", "protect", "healthy", "health effect",
@@ -147,7 +148,7 @@ AGENT_CATEGORIES = (
     "curiosidade",
     "irrelevante",
 )
-ALERT_ACCEPTED_SCOPES = {"global", "multinacional", "nacional"}
+ALERT_ACCEPTED_SCOPES = {"global", "multinacional"}
 
 AGENT_RESPONSE_SCHEMA = {
     "type": "object",
@@ -168,6 +169,22 @@ AGENT_RESPONSE_SCHEMA = {
                             "local", "nao_informada",
                         ],
                     },
+                    "produto_exportado": {"type": "boolean"},
+                    "produto_local": {"type": "boolean"},
+                    "distribuicao_nacional": {"type": "boolean"},
+                    "risco_ingrediente": {"type": "boolean"},
+                    "aplicabilidade_ampla": {
+                        "type": "string",
+                        "enum": ["alta", "media", "baixa", "nao_informada"],
+                    },
+                    "nivel_evidencia": {
+                        "type": "string",
+                        "enum": ["alta", "media", "baixa", "nao_informada"],
+                    },
+                    "relevancia_publica": {
+                        "type": "string",
+                        "enum": ["alta", "media", "baixa"],
+                    },
                     "vigente": {"type": "boolean"},
                     "confianca": {"type": "string", "enum": ["alta", "media", "baixa"]},
                     "manchete_pt": {"type": "string"},
@@ -176,7 +193,10 @@ AGENT_RESPONSE_SCHEMA = {
                 },
                 "required": [
                     "id", "relevante", "categoria", "alimento_relacionado",
-                    "abrangencia", "vigente", "confianca", "manchete_pt",
+                    "abrangencia", "produto_exportado", "produto_local",
+                    "distribuicao_nacional", "risco_ingrediente",
+                    "aplicabilidade_ampla", "nivel_evidencia",
+                    "relevancia_publica", "vigente", "confianca", "manchete_pt",
                     "resumo_pt", "motivo",
                 ],
                 "additionalProperties": False,
@@ -279,12 +299,12 @@ def classify_content(title: str, snippet: str) -> Optional[str]:
     text = normalize_text(f"{title} {snippet}")
     if _contains_any(text, ALERT_TERMS):
         return "alerta"
+    if _contains_any(text, RISK_TERMS):
+        return "risco"
     if _contains_any(text, RESEARCH_TERMS):
         return "pesquisa"
     if _contains_any(text, COMBINATION_TERMS):
         return "combinacao"
-    if _contains_any(text, RISK_TERMS):
-        return "risco"
     if _contains_any(text, BENEFIT_TERMS):
         return "beneficio"
     if _contains_any(text, POSITIVE_TERMS):
@@ -365,6 +385,7 @@ def evaluate_result(
     raw: Dict[str, Any],
     food: str,
     *,
+    aliases: Optional[Iterable[str]] = None,
     now: Optional[datetime] = None,
 ) -> Dict[str, Any]:
     """Avalia um resultado sem gravar ou publicar nada."""
@@ -383,7 +404,7 @@ def evaluate_result(
         reasons.append("titulo_ausente")
     if not snippet:
         reasons.append("resumo_ausente")
-    if not _mentions_food(title, snippet, food):
+    if not _mentions_any_food(title, snippet, food, aliases or []):
         reasons.append("alimento_nao_confirmado")
     if not category:
         reasons.append("categoria_nao_confirmada")
@@ -493,8 +514,25 @@ def _build_agent_prompt(
         "Marque alimento_relacionado somente quando a relacao for direta. "
         "Categorias validas: alerta, boa_noticia, novidade, pesquisa, beneficio, risco, "
         "combinacao, curiosidade ou irrelevante. Alerta significa recall, contaminacao, "
-        "surto, adulteracao ou alergeno nao declarado ainda relevante. Para alerta, "
-        "classifique a abrangencia; marca local ou regional sem distribuicao ampla nao basta. "
+        "surto, adulteracao ou alergeno nao declarado ainda relevante. "
+        "Para alerta, classifique a abrangencia e a distribuicao real do produto. "
+        "Global e multinacional sao aceitos. Nacional pode ser aceito quando o produto "
+        "for amplamente distribuido no mercado nacional, mesmo sem exportacao, ou quando "
+        "o risco for do ingrediente em geral. Produto restrito a uma loja, marca, lote "
+        "ou regiao deve ser rejeitado. "
+        "Considere consumidores e estabelecimentos de alimentacao em geral, incluindo "
+        "mercados, sorveterias, confeitarias, pizzarias, peixarias, hamburguerias, "
+        "restaurantes e outros, nao apenas restaurantes. "
+        "Para pesquisa, beneficio, risco, combinacao, novidade e curiosidade, avalie "
+        "se o achado tem aplicabilidade ampla para consumidores ou estabelecimentos de "
+        "alimentacao no Brasil ou em outros paises. Avalie tambem nivel de evidencia e "
+        "relevancia publica. Nao aceite aplicabilidade baixa ou nao informada, evidencia "
+        "baixa ou nao informada, nem relevancia publica baixa. "
+        "produto_local deve ser verdadeiro somente quando o fato estiver limitado a "
+        "marca, lote, loja ou mercado local. distribuicao_nacional deve ser verdadeira "
+        "somente quando houver distribuicao ampla no mercado nacional. "
+        "risco_ingrediente deve ser verdadeiro somente quando o risco se relacionar ao "
+        "alimento ou ingrediente em geral. "
         "Vigente deve ser falso quando o texto indicar encerrado ou resolvido. "
         "Use confianca baixa se o titulo/resumo nao sustentar a decisao. "
         "Crie manchete jornalistica neutra em portugues com no maximo 18 palavras e resumo "
@@ -635,12 +673,38 @@ async def classify_results_with_agent(
                 reasons.append("data_futura")
             elif age > timedelta(days=CATEGORY_MAX_AGE_DAYS[category]):
                 reasons.append("conteudo_expirado")
+        product_exported = bool(decision.get("produto_exportado"))
+        product_local = bool(decision.get("produto_local"))
+        national_distribution = bool(decision.get("distribuicao_nacional"))
+        ingredient_risk = bool(decision.get("risco_ingrediente"))
+        broad_applicability = decision.get("aplicabilidade_ampla")
+        evidence_level = decision.get("nivel_evidencia")
+        public_relevance = decision.get("relevancia_publica")
+
+        if product_local and not national_distribution and not product_exported and not ingredient_risk:
+            reasons.append("produto_local_sem_aplicabilidade")
+
         if category == "alerta":
             if not decision.get("vigente"):
                 reasons.append("alerta_encerrado")
-            if decision.get("abrangencia") not in ALERT_ACCEPTED_SCOPES:
+            broad_scope = decision.get("abrangencia") in ALERT_ACCEPTED_SCOPES
+            national_market_scope = (
+                decision.get("abrangencia") == "nacional"
+                and (national_distribution or product_exported or ingredient_risk)
+                and not product_local
+            )
+            if not broad_scope and not national_market_scope:
                 reasons.append("abrangencia_insuficiente")
-
+        elif category in {
+            "boa_noticia", "novidade", "pesquisa", "beneficio",
+            "risco", "combinacao", "curiosidade",
+        }:
+            if broad_applicability not in {"alta", "media"}:
+                reasons.append("aplicabilidade_ampla_insuficiente")
+            if evidence_level not in {"alta", "media"}:
+                reasons.append("evidencia_insuficiente")
+            if public_relevance == "baixa":
+                reasons.append("relevancia_publica_baixa")
         if reasons:
             rejected.append({
                 "id": item_id,
@@ -668,6 +732,13 @@ async def classify_results_with_agent(
             "data": original["date"],
             "valido_ate": valid_until.isoformat(),
             "abrangencia": decision.get("abrangencia"),
+            "produto_exportado": product_exported,
+            "produto_local": product_local,
+            "distribuicao_nacional": national_distribution,
+            "risco_ingrediente": ingredient_risk,
+            "aplicabilidade_ampla": broad_applicability,
+            "nivel_evidencia": evidence_level,
+            "relevancia_publica": public_relevance,
             "confianca": decision.get("confianca"),
             "classificador": response_data.get("model") or model,
             "tags": [normalize_text(food).replace(" ", "_")],
@@ -903,7 +974,7 @@ async def search_food_content(
         "max_results": 10,
         "search_recency_filter": "year",
         "search_context_size": "low",
-        "search_language_filter": ["en", "pt"],
+        "search_language_filter": ["en", "pt", "es"],
         "search_domain_filter": list(TRUSTED_DOMAINS),
     }
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
@@ -930,12 +1001,24 @@ async def search_food_content(
         response_data = await _request(client)
 
     unique_results: Dict[str, Dict[str, Any]] = {}
+    source_counts: Dict[str, int] = {}
+    source_concentration_rejected: List[Dict[str, str]] = []
     for raw in response_data.get("results", []):
         if not isinstance(raw, dict):
             continue
         url = normalize_url(raw.get("url"))
-        if url and url not in unique_results:
-            unique_results[url] = raw
+        if not url or url in unique_results:
+            continue
+        domain = _domain(url) or "desconhecido"
+        if source_counts.get(domain, 0) >= MAX_RESULTS_PER_SOURCE_DOMAIN:
+            source_concentration_rejected.append({
+                "url": url,
+                "domain": domain,
+                "reason": "limite_por_dominio",
+            })
+            continue
+        unique_results[url] = raw
+        source_counts[domain] = source_counts.get(domain, 0) + 1
 
     if use_agent:
         agent_result = await classify_results_hybrid(
@@ -952,10 +1035,17 @@ async def search_food_content(
             "request_id": response_data.get("id"),
             "queries": len(payload["query"]),
             "total": len(unique_results),
+            "source_domains": sorted(source_counts),
+            "source_domain_count": len(source_counts),
+            "source_concentration_rejected_count": len(source_concentration_rejected),
+            "source_concentration_rejected": source_concentration_rejected,
         })
         return agent_result
 
-    evaluated = [evaluate_result(raw, food, now=now) for raw in unique_results.values()]
+    evaluated = [
+        evaluate_result(raw, food, aliases=aliases, now=now)
+        for raw in unique_results.values()
+    ]
     candidates = [item for item in evaluated if item["accepted"]]
     rejected = [item for item in evaluated if not item["accepted"]]
     return {
@@ -965,8 +1055,116 @@ async def search_food_content(
         "request_id": response_data.get("id"),
         "queries": len(payload["query"]),
         "total": len(evaluated),
+        "source_domains": sorted(source_counts),
+        "source_domain_count": len(source_counts),
+        "source_concentration_rejected_count": len(source_concentration_rejected),
+        "source_concentration_rejected": source_concentration_rejected,
         "candidate_count": len(candidates),
         "rejected_count": len(rejected),
         "candidates": candidates,
         "rejected": rejected,
+    }
+
+async def search_food_content_batch(
+    foods: Iterable[Any],
+    *,
+    api_key: Optional[str] = None,
+    client: Optional[Any] = None,
+    use_agent: bool = False,
+    agent_client: Optional[Any] = None,
+    agent_batch_size: int = AGENT_BATCH_SIZE,
+    now: Optional[datetime] = None,
+    max_foods: int = 10,
+) -> Dict[str, Any]:
+    """Executa previews de varios alimentos sem persistencia."""
+    if max_foods < 1:
+        raise ValueError("max_foods deve ser maior que zero")
+
+    entries = list(foods or [])
+    if len(entries) > max_foods:
+        raise ValueError(f"o lote pode conter no maximo {max_foods} alimentos")
+
+    results: List[Dict[str, Any]] = []
+    errors: List[Dict[str, Any]] = []
+    usage: Dict[str, Any] = {}
+    candidate_count = 0
+    rejected_count = 0
+
+    for position, entry in enumerate(entries, 1):
+        if isinstance(entry, str):
+            food = entry.strip()
+            aliases: List[str] = []
+        elif isinstance(entry, dict):
+            food = str(entry.get("food") or "").strip()
+            raw_aliases = entry.get("aliases") or []
+            if not isinstance(raw_aliases, list):
+                errors.append({
+                    "position": position,
+                    "food": food,
+                    "error": "aliases deve ser uma lista",
+                })
+                continue
+            aliases = [
+                str(alias).strip()
+                for alias in raw_aliases[:10]
+                if str(alias).strip()
+            ]
+        else:
+            errors.append({
+                "position": position,
+                "food": "",
+                "error": "cada alimento deve ser texto ou objeto",
+            })
+            continue
+
+        if not food:
+            errors.append({
+                "position": position,
+                "food": "",
+                "error": "food obrigatorio",
+            })
+            continue
+
+        try:
+            result = await search_food_content(
+                food,
+                aliases=aliases,
+                api_key=api_key,
+                client=client,
+                use_agent=use_agent,
+                agent_client=agent_client,
+                agent_batch_size=agent_batch_size,
+                now=now,
+            )
+        except (
+            PerplexityConfigurationError,
+            PerplexitySearchError,
+            PerplexityAgentError,
+        ) as exc:
+            errors.append({
+                "position": position,
+                "food": food,
+                "error": type(exc).__name__,
+            })
+            continue
+
+        results.append(result)
+        candidate_count += int(result.get("candidate_count") or 0)
+        rejected_count += int(result.get("rejected_count") or 0)
+        _merge_usage(usage, result.get("usage") or {})
+
+    processed_count = len(results)
+    error_count = len(errors)
+    return {
+        "ok": error_count == 0,
+        "partial": error_count > 0 and processed_count > 0,
+        "dry_run": True,
+        "food_count": len(entries),
+        "processed_count": processed_count,
+        "error_count": error_count,
+        "candidate_count": candidate_count,
+        "rejected_count": rejected_count,
+        "results": results,
+        "errors": errors,
+        "usage": usage,
     }

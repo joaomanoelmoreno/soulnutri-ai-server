@@ -9,7 +9,9 @@ from services.perplexity_food_content_service import (
     classify_results_with_agent,
     evaluate_result,
     search_food_content,
+    search_food_content_batch,
     validate_direct_url,
+    PerplexitySearchError,
 )
 
 
@@ -172,6 +174,13 @@ def _agent_decision(raw, **overrides):
         "categoria": "alerta",
         "alimento_relacionado": True,
         "abrangencia": "nacional",
+        "produto_exportado": False,
+        "produto_local": False,
+        "distribuicao_nacional": True,
+        "risco_ingrediente": True,
+        "aplicabilidade_ampla": "alta",
+        "nivel_evidencia": "alta",
+        "relevancia_publica": "alta",
         "vigente": True,
         "confianca": "alta",
         "manchete_pt": "Autoridade anuncia alerta nacional para atum",
@@ -195,6 +204,7 @@ def test_search_is_dry_run_and_has_no_persistence():
     assert result["candidate_count"] == 1
     assert len(client.calls) == 1
     assert client.calls[0][1]["json"]["query"] == build_queries("tuna")
+    assert client.calls[0][1]["json"]["search_language_filter"] == ["en", "pt", "es"]
 
 
 def test_agent_accepts_alert_but_preserves_original_source_url_and_date():
@@ -497,3 +507,414 @@ def test_hybrid_reports_agent_call_count_and_prefilter_rejections():
     assert result["agent_calls"] == 1
     assert result["prefilter_rejected_count"] == 1
     assert result["rejected_count"] == 1
+
+def test_search_food_content_batch_processes_multiple_foods_and_keeps_dry_run():
+    import asyncio
+    from unittest.mock import patch
+
+    async def fake_search(food, **kwargs):
+        return {
+            "ok": True,
+            "dry_run": True,
+            "food": food,
+            "candidate_count": 1,
+            "rejected_count": 2,
+            "candidates": [{"food": food}],
+            "rejected": [],
+            "usage": {
+                "total_tokens": 10,
+                "cost": {"total_cost": 0.001},
+            },
+        }
+
+    with patch(
+        "services.perplexity_food_content_service.search_food_content",
+        side_effect=fake_search,
+    ):
+        result = asyncio.run(
+            search_food_content_batch(
+                [
+                    "atum",
+                    {"food": "salmão", "aliases": ["salmon"]},
+                ],
+                api_key="pplx-test-key-long-enough",
+            )
+        )
+
+    assert result["ok"] is True
+    assert result["dry_run"] is True
+    assert result["food_count"] == 2
+    assert result["processed_count"] == 2
+    assert result["error_count"] == 0
+    assert result["candidate_count"] == 2
+    assert result["rejected_count"] == 4
+    assert result["usage"]["total_tokens"] == 20
+    assert result["usage"]["cost"]["total_cost"] == 0.002
+    assert [item["food"] for item in result["results"]] == ["atum", "salmão"]
+
+
+def test_search_food_content_batch_keeps_processing_after_one_error():
+    import asyncio
+    from unittest.mock import patch
+
+    async def fake_search(food, **kwargs):
+        if food == "salmão":
+            raise PerplexitySearchError("falha controlada")
+        return {
+            "ok": True,
+            "dry_run": True,
+            "food": food,
+            "candidate_count": 1,
+            "rejected_count": 0,
+            "usage": {},
+        }
+
+    with patch(
+        "services.perplexity_food_content_service.search_food_content",
+        side_effect=fake_search,
+    ):
+        result = asyncio.run(
+            search_food_content_batch(
+                ["atum", "salmão", "tuna"],
+                api_key="pplx-test-key-long-enough",
+            )
+        )
+
+    assert result["ok"] is False
+    assert result["partial"] is True
+    assert result["processed_count"] == 2
+    assert result["error_count"] == 1
+    assert result["candidate_count"] == 2
+    assert result["errors"][0]["food"] == "salmão"
+    assert result["errors"][0]["error"] == "PerplexitySearchError"
+
+
+def test_search_food_content_batch_rejects_more_than_maximum_without_search():
+    import asyncio
+    from unittest.mock import patch
+
+    with patch(
+        "services.perplexity_food_content_service.search_food_content"
+    ) as mocked_search:
+        try:
+            asyncio.run(
+                search_food_content_batch(
+                    ["atum"] * 11,
+                    api_key="pplx-test-key-long-enough",
+                )
+            )
+        except ValueError as exc:
+            assert "no maximo 10" in str(exc)
+        else:
+            raise AssertionError("ValueError esperado")
+
+    mocked_search.assert_not_called()
+
+def test_agent_accepts_national_product_with_broad_distribution():
+    import asyncio
+
+    raw = _raw()
+    client = _AgentFakeClient([_agent_decision(
+        raw,
+        abrangencia="nacional",
+        produto_local=False,
+        distribuicao_nacional=True,
+        produto_exportado=False,
+    )])
+
+    result = asyncio.run(
+        classify_results_with_agent(
+            "tuna",
+            [raw],
+            api_key="pplx-test-key-long-enough",
+            client=client,
+            now=NOW,
+        )
+    )
+
+    assert result["candidate_count"] == 1
+    assert result["candidates"][0]["distribuicao_nacional"] is True
+
+
+def test_agent_rejects_local_national_product_without_broad_distribution():
+    import asyncio
+
+    raw = _raw()
+    client = _AgentFakeClient([_agent_decision(
+        raw,
+        abrangencia="nacional",
+        produto_local=True,
+        distribuicao_nacional=False,
+        produto_exportado=False,
+        risco_ingrediente=False,
+    )])
+
+    result = asyncio.run(
+        classify_results_with_agent(
+            "tuna",
+            [raw],
+            api_key="pplx-test-key-long-enough",
+            client=client,
+            now=NOW,
+        )
+    )
+
+    assert result["candidate_count"] == 0
+    reasons = result["rejected"][0]["reasons"]
+    assert "produto_local_sem_aplicabilidade" in reasons
+    assert "abrangencia_insuficiente" in reasons
+
+
+def test_agent_accepts_broad_research_about_food():
+    import asyncio
+
+    raw = _raw(
+        title="New study examines tuna protein and health",
+        snippet="A systematic review reports nutrition findings about tuna.",
+        url="https://www.bmj.com/content/tuna-protein-study",
+        date="2026-09-01",
+    )
+    client = _AgentFakeClient([_agent_decision(
+        raw,
+        categoria="pesquisa",
+        abrangencia="nao_informada",
+        aplicabilidade_ampla="alta",
+        nivel_evidencia="alta",
+        relevancia_publica="alta",
+        manchete_pt="Estudo analisa a proteína do atum",
+    )])
+
+    result = asyncio.run(
+        classify_results_with_agent(
+            "tuna",
+            [raw],
+            api_key="pplx-test-key-long-enough",
+            client=client,
+            now=NOW,
+        )
+    )
+
+    assert result["candidate_count"] == 1
+    assert result["candidates"][0]["categoria"] == "pesquisa"
+
+
+def test_agent_rejects_research_without_broad_applicability():
+    import asyncio
+
+    raw = _raw(
+        title="New study examines tuna protein and health",
+        snippet="A systematic review reports nutrition findings about tuna.",
+        url="https://www.bmj.com/content/tuna-protein-study-limited",
+        date="2026-09-01",
+    )
+    client = _AgentFakeClient([_agent_decision(
+        raw,
+        categoria="pesquisa",
+        abrangencia="regional",
+        aplicabilidade_ampla="baixa",
+        nivel_evidencia="alta",
+        relevancia_publica="alta",
+        manchete_pt="Estudo regional analisa a proteína do atum",
+    )])
+
+    result = asyncio.run(
+        classify_results_with_agent(
+            "tuna",
+            [raw],
+            api_key="pplx-test-key-long-enough",
+            client=client,
+            now=NOW,
+        )
+    )
+
+    assert result["candidate_count"] == 0
+    assert "aplicabilidade_ampla_insuficiente" in result["rejected"][0]["reasons"]
+
+def test_search_limits_results_per_source_domain():
+    import asyncio
+
+    class MultiSourceResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "id": "request-diversity",
+                "results": [
+                    _raw(url="https://www.fda.gov/safety/recalls/tuna-1"),
+                    _raw(url="https://www.fda.gov/safety/recalls/tuna-2"),
+                    _raw(url="https://www.fda.gov/safety/recalls/tuna-3"),
+                    _raw(url="https://www.nature.com/articles/tuna-study"),
+                ],
+            }
+
+    class MultiSourceClient:
+        def __init__(self):
+            self.calls = []
+
+        async def post(self, url, **kwargs):
+            self.calls.append((url, kwargs))
+            return MultiSourceResponse()
+
+    client = MultiSourceClient()
+    result = asyncio.run(
+        search_food_content(
+            "tuna",
+            api_key="pplx-test-key-long-enough",
+            client=client,
+        )
+    )
+
+    assert result["total"] == 3
+    assert result["source_domain_count"] == 2
+    assert result["source_domains"] == ["fda.gov", "nature.com"]
+    assert result["source_concentration_rejected_count"] == 1
+    assert result["source_concentration_rejected"][0]["domain"] == "fda.gov"
+
+def test_alias_tuna_is_accepted_for_atum_without_agent():
+    result = evaluate_result(
+        _raw(),
+        "atum",
+        aliases=["tuna"],
+        now=NOW,
+    )
+
+    assert result["accepted"] is True
+    assert "alimento_nao_confirmado" not in result["reasons"]
+
+
+def test_mercury_story_is_risk_not_alert():
+    raw = _raw(
+        title="Study evaluates mercury levels in canned tuna",
+        snippet="A recent study examines mercury exposure associated with canned tuna.",
+        url="[https://www.nature.com/articles/mercury-tuna-study](https://www.nature.com/articles/mercury-tuna-study)",
+    )
+
+    result = evaluate_result(
+        raw,
+        "atum",
+        aliases=["tuna"],
+        now=NOW,
+    )
+
+    assert result["categoria"] == "risco"
+    assert result["accepted"] is True
+
+def test_curated_ignores_expired_contextual_content():
+    import asyncio
+    import os
+    from datetime import datetime, timedelta, timezone
+
+    os.environ.setdefault("MONGO_URL", "mongodb://127.0.0.1:27017")
+    os.environ.setdefault("DB_NAME", "soulnutri_test")
+
+    import services.breaking_news_service.providers.curated as curated
+
+    class FakeCollection:
+        def find(self, query, projection):
+            now = datetime.now(timezone.utc)
+            return iter([
+                {
+                    "id": "expired",
+                    "titulo": "Conteúdo expirado",
+                    "url": "https://example.com/expired",
+                    "fonte": "Teste",
+                    "polaridade": "alerta",
+                    "categoria": "alerta",
+                    "resumo": "Conteúdo vencido.",
+                    "data": now,
+                    "valido_ate": now - timedelta(days=1),
+                    "tags": ["atum"],
+                    "ativo": True,
+                },
+                {
+                    "id": "valid",
+                    "titulo": "Risco atual sobre atum",
+                    "url": "https://example.com/valid",
+                    "fonte": "Teste",
+                    "polaridade": "neutro",
+                    "categoria": "risco",
+                    "resumo": "Conteúdo ainda válido.",
+                    "data": now,
+                    "valido_ate": now + timedelta(days=30),
+                    "tags": ["atum"],
+                    "ativo": True,
+                },
+            ])
+
+    original_collection = curated._collection
+    original_indexes = curated._indexes_created
+
+    try:
+        curated._collection = FakeCollection()
+        curated._indexes_created = True
+
+        result = asyncio.run(
+            curated.fetch(
+                dish_slug="atum",
+                family_slug=None,
+                ingredientes=[],
+                category=None,
+            )
+        )
+
+        assert result is not None
+        assert result["categoria"] == "risco"
+        assert result["titulo"] == "Risco atual sobre atum"
+    finally:
+        curated._collection = original_collection
+        curated._indexes_created = original_indexes
+
+def test_curated_builds_neutral_alert_message():
+    import asyncio
+    import os
+    from datetime import datetime, timezone
+
+    os.environ.setdefault("MONGO_URL", "mongodb://127.0.0.1:27017")
+    os.environ.setdefault("DB_NAME", "soulnutri_test")
+
+    import services.breaking_news_service.providers.curated as curated
+
+    class FakeCollection:
+        def find(self, query, projection):
+            now = datetime.now(timezone.utc)
+            return iter([
+                {
+                    "id": "alert",
+                    "titulo": "Contaminação relacionada ao atum",
+                    "url": "https://example.com/tuna-alert",
+                    "fonte": "Fonte especializada",
+                    "polaridade": "alerta",
+                    "categoria": "alerta",
+                    "resumo": "Informação divulgada por fonte especializada.",
+                    "data": now,
+                    "valido_ate": now + timedelta(days=30),
+                    "tags": ["atum"],
+                    "ativo": True,
+                }
+            ])
+
+    original_collection = curated._collection
+    original_indexes = curated._indexes_created
+
+    try:
+        curated._collection = FakeCollection()
+        curated._indexes_created = True
+
+        result = asyncio.run(
+            curated.fetch(
+                dish_slug="atum",
+                family_slug=None,
+                ingredientes=[],
+                category=None,
+            )
+        )
+
+        assert result is not None
+        assert result["categoria"] == "alerta"
+        assert result["mensagem_alerta"].startswith("ALERTA:")
+        assert "Contaminação relacionada ao atum" in result["mensagem_alerta"]
+        assert "Clique aqui para ler a notícia." in result["mensagem_alerta"]
+    finally:
+        curated._collection = original_collection
+        curated._indexes_created = original_indexes
