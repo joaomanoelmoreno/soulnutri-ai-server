@@ -320,6 +320,36 @@ async def preview_perplexity_content(request: Request):
         return {"ok": False, "error": str(e), "dry_run": True}
 
 
+@api_router.post("/admin/perplexity/preview-batch", dependencies=[Depends(verify_admin_key)])
+async def preview_perplexity_content_batch(request: Request):
+    """Prévia administrativa em lote; não grava no MongoDB."""
+    try:
+        body = await request.json()
+        foods = body.get("foods") if isinstance(body, dict) else None
+        use_agent = bool(body.get("use_agent", False)) if isinstance(body, dict) else False
+
+        if not isinstance(foods, list) or not foods:
+            return {"ok": False, "error": "foods deve ser uma lista não vazia", "dry_run": True}
+
+        if len(foods) > 10:
+            return {
+                "ok": False,
+                "error": "o lote pode conter no máximo 10 alimentos",
+                "dry_run": True,
+            }
+
+        from services.perplexity_food_content_service import search_food_content_batch
+
+        return await search_food_content_batch(
+            foods,
+            use_agent=use_agent,
+            max_foods=10,
+        )
+    except Exception as e:
+        logger.error(f"[PERPLEXITY_PREVIEW_BATCH] Erro: {e}")
+        return {"ok": False, "error": str(e), "dry_run": True}
+
+
 @api_router.post("/admin/perplexity/stage", dependencies=[Depends(verify_admin_key)])
 async def stage_perplexity_content(request: Request):
     """Armazena candidato para revisão, sempre inicialmente inativo."""
@@ -352,14 +382,39 @@ async def stage_perplexity_content(request: Request):
         if data.tzinfo is None:
             data = data.replace(tzinfo=timezone.utc)
 
+        valido_ate = None
+        valido_ate_raw = str(item.get("valido_ate") or "").strip()
+        if valido_ate_raw:
+            try:
+                valido_ate = datetime.fromisoformat(
+                    valido_ate_raw.replace("Z", "+00:00")
+                )
+                if valido_ate.tzinfo is None:
+                    valido_ate = valido_ate.replace(tzinfo=timezone.utc)
+                else:
+                    valido_ate = valido_ate.astimezone(timezone.utc)
+            except ValueError:
+                return {"ok": False, "error": "valido_ate inválido"}
         doc_id = hashlib.sha256(url.encode("utf-8")).hexdigest()[:24]
+        categoria = str(item.get("categoria") or "").strip().lower()
+        polaridade = str(item.get("polaridade") or "").strip().lower()
+        if categoria == "alerta":
+            polaridade = "alerta"
+        elif categoria in {"beneficio", "boa_noticia"}:
+            polaridade = "beneficio"
+        elif categoria:
+            polaridade = "neutro"
+        else:
+            polaridade = polaridade or "neutro"
+
         documento = {
             "id": doc_id,
             "titulo": titulo,
             "url": url,
             "fonte": fonte,
-            "polaridade": str(item.get("polaridade") or "neutro"),
+            "polaridade": polaridade,
             "data": data,
+            "valido_ate": valido_ate,
             "tags": [str(tag).strip().lower() for tag in tags if str(tag).strip()],
             "ativo": False,
             "origem": "perplexity_search_agent",

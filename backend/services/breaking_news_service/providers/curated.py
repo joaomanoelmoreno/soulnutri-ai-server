@@ -57,7 +57,8 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
     if not terms:
         return None
 
-    cutoff = datetime.now(timezone.utc) - timedelta(days=MAX_AGE_DAYS)
+    now_utc = datetime.now(timezone.utc)
+    cutoff = now_utc - timedelta(days=MAX_AGE_DAYS)
 
     # Filtro Mongo: ativo, com tags em comum, dentro da janela de recencia.
     query = {
@@ -77,6 +78,20 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
     best_matched = []
 
     for doc in cursor:
+        expiry = doc.get("valido_ate")
+        if isinstance(expiry, str):
+            try:
+                expiry = datetime.fromisoformat(expiry.replace("Z", "+00:00"))
+            except ValueError:
+                expiry = None
+        if isinstance(expiry, datetime):
+            if expiry.tzinfo is None:
+                expiry = expiry.replace(tzinfo=timezone.utc)
+            else:
+                expiry = expiry.astimezone(timezone.utc)
+            if expiry < now_utc:
+                continue
+
         score, matched = score_item(doc, terms)
         if not is_relevant(score):
             continue
@@ -96,12 +111,24 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
 
     data_val = best.get('data')
     data_iso = data_val.isoformat() if isinstance(data_val, datetime) else data_val
+    categoria = best.get('categoria')
+    mensagem_alerta = None
+    if categoria == "alerta":
+        titulo_alerta = str(best.get('titulo') or 'este ingrediente').strip()
+        mensagem_alerta = (
+            f"ALERTA: Existe informação relevante relacionada a {titulo_alerta}, "
+            "divulgada por uma fonte especializada. Clique aqui para ler a notícia."
+        )
 
     return {
         "titulo": best.get('titulo'),
         "url": best.get('url'),
         "fonte": best.get('fonte'),
         "polaridade": best.get('polaridade', 'neutro'),
+        "categoria": best.get('categoria'),
+        "resumo": best.get('resumo'),
+        "mensagem_alerta": mensagem_alerta,
+        "valido_ate": best.get('valido_ate'),
         "data": data_iso,
         "tags_matched": best_matched,
         "score": best_score,
