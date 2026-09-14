@@ -942,3 +942,38 @@ def test_alert_requires_food_in_original_title():
 
     assert result["candidate_count"] == 0
     assert "alimento_ausente_no_titulo" in result["rejected"][0]["reasons"]
+
+def test_all_categories_require_food_in_original_title():
+    import asyncio
+
+    raw = _raw(
+        title="New study examines seafood nutrition",
+        snippet="The report briefly mentions tuna among other foods.",
+        url="https://www.bmj.com/content/seafood-nutrition-generic",
+    )
+    client = _AgentFakeClient([_agent_decision(
+        raw,
+        categoria="pesquisa",
+        produto_exportado=False,
+        produto_local=False,
+        distribuicao_nacional=False,
+        risco_ingrediente=False,
+        aplicabilidade_ampla="alta",
+        nivel_evidencia="alta",
+        relevancia_publica="alta",
+        manchete_pt="Estudo sobre nutrição de frutos do mar",
+    )])
+
+    result = asyncio.run(
+        classify_results_with_agent(
+            "atum",
+            [raw],
+            aliases=["tuna", "atún"],
+            api_key="pplx-test-key-long-enough",
+            client=client,
+            now=NOW,
+        )
+    )
+
+    assert result["candidate_count"] == 0
+    assert "alimento_ausente_no_titulo" in result["rejected"][0]["reasons"]

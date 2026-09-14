@@ -672,7 +672,7 @@ async def classify_results_with_agent(
             reasons.append("agent_irrelevante")
         if not decision.get("alimento_relacionado"):
             reasons.append("alimento_nao_confirmado")
-        if category == "alerta" and not _mentions_food_in_title(
+        if not _mentions_food_in_title(
             original["title"], food, alias_list
         ):
             reasons.append("alimento_ausente_no_titulo")
