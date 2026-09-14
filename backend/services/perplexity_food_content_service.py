@@ -339,6 +339,15 @@ def _mentions_any_food(
     )
 
 
+def _mentions_food_in_title(
+    title: str,
+    food: str,
+    aliases: Iterable[str],
+) -> bool:
+    """Exige que o alimento apareca diretamente no titulo original."""
+    return _mentions_any_food(title, "", food, aliases)
+
+
 def _prefilter_for_food(
     food: str,
     raw_results: Iterable[Dict[str, Any]],
@@ -663,6 +672,10 @@ async def classify_results_with_agent(
             reasons.append("agent_irrelevante")
         if not decision.get("alimento_relacionado"):
             reasons.append("alimento_nao_confirmado")
+        if category == "alerta" and not _mentions_food_in_title(
+            original["title"], food, alias_list
+        ):
+            reasons.append("alimento_ausente_no_titulo")
         if decision.get("confianca") == "baixa":
             reasons.append("confianca_baixa")
         if category not in CATEGORY_MAX_AGE_DAYS:

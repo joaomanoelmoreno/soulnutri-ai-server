@@ -918,3 +918,27 @@ def test_curated_builds_neutral_alert_message():
     finally:
         curated._collection = original_collection
         curated._indexes_created = original_indexes
+
+def test_alert_requires_food_in_original_title():
+    import asyncio
+
+    raw = _raw(
+        title="Why is canned fish being sold at a Gen Z concert?",
+        snippet="The story discusses tuna consumption and mercury concerns.",
+        url="https://www.cnn.com/2026/09/04/health/tinned-fish-generic",
+    )
+    client = _AgentFakeClient([_agent_decision(raw)])
+
+    result = asyncio.run(
+        classify_results_with_agent(
+            "atum",
+            [raw],
+            aliases=["tuna", "atún"],
+            api_key="pplx-test-key-long-enough",
+            client=client,
+            now=NOW,
+        )
+    )
+
+    assert result["candidate_count"] == 0
+    assert "alimento_ausente_no_titulo" in result["rejected"][0]["reasons"]
