@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 # Ordem dos providers. Em PR #1 so existe "curated".
 # Para FASE 6 (dinamico), basta adicionar "dynamic" aqui ou expor via setting.
-PROVIDERS_ORDER = ["curated"]
+PROVIDERS_ORDER = ["dynamic"]
 
 
 async def get_breaking_news(dish_slug, family_slug, ingredientes, category):

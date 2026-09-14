@@ -1760,12 +1760,7 @@ async def identify_image(
             "combinacoes": decision.get('combinacoes', []),
             "noticias": decision.get('noticias', []),
             "premium": premium_data,
-            "contextual_breaking_news": await _safe_get_breaking_news(
-                dish_slug=decision.get('dish'),
-                family_slug=decision.get('family_slug'),
-                ingredientes=decision.get('ingredientes') or [],
-                category=decision.get('category'),
-            ),
+            "contextual_breaking_news": contextual_breaking_news,
             "beneficio_principal": None,
             "curiosidade_cientifica": None,
             "referencia_pesquisa": None,

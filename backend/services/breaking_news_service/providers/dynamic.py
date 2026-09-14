@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+"""Busca de noticias em tempo real via Perplexity, sem persistencia."""
+
+import logging
+import os
+
+from services.perplexity_food_content_service import search_food_content
+
+logger = logging.getLogger(__name__)
+
+
+def _food_terms(dish_slug, family_slug, ingredientes):
+    primary = str(dish_slug or family_slug or "").replace("_", " ").strip()
+    aliases = []
+    for raw in (family_slug, *(ingredientes or [])):
+        value = str(raw or "").replace("_", " ").strip()
+        if value and value.lower() != primary.lower() and value not in aliases:
+            aliases.append(value)
+    return primary, aliases[:10]
+
+
+async def fetch(dish_slug, family_slug, ingredientes, category):
+    """Busca uma noticia atual e retorna somente candidato validado."""
+    primary, aliases = _food_terms(dish_slug, family_slug, ingredientes)
+    if not primary:
+        return None
+
+    api_key = os.getenv("PERPLEXITY_API_KEY", "").strip()
+    if not api_key:
+        logger.info("[BREAKING_NEWS][dynamic] chave ausente")
+        return None
+
+    try:
+        result = await search_food_content(
+            primary,
+            aliases=aliases,
+            api_key=api_key,
+            use_agent=True,
+        )
+    except Exception as exc:
+        logger.warning(
+            "[BREAKING_NEWS][dynamic] busca falhou: %s",
+            type(exc).__name__,
+        )
+        return None
+
+    candidates = result.get("candidates") or []
+    if not candidates:
+        return None
+
+    item = candidates[0]
+    categoria = item.get("categoria") or "novidade"
+    polaridade = (
+        "alerta"
+        if categoria == "alerta"
+        else "beneficio"
+        if categoria in {"beneficio", "boa_noticia"}
+        else "neutro"
+    )
+
+    return {
+        "titulo": item.get("titulo"),
+        "url": item.get("url"),
+        "fonte": item.get("fonte"),
+        "polaridade": polaridade,
+        "categoria": categoria,
+        "resumo": item.get("resumo"),
+        "mensagem_alerta": (
+            "ALERTA: Existe informação relevante relacionada a este alimento. "
+            "Clique aqui para ler a notícia."
+            if categoria == "alerta"
+            else None
+        ),
+        "valido_ate": item.get("valido_ate"),
+        "data": item.get("data"),
+        "tags_matched": item.get("tags") or [primary],
+        "score": item.get("score"),
+    }
