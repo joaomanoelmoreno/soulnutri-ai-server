@@ -32,6 +32,7 @@ MAX_RESULTS_PER_SOURCE_DOMAIN = 2
 # Limite oficial da Search API: no maximo 20 dominios por allowlist.
 TRUSTED_DOMAINS = (
     "anvisa.gov.br",
+    "gov.br",
     "fda.gov",
     "foodsafety.gov",
     "who.int",
@@ -55,6 +56,7 @@ TRUSTED_DOMAINS = (
 
 SOURCE_NAMES = {
     "anvisa.gov.br": "Anvisa",
+    "gov.br": "Governo do Brasil",
     "fda.gov": "FDA",
     "foodsafety.gov": "FoodSafety.gov",
     "who.int": "OMS",
@@ -184,6 +186,10 @@ AGENT_RESPONSE_SCHEMA = {
                     "relevancia_publica": {
                         "type": "string",
                         "enum": ["alta", "media", "baixa"],
+                    },
+                    "impacto": {
+                        "type": "string",
+                        "enum": ["critico", "alto", "medio", "baixo", "nao_informado"],
                     },
                     "vigente": {"type": "boolean"},
                     "confianca": {"type": "string", "enum": ["alta", "media", "baixa"]},
@@ -466,11 +472,11 @@ def build_queries(food: str, aliases: Optional[Iterable[str]] = None) -> List[st
             names.append(clean_alias)
     food_expression = " OR ".join(f'"{name}"' for name in names[:4])
     return [
-        f'{food_expression} food safety alert contamination recall outbreak exported international',
-        f'{food_expression} good news nutrition positive health discovery recent',
-        f'{food_expression} new nutrition research study clinical trial systematic review',
-        f'{food_expression} health benefits risks evidence recent',
-        f'{food_expression} nutrient absorption food combination synergy curiosity research',
+        f'{food_expression} food safety alert contamination recall outbreak consumer risk',
+        f'{food_expression} recall warning contamination salmonella listeria outbreak public health',
+        f'{food_expression} international national distributed exported imported food alert',
+        f'{food_expression} health benefits risks evidence recent consumers',
+        f'{food_expression} nutrition research study clinical trial systematic review',
     ]
 
 
@@ -517,8 +523,10 @@ def _build_agent_prompt(
         for item in candidates
     ]
     return (
-        "Voce e um classificador editorial conservador de conteudo alimentar. "
-        "Analise SOMENTE os candidatos fornecidos, sem pesquisar e sem acrescentar fatos. "
+        "Voce e um analista editorial de seguranca alimentar e relevancia publica. "
+        "Use os candidatos como ponto de partida e pesquise na web quando necessario para "
+        "confirmar vigencia, alcance, impacto e relacao direta com o alimento. "
+        "Nao invente fatos, fonte, URL ou data. "
         f"Alimento: {food}. Sinonimos: {list(aliases)}. Data UTC: {now_utc.date().isoformat()}. "
         "Marque alimento_relacionado somente quando a relacao for direta. "
         "Categorias validas: alerta, boa_noticia, novidade, pesquisa, beneficio, risco, "
@@ -543,6 +551,11 @@ def _build_agent_prompt(
         "risco_ingrediente deve ser verdadeiro somente quando o risco se relacionar ao "
         "alimento ou ingrediente em geral. "
         "Vigente deve ser falso quando o texto indicar encerrado ou resolvido. "
+        "Classifique impacto como critico quando houver perigo imediato ou alerta sanitario "
+        "amplo; alto quando houver risco relevante para muitos consumidores; medio quando "
+        "houver relevancia setorial sem perigo amplo; baixo quando for apenas informacao "
+        "geral. Rejeite incidentes domesticos, festas particulares, restaurantes isolados "
+        "ou ocorrencias sem alcance para outros consumidores. "
         "Use confianca baixa se o titulo/resumo nao sustentar a decisao. "
         "Crie manchete jornalistica neutra em portugues com no maximo 18 palavras e resumo "
         "original com no maximo 40 palavras. Nao invente fonte, URL, data ou alcance. "
@@ -621,7 +634,7 @@ async def classify_results_with_agent(
     payload = {
         "model": model,
         "input": _build_agent_prompt(food, alias_list, prefiltered, now_utc),
-        "tools": [],
+        "tools": [{"type": "web_search"}],
         "max_output_tokens": min(2400, 180 + len(prefiltered) * 180),
         "response_format": {
             "type": "json_schema",
@@ -752,6 +765,7 @@ async def classify_results_with_agent(
             "aplicabilidade_ampla": broad_applicability,
             "nivel_evidencia": evidence_level,
             "relevancia_publica": public_relevance,
+            "impacto": decision.get("impacto", "nao_informado"),
             "confianca": decision.get("confianca"),
             "classificador": response_data.get("model") or model,
             "tags": [normalize_text(food).replace(" ", "_")],
@@ -984,11 +998,10 @@ async def search_food_content(
 
     payload = {
         "query": build_queries(food, aliases),
-        "max_results": 10,
+        "max_results": 20,
         "search_recency_filter": "year",
         "search_context_size": "low",
         "search_language_filter": ["en", "pt", "es"],
-        "search_domain_filter": list(TRUSTED_DOMAINS),
     }
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
 

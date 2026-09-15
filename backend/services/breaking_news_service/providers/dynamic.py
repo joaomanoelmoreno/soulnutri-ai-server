@@ -48,7 +48,28 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
     if not candidates:
         return None
 
-    item = candidates[0]
+    prioridade_impacto = {
+        "critico": 4,
+        "alto": 3,
+        "medio": 2,
+        "baixo": 1,
+        "nao_informado": 0,
+    }
+    prioridade_categoria = {
+        "alerta": 3,
+        "risco": 2,
+        "novidade": 1,
+        "beneficio": 0,
+    }
+    item = sorted(
+        candidates,
+        key=lambda candidate: (
+            prioridade_impacto.get(candidate.get("impacto"), 0),
+            prioridade_categoria.get(candidate.get("categoria"), 0),
+            candidate.get("relevancia_publica") == "alta",
+        ),
+        reverse=True,
+    )[0]
     categoria = item.get("categoria") or "novidade"
     polaridade = (
         "alerta"
@@ -64,6 +85,7 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
         "fonte": item.get("fonte"),
         "polaridade": polaridade,
         "categoria": categoria,
+        "impacto": item.get("impacto", "nao_informado"),
         "resumo": item.get("resumo"),
         "mensagem_alerta": (
             "ALERTA: Existe informação relevante relacionada a este alimento. "
