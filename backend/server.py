@@ -1696,23 +1696,8 @@ async def identify_image(
         # CAMADA 1 — Breaking News Contextual (PREMIUM ONLY)
         # Computado antes da resposta para podermos logar render decisao.
         # ────────────────────────────────────────────────────────────
+        # Radar carregado separadamente pelo frontend, sem bloquear a identificação.
         contextual_breaking_news = None
-        if is_premium:
-            contextual_breaking_news = await _safe_get_breaking_news(
-                dish_slug=decision.get('dish'),
-                family_slug=decision.get('family_slug'),
-                ingredientes=decision.get('ingredientes') or [],
-                category=decision.get('category'),
-            )
-            logger.info(
-                f"[BREAKING_NEWS] render dish={decision.get('dish')} "
-                f"will_render={contextual_breaking_news is not None}"
-            )
-        else:
-            logger.info(
-                f"[BREAKING_NEWS] skip dish={decision.get('dish')} reason=not_premium"
-            )
-
         # ════════════════════════════════════════════════════════════════
         # PAYLOAD BUILDER — Fase 2A Hard Gate
         # Cache armazena sempre versao Premium full; strip pos-cache filtra.
@@ -5268,37 +5253,125 @@ Retorne um JSON:
     except Exception as e:
         logger.error(f"Erro no relatorio semanal AI: {e}")
         return {"ok": False, "error": str(e)}
-async def get_radar_alimentos(nome_prato: str, ingredientes: str = None):
-    """
-    Retorna alertas do Radar sobre um alimento/prato.
-    Informacoes em tempo real sobre nutricao.
-    
-    ZERO CRÉDITOS - 100% LOCAL
-    """
+@api_router.get("/radar/alimentos/{nome_prato}")
+async def get_radar_alimentos(
+    nome_prato: str,
+    ingredientes: str = None,
+    pin: str = Header(None, alias="X-SoulNutri-Pin"),
+    nome: str = Header(None, alias="X-SoulNutri-Nome"),
+):
+    """Busca notícia contextual para usuário Premium, sem persistência."""
     try:
-        from data.radar_noticias import gerar_alerta_radar, buscar_fatos_prato
-        
-        # Parse de ingredientes se fornecidos
-        lista_ingredientes = []
-        if ingredientes:
-            lista_ingredientes = [i.strip() for i in ingredientes.split(",")]
-        
-        # Buscar alertas do radar
-        alerta = gerar_alerta_radar(nome_prato, lista_ingredientes)
-        
-        # Buscar fatos detalhados
-        fatos = buscar_fatos_prato(nome_prato, lista_ingredientes)
-        
+        import asyncio
+        from services.breaking_news_service import get_breaking_news
+        from services.profile_service import hash_pin, verificar_premium_ativo
+
+        if not pin or not nome:
+            return {
+                "ok": False,
+                "error": "Acesso Premium necessário",
+                "prato": nome_prato,
+                "radar": None,
+                "fatos_detalhados": [],
+            }
+
+        pin_hash = hash_pin(pin)
+        user = await db.users.find_one(
+            {
+                "pin_hash": pin_hash,
+                "nome": {
+                    "$regex": f"^\\s*{_norm_nome(nome)}\\s*$",
+                    "$options": "i",
+                },
+            },
+            {"_id": 0},
+        )
+
+        premium_status = (
+            verificar_premium_ativo(user)
+            if user
+            else {"ativo": False}
+        )
+
+        if not premium_status.get("ativo", False):
+            logger.info(
+                f"[PREMIUM_GATE] /radar/alimentos nego nome={nome_prato}"
+            )
+            return {
+                "ok": False,
+                "error": "Acesso Premium necessário",
+                "prato": nome_prato,
+                "radar": None,
+                "fatos_detalhados": [],
+            }
+
+        lista_ingredientes = [
+            item.strip()
+            for item in (ingredientes or "").split(",")
+            if item.strip()
+        ]
+
+        item = await asyncio.wait_for(
+            get_breaking_news(
+                dish_slug=nome_prato,
+                family_slug=None,
+                ingredientes=lista_ingredientes,
+                category=None,
+            ),
+            timeout=9.0,
+        )
+
+        if not item:
+            return {
+                "ok": True,
+                "prato": nome_prato,
+                "radar": None,
+                "fatos_detalhados": [],
+            }
+
+        categoria = item.get("categoria")
+        eh_alerta = categoria in {"alerta", "risco"}
+
+        radar = {
+            "has_alert": eh_alerta,
+            "type": "alerta" if eh_alerta else "novidade",
+            "emoji": "⚠️" if eh_alerta else "📰",
+            "message": (
+                item.get("mensagem_alerta")
+                or item.get("resumo")
+                or item.get("titulo")
+            ),
+            "titulo": item.get("titulo"),
+            "url": item.get("url"),
+            "fonte": item.get("fonte"),
+            "categoria": categoria,
+            "impacto": item.get("impacto"),
+            "data": item.get("data"),
+        }
+
         return {
             "ok": True,
             "prato": nome_prato,
-            "radar": alerta,
-            "fatos_detalhados": fatos
+            "radar": radar,
+            "fatos_detalhados": [],
         }
-        
+
+    except asyncio.TimeoutError:
+        logger.warning("[BREAKING_NEWS] timeout na busca assíncrona")
+        return {
+            "ok": True,
+            "prato": nome_prato,
+            "radar": None,
+            "fatos_detalhados": [],
+        }
     except Exception as e:
-        logger.error(f"Erro no radar: {e}")
-        return {"ok": False, "error": str(e)}
+        logger.warning(f"Erro no radar dinâmico: {type(e).__name__}")
+        return {
+            "ok": False,
+            "prato": nome_prato,
+            "radar": None,
+            "fatos_detalhados": [],
+        }
 
 
 @api_router.get("/nutricao/taco/{ingrediente}")

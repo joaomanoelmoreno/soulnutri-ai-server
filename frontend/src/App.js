@@ -1644,9 +1644,17 @@ const loadNotifCount = async (pin) => {
         }
         // Buscar informações do Radar e Enrich em BACKGROUND (sem bloquear UI)
         if (resultWithTime.ok && resultWithTime.identified) {
-          // Radar - fire and forget
+          // Radar - fire and forget, somente Premium
           const ingredientes = resultWithTime.ingredientes?.join(',') || '';
-          fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}`)
+          if (resultWithTime.is_premium) {
+            const radarPin = localStorage.getItem('soulnutri_pin') || '';
+            const radarNome = localStorage.getItem('soulnutri_nome') || '';
+            fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}`, {
+              headers: {
+                'X-SoulNutri-Pin': radarPin,
+                'X-SoulNutri-Nome': radarNome,
+              },
+            })
             .then(r => r.json())
             .then(radarData => {
               if (radarData.ok && radarData.radar && 
@@ -1657,6 +1665,9 @@ const loadNotifCount = async (pin) => {
               }
             })
             .catch(() => setRadarInfo(null));
+          } else {
+            setRadarInfo(null);
+          }
           
           // ENRICH: movido para useEffect dedicado (evita stale closure)
         }
@@ -4137,85 +4148,47 @@ return {
                 </div>
               )}
 
-            {/* ──────────────────────────────────────────────────────────────
-                RADAR ALIMENTAR — Camada 1 / Breaking News Contextual (PREMIUM)
-                Origem: result.contextual_breaking_news (vindo de /api/ai/identify)
-                Headline-style, max 2 linhas, clique abre modal de detalhes.
-                ────────────────────────────────────────────────────────────── */}
-            {result?.contextual_breaking_news && (() => {
-              const bn = result.contextual_breaking_news;
-              const pol = bn.polaridade || 'neutro';
-              const palette = pol === 'alerta'
-                ? { bg: 'rgba(239, 68, 68, 0.12)', border: 'rgba(239, 68, 68, 0.45)', chip: '#ef4444', icon: '⚠️', label: 'ALERTA' }
-                : pol === 'beneficio'
-                  ? { bg: 'rgba(34, 197, 94, 0.12)', border: 'rgba(34, 197, 94, 0.45)', chip: '#22c55e', icon: '🟢', label: 'BENEFÍCIO' }
-                  : { bg: 'rgba(251, 191, 36, 0.12)', border: 'rgba(251, 191, 36, 0.45)', chip: '#fbbf24', icon: '📡', label: 'RADAR' };
-              return (
-                <button
-                  type="button"
-                  data-testid="radar-alimentar-strip"
-                  aria-label="Abrir Radar Alimentar"
-                  onClick={() => setBreakingNewsModal(bn)}
+              {radarInfo?.has_alert && (
+                <div
+                  data-testid="radar-alimentar-main"
                   style={{
-                    display: 'block',
-                    width: '100%',
-                    textAlign: 'left',
-                    background: palette.bg,
-                    border: `1px solid ${palette.border}`,
-                    borderLeft: `4px solid ${palette.chip}`,
+                    background: 'rgba(239, 68, 68, 0.12)',
+                    border: '1px solid rgba(239, 68, 68, 0.45)',
+                    borderLeft: '4px solid #ef4444',
                     borderRadius: '12px',
-                    padding: '10px 12px',
-                    marginBottom: '12px',
-                    cursor: 'pointer',
+                    padding: '12px',
+                    margin: '12px 0',
                     color: '#fff',
-                    transition: 'transform 120ms ease, box-shadow 120ms ease',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <span style={{ fontSize: '16px' }}>{palette.icon}</span>
-                    <span style={{
-                      fontSize: '10px',
-                      letterSpacing: '0.6px',
-                      fontWeight: 800,
-                      background: palette.chip,
-                      color: '#0b0b0b',
-                      padding: '2px 8px',
-                      borderRadius: '999px',
-                    }}>
-                      RADAR ALIMENTAR
-                    </span>
-                    <span style={{ fontSize: '10px', color: '#aaa', marginLeft: 'auto' }}>
-                      {palette.label}
-                    </span>
+                  <div style={{ fontWeight: 800, fontSize: '12px', marginBottom: '6px' }}>
+                    ⚠️ RADAR ALIMENTAR — ALERTA
                   </div>
-                  <p
-                    data-testid="radar-alimentar-headline"
-                    style={{
-                      margin: 0,
-                      fontSize: '13.5px',
-                      lineHeight: '1.35',
-                      fontWeight: 600,
-                      color: '#fff',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {renderTextSafe(bn.titulo || 'Atualização sobre este alimento')}
-                  </p>
-                  <p style={{ margin: '6px 0 0', fontSize: '10.5px', color: '#9ca3af' }}>
-                    {bn.fonte ? `${renderTextSafe(bn.fonte)} · ` : ''}Toque para ver detalhes →
-                  </p>
-                </button>
-              );
-            })()}
-
-
-
+                  <div style={{ fontSize: '14px', lineHeight: '1.4', fontWeight: 600 }}>
+                    {renderTextSafe(radarInfo.titulo || radarInfo.message)}
+                  </div>
+                  {radarInfo.fonte && (
+                    <div style={{ color: '#cbd5e1', fontSize: '12px', marginTop: '6px' }}>
+                      Fonte: {renderTextSafe(radarInfo.fonte)}
+                    </div>
+                  )}
+                  {radarInfo.url && (
+                    <a
+                      href={radarInfo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-block',
+                        color: '#fca5a5',
+                        fontSize: '12px',
+                        marginTop: '6px',
+                      }}
+                    >
+                      Ler notícia original →
+                    </a>
+                  )}
+                </div>
+              )}
               {/* ALTERNATIVAS — exibir após família quando family_name presente */}
               {r.family_name && (r.confidence === 'média' || r.confidence === 'media') &&
                r.alternatives && r.alternatives.length > 0 && (

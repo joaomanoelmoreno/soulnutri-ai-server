@@ -73,7 +73,7 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
     categoria = item.get("categoria") or "novidade"
     polaridade = (
         "alerta"
-        if categoria == "alerta"
+        if categoria in {"alerta", "risco"}
         else "beneficio"
         if categoria in {"beneficio", "boa_noticia"}
         else "neutro"
@@ -90,7 +90,7 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
         "mensagem_alerta": (
             "ALERTA: Existe informação relevante relacionada a este alimento. "
             "Clique aqui para ler a notícia."
-            if categoria == "alerta"
+            if categoria in {"alerta", "risco"}
             else None
         ),
         "valido_ate": item.get("valido_ate"),
