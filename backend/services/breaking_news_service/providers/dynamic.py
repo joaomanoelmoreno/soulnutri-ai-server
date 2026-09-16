@@ -35,9 +35,7 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
             primary,
             aliases=aliases,
             api_key=api_key,
-            use_agent=True,
-            agent_max_items=2,
-            agent_allow_web_search=False,
+            use_agent=False,
         )
     except Exception as exc:
         logger.warning(
