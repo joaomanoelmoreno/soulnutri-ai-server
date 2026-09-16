@@ -573,6 +573,7 @@ async def classify_results_with_agent(
     client: Optional[Any] = None,
     now: Optional[datetime] = None,
     model: str = PERPLEXITY_AGENT_MODEL,
+    allow_web_search: bool = True,
 ) -> Dict[str, Any]:
     """Classifica resultados ja encontrados; nao pesquisa, persiste ou publica."""
     key = (api_key or os.getenv("PERPLEXITY_API_KEY") or "").strip()
@@ -634,7 +635,7 @@ async def classify_results_with_agent(
     payload = {
         "model": model,
         "input": _build_agent_prompt(food, alias_list, prefiltered, now_utc),
-        "tools": [{"type": "web_search"}],
+        "tools": [{"type": "web_search"}] if allow_web_search else [],
         "max_output_tokens": min(2400, 180 + len(prefiltered) * 180),
         "response_format": {
             "type": "json_schema",
@@ -821,6 +822,7 @@ async def classify_results_in_batches(
     now: Optional[datetime] = None,
     model: str = PERPLEXITY_AGENT_MODEL,
     batch_size: int = AGENT_BATCH_SIZE,
+    allow_web_search: bool = True,
 ) -> Dict[str, Any]:
     """Classifica sequencialmente em lotes pequenos para evitar respostas lentas."""
     if batch_size < 1 or batch_size > AGENT_BATCH_SIZE:
@@ -845,6 +847,7 @@ async def classify_results_in_batches(
                     client=http_client,
                     now=now,
                     model=model,
+                    allow_web_search=allow_web_search,
                 )
             except PerplexityAgentError:
                 batch_errors += 1
@@ -897,6 +900,8 @@ async def classify_results_hybrid(
     client: Optional[Any] = None,
     now: Optional[datetime] = None,
     batch_size: int = AGENT_BATCH_SIZE,
+    max_items: Optional[int] = None,
+    allow_web_search: bool = True,
 ) -> Dict[str, Any]:
     """Usa Luna para possiveis alertas e GLM Flash para conteudo geral."""
     alias_list = [str(alias).strip() for alias in aliases or [] if str(alias).strip()]
@@ -912,6 +917,15 @@ async def classify_results_hybrid(
         else:
             general_content.append(raw)
 
+    # Modo opcional de baixa latencia: prioriza possiveis alertas e
+    # limita o total enviado ao Agent. Default None preserva comportamento atual.
+    if max_items is not None:
+        if max_items < 1:
+            raise ValueError("max_items deve ser maior ou igual a 1")
+        possible_alerts = possible_alerts[:max_items]
+        remaining = max(0, max_items - len(possible_alerts))
+        general_content = general_content[:remaining]
+
     group_results: List[Dict[str, Any]] = []
     if possible_alerts:
         group_results.append(await classify_results_in_batches(
@@ -923,6 +937,7 @@ async def classify_results_hybrid(
             now=now,
             model=PERPLEXITY_ALERT_MODEL,
             batch_size=batch_size,
+            allow_web_search=allow_web_search,
         ))
     if general_content:
         group_results.append(await classify_results_in_batches(
@@ -934,6 +949,7 @@ async def classify_results_hybrid(
             now=now,
             model=PERPLEXITY_GENERAL_MODEL,
             batch_size=batch_size,
+            allow_web_search=allow_web_search,
         ))
 
     accepted: List[Dict[str, Any]] = []
@@ -989,6 +1005,8 @@ async def search_food_content(
     use_agent: bool = False,
     agent_client: Optional[Any] = None,
     agent_batch_size: int = AGENT_BATCH_SIZE,
+    agent_max_items: Optional[int] = None,
+    agent_allow_web_search: bool = True,
     now: Optional[datetime] = None,
 ) -> Dict[str, Any]:
     """Executa busca multi-query e triagem em dry-run, opcionalmente via Agent."""
@@ -1055,6 +1073,8 @@ async def search_food_content(
             client=agent_client,
             now=now,
             batch_size=agent_batch_size,
+            max_items=agent_max_items,
+            allow_web_search=agent_allow_web_search,
         )
         agent_result.update({
             "food": food,
