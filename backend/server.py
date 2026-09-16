@@ -5318,7 +5318,7 @@ async def get_radar_alimentos(
                 ingredientes=lista_ingredientes,
                 category=None,
             ),
-            timeout=9.0,
+            timeout=15.0,
         )
 
         if not item:
