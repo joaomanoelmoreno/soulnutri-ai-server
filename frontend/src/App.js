@@ -4023,7 +4023,7 @@ return {
                       Parece ser:
                     </div>
                     <h2 className="dish-name" data-testid="dish-name" style={{ margin: '0 0 8px', fontSize: '24px' }}>
-                      {r.family_name && ['milanesa', 'batata', 'sobrecoxa'].includes((r.family_slug || '').toLowerCase())
+                      {r.family_name && ['milanesa', 'batata', 'sobrecoxa', 'gratinados'].includes((r.family_slug || '').toLowerCase())
                         ? r.family_name
                         : r.dish_display}
                     </h2>
@@ -4063,7 +4063,7 @@ return {
               ) : (
                 <>
                   <h2 className="dish-name" data-testid="dish-name">
-                    {r.family_name && ['milanesa', 'batata', 'sobrecoxa'].includes((r.family_slug || '').toLowerCase())
+                    {r.family_name && ['milanesa', 'batata', 'sobrecoxa', 'gratinados'].includes((r.family_slug || '').toLowerCase())
                       ? r.family_name
                       : r.dish_display}
                   </h2>
@@ -4700,7 +4700,7 @@ return {
             <div className="add-more-success">
               <span className="add-more-emoji">✅</span>
               <h3>
-                {result.family_name && ['milanesa', 'batata', 'sobrecoxa'].includes((result.family_slug || '').toLowerCase())
+                {result.family_name && ['milanesa', 'batata', 'sobrecoxa', 'gratinados'].includes((result.family_slug || '').toLowerCase())
                   ? result.family_name
                   : result.dish_display}
               </h3>
