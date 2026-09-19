@@ -30,7 +30,7 @@ for key in ['MONGO_URL', 'DB_NAME', 'EMERGENT_LLM_KEY', 'GOOGLE_API_KEY', 'CORS_
 from datetime import datetime, timedelta, timezone
 import json
 import asyncio
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query, Header, Depends
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Request, Query, Header, Depends, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
@@ -1109,6 +1109,7 @@ def _strip_premium_fields(payload: dict) -> dict:
 @api_router.post("/ai/identify")
 async def identify_image(
     request: Request,
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     pin: Optional[str] = Form(None),
     nome: Optional[str] = Form(None),
@@ -1166,10 +1167,15 @@ async def identify_image(
             from PIL import Image as _PILImage
             import io as _io
             _img_obj   = _PILImage.open(_io.BytesIO(content))
+            _img_width = _img_obj.width
+            _img_height = _img_obj.height
             _diag_dims = f"{_img_obj.width}x{_img_obj.height}"
         except Exception:
+            _img_width = None
+            _img_height = None
             _diag_dims = "unknown"
         logger.info(f"[IDENTIFY_DIAG] md5={_diag_md5} size={_diag_size}B dims={_diag_dims} restaurant={restaurant!r}")
+        is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
         # ────────────────────────────────────────────────────────────────────────
 
         if _diag_on:
@@ -1225,6 +1231,20 @@ async def identify_image(
                 logger.info(f"[PREMIUM_GATE] cache stripped dish={cached.get('dish_display')}")
             else:
                 cached["is_premium"] = True
+            if is_cibi_sana:
+                from services.shadow_scan_service import persist_shadow_scan
+                background_tasks.add_task(
+                    persist_shadow_scan,
+                    db=db, image_bytes=content, request_id=_req_id,
+                    predicted_dish=cached.get("dish") or cached.get("dish_display"),
+                    identified=cached.get("identified", False),
+                    score=cached.get("score"), confidence=cached.get("confidence"),
+                    gap=cached.get("gap"), top_k=None,
+                    width=_img_width, height=_img_height,
+                    content_type=file.content_type or "application/octet-stream",
+                    recognition_source=f"{cached.get('source', 'local_index')}_cache",
+                    index_name=None, index_version=None,
+                )
             return cached
         
         # ═══════════════════════════════════════════════════════════════════════
@@ -1235,7 +1255,9 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         
         decision = None
-        is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+        _shadow_top_k = None
+        _shadow_gap = None
+        _shadow_index_name = None
 
         if _diag_on:
             logger.info(
@@ -1261,6 +1283,7 @@ async def identify_image(
             from ai.policy import analyze_result
             
             index = get_index()
+            _shadow_index_name = os.path.basename(index.index_file) if index.index_file else None
             
             if index.is_ready():
                 t_clip = time.perf_counter()
@@ -1270,6 +1293,16 @@ async def identify_image(
                     results = await asyncio.to_thread(index.search, content, 5)
                 t_clip_ms = (time.perf_counter() - t_clip) * 1000
                 logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
+                _shadow_top_k = [
+                    {
+                        key: item.get(key)
+                        for key in ("dish", "dish_display", "score", "raw_score", "gap", "consistency", "image_count")
+                        if item.get(key) is not None
+                    }
+                    for item in (results or [])[:5]
+                ]
+                if len(results or []) >= 2:
+                    _shadow_gap = results[0].get("score", 0) - results[1].get("score", 0)
 
                 # ── [IDENTIFY_DIAG] top_5 real + gap ────────────────────────────
                 if results:
@@ -1796,6 +1829,21 @@ async def identify_image(
                 f"identified={response_data.get('identified')} confidence={response_data.get('confidence')} "
                 f"dish_name={response_data.get('dish_display')!r} provider={response_data.get('source')} "
                 f"duration_ms={_total_ms:.0f}"
+            )
+
+        if is_cibi_sana:
+            from services.shadow_scan_service import persist_shadow_scan
+            background_tasks.add_task(
+                persist_shadow_scan,
+                db=db, image_bytes=content, request_id=_req_id,
+                predicted_dish=response_data.get("dish") or response_data.get("dish_display"),
+                identified=response_data.get("identified", False),
+                score=response_data.get("score"), confidence=response_data.get("confidence"),
+                gap=_shadow_gap, top_k=_shadow_top_k,
+                width=_img_width, height=_img_height,
+                content_type=file.content_type or "application/octet-stream",
+                recognition_source=response_data.get("source", "local_index"),
+                index_name=_shadow_index_name, index_version=None,
             )
         
         return response_data
