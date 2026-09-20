@@ -5313,6 +5313,7 @@ async def get_radar_alimentos(
         import asyncio
         from services.breaking_news_service import get_breaking_news
         from services.profile_service import hash_pin, verificar_premium_ativo
+        from services import radar_diagnostics as radar_diag
 
         if not pin or not nome:
             return {
@@ -5353,6 +5354,7 @@ async def get_radar_alimentos(
                 "fatos_detalhados": [],
             }
 
+        radar_diag_tokens = radar_diag.begin_request()
         lista_ingredientes = [
             item.strip()
             for item in (ingredientes or "").split(",")
@@ -5370,6 +5372,14 @@ async def get_radar_alimentos(
         )
 
         if not item:
+            if radar_diag.active():
+                radar_diag.log_event(
+                    "final",
+                    food=nome_prato,
+                    radar_total_ms=radar_diag.elapsed_ms(),
+                    result=False,
+                    has_alert=False,
+                )
             return {
                 "ok": True,
                 "prato": nome_prato,
@@ -5396,6 +5406,21 @@ async def get_radar_alimentos(
             "impacto": item.get("impacto"),
             "data": item.get("data"),
         }
+        if radar_diag.active():
+            radar_diag.log_event(
+                "final",
+                food=nome_prato,
+                radar_total_ms=radar_diag.elapsed_ms(),
+                result=True,
+                category=categoria,
+                title=radar.get("titulo"),
+                source=radar.get("fonte"),
+                url=radar.get("url"),
+                date=radar.get("data"),
+                impact=radar.get("impacto"),
+                has_alert=radar.get("has_alert"),
+                final_type=radar.get("type"),
+            )
 
         return {
             "ok": True,
@@ -5405,6 +5430,13 @@ async def get_radar_alimentos(
         }
 
     except asyncio.TimeoutError:
+        if "radar_diag" in locals() and radar_diag.active():
+            radar_diag.log_event(
+                "timeout",
+                food=nome_prato,
+                radar_total_ms=radar_diag.elapsed_ms(),
+                result=False,
+            )
         logger.warning("[BREAKING_NEWS] timeout na busca assíncrona")
         return {
             "ok": True,
@@ -5413,6 +5445,14 @@ async def get_radar_alimentos(
             "fatos_detalhados": [],
         }
     except Exception as e:
+        if "radar_diag" in locals() and radar_diag.active():
+            radar_diag.log_event(
+                "error",
+                food=nome_prato,
+                radar_total_ms=radar_diag.elapsed_ms(),
+                error=type(e).__name__,
+                result=False,
+            )
         logger.warning(f"Erro no radar dinâmico: {type(e).__name__}")
         return {
             "ok": False,
@@ -5420,6 +5460,9 @@ async def get_radar_alimentos(
             "radar": None,
             "fatos_detalhados": [],
         }
+    finally:
+        if "radar_diag" in locals():
+            radar_diag.end_request(locals().get("radar_diag_tokens"))
 
 
 @api_router.get("/nutricao/taco/{ingrediente}")
