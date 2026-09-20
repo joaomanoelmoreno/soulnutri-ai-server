@@ -27,6 +27,14 @@ def enabled():
         return False
 
 
+def log_runtime_status():
+    """Registra apenas o estado booleano do flag; nunca registra o valor bruto."""
+    try:
+        logger.warning("[RADAR_DIAG_BOOT] enabled=%s", enabled())
+    except Exception:
+        pass
+
+
 def active():
     """Verdadeiro somente dentro de contexto iniciado pelo endpoint Radar."""
     try:

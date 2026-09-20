@@ -5354,6 +5354,7 @@ async def get_radar_alimentos(
                 "fatos_detalhados": [],
             }
 
+        radar_diag.log_runtime_status()
         radar_diag_tokens = radar_diag.begin_request()
         lista_ingredientes = [
             item.strip()
