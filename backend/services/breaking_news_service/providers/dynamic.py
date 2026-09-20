@@ -5,6 +5,7 @@ import logging
 import os
 
 from services.perplexity_food_content_service import search_food_content
+from services import radar_diagnostics as radar_diag
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +45,16 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
         )
         return None
 
+    selection_started = radar_diag.timer_start()
     candidates = result.get("candidates") or []
     if not candidates:
+        if radar_diag.active():
+            radar_diag.log_event(
+                "selection_done",
+                selection_ms=radar_diag.duration_ms(selection_started),
+                candidate_count=0,
+                result=False,
+            )
         return None
 
     prioridade_impacto = {
@@ -70,6 +79,19 @@ async def fetch(dish_slug, family_slug, ingredientes, category):
         ),
         reverse=True,
     )[0]
+    if radar_diag.active():
+        radar_diag.log_event(
+            "selection_done",
+            selection_ms=radar_diag.duration_ms(selection_started),
+            candidate_count=len(candidates),
+            result=True,
+            category=item.get("categoria"),
+            title=item.get("titulo"),
+            source=item.get("fonte"),
+            url=item.get("url"),
+            date=item.get("data"),
+            impact=item.get("impacto"),
+        )
     categoria = item.get("categoria") or "novidade"
     polaridade = (
         "alerta"

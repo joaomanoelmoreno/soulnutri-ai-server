@@ -18,6 +18,8 @@ from urllib.parse import parse_qs, urlparse
 
 import httpx
 
+from services import radar_diagnostics as radar_diag
+
 
 PERPLEXITY_SEARCH_URL = "https://api.perplexity.ai/search"
 PERPLEXITY_AGENT_URL = "https://api.perplexity.ai/v1/agent"
@@ -1033,17 +1035,31 @@ async def search_food_content(
             response.raise_for_status()
             data = response.json()
         except (httpx.HTTPError, ValueError) as exc:
+            if radar_diag.active():
+                radar_diag.log_event(
+                    "search_error",
+                    perplexity_search_ms=radar_diag.duration_ms(search_started),
+                    error=type(exc).__name__,
+                )
             raise PerplexitySearchError(f"falha na Search API: {type(exc).__name__}") from exc
         if not isinstance(data, dict) or not isinstance(data.get("results"), list):
             raise PerplexitySearchError("resposta sem results[]")
         return data
 
+    search_started = radar_diag.timer_start()
     if client is None:
         async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT_SECONDS) as owned_client:
             response_data = await _request(owned_client)
     else:
         response_data = await _request(client)
+    if radar_diag.active():
+        radar_diag.log_event(
+            "search_done",
+            perplexity_search_ms=radar_diag.duration_ms(search_started),
+            search_result_count=len(response_data.get("results") or []),
+        )
 
+    filters_started = radar_diag.timer_start()
     unique_results: Dict[str, Dict[str, Any]] = {}
     source_counts: Dict[str, int] = {}
     source_concentration_rejected: List[Dict[str, str]] = []
@@ -1094,6 +1110,19 @@ async def search_food_content(
     ]
     candidates = [item for item in evaluated if item["accepted"]]
     rejected = [item for item in evaluated if not item["accepted"]]
+    if radar_diag.active():
+        radar_diag.log_event(
+            "local_filters_done",
+            local_filters_ms=radar_diag.duration_ms(filters_started),
+            input_count=len(response_data.get("results") or []),
+            unique_count=len(unique_results),
+            candidate_count=len(candidates),
+            rejected_count=len(rejected) + len(source_concentration_rejected),
+        )
+        if candidates:
+            radar_diag.log_first_candidate(
+                category=candidates[0].get("categoria"),
+            )
     return {
         "ok": True,
         "dry_run": True,
