@@ -206,11 +206,13 @@ def test_search_is_dry_run_and_has_no_persistence():
     payload = client.calls[0][1]["json"]
     assert payload["query"] == build_queries("tuna")
     assert payload["search_language_filter"] == ["en", "pt", "es"]
-    assert payload["search_domain_filter"] == list(__import__(
+    trusted_domains = __import__(
         "services.perplexity_food_content_service",
         fromlist=["TRUSTED_DOMAINS"],
-    ).TRUSTED_DOMAINS)
-    assert len(payload["search_domain_filter"]) <= 20
+    ).TRUSTED_DOMAINS
+    assert payload["search_domain_filter"] == list(trusted_domains[:20])
+    assert len(payload["search_domain_filter"]) == 20
+    assert len(trusted_domains) > len(payload["search_domain_filter"])
 
 
 def test_agent_accepts_alert_but_preserves_original_source_url_and_date():
