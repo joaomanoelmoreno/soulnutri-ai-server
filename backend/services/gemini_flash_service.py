@@ -49,8 +49,8 @@ logger = logging.getLogger(__name__)
 
 # PROMPT OTIMIZADO - Melhor precisão mantendo velocidade
 SYSTEM_PROMPT_FLASH = """Identifique o prato na imagem. Linguiça/salsicha/embutidos=proteína animal. Retorne APENAS JSON:
-{"nome":"Nome do prato","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2","ingrediente3"]}
-cat:v=vegano,veg=vegetariano,p=proteína animal. score:confiança 0-1. alerg:apenas presentes. ing:3-5 ingredientes visíveis. Porção ~150g."""
+{"nome":"Nome do prato em português","nome_en":"Nome equivalente do prato em inglês","cat":"v|veg|p","kcal":XXX,"prot":XX,"carb":XX,"gord":XX,"alerg":["gluten","lactose"],"score":0.9,"ing":["ingrediente1","ingrediente2","ingrediente3"]}
+nome deve permanecer em português. nome_en deve conter apenas o equivalente direto em inglês. cat:v=vegano,veg=vegetariano,p=proteína animal. score:confiança 0-1. alerg:apenas presentes. ing:3-5 ingredientes visíveis. Porção ~150g."""
 
 # Prompt para enriquecimento Premium (segunda chamada, background)
 ENRICH_TEMPLATE_PRE = 'Dado o prato "'
@@ -303,6 +303,7 @@ Identifique este prato. O que você vê na imagem? Seja preciso."""
             "ok": True,
             "source": "gemini_flash",
             "nome": result.get("nome", "Não identificado"),
+            "nome_en": str(result.get("nome_en") or "").strip(),
             "categoria": cat_expand.get(result.get("cat"), result.get("cat", "")),
             "confianca": "alta",
             "score": 0.90,

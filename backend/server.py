@@ -180,6 +180,15 @@ def format_dish_name(name: str) -> str:
     return name
 
 
+def _radar_aliases_from_gemini(result: dict) -> list:
+    """Extrai somente o equivalente ingles destinado ao Radar."""
+    nome = str(result.get("nome") or "").strip()
+    nome_en = str(result.get("nome_en") or "").strip()
+    if not nome_en or nome_en.casefold() == nome.casefold():
+        return []
+    return [nome_en]
+
+
 def get_confidence_level_message(score: float, confidence: str) -> str:
     """
     Gera mensagem descritiva para o nivel de confianca.
@@ -1423,6 +1432,7 @@ async def identify_image(
                     'identified': True,
                     'dish': flash_result.get('nome', '').lower().replace(' ', '_'),
                     'dish_display': flash_result.get('nome'),
+                    'radar_aliases': _radar_aliases_from_gemini(flash_result),
                     'score': flash_result.get('score', 0.90),
                     'source': 'gemini_flash',
                     'category': flash_result.get('categoria'),
@@ -1741,6 +1751,7 @@ async def identify_image(
             "identified": decision['identified'],
             "dish": decision.get('dish'),
             "dish_display": dish_display_name,
+            "radar_aliases": decision.get('radar_aliases', []),
             "confidence": decision['confidence'],
             "confidence_level": confidence_level_msg,
             "score": decision['score'],
@@ -5305,6 +5316,7 @@ Retorne um JSON:
 async def get_radar_alimentos(
     nome_prato: str,
     ingredientes: str = None,
+    aliases: str = None,
     pin: str = Header(None, alias="X-SoulNutri-Pin"),
     nome: str = Header(None, alias="X-SoulNutri-Nome"),
 ):
@@ -5378,10 +5390,18 @@ async def get_radar_alimentos(
                 user_found=bool(user),
                 premium_active=True,
             )
-        lista_ingredientes = [
+        lista_aliases = [
+            item.strip()
+            for item in (aliases or "").split(",")
+            if item.strip()
+        ]
+        lista_ingredientes = lista_aliases + [
             item.strip()
             for item in (ingredientes or "").split(",")
             if item.strip()
+            and item.strip().casefold() not in {
+                alias.casefold() for alias in lista_aliases
+            }
         ]
 
         item = await asyncio.wait_for(

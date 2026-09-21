@@ -21,6 +21,11 @@ const API = `${BACKEND_URL}/api`;
 const REQUEST_TIMEOUT = 15000; // 15 segundos
 let _ROOT_SCAN_COUNTER = 0; // contador global de scans para diagnóstico
 
+const getRadarAliasesParam = (result) => {
+  const aliases = result?.radar_aliases?.join(',') || '';
+  return aliases ? `&aliases=${encodeURIComponent(aliases)}` : '';
+};
+
 // ═══════════════════════════════════════════════════════════════
 // GEOLOCALIZAÇÃO - Detecção Cibi Sana vs Externo
 // ═══════════════════════════════════════════════════════════════
@@ -1646,10 +1651,11 @@ const loadNotifCount = async (pin) => {
         if (resultWithTime.ok && resultWithTime.identified) {
           // Radar - fire and forget, somente Premium
           const ingredientes = resultWithTime.ingredientes?.join(',') || '';
+          const radarAliasesParam = getRadarAliasesParam(resultWithTime);
           if (resultWithTime.is_premium) {
             const radarPin = localStorage.getItem('soulnutri_pin') || '';
             const radarNome = localStorage.getItem('soulnutri_nome') || '';
-            fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}`, {
+            fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}${radarAliasesParam}`, {
               headers: {
                 'X-SoulNutri-Pin': radarPin,
                 'X-SoulNutri-Nome': radarNome,

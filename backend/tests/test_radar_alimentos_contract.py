@@ -124,15 +124,35 @@ class RadarAlimentosMainContractTest(unittest.IsolatedAsyncioTestCase):
 
         with patch.object(asyncio, "wait_for", recording_wait_for):
             result = await endpoint(
-                "atum", ingredientes="atum, sal", pin="5678", nome="Premium"
+                "Brotos de brócolis",
+                ingredientes="brócolis, sal",
+                aliases="Broccoli Sprouts",
+                pin="5678",
+                nome="Premium",
             )
 
         self.assertEqual(observed_timeouts, [15.0])
         self.assertEqual(len(provider.calls), 1)
-        self.assertEqual(provider.calls[0]["ingredientes"], ["atum", "sal"])
+        self.assertEqual(
+            provider.calls[0]["ingredientes"],
+            ["Broccoli Sprouts", "brócolis", "sal"],
+        )
         self.assertTrue(result["radar"]["has_alert"])
         self.assertEqual(result["radar"]["type"], "alerta")
         self.assertEqual(result["radar"]["url"], original_url)
+
+    async def test_absent_alias_keeps_previous_ingredient_contract(self):
+        provider = _Provider({"categoria": "beneficio", "titulo": "Conteúdo"})
+        endpoint = _load_endpoint({"nome": "Premium"}, provider, True)
+
+        await endpoint(
+            "Brotos de brócolis",
+            ingredientes="brócolis, sal",
+            pin="5678",
+            nome="Premium",
+        )
+
+        self.assertEqual(provider.calls[0]["ingredientes"], ["brócolis", "sal"])
 
     async def test_premium_empty_provider_result_keeps_empty_main_contract(self):
         provider = _Provider(None)
