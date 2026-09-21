@@ -1019,6 +1019,10 @@ async def search_food_content(
     payload = {
         "query": build_queries(food, aliases),
         "max_results": 20,
+        # A Search API aceita no maximo 20 dominios em allowlist.
+        # Restringir na origem evita gastar resultados com fontes que seriam
+        # rejeitadas imediatamente pelo filtro local de confiabilidade.
+        "search_domain_filter": list(TRUSTED_DOMAINS),
         "search_recency_filter": "year",
         "search_context_size": "low",
         "search_language_filter": ["en", "pt", "es"],
