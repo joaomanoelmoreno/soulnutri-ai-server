@@ -137,6 +137,27 @@ class RadarDiagnosticsMainTest(unittest.TestCase):
         self.assertEqual(filters["candidate_count"], 2)
         self.assertEqual(len([e for e in events if e["event"] == "first_candidate"]), 1)
 
+    def test_rejection_reasons_are_aggregated_without_raw_content(self):
+        raw = {
+            "title": "Broccoli sprouts recall after contamination warning",
+            "snippet": "Broccoli sprouts distributed nationally were recalled.",
+            "url": "https://www.fda.gov/safety/recalls-market-withdrawals/broccoli-sprouts",
+            "date": "2026-09-19",
+        }
+        result, logs, _client = self._run_search(True, [raw])
+        events = [json.loads(line) for line in logs]
+        filters = next(event for event in events if event["event"] == "local_filters_done")
+
+        self.assertEqual(result["candidate_count"], 0)
+        self.assertEqual(filters["rejected_count"], 1)
+        self.assertEqual(
+            filters["rejection_reasons"],
+            {"alimento_nao_confirmado": 1},
+        )
+        serialized = json.dumps(filters, ensure_ascii=False)
+        self.assertNotIn("Broccoli sprouts", serialized)
+        self.assertNotIn("broccoli-sprouts", serialized)
+
     def test_dynamic_keeps_use_agent_false_selection_order_and_original_url(self):
         original_url = (
             "https://apiuser:apipass@example.test:8443/noticia"

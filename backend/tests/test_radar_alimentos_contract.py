@@ -68,6 +68,7 @@ def _load_endpoint(user, provider, premium_active):
     profile_module.hash_pin = lambda pin: f"hash:{pin}"
     profile_module.verificar_premium_ativo = lambda _user: {"ativo": premium_active}
     radar_module = types.ModuleType("services.radar_diagnostics")
+    radar_module.log_runtime_status = lambda: None
     radar_module.begin_request = lambda: None
     radar_module.end_request = lambda _tokens: None
     radar_module.active = lambda: False
@@ -87,6 +88,7 @@ def _load_endpoint(user, provider, premium_active):
         "db": _DB(user),
         "logger": _Logger(),
         "_norm_nome": lambda value: value.strip(),
+        "time": __import__("time"),
     }
     exec(compile(module, str(SERVER_PATH), "exec"), namespace)
     return namespace["get_radar_alimentos"]

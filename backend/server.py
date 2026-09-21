@@ -5324,7 +5324,13 @@ async def get_radar_alimentos(
                 "fatos_detalhados": [],
             }
 
+        premium_gate_started = time.perf_counter()
+
+        pin_hash_started = time.perf_counter()
         pin_hash = hash_pin(pin)
+        pin_hash_ms = round((time.perf_counter() - pin_hash_started) * 1000, 2)
+
+        user_lookup_started = time.perf_counter()
         user = await db.users.find_one(
             {
                 "pin_hash": pin_hash,
@@ -5335,12 +5341,15 @@ async def get_radar_alimentos(
             },
             {"_id": 0},
         )
+        user_lookup_ms = round((time.perf_counter() - user_lookup_started) * 1000, 2)
 
+        premium_check_started = time.perf_counter()
         premium_status = (
             verificar_premium_ativo(user)
             if user
             else {"ativo": False}
         )
+        premium_check_ms = round((time.perf_counter() - premium_check_started) * 1000, 2)
 
         if not premium_status.get("ativo", False):
             logger.info(
@@ -5356,6 +5365,19 @@ async def get_radar_alimentos(
 
         radar_diag.log_runtime_status()
         radar_diag_tokens = radar_diag.begin_request()
+        if radar_diag.active():
+            radar_diag.log_event(
+                "premium_gate_done",
+                pin_hash_ms=pin_hash_ms,
+                user_lookup_ms=user_lookup_ms,
+                premium_check_ms=premium_check_ms,
+                premium_gate_total_ms=round(
+                    (time.perf_counter() - premium_gate_started) * 1000,
+                    2,
+                ),
+                user_found=bool(user),
+                premium_active=True,
+            )
         lista_ingredientes = [
             item.strip()
             for item in (ingredientes or "").split(",")

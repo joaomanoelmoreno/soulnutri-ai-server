@@ -1111,6 +1111,15 @@ async def search_food_content(
     candidates = [item for item in evaluated if item["accepted"]]
     rejected = [item for item in evaluated if not item["accepted"]]
     if radar_diag.active():
+        rejection_reasons: Dict[str, int] = {}
+        for rejected_item in rejected:
+            for reason in rejected_item.get("reasons") or []:
+                rejection_reasons[reason] = rejection_reasons.get(reason, 0) + 1
+        if source_concentration_rejected:
+            rejection_reasons["limite_por_dominio"] = (
+                rejection_reasons.get("limite_por_dominio", 0)
+                + len(source_concentration_rejected)
+            )
         radar_diag.log_event(
             "local_filters_done",
             local_filters_ms=radar_diag.duration_ms(filters_started),
@@ -1118,6 +1127,7 @@ async def search_food_content(
             unique_count=len(unique_results),
             candidate_count=len(candidates),
             rejected_count=len(rejected) + len(source_concentration_rejected),
+            rejection_reasons=rejection_reasons,
         )
         if candidates:
             radar_diag.log_first_candidate(
