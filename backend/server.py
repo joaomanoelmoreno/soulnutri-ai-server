@@ -909,13 +909,93 @@ async def clear_ai_cache():
         return {"ok": False, "error": str(e)}
 
 
-@api_router.post("/ai/reindex")
+def _validate_reindex_source(index, max_per_dish: int) -> dict:
+    """Valida a fonte de reindexacao sem alterar o indice carregado."""
+    if max_per_dish < 1:
+        raise HTTPException(status_code=422, detail="max_per_dish deve ser maior que zero")
+
+    data_dir = Path(index.data_dir)
+    if not data_dir.is_dir():
+        raise HTTPException(
+            status_code=409,
+            detail=f"Fonte de reindexacao indisponivel: {data_dir}",
+        )
+
+    image_extensions = {'.jpg', '.jpeg', '.png', '.webp'}
+    try:
+        source_counts = {}
+        for dish_dir in sorted(path for path in data_dir.iterdir() if path.is_dir()):
+            image_count = sum(
+                1
+                for path in dish_dir.iterdir()
+                if path.is_file() and path.suffix.lower() in image_extensions
+            )
+            if image_count:
+                source_counts[dish_dir.name] = image_count
+    except OSError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Fonte de reindexacao inacessivel: {exc}",
+        ) from exc
+
+    if not source_counts:
+        raise HTTPException(status_code=409, detail="Fonte de reindexacao sem imagens validas")
+
+    current_dish_to_idx = getattr(index, 'dish_to_idx', {}) or {}
+    current_dishes = list(getattr(index, 'dishes', []) or [])
+    current_embeddings = getattr(index, 'embeddings', None)
+
+    if current_dish_to_idx:
+        if current_embeddings is None or len(current_embeddings) != len(current_dishes):
+            raise HTTPException(status_code=409, detail="Indice carregado esta inconsistente")
+
+        missing_dishes = sorted(set(current_dish_to_idx) - set(source_counts))
+        if missing_dishes:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "message": "Fonte de reindexacao nao cobre todas as classes atuais",
+                    "missing_count": len(missing_dishes),
+                    "missing_dishes": missing_dishes,
+                },
+            )
+
+        insufficient_dishes = []
+        for dish_name, indices in current_dish_to_idx.items():
+            available = min(source_counts[dish_name], max_per_dish)
+            required = len(indices)
+            if available < required:
+                insufficient_dishes.append({
+                    "dish": dish_name,
+                    "available": available,
+                    "required": required,
+                })
+
+        if insufficient_dishes:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "message": "Fonte de reindexacao reduziria a cobertura atual",
+                    "insufficient_count": len(insufficient_dishes),
+                    "insufficient_dishes": insufficient_dishes,
+                },
+            )
+
+    return {
+        "data_dir": str(data_dir),
+        "source_dishes": len(source_counts),
+        "source_images": sum(source_counts.values()),
+    }
+
+
+@api_router.post("/ai/reindex", dependencies=[Depends(verify_admin_key)])
 async def reindex(max_per_dish: int = 10):
     """Reconstroi o indice de embeddings."""
     try:
         from ai.index import get_index
-        logger.info("Iniciando reindexacao...")
         index = get_index()
+        _validate_reindex_source(index, max_per_dish)
+        logger.info("Iniciando reindexacao...")
         stats = index.build_index(max_per_dish=max_per_dish)
         if 'error' in stats:
             return JSONResponse(status_code=400, content={"ok": False, "error": stats['error']})
@@ -926,16 +1006,22 @@ async def reindex(max_per_dish: int = 10):
             "elapsed_seconds": stats['elapsed_seconds'],
             "message": f"Indice reconstruido com {stats['total_dishes']} pratos"
         }
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro na reindexacao: {e}")
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 
-@api_router.post("/ai/reindex-background")
+@api_router.post("/ai/reindex-background", dependencies=[Depends(verify_admin_key)])
 async def reindex_background(max_per_dish: int = 10):
     """Inicia reconstrucao do indice em BACKGROUND."""
     import subprocess
     try:
+        from ai.index import get_index
+        index = get_index()
+        _validate_reindex_source(index, max_per_dish)
+
         log_file = "/tmp/rebuild_index.log"
         status_file = "/tmp/rebuild_index_status.json"
         if os.path.exists(log_file):
@@ -951,6 +1037,8 @@ async def reindex_background(max_per_dish: int = 10):
             "message": "Reconstrucao iniciada em background",
             "max_per_dish": max_per_dish
         }
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao iniciar reindexacao em background: {e}")
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
