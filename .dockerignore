@@ -9,6 +9,7 @@ __pycache__/
 .env
 backend/.env
 frontend/.env
+r2_model_credentials.json
 
 # Pasta de imagens originais (3.3GB - NAO necessaria em runtime)
 datasets/organized/

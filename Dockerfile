@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # ══════════════════════════════════════════
 # SoulNutri - Dockerfile para Render Deploy
 # ══════════════════════════════════════════
@@ -19,18 +21,54 @@ RUN grep -v -E "^(torch==|torchvision==)" backend/requirements.txt > backend/req
     pip install --no-cache-dir onnxruntime && \
     pip install --no-cache-dir --extra-index-url https://d33sy5i8bnduwe.cloudfront.net/simple/ -r backend/requirements-deploy.txt
 
-# ── Baixar modelo CLIP ONNX pre-compilado do R2 (testado e funcionando) ──
-RUN pip install --no-cache-dir boto3 && \
-    python3 -c "import boto3,os; \
-    r2=boto3.client('s3',endpoint_url='https://2723f210eede7a83470abe72ffeaeecb.r2.cloudflarestorage.com', \
-    aws_access_key_id='a5a02bd055dfda49dd119c3306473172', \
-    aws_secret_access_key='d17b5049f0a518523c00f94fdf229a0528da00eae287a5797739ac1d4aab1314', \
-    region_name='auto'); \
-    r2.download_file('soulnutri-images','models/clip_visual_fp16.onnx','/app/clip_visual_fp16.onnx'); \
-    print(f'Modelo baixado: {os.path.getsize(\"/app/clip_visual_fp16.onnx\")/1024/1024:.1f} MB')"
+# ── Baixar e validar o modelo CLIP ONNX sem persistir credenciais ──
+RUN --mount=type=secret,id=r2_model_credentials_json,dst=/run/secrets/r2_model_credentials.json,required=true \
+    pip install --no-cache-dir boto3 && \
+    python3 - <<'PY'
+import hashlib
+import json
+import sys
 
-# ── Validar integridade do modelo ONNX — falha o build se ausente ou truncado ──
-RUN python3 -c "import os,sys; p='/app/clip_visual_fp16.onnx'; mb=os.path.getsize(p)/1024/1024 if os.path.exists(p) else 0.0; print(f'[ONNX VALIDATE] {p}: {mb:.1f} MB'); sys.exit(0) if mb >= 100 else (print(f'[BUILD FAIL] ONNX ausente ou truncado: {mb:.1f} MB < 100 MB — abortando build') or sys.exit(1))"
+import boto3
+
+MODEL_PATH = "/app/clip_visual_fp16.onnx"
+EXPECTED_SHA256 = "8a97817ddd9947f9e1ddc43c85e7c6d0c65c55d9c7f47b81bf20e265a0fcd0da"
+
+try:
+    with open("/run/secrets/r2_model_credentials.json", encoding="utf-8") as handle:
+        credentials = json.load(handle)
+
+    required_fields = ("endpoint_url", "access_key_id", "secret_access_key")
+    if any(
+        not isinstance(credentials.get(field), str) or not credentials[field].strip()
+        for field in required_fields
+    ):
+        raise RuntimeError
+
+    r2 = boto3.client(
+        "s3",
+        endpoint_url=credentials["endpoint_url"].strip(),
+        aws_access_key_id=credentials["access_key_id"].strip(),
+        aws_secret_access_key=credentials["secret_access_key"].strip(),
+        region_name="auto",
+    )
+    r2.download_file(
+        "soulnutri-images",
+        "models/clip_visual_fp16.onnx",
+        MODEL_PATH,
+    )
+
+    with open(MODEL_PATH, "rb") as model_file:
+        actual_sha256 = hashlib.file_digest(model_file, "sha256").hexdigest()
+
+    if actual_sha256 != EXPECTED_SHA256:
+        raise RuntimeError
+except Exception:
+    print("[BUILD FAIL] Modelo ONNX indisponivel ou invalido", file=sys.stderr)
+    raise SystemExit(1)
+
+print("[ONNX VALIDATE] SHA-256 confirmado")
+PY
 
 # ── Frontend build ──
 RUN echo "Frontend cache bust v3 - 2026-04-26-late"
