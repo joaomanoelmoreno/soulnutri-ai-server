@@ -263,10 +263,8 @@ class DishIndex:
                 'image_count': self.metadata.get(dish_name, {}).get('image_count', 0)
             })
 
-        # CRITICO: apos aplicar penalidades, reordenar por score ajustado.
-        # Sem isso, o top1 pode ficar com score menor que top2, gerando gap negativo
-        # e falso negativo/positivo no policy.py.
-        results.sort(key=lambda r: r.get('score', 0), reverse=True)
+        # Preservar a identidade e as alternativas definidas pela similaridade bruta.
+        # As penalidades ajustam somente o score/confianca do top-1.
         
         # Adicionar metadados da busca
         if results:
