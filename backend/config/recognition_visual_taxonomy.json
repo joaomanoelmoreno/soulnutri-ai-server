@@ -1,0 +1,135 @@
+{
+  "taxonomy_schema_version": 1,
+  "taxonomy_version": "visual-family-initial-3-v1",
+  "metadata": {
+    "scope": "initial_three_visual_families",
+    "variant_resolution": "external_evidence_only",
+    "openclip_must_not_resolve_variant": true
+  },
+  "external_visual_classes": [
+    {
+      "visual_class_id": "berinjela_a_parmegiana",
+      "canonical_name": "Berinjela à Parmegiana"
+    }
+  ],
+  "families": [
+    {
+      "visual_class_id": "maminha_molho_claro",
+      "canonical_name": "Maminha Molho Claro",
+      "variants": [
+        {
+          "id": "creme_de_cebola",
+          "display_name": "Creme de Cebola",
+          "aliases": []
+        },
+        {
+          "id": "mostarda",
+          "display_name": "Mostarda",
+          "aliases": []
+        },
+        {
+          "id": "gorgonzola",
+          "display_name": "Gorgonzola",
+          "aliases": []
+        }
+      ],
+      "must_not_group": [
+        "maminha_molho_escuro"
+      ],
+      "accepted_evidence_sources": [
+        "human_admin",
+        "structured_metadata",
+        "ocr"
+      ],
+      "metadata": {
+        "review_ids": [
+          "REV-015",
+          "REV-035"
+        ],
+        "variant_resolution": "post_visual_only"
+      }
+    },
+    {
+      "visual_class_id": "maminha_molho_escuro",
+      "canonical_name": "Maminha Molho Escuro",
+      "variants": [
+        {
+          "id": "mongolia",
+          "display_name": "Mongólia",
+          "aliases": []
+        },
+        {
+          "id": "madeira",
+          "display_name": "Madeira",
+          "aliases": []
+        },
+        {
+          "id": "cerveja_preta",
+          "display_name": "Cerveja Preta",
+          "aliases": []
+        },
+        {
+          "id": "funghi",
+          "display_name": "Funghi",
+          "aliases": []
+        },
+        {
+          "id": "champignon",
+          "display_name": "Champignon",
+          "aliases": []
+        }
+      ],
+      "must_not_group": [
+        "maminha_molho_claro"
+      ],
+      "accepted_evidence_sources": [
+        "human_admin",
+        "structured_metadata",
+        "ocr"
+      ],
+      "metadata": {
+        "review_ids": [
+          "REV-015",
+          "REV-036"
+        ],
+        "variant_resolution": "post_visual_only",
+        "funghi_champignon_relationship": "unresolved"
+      }
+    },
+    {
+      "visual_class_id": "file_a_parmegiana",
+      "canonical_name": "Filé à Parmegiana",
+      "variants": [
+        {
+          "id": "file_mignon",
+          "display_name": "Filé Mignon",
+          "aliases": []
+        },
+        {
+          "id": "frango",
+          "display_name": "Frango",
+          "aliases": []
+        },
+        {
+          "id": "peixe",
+          "display_name": "Peixe",
+          "aliases": []
+        }
+      ],
+      "must_not_group": [
+        "berinjela_a_parmegiana"
+      ],
+      "accepted_evidence_sources": [
+        "human_admin",
+        "structured_metadata",
+        "ocr"
+      ],
+      "metadata": {
+        "review_ids": [
+          "REV-028"
+        ],
+        "variant_resolution": "post_visual_only"
+      }
+    }
+  ]
+}

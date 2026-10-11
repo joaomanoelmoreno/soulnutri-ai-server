@@ -89,6 +89,8 @@ COPY backend/ backend/
 # Apenas os arquivos de indice (NAO inclui organized/ que tem 3.3GB)
 COPY datasets/dish_index.json datasets/dish_index.json
 COPY datasets/dish_index_embeddings.npy datasets/dish_index_embeddings.npy
+COPY datasets/recognition_v2/dish_index.json datasets/recognition_v2/dish_index.json
+COPY datasets/recognition_v2/dish_index_embeddings.npy datasets/recognition_v2/dish_index_embeddings.npy
 COPY datasets/descriptions.json datasets/descriptions.json
 COPY datasets/dish_name_mapping.json datasets/dish_name_mapping.json
 

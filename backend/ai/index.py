@@ -5,15 +5,131 @@ Meta: resposta em 100ms
 
 import os
 import json
+import hashlib
 import numpy as np
-from typing import List, Dict, Tuple, Optional
+from typing import Dict, List, Mapping, Optional, Tuple
 from pathlib import Path
 import time
 import logging
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
 from .embedder import image_embedding_from_path, image_embedding_from_bytes
+from .index_loader import LoadedIndexArtifacts, load_index_artifacts
+
+
+DEFAULT_V1_INDEX_FILE = "/app/datasets/dish_index.json"
+DEFAULT_V2_INDEX_FILE = "/app/datasets/recognition_v2/dish_index.json"
+
+# Candidate v2 approved by the reproducibility and holdout gates. Explicit v2
+# activation must load this exact pair; availability alone never activates it.
+APPROVED_V2_INDEX_SHA256 = (
+    "32058e88fb3ed46a49237b7936b8f333eaea63089e0b7aa19ffb64c3b31d07e8"
+)
+APPROVED_V2_EMBEDDINGS_SHA256 = (
+    "baa4d607c9fb4f5e53deecb96e79e818a973ed660a560426c6271f2ac64937eb"
+)
+APPROVED_V2_VISUAL_CLASSES = 236
+APPROVED_V2_EMBEDDINGS = 1508
+APPROVED_V2_EMBEDDING_DIM = 512
+
+
+class RecognitionIndexConfigurationError(RuntimeError):
+    """Raised when explicit index selection cannot be honored safely."""
+
+
+@dataclass(frozen=True)
+class RecognitionIndexConfiguration:
+    version: str
+    index_file: str
+    embeddings_file: str
+    expected_schema_version: int
+    expected_index_sha256: Optional[str] = None
+    expected_embeddings_sha256: Optional[str] = None
+    expected_visual_classes: Optional[int] = None
+    expected_embeddings: Optional[int] = None
+    expected_embedding_dim: Optional[int] = None
+
+
+def _paired_embeddings_file(index_file: str) -> str:
+    path = Path(index_file)
+    if path.suffix.lower() != ".json":
+        raise RecognitionIndexConfigurationError(
+            "recognition index path must end with .json"
+        )
+    return str(path.with_name(f"{path.stem}_embeddings.npy"))
+
+
+def resolve_index_configuration(
+    environ: Optional[Mapping[str, str]] = None,
+) -> RecognitionIndexConfiguration:
+    """Resolve v1/v2 explicitly; absence preserves the production v1 default."""
+    env = os.environ if environ is None else environ
+    raw_version = env.get("RECOGNITION_INDEX_VERSION")
+    version = "v1" if raw_version is None else raw_version.strip().lower()
+    if version not in {"v1", "v2"}:
+        raise RecognitionIndexConfigurationError(
+            "RECOGNITION_INDEX_VERSION must be 'v1' or 'v2'"
+        )
+
+    if version == "v1":
+        index_file = env.get(
+            "RECOGNITION_V1_INDEX_FILE", DEFAULT_V1_INDEX_FILE
+        ).strip()
+        if not index_file:
+            raise RecognitionIndexConfigurationError(
+                "RECOGNITION_V1_INDEX_FILE must not be empty"
+            )
+        embeddings_file = env.get(
+            "RECOGNITION_V1_EMBEDDINGS_FILE",
+            _paired_embeddings_file(index_file),
+        ).strip()
+        if not embeddings_file:
+            raise RecognitionIndexConfigurationError(
+                "RECOGNITION_V1_EMBEDDINGS_FILE must not be empty"
+            )
+        return RecognitionIndexConfiguration(
+            version="v1",
+            index_file=index_file,
+            embeddings_file=embeddings_file,
+            expected_schema_version=1,
+        )
+
+    index_file = env.get(
+        "RECOGNITION_V2_INDEX_FILE", DEFAULT_V2_INDEX_FILE
+    ).strip()
+    if not index_file:
+        raise RecognitionIndexConfigurationError(
+            "RECOGNITION_V2_INDEX_FILE must not be empty"
+        )
+    embeddings_file = env.get(
+        "RECOGNITION_V2_EMBEDDINGS_FILE",
+        _paired_embeddings_file(index_file),
+    ).strip()
+    if not embeddings_file:
+        raise RecognitionIndexConfigurationError(
+            "RECOGNITION_V2_EMBEDDINGS_FILE must not be empty"
+        )
+    return RecognitionIndexConfiguration(
+        version="v2",
+        index_file=index_file,
+        embeddings_file=embeddings_file,
+        expected_schema_version=2,
+        expected_index_sha256=APPROVED_V2_INDEX_SHA256,
+        expected_embeddings_sha256=APPROVED_V2_EMBEDDINGS_SHA256,
+        expected_visual_classes=APPROVED_V2_VISUAL_CLASSES,
+        expected_embeddings=APPROVED_V2_EMBEDDINGS,
+        expected_embedding_dim=APPROVED_V2_EMBEDDING_DIM,
+    )
+
+
+def _sha256_file(path: str) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 class DishIndex:
@@ -22,15 +138,42 @@ class DishIndex:
     Usa busca por similaridade de cosseno para identificar pratos.
     """
     
-    def __init__(self, data_dir: str = "/app/datasets/organized", index_file: str = "/app/datasets/dish_index.json"):
+    def __init__(
+        self,
+        data_dir: str = "/app/datasets/organized",
+        index_file: str = DEFAULT_V1_INDEX_FILE,
+        embeddings_file: Optional[str] = None,
+        *,
+        configured_version: Optional[str] = None,
+        expected_schema_version: Optional[int] = None,
+        expected_index_sha256: Optional[str] = None,
+        expected_embeddings_sha256: Optional[str] = None,
+        expected_visual_classes: Optional[int] = None,
+        expected_embeddings: Optional[int] = None,
+        expected_embedding_dim: Optional[int] = None,
+        strict_load: bool = False,
+    ):
         self.data_dir = data_dir
         self.index_file = index_file
+        self.embeddings_file = embeddings_file or _paired_embeddings_file(index_file)
+        self.configured_version = configured_version
+        self.expected_schema_version = expected_schema_version
+        self.expected_index_sha256 = expected_index_sha256
+        self.expected_embeddings_sha256 = expected_embeddings_sha256
+        self.expected_visual_classes = expected_visual_classes
+        self.expected_embeddings = expected_embeddings
+        self.expected_embedding_dim = expected_embedding_dim
+        self.strict_load = strict_load
+        self.index_metadata_sha256: Optional[str] = None
+        self.embeddings_sha256: Optional[str] = None
         
         # Estrutura do índice
         self.dishes: List[str] = []  # Lista de nomes de pratos
         self.embeddings: Optional[np.ndarray] = None  # Matriz de embeddings
         self.dish_to_idx: Dict[str, List[int]] = {}  # Mapa prato -> índices
         self.metadata: Dict[str, dict] = {}  # Metadados por prato
+        self.recognition_schema_version = 1
+        self.loaded_artifacts: Optional[LoadedIndexArtifacts] = None
         
         # Tenta carregar índice existente
         self._load_index()
@@ -38,26 +181,96 @@ class DishIndex:
     def _load_index(self) -> bool:
         """Carrega índice do disco se existir"""
         if not os.path.exists(self.index_file):
-            print(f"[index] Índice não encontrado: {self.index_file}")
+            message = f"Índice não encontrado: {self.index_file}"
+            if self.strict_load:
+                print("[index] Índice configurado indisponível")
+                raise RecognitionIndexConfigurationError(
+                    "configured recognition index JSON is unavailable"
+                )
+            print(f"[index] {message}")
             return False
-        
         try:
-            with open(self.index_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            
-            self.dishes = data.get('dishes', [])
-            self.dish_to_idx = data.get('dish_to_idx', {})
-            self.metadata = data.get('metadata', {})
-            
-            # Carrega embeddings
-            emb_file = self.index_file.replace('.json', '_embeddings.npy')
-            if os.path.exists(emb_file):
-                self.embeddings = np.load(emb_file)
-                print(f"[index] Índice carregado: {len(self.dishes)} itens, {len(self.dish_to_idx)} pratos")
-                return True
+            index_sha256 = _sha256_file(self.index_file)
+            embeddings_sha256 = (
+                _sha256_file(self.embeddings_file)
+                if os.path.exists(self.embeddings_file)
+                else None
+            )
+            if (
+                self.expected_index_sha256 is not None
+                and index_sha256 != self.expected_index_sha256
+            ):
+                raise RecognitionIndexConfigurationError(
+                    "configured v2 index JSON does not match the approved SHA-256"
+                )
+            if (
+                self.expected_embeddings_sha256 is not None
+                and embeddings_sha256 != self.expected_embeddings_sha256
+            ):
+                raise RecognitionIndexConfigurationError(
+                    "configured v2 embeddings do not match the approved SHA-256"
+                )
+            artifacts = load_index_artifacts(
+                self.index_file, self.embeddings_file
+            )
+            if (
+                self.expected_schema_version is not None
+                and artifacts.schema_version != self.expected_schema_version
+            ):
+                raise RecognitionIndexConfigurationError(
+                    f"configured {self.configured_version or 'index'} artifacts use "
+                    f"schema v{artifacts.schema_version}, expected "
+                    f"v{self.expected_schema_version}"
+                )
+            if (
+                self.expected_visual_classes is not None
+                and len(artifacts.dish_to_idx) != self.expected_visual_classes
+            ):
+                raise RecognitionIndexConfigurationError(
+                    "configured v2 index has an unexpected visual class count"
+                )
+            if (
+                self.expected_embeddings is not None
+                and len(artifacts.visual_labels) != self.expected_embeddings
+            ):
+                raise RecognitionIndexConfigurationError(
+                    "configured v2 index has an unexpected embedding count"
+                )
+            if (
+                self.expected_embedding_dim is not None
+                and artifacts.embeddings.shape[1] != self.expected_embedding_dim
+            ):
+                raise RecognitionIndexConfigurationError(
+                    "configured v2 index has an unexpected embedding dimension"
+                )
+            self.dishes = list(artifacts.visual_labels)
+            self.dish_to_idx = {
+                name: list(indices)
+                for name, indices in artifacts.dish_to_idx.items()
+            }
+            self.metadata = dict(artifacts.legacy_metadata)
+            self.embeddings = artifacts.embeddings
+            self.recognition_schema_version = artifacts.schema_version
+            self.loaded_artifacts = artifacts
+            self.configured_version = (
+                self.configured_version or f"v{artifacts.schema_version}"
+            )
+            self.index_metadata_sha256 = index_sha256
+            self.embeddings_sha256 = embeddings_sha256
+            print(
+                f"[index] Índice carregado: {len(self.dishes)} itens, "
+                f"{len(self.dish_to_idx)} pratos"
+            )
+            return True
             
         except Exception as e:
             print(f"[index] Erro ao carregar índice: {e}")
+            if self.strict_load:
+                if isinstance(e, RecognitionIndexConfigurationError):
+                    raise
+                raise RecognitionIndexConfigurationError(
+                    "configured recognition index artifacts failed validation"
+                ) from e
         
         return False
     
@@ -77,9 +290,13 @@ class DishIndex:
                 json.dump(data, f, ensure_ascii=False, indent=2)
             
             # Salva embeddings separadamente (mais eficiente)
-            emb_file = self.index_file.replace('.json', '_embeddings.npy')
             if self.embeddings is not None:
-                np.save(emb_file, self.embeddings)
+                np.save(self.embeddings_file, self.embeddings)
+            self.recognition_schema_version = 1
+            self.loaded_artifacts = None
+            self.configured_version = "v1"
+            self.index_metadata_sha256 = _sha256_file(self.index_file)
+            self.embeddings_sha256 = _sha256_file(self.embeddings_file)
             
             print(f"[index] Índice salvo: {self.index_file}")
             
@@ -96,6 +313,10 @@ class DishIndex:
         Returns:
             Estatísticas da indexação
         """
+        if self.configured_version == "v2":
+            raise RecognitionIndexConfigurationError(
+                "legacy reindex is disabled while recognition index v2 is active"
+            )
         print(f"[index] Iniciando indexação de {self.data_dir}...")
         start_time = time.time()
         
@@ -333,9 +554,13 @@ class DishIndex:
         return {
             'ready': self.is_ready(),
             'total_dishes': len(self.dish_to_idx),
+            'total_visual_classes': len(self.dish_to_idx),
             'total_embeddings': len(self.dishes),
             'embedding_dim': self.embeddings.shape[1] if self.embeddings is not None else 0,
-            'index_file': self.index_file
+            'recognition_index_version': self.configured_version or f"v{self.recognition_schema_version}",
+            'index_metadata_sha256': self.index_metadata_sha256,
+            'embeddings_sha256': self.embeddings_sha256,
+            'index_file': self.index_file,
         }
 
 
@@ -346,15 +571,23 @@ def get_index() -> DishIndex:
     """Retorna a instância global do índice"""
     global _INDEX
     if _INDEX is None:
-        _INDEX = DishIndex()
+        config = resolve_index_configuration()
+        _INDEX = DishIndex(
+            index_file=config.index_file,
+            embeddings_file=config.embeddings_file,
+            configured_version=config.version,
+            expected_schema_version=config.expected_schema_version,
+            expected_index_sha256=config.expected_index_sha256,
+            expected_embeddings_sha256=config.expected_embeddings_sha256,
+            expected_visual_classes=config.expected_visual_classes,
+            expected_embeddings=config.expected_embeddings,
+            expected_embedding_dim=config.expected_embedding_dim,
+            strict_load=config.version == "v2",
+        )
     return _INDEX
 
 
 def get_index_info() -> dict:
     """Retorna informacoes do indice incluindo nomes dos pratos."""
     idx = get_index()
-    return {
-        "total_dishes": len(idx.dish_to_idx),
-        "total_embeddings": len(idx.dishes),
-        "dish_names": sorted(idx.dish_to_idx.keys()),
-    }
+    return {**idx.get_stats(), "dish_names": sorted(idx.dish_to_idx.keys())}

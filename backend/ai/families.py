@@ -8,6 +8,602 @@ Quando o CLIP retorna top matches de uma mesma familia com scores proximos,
 o sistema e HONESTO e sugere candidatos ao inves de afirmar.
 """
 
+import copy
+import json
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Dict, Mapping, Optional, Sequence, Tuple, Union
+
+
+SUPPORTED_TAXONOMY_SCHEMA_VERSION = 1
+DEFAULT_VISUAL_TAXONOMY_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "config"
+    / "recognition_visual_taxonomy.json"
+)
+_ALLOWED_EVIDENCE_SOURCES = {"human_admin", "structured_metadata", "ocr"}
+
+
+class VisualTaxonomyValidationError(ValueError):
+    """Raised when a visual taxonomy cannot be trusted."""
+
+
+def _require_non_empty_string(value: Any, field: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise VisualTaxonomyValidationError(f"{field} must be a non-empty string")
+    if value != value.strip():
+        raise VisualTaxonomyValidationError(
+            f"{field} must not contain surrounding whitespace"
+        )
+    return value
+
+
+def validate_visual_taxonomy(data: Any) -> Dict[str, Any]:
+    """Validate a taxonomy without normalizing or repairing its contents."""
+    if not isinstance(data, dict):
+        raise VisualTaxonomyValidationError("taxonomy root must be an object")
+
+    schema_version = data.get("taxonomy_schema_version")
+    if type(schema_version) is not int:
+        raise VisualTaxonomyValidationError(
+            "taxonomy_schema_version must be an integer"
+        )
+    if schema_version != SUPPORTED_TAXONOMY_SCHEMA_VERSION:
+        raise VisualTaxonomyValidationError(
+            f"unsupported taxonomy_schema_version: {schema_version}"
+        )
+
+    _require_non_empty_string(data.get("taxonomy_version"), "taxonomy_version")
+
+    families = data.get("families")
+    if not isinstance(families, list) or not families:
+        raise VisualTaxonomyValidationError("families must be a non-empty list")
+
+    seen_class_ids = set()
+    seen_class_names = set()
+    exclusions_to_check = []
+
+    external_classes = data.get("external_visual_classes", [])
+    if not isinstance(external_classes, list):
+        raise VisualTaxonomyValidationError(
+            "external_visual_classes must be a list"
+        )
+    external_class_names = {}
+    for external_index, external_class in enumerate(external_classes):
+        prefix = f"external_visual_classes[{external_index}]"
+        if not isinstance(external_class, dict):
+            raise VisualTaxonomyValidationError(f"{prefix} must be an object")
+        external_id = _require_non_empty_string(
+            external_class.get("visual_class_id"), f"{prefix}.visual_class_id"
+        )
+        external_name = _require_non_empty_string(
+            external_class.get("canonical_name"), f"{prefix}.canonical_name"
+        )
+        if external_id in external_class_names:
+            raise VisualTaxonomyValidationError(
+                f"duplicate external visual_class_id: {external_id}"
+            )
+        if external_name in external_class_names.values():
+            raise VisualTaxonomyValidationError(
+                f"duplicate external canonical_name: {external_name}"
+            )
+        external_class_names[external_id] = external_name
+
+    for family_index, family in enumerate(families):
+        prefix = f"families[{family_index}]"
+        if not isinstance(family, dict):
+            raise VisualTaxonomyValidationError(f"{prefix} must be an object")
+
+        class_id = _require_non_empty_string(
+            family.get("visual_class_id"), f"{prefix}.visual_class_id"
+        )
+        class_name = _require_non_empty_string(
+            family.get("canonical_name"), f"{prefix}.canonical_name"
+        )
+        if class_id in seen_class_ids:
+            raise VisualTaxonomyValidationError(
+                f"duplicate visual_class_id: {class_id}"
+            )
+        if class_name in seen_class_names:
+            raise VisualTaxonomyValidationError(
+                f"duplicate visual_class: {class_name}"
+            )
+        seen_class_ids.add(class_id)
+        seen_class_names.add(class_name)
+
+        variants = family.get("variants")
+        if not isinstance(variants, list) or not variants:
+            raise VisualTaxonomyValidationError(
+                f"{prefix}.variants must be a non-empty list"
+            )
+
+        variant_ids = set()
+        variant_names = set()
+        for variant_index, variant in enumerate(variants):
+            variant_prefix = f"{prefix}.variants[{variant_index}]"
+            if not isinstance(variant, dict):
+                raise VisualTaxonomyValidationError(
+                    f"{variant_prefix} must be an object"
+                )
+            variant_id = _require_non_empty_string(
+                variant.get("id"), f"{variant_prefix}.id"
+            )
+            display_name = _require_non_empty_string(
+                variant.get("display_name"), f"{variant_prefix}.display_name"
+            )
+            if variant_id in variant_ids:
+                raise VisualTaxonomyValidationError(
+                    f"duplicate variant id in {class_name}: {variant_id}"
+                )
+            if display_name in variant_names:
+                raise VisualTaxonomyValidationError(
+                    f"duplicate variant in {class_name}: {display_name}"
+                )
+            variant_ids.add(variant_id)
+            variant_names.add(display_name)
+            aliases = variant.get("aliases", [])
+            if not isinstance(aliases, list):
+                raise VisualTaxonomyValidationError(
+                    f"{variant_prefix}.aliases must be a list"
+                )
+            seen_aliases = set()
+            for alias_index, alias in enumerate(aliases):
+                alias_name = _require_non_empty_string(
+                    alias, f"{variant_prefix}.aliases[{alias_index}]"
+                )
+                if alias_name in seen_aliases:
+                    raise VisualTaxonomyValidationError(
+                        f"duplicate alias in {class_name}: {alias_name}"
+                    )
+                if alias_name in variant_ids or alias_name in variant_names:
+                    raise VisualTaxonomyValidationError(
+                        f"variant alias collides with canonical variant: {alias_name}"
+                    )
+                seen_aliases.add(alias_name)
+
+        all_aliases = [
+            alias
+            for variant in variants
+            for alias in variant.get("aliases", [])
+        ]
+        if len(all_aliases) != len(set(all_aliases)):
+            raise VisualTaxonomyValidationError(
+                f"duplicate variant alias in {class_name}"
+            )
+        canonical_variant_tokens = variant_ids | variant_names
+        alias_collision = canonical_variant_tokens.intersection(all_aliases)
+        if alias_collision:
+            raise VisualTaxonomyValidationError(
+                "variant alias collides with canonical variant: "
+                f"{sorted(alias_collision)[0]}"
+            )
+
+        variant_aliases = family.get("variant_aliases", {})
+        if not isinstance(variant_aliases, dict):
+            raise VisualTaxonomyValidationError(
+                f"{prefix}.variant_aliases must be an object"
+            )
+        for alias, target_value in variant_aliases.items():
+            alias_name = _require_non_empty_string(
+                alias, f"{prefix}.variant_aliases alias"
+            )
+            target_id = _require_non_empty_string(
+                target_value, f"{prefix}.variant_aliases[{alias_name}]"
+            )
+            if target_id not in variant_ids:
+                raise VisualTaxonomyValidationError(
+                    f"variant alias {alias_name} targets unknown variant: {target_id}"
+                )
+            if alias_name in canonical_variant_tokens or alias_name in all_aliases:
+                raise VisualTaxonomyValidationError(
+                    f"variant alias collides with configured variant: {alias_name}"
+                )
+
+        exclusions = family.get("must_not_group", [])
+        if not isinstance(exclusions, list):
+            raise VisualTaxonomyValidationError(
+                f"{prefix}.must_not_group must be a list"
+            )
+        seen_exclusions = set()
+        for exclusion_index, excluded_value in enumerate(exclusions):
+            excluded_id = _require_non_empty_string(
+                excluded_value,
+                f"{prefix}.must_not_group[{exclusion_index}]",
+            )
+            if excluded_id == class_id:
+                raise VisualTaxonomyValidationError(
+                    f"visual class cannot exclude itself: {class_name}"
+                )
+            if excluded_id in seen_exclusions:
+                raise VisualTaxonomyValidationError(
+                    f"duplicate exclusion in {class_name}: {excluded_id}"
+                )
+            seen_exclusions.add(excluded_id)
+            exclusions_to_check.append((class_name, excluded_id))
+
+        evidence_sources = family.get("accepted_evidence_sources")
+        if not isinstance(evidence_sources, list) or not evidence_sources:
+            raise VisualTaxonomyValidationError(
+                f"{prefix}.accepted_evidence_sources must be a non-empty list"
+            )
+        seen_evidence_sources = set()
+        for source in evidence_sources:
+            source_name = _require_non_empty_string(
+                source, f"{prefix}.accepted_evidence_sources"
+            )
+            if source_name in seen_evidence_sources:
+                raise VisualTaxonomyValidationError(
+                    f"duplicate accepted_evidence_sources in {class_name}"
+                )
+            seen_evidence_sources.add(source_name)
+            if source_name not in _ALLOWED_EVIDENCE_SOURCES:
+                raise VisualTaxonomyValidationError(
+                    f"unsupported evidence source in {class_name}: {source_name}"
+                )
+
+        metadata = family.get("metadata", {})
+        if not isinstance(metadata, dict):
+            raise VisualTaxonomyValidationError(f"{prefix}.metadata must be an object")
+
+    overlap = seen_class_ids.intersection(external_class_names)
+    if overlap:
+        raise VisualTaxonomyValidationError(
+            f"external visual class collides with family: {sorted(overlap)[0]}"
+        )
+    name_overlap = seen_class_names.intersection(external_class_names.values())
+    if name_overlap:
+        raise VisualTaxonomyValidationError(
+            "external canonical_name collides with family: "
+            f"{sorted(name_overlap)[0]}"
+        )
+
+    known_class_ids = seen_class_ids | set(external_class_names)
+    for owner_name, excluded_id in exclusions_to_check:
+        if excluded_id not in known_class_ids:
+            raise VisualTaxonomyValidationError(
+                f"unknown exclusion in {owner_name}: {excluded_id}"
+            )
+
+    metadata = data.get("metadata", {})
+    if not isinstance(metadata, dict):
+        raise VisualTaxonomyValidationError("metadata must be an object")
+
+    return copy.deepcopy(data)
+
+
+def load_visual_taxonomy(
+    path: Optional[Union[str, Path]] = None,
+) -> Dict[str, Any]:
+    """Load and validate a taxonomy file without caching or side effects."""
+    taxonomy_path = Path(path) if path is not None else DEFAULT_VISUAL_TAXONOMY_PATH
+    try:
+        raw = taxonomy_path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise VisualTaxonomyValidationError(
+            f"unable to read visual taxonomy: {taxonomy_path}"
+        ) from exc
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise VisualTaxonomyValidationError(
+            f"invalid visual taxonomy JSON at line {exc.lineno}, column {exc.colno}"
+        ) from exc
+
+    return validate_visual_taxonomy(data)
+
+
+def _resolve_visual_class_id(
+    taxonomy: Mapping[str, Any], visual_class: str
+) -> Optional[str]:
+    for family in taxonomy.get("families", []):
+        if visual_class in (
+            family.get("visual_class_id"),
+            family.get("canonical_name"),
+        ):
+            return family.get("visual_class_id")
+    return None
+
+
+def get_visual_family(
+    taxonomy: Mapping[str, Any], visual_class: str
+) -> Optional[Dict[str, Any]]:
+    """Return a defensive copy of an exact class or configured alias match."""
+    class_id = _resolve_visual_class_id(taxonomy, visual_class)
+    if class_id is None:
+        return None
+    for family in taxonomy.get("families", []):
+        if family.get("visual_class_id") == class_id:
+            return copy.deepcopy(family)
+    return None
+
+
+def get_allowed_variants(
+    taxonomy: Mapping[str, Any], visual_class: str
+) -> Tuple[str, ...]:
+    """Return canonical display names in configured order."""
+    family = get_visual_family(taxonomy, visual_class)
+    if family is None:
+        return ()
+    return tuple(variant["display_name"] for variant in family["variants"])
+
+
+def resolve_variant_alias(
+    taxonomy: Mapping[str, Any], visual_class: str, alias: str
+) -> Optional[str]:
+    """Resolve only an explicitly configured alias to a canonical display name."""
+    family = get_visual_family(taxonomy, visual_class)
+    if family is None:
+        return None
+    for variant in family["variants"]:
+        if alias in variant.get("aliases", []):
+            return variant["display_name"]
+    target_id = family.get("variant_aliases", {}).get(alias)
+    if target_id is not None:
+        for variant in family["variants"]:
+            if variant["id"] == target_id:
+                return variant["display_name"]
+    return None
+
+
+def is_valid_variant(
+    taxonomy: Mapping[str, Any], visual_class: str, variant: str
+) -> bool:
+    """Check an exact canonical variant or explicitly configured alias."""
+    family = get_visual_family(taxonomy, visual_class)
+    if family is None:
+        return False
+    for configured in family["variants"]:
+        if variant in (configured["id"], configured["display_name"]):
+            return True
+    return resolve_variant_alias(taxonomy, visual_class, variant) is not None
+
+
+def is_excluded_from_family(
+    taxonomy: Mapping[str, Any], visual_class: str, candidate: str
+) -> bool:
+    """Check an exact exclusion by canonical name or stable class ID."""
+    family = get_visual_family(taxonomy, visual_class)
+    if family is None:
+        return False
+    excluded_ids = set(family.get("must_not_group", []))
+    if candidate in excluded_ids:
+        return True
+    for configured in taxonomy.get("families", []):
+        if (
+            configured.get("visual_class_id") in excluded_ids
+            and configured.get("canonical_name") == candidate
+        ):
+            return True
+    return any(
+        configured.get("visual_class_id") in excluded_ids
+        and configured.get("canonical_name") == candidate
+        for configured in taxonomy.get("external_visual_classes", [])
+    )
+
+
+@dataclass(frozen=True)
+class VariantEvidence:
+    """One explicit source of variant evidence for a recognized visual class."""
+
+    source: str
+    values: Tuple[str, ...]
+    evidence_id: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class VariantResolution:
+    """Fail-safe result of post-visual variant resolution."""
+
+    visual_class: str
+    display_variant: Optional[str]
+    variant_source: Optional[str]
+    variant_status: str
+    variant_evidence_ids: Tuple[str, ...]
+    reason: str
+
+
+_VARIANT_SOURCE_PRIORITY = {
+    "human_admin": 0,
+    "structured_metadata": 1,
+    "ocr": 2,
+}
+
+
+def _as_evidence_values(value: Union[str, Sequence[str]]) -> Tuple[str, ...]:
+    if isinstance(value, str):
+        return (value,)
+    if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray)):
+        return tuple(value)
+    raise VisualTaxonomyValidationError(
+        "variant evidence must be a string or sequence of strings"
+    )
+
+
+def collect_variant_evidence(
+    *,
+    human_admin: Optional[Union[str, Sequence[str]]] = None,
+    structured_metadata: Optional[Union[str, Sequence[str]]] = None,
+    ocr: Optional[Union[str, Sequence[str]]] = None,
+    evidence_ids: Optional[Mapping[str, str]] = None,
+) -> Tuple[VariantEvidence, ...]:
+    """Collect explicit evidence in the approved priority order."""
+    identifiers = evidence_ids or {}
+    if not isinstance(identifiers, Mapping):
+        raise VisualTaxonomyValidationError("evidence_ids must be a mapping")
+
+    collected = []
+    for source, value in (
+        ("human_admin", human_admin),
+        ("structured_metadata", structured_metadata),
+        ("ocr", ocr),
+    ):
+        if value is None:
+            continue
+        evidence_id = identifiers.get(source)
+        if evidence_id is not None:
+            _require_non_empty_string(evidence_id, f"evidence_ids[{source}]")
+        collected.append(
+            VariantEvidence(
+                source=source,
+                values=_as_evidence_values(value),
+                evidence_id=evidence_id,
+            )
+        )
+    return tuple(collected)
+
+
+def _canonical_variant_display(
+    family: Mapping[str, Any], candidate: str
+) -> Optional[str]:
+    for variant in family.get("variants", []):
+        if candidate in (variant.get("id"), variant.get("display_name")):
+            return variant.get("display_name")
+        if candidate in variant.get("aliases", []):
+            return variant.get("display_name")
+    target_id = family.get("variant_aliases", {}).get(candidate)
+    if target_id is not None:
+        for variant in family.get("variants", []):
+            if variant.get("id") == target_id:
+                return variant.get("display_name")
+    return None
+
+
+def _unresolved_variant(
+    visual_class: str, status: str, reason: str
+) -> VariantResolution:
+    return VariantResolution(
+        visual_class=visual_class,
+        display_variant=None,
+        variant_source=None,
+        variant_status=status,
+        variant_evidence_ids=(),
+        reason=reason,
+    )
+
+
+def resolve_display_variant(
+    taxonomy: Mapping[str, Any],
+    visual_class: str,
+    evidence: Sequence[VariantEvidence] = (),
+) -> VariantResolution:
+    """Resolve an exact display variant without scores, models, I/O, or guessing."""
+    family = get_visual_family(taxonomy, visual_class)
+    if family is None:
+        return _unresolved_variant(
+            visual_class,
+            "unconfigured",
+            "visual_class_has_no_variant_taxonomy",
+        )
+
+    if not isinstance(evidence, Sequence) or isinstance(
+        evidence, (str, bytes, bytearray)
+    ):
+        raise VisualTaxonomyValidationError("evidence must be a sequence")
+
+    resolved_by_source = {}
+    evidence_ids_by_source = {}
+    saw_value = False
+    for item in evidence:
+        if not isinstance(item, VariantEvidence):
+            raise VisualTaxonomyValidationError(
+                "evidence entries must be VariantEvidence"
+            )
+        if item.source not in _VARIANT_SOURCE_PRIORITY:
+            return _unresolved_variant(
+                family["canonical_name"],
+                "unsupported",
+                "unsupported_variant_evidence_source",
+            )
+        if item.evidence_id is not None:
+            _require_non_empty_string(item.evidence_id, "evidence_id")
+            evidence_ids_by_source.setdefault(item.source, set()).add(
+                item.evidence_id
+            )
+
+        source_values = resolved_by_source.setdefault(item.source, set())
+        for raw_value in item.values:
+            saw_value = True
+            if not isinstance(raw_value, str) or not raw_value:
+                return _unresolved_variant(
+                    family["canonical_name"],
+                    "unsupported",
+                    "unknown_variant_evidence",
+                )
+            if raw_value != raw_value.strip():
+                return _unresolved_variant(
+                    family["canonical_name"],
+                    "unsupported",
+                    "unknown_variant_evidence",
+                )
+            if is_excluded_from_family(taxonomy, visual_class, raw_value):
+                return _unresolved_variant(
+                    family["canonical_name"],
+                    "unsupported",
+                    "excluded_variant_evidence",
+                )
+            canonical = _canonical_variant_display(family, raw_value)
+            if canonical is None:
+                return _unresolved_variant(
+                    family["canonical_name"],
+                    "unsupported",
+                    "unknown_variant_evidence",
+                )
+            source_values.add(canonical)
+
+    if not saw_value:
+        return _unresolved_variant(
+            family["canonical_name"], "absent", "no_variant_evidence"
+        )
+
+    if any(len(values) > 1 for values in resolved_by_source.values()):
+        return _unresolved_variant(
+            family["canonical_name"],
+            "ambiguous",
+            "ambiguous_variant_evidence",
+        )
+
+    resolved_sources = {
+        source: next(iter(values))
+        for source, values in resolved_by_source.items()
+        if values
+    }
+    distinct_variants = set(resolved_sources.values())
+    if len(distinct_variants) > 1:
+        return _unresolved_variant(
+            family["canonical_name"],
+            "conflict",
+            "conflicting_variant_evidence",
+        )
+    if not distinct_variants:
+        return _unresolved_variant(
+            family["canonical_name"], "absent", "no_variant_evidence"
+        )
+
+    display_variant = next(iter(distinct_variants))
+    agreeing_sources = [
+        source
+        for source, value in resolved_sources.items()
+        if value == display_variant
+    ]
+    variant_source = min(
+        agreeing_sources, key=lambda source: _VARIANT_SOURCE_PRIORITY[source]
+    )
+    ordered_ids = []
+    for source in sorted(
+        agreeing_sources, key=lambda item: _VARIANT_SOURCE_PRIORITY[item]
+    ):
+        ordered_ids.extend(sorted(evidence_ids_by_source.get(source, ())))
+
+    return VariantResolution(
+        visual_class=family["canonical_name"],
+        display_variant=display_variant,
+        variant_source=variant_source,
+        variant_status="confirmed",
+        variant_evidence_ids=tuple(ordered_ids),
+        reason="confirmed_variant_evidence",
+    )
+
 DISH_FAMILIES = {
     "Tabules": [
         "Tabule",

@@ -570,6 +570,15 @@ class IdentifyResponse(BaseModel):
     family_name: Optional[str] = None
     family_candidates: List[str] = []
     family_candidates_detail: List[dict] = []
+    recognition_schema_version: Optional[int] = None
+    visual_class: Optional[dict] = None
+    display_variant: Optional[str] = None
+    variant_source: Optional[str] = None
+    variant_status: Optional[str] = None
+    variant_evidence_id: Optional[str] = None
+    variant_evidence_ids: List[str] = []
+    index_version: Optional[str] = None
+    taxonomy_version: Optional[str] = None
 
 class ReindexResponse(BaseModel):
     ok: bool
@@ -583,6 +592,11 @@ class StatusResponse(BaseModel):
     total_dishes: int
     total_embeddings: int
     message: str
+    recognition_index_version: Optional[str] = None
+    total_visual_classes: Optional[int] = None
+    embedding_dimension: Optional[int] = None
+    index_metadata_sha256: Optional[str] = None
+    embeddings_sha256: Optional[str] = None
 
 # =====================
 # ENDPOINTS
@@ -749,6 +763,11 @@ async def ai_status():
             ready=stats['ready'],
             total_dishes=stats['total_dishes'],
             total_embeddings=stats['total_embeddings'],
+            recognition_index_version=stats['recognition_index_version'],
+            total_visual_classes=stats['total_visual_classes'],
+            embedding_dimension=stats['embedding_dim'],
+            index_metadata_sha256=stats['index_metadata_sha256'],
+            embeddings_sha256=stats['embeddings_sha256'],
             message="Índice pronto para buscas" if stats['ready'] else "Índice nao carregado. Execute /ai/reindex"
         )
     except Exception as e:
@@ -1194,6 +1213,50 @@ def _strip_premium_fields(payload: dict) -> dict:
     return payload
 
 
+def _parse_variant_evidence_json(raw_value: Optional[str]):
+    """Parse only explicit v2 request evidence; malformed input fails closed."""
+    if not raw_value:
+        return ()
+    try:
+        payload = json.loads(raw_value)
+    except (TypeError, json.JSONDecodeError):
+        return ()
+    if not isinstance(payload, dict):
+        return ()
+    allowed_sources = {"structured_metadata", "ocr"}
+    if set(payload) - allowed_sources:
+        return ()
+
+    values = {}
+    evidence_ids = {}
+    for source in ("structured_metadata", "ocr"):
+        entry = payload.get(source)
+        if entry is None:
+            continue
+        if isinstance(entry, dict):
+            if set(entry) - {"value", "evidence_id"} or "value" not in entry:
+                return ()
+            value = entry["value"]
+            evidence_id = entry.get("evidence_id")
+        else:
+            value = entry
+            evidence_id = None
+        values[source] = value
+        if evidence_id is not None:
+            evidence_ids[source] = evidence_id
+
+    try:
+        from ai.families import collect_variant_evidence
+
+        return collect_variant_evidence(
+            structured_metadata=values.get("structured_metadata"),
+            ocr=values.get("ocr"),
+            evidence_ids=evidence_ids,
+        )
+    except Exception:
+        return ()
+
+
 @api_router.post("/ai/identify")
 async def identify_image(
     request: Request,
@@ -1201,7 +1264,8 @@ async def identify_image(
     pin: Optional[str] = Form(None),
     nome: Optional[str] = Form(None),
     country: Optional[str] = Form("BR"),  # Pais do usuario: BR ou OTHER
-    restaurant: Optional[str] = Form(None)  # Restaurante: cibi_sana ou None/outro
+    restaurant: Optional[str] = Form(None),  # Restaurante: cibi_sana ou None/outro
+    variant_evidence_json: Optional[str] = Form(None),
 ):
     """
     Identifica um prato a partir de uma imagem.
@@ -1275,11 +1339,45 @@ async def identify_image(
                 f"image_dims_server={_diag_dims}"
             )
 
+        decision = None
+        is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
+        index = None
+        _is_visual_v2 = False
+        _visual_artifacts = None
+        _variant_evidence = ()
+        _v2_cached_decision = None
+
+        if is_cibi_sana:
+            from ai.index import get_index
+
+            index = get_index()
+            _visual_artifacts = getattr(index, "loaded_artifacts", None)
+            _is_visual_v2 = bool(
+                _visual_artifacts is not None
+                and _visual_artifacts.schema_version == 2
+            )
+            if _is_visual_v2:
+                from ai.recognition_response import (
+                    get_cached_identification_response,
+                )
+
+                _variant_evidence = _parse_variant_evidence_json(
+                    variant_evidence_json
+                )
+                _v2_cached_decision = get_cached_identification_response(
+                    content,
+                    _visual_artifacts,
+                    evidence=_variant_evidence,
+                    restaurant=restaurant or '',
+                )
+
         # ═══════════════════════════════════════════════════════════════════════
         # CACHE: Verificar se ja identificamos esta imagem antes
         # ═══════════════════════════════════════════════════════════════════════
         from services.cache_service import get_cached_result, cache_result
-        cached = get_cached_result(content, restaurant=restaurant or '')
+        cached = None
+        if not _is_visual_v2:
+            cached = get_cached_result(content, restaurant=restaurant or '')
         if cached:
             elapsed_ms = (time.time() - start_time) * 1000
             cached['search_time_ms'] = round(elapsed_ms, 2)
@@ -1322,9 +1420,6 @@ async def identify_image(
         # Fora Cibi Sana: GEMINI ONLY (CLIP desligado, pratos genericos)
         # ═══════════════════════════════════════════════════════════════════════
         
-        decision = None
-        is_cibi_sana = (restaurant or '').strip().lower() == 'cibi_sana'
-
         if _diag_on:
             logger.info(
                 f"[IDENTIFY_ROUTE] request_id={_req_id} restaurant_normalized={restaurant!r} "
@@ -1345,38 +1440,57 @@ async def identify_image(
             # ══════════════════════════════════════════════════════════════════
             # MODO CIBI SANA: CLIP ONLY (HARD LOCK - Gemini bloqueado)
             # ══════════════════════════════════════════════════════════════════
-            from ai.index import get_index
             from ai.policy import analyze_result
             
-            index = get_index()
-            
             if index.is_ready():
-                t_clip = time.perf_counter()
-                # CRITICO: ONNX bloqueia o event loop — usar semaforo + to_thread
-                async with _identify_semaphore:
-                    logger.info(f"[IDENTIFY] ONNX adquiriu semaforo ts={time.strftime('%H:%M:%S')}")
-                    results = await asyncio.to_thread(index.search, content, 5)
-                t_clip_ms = (time.perf_counter() - t_clip) * 1000
-                logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
+                if _v2_cached_decision is not None:
+                    decision = _v2_cached_decision
+                    logger.info(
+                        "[VISUAL_CACHE] hit class=%r score=%s",
+                        decision.get("dish_display"),
+                        decision.get("score"),
+                    )
+                else:
+                    t_clip = time.perf_counter()
+                    # CRITICO: ONNX bloqueia o event loop — usar semaforo + to_thread
+                    async with _identify_semaphore:
+                        logger.info(f"[IDENTIFY] ONNX adquiriu semaforo ts={time.strftime('%H:%M:%S')}")
+                        results = await asyncio.to_thread(index.search, content, 5)
+                    t_clip_ms = (time.perf_counter() - t_clip) * 1000
+                    logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
 
-                # ── [IDENTIFY_DIAG] top_5 real + gap ────────────────────────────
-                if results:
-                    _top = results[:5]
-                    _scores = [r.get('score', 0) for r in _top]
-                    _names  = [r.get('dish', r.get('dish_display', '?')) for r in _top]
-                    for _rank, (_n, _s) in enumerate(zip(_names, _scores), 1):
-                        logger.info(f"[IDENTIFY_DIAG] top{_rank} score={_s:.4f} dish={_n!r}")
-                    _gap = (_scores[0] - _scores[1]) if len(_scores) >= 2 else 0
-                    logger.info(f"[IDENTIFY_DIAG] gap_top1_top2={_gap:.4f} source=local_index")
-                # ────────────────────────────────────────────────────────────────
+                    # ── [IDENTIFY_DIAG] top_5 real + gap ────────────────────────────
+                    if results:
+                        _top = results[:5]
+                        _scores = [r.get('score', 0) for r in _top]
+                        _names  = [r.get('dish', r.get('dish_display', '?')) for r in _top]
+                        for _rank, (_n, _s) in enumerate(zip(_names, _scores), 1):
+                            logger.info(f"[IDENTIFY_DIAG] top{_rank} score={_s:.4f} dish={_n!r}")
+                        _gap = (_scores[0] - _scores[1]) if len(_scores) >= 2 else 0
+                        logger.info(f"[IDENTIFY_DIAG] gap_top1_top2={_gap:.4f} source=local_index")
+                    # ────────────────────────────────────────────────────────────────
 
-                clip_decision = await asyncio.to_thread(analyze_result, results)
-                clip_score = clip_decision.get('score', 0.0)
-                
-                logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
-                
-                decision = clip_decision
-                decision["source"] = "local_index"
+                    clip_decision = await asyncio.to_thread(analyze_result, results)
+                    clip_score = clip_decision.get('score', 0.0)
+
+                    logger.info(f"[CIBI SANA | CLIP] {clip_decision.get('dish_display', 'N/A')} - Score: {clip_score:.2%}")
+
+                    if _is_visual_v2:
+                        from ai.recognition_response import (
+                            assemble_identification_response_with_visual_cache,
+                        )
+
+                        clip_decision["ok"] = True
+                        decision = assemble_identification_response_with_visual_cache(
+                            content,
+                            _visual_artifacts,
+                            decision=clip_decision,
+                            evidence=_variant_evidence,
+                            restaurant=restaurant or '',
+                        )
+                    else:
+                        decision = clip_decision
+                    decision["source"] = "local_index"
 
                 # 🔴 GARANTIR CATEGORY NO FLUXO LOCAL (CIBI SANA)
 
@@ -1548,7 +1662,10 @@ async def identify_image(
         # DISH-NAME CACHE CHECK: pula MongoDB se prato ja identificado recentemente (TTL 5min)
         _dish_key = (dish_display_name.lower(), restaurant or '')
         _now = time.time()
-        if dish_display_name and decision.get('identified') and decision.get('confidence') != 'baixa' and not (pin and nome):
+        if (not _is_visual_v2 and dish_display_name
+                and decision.get('identified')
+                and decision.get('confidence') != 'baixa'
+                and not (pin and nome)):
             _cached = _dish_name_cache.get(_dish_key)
             if _cached and _cached['exp'] > _now:
                 logger.info(f"[DISH_CACHE] ✓ Hit: {dish_display_name}")
@@ -1816,6 +1933,19 @@ async def identify_image(
             "family_candidates": decision.get('family_candidates', []),
             "family_members_slugs": decision.get('family_members_slugs', []),
         }
+        if _is_visual_v2:
+            response_data.update({
+                "recognition_schema_version": decision.get("recognition_schema_version"),
+                "visual_class": decision.get("visual_class"),
+                "display_variant": decision.get("display_variant"),
+                "variant_source": decision.get("variant_source"),
+                "variant_status": decision.get("variant_status"),
+                "variant_evidence_id": decision.get("variant_evidence_id"),
+                "variant_evidence_ids": decision.get("variant_evidence_ids", []),
+                "index_version": decision.get("index_version"),
+                "taxonomy_version": decision.get("taxonomy_version"),
+                "from_visual_cache": decision.get("from_visual_cache", False),
+            })
 
         # Camada PREMIUM — SEMPRE construida para alimentar cache full.
         response_data.update({
@@ -1848,7 +1978,7 @@ async def identify_image(
             logger.info(f"[PREMIUM_GATE] /identify base Free dish={dish_display_name}")
 
         # CACHE: Salvar resultado COMPLETO (versao Premium); strip pos-cache filtra.
-        if response_data.get('identified'):
+        if response_data.get('identified') and not _is_visual_v2:
             cache_result(content, response_data, restaurant=restaurant or '', ttl_seconds=3600)
 
         # FASE 2A — Strip Premium para requests Free / trial expirado
@@ -1858,6 +1988,7 @@ async def identify_image(
         # DISH-NAME CACHE STORE (nao-premium, confidence != baixa, TTL 5min)
         if (response_data.get('identified') and
                 response_data.get('confidence') != 'baixa' and
+                not _is_visual_v2 and
                 not is_premium):
             _dish_name_cache[_dish_key] = {'data': dict(response_data), 'exp': _now + 300}
             logger.info(f"[DISH_CACHE] + Salvo: {dish_display_name} (TTL: 300s)")  # 1 hora de cache
