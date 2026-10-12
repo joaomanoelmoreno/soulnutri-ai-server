@@ -129,17 +129,25 @@ def assemble_identification_response(
 
     visual_taxonomy = taxonomy if taxonomy is not None else load_visual_taxonomy()
     family = get_visual_family(visual_taxonomy, provenance_class_id)
-    if family is None or family.get("canonical_name") != visual_class_name:
+    if family is None:
+        if get_visual_family(visual_taxonomy, visual_class_name) is not None:
+            raise RecognitionResponseIntegrationError(
+                "visual class is inconsistent with the loaded taxonomy"
+            )
+        resolution = resolve_display_variant(
+            visual_taxonomy, visual_class_name, evidence
+        )
+    elif family.get("canonical_name") != visual_class_name:
         raise RecognitionResponseIntegrationError(
             "visual class is inconsistent with the loaded taxonomy"
         )
-
-    resolution = resolve_display_variant(
-        visual_taxonomy, provenance_class_id, evidence
-    )
+    else:
+        resolution = resolve_display_variant(
+            visual_taxonomy, provenance_class_id, evidence
+        )
     evidence_ids = list(resolution.variant_evidence_ids)
     display_name = _safe_display_name(
-        resolution.visual_class, resolution.display_variant
+        visual_class_name, resolution.display_variant
     )
 
     response.update(
@@ -147,7 +155,7 @@ def assemble_identification_response(
             "recognition_schema_version": 2,
             "visual_class": {
                 "id": provenance_class_id,
-                "name": resolution.visual_class,
+                "name": visual_class_name,
             },
             "display_variant": resolution.display_variant,
             "variant_source": resolution.variant_source,
@@ -157,7 +165,7 @@ def assemble_identification_response(
             ),
             "variant_evidence_ids": evidence_ids,
             "variant_reason": resolution.reason,
-            "dish": resolution.visual_class,
+            "dish": visual_class_name,
             "dish_display": display_name,
             "index_version": artifacts.index_metadata.get("index_id")
             or artifacts.index_metadata.get("version"),

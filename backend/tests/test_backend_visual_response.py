@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Synthetic integration tests for the backend v1/v2 response boundary."""
 
+import copy
 import hashlib
 import json
 import sys
@@ -81,8 +82,12 @@ class BackendVisualResponseIntegrationTest(unittest.TestCase):
             source_sha256=_sha(token),
             source_bytes=len(token),
             source_variant_id=variant_id,
-            source_variant_status="reference_annotation",
-            source_variant_source="human_manifest",
+            source_variant_status=(
+                "reference_annotation" if variant_id is not None else None
+            ),
+            source_variant_source=(
+                "human_manifest" if variant_id is not None else None
+            ),
             original_class=class_name,
             human_decision_refs=("REV-TEST",),
         )
@@ -106,6 +111,12 @@ class BackendVisualResponseIntegrationTest(unittest.TestCase):
                 "Filé à Parmegiana",
                 "parmegiana",
                 "frango",
+            ),
+            self._reference(
+                "vol_au_vent",
+                "Vol Au Vent",
+                "vol-au-vent",
+                None,
             ),
         ]
         selection = select_deterministic_references(
@@ -179,6 +190,29 @@ class BackendVisualResponseIntegrationTest(unittest.TestCase):
         self.assertIsNone(result["variant_source"])
         self.assertEqual(result["variant_status"], "absent")
         self.assertEqual(result["dish_display"], "Maminha Molho Claro")
+
+    def test_v2_standalone_class_preserves_provenance_without_variant(self):
+        decision = self._decision("Vol Au Vent", 1.0, "alta")
+        evidence = collect_variant_evidence(
+            structured_metadata="unconfigured value"
+        )
+        result = assemble_identification_response(
+            decision, self.v2, evidence=evidence, taxonomy=self.taxonomy
+        )
+        self.assertEqual(
+            result["visual_class"],
+            {"id": "vol_au_vent", "name": "Vol Au Vent"},
+        )
+        self.assertIsNone(result["display_variant"])
+        self.assertIsNone(result["variant_source"])
+        self.assertEqual(result["variant_status"], "unconfigured")
+        self.assertEqual(
+            result["variant_reason"], "visual_class_has_no_variant_taxonomy"
+        )
+        self.assertEqual(result["dish"], "Vol Au Vent")
+        self.assertEqual(result["dish_display"], "Vol Au Vent")
+        self.assertEqual(result["score"], 1.0)
+        self.assertEqual(result["confidence"], "alta")
 
     def test_v2_valid_metadata_returns_family_and_variant(self):
         decision = self._decision("Maminha Molho Claro")
@@ -311,6 +345,22 @@ class BackendVisualResponseIntegrationTest(unittest.TestCase):
         ):
             assemble_identification_response(
                 decision, self.v2, taxonomy=self.taxonomy
+            )
+
+    def test_configured_family_name_mismatch_still_fails_closed(self):
+        inconsistent_taxonomy = copy.deepcopy(self.taxonomy)
+        for family in inconsistent_taxonomy["families"]:
+            if family["visual_class_id"] == "maminha_molho_claro":
+                family["canonical_name"] = "Maminha Clara Inconsistente"
+                break
+        with self.assertRaisesRegex(
+            RecognitionResponseIntegrationError,
+            "visual class is inconsistent with the loaded taxonomy",
+        ):
+            assemble_identification_response(
+                self._decision("Maminha Molho Claro"),
+                self.v2,
+                taxonomy=inconsistent_taxonomy,
             )
 
     def test_v2_response_includes_versioned_optional_metadata(self):
