@@ -466,6 +466,25 @@ async def get_setting(key: str):
     except Exception:
         return False
 
+
+async def processing_metrics_enabled() -> bool:
+    """Resolve processing metrics with an explicit env override."""
+    env_value = os.environ.get("ENABLE_PROCESSING_METRICS")
+    if env_value is None:
+        return bool(await get_setting("ENABLE_PROCESSING_METRICS"))
+
+    normalized = env_value.strip().lower()
+    if normalized in {"true", "1", "yes", "on"}:
+        return True
+    if normalized in {"false", "0", "no", "off"}:
+        return False
+
+    logger.warning(
+        "Invalid ENABLE_PROCESSING_METRICS value; processing metrics disabled"
+    )
+    return False
+
+
 def save_processing_metrics(data: dict):
     """Salva métricas de processamento no banco"""
     try:
@@ -1383,7 +1402,7 @@ async def identify_image(
             cached['search_time_ms'] = round(elapsed_ms, 2)
             logger.info(f"[CACHE] ⚡ Resposta do cache em {elapsed_ms:.0f}ms")
             logger.info(f"[IDENTIFY_DIAG] source=cache dish={cached.get('dish_display')} score={cached.get('score')}")
-            if await get_setting("ENABLE_PROCESSING_METRICS"):
+            if await processing_metrics_enabled():
                 total_ms = (time.perf_counter() - perf_start) * 1000
                 source = cached.get('source', '')
                 engine = "GEMINI" if source == 'gemini_flash' else "CLIP"
@@ -1996,7 +2015,7 @@ async def identify_image(
         # ═══════════════════════════════════════════════════════════════════════
         # MÉTRICAS DE PROCESSAMENTO (condicional)
         # ═══════════════════════════════════════════════════════════════════════
-        if await get_setting("ENABLE_PROCESSING_METRICS"):
+        if await processing_metrics_enabled():
             total_ms = (time.perf_counter() - perf_start) * 1000
             source = response_data.get('source', '')
             engine = "GEMINI" if source == 'gemini_flash' else "CLIP"
@@ -2220,7 +2239,7 @@ async def identify_with_ai(
                 "creditos_usados": True,
                 "message": "Identificado com IA (creditos consumidos)"
             }
-            if await get_setting("ENABLE_PROCESSING_METRICS"):
+            if await processing_metrics_enabled():
                 total_ms = (time.time() - start_time) * 1000
                 save_processing_metrics({
                     "timestamp": datetime.now().isoformat(),
@@ -2897,7 +2916,7 @@ async def identify_with_gemini_flash(
         
         if result.get("ok"):
             logger.info(f"[Gemini Flash] ✅ {result.get('nome')} em {elapsed_ms:.0f}ms")
-            if await get_setting("ENABLE_PROCESSING_METRICS"):
+            if await processing_metrics_enabled():
                 save_processing_metrics({
                     "timestamp": datetime.now().isoformat(),
                     "processing_time_ms": round(elapsed_ms, 2),
