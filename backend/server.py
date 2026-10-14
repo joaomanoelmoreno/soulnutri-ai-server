@@ -196,6 +196,45 @@ def get_confidence_level_message(score: float, confidence: str) -> str:
         return "Baixa confianca - Prato nao reconhecido"
 
 
+def _log_identify_diagnostics(results: List[dict]) -> None:
+    """Log raw ranking and confidence adjustment without mutating results."""
+    if not results:
+        return
+
+    top_results = results[:5]
+    scores = []
+    for rank, result in enumerate(top_results, 1):
+        adjusted_score = float(result.get("score", 0) or 0)
+        raw_value = result.get("raw_score")
+        raw_score = adjusted_score if raw_value is None else float(raw_value)
+        scores.append((raw_score, adjusted_score))
+        logger.info(
+            "[IDENTIFY_DIAG] top%d dish=%r raw_score=%.4f "
+            "adjusted_score=%.4f scores_equal=%s",
+            rank,
+            result.get("dish", result.get("dish_display", "?")),
+            raw_score,
+            adjusted_score,
+            str(raw_score == adjusted_score).lower(),
+        )
+
+    top1_raw, top1_adjusted = scores[0]
+    logger.info(
+        "[IDENTIFY_DIAG] top1_score_detail raw_score=%.4f "
+        "adjusted_score=%.4f penalty_total=%.4f",
+        top1_raw,
+        top1_adjusted,
+        top1_raw - top1_adjusted,
+    )
+
+    raw_gap = scores[0][0] - scores[1][0] if len(scores) >= 2 else 0.0
+    logger.info(
+        "[IDENTIFY_DIAG] gap_top1_top2=%.4f score_basis=raw_score "
+        "source=local_index",
+        raw_gap,
+    )
+
+
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL')
 if mongo_url:
@@ -1479,14 +1518,7 @@ async def identify_image(
                     logger.info(f"[TIMING] CLIP search total: {t_clip_ms:.0f}ms")
 
                     # ── [IDENTIFY_DIAG] top_5 real + gap ────────────────────────────
-                    if results:
-                        _top = results[:5]
-                        _scores = [r.get('score', 0) for r in _top]
-                        _names  = [r.get('dish', r.get('dish_display', '?')) for r in _top]
-                        for _rank, (_n, _s) in enumerate(zip(_names, _scores), 1):
-                            logger.info(f"[IDENTIFY_DIAG] top{_rank} score={_s:.4f} dish={_n!r}")
-                        _gap = (_scores[0] - _scores[1]) if len(_scores) >= 2 else 0
-                        logger.info(f"[IDENTIFY_DIAG] gap_top1_top2={_gap:.4f} source=local_index")
+                    _log_identify_diagnostics(results)
                     # ────────────────────────────────────────────────────────────────
 
                     clip_decision = await asyncio.to_thread(analyze_result, results)
