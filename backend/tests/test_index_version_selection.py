@@ -169,6 +169,59 @@ class IndexVersionConfigurationTest(unittest.TestCase):
             "configured recognition index JSON is unavailable",
         )
 
+    def test_packaged_v2_candidate_matches_approved_gate(self):
+        index_path = (
+            BACKEND_DIR.parent
+            / "datasets"
+            / "recognition_v2"
+            / "dish_index.json"
+        )
+        embeddings_path = index_path.with_name("dish_index_embeddings.npy")
+
+        index = DishIndex(
+            index_file=str(index_path),
+            embeddings_file=str(embeddings_path),
+            configured_version="v2",
+            expected_schema_version=2,
+            expected_index_sha256=APPROVED_V2_INDEX_SHA256,
+            expected_embeddings_sha256=APPROVED_V2_EMBEDDINGS_SHA256,
+            expected_visual_classes=APPROVED_V2_VISUAL_CLASSES,
+            expected_embeddings=APPROVED_V2_EMBEDDINGS,
+            expected_embedding_dim=APPROVED_V2_EMBEDDING_DIM,
+            strict_load=True,
+        )
+
+        self.assertIsNotNone(index.embeddings)
+        self.assertEqual(len(index.dish_to_idx), 237)
+        self.assertEqual(len(index.dishes), 1518)
+        self.assertEqual(index.embeddings.shape[1], 512)
+
+    def test_explicit_v2_still_rejects_unapproved_hash(self):
+        index_path = (
+            BACKEND_DIR.parent
+            / "datasets"
+            / "recognition_v2"
+            / "dish_index.json"
+        )
+        embeddings_path = index_path.with_name("dish_index_embeddings.npy")
+
+        with self.assertRaisesRegex(
+            RecognitionIndexConfigurationError,
+            "does not match the approved SHA-256",
+        ):
+            DishIndex(
+                index_file=str(index_path),
+                embeddings_file=str(embeddings_path),
+                configured_version="v2",
+                expected_schema_version=2,
+                expected_index_sha256="0" * 64,
+                expected_embeddings_sha256=APPROVED_V2_EMBEDDINGS_SHA256,
+                expected_visual_classes=APPROVED_V2_VISUAL_CLASSES,
+                expected_embeddings=APPROVED_V2_EMBEDDINGS,
+                expected_embedding_dim=APPROVED_V2_EMBEDDING_DIM,
+                strict_load=True,
+            )
+
 
 class IndexStatusObservabilityTest(unittest.TestCase):
     def test_ai_status_exposes_version_hashes_and_counts(self):
@@ -176,10 +229,10 @@ class IndexStatusObservabilityTest(unittest.TestCase):
             def get_stats(self):
                 return {
                     "ready": True,
-                    "total_dishes": 236,
-                    "total_visual_classes": 236,
-                    "total_embeddings": 1508,
-                    "embedding_dim": 512,
+                    "total_dishes": APPROVED_V2_VISUAL_CLASSES,
+                    "total_visual_classes": APPROVED_V2_VISUAL_CLASSES,
+                    "total_embeddings": APPROVED_V2_EMBEDDINGS,
+                    "embedding_dim": APPROVED_V2_EMBEDDING_DIM,
                     "recognition_index_version": "v2",
                     "index_metadata_sha256": APPROVED_V2_INDEX_SHA256,
                     "embeddings_sha256": APPROVED_V2_EMBEDDINGS_SHA256,
@@ -190,9 +243,13 @@ class IndexStatusObservabilityTest(unittest.TestCase):
 
         self.assertTrue(response.ok)
         self.assertEqual(response.recognition_index_version, "v2")
-        self.assertEqual(response.total_visual_classes, 236)
-        self.assertEqual(response.total_embeddings, 1508)
-        self.assertEqual(response.embedding_dimension, 512)
+        self.assertEqual(
+            response.total_visual_classes, APPROVED_V2_VISUAL_CLASSES
+        )
+        self.assertEqual(response.total_embeddings, APPROVED_V2_EMBEDDINGS)
+        self.assertEqual(
+            response.embedding_dimension, APPROVED_V2_EMBEDDING_DIM
+        )
         self.assertEqual(
             response.index_metadata_sha256, APPROVED_V2_INDEX_SHA256
         )

@@ -25,13 +25,13 @@ DEFAULT_V2_INDEX_FILE = "/app/datasets/recognition_v2/dish_index.json"
 # Candidate v2 approved by the reproducibility and holdout gates. Explicit v2
 # activation must load this exact pair; availability alone never activates it.
 APPROVED_V2_INDEX_SHA256 = (
-    "32058e88fb3ed46a49237b7936b8f333eaea63089e0b7aa19ffb64c3b31d07e8"
+    "64a431e60cb9d8c1f40b2593a364c52793fa8f1949b5776aa2baf15f9d9d8047"
 )
 APPROVED_V2_EMBEDDINGS_SHA256 = (
-    "baa4d607c9fb4f5e53deecb96e79e818a973ed660a560426c6271f2ac64937eb"
+    "1256e57367ac682cd8f6fbd5d1ad2dbd5f888a07c4239163f50b47d4eb1b1db5"
 )
-APPROVED_V2_VISUAL_CLASSES = 236
-APPROVED_V2_EMBEDDINGS = 1508
+APPROVED_V2_VISUAL_CLASSES = 237
+APPROVED_V2_EMBEDDINGS = 1518
 APPROVED_V2_EMBEDDING_DIM = 512
 
 
