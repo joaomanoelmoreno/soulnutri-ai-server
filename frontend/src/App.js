@@ -13,6 +13,11 @@ import "./NutritionFeed.css";
 import WeeklyReport from "./WeeklyReport";
 import "./WeeklyReport.css";
 import NotificationPanel from "./NotificationPanel";
+import {
+  canUseSpecificNutrition,
+  getFamilySafeDisplayName,
+  isFamilyMemberConfirmationPending,
+} from "./familyNutritionSafety";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
@@ -718,7 +723,12 @@ const renderTextSafe = (v) => {
   // Dispara quando um novo resultado é identificado E o user é premium
   // ═══════════════════════════════════════════════════════════════
   useEffect(() => {
-    if (!result?.ok || !result?.identified || !premiumUser) { setEnrichLoading(false); return; }
+    if (
+      !result?.ok ||
+      !result?.identified ||
+      !premiumUser ||
+      !canUseSpecificNutrition(result)
+    ) { setEnrichLoading(false); return; }
 
     const dishName = result.dish_display;
     if (!dishName) return;
@@ -921,7 +931,7 @@ const renderTextSafe = (v) => {
     return () => {
       cancelled = true;
     };
-    }, [result?.ok, result?.identified, result?.dish_display, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [result?.ok, result?.identified, result?.dish_display, result?.specific_nutrition_authorized, result?.family_member_confirmation_required, result?.family_member_confirmed, premiumUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ──────────────────────────────────────────────────────────────────────
   // Telemetria simétrica do Radar Alimentar (Camada 1, Breaking News).
@@ -1147,7 +1157,7 @@ const loadNotifCount = async (pin) => {
 
   // Registrar refeição automaticamente após identificar
   const logMealToPremium = async (prato) => {
-    if (!premiumUser || !mountedRef.current) return false;
+    if (!premiumUser || !mountedRef.current || !canUseSpecificNutrition(prato)) return false;
     
     try {
       const pin = localStorage.getItem('soulnutri_pin');
@@ -1646,7 +1656,7 @@ const loadNotifCount = async (pin) => {
         if (resultWithTime.ok && resultWithTime.identified) {
           // Radar - fire and forget, somente Premium
           const ingredientes = resultWithTime.ingredientes?.join(',') || '';
-          if (resultWithTime.is_premium) {
+          if (resultWithTime.is_premium && canUseSpecificNutrition(resultWithTime)) {
             const radarPin = localStorage.getItem('soulnutri_pin') || '';
             const radarNome = localStorage.getItem('soulnutri_nome') || '';
             fetch(`${API}/radar/alimentos/${encodeURIComponent(resultWithTime.dish_display)}?ingredientes=${encodeURIComponent(ingredientes)}`, {
@@ -1723,47 +1733,49 @@ const loadNotifCount = async (pin) => {
     setScannerResult(null);
 
     if (result?.ok && result?.identified) {
+      const specificNutritionAuthorized = canUseSpecificNutrition(result);
       const newItem = {
         id: Date.now(),
         dish: result.dish,
-        dish_display: result.dish_display,
+        dish_display: getFamilySafeDisplayName(result),
         category: result.category,
-        calorias: result.nutrition?.calorias 
+        calorias: specificNutritionAuthorized && result.nutrition?.calorias
           ? result.nutrition.calorias 
-          : (result.calorias_estimadas || '—'),
-        proteinas: result.nutrition?.proteinas 
+          : (specificNutritionAuthorized ? (result.calorias_estimadas || '—') : '—'),
+        proteinas: specificNutritionAuthorized && result.nutrition?.proteinas
           ? result.nutrition.proteinas 
           : '—',
-        carboidratos: result.nutrition?.carboidratos 
+        carboidratos: specificNutritionAuthorized && result.nutrition?.carboidratos
           ? result.nutrition.carboidratos 
           : '—',
-        gorduras: result.nutrition?.gorduras 
+        gorduras: specificNutritionAuthorized && result.nutrition?.gorduras
           ? result.nutrition.gorduras 
           : '—',
-        ingredientes: result.ingredientes || [],
-        beneficios: result.beneficios || [],
-        riscos: result.riscos || [],
-        alergenos: {
+        ingredientes: specificNutritionAuthorized ? (result.ingredientes || []) : [],
+        beneficios: specificNutritionAuthorized ? (result.beneficios || []) : [],
+        riscos: specificNutritionAuthorized ? (result.riscos || []) : [],
+        alergenos: specificNutritionAuthorized ? {
           gluten: result.contem_gluten || result.alergenos?.gluten,
           lactose: result.contem_lactose || result.alergenos?.lactose,
           ovo: result.contem_ovo || result.alergenos?.ovo,
           castanhas: result.contem_castanhas || result.alergenos?.castanhas,
           frutosMar: result.contem_frutos_mar || result.alergenos?.frutos_mar
-        },
+        } : {},
+        specific_nutrition_authorized: specificNutritionAuthorized,
         score: result.score,
         source: result.source || 'clip',
         // Premium data
-        curiosidade: result.curiosidade || result.curiosidade_cientifica || '',
-        combinacoes: result.combinacoes || result.premium?.combinacoes_sugeridas || [],
-        beneficio_principal: result.beneficio_principal || '',
-        alerta_saude: result.alerta_saude || '',
-        mito_verdade: result.mito_verdade || null,
-        voce_sabia: result.voce_sabia || '',
-        dica_chef: result.dica_chef || '',
-        premium: result.premium || null,
-        alertas_personalizados: result.alertas_personalizados || [],
-        noticias: result.noticias || [],
-        contextual_breaking_news: result.contextual_breaking_news || null,
+        curiosidade: specificNutritionAuthorized ? (result.curiosidade || result.curiosidade_cientifica || '') : '',
+        combinacoes: specificNutritionAuthorized ? (result.combinacoes || result.premium?.combinacoes_sugeridas || []) : [],
+        beneficio_principal: specificNutritionAuthorized ? (result.beneficio_principal || '') : '',
+        alerta_saude: specificNutritionAuthorized ? (result.alerta_saude || '') : '',
+        mito_verdade: specificNutritionAuthorized ? (result.mito_verdade || null) : null,
+        voce_sabia: specificNutritionAuthorized ? (result.voce_sabia || '') : '',
+        dica_chef: specificNutritionAuthorized ? (result.dica_chef || '') : '',
+        premium: specificNutritionAuthorized ? (result.premium || null) : null,
+        alertas_personalizados: specificNutritionAuthorized ? (result.alertas_personalizados || []) : [],
+        noticias: specificNutritionAuthorized ? (result.noticias || []) : [],
+        contextual_breaking_news: specificNutritionAuthorized ? (result.contextual_breaking_news || null) : null,
       };
 
       setPlateItems(prev => {
@@ -1778,7 +1790,7 @@ const loadNotifCount = async (pin) => {
       });
       
       // Registrar no contador Premium se usuário estiver logado
-      if (premiumUser) {
+      if (premiumUser && specificNutritionAuthorized) {
         const registered = await logMealToPremium({
           dish_display: newItem.dish_display,
           nutrition: {
@@ -1807,40 +1819,42 @@ const loadNotifCount = async (pin) => {
     console.log('[DEBUG] plateItems antes:', plateItems.length, 'itens');
     
     if (result?.ok && result?.identified) {
+      const specificNutritionAuthorized = canUseSpecificNutrition(result);
       // Adicionar último item se houver
       const newItem = {
         id: Date.now(),
         dish: result.dish,
-        dish_display: result.dish_display,
+        dish_display: getFamilySafeDisplayName(result),
         category: result.category,
-        calorias: result.nutrition?.calorias || result.calorias_estimadas || '0 kcal',
-        proteinas: result.nutrition?.proteinas || '0g',
-        carboidratos: result.nutrition?.carboidratos || '0g',
-        gorduras: result.nutrition?.gorduras || '0g',
-        ingredientes: result.ingredientes || [],
-        beneficios: result.beneficios || [],
-        riscos: result.riscos || [],
-        alergenos: {
+        calorias: specificNutritionAuthorized ? (result.nutrition?.calorias || result.calorias_estimadas || '0 kcal') : '—',
+        proteinas: specificNutritionAuthorized ? (result.nutrition?.proteinas || '0g') : '—',
+        carboidratos: specificNutritionAuthorized ? (result.nutrition?.carboidratos || '0g') : '—',
+        gorduras: specificNutritionAuthorized ? (result.nutrition?.gorduras || '0g') : '—',
+        ingredientes: specificNutritionAuthorized ? (result.ingredientes || []) : [],
+        beneficios: specificNutritionAuthorized ? (result.beneficios || []) : [],
+        riscos: specificNutritionAuthorized ? (result.riscos || []) : [],
+        alergenos: specificNutritionAuthorized ? {
           gluten: result.contem_gluten || result.alergenos?.gluten,
           lactose: result.contem_lactose || result.alergenos?.lactose,
           ovo: result.contem_ovo || result.alergenos?.ovo,
           castanhas: result.contem_castanhas || result.alergenos?.castanhas,
           frutosMar: result.contem_frutos_mar || result.alergenos?.frutos_mar
-        },
+        } : {},
+        specific_nutrition_authorized: specificNutritionAuthorized,
         score: result.score,
         source: result.source || 'clip',
         // Premium data
-        curiosidade: result.curiosidade || result.curiosidade_cientifica || '',
-        combinacoes: result.combinacoes || result.premium?.combinacoes_sugeridas || [],
-        beneficio_principal: result.beneficio_principal || '',
-        alerta_saude: result.alerta_saude || '',
-        mito_verdade: result.mito_verdade || null,
-        voce_sabia: result.voce_sabia || '',
-        dica_chef: result.dica_chef || '',
-        premium: result.premium || null,
-        alertas_personalizados: result.alertas_personalizados || [],
-        noticias: result.noticias || [],
-        contextual_breaking_news: result.contextual_breaking_news || null,
+        curiosidade: specificNutritionAuthorized ? (result.curiosidade || result.curiosidade_cientifica || '') : '',
+        combinacoes: specificNutritionAuthorized ? (result.combinacoes || result.premium?.combinacoes_sugeridas || []) : [],
+        beneficio_principal: specificNutritionAuthorized ? (result.beneficio_principal || '') : '',
+        alerta_saude: specificNutritionAuthorized ? (result.alerta_saude || '') : '',
+        mito_verdade: specificNutritionAuthorized ? (result.mito_verdade || null) : null,
+        voce_sabia: specificNutritionAuthorized ? (result.voce_sabia || '') : '',
+        dica_chef: specificNutritionAuthorized ? (result.dica_chef || '') : '',
+        premium: specificNutritionAuthorized ? (result.premium || null) : null,
+        alertas_personalizados: specificNutritionAuthorized ? (result.alertas_personalizados || []) : [],
+        noticias: specificNutritionAuthorized ? (result.noticias || []) : [],
+        contextual_breaking_news: specificNutritionAuthorized ? (result.contextual_breaking_news || null) : null,
       };
 
       setPlateItems(prev => {
@@ -1850,7 +1864,7 @@ const loadNotifCount = async (pin) => {
       });
       
       // Registrar no histórico Premium
-      if (premiumUser) {
+      if (premiumUser && specificNutritionAuthorized) {
         await logMealToPremium({
           dish_display: newItem.dish_display,
           nutrition: {
@@ -2051,19 +2065,27 @@ try {
           // Só mostrar se score >= 0.7 (mais confiável)
           if (data.ok && data.identified && data.score >= 0.7) {
             // Verificar se é diferente do último resultado (evita repetições)
-            const newDish = data.dish_display;
+            const specificNutritionAuthorized = canUseSpecificNutrition(data);
+            const newDish = getFamilySafeDisplayName(data);
             if (newDish !== lastScanResultRef.current) {
               lastScanResultRef.current = newDish;
               setScannerResult({
                 dish: data.dish,
-                dish_display: data.dish_display,
+                dish_display: newDish,
                 categoria: data.category || data.categoria,
-                calorias: data.nutrition?.calorias || '~150 kcal',
+                calorias: specificNutritionAuthorized ? (data.nutrition?.calorias || '~150 kcal') : '—',
                 score: data.score,
                 confidence: data.confidence,
-                beneficios: data.beneficios || [],
-                riscos: data.riscos || [],
-                contem_gluten: data.contem_gluten,
+                beneficios: specificNutritionAuthorized ? (data.beneficios || []) : [],
+                riscos: specificNutritionAuthorized ? (data.riscos || []) : [],
+                contem_gluten: specificNutritionAuthorized ? data.contem_gluten : undefined,
+                family_name: data.family_name,
+                family_slug: data.family_slug,
+                family_candidates: data.family_candidates || [],
+                family_member_confirmation_required: data.family_member_confirmation_required,
+                family_member_confirmed: data.family_member_confirmed,
+                specific_nutrition_authorized: specificNutritionAuthorized,
+                nutrition_status: data.nutrition_status,
                 timestamp: Date.now()
               });
             }
@@ -2118,6 +2140,9 @@ try {
   // Calcular dados CONSOLIDADOS do prato (para vista "mesa")
   const plateConsolidated = useMemo(() => {
     if (plateItems.length === 0) return null;
+    const allSpecificNutritionAuthorized = plateItems.every(
+      (item) => item.specific_nutrition_authorized !== false
+    );
     
     // Função para extrair número de string tipo "120 kcal" ou "15g"
     const parseNum = (val) => {
@@ -2174,11 +2199,12 @@ return {
   itens: plateItems.map(i => i.dish_display),
   totalItens: plateItems.length,
   nutrition: {
-    calorias: `${Math.round(totals.calorias)} kcal`,
-    proteinas: `${Math.round(totals.proteinas)}g`,
-    carboidratos: `${Math.round(totals.carboidratos)}g`,
-    gorduras: `${Math.round(totals.gorduras)}g`
+    calorias: allSpecificNutritionAuthorized ? `${Math.round(totals.calorias)} kcal` : '—',
+    proteinas: allSpecificNutritionAuthorized ? `${Math.round(totals.proteinas)}g` : '—',
+    carboidratos: allSpecificNutritionAuthorized ? `${Math.round(totals.carboidratos)}g` : '—',
+    gorduras: allSpecificNutritionAuthorized ? `${Math.round(totals.gorduras)}g` : '—'
   },
+  specific_nutrition_authorized: allSpecificNutritionAuthorized,
   ingredientes: allIngredientes,
   beneficios: allBeneficios,
       riscos: riscosNaoAlergenos.length > 0 ? riscosNaoAlergenos : allRiscos.slice(0, 2),
@@ -3850,13 +3876,13 @@ return {
               className="tts-btn"
               data-testid="tts-listen-btn"
               onClick={() => playDishAudio({
-                dish_display: r.dish_display,
+                dish_display: getFamilySafeDisplayName(r),
                 category: r.category,
-                nutrition: r.nutrition,
-                ingredientes: r.ingredientes,
-                alergenos: r.alergenos,
-                alertas_personalizados: r.alertas_personalizados,
-                premium: r.premium ? { alertas_alergenos: r.premium.alertas_alergenos } : null,
+                nutrition: canUseSpecificNutrition(r) ? r.nutrition : null,
+                ingredientes: canUseSpecificNutrition(r) ? r.ingredientes : [],
+                alergenos: canUseSpecificNutrition(r) ? r.alergenos : {},
+                alertas_personalizados: canUseSpecificNutrition(r) ? r.alertas_personalizados : [],
+                premium: canUseSpecificNutrition(r) && r.premium ? { alertas_alergenos: r.premium.alertas_alergenos } : null,
               })}
               disabled={ttsLoading}
               aria-label={ttsPlaying ? 'Parar audio' : 'Ouvir descricao do prato'}
@@ -3894,7 +3920,7 @@ return {
           {ttsError && <div style={{color:'#ef4444',fontSize:'12px',textAlign:'center',margin:'4px 0'}}>{ttsError}</div>}
           
           {/* ALERTAS PREMIUM - Destaque na tela de resultado */}
-          {r.premium?.alertas_alergenos?.length > 0 && (
+          {canUseSpecificNutrition(r) && r.premium?.alertas_alergenos?.length > 0 && (
             <div data-testid="result-allergen-alerts" style={{
               margin: '8px 0', padding: '12px 16px',
               background: 'linear-gradient(135deg, rgba(239,68,68,0.2), rgba(185,28,28,0.15))',
@@ -4023,9 +4049,7 @@ return {
                       Parece ser:
                     </div>
                     <h2 className="dish-name" data-testid="dish-name" style={{ margin: '0 0 8px', fontSize: '24px' }}>
-                      {r.family_name && ['milanesa', 'batata', 'sobrecoxa', 'gratinados'].includes((r.family_slug || '').toLowerCase())
-                        ? r.family_name
-                        : r.dish_display}
+                      {getFamilySafeDisplayName(r)}
                     </h2>
                     <div style={{ fontSize: '13px', color: '#a16207' }}>
                       Verifique se o prato esta correto ({Math.round(r.score * 100)}%)
@@ -4063,9 +4087,7 @@ return {
               ) : (
                 <>
                   <h2 className="dish-name" data-testid="dish-name">
-                    {r.family_name && ['milanesa', 'batata', 'sobrecoxa', 'gratinados'].includes((r.family_slug || '').toLowerCase())
-                      ? r.family_name
-                      : r.dish_display}
+                    {getFamilySafeDisplayName(r)}
                   </h2>
                   {(r.nutrition?.calorias || r.calorias_estimadas) && (
                     <div
@@ -4123,6 +4145,11 @@ return {
                     <p data-testid="family-pastel-note" style={{ fontSize: '12px', color: '#fbbf24', margin: '6px 0 0 0', lineHeight: '1.5', fontStyle: 'italic' }}>
                       Confirme o nome na plaquinha ou com o atendente.
                     </p>
+                    {isFamilyMemberConfirmationPending(r) && (
+                      <p data-testid="family-nutrition-pending-note" style={{ fontSize: '12px', color: '#fca5a5', margin: '6px 0 0 0', lineHeight: '1.5', fontWeight: '600' }}>
+                        Informações nutricionais específicas ficam indisponíveis até confirmar o prato.
+                      </p>
+                    )}
                   </div>
                 );
               })()}
@@ -4230,7 +4257,7 @@ return {
           {/* VISTA BUFFET - Informações para DECISÃO RÁPIDA */}
           
           {/* ALÉRGENOS */}
-          <div className={`allergen-section ${allergenInfo.hasAllergens ? 'has-allergens' : 'no-allergens'}`}>
+          {canUseSpecificNutrition(r) && <div className={`allergen-section ${allergenInfo.hasAllergens ? 'has-allergens' : 'no-allergens'}`}>
             {allergenInfo.hasAllergens ? (
               allergenInfo.alerts.map((alert, i) => (
                 <div key={i} className={`alert-item ${alert.type}`}>
@@ -4242,10 +4269,10 @@ return {
                 {allergenInfo.text}
               </div>
             )}
-          </div>
+          </div>}
 
           {/* DICAS PERSONALIZADAS - Baseadas no perfil do usuário Premium */}
-          {premiumUser?.perfil && (() => {
+          {canUseSpecificNutrition(r) && premiumUser?.perfil && (() => {
             const tips = generatePersonalizedTip(r, premiumUser.perfil);
             if (tips && tips.length > 0) {
               return (
@@ -4264,7 +4291,7 @@ return {
           })()}
 
           {/* Ingredientes */}
-          {r.ingredientes?.length > 0 && (
+          {canUseSpecificNutrition(r) && r.ingredientes?.length > 0 && (
             <div className="info-box" data-testid="ingredients-box">
               <h4>🥗 Ingredientes</h4>
               <p>{Array.isArray(r.ingredientes) ? r.ingredientes.join(', ') : r.ingredientes}</p>
@@ -4272,7 +4299,7 @@ return {
           )}
 
           {/* Benefícios - Resumo rápido */}
-          {r.beneficios?.length > 0 && (
+          {canUseSpecificNutrition(r) && r.beneficios?.length > 0 && (
             <div className="info-box good" data-testid="benefits-box">
               <h4>✅ Benefícios</h4>
 <ul>{r.beneficios.slice(0, 2).map((b,i) => 
@@ -4298,7 +4325,7 @@ return {
           )}
 
           {/* Referências e Fontes */}
-          {r.confidence !== 'baixa' && (
+          {canUseSpecificNutrition(r) && r.confidence !== 'baixa' && (
             <div className="info-box" data-testid="nutrition-references" style={{
               background: 'rgba(124, 58, 237, 0.08)',
               border: '1px solid rgba(124, 58, 237, 0.2)',
@@ -4331,7 +4358,7 @@ return {
           )}
 
           {/* ALERTA DE ALÉRGENOS - Visível para TODOS durante scan (fase buffet) */}
-          {(() => {
+          {canUseSpecificNutrition(r) && (() => {
             const alergenos = [];
             if (r.contem_gluten || r.alergenos?.gluten) alergenos.push({ icone: '🌾', nome: 'Glúten' });
             if (r.contem_lactose || r.alergenos?.lactose) alergenos.push({ icone: '🥛', nome: 'Lactose' });
@@ -4373,7 +4400,7 @@ return {
           })()}
 
           {/* ALERTA PERSONALIZADO - Baseado nas restrições do perfil Premium */}
-          {premiumUser && (() => {
+          {canUseSpecificNutrition(r) && premiumUser && (() => {
             const restricoes = premiumUser.restricoes || [];
             const alertasPersonalizados = [];
             
@@ -4700,9 +4727,7 @@ return {
             <div className="add-more-success">
               <span className="add-more-emoji">✅</span>
               <h3>
-                {result.family_name && ['milanesa', 'batata', 'sobrecoxa', 'gratinados'].includes((result.family_slug || '').toLowerCase())
-                  ? result.family_name
-                  : result.dish_display}
+                {getFamilySafeDisplayName(result)}
               </h3>
               <p className="add-more-confidence">
                 {result.confidence === 'alta' ? '🎯 Alta confiança' : 

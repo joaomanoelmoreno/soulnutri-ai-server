@@ -1,0 +1,72 @@
+{
+  "schema": "existing-dish-family-registration-v1",
+  "status": "EXPERIMENTAL_NOT_APPLIED",
+  "runtime_schema": {
+    "dish_collection": "dishes",
+    "dish_family_field": "family",
+    "family_collection": "dish_families"
+  },
+  "dish_updates": [
+    {
+      "selector": {
+        "slug": "canelone4queijos"
+      },
+      "set": {
+        "family": "canelone"
+      }
+    },
+    {
+      "selector": {
+        "slug": "canelonedeespinafre"
+      },
+      "set": {
+        "family": "canelone"
+      }
+    }
+  ],
+  "family_upsert": {
+    "selector": {
+      "slug": "canelone"
+    },
+    "set": {
+      "slug": "canelone",
+      "name": "Canelone",
+      "members_display": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "members_slugs": [
+        "canelone4queijos",
+        "canelonedeespinafre"
+      ],
+      "requires_member_confirmation": true
+    }
+  },
+  "nutrition_policy": "WITHHOLD_SPECIFIC_NUTRITION_UNTIL_MEMBER_CONFIRMATION",
+  "backend_fail_closed_contract": {
+    "protected_member_slugs": [
+      "canelone4queijos",
+      "canelonedeespinafre"
+    ],
+    "independent_from_mongo_enrichment": true,
+    "legacy_display_name": "Canelone",
+    "nutrition": null,
+    "member_specific_fields": "empty",
+    "premium_enrichment": "blocked",
+    "meal_persistence": "blocked",
+    "visual_identity_score_and_ranking": "preserved"
+  },
+  "frontend_contract": {
+    "component": "family-block",
+    "message": "Confirme o nome na plaquinha ou com o atendente.",
+    "interactive_selection": false,
+    "specific_nutrition_pending_message": "Informações nutricionais específicas ficam indisponíveis até confirmar o prato."
+  },
+  "rollback": {
+    "unset_family_from_dish_slugs": [
+      "canelone4queijos",
+      "canelonedeespinafre"
+    ],
+    "delete_family_slug": "canelone"
+  }
+}

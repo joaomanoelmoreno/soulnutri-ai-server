@@ -63,6 +63,103 @@ def _norm_nome(nome: str) -> str:
     """Remove acentos do nome para lookup robusto (teclado mobile adiciona acento automaticamente)."""
     return unicodedata.normalize('NFD', nome or '').encode('ascii', 'ignore').decode('ascii').strip()
 
+
+# Safety belt local para uma ambiguidade visual ja comprovada. Esta definicao
+# nao substitui o cadastro de familias no Mongo: ela existe para que uma falha
+# ou inconsistencia desse enriquecimento nunca reautorize a ficha nutricional
+# especifica dos dois Canelones conhecidos.
+_KNOWN_AMBIGUOUS_FAMILY_SAFETY = {
+    "family_name": "Canelone",
+    "family_slug": "canelone",
+    "members_display": ["Canelone 4 Queijos", "Canelone de Espinafre"],
+    "members_slugs": ["canelone4queijos", "canelonedeespinafre"],
+}
+
+
+def _nutrition_safety_key(value) -> str:
+    normalized = unicodedata.normalize("NFD", str(value or ""))
+    ascii_value = normalized.encode("ascii", "ignore").decode("ascii").lower()
+    return re.sub(r"[^a-z0-9]", "", ascii_value)
+
+
+_KNOWN_AMBIGUOUS_FAMILY_KEYS = frozenset(
+    _nutrition_safety_key(value)
+    for value in (
+        _KNOWN_AMBIGUOUS_FAMILY_SAFETY["family_name"],
+        *_KNOWN_AMBIGUOUS_FAMILY_SAFETY["members_display"],
+        *_KNOWN_AMBIGUOUS_FAMILY_SAFETY["members_slugs"],
+    )
+)
+
+
+def _known_ambiguous_family_for_decision(decision: dict):
+    if not decision or not decision.get("identified"):
+        return None
+    visual_class = decision.get("visual_class")
+    candidates = [decision.get("dish"), decision.get("dish_display")]
+    if isinstance(visual_class, dict):
+        candidates.extend([visual_class.get("id"), visual_class.get("name")])
+    elif isinstance(visual_class, str):
+        candidates.append(visual_class)
+    if any(
+        _nutrition_safety_key(value) in _KNOWN_AMBIGUOUS_FAMILY_KEYS
+        for value in candidates
+        if value
+    ):
+        return _KNOWN_AMBIGUOUS_FAMILY_SAFETY
+    return None
+
+
+def _is_known_ambiguous_family_name(value) -> bool:
+    return _nutrition_safety_key(value) in _KNOWN_AMBIGUOUS_FAMILY_KEYS
+
+
+def _apply_family_nutrition_hold(decision: dict, family: dict) -> None:
+    """Retem dados de membro sem alterar identidade visual, score ou ranking."""
+    decision["family_name"] = family["family_name"]
+    decision["family_slug"] = family["family_slug"]
+    decision["family_candidates"] = list(family["members_display"])
+    decision["family_members_slugs"] = list(family["members_slugs"])
+    decision["family_member_confirmation_required"] = True
+    decision["family_member_confirmed"] = False
+    decision["specific_nutrition_authorized"] = False
+    decision["nutrition_status"] = "withheld_pending_family_member_confirmation"
+
+
+def _sanitize_unconfirmed_family_payload(payload: dict, family: dict) -> dict:
+    """Fail closed for old and new clients while preserving visual identity."""
+    _apply_family_nutrition_hold(payload, family)
+    payload["dish_display"] = family["family_name"]
+    payload["message"] = f"Familia visual identificada: {family['family_name']}"
+    payload["aviso_confianca"] = (
+        "Confirme o nome na plaquinha ou com o atendente"
+    )
+    payload["nutrition"] = None
+    payload["ingredientes"] = []
+    payload["beneficios"] = []
+    payload["riscos"] = []
+    payload["alergenos"] = {}
+    payload["alertas_personalizados"] = []
+    payload["combinacoes"] = []
+    payload["noticias"] = []
+    payload["curiosidade"] = None
+    payload["dica_nutricional"] = None
+    payload["aviso_cibi_sana"] = None
+    payload["descricao"] = None
+    payload["tecnica"] = None
+    payload["premium"] = None
+    payload["calorias_estimadas"] = None
+    for field in (
+        "contem_gluten",
+        "contem_lactose",
+        "contem_ovo",
+        "contem_castanhas",
+        "contem_frutos_mar",
+        "contem_soja",
+    ):
+        payload[field] = None
+    return payload
+
 # ═══════════════════════════════════════════════════════
 # DEPLOY VERSION MARKERS — atualizar a cada nova fase para
 # permitir verificacao deterministica de qual codigo esta no ar.
@@ -628,6 +725,10 @@ class IdentifyResponse(BaseModel):
     family_name: Optional[str] = None
     family_candidates: List[str] = []
     family_candidates_detail: List[dict] = []
+    family_member_confirmation_required: bool = False
+    family_member_confirmed: bool = True
+    specific_nutrition_authorized: bool = True
+    nutrition_status: Optional[str] = None
     recognition_schema_version: Optional[int] = None
     visual_class: Optional[dict] = None
     display_variant: Optional[str] = None
@@ -1437,6 +1538,9 @@ async def identify_image(
         if not _is_visual_v2:
             cached = get_cached_result(content, restaurant=restaurant or '')
         if cached:
+            cached_family_safety = _known_ambiguous_family_for_decision(cached)
+            if cached_family_safety:
+                _sanitize_unconfirmed_family_payload(cached, cached_family_safety)
             elapsed_ms = (time.time() - start_time) * 1000
             cached['search_time_ms'] = round(elapsed_ms, 2)
             logger.info(f"[CACHE] ⚡ Resposta do cache em {elapsed_ms:.0f}ms")
@@ -1708,6 +1812,9 @@ async def identify_image(
         is_premium = False
         user_profile = None
         premium_data = {}
+        known_family_safety = _known_ambiguous_family_for_decision(decision)
+        if known_family_safety:
+            _sanitize_unconfirmed_family_payload(decision, known_family_safety)
         dish_display_name = format_dish_name(decision.get('dish_display', ''))
 
         # DISH-NAME CACHE CHECK: pula MongoDB se prato ja identificado recentemente (TTL 5min)
@@ -1721,6 +1828,8 @@ async def identify_image(
             if _cached and _cached['exp'] > _now:
                 logger.info(f"[DISH_CACHE] ✓ Hit: {dish_display_name}")
                 resp = dict(_cached['data'])
+                if known_family_safety:
+                    _sanitize_unconfirmed_family_payload(resp, known_family_safety)
                 resp['score'] = decision.get('score', resp.get('score', 0.0))
                 resp['source'] = decision.get('source', resp.get('source', 'local_index'))
                 resp['from_dish_cache'] = True
@@ -1927,6 +2036,23 @@ async def identify_image(
                         decision["family_slug"] = family_doc.get("slug")
                         decision["family_candidates"] = family_doc.get("members_display", [])
                         decision["family_members_slugs"] = family_doc.get("members_slugs", [])
+                        family_member_confirmation_required = bool(
+                            family_doc.get("requires_member_confirmation")
+                        ) and len(decision["family_members_slugs"]) > 1
+                        decision["family_member_confirmation_required"] = (
+                            family_member_confirmation_required
+                        )
+                        decision["family_member_confirmed"] = not (
+                            family_member_confirmation_required
+                        )
+                        decision["specific_nutrition_authorized"] = not (
+                            family_member_confirmation_required
+                        )
+                        decision["nutrition_status"] = (
+                            "withheld_pending_family_member_confirmation"
+                            if family_member_confirmation_required
+                            else "variant_specific"
+                        )
                         decision["family_ingredients_union"] = family_doc.get("ingredientes_uniao", [])
                         decision["family_allergens_union"] = {
                             "contem_gluten":   family_doc.get("contem_gluten"),
@@ -1941,6 +2067,25 @@ async def identify_image(
                         )
             except Exception as e_fam:
                 logger.warning(f"[FAMILY] Enriquecimento falhou para '{decision.get('dish')}': {e_fam}")
+
+        if known_family_safety:
+            _sanitize_unconfirmed_family_payload(decision, known_family_safety)
+
+        if decision.get("family_member_confirmation_required"):
+            # A família visual foi reconhecida, mas o membro específico não foi
+            # confirmado. A identidade CLIP permanece auditável em `dish` e
+            # `visual_class`; somente a autorização para apresentar/persistir a
+            # ficha nutricional específica é retirada.
+            pending_family = {
+                "family_name": decision.get("family_name") or "Familia visual",
+                "family_slug": decision.get("family_slug") or "",
+                "members_display": decision.get("family_candidates") or [],
+                "members_slugs": decision.get("family_members_slugs") or [],
+            }
+            _sanitize_unconfirmed_family_payload(decision, pending_family)
+            dish_display_name = pending_family["family_name"]
+            nutrition_obj = None
+            premium_data = {}
 
         elapsed_ms = (time.time() - start_time) * 1000
         logger.info(
@@ -1983,6 +2128,16 @@ async def identify_image(
             "family_slug": decision.get('family_slug'),
             "family_candidates": decision.get('family_candidates', []),
             "family_members_slugs": decision.get('family_members_slugs', []),
+            "family_member_confirmation_required": decision.get(
+                'family_member_confirmation_required', False
+            ),
+            "family_member_confirmed": decision.get(
+                'family_member_confirmed', True
+            ),
+            "specific_nutrition_authorized": decision.get(
+                'specific_nutrition_authorized', True
+            ),
+            "nutrition_status": decision.get('nutrition_status'),
         }
         if _is_visual_v2:
             response_data.update({
@@ -2106,6 +2261,16 @@ async def enrich_dish(request: Request):
         
         if not nome:
             return {"ok": False, "error": "Nome do prato é obrigatório"}
+
+        if _is_known_ambiguous_family_name(nome):
+            logger.info(
+                "[FAMILY_SAFETY] /ai/enrich bloqueado: membro de Canelone nao confirmado"
+            )
+            return {
+                "ok": False,
+                "error": "family_member_confirmation_required",
+                "nutrition_status": "withheld_pending_family_member_confirmation",
+            }
         
         # Verificar se é Premium (Hard Gate Fase 2A: respeita expiracao do trial)
         is_premium = False
@@ -4567,6 +4732,16 @@ async def log_meal(
     source: 'clip' (Cibi Sana) ou 'gemini' (externo)
     """
     try:
+        if _is_known_ambiguous_family_name(prato_nome):
+            logger.info(
+                "[FAMILY_SAFETY] /premium/log-meal bloqueado: membro de Canelone nao confirmado"
+            )
+            return {
+                "ok": False,
+                "error": "family_member_confirmation_required",
+                "nutrition_status": "withheld_pending_family_member_confirmation",
+            }
+
         from services.profile_service import hash_pin
         from datetime import datetime, timezone
         

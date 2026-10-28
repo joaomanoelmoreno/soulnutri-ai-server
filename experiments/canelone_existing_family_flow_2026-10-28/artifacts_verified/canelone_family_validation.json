@@ -1,0 +1,1246 @@
+{
+  "status": "PASS",
+  "mode": "OFFLINE_EXPERIMENTAL_NO_DATABASE_WRITE",
+  "artifact_hashes": {
+    "json": "64a431e60cb9d8c1f40b2593a364c52793fa8f1949b5776aa2baf15f9d9d8047",
+    "npy": "1256e57367ac682cd8f6fbd5d1ad2dbd5f888a07c4239163f50b47d4eb1b1db5",
+    "onnx": "8a97817ddd9947f9e1ddc43c85e7c6d0c65c55d9c7f47b81bf20e265a0fcd0da"
+  },
+  "cardinality": {
+    "visual_classes": 237,
+    "embeddings": 1518,
+    "dimension": 512
+  },
+  "family_registration_plan": {
+    "slug": "canelone",
+    "name": "Canelone",
+    "members_display": [
+      "Canelone 4 Queijos",
+      "Canelone de Espinafre"
+    ],
+    "members_slugs": [
+      "canelone4queijos",
+      "canelonedeespinafre"
+    ]
+  },
+  "frontend_message": "Confirme o nome na plaquinha ou com o atendente.",
+  "validations": {
+    "seven_four_cheese_queries_evaluated": true,
+    "accepted_canelone_queries_show_existing_family": true,
+    "spinach_references_show_existing_family": true,
+    "negative_pastas_do_not_show_canelone_family": true,
+    "frontend_contract_unchanged": true,
+    "index_hashes_unchanged": true
+  },
+  "summary": {
+    "four_cheese_queries": 7,
+    "four_cheese_accepted": 7,
+    "four_cheese_family_visible": 7,
+    "spinach_references": 10,
+    "spinach_family_visible": 10,
+    "negative_pasta_controls": 5,
+    "negative_family_visible": 0
+  },
+  "limitations": [
+    "The seven 4-cheese photos are a known regression set, not independent validation.",
+    "Spinach and negative controls are active index references and validate routing only, not independent accuracy.",
+    "The registration plan was not applied to MongoDB or any deployed environment."
+  ],
+  "results": [
+    {
+      "kind": "known_regression",
+      "filename": "canelon4queijos1HEIC.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.9124732,
+          "adjusted_score": 0.8724732,
+          "gap": 0.05010986,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.86236334,
+          "adjusted_score": 0.86236334,
+          "gap": 0.05010986,
+          "consistency": 5,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.81218368,
+          "adjusted_score": 0.81218368,
+          "gap": 0.05010986,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.79814053,
+          "adjusted_score": 0.79814053,
+          "gap": 0.05010986,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.79237688,
+          "adjusted_score": 0.79237688,
+          "gap": 0.05010986,
+          "consistency": 5,
+          "image_count": 3
+        }
+      ]
+    },
+    {
+      "kind": "known_regression",
+      "filename": "canelone4q2.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.8744536,
+          "adjusted_score": 0.8344536,
+          "gap": 0.04908365,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.82536995,
+          "adjusted_score": 0.82536995,
+          "gap": 0.04908365,
+          "consistency": 5,
+          "image_count": 5
+        },
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.80498427,
+          "adjusted_score": 0.80498427,
+          "gap": 0.04908365,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.80213368,
+          "adjusted_score": 0.80213368,
+          "gap": 0.04908365,
+          "consistency": 5,
+          "image_count": 3
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.80119967,
+          "adjusted_score": 0.80119967,
+          "gap": 0.04908365,
+          "consistency": 5,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "known_regression",
+      "filename": "canelone4q3.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.87887704,
+          "adjusted_score": 0.81887704,
+          "gap": 0.05223024,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.8266468,
+          "adjusted_score": 0.8266468,
+          "gap": 0.05223024,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.81910312,
+          "adjusted_score": 0.81910312,
+          "gap": 0.05223024,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.79706913,
+          "adjusted_score": 0.79706913,
+          "gap": 0.05223024,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.79285419,
+          "adjusted_score": 0.79285419,
+          "gap": 0.05223024,
+          "consistency": 6,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "known_regression",
+      "filename": "canelone4q4.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.87781632,
+          "adjusted_score": 0.81781632,
+          "gap": 0.0586071,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.81920922,
+          "adjusted_score": 0.81920922,
+          "gap": 0.0586071,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.81232309,
+          "adjusted_score": 0.81232309,
+          "gap": 0.0586071,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.80584788,
+          "adjusted_score": 0.80584788,
+          "gap": 0.0586071,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.80462992,
+          "adjusted_score": 0.80462992,
+          "gap": 0.0586071,
+          "consistency": 6,
+          "image_count": 3
+        }
+      ]
+    },
+    {
+      "kind": "known_regression",
+      "filename": "canelone4q5.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.83243185,
+          "adjusted_score": 0.77243185,
+          "gap": 0.05828571,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.77414614,
+          "adjusted_score": 0.77414614,
+          "gap": 0.05828571,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.76489741,
+          "adjusted_score": 0.76489741,
+          "gap": 0.05828571,
+          "consistency": 6,
+          "image_count": 3
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.75848597,
+          "adjusted_score": 0.75848597,
+          "gap": 0.05828571,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Panquecade Frango",
+          "raw_score": 0.75846982,
+          "adjusted_score": 0.75846982,
+          "gap": 0.05828571,
+          "consistency": 6,
+          "image_count": 2
+        }
+      ]
+    },
+    {
+      "kind": "known_regression",
+      "filename": "canelone4q6.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.85228932,
+          "adjusted_score": 0.79775312,
+          "gap": 0.0227319,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.82955742,
+          "adjusted_score": 0.82955742,
+          "gap": 0.0227319,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.81365591,
+          "adjusted_score": 0.81365591,
+          "gap": 0.0227319,
+          "consistency": 5,
+          "image_count": 5
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.79825366,
+          "adjusted_score": 0.79825366,
+          "gap": 0.0227319,
+          "consistency": 5,
+          "image_count": 3
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.79649478,
+          "adjusted_score": 0.79649478,
+          "gap": 0.0227319,
+          "consistency": 5,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "known_regression",
+      "filename": "canelone4q7.jpg",
+      "expected": "canelone4queijos",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.84739298,
+          "adjusted_score": 0.78963467,
+          "gap": 0.02112085,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.82627213,
+          "adjusted_score": 0.82627213,
+          "gap": 0.02112085,
+          "consistency": 5,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.81972104,
+          "adjusted_score": 0.81972104,
+          "gap": 0.02112085,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.79190862,
+          "adjusted_score": 0.79190862,
+          "gap": 0.02112085,
+          "consistency": 5,
+          "image_count": 3
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.78436077,
+          "adjusted_score": 0.78436077,
+          "gap": 0.02112085,
+          "consistency": 5,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre07.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.0,
+          "adjusted_score": 0.94,
+          "gap": 0.14464521,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.85535479,
+          "adjusted_score": 0.85535479,
+          "gap": 0.14464521,
+          "consistency": 6,
+          "image_count": 3
+        },
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.83873063,
+          "adjusted_score": 0.83873063,
+          "gap": 0.14464521,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.83610308,
+          "adjusted_score": 0.83610308,
+          "gap": 0.14464521,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.82451797,
+          "adjusted_score": 0.82451797,
+          "gap": 0.14464521,
+          "consistency": 6,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre_correct_20260129_145347_c59c596f.jpg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.0,
+          "adjusted_score": 0.86,
+          "gap": 0.20413035,
+          "consistency": 10,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.79586965,
+          "adjusted_score": 0.79586965,
+          "gap": 0.20413035,
+          "consistency": 10,
+          "image_count": 5
+        },
+        {
+          "dish": "gnocchidebananadaterraaomolho",
+          "raw_score": 0.7826277,
+          "adjusted_score": 0.7826277,
+          "gap": 0.20413035,
+          "consistency": 10,
+          "image_count": 1
+        },
+        {
+          "dish": "Berinjela à Parmegiana",
+          "raw_score": 0.77715528,
+          "adjusted_score": 0.77715528,
+          "gap": 0.20413035,
+          "consistency": 10,
+          "image_count": 9
+        },
+        {
+          "dish": "Panquecade Frango",
+          "raw_score": 0.75952506,
+          "adjusted_score": 0.75952506,
+          "gap": 0.20413035,
+          "consistency": 10,
+          "image_count": 2
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre06.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.0,
+          "adjusted_score": 0.94,
+          "gap": 0.10723311,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.89276689,
+          "adjusted_score": 0.89276689,
+          "gap": 0.10723311,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.84125936,
+          "adjusted_score": 0.84125936,
+          "gap": 0.10723311,
+          "consistency": 6,
+          "image_count": 3
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.83179545,
+          "adjusted_score": 0.83179545,
+          "gap": 0.10723311,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.81965292,
+          "adjusted_score": 0.81965292,
+          "gap": 0.10723311,
+          "consistency": 6,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre18.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.0,
+          "adjusted_score": 0.98,
+          "gap": 0.16361046,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Escondidinhode Carne Seca",
+          "raw_score": 0.83638954,
+          "adjusted_score": 0.83638954,
+          "gap": 0.16361046,
+          "consistency": 4,
+          "image_count": 5
+        },
+        {
+          "dish": "Lasanha de Espinafre",
+          "raw_score": 0.77140903,
+          "adjusted_score": 0.77140903,
+          "gap": 0.16361046,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Gratinados",
+          "raw_score": 0.76507777,
+          "adjusted_score": 0.76507777,
+          "gap": 0.16361046,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Quiche",
+          "raw_score": 0.7516824,
+          "adjusted_score": 0.7516824,
+          "gap": 0.16361046,
+          "consistency": 4,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre09.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.99999988,
+          "adjusted_score": 0.93999988,
+          "gap": 0.14855933,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.85144055,
+          "adjusted_score": 0.85144055,
+          "gap": 0.14855933,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.83421874,
+          "adjusted_score": 0.83421874,
+          "gap": 0.14855933,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Tortilha Espanhola de Batata",
+          "raw_score": 0.82838285,
+          "adjusted_score": 0.82838285,
+          "gap": 0.14855933,
+          "consistency": 6,
+          "image_count": 2
+        },
+        {
+          "dish": "Nhoque ao Gorgonzola",
+          "raw_score": 0.82344425,
+          "adjusted_score": 0.82344425,
+          "gap": 0.14855933,
+          "consistency": 6,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre10.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.99999994,
+          "adjusted_score": 0.97999994,
+          "gap": 0.16401768,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Espinafre",
+          "raw_score": 0.83598226,
+          "adjusted_score": 0.83598226,
+          "gap": 0.16401768,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Escondidinhode Carne Seca",
+          "raw_score": 0.82986212,
+          "adjusted_score": 0.82986212,
+          "gap": 0.16401768,
+          "consistency": 4,
+          "image_count": 5
+        },
+        {
+          "dish": "Tortilha Espanhola de Batata",
+          "raw_score": 0.82041621,
+          "adjusted_score": 0.82041621,
+          "gap": 0.16401768,
+          "consistency": 4,
+          "image_count": 2
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.80884272,
+          "adjusted_score": 0.80884272,
+          "gap": 0.16401768,
+          "consistency": 4,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre15.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.00000012,
+          "adjusted_score": 0.94000012,
+          "gap": 0.18286455,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Escondidinhode Carne Seca",
+          "raw_score": 0.81713557,
+          "adjusted_score": 0.81713557,
+          "gap": 0.18286455,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "Lasanha de Espinafre",
+          "raw_score": 0.80155671,
+          "adjusted_score": 0.80155671,
+          "gap": 0.18286455,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Nhoque ao Gorgonzola",
+          "raw_score": 0.80015069,
+          "adjusted_score": 0.80015069,
+          "gap": 0.18286455,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Tortilha Espanhola de Batata",
+          "raw_score": 0.79803789,
+          "adjusted_score": 0.79803789,
+          "gap": 0.18286455,
+          "consistency": 6,
+          "image_count": 2
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre04.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.99999994,
+          "adjusted_score": 0.93999994,
+          "gap": 0.19768089,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.80231905,
+          "adjusted_score": 0.80231905,
+          "gap": 0.19768089,
+          "consistency": 6,
+          "image_count": 3
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.78992057,
+          "adjusted_score": 0.78992057,
+          "gap": 0.19768089,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.78276712,
+          "adjusted_score": 0.78276712,
+          "gap": 0.19768089,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.7673409,
+          "adjusted_score": 0.7673409,
+          "gap": 0.19768089,
+          "consistency": 6,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre19.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.00000012,
+          "adjusted_score": 0.92000012,
+          "gap": 0.17259866,
+          "consistency": 7,
+          "image_count": 10
+        },
+        {
+          "dish": "Escondidinhode Carne Seca",
+          "raw_score": 0.82740146,
+          "adjusted_score": 0.82740146,
+          "gap": 0.17259866,
+          "consistency": 7,
+          "image_count": 5
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.8089835,
+          "adjusted_score": 0.8089835,
+          "gap": 0.17259866,
+          "consistency": 7,
+          "image_count": 10
+        },
+        {
+          "dish": "Tortilha Espanhola de Batata",
+          "raw_score": 0.80520403,
+          "adjusted_score": 0.80520403,
+          "gap": 0.17259866,
+          "consistency": 7,
+          "image_count": 2
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.80278426,
+          "adjusted_score": 0.80278426,
+          "gap": 0.17259866,
+          "consistency": 7,
+          "image_count": 5
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_structural_check",
+      "filename": "canelonedeespinafre11.jpeg",
+      "expected": "canelonedeespinafre",
+      "top1": "canelonedeespinafre",
+      "accepted": true,
+      "family_visible": true,
+      "family_name": "Canelone",
+      "family_candidates": [
+        "Canelone 4 Queijos",
+        "Canelone de Espinafre"
+      ],
+      "top5": [
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 1.0,
+          "adjusted_score": 0.98,
+          "gap": 0.14769161,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.85230839,
+          "adjusted_score": 0.85230839,
+          "gap": 0.14769161,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.82679486,
+          "adjusted_score": 0.82679486,
+          "gap": 0.14769161,
+          "consistency": 4,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.82376218,
+          "adjusted_score": 0.82376218,
+          "gap": 0.14769161,
+          "consistency": 4,
+          "image_count": 5
+        },
+        {
+          "dish": "Panquecade Frango",
+          "raw_score": 0.80021155,
+          "adjusted_score": 0.80021155,
+          "gap": 0.14769161,
+          "consistency": 4,
+          "image_count": 2
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_negative_control",
+      "filename": "lasanhadeberinjela_correct_20260129_145209_0b0b9b0c.jpg",
+      "expected": "Lasanha de Berinjela",
+      "top1": "Lasanha de Berinjela",
+      "accepted": true,
+      "family_visible": false,
+      "family_name": null,
+      "family_candidates": [],
+      "top5": [
+        {
+          "dish": "Lasanha de Berinjela",
+          "raw_score": 0.99999988,
+          "adjusted_score": 0.87999988,
+          "gap": 0.17261815,
+          "consistency": 9,
+          "image_count": 3
+        },
+        {
+          "dish": "Gratinados",
+          "raw_score": 0.82738173,
+          "adjusted_score": 0.82738173,
+          "gap": 0.17261815,
+          "consistency": 9,
+          "image_count": 10
+        },
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.78459859,
+          "adjusted_score": 0.78459859,
+          "gap": 0.17261815,
+          "consistency": 9,
+          "image_count": 10
+        },
+        {
+          "dish": "berinjelaàparmegiana",
+          "raw_score": 0.77676475,
+          "adjusted_score": 0.77676475,
+          "gap": 0.17261815,
+          "consistency": 9,
+          "image_count": 1
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.77631491,
+          "adjusted_score": 0.77631491,
+          "gap": 0.17261815,
+          "consistency": 9,
+          "image_count": 5
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_negative_control",
+      "filename": "nhoqueaosugo25.jpeg",
+      "expected": "Nhoque ao Sugo",
+      "top1": "Nhoque ao Sugo",
+      "accepted": true,
+      "family_visible": false,
+      "family_name": null,
+      "family_candidates": [],
+      "top5": [
+        {
+          "dish": "Nhoque ao Sugo",
+          "raw_score": 0.99999988,
+          "adjusted_score": 0.89999988,
+          "gap": 0.10276401,
+          "consistency": 8,
+          "image_count": 10
+        },
+        {
+          "dish": "gnocchiaosugocomqueijoralado",
+          "raw_score": 0.89723587,
+          "adjusted_score": 0.89723587,
+          "gap": 0.10276401,
+          "consistency": 8,
+          "image_count": 1
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.83258098,
+          "adjusted_score": 0.83258098,
+          "gap": 0.10276401,
+          "consistency": 8,
+          "image_count": 10
+        },
+        {
+          "dish": "gnocchidebananadaterraaomolho",
+          "raw_score": 0.8188113,
+          "adjusted_score": 0.8188113,
+          "gap": 0.10276401,
+          "consistency": 8,
+          "image_count": 1
+        },
+        {
+          "dish": "Gnocchi ao Molho Branco",
+          "raw_score": 0.81580603,
+          "adjusted_score": 0.81580603,
+          "gap": 0.10276401,
+          "consistency": 8,
+          "image_count": 3
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_negative_control",
+      "filename": "panquecadefrango_correct_20260129_144808_e29d3801.jpg",
+      "expected": "Panquecade Frango",
+      "top1": "Panquecade Frango",
+      "accepted": true,
+      "family_visible": false,
+      "family_name": null,
+      "family_candidates": [],
+      "top5": [
+        {
+          "dish": "Panquecade Frango",
+          "raw_score": 1.0,
+          "adjusted_score": 0.94,
+          "gap": 0.15672696,
+          "consistency": 6,
+          "image_count": 2
+        },
+        {
+          "dish": "Filé à Parmegiana",
+          "raw_score": 0.84327304,
+          "adjusted_score": 0.84327304,
+          "gap": 0.15672696,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "Polpetone",
+          "raw_score": 0.82062912,
+          "adjusted_score": 0.82062912,
+          "gap": 0.15672696,
+          "consistency": 6,
+          "image_count": 10
+        },
+        {
+          "dish": "canelone4queijos",
+          "raw_score": 0.80368626,
+          "adjusted_score": 0.80368626,
+          "gap": 0.15672696,
+          "consistency": 6,
+          "image_count": 5
+        },
+        {
+          "dish": "canelonedeespinafre",
+          "raw_score": 0.80021155,
+          "adjusted_score": 0.80021155,
+          "gap": 0.15672696,
+          "consistency": 6,
+          "image_count": 10
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_negative_control",
+      "filename": "ravioli_correct_20260129_145224_7a2defc2.jpg",
+      "expected": "Ravioli",
+      "top1": "Ravioli",
+      "accepted": true,
+      "family_visible": false,
+      "family_name": null,
+      "family_candidates": [],
+      "top5": [
+        {
+          "dish": "Ravioli",
+          "raw_score": 1.0,
+          "adjusted_score": 0.88,
+          "gap": 0.30389059,
+          "consistency": 9,
+          "image_count": 3
+        },
+        {
+          "dish": "Conchiglione ao Creme de Avelas e Salvia Crocante",
+          "raw_score": 0.69610941,
+          "adjusted_score": 0.69610941,
+          "gap": 0.30389059,
+          "consistency": 9,
+          "image_count": 9
+        },
+        {
+          "dish": "Berinjela à Parmegiana",
+          "raw_score": 0.69482911,
+          "adjusted_score": 0.69482911,
+          "gap": 0.30389059,
+          "consistency": 9,
+          "image_count": 9
+        },
+        {
+          "dish": "berinjelaàparmegiana",
+          "raw_score": 0.68146384,
+          "adjusted_score": 0.68146384,
+          "gap": 0.30389059,
+          "consistency": 9,
+          "image_count": 1
+        },
+        {
+          "dish": "beringela_ao_purê_de_limão_siciliano_picles_de_dedo_de_moça",
+          "raw_score": 0.68066591,
+          "adjusted_score": 0.68066591,
+          "gap": 0.30389059,
+          "consistency": 9,
+          "image_count": 2
+        }
+      ]
+    },
+    {
+      "kind": "indexed_reference_negative_control",
+      "filename": "espaguete09.jpeg",
+      "expected": "Espaguete",
+      "top1": "Espaguete",
+      "accepted": true,
+      "family_visible": false,
+      "family_name": null,
+      "family_candidates": [],
+      "top5": [
+        {
+          "dish": "Espaguete",
+          "raw_score": 1.0,
+          "adjusted_score": 0.96,
+          "gap": 0.28647792,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Arroz Integral",
+          "raw_score": 0.71352208,
+          "adjusted_score": 0.71352208,
+          "gap": 0.28647792,
+          "consistency": 5,
+          "image_count": 5
+        },
+        {
+          "dish": "Purede Mandioquinha",
+          "raw_score": 0.70793772,
+          "adjusted_score": 0.70793772,
+          "gap": 0.28647792,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Purê de Batata Doce",
+          "raw_score": 0.70148861,
+          "adjusted_score": 0.70148861,
+          "gap": 0.28647792,
+          "consistency": 5,
+          "image_count": 10
+        },
+        {
+          "dish": "Saladadebifumcompepino",
+          "raw_score": 0.69488692,
+          "adjusted_score": 0.69488692,
+          "gap": 0.28647792,
+          "consistency": 5,
+          "image_count": 3
+        }
+      ]
+    }
+  ]
+}
