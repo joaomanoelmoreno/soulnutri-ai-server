@@ -158,4 +158,4 @@ A `GOOGLE_API_KEY` anterior estava revogada. Toda chamada à rota Gemini (`resta
 
 **Fix:** Nova key configurada no Render dashboard.
 
-> ⚠️ A nova key (`AIzaSyBZAwyEEJFqzh6y8b0BmOZsXk_9s7y7PEk`) foi posteriormente identificada como **comprometida (leaked)**. Ver `STABLE_VERSION.md` → Problemas conhecidos.
+> ⚠️ A nova key (`[CHAVE HISTÓRICA REMOVIDA]`) foi posteriormente identificada como **comprometida (leaked)**. Ver `STABLE_VERSION.md` → Problemas conhecidos.
