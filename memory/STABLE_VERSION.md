@@ -60,7 +60,7 @@ grep -n "premiumCycleBusyRef.current = false" /app/frontend/src/App.js
 ## Problemas conhecidos NESTA versão (ainda não corrigidos)
 
 ### P0 — Google API Key comprometida (`.env` local)
-- Chave '[CHAVE HISTÓRICA REMOVIDA` retorna `403 PERMISSION_DENIED: key reported as leaked`
+- Chave `[CHAVE HISTÓRICA REMOVIDA]` retorna `403 PERMISSION_DENIED: key reported as leaked`
 - **Não afeta o Render diretamente** (Render tem sua própria key no dashboard)
 - Mas afeta testes locais/preview que usam Gemini — cai no fallback Emergent (3-5s mais lento)
 - **Ação necessária**: gerar nova key em https://console.cloud.google.com e atualizar `/app/backend/.env` E o dashboard do Render
